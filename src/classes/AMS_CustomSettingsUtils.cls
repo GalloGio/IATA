@@ -92,7 +92,6 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 
  	// Mapping between 		Change Code Name -> Section 
  	// (ex: 'CTA', 'CHANGES FINALISED')
- 	// 
  	
 	public static Map<String,String> ccNameSectionMap{ 
 			get{ 
@@ -100,9 +99,16 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 			}
 			set;}
 
+ 	// Mapping between 		Change Code Name -> Description 
+ 	
+	public static Map<String,String> ccNameDescrMap{ 
+			get{ 
+				if(ccNameDescrMap == null) ccNameDescrMap = new Map<String,String>();return ccNameDescrMap;
+			}
+			set;}
+
  	// Mapping between		 Section -> List of Change Codes Names in that Section : Section 
  	// (ex:'CHANGES FINALISED', {'CTA','CCF','CHF','CLF','CNF' })
- 	// 
  	
 	public static Map<String,List<String>> ccNamePerSectionMap{ 
 			get{ 
@@ -119,7 +125,8 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 
 			this.eBulletinCCExtration = eBulletinCCExtration;
 			setNamePerSection(eBulletinCCExtration.Name,eBulletinCCExtration.Section__c);
-				
+
+			ccNameDescrMap.put(eBulletinCCExtration.Name,eBulletinCCExtration.Description__c);
 		}
 
 		public void setNamePerSection(String name, String section)
@@ -132,7 +139,7 @@ This Custom Setting recovers the Collumns used In the EBulletin Reports
 				ccNamePerSectionMap.put(section,new List<String>{name});
 
 		}
-
+		
 		public void filterAndSort()
 		{
 			

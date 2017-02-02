@@ -22,7 +22,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert lsAccntBR;
 
         insert new Account(Name='Accnt3.1.1', RecordTypeId = AgencyRecordTypeId, IATA_ISO_Country__c=lsCountries.get(1).Id, Location_Class__c='P', Location_type__c = 'SA', Status__c = 'Accredited', Reason__c = '90-MEETS CRITERIA', ParentId = lsAccntBR.get(0).Id);
-
+		
         //Create configurations
         list<AMS_ChangeCodes__c> lsConf = new list<AMS_ChangeCodes__c>();
         lsConf.add(new AMS_ChangeCodes__c(Name='RRC', CHANGE_CODE__C='RRC', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA', FIELD1__C='REI_ApprovalRejectin__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_REI_DEFWITH__c', FIELD2VALUES__C='not blank', FIELD3__C=null, FIELD3VALUES__C=null, FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C=null, CLASS_TYPE__C='P;D;R', BULLETIN_MEMO_TEXT__C=null, BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=TRUE, PUBLISHED_IN_BULLETIN__C=FALSE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
@@ -40,17 +40,23 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
     private static id SIDRALiteRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
     private static id SIDRARTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
-
+	private static Id RTOSCAR = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('OSCAR_Communication');
 
     static testMethod void TestCountryNotPilot(){
         Account a = [select id from Account where name='Accnt1'];
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
         SidraLiteCase.AccountId = a.Id;
         SidraLiteCase.recordtypeId = SIDRALiteRTId;
+        SidraLiteCase.ParentId = parent.Id;
+        
         insert SidraLiteCase;
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
         test.StartTest();
-
+        
         SidraLiteCase.Update_AIMS_DEF__c = system.Now();
         SidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
         SidraLiteCase.REI_ApprovalRejectin__c = 'Approved';
@@ -66,17 +72,26 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
     static testMethod void TestCCToSingleAgency(){
-        test.StartTest();
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
-
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
         SidraLiteCase.AccountId = a.Id;
         SidraLiteCase.recordtypeId = SIDRALiteRTId;
+        SidraLiteCase.ParentId = parent.Id;
+        insert SidraLiteCase;
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
         SidraLiteCase.DEF_Withdrawal_Reason__c = 'Administrative error';
         SidraLiteCase.Update_AIMS_DEF__c = system.Now();
+        SidraLiteCase.DEF_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.REI_ApprovalRejectin__c = 'Approved';
         SidraLiteCase.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
         SidraLiteCase.Update_AIMS_REI_DEFWITH__c = system.Now();
-        insert SidraLiteCase;
+        update SidraLiteCase;
 
         system.assertEquals(1, [Select id from Agency_applied_change_code__c where account__c = :a.Id].size(), 'Change Code Created because country is enabled');
         test.StopTest();
@@ -84,17 +99,26 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
 
     static testMethod void TestCCToAllHierarchyFromSA(){
-        test.StartTest();
-
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3.1.1'];
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
         SidraLiteCase.AccountId = a.Id;
         SidraLiteCase.recordtypeId = SIDRALiteRTId;
+        SidraLiteCase.ParentId = parent.Id;
+        
+        insert SidraLiteCase;
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
         SidraLiteCase.DEF_Withdrawal_Reason__c = 'Administrative error';
         SidraLiteCase.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.REI_ApprovalRejectin__c = 'Approved';
         SidraLiteCase.Update_AIMS_REI_DEFWITH__c = system.now();
         SidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.Now();
-        insert SidraLiteCase;
+        update SidraLiteCase;
 
         //system.assertEquals(1, [Select id from Agency_applied_change_code__c where account__r.Name = :'Accnt3'].size(), 'Change Code Created for whole hierarchy - HO');
         //system.assertEquals(1, [Select id from Agency_applied_change_code__c where account__r.Name = :'Accnt3.1'].size(), 'Change Code Created for whole hierarchy - BR1');
@@ -105,17 +129,25 @@ private class AMS_OscarCase_RiskMgmt_Test {
     }
 
     static testMethod void TestCCToAllHierarchyFromBR(){
-        test.StartTest();
-
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3.1'];
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
         SidraLiteCase.AccountId = a.Id;
         SidraLiteCase.recordtypeId = SIDRALiteRTId;
+        SidraLiteCase.ParentId = parent.Id;
+        insert SidraLiteCase;
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
         SidraLiteCase.DEF_Withdrawal_Reason__c = 'Administrative error';
         SidraLiteCase.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.REI_ApprovalRejectin__c = 'Approved';
         SidraLiteCase.Update_AIMS_REI_DEFWITH__c = system.now();
         SidraLiteCase.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.Now();
-        insert SidraLiteCase;
+        update SidraLiteCase;
 
         //system.assertEquals(1, [Select id from Agency_applied_change_code__c where account__r.Name = :'Accnt3'].size(), 'Change Code Created for whole hierarchy - HO');
         //system.assertEquals(1, [Select id from Agency_applied_change_code__c where account__r.Name = :'Accnt3.1'].size(), 'Change Code Created for whole hierarchy - BR1');
@@ -127,74 +159,97 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
 
     static testMethod void TestNewIrregularity(){
-        test.StartTest();
-
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
-
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
             SidraLiteCase.AccountId = a.Id;
             SidraLiteCase.recordtypeId = SIDRALiteRTId;
             SidraLiteCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
-            SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
-            SidraLiteCase.IRR_Approval_Rejection_Date__c = system.now();
-            SidraLiteCase.Update_AIMS_IRR__c = system.Now();
-            SidraLiteCase.IRR_Type__c = 'Double Irregularity';
-            SidraLiteCase.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+            SidraLiteCase.ParentId = parent.Id;
         insert SidraLiteCase;
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
+		SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.IRR_Approval_Rejection_Date__c = system.now();
+        SidraLiteCase.Update_AIMS_IRR__c = system.Now();
+        SidraLiteCase.IRR_Type__c = 'Double Irregularity';
+        SidraLiteCase.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        
+        update SidraLiteCase;
+		
         list<Agency_applied_change_code__c> AACC = [select id, Change_code__c, Operation__c, Irregularities_Points__c from Agency_applied_Change_code__c where Account__c =:a.Id];
 
-        //system.assertEquals(1, AACC.size(), '1 IRR Created');
-        //system.assertEquals('IRR', AACC.get(0).Change_code__c, 'IRR Created');
-        //system.assertEquals('A', AACC.get(0).Operation__c, 'Addition IRR Created');
-        //system.assertEquals(2, AACC.get(0).Irregularities_Points__c, '1 IRR Created with 2 points created');
-        //system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
+        system.assertEquals(1, AACC.size(), '1 IRR Created');
+        system.assertEquals('IRR', AACC.get(0).Change_code__c, 'IRR Created');
+        system.assertEquals('A', AACC.get(0).Operation__c, 'Addition IRR Created');
+        system.assertEquals(2, AACC.get(0).Irregularities_Points__c, '1 IRR Created with 2 points created');
+        system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
 
         test.StopTest();
 
     }
 
     static testMethod void TestAll6Conditions(){
-        test.StartTest();
-
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
-
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
             SidraLiteCase.AccountId = a.Id;
             SidraLiteCase.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
-            SidraLiteCase.Update_AIMS_IRR__c = system.Now();
-            SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
-            SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
-            SidraLiteCase.Outstanding_Amount__c  = 75;
+            SidraLiteCase.ParentId = parent.Id;
         insert SidraLiteCase;
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
+        SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.Update_AIMS_IRR__c = system.Now();
+        SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
+        SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
+        SidraLiteCase.Outstanding_Amount__c  = 75;
+            
+		update SidraLiteCase;
 
         test.StopTest();
 
     }
 
     static testMethod void TestAll6Conditions2(){
-        test.StartTest();
-
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
-
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         Case SidraLiteCase = new Case();
             SidraLiteCase.AccountId = a.Id;
             SidraLiteCase.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
-            SidraLiteCase.Update_AIMS_IRR__c = system.Now();
-            SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
-            SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
-            SidraLiteCase.Outstanding_Amount__c  = 40;
+            SidraLiteCase.ParentId = parent.Id;
         insert SidraLiteCase;
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
+        test.StartTest();
+        
+        SidraLiteCase.IRR_Approval_Rejection__c = 'Approved';
+        SidraLiteCase.Update_AIMS_IRR__c = system.Now();
+        SidraLiteCase.DEF_Approval_Rejection__c = 'Rejected';
+        SidraLiteCase.End_of_Grace_Period_Date__c = system.today();
+        SidraLiteCase.Outstanding_Amount__c  = 40;
+            
+		update SidraLiteCase;
+		
         test.StopTest();
 
     }
 
     static testMethod void TestIrregularityWithdrawn(){
         Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt2'];
-
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
         lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='1'));
         lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRR', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='A', AIMS_ID__c='2'));
@@ -202,25 +257,30 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.assertEquals(4, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 4');
 
-        test.StartTest();
-
         //WithDraw 1 IRR
         Case SidraLiteCase3 = new Case();
             SidraLiteCase3.AccountId = a.Id;
             SidraLiteCase3.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase3.SIDRA_Lite_Reason__c = 'Annual fees';
-            SidraLiteCase3.IRR_Withdrawal_Approval_Rejection__c = 'Approved';
-            SidraLiteCase3.IRR_Withdrawal_Reason__c = 'Exception raised';
-            SidraLiteCase3.Update_AIMS_IRRWITH__c = system.Now();
-            SidraLiteCase3.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-            SidraLiteCase3.IRR_Type__c = 'Double Irregularity';
+            SidraLiteCase3.ParentId = parent.Id;
         insert SidraLiteCase3;
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
+		test.StartTest();
+		
+		SidraLiteCase3.SIDRA_Lite_Reason__c = 'Annual fees';
+        SidraLiteCase3.IRR_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase3.IRR_Withdrawal_Reason__c = 'Exception raised';
+        SidraLiteCase3.Update_AIMS_IRRWITH__c = system.Now();
+        SidraLiteCase3.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        SidraLiteCase3.IRR_Type__c = 'Double Irregularity';
+        
+        update SidraLiteCase3;
+		
         for(Agency_applied_Change_code__c aa:[select id, Change_code__c, Operation__c, recordtype.developername, Irregularities_Points__c from Agency_applied_Change_code__c where Account__c = :a.Id])
             system.debug(Logginglevel.ERROR, 'DTULLO 180 IRR Type. ' + aa.RecordType.DeveloperName + ' - ' + aa.Operation__c + ' - ' + aa.Change_code__c + ' - ' +aa.Irregularities_Points__c);
 
-        //system.assertEquals(3, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), '3 IRRS: 2 A and 1 W');
-        //system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
+        system.assertEquals(3, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), '3 IRRS: 2 A and 1 W');
+        system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 2');
 
         test.StopTest();
     }
@@ -233,23 +293,33 @@ private class AMS_OscarCase_RiskMgmt_Test {
         lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRW', Effective_date__c = system.today(), Irregularities_Points__c=2, Operation__c='W', AIMS_ID__c='3'));
 
         insert lsCC;
+        
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
 
         system.assertEquals(2, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Starting with 2 Accumulated Irregularities');
 
-        test.StartTest();
         //Generate a change code that will clear all IRRS:
         Case SidraLiteCase4 = new Case();
             SidraLiteCase4.AccountId = a.Id;
             SidraLiteCase4.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
-            SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
-            SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
-            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-            SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Other';
-            SidraLiteCase4.IRR_Type__c = 'Double Irregularity';
+            SidraLiteCase4.ParentId = parent.Id;
         insert SidraLiteCase4;
-
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
+		test.StartTest();
+		
+		SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.DEF_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
+        SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Other';
+        SidraLiteCase4.IRR_Type__c = 'Double Irregularity';
+		
+		update SidraLiteCase4;
+		
         system.assertEquals(4, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), '3 IRR still remains + RCR');
         system.assertEquals(0, [select Accumulated_irregularities__c from Account where id =: a.id].Accumulated_Irregularities__C, 'Total Acc Irr: 0 - Cleared');
 
@@ -264,6 +334,9 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert FI;
         Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
         insert FS;
+        
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
 
         list<Agency_applied_change_code__c> lsCC = new list<Agency_applied_change_code__c>();
         lsCC.add(new Agency_Applied_change_code__c(Account__c = a.Id, Change_code__c = 'IRW', Effective_date__c = system.today().addDays(1), Irregularities_Points__c=2, Operation__c='W', AIMS_ID__c='1'));
@@ -276,29 +349,36 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 2 --> Query issued: ' + Limits.getQueries());
 
-        test.StartTest();
-
         Case SidraLiteCase4 = new Case();
             SidraLiteCase4.AccountId = a.Id;
             SidraLiteCase4.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
-            SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
-            SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
-            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-            SidraLiteCase4.Termination_date_manual_entry__c = system.today();
-            SidraLiteCase4.DEF_Withdrawal_Reason__c='Bank error';
-            SIdraLiteCase4.SIDRA_Lite_Reason__c = 'Annual Fees';
-            SidraLiteCase4.End_of_Grace_Period_Date__c = system.Today().addDays(15);
-            SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
-            SidraLiteCase4.Outstanding_Amount__c = 3000;
-            SidraLiteCase4.Termination_Reason__c = 'Non Payment';
-            SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
-            SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
-            SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
-            SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
-            SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+            SidraLiteCase4.ParentId = parent.Id;
         insert SidraLiteCase4;
-
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+		test.StartTest();
+		
+		SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
+        SidraLiteCase4.DEF_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
+        SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        SidraLiteCase4.Termination_date_manual_entry__c = system.today();
+        SidraLiteCase4.DEF_Withdrawal_Reason__c='Bank error';
+        SIdraLiteCase4.SIDRA_Lite_Reason__c = 'Annual Fees';
+        SidraLiteCase4.End_of_Grace_Period_Date__c = system.Today().addDays(15);
+        SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
+        SidraLiteCase4.Outstanding_Amount__c = 3000;
+        SidraLiteCase4.Termination_Reason__c = 'Non Payment';
+        SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
+        SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
+        SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+        SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+        SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+        
+        update SidraLiteCase4;
+        
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries());
 
 
@@ -341,32 +421,41 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert lsCC;
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 1 --> Query issued: ' + Limits.getQueries());
-
-        test.StartTest();
-
+		
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id);
+        insert parent;
+        
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 2 --> Query issued: ' + Limits.getQueries());
 
         Case SidraLiteCase4 = new Case();
             SidraLiteCase4.AccountId = a.Id;
             SidraLiteCase4.recordtypeId = SIDRALiteRTId;
-            SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
-            SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
-            SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
-            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
-            SidraLiteCase4.Termination_date_manual_entry__c = system.today();
-            SidraLiteCase4.DEF_Withdrawal_Reason__c='Bank error';
-            SIdraLiteCase4.SIDRA_Lite_Reason__c = 'Annual Fees';
-            SidraLiteCase4.End_of_Grace_Period_Date__c = system.Today().addDays(15);
-            SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
-            SidraLiteCase4.Outstanding_Amount__c = 3000;
-            SidraLiteCase4.Termination_Reason__c = 'Non Payment';
-            SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
-            SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
-            SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+            SidraLiteCase4.ParentId = parent.Id;
         insert SidraLiteCase4;
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 3 --> Query issued: ' + Limits.getQueries());
-
+		
+		AMS_OscarCase_RiskMgmt.EndRun();
+		test.StartTest();
+		
+        SidraLiteCase4.Update_AIMS_DEF__c = system.Now();
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.DEF_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
+        SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        SidraLiteCase4.Termination_date_manual_entry__c = system.today();
+        SidraLiteCase4.DEF_Withdrawal_Reason__c='Bank error';
+        SIdraLiteCase4.SIDRA_Lite_Reason__c = 'Annual Fees';
+        SidraLiteCase4.End_of_Grace_Period_Date__c = system.Today().addDays(15);
+        SidraLiteCase4.IRR_Withdrawal_Reason__c = 'Exception raised';
+        SidraLiteCase4.Outstanding_Amount__c = 3000;
+        SidraLiteCase4.Termination_Reason__c = 'Non Payment';
+        SidraLiteCase4.Reason_for_Default__c = 'Annual Fees';
+        SidraLiteCase4.Reason_of_REI_WD__c = 'IATA Error';
+        SidraLiteCase4.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+        
+        update SidraLiteCase4;
         string sMemo1 = '<IRRS Sequence>';
 
         list<Case> lsCase = [select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,

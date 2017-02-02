@@ -193,13 +193,14 @@ public class AMS_ChangeCodesHelper {
         if(!aaccHistoryToProcess.isEmpty())
             {for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
 
-                for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(index2))
-                {
-                    //Add Agency_Applied_Change_Code__c IDs to AMS_Agency_A_Change_code_History__c
-                    
-                    aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
-                    aaccHistoryToInsert.add(aaccHist);
-                }
+                if(aaccHistoryToProcess.get(index2)!=null && !aaccHistoryToProcess.get(index2).isEmpty())
+                    for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(index2))
+                    {
+                        //Add Agency_Applied_Change_Code__c IDs to AMS_Agency_A_Change_code_History__c
+                        
+                        aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
+                        aaccHistoryToInsert.add(aaccHist);
+                    }
 
 
                 index2++;
@@ -297,8 +298,12 @@ public class AMS_ChangeCodesHelper {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
-            toReturn = oscarAgency;
+            toReturn = oscarAgency; 
         }
+
+        //Save current account status in the change code
+        
+        aacNEW.AccountNewStatus__c = oscarAgency.Status__c;
         
         if(oscar != null){
 

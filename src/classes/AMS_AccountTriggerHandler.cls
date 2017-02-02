@@ -29,20 +29,10 @@ public class AMS_AccountTriggerHandler {
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
 
-        Set<Id> countries = new Set<Id>();
-        for(Account ag : accs)
-            countries.add(ag.IATA_ISO_Country__c);
-
-        Map<Id, boolean> countryToIsCNS = new Map<Id, boolean>();
-        for(IATA_ISO_Country__c iic : [SELECT Id, CNS_Country__c FROM IATA_ISO_Country__c WHERE Id IN :countries]){
-            countryToIsCNS.put(iic.Id, iic.CNS_Country__c);
-        }
-
-
         for(Account ag : accs){
             if(!disallowedSources.contains(ag.Source_System__c)){
                 if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
-                    setCassNumberOnHO(ag, (ag.IATA_ISO_Country__c ==null ? null :  countryToIsCNS.get(ag.IATA_ISO_Country__c)));
+                    setCassNumberOnHO(ag);
 
                     if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric()){
                         ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
@@ -109,7 +99,7 @@ public class AMS_AccountTriggerHandler {
         //Operations assignment update:
         //we want to set all operation to a dedicated Operation based on their Countries
         List<Account> operationHelpercandidate = new List<Account>();
-        List<Account> agencies = new List<Account>();
+        //List<Account> agencies = new List<Account>();
         /*
             //cannot be working on creation because need to have a primary address linked
         */
@@ -117,10 +107,13 @@ public class AMS_AccountTriggerHandler {
         for(Account ag:accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent')
             {
+                // DNG - This is not used anymore since that agencies object is not used ...
+                /*
                 if(verifyFieldChanges(ag, oldMap.get(ag.Id)))    
                 {
                     agencies.add(ag);
                 }
+                */
                 //consider agency with iata code with NEW primary Address  OR agencies with Address with new iata code
                 if((ag.IATA_ISO_Country__c!= oldMap.get(ag.Id).IATA_ISO_Country__c && ag.IATACode__c!=null) || (ag.IATA_ISO_Country__c!=null && ag.IATACode__c!=null && oldMap.get(ag.Id).IATACode__c != ag.IATACode__c)){
                     system.debug('[AMS_AgencyTrigger] updated Primary Address for Agency '+ag.Id);
@@ -148,24 +141,11 @@ public class AMS_AccountTriggerHandler {
         Map<String, Schema.SObjectField> accountFields = AMS_Utils.getObjectFields('Account');
 
         List<AccountChangesStruct> accountChangesList = new List<AccountChangesStruct>();
-        
-        //LF: enable minor changes only if the ISO Country has the flag OSCAR_enabled__c enabled
-        Set<Id> countries = new Set<Id>();
-        Map<Id, boolean> countryIdToMinorChangeEnabled = new Map<Id,boolean>();
-        for(Account acct : accs)
-            if(acct.IATA_ISO_Country__c!=null)
-                countries.add(acct.IATA_ISO_Country__c);
-
-        if(countries.size()>0)
-            for(IATA_ISO_Country__c iic : [SELECT Name, OSCAR_enabled__c FROM IATA_ISO_Country__c WHERE ID IN :countries])
-                countryIdToMinorChangeEnabled.put(iic.Id, iic.OSCAR_enabled__c);
-        //LF: end change
  
         Map<String, Schema.SobjectField> accountDescription =Account.getSObjectType().getDescribe().fields.getMap();
         for(Account acct : accs){
             //LF: enable minor changes only if the ISO Country has the flag OSCAR_enabled__c enabled
-            if(countryIdToMinorChangeEnabled.get(acct.IATA_ISO_Country__c)!=true)
-                continue;
+            if(!acct.Country_OSCAR_Enabled__c) continue;
             //LF: end change
         
 
@@ -323,10 +303,10 @@ public class AMS_AccountTriggerHandler {
 
     }
 
-    public static void setCassNumberOnHO(Account ag, boolean isCNS){
+    public static void setCassNumberOnHO(Account ag){
         if(ag.Sector__c == 'Cargo Agent'  && ag.Location_Type__c=='HO' && ag.CASS_Number__c==null){
             // Salvatore don't hate me for this if==true, but it may be null!
-            if(isCNS == true)
+            if(ag.CNS_Country__c == true)
                 ag.CASS_Number__c ='001';
             else
                 ag.CASS_Number__c ='000';
@@ -359,15 +339,10 @@ public class AMS_AccountTriggerHandler {
 
         Map<Id, List<Account>> hierarchiesPerAccount = new Map<Id, List<Account>>();
 
-        List<AMS_Agencies_relationhip__c> relationshipLst = [SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c in :accountsSet.keySet()];
-        
-        Set<Id> relationshipSet = new Set<Id>();
+        List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
 
-        for(AMS_Agencies_relationhip__c rel : relationshipLst){
-            relationshipSet.add(rel.Hierarchy__c);
-        }
-
-        relationshipLst = [SELECT Hierarchy__c, Child_Account__c, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationhip__c where Hierarchy__c in :relationshipSet];
+        for(AMS_Agencies_Hierarchy__c h : [SELECT Id, (SELECT Hierarchy__c, Child_Account__c, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationships__r) FROM AMS_Agencies_Hierarchy__c WHERE Id In (SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__c in :accountsSet.keySet())]) 
+            relationshipLst.addAll(h.AMS_Agencies_relationships__r);
         
 
         for(AMS_Agencies_relationhip__c rel: relationshipLst){

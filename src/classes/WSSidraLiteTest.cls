@@ -604,7 +604,23 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK1() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c='BR');
+
+        insert country;
+
+        Account acct = new Account(
+            Name = 'Test account',
+            BillingCity = 'Montreal',
+            BillingCountry = 'Canada',
+            BillingStreet = 'some street',
+            IATA_ISO_Country__c = country.Id,
+            Location_Type__c = 'HO',
+            IATACode__c = '1234567',
+            Type = 'IATA Passenger Sales Agent'
+        );
+        insert acct;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c = acct.Id);
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
