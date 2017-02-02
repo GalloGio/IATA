@@ -43,7 +43,7 @@
                 <field>RecordTypeId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>AMS_Correction_change_code__c</field>
             </layoutItems>
         </layoutColumns>

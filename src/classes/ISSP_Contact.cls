@@ -96,7 +96,7 @@ public class ISSP_Contact{
     }
     
     public Pagereference AssignIFAPContact(){
-        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+contact.AccountId + '&vContactId=' + contact.Id + '&vContactName=' + EncodingUtil.urlEncode(contact.Name, 'UTF-8' + commParam));
+        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+contact.AccountId + '&vContactId=' + contact.Id + commParam +'&vContactName=' + EncodingUtil.urlEncode(contact.Name, 'UTF-8'));
         p.setredirect(true);
         return p;
     }

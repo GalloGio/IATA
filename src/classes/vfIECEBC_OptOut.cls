@@ -66,10 +66,12 @@ public class vfIECEBC_OptOut {
         
         PageReference pr = Page.IECEBC_PublicConfirmation;
         pr.setRedirect(true);
-        //pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
+        pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }
-    
+    public string getemailurl(){
+        return ApexPages.currentPage().getParameters().get('e');
+    }
     public Map<String, Boolean> reasons {
         get {
             if (reasons == null) {

@@ -52,7 +52,7 @@ font-size:85%;
     <div id="footerImg" style="display:{!if(communityName=='CNS','','none')}">
       <span class="footerbig" >Relevant. Committed. Connected </span><img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002q77c&oid=00D2000000008TF&lastMod=1434982567000" height="30px"/><br/>
       <span  class="footersml">&#169; Cargo Network Services Corp., An IATA Company. All rights reserved.</span>
-      <div style="float:right"><img src="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}"/></div>
+      <div style="float:right"><img src="{!urlfor($Resource.IIS_Portal,'/images/cnsFooter.PNG')}"/> </div>
     </div>
 
 

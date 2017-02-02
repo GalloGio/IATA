@@ -94,13 +94,14 @@ public without sharing class ISSP_Case {
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
             if (!newCase.Visible_on_ISS_Portal__c) {
-                PageReference pr = new PageReference('/ISSP_Homepage');
+                PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
             }
             
@@ -109,7 +110,7 @@ public without sharing class ISSP_Case {
                 Set<String> openIFAPStatuses = new Set<String>
                     {'action needed', 'agent notified (email)', 'agent notified (mail)', 'sanity check failure'};
                 if(openIFAPStatuses.contains(newCase.Status.toLowerCase()) && con.Financial_Assessment_Contact__c) {
-                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId);
+                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                 		return pr;
                     }
             }

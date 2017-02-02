@@ -286,7 +286,7 @@ margin-top:50px;
             <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!NOT(isOSCARCase)}"/>
             </div>
           <div class="col-md-3">
-           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}&communityName={!CommunityName}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!NOT(isOSCARCase)}" />
+           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!NOT(isOSCARCase)}" />
          <!--
            <apex:commandButton action="/ISSP_Baggage_Proration_Claim?id={!tmpClaim.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!isClaim}" /> 
           -->   

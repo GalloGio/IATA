@@ -117,6 +117,10 @@
                 <behavior>Readonly</behavior>
                 <field>CNS_Agency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -716,12 +720,12 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Change_Code__c</fields>
-        <fields>Update_Type__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>CREATED_DATE</fields>
+        <fields>Update_Type__c</fields>
         <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
+        <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>

@@ -13,6 +13,10 @@ public class ISSP_AddAttachment {
   public Contact con {get; set;}
   Account hqAccount;
 
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+  public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
   public ISSP_AddAttachment() {
     isCase = false;
     isClaim = false;
@@ -112,7 +116,7 @@ public class ISSP_AddAttachment {
     ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Attachment uploaded successfully'));
     PageReference p;
     if (isCase) {
-      p = new PageReference('/ISSP_Case?caseId=' + CaseId);
+      p = new PageReference('/ISSP_Case?caseId=' + CaseId + commParam);
     } else if (isClaim) {
       p = new PageReference('/ISSP_Baggage_Proration_Claim?id=' + claimId);
     }
@@ -187,7 +191,7 @@ public class ISSP_AddAttachment {
                     }
                 }
                 
-                 return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id);   
+                 return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id + commParam);   
                 }
 
     
@@ -207,7 +211,7 @@ public class ISSP_AddAttachment {
 
         List <Account> branchList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
-                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending'))
                                       										AND IATACode__c != null AND Location_Type__c != 'SA'
                                               ORDER BY Location_Type__c,Name, IATACode__c
                                      ];

@@ -18,6 +18,7 @@ public with sharing class ISSP_PortalUserCreation {
      //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalUserCreation() {
         popContact(); //Get the current contact assoc. with logged in portal user
@@ -64,7 +65,7 @@ public with sharing class ISSP_PortalUserCreation {
         
     }
     public PageReference cancel(){
-        return new PageReference(retUrl);
+        return new PageReference(retUrl + firstCommParam);
 
     }
     public Boolean save(){
