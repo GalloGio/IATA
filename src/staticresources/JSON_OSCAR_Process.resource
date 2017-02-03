@@ -887,6 +887,68 @@
         }]
       },
       {
+        "Name": "AMS_OSCAR_PENALTY",
+        "Steps": [{
+          "Name": "STEP26",
+          "Required": [],
+          "Actions": [{
+            "FunctionName": "createSIDRALite",
+            "ActionLabel": "AMS_OSCAR_Action7",
+            "args": ["oscarid"]
+          },
+          {
+            "FunctionName": "createCommissionerCase",
+            "ActionLabel": "AMS_OSCAR_Action8",
+            "args": ["oscarid"]
+          }],
+          "Automations": [],
+          "DisplayFields": [
+            "Change_effective_as_of__c",
+            "Remove_STDs__c",
+            "Notify_Agent_Suspension__c",
+            "Notify_Agent_Termination__c",
+            "STEP26__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP27",
+          "Required": [],
+          "Actions": [],
+          "Automations": [],
+          "DisplayFields": [
+            "NOC_Received__c",
+            "Notify_Agent_Reactivation__c",
+            "Reinstate_STDs_Reactivation__c",
+            "STEP27__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP28",
+          "Required": [],
+          "Actions": [],
+          "Automations": [],
+          "DisplayFields": [
+            "Notify_Agent_Withdrawal__c",
+            "Reactivate_Ticketing_Authority__c",
+            "STEP28__c"
+          ],
+          "IsDependent": false
+        },{
+          "Name": "STEP29",
+          "Required": [],
+          "Actions": [],
+          "Automations": [{
+            "Status": "Passed",
+            "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded"
+          }],
+          "DisplayFields": [
+            "Apply_Penalty_Fee__c",
+            "STEP29__c"
+          ],
+          "IsDependent": false
+        }]
+      },
+      {
         "Name": "AMS_OSCAR_AGENCYFEES",
         "Steps": [{
           "Name": "STEP8",
