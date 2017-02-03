@@ -15,11 +15,10 @@ private class ams2gdp_Batch_Address_Test
 	@isTest static void positiveTest1BatchAddress() 
 	{
 
-		system.debug('*inside*');
 		Test.startTest();
- 			Database.executeBatch(new ams2gdp_Batch_Address());
+ 		 Database.executeBatch(new ams2gdp_Batch_Address());
 		Test.stopTest();
-system.debug('*inside22*');
+
 		Set<String> addressIds = new Set<String>(); 
 		Set<String> phoneKeys = new Set<String>();
 		//for(AMS_Address__c adr : [SELECT Id FROM AMS_Address__c])
@@ -30,8 +29,7 @@ system.debug('*inside22*');
 			addressIds.add(accIds.Id+'MAIGDP');
 			phoneKeys.add(accIds.Id+'-P1GDP');
 			phoneKeys.add(accIds.Id+'-FXGDP');
-			system.debug('***'+accIds.Id+'LOCGDP');
-
+			
 		}
 
 		//-- Validate GDP Address & Phones are created
