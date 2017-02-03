@@ -386,7 +386,7 @@ system.debug('iDays: ' + iDays);
 
             //Checks if "Select All" is checked or not
             if(!dailyCountrySelectAll){
-
+				
                 //Remove Select values from the "Selected" list that doens't exist anymore on the "to select" list
                 for(Integer i=dailyCountrySelected.size()-1; i >= 0 ; i--){
                     Boolean bExist = false;
@@ -507,10 +507,12 @@ system.debug('iDays: ' + iDays);
 
         for(String aux : lSelectedCountries){
             
+            System.debug('populateSelectedCountries - mCountries:' + mCountries);
             if(!mCountries.containsKey(aux)){
                 continue;
             }
             
+
             IATA_ISO_Country__c iso = mCountries.get(aux);
 
             if (applyLanguage == 'es') {
@@ -603,6 +605,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_SP__c];
             } else if (applyLanguage == 'fr') {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -612,6 +615,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_FR__c];
             } else {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -621,6 +625,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             }
 
@@ -665,6 +670,7 @@ system.debug('iDays: ' + iDays);
                 FROM IATA_ISO_Country__c
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
+                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             
             for (IATA_ISO_Country__c iso : isoList) {
@@ -1170,6 +1176,7 @@ system.debug('iDays: ' + iDays);
                                              Enable_Minor_Changes_from_Portal__c,EBulletin_enabled__c
                                              FROM IATA_ISO_Country__c
                                              WHERE ISO_Code__c = :isocode
+                                             AND Sub_Region__c not in ('USA')
                                          ];
 
         return isocountry;

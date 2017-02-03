@@ -1975,8 +1975,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_OSCAR__c oscar = createOSCAR(HO1, AMS_Utils.VFMR, null, null);
 
         List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id));
-        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
 
         insert pds;
 
