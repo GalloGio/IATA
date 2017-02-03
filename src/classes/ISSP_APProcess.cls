@@ -753,6 +753,11 @@ public without sharing class ISSP_APProcess {
         
         try{
             newForm.Submitted_to_IATA__c = TRUE;
+            if(strAreaType == 'Airline Joining') {               
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;   
+            } else {
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+            }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
             if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
