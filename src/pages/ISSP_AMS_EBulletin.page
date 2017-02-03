@@ -309,12 +309,22 @@
     }
     function onSelect(dateText, inst) { 
         var date = $(this).datepicker('getDate');
+
+        //when user clicks on friday or saturday we need to advance for the next week in order to get the correct results
+        if(date.getDay() >= 5){
+            date.setDate(date.getDate() + 2);
+        }
+
         startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
         endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
 
+        //alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
+
         startDate.setDate(startDate.getDate() - 2);
         endDate.setDate(endDate.getDate() -2);
+
+        //alert('2 - startDate: '+startDate + ' || endDate: '+endDate);
 
         jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
         jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
@@ -354,7 +364,6 @@
         maxDay = dayOfMonth;
         testDay = 0;
 
-        // alert('dayOfWeek: '+dayOfWeek);
 
         if(dayOfWeek == 5){
             maxDay = maxDay-1;
@@ -368,8 +377,7 @@
             }
             maxDay = dayOfMonth-1;
         } 
-        // alert('maxDay: '+maxDay);
-
+        
         //Initial values for the selected week
         weekInitialStartDate=maxDay-6;
         weekInitialEndDate=maxDay;
@@ -421,10 +429,14 @@
         // if(bIsStep3){
             //Ser current week as selected
             var date = $(this).datepicker('getDate');
+
+            // alert('0 - date: '+date + ' || date.getDay(): '+date.getDay());
+
             startDate = new Date(date.getFullYear(), date.getMonth(), weekInitialStartDate);
             endDate = new Date(date.getFullYear(), date.getMonth(), weekInitialEndDate);
-            // alert('startDate-'+startDate);
-            // alert('endDate-'+endDate);
+            
+            // alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
+
             var dateFormat = $.datepicker._defaults.dateFormat;
 
             // startDate.setDate(startDate.getDate() - 2);
