@@ -1,7 +1,6 @@
 @isTest
 private class ams2gdp_TriggerHelper_Test 
 {
-	/*
 	@isTest static void testDeleteAppointmentAccreditations()
 	{
 		//Generate Accounts 2 Accounts 1-AIMS 1-WEBSTAR
@@ -174,6 +173,4 @@ private class ams2gdp_TriggerHelper_Test
 		delete ams_Affiliations; 
 		System.assertEquals(0, [SELECT count() FROM Assoc_Affiliation_Membership__c]);
 	}
-
-	*/
 }

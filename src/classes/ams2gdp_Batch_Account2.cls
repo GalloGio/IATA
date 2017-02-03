@@ -28,8 +28,6 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
 		}else{
 			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
-
-			
 		}
 
 		//-- Query conditions 
@@ -37,30 +35,6 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 			,	'IATACode__c != null'
 			,	idsCondition
 		}; 
-
-		AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
-		if(batchInfo != null && (extraIds==null || extraIds.size() == 0))
-		{
-			//Run only on the deltas 
-			String deltaConditions = String.format('LastModifiedDate >= {0}'
-				,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
-
-			if(String.isNotBlank(batchInfo.Failed_Records__c))
-			{
-				// Reprocess failed records 
-				List<String> failedAccountRecordIds = new List<String>(); 
-				
-				for(String s: batchInfo.Failed_Records__c.split(';'))
-				{
-					if(s.length() >= 15) failedAccountRecordIds.add(s.left(15));
-				}
-				
-				if(failedAccountRecordIds.size() > 0) deltaConditions += ' OR Id IN (\'' + String.join(failedAccountRecordIds, '\' , \'') + '\') ';
-
-			}
-
-			conditions.add('('+deltaConditions+')');
-		}
 		
 		query = String.format('SELECT {0} '
 			+	'FROM Account '

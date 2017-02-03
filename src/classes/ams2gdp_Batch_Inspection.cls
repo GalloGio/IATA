@@ -19,7 +19,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		String fields = ' Id, Name, Account__c, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c, Legacy_External_ID__c '
-			+', Account__r.Location_Class__c, Account__r.Check_Digit__c, Account__r.IATACode__c, Account__r.Status__c' 
+			+', Account__r.Location_Class__c, Account__r.Check_Digit__c, Account__r.IATACode__c' 
 			+', Account__r.Organization_Last_Change_Date__c, Account__r.Verification_Date__c,  Account__r.Original_Approval_DAte__c '
 			+', Accreditation_Endorsement_organisation__r.Air_Code__c, Accreditation_Endorsement_organisation__r.Name  '
 			+', Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c' ;

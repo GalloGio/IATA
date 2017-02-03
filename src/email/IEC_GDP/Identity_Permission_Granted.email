@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+     
+      
+div.main{
+margin:auto;
+width:90%;
+}
+      hr{
+	color:#0A4279;
+      }
+    </style>
+    
+  </head>
+
+  <body>
+<div class="main">
+<table width="640px">
+<tr>
+<td colspan="3">
+  <img src="https://iata--platenrico--c.cs81.content.force.com/servlet/servlet.FileDownload?file=01526000000Eomy"/>
+  </td>
+  </tr>
+<tr>
+
+<tr>
+<td colspan="3">
+{!$Label.ISSP_Email_do_not_reply}
+</td>
+</tr>
+<tr>
+
+<td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
+  <b>{!Community_Name}</b>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+  <br />
+   <hr style="width:80%"/>
+   <p> 
+   Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName},
+    </p>
+    <p>
+      You have been granted the permission you requested.
+
+    </p>
+<p>Please click on the button below to log into the community:<br>
+</p>
+  </td>
+  </tr>
+  <tr>
+  <td width="30%">
+  
+    </td>
+    <td >
+
+      <center>
+<a style="font-size:20px;
+	text-align:center;
+	font-weight:bold;
+	background-color:#0A4279;
+	color:white;
+	padding:5px;
+	text-decoration:none;
+	
+	
+border-collapse: separate!important;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;" href=" {!$Setup.Identity_Community_Link__c.Url__c}">Click here to log in</a>
+  </center>
+  </td>
+  <td width="30%">
+  </td>
+  </tr>
+
+  <tr>
+  <td colspan="3">
+    <p>
+Thank you for signing up,
+    </p>
+    <p>
+IATA Customer Service
+    </p>
+  </td>
+    </tr>
+
+        <tr>
+    <p>
+    <td style="text-align:left">
+    <a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<img src="https://iata--platenrico--c.cs81.content.force.com/servlet/servlet.FileDownload?file=01526000000Eon3"/>
+    </p>
+      </td>
+    </tr>
+
+    <BR />
+
+    
+    <tr>
+    <td colspan="3">
+    <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000" />
+      </td>
+    </tr>
+
+    
+    
+
+</table>
+</div>
+  </body>
+</html>

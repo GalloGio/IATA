@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Identity_Portal_New_User</name>
+    <style>none</style>
+    <subject>Welcome to IATA Identity Portal</subject>
+    <textOnly>{!$Label.ISSP_Email_do_not_reply} 
+{!Community_Name} 
+
+Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName}, 
+
+Welcome to {!Community_Name}. 
+Your e-mail adress is {!Receiving_User.Email} 
+
+
+Please follow the link below to finalize your registration process: 
+
+{!Community_Url} 
+
+Thank you for signing up, 
+
+IATA Customer Service</textOnly>
+    <type>custom</type>
+</EmailTemplate>

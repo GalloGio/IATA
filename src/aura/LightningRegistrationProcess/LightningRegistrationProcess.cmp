@@ -1,0 +1,537 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningRegistrationProcess">
+	<aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+
+    <ltng:require styles="{!$Resource.SLDS102 + '/assets/styles/salesforce-lightning-design-system-ltng.css'}"/>
+	<aura:attribute name="Page" type="Integer" default="1"/>
+    <aura:attribute name="contact"  type="Contact" default="{ sobjectType: 'Contact' }" />
+    <aura:attribute name="account"  type="Account" default="{ sobjectType: 'Account', Type: '' }" />
+
+
+    <aura:attribute name="salutationOptions" type="String[]"/>
+    <aura:attribute name="jobFunctionOptions" type="String[]"/>
+    <aura:attribute name="sectorOptions" type="String[]"/>
+    <aura:attribute name="categoryOptions" type="String[]"/>
+    <aura:attribute name="countryOptions" type="String[]"/>
+    <aura:attribute name="rtcategorysector" type="String[]" access="private"/>
+    <aura:attribute name="contactLabels" type="Map"/>
+    <aura:attribute name="accountLabels" type="Map"/>
+
+	<aura:attribute name="Results" type="Account[]"/>
+    <aura:attribute name="isAirline1" type="Boolean" default="false"/>
+    <aura:attribute name="isAirline2" type="Boolean" default="false"/>
+    <aura:attribute name="showCompanyName" type="Boolean" default="false"/>
+    <aura:attribute name="isCargoTravel1" type="Boolean" default="false"/>
+    <aura:attribute name="isCargoTravel2" type="Boolean" default="false"/>
+    <aura:attribute name="isIataCodeCT" type="Boolean" default="false"/>
+    <aura:attribute name="showCountry" type="Boolean" default="false"/>
+    <aura:attribute name="Terms" type="Boolean" default="false"/>
+
+    <aura:attribute name="IataCode" type="String"/>
+    <aura:attribute name="DesCode" type="String"/>
+    <aura:attribute name="AccName" type="String"/>
+    <aura:attribute name="IataCodeCargotravel" type="String"/>
+
+	<aura:attribute name="NoAccounts" type="String"/>
+    <aura:attribute name="ShowSave" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSubmit" type="Boolean" default="false"/>
+    <aura:attribute name="ShowSearch" type="Boolean" default="false"/>
+	<aura:attribute name="ShowResults" type="Boolean" default="false"/>
+    <aura:attribute name="ShowNoResults" type="Boolean" default="false"/>
+    <aura:attribute name="ShowCreateAccount" type="Boolean" default="false"/>
+	<aura:attribute name="ShowCategoryOther" type="Boolean" default="false"/>
+
+    <!-- ShowCategoryOther -->
+    <aura:attribute name="AccountT" type="String"/>
+
+
+	<!-- for the accordion -->
+	<aura:attribute name="ShowPage1" type="Boolean" default="true"/>
+	<aura:attribute name="ShowPage2" type="Boolean" default="false"/>
+	<aura:attribute name="ShowPage3" type="Boolean" default="false"/>
+	<aura:attribute name="ShowPage4" type="Boolean" default="false"/>
+
+	<aura:attribute name="emailOK" type="Boolean" default="false"/>
+	<aura:attribute name="termsOK" type="Boolean" default="false"/>
+
+	<aura:attribute name="emailLocked" type="Boolean" default="false"/>
+
+	<aura:attribute name="disableButtons" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+	<div class="slds">
+	<div class="slds-page-header">
+	  <div class="slds-grid">
+		<div class="slds-col slds-has-flexi-truncate">
+		  <p class="slds-text-heading--label">{!$Label.c.ISSP_Registration_RegistrationProcess}</p>
+
+		</div>
+	  </div>
+	</div>
+
+        <!-- /////////////////////////////////////////////// -->
+<!-- $Label.c.ISSP_Registration_step_1 '' -->
+        <!-- //////////////////////PAGE 1: Email/////////////////// -->
+        <!-- /////////////////////////////////////////////// -->
+
+
+		<div class="slds-grid slds-wrap ">
+			<div class="section">
+			<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+				<aura:if isTrue="{!v.Page == 1}">
+					<ui:outputText value="{!'&#9660;' + $Label.c.ISSP_Registration_step_1}"   aura:id="1" class="headerText"/><!-- click="{!c.hidePage}" -->
+					<aura:set attribute="else">
+						<ui:outputText value="{!'&#9654;' + $Label.c.ISSP_Registration_step_1}"  click="{!c.showPage}" aura:id="1" class="headerText"/>
+					</aura:set>
+				</aura:if>
+
+			</div>
+			<aura:if isTrue="{!v.Page == 1}">
+				<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+					<div class="">
+						<label class="slds-form-element__label" >{!v.contactLabels.Email}</label>
+						<ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input required-input" required="true" disabled="{!v.emailLocked}"/>
+					</div>
+					<ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" disabled="{!v.emailLocked}"/>
+					<a href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+                </div>
+
+
+	        </aura:if>
+			<!-- <ui:spinner aura:id="spinner"/> -->
+			</div>
+
+            <!-- /////////////////////////////////////////////// -->
+        	<!-- //////////////////////PAGE 2: Contact Info/////////////////// -->
+        	<!-- /////////////////////////////////////////////// -->
+			<div class="section">
+			<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+				<aura:if isTrue="{!v.Page == 2}">
+				<ui:outputText value="{!'&#9660;' + $Label.c.ISSP_Registration_step_2}"   aura:id="2"  class="headerText"/><!--click="{!c.hidePage}" -->
+				<!-- <a href="javascript:hidePage(2);" >&#9660;</a> -->
+				<aura:set attribute="else">
+					<ui:outputText value="{!'&#9654;' + $Label.c.ISSP_Registration_step_2}"  click="{!c.showPage}" aura:id="2"  class="{!v.ShowPage2 == true ? 'headerText':'headerText inactive' }"/>
+				</aura:set>
+			</aura:if>
+
+
+			</div>
+            <!-- <aura:if isTrue="{!v.ShowPage2}"> -->
+            <aura:if isTrue="{!v.Page == 2}">
+
+				<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+
+					<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+                		<label class="slds-form-element__label" >{!v.contactLabels.Salutation}</label>
+		                <ui:inputSelect aura:id="Salutation" class="slds-input required-input" required="true">
+		                        <ui:inputSelectOption text="Mr." label="{!$Label.c.ISSP_Registration_MR}"/>
+		                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.ISSP_Registration_MRS}"/>
+		                        <ui:inputSelectOption text="Ms." label="{!$Label.c.ISSP_Registration_MS}"/>
+		                        <ui:inputSelectOption text="Others" label="{!$Label.c.ISSP_Registration_Others}"/>
+		                </ui:inputSelect>
+					</div>
+
+				<div class="slds-grid slds-wrap ">
+					<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+						<label class="slds-form-element__label" >{!v.contactLabels.FirstName}</label>
+						<ui:inputText aura:id="firstName" value="{!v.contact.FirstName}" class="slds-input required-input" required="true"/>
+
+					</div>
+
+					<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+							<label class="slds-form-element__label" >{!v.contactLabels.LastName}</label>
+							<ui:inputText aura:id="lastName" value="{!v.contact.LastName}" class="slds-input required-input" required="true"/>
+					</div>
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+					<div class="">
+						<label class="slds-form-element__label" >{!v.contactLabels.Title}</label>
+						<ui:inputText aura:id="title" value="{!v.contact.Title}" class="slds-input required-input" required="true"/>
+					</div>
+				</div>
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+
+
+					<label class="slds-form-element__label" >{!v.contactLabels.Membership_Function__c}</label>
+					<ui:inputSelect multiple="true" class="multiple required" aura:id="membershipFunction">
+						<aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
+							<ui:inputSelectOption text="{!function}" label="{!function}" /><!-- value="true" -->
+						</aura:iteration>
+					</ui:inputSelect>
+
+				</div>
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+						<label class="slds-form-element__label" >{!v.contactLabels.Phone}</label>
+						<ui:inputText aura:id="contactPhone" value="{!v.contact.Phone}" class="slds-input required-input" required="true" keyup="{!c.validateContact}"/>
+				</div>
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+						<label class="slds-form-element__label" >{!v.contactLabels.MobilePhone}</label>
+						<ui:inputText value="{!v.contact.MobilePhone}" class="slds-input" />
+				</div>
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+						<label class="slds-form-element__label" >{!v.contactLabels.Fax}</label>
+						<ui:inputText value="{!v.contact.Fax}" class="slds-input" />
+				</div>
+
+			</div>
+
+
+			</div>
+
+            </aura:if>
+			</div>
+
+
+            <!-- /////////////////////////////////////////////// -->
+        	<!-- //////////////////////PAGE 3: Account Selection/////////////////// -->
+        	<!-- /////////////////////////////////////////////// -->
+			<div class="section">
+			<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+				<aura:if isTrue="{!v.Page == 3}">
+					<ui:outputText value="{!'&#9660;' + $Label.c.ISSP_Registration_step_3}"   aura:id="3"  class="headerText"/><!-- click="{!c.hidePage}" -->
+					<!-- <a href="javascript:hidePage(1);" >&#9660;</a> -->
+					<aura:set attribute="else">
+						<ui:outputText value="{!'&#9654;' + $Label.c.ISSP_Registration_step_3}"  click="{!c.showPage}" aura:id="3" class="{!v.ShowPage3 == true ? 'headerText':'headerText inactive' }"/>
+					</aura:set>
+				</aura:if>
+
+			</div>
+			<!-- <aura:if isTrue="{!v.ShowPage3}"> -->
+            <aura:if isTrue="{!v.Page == 3}">
+
+
+				<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+				<div class="">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!$Label.c.ISSP_Type_of_Customer}</label>
+						<ui:inputSelect aura:id="AccountType"  class="slds-input required-input" required="true" change="{!c.changeAccountType}">
+							<ui:inputSelectOption text="-Company type-"/>
+							<ui:inputSelectOption text="Airline"/>
+							<ui:inputSelectOption text="GSA"/>
+							<ui:inputSelectOption text="Agency"/>
+							<ui:inputSelectOption text="Other Company"/>
+							<ui:inputSelectOption text="General Public"/>
+						</ui:inputSelect>
+					</div>
+				</div>
+
+                <aura:if isTrue="{!v.isAirline1 == true}" >
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >{!$Label.c.ISSP_Designator_Code_Question}</label>
+							<ui:inputSelect aura:id="IataC1" class="slds-input" labelClass="slds-form-element__label"  required="true" change="{!c.IataCodeYesNo}">
+								<ui:inputSelectOption text=""/>
+								<ui:inputSelectOption text="Yes" label="{!$Label.c.ISSP_Yes}"/>
+								<ui:inputSelectOption text="No" label="{!$Label.c.ISSP_No}"/>
+							</ui:inputSelect>
+						</div>
+					</div>
+				</aura:if>
+
+                <aura:if isTrue="{!v.isAirline2 == true}">
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >{!$Label.c.ISSP_Designator_Code}</label>
+							<ui:inputText aura:id="DesCode" class="slds-input" value="{!v.DesCode}" required="true"/>
+						</div>
+					</div>
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >Iata Code</label>
+							<ui:inputText aura:id="IataCode" class="slds-input" value="{!v.IataCode}" required="true"/>
+						</div>
+					</div>
+				</aura:if>
+
+                <aura:if isTrue="{!v.isCargoTravel1 == true}">
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >{!$Label.c.ISSP_Select_Agency_Type}</label>
+							<ui:inputSelect aura:id="CargoTravel" class="slds-input required-input" required="true" change="{!c.CargoTravel}">
+								<ui:inputSelectOption text=""/>
+								<ui:inputSelectOption text="Cargo"/>
+								<ui:inputSelectOption text="Travel"/>
+							</ui:inputSelect>
+						</div>
+					</div>
+				</aura:if>
+
+
+                <aura:if isTrue="{!v.isCargoTravel2 == true}">
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >{!$Label.c.ISSP_IATA_Code_Question}</label>
+							<ui:inputSelect aura:id="IataCodeCT" class="slds-input required-input" required="true" change="{!c.IataCodeCargoTravel}">
+								<ui:inputSelectOption text=""/>
+								<ui:inputSelectOption text="Yes"/>
+								<ui:inputSelectOption text="No"/>
+							</ui:inputSelect>
+						</div>
+					</div>
+				</aura:if>
+
+
+                <aura:if isTrue="{!v.isIataCodeCT == true}">
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >Iata Code</label>
+							<ui:inputText aura:id="IataCodeCargotravel" value="{!v.IataCodeCargotravel}" class="slds-input required-input" required="true"/>
+						</div>
+					</div>
+				</aura:if>
+
+                <aura:if isTrue="{!v.showCountry == true}">
+					<div class="">
+						<div class="slds-form-element__control">
+							<label class="slds-form-element__label" >{!$Label.c.ISSP_CompanyLocation}</label>
+							<ui:inputSelect aura:id="countryName" value="{!v.account.BillingCountry}" class="slds-input required-input" required="true">
+								<aura:iteration items="{!v.countryOptions}" var="country" indexVar="index" >
+			                        <ui:inputSelectOption text="{!country}"/>
+								</aura:iteration>
+							</ui:inputSelect>
+						</div>
+					</div>
+				</aura:if>
+
+
+				<div class="">
+						<div class="slds-form-element__control">
+
+
+						</div>
+					</div>
+
+				<aura:if isTrue="{!v.showCompanyName == true}">
+                    <label class="slds-form-element__label" >{!$Label.c.ISSP_CompanyName}</label>
+					<ui:inputText aura:id="accountName" value="{!v.AccName}" class="slds-input required-input" required="true"/>
+				</aura:if>
+
+
+				<aura:if isTrue="{!v.ShowResults == true}">
+
+					<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+						<div class="">
+
+							<fieldset class="slds-form-element">
+							  <legend class="slds-form-element__legend slds-form-element__label">Select Account</legend>
+							  <aura:iteration items="{!v.Results}" var="account">
+								<div class="slds-form-element__control">
+								  <ui:inputRadio name="existingAccount" label="{!account.Name + ' ' + account.BillingStreet + ' ' + account.BillingCity + ' ' + account.BillingCountry + ' ' + account.RecordType.Name}" value="false" aura:id="selectedAccount"/>
+								</div>
+
+								</aura:iteration>
+
+							</fieldset>
+							<ui:button label="{!$Label.c.ISSP_Submit}" press="{!c.selectAccount}"/>
+						</div>
+					</div>
+
+	        	</aura:if>
+				<!-- <ui:spinner aura:id="spinner2"/> -->
+				<br />
+				<aura:unescapedHtml value="{!v.NoAccounts}"/>
+				<br />
+				<aura:if isTrue="{!v.ShowSearch == true}">
+					<ui:button label="{!$Label.c.ISSP_Search}" press="{!c.searchAccount}"/>
+	            </aura:if>
+				<aura:if isTrue="{!v.ShowCreateAccount == true}">
+					<ui:button label="{!$Label.c.ISSP_Create_New_Other_Account}" press="{!c.createAccount}"/>
+	            </aura:if>
+
+			</div>
+
+            </aura:if>
+		</div>
+
+            <!-- /////////////////////////////////////////////// -->
+            <!-- //////////////////////PAGE 4: Account creation/////////////////// -->
+            <!-- /////////////////////////////////////////////// -->
+			<div class="section">
+			<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+				<aura:if isTrue="{!v.Page == 4}">
+					<ui:outputText value="{!'&#9660;' + $Label.c.ISSP_Registration_step_4}"  aura:id="4"  class="headerText"/><!--  click="{!c.hidePage}" -->
+					<!-- <a href="javascript:hidePage(1);" >&#9660;</a> -->
+					<aura:set attribute="else">
+						<ui:outputText value="{!'&#9654;' + $Label.c.ISSP_Registration_step_4}"  click="{!c.showPage}" aura:id="4"  class="{!v.ShowPage4 == true ? 'headerText':'headerText inactive' }"/>
+					</aura:set>
+				</aura:if>
+
+			</div>
+			<!-- <aura:if isTrue="{!v.ShowPage4}"> -->
+            <aura:if isTrue="{!v.Page == 4}">
+
+				<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+
+                <h3 class="slds-section-title-divider">{!$Label.c.ISSP_CompanyName}</h3>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.Legal_name__c}</label>
+						<ui:inputText aura:id="legalName" value="{!v.account.Legal_name__c}" class="slds-input required-input" required="true"/>
+					</div>
+				</div>
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.Sector__c}</label>
+						<ui:inputSelect aura:id="Sector" class="slds-input required-input" required="true" change="{!c.getCategoryOptions}">
+		                    <aura:iteration items="{!v.sectorOptions}" var="sector" indexVar="index" >
+		                        <ui:inputSelectOption text="{!sector}"/>
+							</aura:iteration>
+		                </ui:inputSelect>
+					</div>
+				</div>
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.TradeName__c}</label>
+						<ui:inputText aura:id="tradeName" value="{!v.account.TradeName__c}" class="slds-input" />
+					</div>
+				</div>
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.Category__c}</label>
+						<ui:inputSelect aura:id="Category" class="slds-input required-input" required="true">
+		                    <aura:iteration items="{!v.categoryOptions}" var="category" indexVar="index" >
+		                        <ui:inputSelectOption text="{!category}"/>
+							</aura:iteration>
+		                </ui:inputSelect>
+					</div>
+				</div>
+
+                <aura:if isTrue="{!v.ShowCategoryOther == true}">
+                    <div class="slds-form-element slds-is-required">
+                        <div class="slds-form-element__control">
+                            <label class="slds-form-element__label" >{!v.accountLabels.Category_Other_Value__c}</label>
+                            <ui:inputText aura:id="categoryothervalue" value="{!v.account.Category_Other_Value__c}" class="slds-input required-input" required="true"/>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <h3 class="slds-section-title-divider">{!$Label.c.ISSP_CompanyAddressInformation}</h3>
+				{!$Label.c.ISSP_CopyBillingAddress}
+				<ui:inputCheckbox aura:id="copybil" change="{!c.copyBillingAddressToShipping}" />
+				<div class="slds-grid slds-wrap ">
+					<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 ">
+
+							<label class="slds-form-element__label" >{!v.accountLabels.BillingStreet}</label>
+							<ui:inputTextArea aura:id="billingStreet" value="{!v.account.BillingStreet}" class="slds-input required-input" required="true"/>
+
+							<label class="slds-form-element__label" >{!v.accountLabels.BillingCity}</label>
+							<ui:inputText aura:id="billingCity" value="{!v.account.BillingCity}" class="slds-input required-input" required="true"/>
+
+							<label class="slds-form-element__label" >{!v.accountLabels.BillingState}</label>
+							<ui:inputText aura:id="billingState" value="{!v.account.BillingState}" class="slds-input required-input" required="true"/>
+
+							<label class="slds-form-element__label" >{!v.accountLabels.BillingPostalCode}</label>
+							<ui:inputText aura:id="billingPostalCode" value="{!v.account.BillingPostalCode}" class="slds-input required-input" required="true"/>
+
+							<label class="slds-form-element__label" >{!v.accountLabels.BillingCountry}</label>
+							<ui:outputText value="{!v.account.BillingCountry}"/>
+					</div>
+
+
+				<div class="slds-col--padded slds-p-bottom--large slds-size--1-of-1 slds-medium-size--1-of-2 ">
+
+						<label class="slds-form-element__label" >{!v.accountLabels.ShippingStreet}</label>
+						<ui:inputTextArea aura:id="shippingStreet" value="{!v.account.ShippingStreet}" class="slds-input" required="true"/>
+
+						<label class="slds-form-element__label" >{!v.accountLabels.ShippingCity}</label>
+						<ui:inputText aura:id="shippingCity" value="{!v.account.ShippingCity}" class="slds-input" required="true"/>
+
+						<label class="slds-form-element__label" >{!v.accountLabels.ShippingState}</label>
+						<ui:inputText aura:id="shippingState" value="{!v.account.ShippingState}" class="slds-input" required="true"/>
+
+						<label class="slds-form-element__label" >{!v.accountLabels.ShippingPostalCode}</label>
+						<ui:inputText aura:id="shippingPostalCode" value="{!v.account.ShippingPostalCode}" class="slds-input" required="true"/>
+
+						<label class="slds-form-element__label" >{!v.accountLabels.ShippingCountry}</label>
+						<ui:outputText value="{!v.account.BillingCountry}"/>
+				</div>
+					</div>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!$Label.c.ISSP_Office_Phone}</label>
+						<ui:inputText aura:id="officePhone" value="{!v.account.Phone}" class="slds-input required-input" required="true"/>
+					</div>
+				</div>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!$Label.c.ISSP_Office_Mobile}</label>
+						<ui:inputText value="{!v.account.MobileNational__c}" class="slds-input"/>
+					</div>
+				</div>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!$Label.c.ISSP_Office_Fax}</label>
+						<ui:inputText value="{!v.account.Fax}" class="slds-input" required="true"/>
+					</div>
+				</div>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.Website}</label>
+						<ui:inputText value="{!v.account.Website}" class="slds-input" required="true"/>
+					</div>
+				</div>
+
+				<div class="slds-form-element slds-is-required">
+					<div class="slds-form-element__control">
+						<label class="slds-form-element__label" >{!v.accountLabels.Email__c}</label>
+						<ui:inputEmail value="{!v.account.Email__c}" class="slds-input" required="true"/>
+					</div>
+				</div>
+			</div>
+
+
+            </aura:if>
+			<ui:spinner aura:id="spinner"/>
+		</div>
+
+            <!-- //////////////////////////////////////////////// -->
+            <!-- //////////////////////RESULTS/////////////////// -->
+            <!-- //////////////////////////////////////////////// -->
+
+
+
+            <!-- //////////////////////////////////////////////////////////// -->
+            <!-- //////////////////////NO ACCOUNTS MESSAGE/////////////////// -->
+            <!-- //////////////////////////////////////////////////////////// -->
+
+
+
+        	<!-- //////////////////////////////////////////////// -->
+            <!-- //////////////////////BUTTONS/////////////////// -->
+            <!-- //////////////////////////////////////////////// -->
+
+
+		<div class="slds-p-horizontal--small slds-size--1-of-1 ">
+            <!-- <aura:if isTrue="{!v.Page != 1}">
+				<ui:button label="{!$Label.c.ISSP_Back}" press="{!c.back}"/>
+			</aura:if> -->
+			<!-- <aura:if isTrue="{!v.ShowSave == true}">
+				<ui:button label="{!$Label.c.ISSP_Next}" press="{!c.changepage}"/>
+			</aura:if> -->
+
+
+
+
+            <aura:if isTrue="{!v.ShowSubmit == true}">
+				<ui:button label="{!$Label.c.ISSP_Submit}" press="{!c.submit}" disabled="{!v.disableButtons}" class="submitButton"/>
+            </aura:if>
+		</div>
+
+
+
+
+
+    </div>
+
+    </div>
+
+</aura:component>

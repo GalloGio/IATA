@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This custom setting defines the list of user roles that are available for each connected app: to be used on the Identity Community</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>App_Picture_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>App Picture Url</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App_Provisioning_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App Provisioning Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Connected_App__c</fullName>
+        <externalId>false</externalId>
+        <label>Connected App SSO Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>PermissionSet_Provisioning__c</fullName>
+        <externalId>false</externalId>
+        <label>PermissionSet Provisioning</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Permission_set_SSO__c</fullName>
+        <externalId>false</externalId>
+        <label>PermissionSet SSO</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>isCommunity__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isCommunity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Connected App Roles</label>
+    <visibility>Public</visibility>
+</CustomObject>

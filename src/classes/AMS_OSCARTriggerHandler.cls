@@ -539,7 +539,11 @@ public class AMS_OSCARTriggerHandler {
 						}
 
 					}
-
+					system.debug(LoggingLevel.ERROR, 'LF: onlineAccreditations = '+onlineAccreditations);
+					system.debug(LoggingLevel.ERROR, 'LF: oscar.AMS_Online_Accreditation__c = '+oscar.AMS_Online_Accreditation__c);
+					system.debug(LoggingLevel.ERROR, 'LF: onlineAccreditations.get(oscar.AMS_Online_Accreditation__c) = '+onlineAccreditations.get(oscar.AMS_Online_Accreditation__c));
+					system.debug(LoggingLevel.ERROR, 'LF: onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__r = '+onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__c);
+					system.debug(LoggingLevel.ERROR, 'LF: onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__r.Due_diligence_mandatory__c = '+onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__r.Due_diligence_mandatory__c);
 					if (onlineAccreditations.get(oscar.AMS_Online_Accreditation__c).Branch_Office_Country__r.Due_diligence_mandatory__c && oscar.STEP17__c != AMS_Utils.NOT_APPLICABLE) {
 
 						if(accounts.get(oscar.Account__c).Due_Diligence_Status__c == AMS_Utils.IN_PROGRESS) oscar.STEP17__c = AMS_Utils.IN_PROGRESS;
