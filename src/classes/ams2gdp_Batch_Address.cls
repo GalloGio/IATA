@@ -20,7 +20,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 		//-- Fields used for Sync
 		String fields = ' Id, BillingStreet, BillingCity, BillingCountry, IATA_ISO_Country__c, BillingState, IATA_ISO_Billing_State__c, BillingPostalCode'
-			+	', ShippingStreet, ShippingCity, IATA_ISO_Shipping_Country__c, SHippingState, IATA_ISO_Shipping_State__c, ShippingPostalCode'
+			+	', ShippingStreet, ShippingCity, IATA_ISO_Shipping_Country__c, ShippingState,ShippingCountry, IATA_ISO_Shipping_State__c, ShippingPostalCode'
 			+	', Phone, Fax, IATA_ISO_Country__r.ISO_Code__c';
 
 		String idsCondition;
@@ -175,7 +175,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
    		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();	
 
-   		// Format AMS_Address to GDP_Phone
+   		// Format Account to GDP_Phone
 		List<GDP_Phone__c> phones_to_save = new List<GDP_Phone__c>(); 
 		try
 		{
@@ -189,7 +189,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 			errors.add(ams2gdp_Error.Exception2Error('Job 5: Phone', ex));
 		}
 
-		// Format AMS Address to GDP Address
+		// Format Account to GDP Address
 		List<GDP_Address__c> addresses_to_save = new List<GDP_Address__c>();
 		try
 		{

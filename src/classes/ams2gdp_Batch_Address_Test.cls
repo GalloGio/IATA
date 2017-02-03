@@ -6,23 +6,31 @@ private class ams2gdp_Batch_Address_Test
 	@testSetup static void loadData() 
 	{
 		// Generate Test Data
-		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(nb, true);
+		//List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(nb, true);
+		List<Account> accountslist = ams2gdp_TestDataGenerator.generateAccounts(nb, true);
+		system.debug('*aclist*'+accountslist);
 	}
 
 
 	@isTest static void positiveTest1BatchAddress() 
 	{
+
+		system.debug('*inside*');
 		Test.startTest();
  			Database.executeBatch(new ams2gdp_Batch_Address());
 		Test.stopTest();
-
+system.debug('*inside22*');
 		Set<String> addressIds = new Set<String>(); 
 		Set<String> phoneKeys = new Set<String>();
-		for(AMS_Address__c adr : [SELECT Id FROM AMS_Address__c])
+		//for(AMS_Address__c adr : [SELECT Id FROM AMS_Address__c])
+		for(Account accIds : [SELECT Id FROM Account])
 		{
-			addressIds.add(adr.Id+'GDP');
-			phoneKeys.add(adr.Id+'-P1GDP');
-			phoneKeys.add(adr.Id+'-P2GDP');
+
+			addressIds.add(accIds.Id+'LOCGDP');
+			addressIds.add(accIds.Id+'MAIGDP');
+			phoneKeys.add(accIds.Id+'-P1GDP');
+			phoneKeys.add(accIds.Id+'-FXGDP');
+			system.debug('***'+accIds.Id+'LOCGDP');
 
 		}
 
@@ -33,7 +41,9 @@ private class ams2gdp_Batch_Address_Test
 
 	@isTest static void positiveTest2BatchAddress() 
 	{
-		List<AMS_Address__c> addresses = [SELECT Id FROM AMS_Address__c]; 
+		//List<AMS_Address__c> addresses = [SELECT Id FROM AMS_Address__c]; 
+		List<Account> accountList = [SELECT Id FROM Account];
+		system.debug('*aclistinside*'+accountList);
 
 		upsert new AMS_GDP_Batch__c(
 			Batch_Name__c='Job 5: Address & Phone', 
@@ -41,7 +51,7 @@ private class ams2gdp_Batch_Address_Test
 			Last_Sync_End_Date__c=Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
-			Failed_Records__c = addresses[0].Id
+			Failed_Records__c = accountList[0].Id
 		) Batch_Name__c; 
 
 
