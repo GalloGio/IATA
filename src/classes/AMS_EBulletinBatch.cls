@@ -8,7 +8,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	global AMS_EBulletinBatch(String typeEBulletin) {
 		this.typeEBulletin = typeEBulletin;
 
-		//String fieldsToRecover  = 'id,Last_NotificationBatch_Run__c,User__r.email,RecordTypeId,Name,CountriesList__c,RecordType.Name,Area_1__c,ApplicationReadWriteMode_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c';
+		//String fieldsToRecover  = 'id,Last_NotificationBatch_Run__c,User__r.email,RecordTypeId,Name,CountriesList__c,RecordType.Name,Area_1__c,Area_2__c,Area_3__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c';
 		
 		//String filters = 'where recordType.name = :typeEBulletin and Opt_out_Bulletin__c = FALSE and Opt_in__c = TRUE ';
 
