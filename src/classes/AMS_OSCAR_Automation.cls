@@ -16,7 +16,7 @@ public with sharing class AMS_OSCAR_Automation {
                 if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA) oscar.Process_Start_Date__c = oscar.Change_effective_as_of__c;
                 else if(oscar.Process__c != AMS_Utils.VOLRELINQUISH) oscar.Process_Start_Date__c = Date.today();
                 oscar.Sanity_check_results__c = AMS_Utils.PASSED;
-            
+
                 res = True;
             }
 
