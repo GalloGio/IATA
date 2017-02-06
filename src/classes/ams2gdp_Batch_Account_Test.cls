@@ -130,4 +130,13 @@ private class ams2gdp_Batch_Account_Test
 		Test.stopTest();
 	}
 	
+	@isTest static void testAddressPhoneBatch()
+	{
+		Test.startTest(); 
+			ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false);
+				batch.throwException = true; 
+ 			Database.executeBatch(batch);
+		Test.stopTest();
+	}
+
 }

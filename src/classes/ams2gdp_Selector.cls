@@ -1,5 +1,57 @@
 public class ams2gdp_Selector 
 {
+	public static Map<String, String> getCountryNameById(Set<String> countryIds)
+	{
+		Map<String, String> result = new Map<String, String>();
+		if(countryIds.size() > 0)
+		{
+			for(IATA_ISO_Country__c isoCountry : [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Id IN :countryIds])
+			{
+				result.put(isoCountry.Id, isoCountry.Name);
+			}
+		}
+		return result;
+	}
+
+	public static Map<String, String> getCountryIdByName(Set<String> countryNames)
+	{
+		Map<String, String> result = new Map<String, String>();
+		if(countryNames.size() > 0)
+		{
+			for(IATA_ISO_Country__c isoCountry : [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name IN :countryNames])
+			{
+				result.put(isoCountry.Name, isoCountry.Id);
+			}
+		}
+		return result;
+	}
+
+	public static Map<String, String> getStateNameById(Set<String> stateIds)
+	{
+		Map<String, String> result = new Map<String, String>();
+		if(stateIds.size() > 0)
+		{
+			for(IATA_ISO_State__c isoState : [SELECT Id, Name FROM IATA_ISO_State__c WHERE Id IN :stateIds])
+			{
+				result.put(isoState.Id, isoState.Name);
+			}
+		}
+		return result;
+	}
+
+	public static Map<String, String> getStateIdByName(Set<String> stateNames)
+	{
+		Map<String, String> result = new Map<String, String>();
+		if(stateNames.size() > 0)
+		{
+			for(IATA_ISO_State__c isoState : [SELECT Id, Name FROM IATA_ISO_State__c WHERE Name IN :stateNames])
+			{
+				result.put(isoState.Name, isoState.Id);
+			}
+		}
+		return result;
+	}
+
 	public static Map<String, String> getGeoDetailsByCountry(Set<String> countryIds)
 	{
 		Map<String, String> result = new Map<String, String>(); 
@@ -194,44 +246,16 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-	/*public static Map<String,Id> getUserIdfromName(List<String> unames)
+	public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDefinitionAndTable(Set<String> definitions, String table, String sys)
 	{
-		Map<String,Id> result=new Map<String,Id>();
-
-		for(User u:[select Id from User where username in:unames])
-		{
-
-			result.put(u.name,u.Id);
-		}
-			return result;
-	}*/
-
-	/*public static Map<String,Agency_Owner__c> getAgencyInfo(List<String> externalIds)
-	{
-		Map<String,Agency_Owner__c> result = new Map<String,Agency_Owner__c>();
-		List<Agency_Owner__c> agencies=[select Id,AIMS_ID__c from Agency_Owner__c where AIMS_ID__c in :externalIds];
-
-		for(Agency_Owner__c ag:agencies)
-		{
-			result.put(ag.AIMS_ID__c,ag);
-		}
-
-		return result; 
-	}*/
-	/*public static Map<String, Map<String,GDP_Reference_Table__c>> getGDPReferenceTableByCodeandTable(Set<String> codes)
-	{
-		Map<String, Map<String,GDP_Reference_Table__c>> result = new Map<String,  Map<String,GDP_Reference_Table__c>>(); 
+		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>(); 
 		
-		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c FROM GDP_Reference_Table__c WHERE Code__c IN : codes])
-		{
-			Map<String,GDP_Reference_Table__c> tempMap= new Map<String,GDP_Reference_Table__c>();
-			tempMap.put(tbl.Code__c,tbl);
-			system.debug('****temp map*'+tempMap);
-			result.put(tbl.Table__c, tempMap);
-		}
+		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c FROM GDP_Reference_Table__c WHERE Definition__c IN : definitions AND Table__c = :table AND System__c = :sys])
+			result.put(tbl.Definition__c, tbl);
 		
 		return result;
-	}*/
+	}
+
 
 	public static Map<String,GDP_Reference_Table__c> getGDPReferenceTableByCodeandTable1(Set<String> codes)
 	{

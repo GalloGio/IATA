@@ -1,11 +1,6 @@
-trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
+trigger AccountTrigger on Account (before insert, after insert, after update, before update, after delete){
   //Delete GDS, Account Category & GDP Products When Account is deleted
-   if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
- 
-   if(Trigger.isBefore && Trigger.isDelete) 
-   {
-    system.debug('old..'+Trigger.old);
-    ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
+  if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
 
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
 
@@ -36,6 +31,14 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+    
   }
+
+  if(Trigger.isAfter && Trigger.isUpdate){
+    //E&F Account After Update - Handles account inactivation
+    EF_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+    //E&F Notification of fields identified as critical. List of fields set on custom setting.
+    EF_AccountTriggerHandler.manageCriticalFieldChanges(Trigger.new, Trigger.oldMap);
+  } 
 
 }

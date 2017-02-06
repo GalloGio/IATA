@@ -30,7 +30,6 @@ public with sharing class ISSP_PersonalInformation {
 
     public boolean isHOAccredited {get;set;}
     public boolean isTerminatedAgent {get; set;}
-    public boolean isTerminatedAgentBR {get; set;}
     private Id vHQAccountId;
     
 	//Global Variables
@@ -77,7 +76,6 @@ public with sharing class ISSP_PersonalInformation {
         bBlockTradeNameChangeBR = false;
         isIATAAgencyAcctBR = false;
         isTerminatedAgent = false;
-        isTerminatedAgentBR = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -319,8 +317,7 @@ public with sharing class ISSP_PersonalInformation {
 
         List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
-                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') 
-                                        //AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+                                      WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
                                               ORDER BY Name, IATACode__c
                                      ];
        
@@ -351,13 +348,11 @@ public with sharing class ISSP_PersonalInformation {
     }
     
     public void getBranchOffice() {
-        isTerminatedAgentBR = false;
-
-        List<Account> bo = [SELECT Id, Name, TradeName__c, IATACode__c, Phone, PhoneNational__c, Fax, FAXNational__c, Email__c,
+         List<Account> bo = [SELECT Id, Name, TradeName__c, IATACode__c, Phone, PhoneNational__c, Fax, FAXNational__c, Email__c,
         					IATA_ISO_Country__r.Name, BillingStreet, BillingCity, BillingPostalCode, BillingState, BillingCountry,Sector__c,
                             Category__c,Location_Type__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.OSCAR_enabled__c, 
                             IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c, IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
-                            Website, Status__c
+                            Website
         					FROM Account
                             WHERE Id = :selectedBranchAccount];
         
@@ -368,12 +363,7 @@ public with sharing class ISSP_PersonalInformation {
             bIsOSCARenabledBR = branchOffice.IATA_ISO_Country__r.OSCAR_enabled__c;
             bIsMinorChangeEnabledBR = branchOffice.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c;
             bBlockTradeNameChangeBR = branchOffice.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c;
-    
-            
-            if(branchOffice.Status__c == 'Terminated' || branchOffice.Status__c == 'Not accredited' 
-                    || branchOffice.Status__c == 'No longer a customer' || branchOffice.Status__c == 'New application pending')
-                isTerminatedAgentBR = true;
-        
+
             if (branchOffice.Sector__c=='Cargo Agent' || branchOffice.Sector__c=='Travel Agent')
                 isIATAAgencyAcctBR = true;
             

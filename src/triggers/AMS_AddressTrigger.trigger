@@ -1,14 +1,15 @@
-/**
-This trigger is in charge of setting the country state, according to the primary address one
-
-
-*/
+/**************************************************************************************************
+ *  This trigger is in charge of setting the country state, according to the primary address one  *
+ **************************************************************************************************/
 
 trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update, after delete) {
 
-    //Delete GDS, Account Category & GDP Products When Account is deleted
-  if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteGDPAddressAndPhones(Trigger.old);
+  //Clear the Account Address If the AMS_Address is deleted 
+  if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.clearAccountAddresses(Trigger.old);
 
+  if(Trigger.isAfter && Trigger.isUpdate) ams2gdp_TriggerHelper.updateAccountAddresses(Trigger.oldMap, Trigger.newMap);
+
+  if(Trigger.isAfter && Trigger.isInsert) ams2gdp_TriggerHelper.updateAccountAddresses(null, Trigger.newMap);
          
     /*
     Map<String,AMS_Address__c > addressMapPerAgency = new Map<String,AMS_Address__c > ();

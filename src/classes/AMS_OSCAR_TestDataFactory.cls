@@ -87,7 +87,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		insert accountList;
         
-		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'Not started', Account__c = a1.id, Process__c = AMS_Utils.new_HO,Change_effective_as_of__c = Date.today());
+		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Process__c = AMS_Utils.new_HO,Change_effective_as_of__c = Date.today());
 		insert OSCAR;
 
 		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
@@ -115,12 +115,6 @@ public with sharing class AMS_OSCAR_TestDataFactory
         oscarCase.AccountId = a1.Id;
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
-
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c );
-        insert stagingArea;
-
-        OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
-        update OSCAR;
 
 
         //create oscar history custom setting

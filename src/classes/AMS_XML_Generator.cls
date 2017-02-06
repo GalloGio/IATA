@@ -758,7 +758,7 @@ public with sharing class AMS_XML_Generator {
         lAgAppChangeCode = [SELECT Account__c,Change_Code__c,CreatedDate,Id,Created_Date_To_Show__c FROM Agency_Applied_Change_code__c 
                                 where Change_Code__c = 'FIN'
                                 and Account__c in :setAgencyKeys
-                                order by Account__c,Created_Date_To_Show__c desc];
+                                order by Account__c,CreatedDate desc];
 
         for(Agency_Applied_Change_code__c agAppChangeCode : lAgAppChangeCode){
             if(!mAg_VS_AgChangeCodeFIN.containsKey(agAppChangeCode.Account__c)){
@@ -770,7 +770,7 @@ public with sharing class AMS_XML_Generator {
         lAgAppChangeCodeDEF = [SELECT Account__c,Change_Code__c,CreatedDate,Id,Created_Date_To_Show__c FROM Agency_Applied_Change_code__c 
                                 where Change_Code__c = 'DEF'
                                 and Account__c in :setAgencyKeys
-                                order by Account__c,Created_Date_To_Show__c desc];
+                                order by Account__c,CreatedDate desc];
 
         for(Agency_Applied_Change_code__c agAppChangeCode : lAgAppChangeCodeDEF){
             if(!mAg_VS_AgChangeCodeDEF.containsKey(agAppChangeCode.Account__c)){

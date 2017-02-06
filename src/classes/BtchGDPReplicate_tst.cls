@@ -144,13 +144,13 @@ private class BtchGDPReplicate_tst {
 		oGDP_Address1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOC';
 		oGDP_Address1.WebStar_ID__c = null;
 		oGDP_Address1.Address_Type__c = 'Location';
-		//sObjList.add(oGDP_Address1);
+		sObjList.add(oGDP_Address1);
 
 		GDP_Address__c oGDP_Address2 = IECTestUtil.CreateSampleGDPAddress(oAccount2);
 		oGDP_Address2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAI';
 		oGDP_Address2.AIMS_ID__c = null;
 		oGDP_Address2.Address_Type__c = 'Mailing';
-		//sObjList.add(oGDP_Address2);
+		sObjList.add(oGDP_Address2);
 
 		GDP_Agency_Profile_Specialization__c oGDP_Agency_Profile_Specialization1 = IECTestUtil.CreateSampleGDPAgencyProfileSpecialization(oAccount1);
 		oGDP_Agency_Profile_Specialization1.AIMS_ID__c = oAccount1.AIMS_ID__c + '1';
@@ -235,11 +235,13 @@ private class BtchGDPReplicate_tst {
 		GDP_Address__c oGDP_Address1_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount1, oGDPAccount1, 'GDP');
 		oGDP_Address1_GDP.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOCGDP';
 		oGDP_Address1_GDP.WebStar_ID__c = null;
+		oGDP_Address1_GDP.Address_Type__c = 'Location';
 		sObjList.add(oGDP_Address1_GDP);
 
 		GDP_Address__c oGDP_Address2_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount2, oGDPAccount2, 'GDP');
-		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'LOCGDP';
+		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAIGDP';
 		oGDP_Address2_GDP.AIMS_ID__c = null;
+		oGDP_Address2_GDP.Address_Type__c = 'Mailing';
 		sObjList.add(oGDP_Address2_GDP);
 
 		GDP_Phone__c oGDP_Phone1_GDP = IECTestUtil.CreateSampleGDPPhone(oAccount1, oGDPAccount1, 'GDP');
@@ -254,6 +256,7 @@ private class BtchGDPReplicate_tst {
 		
 		
 		sObjList.sort();
+		SYstem.debug('sObjList::'+sObjList);
 		insert sObjList;
 		
 		// set static variable for testing the territory
