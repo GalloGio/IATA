@@ -91,13 +91,10 @@
 
         function oscarAttachments()
         {
-            var redirectUrl =  "/apex/AMS_OSCAR_Attachment_List?id={!relatedCase.parent.OSCAR__c}";
+            var redirectUrl = "/apex/AMS_OSCAR_Attachment_List?id={!relatedCase.parent.OSCAR__c}";
+            
+            redirect(redirectUrl);
 
-            if (typeof(srcUp) == 'function') {
-                srcUp(redirectUrl); 
-            }else{
-                window.open(redirectUrl); 
-            }
         }
 
     </script>
@@ -109,7 +106,7 @@
                 <apex:outputPanel rendered="{!NOT(isPortal)}">
                     <c:UploadMultipleFileToAmazonButton sObjectId="{!sObjectId}" AmazonCredential="{!credentialName}" path="{!amazonPath}" uploaderWizard="{!uploader}" sourceSystem="{!source}"/>
                     <apex:commandButton value="{!$Label.Transfer_Attachments}" onclick="redirect('{!TransferAttachmentsUrl}');" immediate="true" />
-                    <apex:commandButton value="{!$Label.Oscar_Attachments}" onclick="oscarAttachments();return false;" immediate="true" />
+                    <apex:commandButton value="{!$Label.Oscar_Attachments}" onclick="oscarAttachments();return false;" />
                     <apex:commandButton value="{!$Label.Make_All_Public}" action="{!makeAllPublic}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList();" />
                     <apex:commandButton value="{!$Label.Make_All_Private}" action="{!makeAllPrivate}" onclick="startLoading();" rerender="mainform" oncomplete="refreshList()" />
                     <apex:commandButton value="Download All Files" action="{!makeAllPrivate}" onclick="downloadZIP(); return false;" />
