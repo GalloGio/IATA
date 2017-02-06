@@ -6,6 +6,10 @@ public without sharing class  ISSP_First_Login{
    	private User u {get;set;}
 	public string ids = '';
 
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
 	public ISSP_First_Login(){
            
    // u = new User();        
@@ -89,7 +93,7 @@ public without sharing class  ISSP_First_Login{
     private PageReference changePassword(){
 		system.debug('CHANGING PASS');
         //updateUsers(ids);
-        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword'): Page.ISSP_ChangePassword;
+        Pagereference pr =  !test.isRunningTest() ? site.login(userName,passWord,'/ISSP_ChangePassword{!if(communityName=='CNS','?CommunityName='+communityName,'')}'): Page.ISSP_ChangePassword;
         pr.setRedirect(true);
         return pr;   
          
