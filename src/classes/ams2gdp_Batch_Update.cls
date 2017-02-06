@@ -32,7 +32,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         }
         else if(job == 'updateGDPPhone')
         {
-            query = 'SELECT AMS_GDP_Key__c, Related_Account__r.Id RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Phone_Type__c,  Related_GDP_Products_Account_View__c FROM GDP_Phone__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
+            query = 'SELECT AMS_GDP_Key__c, Related_Account__r.Id, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Phone_Type__c,  Related_GDP_Products_Account_View__c FROM GDP_Phone__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
         }
         else if(job == 'updateGDPAddress')
         {

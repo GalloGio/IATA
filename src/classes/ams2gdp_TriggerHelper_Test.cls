@@ -187,7 +187,7 @@ private class ams2gdp_TriggerHelper_Test
 		insert gdp_products;
 
 	//Generate AMS Address 
-		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(2, false);
+		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(1, false);
 			//addresses[0].Account__c = accounts[0].Id;
 			//addresses[1].Account__c = accounts[1].Id;
 			//ams_Affiliations[2].Account__c = accounts[1].Id;

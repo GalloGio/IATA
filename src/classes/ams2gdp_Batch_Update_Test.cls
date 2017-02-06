@@ -201,6 +201,7 @@ private class ams2gdp_Batch_Update_Test {
 			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
 			, RecordTypeID = airportRecordTypes.get('GDP')
 		));
+		insert adjacentAirports;
  
 	}
 	
