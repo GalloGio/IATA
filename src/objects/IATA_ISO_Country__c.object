@@ -2398,6 +2398,33 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
             <group>DDS_team</group>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>new_dpcs</fullName>
+        <columns>NAME</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Country_Manager__c</columns>
+        <columns>AIMS_Area_Name__c</columns>
+        <columns>Case_BSP_Country__c</columns>
+        <columns>AIMS_Area_ID__c</columns>
+        <columns>SLA_Type__c</columns>
+        <columns>Sanctioned_Country__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ISO_Code__c</field>
+            <operation>equals</operation>
+            <value>WF,PW,MH,MP</value>
+        </filters>
+        <label>new dpcs</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>Account_management_team</group>
+            <group>IDFSAllusersexcludingIWandACCA</group>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>ISO Country Name</label>
         <trackHistory>true</trackHistory>

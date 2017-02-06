@@ -156,7 +156,9 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>IATA ISO States</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>ISO_Code__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

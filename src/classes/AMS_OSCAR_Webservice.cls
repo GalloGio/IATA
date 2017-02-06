@@ -44,13 +44,9 @@ global class AMS_OSCAR_Webservice {
                                         updatedValue = updatedValue.replace(',','');
                                         oscar[0].put(fieldsToUpdateKey[i], Double.valueOf(updatedValue));
                                 }
-                            else if(fldDisplayType == Schema.DisplayType.BOOLEAN)
-                                oscar[0].put(fieldsToUpdateKey[i], Boolean.valueOf(updatedValue));
-                            else if(fldDisplayType == Schema.DisplayType.INTEGER)
-                                oscar[0].put(fieldsToUpdateKey[i], Integer.valueOf(updatedValue));
-                            else if(fldDisplayType == Schema.DisplayType.DATE){
-                                oscar[0].put(fieldsToUpdateKey[i], Date.parse(updatedValue));
-                            }
+                            else if(fldDisplayType == Schema.DisplayType.DATE)      oscar[0].put(fieldsToUpdateKey[i], Date.parse(updatedValue));
+                            else if(fldDisplayType == Schema.DisplayType.INTEGER)   oscar[0].put(fieldsToUpdateKey[i], Integer.valueOf(updatedValue));
+                            else if(fldDisplayType == Schema.DisplayType.BOOLEAN)   oscar[0].put(fieldsToUpdateKey[i], Boolean.valueOf(updatedValue));
                             else //default will try to update field with String value
                                 oscar[0].put(fieldsToUpdateKey[i], String.valueOf(updatedValue));
                         }
@@ -126,12 +122,14 @@ global class AMS_OSCAR_Webservice {
                     return 'ERROR: ' + result;
                 }
 
-                Case oscarCommCase = [select Id,Reason1__c from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [select Id,Reason1__c from Case where OSCAR__c =: oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
-                if(oscarCommCase == null){
+                if(cases == null || cases.isEmpty()){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
+
+                Case oscarCommCase = cases[0];
 
                 Date currentDate = Date.today();
                 Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = oscarCommCase.Reason1__c + ' - ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
@@ -178,18 +176,19 @@ global class AMS_OSCAR_Webservice {
 
             ID InternalCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Internal Cases (IDFS ISS)');
 
-            Case oscarCommCase = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-                        
-            if(oscarCommCase == null){
+            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c from Case where OSCAR__c =: oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+
+            if(cases == null || cases.isEmpty()){
                 result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                 return 'ERROR: ' + result;
             }
+
+            Case oscarCommCase = cases[0];
 
             Case issCase = new Case(RecordTypeId = InternalCaseRecordTypeID, CaseArea__c = 'Corporate Compliance',
                                 Reason1__c = (oscar.Process__c == AMS_Utils.AGENCYCHANGES ? 'Agent Change of Ownership' : 'New Accredited Agent'),
                                 ParentId = oscarCommCase.Id, AccountId = oscar.Account__c, Subject = 'Due Diligence – ' + oscarCommCase.OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c,
                                 OSCAR__c = oscar.Id, Region__c = oscar.Region__c, BSPCountry__c = oscarCommCase.OSCAR__r.Account__r.IATA_ISO_Country__r.Name);
-
 
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -221,10 +220,8 @@ global class AMS_OSCAR_Webservice {
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
         }catch (Exception ex) {
-            if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser'))
-                return Label.AMS_Duplicate_Username;
-            else
-                return ex.getMessage();
+            if (ex.getMessage().contains('ISSP_ContactUpdaetPortalUser')) return Label.AMS_Duplicate_Username;
+            else return ex.getMessage();
         }
     }
 
@@ -263,12 +260,14 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
-                if(oscarCommCase == null){
+                if(cases == null || cases.isEmpty()){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
+
+                Case oscarCommCase = cases[0];
 
                 Case sidraCase = new Case();
                 sidraCase.RecordTypeId = sidraLiteRecType;
@@ -340,12 +339,14 @@ global class AMS_OSCAR_Webservice {
                 }
                 */
 
-                Case oscarCommCase = [select Id from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [select Id from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
-                if(oscarCommCase == null){
+                if(cases == null || cases.isEmpty()){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
+
+                Case oscarCommCase = cases[0];
 
                 Case newCase = new Case(RecordTypeId = commisionerCaseRecType, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'Late/Absence NOC – ' + oscar[0].Account__r.Name, OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name, Reason1__c = 'Commissioner Review', Visible_on_ISS_Portal__c = false);
 
@@ -379,12 +380,14 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Category__c from AMS_OSCAR__c where Id =: oscarId];
             if(oscar!=null && oscar.size()>0){
 
-                Case oscarCommCase = [select Id, ContactId from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [select Id, ContactId from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
-                if(oscarCommCase == null){
+                if(cases == null || cases.isEmpty()){
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
+
+                Case oscarCommCase = cases[0];
 
                 Case newCase = new Case(RecordTypeId = fsReleaseRT, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c, Subject = 'FS Release', OSCAR__c = oscar[0].Id, Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c, Reason1__c = 'Financial Security Release', CaseArea__c = 'Risk Management Process', Origin = 'Email', Priority = 'Normal', Type_of_customer__c = oscar[0].Account__r.Category__c, BSPCountry__c = oscar[0].Account__r.IATA_ISO_Country__r.Name, ContactId = oscarCommCase.ContactId);
 

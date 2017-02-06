@@ -518,7 +518,7 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateCaseOSCAR_CaseAlreadyExists() {
+    public static void testCreateCaseOSCAR_NotOSCARRecord() {
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         insert oscarCase;
 
@@ -535,27 +535,13 @@ public class WSSidraLiteTest {
     }
 
     @isTest
-    public static void testCreateCaseOSCAR_ChangeDisaprovalNotAuthorized() {
-        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
-        insert oscarCase;
-
-        Test.startTest();
-        try {
-            WSSidraLite.createCase(oscarCase.Id);
-            System.assert(false,'No exception thrown for SIDRA Lite case when there is no OSCAR case');
-        } catch (Exception e) {
-            System.assert(true);
-        }
-        Test.stopTest();
-    }
-
-    @isTest
     public static void testCreateCaseOSCAR_NoReason() {
         AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
         oscarCase.OSCAR__c = oscar.Id;
+        oscarCase.Reason1__c = '';
         insert oscarCase;
 
         Test.startTest();
@@ -588,21 +574,156 @@ public class WSSidraLiteTest {
         Test.stopTest();
     }
 
+    private static list<String> OSCARValidReasons = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS);
+
     @isTest
-    public static void testCreateCaseOSCAR_OK() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
+    public static void testCreateCaseOSCAR_NoOSCARReason() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c(
+            Step6__c = '',
+            Step9__c = '',
+            Step11__c = '',
+            Step12__c = '',
+            Step14__c = '',
+            RPM_Approval__c = '');
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
-        oscarCase.Reason1__c = 'CHO / CHS – Change of Ownership / Legal Status';
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
 
         Test.startTest();
+        try {
+            WSSidraLite.createCase(oscarCase.Id);
+            System.assert(false,'No exception thrown for SIDRA Lite case when there is no OSCAR case');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK1() {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c='BR');
+
+        insert country;
+
+        Account acct = new Account(
+            Name = 'Test account',
+            BillingCity = 'Montreal',
+            BillingCountry = 'Canada',
+            BillingStreet = 'some street',
+            IATA_ISO_Country__c = country.Id,
+            Location_Type__c = 'HO',
+            IATACode__c = '1234567',
+            Type = 'IATA Passenger Sales Agent'
+        );
+        insert acct;
+        
+        AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c = acct.Id);
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step6__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
         WSSidraLite.createCase(oscarCase.Id);
         Test.stopTest();
+    }
 
-        System.assert(oscarCase.Id!=null, 'Sidra Lite case for SMAP parent case was not created');
+    @isTest
+    public static void testCreateCaseOSCAR_OK2() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step9__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.createCase(oscarCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK3() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step11__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.createCase(oscarCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK4() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step12__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.createCase(oscarCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK5() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.Step14__c = 'Failed';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.createCase(oscarCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateCaseOSCAR_OK6() {
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        insert oscar;
+
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        oscarCase.Reason1__c = OSCARValidReasons.get(0);
+        oscarCase.OSCAR__c = oscar.Id;
+        insert oscarCase;
+
+        oscar.RPM_Approval__c = 'Authorize Disapproval';
+        update oscar;
+
+        Test.startTest();
+        WSSidraLite.createCase(oscarCase.Id);
+        Test.stopTest();
     }
 
     @isTest

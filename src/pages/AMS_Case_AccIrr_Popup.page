@@ -1,11 +1,7 @@
-<apex:page standardController="Case">
-
-  <script type="text/javascript">
-  	if('{!Case.IRR_Approval_Rejection_Date__c}'!=''){
-      if(({!case.Account.Accumulated_Irregularities__c}>={!case.Acc_IRR_leading_to_DEF__c}) && ({!(NOW() - Case.IRR_Approval_Rejection_Date__c)*24*60})<2){
-         window.alert('Please note that agent and all its associated locations should be now placed under Technical Default'); 
-      }
-    }
-  </script> 
-  
+<apex:page standardController="Case" extensions="AMS_Case_Popup_ctrl">
+	<script type="text/javascript">
+		if('{!sMsgToDisplay}' != ''){
+			window.alert('{!sMsgToDisplay}');
+		}
+	</script> 
 </apex:page>

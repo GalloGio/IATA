@@ -185,6 +185,11 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //Agency changes configuration settings
         List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
         customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
@@ -225,6 +230,12 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                            TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false,
                            TC_Major_Shareholding__c = true, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
                            TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
+                           TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false,
+                           TC_Minor_Shareholding__c = false, TC_Name__c = true, TC_Ownership_to_IATA_Agent__c = false,
+                           TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
 
         insert customsettings;
 
@@ -1861,12 +1872,129 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         System.assertEquals(HO1.Id, con.mainAccount.Id);
         System.assertEquals(HO1.Id, con.oscar.Account__c);
-        System.assertEquals(7,con.hierarchyValues.size());
         System.assertEquals('Change of ownership to IATA will move all the agencies selected under the target agency', con.noteList[0]);
+
+        System.assertEquals(1, con.totalPages);
+        System.assertEquals(0, con.currentPage);
+        System.assertEquals(7,con.hierarchyValues.size());
+        System.assertEquals(7,con.hierarchyValuesForDisplay[0].size());
 
         System.assert(con.editable);
         System.assert(con.showTopPanel);
         System.assert(con.showTargetAgency);
+        System.assert(con.getDisableNext());
+        System.assert(con.getDisablePrevious());
+        System.assert(!con.showLocationTypeBehavior);
+        System.assert(!con.oscarFieldList.isEmpty());
+
+        oscar.Type_of_change__c = null;
+        System.assert(!con.showTargetAgency);
+
+        oscar.Type_of_change__c = AMS_Utils.LOCATION_TYPE;
+        System.assert(con.showLocationTypeBehavior);
+
+        oscar.Type_of_change__c = AMS_Utils.OWNERSHIP_IATA;
+
+        con.hierarchyValues[2].main = true;
+
+        //emulate js
+        con.hierarchyValues[0].selected  = true;
+        con.hierarchyValues[0].main = false;
+        // /emulate js
+
+        con.selectMain();
+        System.assertNotEquals(HO1.Id, con.oscar.Account__c);
+
+        con.save();
+        System.assert(!con.closeTab);
+        
+        con.oscar.AMS_Target_Agency__c = HO2.Id;
+        con.selectAll = true;
+        con.doSelectAll(); //simulates page actionSupport
+        System.assert(!con.isPartialHierarchy(con.hierarchyValues[2]));
+        
+        con.save();
+
+        con.beginning();
+        con.previous();
+        con.next();
+        con.end();
+
+        Test.stopTest();
+    }
+
+     @isTest static void testManagerApprovalOnMixChange() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location;Name', null, null);
+
+        Test.startTest();
+
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+
+        Test.stopTest();
+
+    }
+
+    @isTest static void testManagerApprovalOnLocation() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location', null, null);
+
+        Test.startTest();
+
+        oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        update oscar;
+
+        Test.stopTest();
+
+    }
+
+     @isTest static void testSanityCheckOnMixChange() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, 'Location;Name', null, null);
+
+        Test.startTest();
+
+        oscar.STEP6__c = AMS_Utils.PASSED;
+        update oscar;
+
+        Test.stopTest();
+
+    }
+    
+    @isTest static void accountHierarchySelectionPageVMFR() {
+
+        getUpdatedAccountData();
+
+        AMS_OSCAR__c oscar = createOSCAR(HO1, AMS_Utils.VFMR, null, null);
+
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = BR1.Id,  RecordTypeId = rtAgencyInvolved));
+        pds.add(new AMS_Process_Detail__c(Oscar__c = oscar.Id, Account__c = SA4.Id,  RecordTypeId = rtAgencyInvolved));
+
+        insert pds;
+
+        PageReference pg = Page.AMS_AccountHierarchySelection;
+        pg.getParameters().put('Id', oscar.Id);
+
+        Test.startTest();
+
+        AMS_AccountHierarchySelectionController con = new AMS_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+
+        System.assertEquals(HO1.Id, con.mainAccount.Id);
+        System.assertEquals(HO1.Id, con.oscar.Account__c);
+        System.assertEquals(7,con.hierarchyValues.size());
+        System.assertEquals('Change of remittance frequency must be applied to all the hierarchy (except for branches abroad)', con.noteList[0]);
+
+        System.assert(con.editable);
+        System.assert(con.showTopPanel);
+        System.assert(!con.showTargetAgency);
         System.assert(!con.showLocationTypeBehavior);
         System.assert(!con.oscarFieldList.isEmpty());
 
@@ -1888,7 +2016,6 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         con.doSelectAll(); //simulates page actionSupport
         System.assert(!con.isPartialHierarchy(con.hierarchyValues[2]));
         
-        con.save();
 
         Test.stopTest();
     }

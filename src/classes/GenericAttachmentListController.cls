@@ -231,4 +231,28 @@ global with sharing class GenericAttachmentListController {
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
     }
+
+    /**
+        download files from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getFilesFromAmazon(String objectId) {
+
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.name;
+            filedef.url = getExpiringLink(attach.fullName);
+            filedef.data = '';
+            listFileDef.add(filedef);
+        }
+        system.debug('aqui listFileDef ' + listFileDef);
+        return listFileDef;
+    }
+
+        global class FileDef {
+        String name;
+        String url;
+        String data;
+    }
 }

@@ -8,7 +8,7 @@
             padding: 0 30px;*/
         }
         .intl-tel-input{
-
+           
         }
     </style>
 
@@ -317,4 +317,8 @@
             </apex:variable>
         </div>
     </nav>
+
+<!-- Pardot tracking -->
+<apex:includeScript value="{!$Resource.IEC_Pardot_Track_Page}" loadOnReady="false" />
+
 </apex:component>
