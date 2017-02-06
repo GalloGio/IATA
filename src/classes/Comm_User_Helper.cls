@@ -153,7 +153,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
         
-        if(community == ISSP){
+        if(community == ISSP || community == 'CNS'){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -178,7 +178,7 @@ global without sharing class Comm_User_Helper {
                     template = 'ISSP_New_Member_Welcome_Email_CNS'; 
                   }
                 Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, Community);
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
                 permissionASS(new list<Id>{userId});
             }
         
