@@ -65,10 +65,15 @@ global class CongaManager {
 
         // send email
         url += '&ds7=2'; //returns automatically to send mail SF page
-        url += '&EmailTemplateId=' + emailTemplateId;
+        if (emailTemplateId!=null) {
+            url += '&EmailTemplateId=' + emailTemplateId;
+        }
         url += '&EmailFromID=' + OrgWideDefaultsId;
         url += '&EmailToId=' + contactId;
         url += '&EmailRelatedToId=' + emailRelatedCaseId;
+        url += '&SC0=1';
+        url += '&SC1=Attachments';
+
         if (listQueries!=null && !listQueries.isEmpty()) {
             url += '&QueryId=' + String.join(listQueries,',');
         }
@@ -88,6 +93,8 @@ global class CongaManager {
         pageref.getParameters().put('EmailFromID', OrgWideDefaultsId);
         pageref.getParameters().put('EmailToId', contactId);
         pageref.getParameters().put('EmailRelatedToId', emailRelatedCaseId);
+        pageref.getParameters().put('SC0', '1');
+        pageref.getParameters().put('SC1', 'Attachments');
         String url = pageref.getURL();
         if (listQueries!=null && !listQueries.isEmpty()) {
             url += '&QueryId=' + String.join(listQueries,',');

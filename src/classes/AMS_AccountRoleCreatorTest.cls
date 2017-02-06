@@ -789,4 +789,37 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         Test.stopTest();
     }
+
+    @isTest static void test_utilsMethods(){
+
+        Test.startTest();
+
+        AMS_AccountRoleCreator.OwnerFieldsEntity ofe1 = new AMS_AccountRoleCreator.OwnerFieldsEntity('TestUser','100');
+        AMS_AccountRoleCreator.OwnerFieldsEntity ofe2 = new AMS_AccountRoleCreator.OwnerFieldsEntity();
+
+        ofe1.decodeFromCSV('test,100');
+
+        AMS_AccountRoleCreator.OwnerFieldsEntity ofe3 = new AMS_AccountRoleCreator.OwnerFieldsEntity('TestUser2','90');
+
+        ofe1.compareTo(ofe3);
+
+        List<Contact> contacts = [SELECT id from Contact];
+
+        List<Id> contactIds = new List<Id>();
+
+        For(Contact c: contacts)
+            contactIDs.add(c.Id);
+
+        AMS_AccountRoleCreator.removeFromList(contactIDs,contacts.get(0).Id);
+
+        List<AMS_Accreditation_Contact__c> acontacts = [SELECT id, Person_AMS__c, Contact__c,Person_AMS__r.Contact__c from AMS_Accreditation_Contact__c];
+
+        AMS_AccountRoleCreator.getNoPersonNorContactLing(acontacts);
+
+        AMS_AccountRoleCreator.getContactLinking(acontacts);
+
+
+        Test.stopTest();
+
+    }
 }

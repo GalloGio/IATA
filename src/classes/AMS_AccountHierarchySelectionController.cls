@@ -389,7 +389,8 @@ public class AMS_AccountHierarchySelectionController {
 			ownershipAgenciesNotSelected = false;
 		}
 
-		if(oscar.AMS_Target_Agency__c != null && (tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION))) errorChecks.put(AMS_Utils.LOCATION, true);
+		if(oscar.AMS_Target_Agency__c != null && ((tocList.contains(AMS_Utils.LOCATION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))  || (tocList.contains(AMS_Utils.LOCATION_INSPECTION) && !(tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)))))
+			errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchyValues){
 			
@@ -430,6 +431,20 @@ public class AMS_AccountHierarchySelectionController {
 			}
 			
 		}
+
+		//Second check for VMFR. If only BR abroad are selected, the system should allow to save
+		if(tocList.contains(AMS_Utils.VFMR)){
+			boolean onlyBRabroadAreSelected = true;
+			for(HierarchyItem hi : hierarchyValues){
+				if((hi.selected || hi.main) && hi.acc.Is_Branch_Abroad__c!='Yes'){
+					onlyBRabroadAreSelected = false;
+					break;
+				}
+			}
+			if(onlyBRabroadAreSelected)
+				errorChecks.remove(AMS_Utils.VFMR);
+		}
+
 
 		if(tocList.contains(AMS_Utils.OWNERSHIP_IATA) && !errorChecks.containsKey(AMS_Utils.OWNERSHIP_IATA)){
 			if(oscar.AMS_Target_Agency__c == null) errorChecks.put(AMS_Utils.OWNERSHIP_IATA, true);
