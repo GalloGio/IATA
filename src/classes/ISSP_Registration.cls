@@ -1179,6 +1179,22 @@ public without sharing class ISSP_Registration {
         }
     }
 
+    
+    public static void sendCNSEmail(string userId , string contactId){
+        EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS']; //niv.g
+        //EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'IATAPortalWelcomeEmailTemplateVF'];
+        if(et != null){
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setTemplateId(et.Id);
+            mail.setTargetObjectId(userId);
+            mail.setSaveAsActivity(false);
+            mail.setReplyTo('noreply@cnsc.net'); //its valid email id
+            mail.setSenderDisplayName('CNS Portal ');
+            Messaging.sendEmail(
+            new Messaging.SingleEmailMessage[]{mail});
+        }
+    }
+
     public PageReference selectType(){
     	showcreateother = false;
         onegpa = false;

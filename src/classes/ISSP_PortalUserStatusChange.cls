@@ -252,7 +252,12 @@ public with sharing class ISSP_PortalUserStatusChange {
             User user = [select Id from User where ContactId =:contactId];
             ISSP_Registration.password =  ISSP_Registration.generatePassword();
             system.setPassword(user.Id, ISSP_Registration.password);
+            if(CommunityName=='CNS'){
+                ISSP_Registration.sendCNSEmail(user.Id,contactId);
+                }else{
             ISSP_Registration.sendEmail(user.Id,contactId);
+            }
+            
         }catch(Exception e){        
            
         } 
@@ -329,7 +334,7 @@ public with sharing class ISSP_PortalUserStatusChange {
      }
     public static void createNewUser(Id userProfile,string contactId){
         system.debug('\n\n\n contactId'+contactId+'\n\n\n');
-        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation from Contact where Id =:contactId];
+        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation, Community__c from Contact where Id =:contactId];
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.EmailHeader.triggerUserEmail = false; 
         dmo.EmailHeader.triggerOtherEmail = false; 
@@ -358,10 +363,16 @@ public with sharing class ISSP_PortalUserStatusChange {
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
-            String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?{!if(communityName=='CNS','&CommunityName='+communityName,'')}&c='+encodedPart ;
+
+            String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
             String template = 'ISSP_New_Member_Welcome_Email_2';
-            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link);
-            Comm_User_Helper.sendEmail( template ,emailWrap, con);
+            if(con.Community__c=='CNS'){
+                link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
+                template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+            }
+
+            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
+            Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
             Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
             
             //ISSP_Registration.password =  ISSP_Registration.generatePassword();
