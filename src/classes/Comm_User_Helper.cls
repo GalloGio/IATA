@@ -169,10 +169,16 @@ global without sharing class Comm_User_Helper {
             if (userId != null) {
             
                 string encodedPart = EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
+                String template ='';
+                if(community== ISSP){
                 link = Site.getBaseUrl()+ '/ISSP_First_Login?c='+encodedPart;
-                String template = 'ISSP_New_Member_Welcome_Email_2';
-                Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link);
-                Comm_User_Helper.sendEmail( template ,emailWrap, con);
+                    template = 'ISSP_New_Member_Welcome_Email_2'; 
+                  }else if(community == 'CNS'){
+                    link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&c='+encodedPart;
+                    template = 'ISSP_New_Member_Welcome_Email_CNS'; 
+                  }
+                Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, Community);
                 permissionASS(new list<Id>{userId});
             }
         
@@ -199,7 +205,7 @@ global without sharing class Comm_User_Helper {
             //TO ask Tiago why not for the ISSP? 
             if (userId != null) {
                 permissionASS(new list<Id>{userId});
-                Comm_User_Helper.sendEmail( 'IEC_Portal_New_User_Login_Information_English_Text' , Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link),  con);
+                Comm_User_Helper.sendEmail( 'IEC_Portal_New_User_Login_Information_English_Text' , Comm_User_Helper.IEC_builMessageWrapper( con ,  password ,  link),  con, community);
             }
 
     
@@ -246,7 +252,10 @@ global without sharing class Comm_User_Helper {
     }
 
 
-    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link){
+    public static  Map<String, String> ISSP_PassWordBuilMessageWrapper(contact con , string password , string link, String commName){
+      String portalName = 'IATA';
+      if(commName =='CNS'){portalName='CNS';}
+
         Map<String, String> mapBodyParamsIssp = new map<String,String>{
 
             '{!Contact.Salutation}' => con.Salutation,
@@ -254,7 +263,7 @@ global without sharing class Comm_User_Helper {
             '{!Receiving_User.FirstName}' =>con.Firstname,
             '{!Receiving_User.LastName}' => con.LastName,
             '{!Receiving_User.Email}' => con.Email,
-            '{!Community_Name}' => 'IATA Customer Portal',
+            '{!Community_Name}' => portalName + ' Customer Portal',
             '{!Community_Url}' => link, 
             '{!$Label.ISSP_Email_Here}' => 'here',
             '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply
@@ -266,9 +275,9 @@ global without sharing class Comm_User_Helper {
 
     }
     
-    public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con){
+    public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, String commName){
        try{ 
-        sendEmail( emailTemplateDeveloperName , mapBodyParamsIssp, con, false);
+        sendEmail( emailTemplateDeveloperName , mapBodyParamsIssp, con, false, commName);
         
         
                } catch (exception ex) {
@@ -278,14 +287,17 @@ global without sharing class Comm_User_Helper {
         }
     }
 
-    public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, Boolean bccCS){
+    public static void sendEmail( string emailTemplateDeveloperName , Map<String, String> mapBodyParamsIssp, Contact con, Boolean bccCS, String commName){
         try{
 
         EmailMessageWrapper ew;
+        String noreplyemail= 'noreply@iata.org';
+        if(commName=='CNS'){ noreplyemail ='noreply@cnsc.us'; }
+
         if (bccCS){
             String bccEmail = UserInfo.getUserEmail();
             system.debug('bccEmail: ' + bccEmail);
-            ew = new EmailMessageWrapper( 'noreply@iata.org',
+            ew = new EmailMessageWrapper( noreplyemail,
                                             con.Email,
                                             null,
                                             bccEmail,
@@ -297,7 +309,7 @@ global without sharing class Comm_User_Helper {
         }
         else{
             
-            ew = new EmailMessageWrapper( 'noreply@iata.org',
+            ew = new EmailMessageWrapper( noreplyemail,
                                             con.Email,
                                             null,
                                             null,
@@ -499,11 +511,16 @@ global without sharing class Comm_User_Helper {
                   string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) : Site.getBaseUrl();
                   link = prefix + '/ISSP_First_Login?'+encodedPart;
                   template = 'Communities_Forgot_Password_Email3';
-                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link);
+                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
+              }else if(Community == 'CNS'){
+                  string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) : Site.getBaseUrl();
+                  link = prefix + '/ISSP_First_Login?CommunityName=CNS&'+encodedPart;
+                  template = 'Communities_Forgot_Password_Email3_CNS';
+                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');
               }
                
 
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS);
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS, community);
 
            
             return true;
