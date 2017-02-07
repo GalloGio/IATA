@@ -1,7 +1,7 @@
 <apex:page controller="ISSP_Registration" showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
     
   <head>
-    <title>IATA</title>
+    <title>{!CASE(communityName, 'CNS', 'CNS', 'IATA')}</title>
  </head>
  
   <apex:outputPanel rendered="{!displayNewCaseForm}" >
