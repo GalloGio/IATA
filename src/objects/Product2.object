@@ -3906,6 +3906,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Russian</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -4428,6 +4432,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Display_to_ECommerce__c</columns>
         <columns>Effective_To__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -7976,6 +7981,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
             <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>English</fullName>
                 <default>false</default>
             </values>
@@ -10963,6 +10972,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
             <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>English</fullName>
                 <default>false</default>
             </values>
@@ -13877,6 +13890,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>
