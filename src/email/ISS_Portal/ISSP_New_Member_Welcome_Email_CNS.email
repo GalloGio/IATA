@@ -25,7 +25,7 @@ width:90%;
 <table width="640px">
 <tr>
 <td colspan="3">
-  <img src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006Nu9&oid=00D7E0000000mLr&lastMod=1434447102000"/>
+  <img src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006IOw&oid=00D7E0000000mLr"/> 
   </td>
   </tr>
 <tr>
@@ -38,7 +38,7 @@ width:90%;
 <tr>
 
 <td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
-  <b>CNS Customer Portal</b>
+  <b>{!Community_Name}</b>
 </td>
 </tr>
 <tr>
@@ -93,7 +93,11 @@ CNS Customer Service
     </p>
   </td>
     </tr>
-       
+    <tr>
+    <td colspan="3">
+  <img src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006Q88&oid=00D7E0000000mLr" /> 
+      </td>
+    </tr>    
     
 
 </table>

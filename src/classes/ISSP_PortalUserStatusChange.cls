@@ -366,7 +366,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 
             String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
             String template = 'ISSP_New_Member_Welcome_Email_2';
-            if(con.Community__c=='CNS'){
+            if(con.Community__c.contains('CNS')){
                 link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
                 template = 'ISSP_New_Member_Welcome_Email_2_CNS';
             }
