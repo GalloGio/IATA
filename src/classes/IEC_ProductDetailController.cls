@@ -78,6 +78,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	// Boolean to determine whether to show the price on the rateplans or not
 	public boolean bShowPrice {get; set;}
 	
+	public String selectedTopic{get;set;}
+	public String selectedTopicLabel{get;set;}
 	
 
 	public IEC_ProductDetailController() 
@@ -134,6 +136,30 @@ public class IEC_ProductDetailController  extends IEC_PageController
 
 				charges = IECProductManager.getZuoraRatePlanChargesByRatePlanIDs(planIds);
 				iColWidth = (subProducts.size() > 0) ? 100/subProducts.size() : 100;
+
+				//*** get category
+				selectedCategory = new SelectOption('', '');
+				for(SelectOption so : categories)
+					if (so.getValue() == ecomProduct.megaMenu)
+					{
+						selectedCategory = so;
+						break;
+					}
+
+				//*** get topic
+				selectedTopic = [select Display_Ecom_Topic__c from Product2 where Id = :ecomProduct.ProductId limit 1][0].Display_Ecom_Topic__c;
+				selectedTopicLabel = '';
+				if (!String.isBlank(selectedTopic))
+				{
+					selectedTopic = selectedTopic.split(';')[0];   //*** take the first topic if contains multiple
+					if (subCategories.containsKey(selectedCategory.getValue()))
+						for (SelectOption so : subCategories.get(selectedCategory.getValue()))
+							if (so.getValue() == selectedTopic)
+							{
+								selectedTopicLabel = so.getLabel();
+								break;
+							}
+				}
 			}
 			else
 			{
@@ -148,6 +174,10 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bTryButtonShow = pc.Trial_available_for_this_Product__c;
 			sBannerImage = pc.Banner_Image__c;
 			sProductIcon = pc.Product_Icon__c;
+			sProductIcon = 'imgbloc5.png';   //*** default - GSS image
+			Map<String,String> mapCategory_ImageName = Utility.buildMapFromString(Utility.getTextSetting('GDP Category-Image'), ',', '=');
+			if (mapCategory_ImageName.containsKey(pc.Name))
+				sProductIcon = mapCategory_ImageName.get(pc.Name);
 			
 			bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
 			sDisplayName = pc.Display_Name__c;
