@@ -139,7 +139,7 @@ public  class ISSP_TC_Accept {
                 }
                 else if (userList[0].UID__c != '' && userList[0].UID__c != null){
                     //PageReference pr = new PageReference('/ISSP_ChangePasswordRedirect');
-                    PageReference pr = new PageReference('/ISSP_ChangePassword');
+                    PageReference pr = new PageReference('/ISSP_ChangePassword' + commParam);
                     system.debug('REDIRECTING TO CHANGE PASSWORD');
                     pr.setRedirect(true);
                     return pr;
@@ -163,7 +163,7 @@ public  class ISSP_TC_Accept {
                 userList[0].Date_ToU_accepted__c = system.now();
                 update userList;
             }
-            PageReference pr = new PageReference('/ISSP_Homepage');
+            PageReference pr = new PageReference('/ISSP_Homepage' + commParam);
             pr.setRedirect(true);
             return pr;
         }
@@ -210,7 +210,7 @@ public  class ISSP_TC_Accept {
             }
         }else{
             ShowModal = false ;
-            Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage');
+            Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}');
             p.setRedirect(true);
             return p;
         }
