@@ -210,7 +210,10 @@ public  class ISSP_TC_Accept {
             }
         }else{
             ShowModal = false ;
-            Pagereference p =  new PageReference('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}');
+            String BaseURL = URL.getSalesforceBaseUrl().toExternalForm();
+            String redirectURL = '/secur/logout.jsp?retUrl=' + BaseURL + '/ISSP_Login';
+            if(CommunityName != null && CommunityName != '') redirectURL +='?CommunityName='+CommunityName;
+            Pagereference p =  new PageReference(redirectURL);
             p.setRedirect(true);
             return p;
         }
