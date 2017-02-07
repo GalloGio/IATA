@@ -1338,13 +1338,13 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Accreditation_Contact__c> allTrainedStaff = new List<AMS_Accreditation_Contact__c>(  [SELECT Id, Type_Of_Certificate__c, Valid_until__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c
 																									FROM AMS_Accreditation_Contact__c
 																									WHERE AMS_Pax_Accreditation_Form__c IN :onlineAccreditations
-																									AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT AND Valid_until__c > TODAY]);
-
+																									AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT /*AND Valid_until__c > TODAY*/]);
+		Id tsAccount = null;
 		for(AMS_Accreditation_Contact__c trainedStaff :allTrainedStaff){
 
 			System.debug('OSCARTriggerHandler -> validateCertificates: Found trained staff ' + trainedStaff);
 
-			Id tsAccount = trainedStaff.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c;
+			tsAccount = trainedStaff.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c;
 
 			if(!trainedStaffPerAccount.containsKey(tsAccount))
 				trainedStaffPerAccount.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
@@ -1399,7 +1399,23 @@ public class AMS_OSCARTriggerHandler {
 						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
 				}else{
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+					//RB: Here We will select only the DGR trained staff, which must have a Valid until date
+					Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
+					List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
+					
+					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+
+					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
+						if(trainedStaffToRemove.Type_Of_Certificate__c == 'DGR' && trainedStaffToRemove.Valid_until__c != null){
+							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+						}
+					}
+
+					system.debug('Trained staff to remove: '+ trainedStaffDGR);
+					system.debug('All Trained staff: '+ allTrainedStaff);
+
+					checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
 
 			}
