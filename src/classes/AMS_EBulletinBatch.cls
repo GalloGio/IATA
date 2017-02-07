@@ -24,7 +24,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		
 		List<Network> myCommunity = new List<Network>([SELECT Id FROM Network WHERE Name = 'IATA Portal']);
 
-		if(myCommunity.size() > 0) this.networkComponent = Network.getLoginUrl(myCommunity[0].id).substringBeforeLast('/') + '/ISSP_AMS_EBulletin';
+		if(myCommunity.size() > 0) this.networkComponent = Network.getLoginUrl(myCommunity[0].id).substringBeforeLast('/') + '/ISSP_Login?retURL=ISSP_AMS_EBulletin';
     
 		System.debug(networkComponent);
 
@@ -116,12 +116,13 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 	private Messaging.SingleEmailMessage setEmailContents(AMS_eBulletin_Profile__c eBprof)
 	{
 
-		//TODO Create an Email template
+		// Create an Email template
 		//
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     	mail.setToAddresses(new List<String>{eBprof.User__r.email});
     	
-        mail.setSenderDisplayName('IATA Customer Service');
+    	mail.setReplyTo(ENV.Reply_Email);
+		mail.setOrgWideEmailAddressId(PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email));
 
 	    String bodyHTML = emailTemplate.HtmlValue;
         String bodyText = emailTemplate.Body;
