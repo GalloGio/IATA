@@ -170,14 +170,15 @@ global without sharing class Comm_User_Helper {
             
                 string encodedPart = EncodingUtil.urlEncode(EncryptString(cleanUsername+SEPARATOR+password+SEPARATOR+UID), 'UTF-8');
                 String template ='';
+                Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
                 if(community== ISSP){
                 link = Site.getBaseUrl()+ '/ISSP_First_Login?c='+encodedPart;
                     template = 'ISSP_New_Member_Welcome_Email_2'; 
                   }else if(community == 'CNS'){
                     link = Site.getBaseUrl()+ '/ISSP_First_Login?communityName=CNS&c='+encodedPart;
-                    template = 'ISSP_New_Member_Welcome_Email_CNS'; 
+                    template = 'ISSP_New_Member_Welcome_Email_2_CNS'; 
+                    emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');                   
                   }
-                Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, community);
                 permissionASS(new list<Id>{userId});
             }

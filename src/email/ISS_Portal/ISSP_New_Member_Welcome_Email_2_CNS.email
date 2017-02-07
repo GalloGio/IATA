@@ -25,8 +25,7 @@ width:90%;
 <table width="640px">
 <tr>
 <td colspan="3">
-CNS HEADER
-  <!-- <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/> -->
+<img src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006IOw&oid=00D7E0000000mLr"/> 
   </td>
   </tr>
 <tr>
@@ -39,7 +38,7 @@ CNS HEADER
 <tr>
 
 <td colspan="3" style="font-size:26px;color:#0A4279;text-align:center;">     
-  <b>CNS Customer Portal</b>
+  <b>{!Community_Name}</b>
 </td>
 </tr>
 <tr>
@@ -94,28 +93,14 @@ CNS Customer Service
     </p>
   </td>
     </tr>
-
-        <tr>
-    <p>
-    <td style="text-align:left">
-cns image footer
-  <!--  <a href="http://www.iata.org/customer-portal/Pages/index.aspx">
-<img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000"/> -->
-    </p>
-      </td>
-    </tr>
-
+       
     <BR />
-
     
     <tr>
     <td colspan="3">
-cns footer
-   <!-- <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000" /> -->
+  <img src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006Q88&oid=00D7E0000000mLr" /> 
       </td>
-    </tr>
-
-    
+    </tr>    
     
 
 </table>
