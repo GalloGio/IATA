@@ -93,7 +93,11 @@
         {
             var redirectUrl = "/apex/AMS_OSCAR_Attachment_List?id={!relatedCase.parent.OSCAR__c}";
             
-            redirect(redirectUrl);
+            if (sforce.console.isInConsole()) {
+                ServiceConsoleIntegration(redirectUrl);
+            } else {
+                window.top.location=redirectUrl;
+            }
 
         }
 
