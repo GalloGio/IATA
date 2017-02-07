@@ -15,8 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<title>CNS</title>
-	<link rel="icon" type="image/png" href="http://www.cnsc.net/Style%20Library/cnsc-v1/Core/Images/Logos/CNSClogo.png"/>
-	<link rel="shortcut icon" href="http://www.cnsc.net/Style%20Library/cnsc-v1/Core/Images/Logos/CNSClogo.png"/>
+	<link rel="icon" type="image/png" href="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}"/>
+	<link rel="shortcut icon" href="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}"/>
 
 	<link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
     <!-- Latest compiled and minified CSS -->
