@@ -139,7 +139,7 @@ public class AMS_ChangeCodesHelper {
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
         
         
-        Map<Id,List<AMS_Agency_A_Change_code_History__c>> aaccHistoryToProcess = new Map<Id,List<AMS_Agency_A_Change_code_History__c>>();
+        List<ChangeCodeStruct> aaccHistoryToProcess = new List <ChangeCodeStruct> ();
         ObjectChangesStruct objectChangesByChangeCode = null;
         
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
@@ -158,18 +158,17 @@ public class AMS_ChangeCodesHelper {
 
             aaccToInsert.add(changeCodeResult.changeCode);
             
+            aaccHistoryToProcess.add(changeCodeResult);
+            
             System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
-            if (!changeCodeResult.changeCodeFielsHistory.isEmpty() && changeCodeResult.acct != null)
-                aaccHistoryToProcess.put(changeCodeResult.acct.Id,changeCodeResult.changeCodeFielsHistory);
-
-            if (changeCodeResult.acct != null && !accountsToUpdate.contains(changeCodeResult.acct))
+            
+            if (!accountsToUpdate.contains(changeCodeResult.acct))
                 accountsToUpdate.add(changeCodeResult.acct);
 
             index++;
-
         }
 
-            List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
+        List<Account> accountsToUpdateList = new List<Account>(accountsToUpdate);
 
         if (!accountsToUpdate.isEmpty() && (!Trigger.isExecuting || isToUpdateAccounts)) {
             System.debug('The list of Accounts to update is ' + accountsToUpdate.size());
@@ -188,20 +187,29 @@ public class AMS_ChangeCodesHelper {
         // Add the IDs of the Change Codes after they are inserted
 
         List<AMS_Agency_A_Change_code_History__c> aaccHistoryToInsert = new List<AMS_Agency_A_Change_code_History__c>();
+
         if(!aaccHistoryToProcess.isEmpty()){
 
             System.debug('## aaccToInsert: '+ aaccToInsert);
             System.debug('## aaccHistoryToProcess: '+ aaccHistoryToProcess);
-            for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
 
-                if (aaccHistoryToProcess.containsKey(aaccCreated.Account__c)){
-                    for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(aaccCreated.Account__c)){
+            index = 0;
 
-                        aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
+            for(ChangeCodeStruct ccStruct : aaccHistoryToProcess)
+            {
+
+                if(!ccStruct.changeCodeFielsHistory.isEmpty())
+                {
+                    for(AMS_Agency_A_Change_code_History__c aaccHist : ccStruct.changeCodeFielsHistory)
+                    {
+                        aaccHist.Agency_Applied_Change_Code__c = aaccToInsert.get(index).Id;
                         aaccHistoryToInsert.add(aaccHist);
-                    }
+                    }   
                 }
+
+                index++;
             }
+       
         }
 
         if (!aaccHistoryToInsert.isEmpty()) {
@@ -229,7 +237,6 @@ public class AMS_ChangeCodesHelper {
 
     private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
 
-        Account toReturn = null;
 
         Id oscarId = null;
 
@@ -243,7 +250,7 @@ public class AMS_ChangeCodesHelper {
             , Account__c = oscarAgency.Id
             , Change_Code__c = changeCode.name
             , OSCAR__c = oscarId
-            , Bulletin_Information__c = changeCode.memoText
+            , Bulletin_Information__c = (changeCode.memoText == null) ? '' : changeCode.memoText.toUpperCase()
             , Reason_Code__c = changeCode.reasonCode
             , Reason_Description__c = changeCode.reasonDesc
             , Source__c = source
@@ -296,7 +303,6 @@ public class AMS_ChangeCodesHelper {
         if (newVal <> oscarAgency.Status__c && newVal != null) {
 
             oscarAgency.Status__c = newVal;
-            toReturn = oscarAgency; 
         }
 
         //Save current account status in the change code
@@ -321,7 +327,6 @@ public class AMS_ChangeCodesHelper {
 
             if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
-                toReturn = oscarAgency;
             }
                    
 
@@ -330,7 +335,6 @@ public class AMS_ChangeCodesHelper {
       if(aacNew.Change_Code__c == 'CER'){
             oscarAgency.Annual_Renewal_Certificates__c = true;
             oscarAgency.Certificate_Generated_Current_Year__c = true;
-            toReturn = oscarAgency;
         }        
 
         if( aacNEW.Change_Code__c == 'FIN'){
@@ -338,23 +342,19 @@ public class AMS_ChangeCodesHelper {
             oscarAgency.Is_AIMS_Account__c = true;
 
             oscarAgency.Accreditation_Date__c = Date.Today();            
-
-            toReturn = oscarAgency;
         }
 
         if( aacNEW.Change_Code__c == 'CLO' ){
             
             oscarAgency.Expiry_Date__c = Date.Today();            
-            toReturn = oscarAgency;
         }
 
         if( aacNEW.Change_Code__c == 'REI' ){
             
             oscarAgency.Expiry_Date__c = null;            
-            toReturn = oscarAgency;
         }
         
-        return new ChangeCodeStruct(aacNEW, toReturn,changeCodeFielsHistory);
+        return new ChangeCodeStruct(aacNEW, oscarAgency,changeCodeFielsHistory);
     }
 
 
