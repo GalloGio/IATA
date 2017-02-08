@@ -375,6 +375,28 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>IDFS_ACCA_ADM_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IDFS ACCA ADM Team</label>
+        <sharedTo>
+            <group>IDFSACCAADMTeam</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>IDFS_All_users_including_ACCA</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>IDFS All users including ACCA</label>
+        <sharedTo>
+            <group>IDFSAllusersincludingACCA</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>IDFSACCACSTeam</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>MACSDirectSalesAll</fullName>
         <accessLevel>Edit</accessLevel>
         <label>MACS Direct Sales - All</label>

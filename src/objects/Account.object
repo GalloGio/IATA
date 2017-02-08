@@ -8171,6 +8171,7 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Has a Financial Assessment Contact under this hierarchy</inlineHelpText>
         <label>Has a FA Contact (under hierarchy)</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8181,6 +8182,7 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <inlineHelpText>Has a Financial Assessment Contact in this account</inlineHelpText>
         <label>Has a FA Contact (This account)</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8198,6 +8200,7 @@ WSPN-Worldspan</inlineHelpText>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Has an Admin User Portal under hierarchy</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8207,6 +8210,7 @@ WSPN-Worldspan</inlineHelpText>
         <description>Search in all related contacts and if any of them is an Admin User portal this value is checked</description>
         <externalId>false</externalId>
         <label>Has an Admin User Portal (This account)</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
