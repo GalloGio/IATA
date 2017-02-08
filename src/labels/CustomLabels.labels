@@ -16289,6 +16289,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>noreply@iata.org</value>
     </labels>
     <labels>
+        <fullName>ISSP_Sender_Email_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Sender Email CNS</shortDescription>
+        <value>noreply@cnsc.us</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>

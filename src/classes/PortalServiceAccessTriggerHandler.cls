@@ -15,6 +15,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
     System.debug('zZzZ Start SendEmailToPortalAdminToValidateRequest ==>'+ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
         ID templateId = getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
     System.debug('zZzZ templateId==>'+templateId);
+        ID templateID_CNS = getEmailTemplateIdByName (ENV.EmailTemplateData.NotifyAdminOfAppRequestVF_CNS);
         if(String.isBlank(templateId)) {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminOfAppRequestVF + ' not found');   
             return;
@@ -37,6 +38,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
     System.debug('zZzZ ENV.Reply_Email==>'+ENV.Reply_Email);
         ID standartReplyUserID = getStandartReplyUserID(ENV.Reply_Email);
     System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
+        ID standardReplyUserID_CNS = getStandartReplyUserID(ENV.Reply_Email_CNS);
         list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
     System.debug('zZzZ par==>'+par);
@@ -51,15 +53,27 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 if(null == portalAdminUserIDs) continue;
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
+                    if(par.Conctact_is_CNS__c){
+                        emailMsg.setTemplateId(templateId_CNS);
+                    }else{
                     emailMsg.setTemplateId(templateId);
+                    } 
                     emailMsg.setTargetObjectId(userId);
                     emailMsg.saveAsActivity = false;
                     
-                    if(null != standartReplyUserID)
-                        emailMsg.setOrgWideEmailAddressId(standartReplyUserID);
+                    if(!par.Conctact_is_CNS__c){
+                        if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
                     else {
                         emailMsg.setReplyTo(ENV.Reply_Email);
                         emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                    }
+
+                    }else{
+                         if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
+                        else {
+                            emailMsg.setReplyTo(ENV.Reply_Email_CNS);
+                            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject_CNS);
+                        }
                     }
                     emailMsg.setWhatId(par.ID); 
                     msgList.add(emailMsg);
