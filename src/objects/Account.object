@@ -77397,7 +77397,7 @@ Source_System__c  &lt;&gt; &apos;AIMS&apos;
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
         <active>true</active>
         <description>Conditions to fit when an account becomes a MITA or BIETA member</description>
-        <errorConditionFormula>AND(
+        <errorConditionFormula>AND(OR(ISCHANGED(MITA_Member__c), ISCHANGED(BIETA_Member__c)),
   OR(
     MITA_Member__c,
     BIETA_Member__c
