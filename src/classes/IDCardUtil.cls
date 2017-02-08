@@ -1043,7 +1043,7 @@ global with sharing class IDCardUtil {
             idCard.Title__c = (objApp.Title__c!=null && objApp.Title__c.length() <= 5) ? objApp.Title__c : '';            
             idcard.VER_Number__c = objApp.VER_Number__c;
             //set sync to true
-            idCard.MustSyncWithAIMS__c = true;
+            //idCard.MustSyncWithAIMS__c = true;
             
             if(IdCardAIMSrt==null)
                 IdCardAIMSrt = [SELECT ID FROM RecordType WHERE DeveloperName = 'AIMS'][0].Id;
@@ -1776,7 +1776,7 @@ global with sharing class IDCardUtil {
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             idCards[0].Cancellation_Date__c = Date.Today(); 
-                            idCards[0].MustSyncWithAIMS__c = true;                            
+                            //fidCards[0].MustSyncWithAIMS__c = true;                            
                             update idcards[0];
                         }
                     } 
