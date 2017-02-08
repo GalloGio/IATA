@@ -20,6 +20,7 @@ public with sharing class IEC_ProductListController extends IEC_PageController
     //Page parameters
     public Map<String, String> pageParams;
     public String selectedTopic{get;set;}
+    public String selectedTopicLabel{get;set;}
     public String selectedCustomerType{get;set;}
 
     //Products available
@@ -111,6 +112,13 @@ public with sharing class IEC_ProductListController extends IEC_PageController
         if(pageParams.containsKey('topic')){
             selectedTopic = pageParams.get('topic');
             searchCondition += ' AND Display_Ecom_Topic__c INCLUDES(\''+selectedTopic+'\') ';
+            if (subCategories.containsKey(selected_category))
+                for (SelectOption so : subCategories.get(selected_category))
+                    if (so.getValue() == selectedTopic)
+                    {
+                        selectedTopicLabel = so.getLabel();
+                        break;
+                    }
         }
 
         if(pageParams.containsKey('customer_type')){

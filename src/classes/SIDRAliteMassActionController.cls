@@ -1,6 +1,7 @@
 public with sharing class SIDRAliteMassActionController {
 
     public static final Integer MIN_CASES_FOR_BATCH =11;
+    public static final Integer MAX_SEARCH_ELEMENTS =900;
     public Integer getMinCasesForBatch(){ return MIN_CASES_FOR_BATCH;}
 
     public static final Schema.RecordTypeInfo RECORDTYPE_SIDRA_LITE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite');
@@ -119,7 +120,7 @@ public with sharing class SIDRAliteMassActionController {
             + ' RecordtypeId, Reason1__c, Decision__c, Suspension_Date__c, Bank_Guarantee_deadline__c, SAAM_Deadline_Date__c, Key_Customer_Case__c,'
             + ' BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c, Bank_Guarantee_received__c,Has_the_agent_paid_invoice__c, isClosed,'
             + ' Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c, Comments__c,'
-            + ' OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,'
+            + ' OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step14__c,'
             + ' (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,'
             + '     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,'
             + '     FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,'
@@ -177,17 +178,9 @@ public with sharing class SIDRAliteMassActionController {
         returns the Result
     **/
     private list<Case> executeQuery(String query) {
-        query += ' limit 1001';
+        query += ' limit ' + (MAX_SEARCH_ELEMENTS + 1);
         list<Case> listCase = (list<Case>)Database.query(query);
         //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,query));
-        //list<String> listCaseNumbers = new list<String>();
-        //for (Case cse : listCase) {
-        //    listCaseNumbers.add(cse.CaseNumber);
-        //}
-        //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,'Result ' + listCaseNumbers));
-        //if (listCase.size() == 1000) {
-        //    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,'Results were cut down, try to add more filters'));
-        //}
         return listCase;
     }
 
@@ -195,10 +188,10 @@ public with sharing class SIDRAliteMassActionController {
         Filter the list to a maximum number
     **/
     private void addWrapper(WrapperCase wrapper) {
-        if (this.listWrapperCase.size()<1000) {
+        if (this.listWrapperCase.size()<MAX_SEARCH_ELEMENTS) {
             this.listWrapperCase.add(wrapper);
         } else {
-            throw new SIDRAliteMassActionException('Your search criteria result exceeds the limit of number of records (1,000). Try to apply more filters to reduce the number of records or process your request in multiple sessions');
+            throw new SIDRAliteMassActionException('Your search criteria result exceeds the limit of number of records (' + MAX_SEARCH_ELEMENTS + '). Try to apply more filters to reduce the number of records or process your request in multiple sessions');
         }
     }
 
@@ -412,12 +405,21 @@ public with sharing class SIDRAliteMassActionController {
     **/
     private void searchOSCAR(){
         String query = getBaseQuery(RECORDTYPE_OSCAR_ID);
-        query += ' AND OSCAR__r.RPM_Approval__c = \'Authorize Disapproval\'';
+        query += ' AND (OSCAR__r.Step6__c = \'Failed\'';
+        query += ' OR OSCAR__r.Step9__c = \'Failed\'';
+        query += ' OR OSCAR__r.Step11__c = \'Failed\'';
+        query += ' OR OSCAR__r.Step12__c = \'Failed\'';
+        query += ' OR OSCAR__r.Step14__c = \'Failed\'';
+        query += ' OR OSCAR__r.RPM_Approval__c = \'Authorize Disapproval\')';
 
         this.listWrapperCase = new list<WrapperCase>();
         for (Case cse: executeQuery(query)) {
-            if (cse.cases.isEmpty()) {
+            try {
+                // check the reason
+                SidraLiteHelperForOSCAR.getOSCARReason(cse);
                 addWrapper(new WrapperCase(cse));
+            } catch (WSSidraLite.SidraLiteException e) {
+                // do not add cases with exception, it means that ther is already a sidra lite case for this reason
             }
         }
     }
