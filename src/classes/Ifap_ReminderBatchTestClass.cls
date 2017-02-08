@@ -141,6 +141,11 @@ private class Ifap_ReminderBatchTestClass {
               ));
            
             insert cases;
+
+            Case c = [SELECT id, Financial_Review_Type__c FROM Case WHERE Subject = 'Test case Italia' LIMIT 1];
+            c.Financial_Review_Type__c = 'Annual';
+        
+            update c;
             
             TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
 			TransformationHelper.CalculateBusinessHoursAges = false;

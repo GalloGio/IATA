@@ -138,8 +138,8 @@ public class AMS_ChangeCodesHelper {
 
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
         
-        List<list<AMS_Agency_A_Change_code_History__c>> aaccHistoryToProcess = new List <List <AMS_Agency_A_Change_code_History__c>>();
         
+        Map<Id,List<AMS_Agency_A_Change_code_History__c>> aaccHistoryToProcess = new Map<Id,List<AMS_Agency_A_Change_code_History__c>>();
         ObjectChangesStruct objectChangesByChangeCode = null;
         
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
@@ -158,8 +158,9 @@ public class AMS_ChangeCodesHelper {
 
             aaccToInsert.add(changeCodeResult.changeCode);
             
-            if (!changeCodeResult.changeCodeFielsHistory.isEmpty())
-                aaccHistoryToProcess.add(changeCodeResult.changeCodeFielsHistory);
+            System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
+            if (!changeCodeResult.changeCodeFielsHistory.isEmpty() && changeCodeResult.acct != null)
+                aaccHistoryToProcess.put(changeCodeResult.acct.Id,changeCodeResult.changeCodeFielsHistory);
 
             if (changeCodeResult.acct != null && !accountsToUpdate.contains(changeCodeResult.acct))
                 accountsToUpdate.add(changeCodeResult.acct);
@@ -182,28 +183,24 @@ public class AMS_ChangeCodesHelper {
             insert aaccToInsert;
         }
 
-        Integer index2 = 0;
 
         
         // Add the IDs of the Change Codes after they are inserted
 
-        list<AMS_Agency_A_Change_code_History__c> aaccHistoryToInsert = new List <AMS_Agency_A_Change_code_History__c>();
+        List<AMS_Agency_A_Change_code_History__c> aaccHistoryToInsert = new List<AMS_Agency_A_Change_code_History__c>();
+        if(!aaccHistoryToProcess.isEmpty()){
 
-         
-        if(!aaccHistoryToProcess.isEmpty())
-            {for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
+            System.debug('## aaccToInsert: '+ aaccToInsert);
+            System.debug('## aaccHistoryToProcess: '+ aaccHistoryToProcess);
+            for (Agency_Applied_Change_code__c aaccCreated : aaccToInsert){
 
-                if(aaccHistoryToProcess.get(index2)!=null && !aaccHistoryToProcess.get(index2).isEmpty())
-                    for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(index2))
-                    {
-                        //Add Agency_Applied_Change_Code__c IDs to AMS_Agency_A_Change_code_History__c
-                        
+                if (aaccHistoryToProcess.containsKey(aaccCreated.Account__c)){
+                    for (AMS_Agency_A_Change_code_History__c aaccHist : aaccHistoryToProcess.get(aaccCreated.Account__c)){
+
                         aaccHist.Agency_Applied_Change_Code__c = aaccCreated.id;
                         aaccHistoryToInsert.add(aaccHist);
                     }
-
-
-                index2++;
+                }
             }
         }
 
@@ -213,7 +210,7 @@ public class AMS_ChangeCodesHelper {
 
             insert aaccHistoryToInsert;
         }
-             return accountsToUpdateList;
+            return accountsToUpdateList;
     }
 
    /** 

@@ -63,6 +63,13 @@ private class clMassCaseCreationNonComplianceTest{
        // create test BatchNumber        
         BatchNumber__c batch = new BatchNumber__c();
         insert batch;
+
+        IATA_ISO_Country__c ic = new IATA_ISO_Country__c(Name = 'Canada',
+                                                        ISO_Code__c ='CA',
+                                                        Case_BSP_Country__c = 'Canada',
+                                                        Region__c = 'Americas',
+                                                        AIMS_Area_Name__c = 'Canada');
+        insert ic;
        
         Account account1 = new Account(IATACode__c = '1234567');    // 7 digits
         account1.Name = 'Test account';
@@ -100,9 +107,12 @@ private class clMassCaseCreationNonComplianceTest{
                 aCase.New_IFAP_Deadline_date__c = Date.today();
                 
                 Insert aCase;
-                
-         cList.add(aCase); 
-                
+         
+        aCase = [Select c.CaseNumber,c.ID,c.Status, Account.Name,c.AccountID,c.ContactID,c.Account.BillingCountry, Account.IATACode__c,Contact.Name, c.Account.Type, 
+               Contact.Email,c.firstFSnonComplianceDate__c ,c.firstFAnonComplianceDate__c,c.secondFSnonComplianceDate__c,c.secondFAnonComplianceDate__c, c.SCF_Reason_IFAP__c
+               From Case c Where c.Id = :aCase.Id];
+
+         cList.add(aCase);            
            
         
         
