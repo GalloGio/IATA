@@ -5,6 +5,7 @@ public class ams2gdp_TestDataGenerator
 	{
 		List<Account> accounts = new List<Account>();
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
+		List<IATA_ISO_Country__c> countries = generateISOCountryState();
 
         for(Integer i = 0; i < nb; i++)
         {
@@ -26,10 +27,12 @@ public class ams2gdp_TestDataGenerator
                 Customer_Type__c = 'Member Airline',
                 Location_Class__c = 'C'+i,
                 Phone_Number__c = '+1-888-123-456'+i,
+                Phone = '+1-888-123-456'+i,
                 Fax = '+1-999-123-45'+i,
                 GDS__c = 'ABAC;UALA',
                 RecordTypeId = recordTypes.get('Agency'),
-                IATACode__c = 'I'+i
+                IATACode__c = 'I'+i,
+                IATA_ISO_Country__c=countries[0].Id
             ));
         }
 
@@ -40,6 +43,7 @@ public class ams2gdp_TestDataGenerator
         if(doInsert){
             insert accounts;
             List<Accreditation__c> accreditations = new List<Accreditation__c>();
+          //  List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
             GDP_Reference_Table__c tblStatus = new GDP_Reference_Table__c(Code__c='4');
             GDP_Reference_Table__c tblEndorse = new GDP_Reference_Table__c(Code__c='IATA');
             insert new List<GDP_Reference_Table__c>{tblStatus,tblEndorse};
@@ -54,6 +58,12 @@ public class ams2gdp_TestDataGenerator
         		));
             }
             insert accreditations;
+
+            /*for(Account acc: accounts)
+            {
+            	countries.add(new IATA_ISO_Country__c(Name='ABC', ISO_Code__c='AB', International_dialing_code_ISD__c='123',ISO_Code_Numeric__c=1234));
+            }
+            insert countries;*/
         }
 
         return accounts;

@@ -1,7 +1,6 @@
 @isTest
 private class ams2gdp_TriggerHelper_Test 
 {
-	/*
 	@isTest static void testDeleteAppointmentAccreditations()
 	{
 		//Generate Accounts 2 Accounts 1-AIMS 1-WEBSTAR
@@ -10,9 +9,10 @@ private class ams2gdp_TriggerHelper_Test
 			accounts[1].Webstar_Id__c = 'WEB001';
 		insert accounts; 
 
+
 		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id));
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id,IATA_Code__c='123'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id,IATA_Code__c='1234'));
 		insert gdp_products;
 
 		//Generate Appointment (AMS) 
@@ -65,8 +65,8 @@ private class ams2gdp_TriggerHelper_Test
 		insert accounts; 
 
 		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id));
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id,IATA_Code__c='1235'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id,IATA_Code__c='1236'));
 		insert gdp_products;
 
 		//Delete Account 
@@ -86,8 +86,8 @@ private class ams2gdp_TriggerHelper_Test
 		insert accounts; 
 
 		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP'));
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP',IATA_Code__c='1237'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP',IATA_Code__c='1238'));
 		insert gdp_products;
 
 		//Generate Agency Airports (AMS)
@@ -119,8 +119,8 @@ private class ams2gdp_TriggerHelper_Test
 		insert accounts; 
 
 		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP'));
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP',IATA_Code__c='1239'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP',IATA_Code__c='1240'));
 		insert gdp_products;
 
 		//Generate AMS Account Roles : 2 for each account
@@ -152,8 +152,8 @@ private class ams2gdp_TriggerHelper_Test
 		insert accounts; 
 
 		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP'));
-			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP',IATA_Code__c='1241'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP',IATA_Code__c='1242'));
 		insert gdp_products;
 
 		//Generate AMS Agency Affiliations 
@@ -174,6 +174,34 @@ private class ams2gdp_TriggerHelper_Test
 		delete ams_Affiliations; 
 		System.assertEquals(0, [SELECT count() FROM Assoc_Affiliation_Membership__c]);
 	}
+	@isTest static void testUpdateAccountAddresses()
+	{
+		//Generate Accounts 2 Accounts 1-AIMS 1-WEBSTAR
+		List<Account> accounts = ams2gdp_TestDataGenerator.generateAccounts(2, false);
+			accounts[0].AIMS_ID__c = 'AIMS001';
+			//accounts[1].Webstar_Id__c = 'WEB001';
+		insert accounts; 
 
-	*/
+		List<GDP_Products_Account_View__c> gdp_products = new List<GDP_Products_Account_View__c>();
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[0].Name, AIMS_Id__c='AIMS001', AMS_GDP_Key__c=accounts[0].Id+'GDP',IATA_Code__c='1241'));
+			gdp_products.add(new GDP_Products_Account_View__c(Name = accounts[1].Name, Webstar_Id__c='WEB001',AMS_GDP_Key__c=accounts[1].Id+'GDP',IATA_Code__c='1242'));
+		insert gdp_products;
+
+	//Generate AMS Address 
+		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(1, false);
+			//addresses[0].Account__c = accounts[0].Id;
+			//addresses[1].Account__c = accounts[1].Id;
+			//ams_Affiliations[2].Account__c = accounts[1].Id;
+			//ams_Affiliations[3].Account__c = accounts[1].Id;
+		insert addresses;
+
+		//addresses[0].Email__c = 'test_a@test.com';
+		//addresses[1].Email__c = 'test_b@test.com';
+
+		update addresses;
+
+		//delete addresses;
+
+		//system.assertEquals(0, [SELECT count() FROM Assoc_Affiliation_Membership__c]);
+	}
 }

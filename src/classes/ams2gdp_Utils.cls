@@ -8,11 +8,7 @@ public class ams2gdp_Utils
 		Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
 			msg.toAddresses = new String[]{email};
 			msg.subject = batchName + ' completed'; 
-			msg.plainTextBody = batchName+ ' completed with the following output\n'
-				+'\nRecords Processed: '+totalRecords
-				+'\nFailled Records: '+errorsCount
-				+'\n ========== '
-				+'\n'+String.join(failed_records, ' ; ');
+			msg.plainTextBody = batchName+ ' completed with the following output\n'	+'\nRecords Processed: '+totalRecords +'\nFailed Records: '+errorsCount	+'\n ========== '+'\n'+String.join(failed_records, ' ; ');
 		try{		
 			Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{msg});
 		}catch(Exception ex){}		
@@ -41,28 +37,18 @@ public class ams2gdp_Utils
 	 			if(phone_segment.length() < 10)
 	 			{
 	 				parts.put('std',null);
-	 				parts.put('phone', phone_segment);
-	 			}
-	 			else
-	 			{
+	 				parts.put('phone', phone_segment);}else{
 	 				parts.put('std',phone_segment.left(3));
 	 				phone_segment = phone_segment.removeStart(parts.get('std'));
-	 				parts.put('phone', phone_segment.left(12));
-	 			}
-	 		}
+	 				parts.put('phone', phone_segment.left(12));	}}
 	 		else
 	 		{
-	 			if(phone_segment.length() > 12)
-	 			{
+	 			if(phone_segment.length() > 12){
 	 				parts.put('phone', phone_segment.right(12));
 	 				phone_segment = phone_segment.removeStart(parts.get('phone'));
-	 				parts.put('std',phone_segment.left(6));
-	 			}
-	 			else 
-	 			{
+	 				parts.put('std',phone_segment.left(6));}else{
 	 				parts.put('std',null);
-	 				parts.put('phone', phone_segment);
-	 			}
+	 				parts.put('phone', phone_segment);}
 	 		}
 
 	 		//-- Area Codes & Toll Free codes
@@ -105,11 +91,7 @@ public class ams2gdp_Utils
 
     	for(ams2gdp_Error err : errorLogs)
     	{
-    		logs.add(new AMS2GDP_Log__c(Job_Name__c= err.jobName
-    			, AMS_Record_Id__c = err.amsRecordId
-    			, GDP_Record_Id__c = err.gdpRecordId
-    			, Message__c = err.message
-			));
+    		logs.add(new AMS2GDP_Log__c(Job_Name__c= err.jobName, AMS_Record_Id__c = err.amsRecordId, GDP_Record_Id__c = err.gdpRecordId, Message__c = err.message));
 
 			//Notify GDP Admin if errors are due to duplicates founded
 			if(String.isNotBlank(err.message) && err.message.containsIgnoreCase('Duplicate')) 
@@ -117,11 +99,7 @@ public class ams2gdp_Utils
 				/*Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
 					msg.toAddresses = new String[]{email};
 					msg.subject = 'WARNING - Duplicate founded on '+err.jobName; */
-					body +=  err.message + '\n';
-
-				//messages.add(msg);
-			}
-    	}
+					body +=  err.message + '\n';}	}
 
     	if(logs.size() > 0) insert logs;
     	if(body != '')
@@ -157,11 +135,9 @@ public class ams2gdp_Utils
 			if (bWrapChar) 
 			{
 				integer i = 0;
-				for (i = 0; i < (StrToWrap.length() / WrapLength); i++) 
-					lstLines.add(StrToWrap.substring(i * WrapLength, (i + 1) * WrapLength));
+				for (i = 0; i < (StrToWrap.length() / WrapLength); i++) lstLines.add(StrToWrap.substring(i * WrapLength, (i + 1) * WrapLength));
 				
-				if (math.mod(StrToWrap.length(), WrapLength) > 0)
-					lstLines.add(StrToWrap.substring(i * WrapLength, StrToWrap.length()));
+				if (math.mod(StrToWrap.length(), WrapLength) > 0)		lstLines.add(StrToWrap.substring(i * WrapLength, StrToWrap.length()));
 			}
 			// Wrap string by word
 			else 

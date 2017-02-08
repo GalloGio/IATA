@@ -8,8 +8,7 @@ private class ams2gdp_Batch_Address_Test
 		// Generate Test Data
 		//List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(nb, true);
 		List<Account> accountslist = ams2gdp_TestDataGenerator.generateAccounts(nb, true);
-		system.debug('*aclist*'+accountslist);
-	}
+		}
 
 
 	@isTest static void positiveTest1BatchAddress() 
@@ -41,8 +40,7 @@ private class ams2gdp_Batch_Address_Test
 	{
 		//List<AMS_Address__c> addresses = [SELECT Id FROM AMS_Address__c]; 
 		List<Account> accountList = [SELECT Id FROM Account];
-		system.debug('*aclistinside*'+accountList);
-
+		
 		upsert new AMS_GDP_Batch__c(
 			Batch_Name__c='Job 5: Address & Phone', 
 			Last_Sync_Start_Date__c=Datetime.now(), 

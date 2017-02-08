@@ -17,13 +17,13 @@ private class ams2gdp_Batch_Account_Test
 
 		update accounts; 
 	}
-
+  
 	@isTest static void schedulerTest()
 	{
 		AMS_2_GDP_Settings__c settings = AMS_2_GDP_Settings__c.getOrgDefaults();
 			settings.Activate_Sync__c = true;
 			settings.Schedule_Period__c = 24;
-			settings.Notification_Email__c = 'hello@world.com';
+			//settings.Notification_Email__c = 'hello@world.com'; 
 		upsert settings AMS_2_GDP_Settings__c.Id;
 
 		Test.startTest();
@@ -130,13 +130,4 @@ private class ams2gdp_Batch_Account_Test
 		Test.stopTest();
 	}
 	
-	@isTest static void testAddressPhoneBatch()
-	{
-		Test.startTest(); 
-			ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false);
-				batch.throwException = true; 
- 			Database.executeBatch(batch);
-		Test.stopTest();
-	}
-
 }

@@ -8,7 +8,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
     public Integer totalRecords;
     public List<String> failed_records;
 
-    
+     
     global ams2gdp_Batch_Update(String j, String p) 
     {
         job = j;
@@ -32,11 +32,11 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         }
         else if(job == 'updateGDPPhone')
         {
-            query = 'SELECT AMS_GDP_Key__c, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Phone_Type__c,  Related_GDP_Products_Account_View__c FROM GDP_Phone__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
+            query = 'SELECT AMS_GDP_Key__c, Related_Account__r.Id, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Phone_Type__c,  Related_GDP_Products_Account_View__c FROM GDP_Phone__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
         }
         else if(job == 'updateGDPAddress')
         {
-            query = 'SELECT AMS_GDP_Key__c, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Related_Account__c, Related_GDP_Products_Account_View__c FROM GDP_Address__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
+            query = 'SELECT AMS_GDP_Key__c, Related_Account__r.Id, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Address_Type__c, Related_Account__c, Related_GDP_Products_Account_View__c FROM GDP_Address__c WHERE AMS_GDP_Key__c = null AND RecordType.DeveloperName = \'GDP\' AND Related_GDP_Products_Account_View__c!=null AND (AIMS_Id__c != null OR Webstar_Id__c!=null)';
         }
         else if(job == 'updateAgencyOwner')
         {
@@ -62,10 +62,10 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         {
             query = 'SELECT Id FROM AMS2GDP_Log__c  ';
         }
-        /*else if(job == 'clearBatchGeneratedData')
+        else if(job == 'clearGDPRecords')
         {
-            query = 'SELECT Id FROM '+jobParams+' WHERE CreatedById IN(\'0057E000000vCiP\',\'0057E000001F9va\')';
-        }   */
+            query = 'SELECT Id FROM '+jobParams+' ';
+        } 
         else if(job == 'clearLiveRecords')
         {
             query = 'SELECT Id FROM '+jobParams+' WHERE RecordType.DeveloperName = \'Live\' ';
@@ -104,7 +104,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         else if(job == 'updateAgencyProfileSpecialization') updateAgencyProfileSpecialization((List<GDP_Agency_Profile_Specialization__c>) scope);
         else if(job == 'updateGSATerritory') updateGSATerritory((List<GSA_Territory__c>) scope);
         else if(job =='clearLogs') clearData(scope);
-        //else if(job =='clearBatchGeneratedData') clearData(scope);
+        else if(job =='clearGDPRecords') clearData(scope);
         else if(job == 'clearLiveRecords') clearData(scope);
         //else if (job == 'clearKeyValues') clearKeyValues(scope);        
     }
@@ -289,7 +289,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         Database.update(accreditations,false);              
     }
 
-    public static void updateGDPPhone(List<GDP_Phone__c> gdp_phones)
+   /* public static void updateGDPPhone(List<GDP_Phone__c> gdp_phones)
     {
         Set<String> legacy_ids = new Set<String>(); 
         for(GDP_Phone__c phone : gdp_phones)
@@ -373,9 +373,50 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
 
         //DML 1
         Database.update(gdp_phones, false);      
+    }*/
+
+ public static void updateGDPPhone(List<GDP_Phone__c> gdp_phones)
+    {
+        Set<String> legacy_ids = new Set<String>(); 
+        for(GDP_Phone__c phone : gdp_phones)
+        {
+            //{EXTERNAL_ID}{PHONE_TYPE}[GDP]
+            if(String.isNotBlank(phone.Related_Account__r.Id))
+            {
+               if(phone.Phone_Type__c=='Phone 1')
+               phone.AMS_GDP_Key__c  = phone.Related_Account__r.Id+'-P1GDP';
+               else if(phone.Phone_Type__c=='Fax')
+               phone.AMS_GDP_Key__c  = phone.Related_Account__r.Id+'-FXGDP';                
+                       
+            }
+          
+        }        
+        //DML 1
+        Database.update(gdp_phones, false);      
     }
 
-    public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
+public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
+    {
+        Set<String> legacy_ids = new Set<String>(); 
+        for(GDP_Address__c address : gdp_address)
+        {
+            //{EXTERNAL_ID}{PHONE_TYPE}[GDP]
+            if(String.isNotBlank(address.Related_Account__r.Id))
+            {               
+              if(address.Address_Type__c=='Location')
+              address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'LOCGDP'; 
+              else if(address.Address_Type__c=='Mailing') 
+              address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'MAIGDP'; 
+
+            }          
+        }
+
+        
+        //DML 1
+        Database.update(gdp_address, false);      
+    }
+
+   /* public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
     {
     
         Set<String> legacy_ids = new Set<String>(); 
@@ -448,7 +489,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
 
         //DML 1
         Database.update(gdp_Address,false);
-    }
+    }*/
 
     public static void updateAgencyOwner(List<Agency_Owner__c> agency_owner)
     {

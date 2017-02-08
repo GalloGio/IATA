@@ -16,6 +16,7 @@ public class ams2gdp_BusinessLogic
 		Set<String> parentIds = new Set<String>();
 		Set<String> accountIds = new Set<String>();
 		
+		
 		for(Account account : accounts)
 		{
 			accountIds.add(account.Id);
@@ -268,6 +269,7 @@ public class ams2gdp_BusinessLogic
  		Set<String> countryNames = new Set<String>(); 
  		Set<String> stateNames = new Set<String>(); 
 
+
 		for(Account acc : accounts)
 		{
 			accountIds.add(acc.Id);
@@ -346,7 +348,7 @@ public class ams2gdp_BusinessLogic
 	 * @return List<GDP_Address__c>
 	 * @author David Daboué <david.daboue@cgi.com> 
 	 */
-	public static List<GDP_Address__c> formatAddress2Address(List<AMS_Address__c> addresses)
+	/*public static List<GDP_Address__c> formatAddress2Address(List<AMS_Address__c> addresses)
  	{
  		List<GDP_Address__c> result = new List<GDP_Address__c>();
 
@@ -395,14 +397,14 @@ public class ams2gdp_BusinessLogic
 		}
 
  		return result; 
- 	}
+ 	}*/
 
 
  	public static List<GDP_Phone__c> formatAccount2Phone(List<Account> accounts)
 	{
 		List<GDP_Phone__c> result = new List<GDP_Phone__c>();
 
-		Set<String> accountIds = new Set<String>();
+	   Set<String> accountIds = new Set<String>();
 		for(Account acc : accounts)
 		{
 			accountIds.add(acc.Id);
@@ -445,12 +447,11 @@ public class ams2gdp_BusinessLogic
 				));
 			}
 		}
-
-
+		
 		return result; 
 	}
 
- 	public static List<GDP_Phone__c> formatAddress2Phone(List<AMS_Address__c> addresses)
+ 	/*public static List<GDP_Phone__c> formatAddress2Phone(List<AMS_Address__c> addresses)
  	{
 		List<GDP_Phone__c> result = new List<GDP_Phone__c>();
 
@@ -579,7 +580,7 @@ public class ams2gdp_BusinessLogic
 		}
 		
 		return result; 		
- 	} 
+ 	} */
 
  	/**
  	 * This function format a list of AMS Agency Affiliation  (AMS_Agency_Affiliation__c) records into Assoc Affiliation Membership (Assoc_Affiliation_Membership__c) records

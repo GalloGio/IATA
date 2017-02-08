@@ -134,7 +134,7 @@ private class ams2gdp_Batch_Update_Test {
 		//GDP Phones & Address
 		AMS_Address__c adr =  new AMS_Address__c(Legacy_System__c = 'AIMS'
 			, Legacy_External_Id__c = 'AIMS001'
-			, Address_Type__c = 'Mailing'
+			, Address_Type__c = 'Shipping'
 		);
 		insert adr;
 
@@ -201,6 +201,28 @@ private class ams2gdp_Batch_Update_Test {
 			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
 			, RecordTypeID = airportRecordTypes.get('GDP')
 		));
+		insert adjacentAirports;
+
+		//Agency profiles
+		List<GDP_Agency_Profile_Specialization__c> agencies = new List<GDP_Agency_Profile_Specialization__c>(); 
+		Map<String, String> agencyRecordTypes = ams2gdp_Utils.getRecordTypeIdByName('GDP_Agency_Profile_Specialization__c'); 
+		agencies.add(new GDP_Agency_Profile_Specialization__c(AIMS_ID__c = 'AIMS001GDP'
+			, Related_Account__c = accounts[0].Id
+			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
+			, RecordTypeID = agencyRecordTypes.get('GDP')
+		));
+		insert agencies;
+
+		//GSA Territories
+		List<GSA_Territory__c> territories = new List<GSA_Territory__c>(); 
+		
+		territories.add(new GSA_Territory__c(AIMS_ID__c = 'AIMS001GDP'
+			,Related_Accreditation__c = accreditations[0].Id
+			, AIMS_Territory_Unique_Reference__c = '1234'
+			, Related_Account__c = accounts[0].Id
+			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
+			));
+		insert territories;
  
 	}
 	
@@ -289,7 +311,17 @@ private class ams2gdp_Batch_Update_Test {
 			Database.executeBatch(new ams2gdp_Batch_Update('clearLogs', null));
 		Test.stopTest();		
 	}
-	
+
+	@isTest static void test_method_16() {		
+		Test.startTest();
+			Database.executeBatch(new ams2gdp_Batch_Update('updateGSATerritory', null));
+		Test.stopTest();
+	}
+	@isTest static void test_method_17() {		
+		Test.startTest();
+			Database.executeBatch(new ams2gdp_Batch_Update('updateAgencyProfileSpecialization', null));
+		Test.stopTest();
+	}
 	
 	
 	

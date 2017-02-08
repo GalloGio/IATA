@@ -9,7 +9,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 	public Boolean throwException;
 	public String batchName;
 	public List<String> extraIds;
-
+ 
 	public void init(Boolean runNext, List<String> ids)
 	{
 		batchName = 'Job 5: Address & Phone'; 
