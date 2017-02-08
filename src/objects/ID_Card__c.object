@@ -1326,6 +1326,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Card_Status__c</columns>
         <columns>CIN__c</columns>
         <columns>Photo__c</columns>
+        <columns>Is_Expedite__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>MustSyncWithAIMS__c</columns>
