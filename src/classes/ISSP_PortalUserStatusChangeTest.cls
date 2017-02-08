@@ -151,7 +151,7 @@ private class ISSP_PortalUserStatusChangeTest {
         contactListId.add(con2.Id);
 
         ISSP_PortalUserStatusChange.removeInactiveEmail(con2.Email);
-        ISSP_PortalUserStatusChange.maasUserCreation(contactList);
+        ISSP_PortalUserStatusChange.maasUserCreation(contactList, 'CNS');
         ISSP_PortalUserStatusChange.futureUpdateUsers(contactListId);
         ISSP_PortalUserStatusChange.futureDeactivateUsers(contactListId);
 

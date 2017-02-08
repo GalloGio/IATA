@@ -616,7 +616,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                                                             'Japanese' =>'ja',
                                                             'Portuguese' =>'pt_BR'
                                                     };
-     public static void maasUserCreation(list<Contact> vContactList){
+     public static void maasUserCreation(list<Contact> vContactList, String communityName){ //CNS added parameter to change the email template, for cns users
         list<Contact> conList = vContactList.deepClone(true, false, false);
         map<Id,Contact> conMap = new map<Id,Contact>( [select Id,Account.RecordType.DeveloperName,Preferred_Language__c from Contact where Id in:conList]);
         Database.DMLOptions dmo = new Database.DMLOptions();
@@ -642,6 +642,9 @@ public with sharing class ISSP_PortalUserStatusChange {
             Database.SaveResult[] results = Database.insert(UserList, false);
            list<Messaging.SingleEmailMessage> ml = new list<Messaging.SingleEmailMessage>();
             EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email'];
+           if(communityName=='CNS'){ //
+                et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS'];
+           }           
                 
             for(Database.SaveResult r:results){
                 system.debug('\n\n\n'+r.getErrors()+'\n\n\n');
