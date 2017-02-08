@@ -1279,6 +1279,15 @@ public without sharing class ISSP_Registration {
             doSearch = true;
         }
 
+
+        if(CommunityName == 'CNS') {
+            Id USAid = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].Id;
+            searchCountry = USAid;
+            searchCountryAirline = USAid;
+            searchIATACode = USAid;
+            searchIATACodeAirline = USAid;
+        }
+
         return null;
     }
 
@@ -1378,6 +1387,15 @@ public without sharing class ISSP_Registration {
             infoMessage.clear();
             errorMessage.clear();
         }
+
+        if(CommunityName == 'CNS') {
+            Id USAid = [SELECT Id, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].Id;
+            searchCountry = USAid;
+            searchCountryAirline = USAid;
+            searchIATACode = USAid;
+            searchIATACodeAirline = USAid;
+        }
+        
         doSearch = true;
         return null;
     }
