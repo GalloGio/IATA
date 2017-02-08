@@ -11810,6 +11810,16 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Tell us about your experience and please add the name of the person that helped you if you know it. We will make sure they receive your message.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CaseComplimentMessage_CNS</fullName>
+        <categories>ISS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CaseComplimentMessage_CNS</shortDescription>
+        <value>Thank you for sharing you compliments about your experience with us.
+At CNS we strive to provide excellent Customer Service and it&apos;s rewarding to know that you care too.&lt;br /&gt;
+Can you please confirm which country you&apos;ve previously received support for :</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CaseInformation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -15249,6 +15259,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_PageDescription_ISSP_FAQ2Case</shortDescription>
         <value>Ask a question, consult relevant FAQs or raise a complaint with IATA Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PageDescription_ISSP_FAQ2Case_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PageDescription_ISSP_FAQ2Case_CNS</shortDescription>
+        <value>Ask a question, consult relevant FAQs or raise a complaint with CNS Customer Service</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_faq_template</fullName>
