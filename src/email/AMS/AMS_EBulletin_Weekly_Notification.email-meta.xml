@@ -8,7 +8,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>AMS - EBulletin Weekly Notification</name>
     <style>none</style>
-    <subject>Weekly AIRS / CAIRS Online Bulletin Notification</subject>
+    <subject>Weekly EBulletin Notification</subject>
     <textOnly>Dear {!Receiving_User.Name}.
 
 In order to generate a Daily Report containing these events/occurrences, please click here (link to the Portal Service).

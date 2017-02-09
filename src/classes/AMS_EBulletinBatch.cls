@@ -24,7 +24,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		
 		List<Network> myCommunity = new List<Network>([SELECT Id FROM Network WHERE Name = 'IATA Portal']);
 
-		if(myCommunity.size() > 0) this.networkComponent = Network.getLoginUrl(myCommunity[0].id).substringBeforeLast('/') + '/ISSP_Login?retURL=ISSP_AMS_EBulletin';
+		if(myCommunity.size() > 0) this.networkComponent = Network.getLoginUrl(myCommunity[0].id).substringBeforeLast('/') + '/ISSP_AMS_EBulletin';
     
 		System.debug(networkComponent);
 
