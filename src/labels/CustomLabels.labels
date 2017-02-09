@@ -12910,6 +12910,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>New BSP/CASS Payment Contact</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_CNS_Service</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CNS_Service</shortDescription>
+        <value>CNS Customer Service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_CaseComment_Subject</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
