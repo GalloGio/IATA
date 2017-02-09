@@ -20,6 +20,22 @@ global with sharing class GenericAttachmentListController {
 	public Boolean showFileIdentifier {get; set;}
 	Boolean canAttachFiles;
     private Case cse;
+
+    public Boolean hasOscar{
+        get{
+            if(hasOscar == null) hasOscar = false;
+            return hasOscar;
+        }
+        private set;
+    }
+
+    public Case relatedCase {
+        get; 
+        set{
+            relatedCase = value;
+            hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
+        }
+    }
 	
 	// assgnTo variable
 	public Boolean isForPortal {
@@ -52,7 +68,8 @@ global with sharing class GenericAttachmentListController {
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        
+        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c from Case where id = :this.id];
+
         if (this.isForPortal) {
             this.showFileIdentifier = false;
             cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
