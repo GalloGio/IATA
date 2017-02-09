@@ -176,7 +176,7 @@
 <div class="col-md-12">
  <h4>{!$Label.LAQ_ContactUs} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Create_query} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span> 
-         <small>{!$Label.ISSP_PageDescription_ISSP_FAQ2Case}</small></h4>
+         <small>{!if(communityName=='CNS', $Label.ISSP_PageDescription_ISSP_FAQ2Case_CNS, $Label.ISSP_PageDescription_ISSP_FAQ2Case)}</small></h4>
 </div>
 </div>
     <div class="row"> 
@@ -279,7 +279,7 @@
                             </apex:outputpanel>
                         </li>
                          <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
-                           <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage}"  style="color:#3174AF;font-style: italic;"/><br /><br />
+                           <apex:outputText escape="false" value="{!if(communityName=='CNS', $Label.ISSP_CaseComplimentMessage_CNS, $Label.ISSP_CaseComplimentMessage)}"  style="color:#3174AF;font-style: italic;"/><br /><br />
 
                          </apex:outputPanel>
 

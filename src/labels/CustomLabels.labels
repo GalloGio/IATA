@@ -11810,6 +11810,16 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Tell us about your experience and please add the name of the person that helped you if you know it. We will make sure they receive your message.</value>
     </labels>
     <labels>
+        <fullName>ISSP_CaseComplimentMessage_CNS</fullName>
+        <categories>ISS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CaseComplimentMessage_CNS</shortDescription>
+        <value>Thank you for sharing you compliments about your experience with us.
+At CNS we strive to provide excellent Customer Service and it&apos;s rewarding to know that you care too.&lt;br /&gt;
+Can you please confirm which country you&apos;ve previously received support for :</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CaseInformation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12911,7 +12921,7 @@ Can you please confirm which country you&apos;ve previously received support for
     </labels>
     <labels>
         <fullName>ISSP_Email_CNS_Service</fullName>
-        <categories>ISSP</categories>
+        <categories>ISS, Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CNS_Service</shortDescription>
@@ -13130,6 +13140,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Email PortalStatusChange Subject</shortDescription>
         <value>Notification of change of IATA User Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_PortalStatusChange_Subject_CNS</fullName>
+        <categories>ISS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_PortalStatusChange_Subject_CNS</shortDescription>
+        <value>Notification of change of CNS User Portal Status</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_PortalUrl</fullName>
@@ -15259,6 +15277,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Ask a question, consult relevant FAQs or raise a complaint with IATA Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_PageDescription_ISSP_FAQ2Case_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PageDescription_ISSP_FAQ2Case_CNS</shortDescription>
+        <value>Ask a question, consult relevant FAQs or raise a complaint with CNS Customer Service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PageDescription_ISSP_faq_template</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -16295,6 +16320,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Sender Email</shortDescription>
         <value>noreply@iata.org</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Sender_Email_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Sender Email CNS</shortDescription>
+        <value>noreply@cnsc.us</value>
     </labels>
     <labels>
         <fullName>ISSP_Service</fullName>

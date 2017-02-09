@@ -79,8 +79,11 @@ public with sharing class ISSP_PortalUserStatusChange {
                  con.Regional_Administrator_Countries__c = '';
               }
         }
-        if (con.Community__c == '' || con.Community__c == null)
+        if ((con.Community__c == '' || con.Community__c == null) && communityName!='CNS'){
             con.Community__c = 'ISS Customer Portal';
+        }else if((con.Community__c == '' || con.Community__c == null) && communityName =='CNS'){
+             con.Community__c = 'CNS Customer Portal';
+        }
         update con;
         if (portalUser){
             return new Pagereference('/ISSP_Contact?Id='+con.Id + commParam);
@@ -249,7 +252,12 @@ public with sharing class ISSP_PortalUserStatusChange {
             User user = [select Id from User where ContactId =:contactId];
             ISSP_Registration.password =  ISSP_Registration.generatePassword();
             system.setPassword(user.Id, ISSP_Registration.password);
+            if(CommunityName=='CNS'){
+                ISSP_Registration.sendCNSEmail(user.Id,contactId);
+                }else{
             ISSP_Registration.sendEmail(user.Id,contactId);
+            }
+            
         }catch(Exception e){        
            
         } 
@@ -326,7 +334,7 @@ public with sharing class ISSP_PortalUserStatusChange {
      }
     public static void createNewUser(Id userProfile,string contactId){
         system.debug('\n\n\n contactId'+contactId+'\n\n\n');
-        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation from Contact where Id =:contactId];
+        Contact con = [select id,email,firstName,lastname,accountId,Preferred_Language__c, Salutation, Community__c from Contact where Id =:contactId];
         Database.DMLOptions dmo = new Database.DMLOptions();
         dmo.EmailHeader.triggerUserEmail = false; 
         dmo.EmailHeader.triggerOtherEmail = false; 
@@ -355,10 +363,16 @@ public with sharing class ISSP_PortalUserStatusChange {
             String cleanUsername = ISSP_Utilities.buildPortalUserName(con.email);
             cleanUsername = cleanUsername.replace('+', Comm_User_Helper.plusReplacer);
             string encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+UID), 'UTF-8');
+
             String link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart ;
             String template = 'ISSP_New_Member_Welcome_Email_2';
-            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link);
-            Comm_User_Helper.sendEmail( template ,emailWrap, con);
+            if(con.Community__c.contains('CNS')){
+                link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
+                template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+            }
+
+            Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
+            Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
             Comm_User_Helper.permissionASS(new list<Id>{newUser.Id});
             
             //ISSP_Registration.password =  ISSP_Registration.generatePassword();
@@ -602,7 +616,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                                                             'Japanese' =>'ja',
                                                             'Portuguese' =>'pt_BR'
                                                     };
-     public static void maasUserCreation(list<Contact> vContactList){
+     public static void maasUserCreation(list<Contact> vContactList, String communityName){ //CNS added parameter to change the email template, for cns users
         list<Contact> conList = vContactList.deepClone(true, false, false);
         map<Id,Contact> conMap = new map<Id,Contact>( [select Id,Account.RecordType.DeveloperName,Preferred_Language__c from Contact where Id in:conList]);
         Database.DMLOptions dmo = new Database.DMLOptions();
@@ -628,6 +642,9 @@ public with sharing class ISSP_PortalUserStatusChange {
             Database.SaveResult[] results = Database.insert(UserList, false);
            list<Messaging.SingleEmailMessage> ml = new list<Messaging.SingleEmailMessage>();
             EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email'];
+           if(communityName=='CNS'){ //
+                et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS'];
+           }           
                 
             for(Database.SaveResult r:results){
                 system.debug('\n\n\n'+r.getErrors()+'\n\n\n');

@@ -123,7 +123,7 @@
          
                    <apex:outputpanel rendered="{!IF(f.label=='Service'||f.label=='Servicio'||f.label=='???' ||f.label=='??' ||f.label=='Servi�o' ||f.label=='????' ||f.label=='Servizio' ||f.label=='??????' ||f.label=='Layanan' ||f.label=='D?ch v?' ||f.label=='??????',true,false)}"> 
                         
-                     <apex:outputLink value="{!item.recordService.Application_URL__c}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
+                     <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
                     

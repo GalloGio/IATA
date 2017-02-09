@@ -130,10 +130,8 @@ public without sharing class ISSP_Registration {
     public string sRefererCommunity {get; set;}
 
     //new CNS
-	public String communityName{
-	  get{
-		return ApexPages.currentPage().getParameters().get('CommunityName');
-	  }set;}
+	public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 
 
     // EM: New
@@ -751,7 +749,7 @@ public without sharing class ISSP_Registration {
                 pr = new PageReference('/IECLogin');
                 //pr = new PageReference('/' +sRefererCommunity);
             else
-                pr = new PageReference('/ISSP_Login');
+                pr = new PageReference('/ISSP_Login' + commParam);
             return pr;
         }
 
@@ -793,11 +791,18 @@ public without sharing class ISSP_Registration {
 
         //EM: Management of email according to the portal
         //userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
-        if(sRefererCommunity == constIEC)
+        if(sRefererCommunity == constIEC){
             userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'IEC', lang, isNotIATA, newAirline);
+        }
 
-        else
+        else{
+            if(communityName=='' || communityName==null){
             userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'ISSP', lang, isNotIATA, newAirline);
+            }else if(communityName=='CNS'){
+                userId = Comm_User_Helper.createNewUser(con,selectedCustomerType, 'CNS', lang, isNotIATA, newAirline);
+            }
+            
+        }
 
         if (userId != null) {
             //TF-SP08 - for first agency user, give access to custom permission set
@@ -831,8 +836,8 @@ public without sharing class ISSP_Registration {
 
 
             try {
-                if (sRefererCommunity == constISS)	con.community__c= 'ISS Customer Portal';
-                else if	(sRefererCommunity == constIEC)	con.community__c= 'E-Commerce';
+                if (sRefererCommunity == constISS){ if(communityName=='' || communityName==null){ con.community__c= 'ISS Customer Portal';} else if(communityName=='CNS'){ con.community__c= 'CNS Customer Portal'; }}	
+                else if	(sRefererCommunity == constIEC){con.community__c= 'E-Commerce';}	
                 system.debug('1-Creating contact with language: ' + lang);
                 String languageString = 'English';
                 if (lang != null && lang != ''){
@@ -986,7 +991,7 @@ public without sharing class ISSP_Registration {
 
         // create new Contact
         try {
-            if (sRefererCommunity == constISS)	con.community__c= 'ISS Customer Portal';
+             if (sRefererCommunity == constISS){ if(communityName=='' || communityName==null){ con.community__c= 'ISS Customer Portal';} else if(communityName=='CNS'){ con.community__c= 'CNS Customer Portal'; }} 
             else if	(sRefererCommunity == constIEC)	con.community__c= 'E-Commerce';
             system.debug('2-Creating contact with language: ' + lang);
             String languageString = 'English';
@@ -1169,6 +1174,21 @@ public without sharing class ISSP_Registration {
             mail.setSaveAsActivity(false);
             mail.setReplyTo('noreply@iata.org'); //its valid email id
             mail.setSenderDisplayName('ISS Portal ');
+            Messaging.sendEmail(
+            new Messaging.SingleEmailMessage[]{mail});
+        }
+    }
+
+    
+    public static void sendCNSEmail(string userId , string contactId){
+        EmailTemplate et = [Select e.Id, e.Name, e.DeveloperName From EmailTemplate e where DeveloperName=:'ISSP_New_Member_Welcome_Email_CNS']; 
+        if(et != null){
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setTemplateId(et.Id);
+            mail.setTargetObjectId(userId);
+            mail.setSaveAsActivity(false);
+            mail.setReplyTo('noreply@cnsc.us'); 
+            mail.setSenderDisplayName('CNS Portal ');
             Messaging.sendEmail(
             new Messaging.SingleEmailMessage[]{mail});
         }
