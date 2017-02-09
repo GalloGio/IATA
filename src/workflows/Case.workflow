@@ -14723,7 +14723,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone,Chat</value>
+            <value>Internal Case,Phone,Chat,Voicemail</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -16449,7 +16449,7 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>greaterOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Recurrence_Negative_Settlement__c</field>
@@ -16459,10 +16459,10 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>lessOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <description>SEDA :, the case be assigned to Airline Suspension Team automatically. 
-1) airline unpaid amount is greater than USD1000 
+1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000) 
 2) Recurrence Negative Settlement no matter the amount</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

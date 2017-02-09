@@ -152,27 +152,27 @@
                                                         <figure class="item-image"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"><img src="{!URLFOR($Resource.Product_Images, prod.ImageName)}" alt="{!prod.ProductName}" /></a></figure>
                                                         <h3 class="item-name"><a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}">{!prod.ProductName}</a></h3>
                                                         <h4 class="item-description-title">{!prod.Media}</h4>
-                                                        <p class="item-description">
+                                                        <p class="item-description" style="{! IF(prod.ProductInfoId == null, '', 'display:none')}">
                                                             Edition: {!prod.Edition} <br />
                                                             Language: {!prod.Language}
                                                         </p>
                                                         <p class="item-description">{!prod.ProductShortDesc}</p>
                                                         <!-- Scenario 1: In Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock'}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock in-stock" rendered="{!prod.InventoryStatus == 'In stock' && prod.ProductInfoId == null}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
                                                         <!-- Scenario 2: Out of Stock -->
-                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock' , prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo)}">
+                                                        <apex:outputPanel layout="block" styleClass="item-stock out-of-stock" rendered="{!AND(prod.InventoryStatus != 'In stock' , prod.AvailabilityDate !=null,prod.EffectiveFrom <=TODAY(),TODAY() <=prod.EffectiveTo, prod.ProductInfoId == null)}">
                                                             {!prod.InventoryStatus}
                                                         </apex:outputPanel>
 
                                                         <!-- Scenario 3: Pre-order -->
-                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!TODAY() <=prod.EffectiveFrom}">
+                                                        <apex:outputPanel layout="block" styleClass="item-label pre-order" rendered="{!TODAY() <=prod.EffectiveFrom && prod.ProductInfoId == null}">
                                                             <span class="text">{!$Label.Button_Pre_Order}</span>
                                                         </apex:outputPanel>
 
                                                         <!-- Regular Price if exist -->
-                                                        <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0}">
+                                                        <apex:outputPanel styleClass="item-price regular-price {!IF(AND(prod.CustomerPrice!=null , prod.CustomerPrice>0),'line-stroke','')}" layout="block" rendered="{! prod.RegularPrice!=null && prod.RegularPrice > 0 && prod.ProductInfoId == null}">
                                                             <apex:outputText styleClass="price-value" value="{0, number, currency}">
                                                                 <apex:param value="{!prod.RegularPrice}" />
                                                             </apex:outputText>
@@ -180,7 +180,7 @@
                                                         </apex:outputPanel>
 
                                                         <!-- Discounted price if exist -->
-                                                        <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0}">
+                                                        <apex:outputPanel styleClass="item-price discounted-price" layout="block" rendered="{! prod.CustomerPrice!=null && prod.CustomerPrice > 0 && prod.ProductInfoId == null}">
                                                             <apex:outputText styleClass="price-value" value="{0, number, currency}">
                                                                 <apex:param value="{!prod.CustomerPrice}" />
                                                             </apex:outputText>
@@ -188,7 +188,7 @@
                                                         </apex:outputPanel>
 
                                                         <!-- Price not exit: Direct Sales -->
-                                                        <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null)}">
+                                                        <apex:outputPanel styleClass="item-price regular-price" layout="block" rendered="{! AND(prod.RegularPrice==null, prod.CustomerPrice==null, prod.ProductInfoId == null)}">
                                                             <span class="price-label">{!$Label.Direct_Sales}</span>
                                                         </apex:outputPanel>
                                                     
