@@ -12752,6 +12752,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Service has been rejected by your IATA Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_AccessRejected4_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected4_CNS</shortDescription>
+        <value>Service has been rejected by your CNS Customer Service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_AccessRejected_subject1</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -13068,6 +13076,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Email_Log_Case</shortDescription>
         <value>For additional information, please, log a case with IATA Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Log_Case_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Log_Case_CNS</shortDescription>
+        <value>For additional information, please, log a case with CNS Customer Service</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_LoginInformation</fullName>
