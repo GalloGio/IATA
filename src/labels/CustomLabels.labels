@@ -18487,6 +18487,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Orders</value>
     </labels>
     <labels>
+        <fullName>Oscar_Attachments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oscar Attachments</shortDescription>
+        <value>Oscar Attachments</value>
+    </labels>
+    <labels>
         <fullName>Overall_maximum_size</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
