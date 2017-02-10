@@ -5,7 +5,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>ISS email from notification - CNS</name>
     <style>none</style>
-    <subject>New notification on your IATA portal</subject>
+    <subject>New notification on your CNS portal</subject>
     <textOnly>{!$Label.ISSP_Email_do_not_reply}
 {!Community_Name}
 

@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="{!$Label.ISSP_Email_Welcome}" recipientType="User" language="{!recipient.LanguageLocaleKey}"
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_Welcome_CNS}" recipientType="User" language="{!recipient.LanguageLocaleKey}"
 relatedToType="User"
 >
 <messaging:htmlEmailBody >
