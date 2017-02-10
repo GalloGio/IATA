@@ -13,6 +13,18 @@
         <template>ISS_Portal/Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
+        <fullName>Application_access_granted_cns</fullName>
+        <description>Application access granted - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_contact_of_access_grantedVF_cns</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Alert_Treasury_Dashboard_Manager_of_access_request</fullName>
         <description>ISSP Alert Treasury Dashboard Manager of access request</description>
         <protected>false</protected>
@@ -117,6 +129,18 @@
         <template>ISS_Portal/Notify_contact_of_access_rejected_VF_ADM</template>
     </alerts>
     <alerts>
+        <fullName>Notify_Access_denied_by_PortalAdmin_CNS</fullName>
+        <description>Portal Admin rejects access to Service. Portal User is notified with this Alert. - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_contact_of_access_rej_VF_ADM_cns</template>
+    </alerts>
+    <alerts>
         <fullName>Notify_Access_denied_by_internal_user</fullName>
         <description>IATA Internal User rejects access to Service. Portal User is notified with this Alert</description>
         <protected>false</protected>
@@ -127,6 +151,18 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rejected_VF_INT</template>
+    </alerts>
+    <alerts>
+        <fullName>Notify_Access_denied_by_internal_user_cns</fullName>
+        <description>IATA Internal User rejects access to Service. Portal User is notified with this Alert</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_contact_of_access_rej_VF_INT_cns</template>
     </alerts>
     <alerts>
         <fullName>Notify_contact_of_access_granted_to_TD_Premium</fullName>
@@ -534,7 +570,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <name>Notify_Access_denied_by_internal_user</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
             <operation>equals</operation>
@@ -585,7 +621,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <name>Notify_Application_access_granted</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( ISPICKVAL (Right__c , &apos;Access Granted&apos;), NOT ( OR(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;), CONTAINS(Application_Name__c, &apos;Standards Setting Workspace&apos;) )))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
