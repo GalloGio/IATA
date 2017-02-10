@@ -442,9 +442,6 @@ public with sharing class SIDRAliteMassActionController {
             query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS2);
             query2 += ' AND Termination_date__c < TODAY';
             query2 += ' AND Documentation_Complete__c = null';
-            if (!isEmpty(this.filter.dateFilter)) {
-                query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
-            }
             listCase2.addAll(executeQuery(query2));
 
             // no third non compliance for certificare DGR
