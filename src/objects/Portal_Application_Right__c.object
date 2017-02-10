@@ -357,6 +357,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Last_modified_by_internal_user__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOT(CONTAINS(LastModifiedBy.Profile.Name  , &apos;ISS&apos;) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Last modified by internal user</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>My_Apps__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__c == $User.ContactId</formula>
