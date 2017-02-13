@@ -277,7 +277,11 @@
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <excludeButtons>Merge</excludeButtons>
         <excludeButtons>NewContact</excludeButtons>

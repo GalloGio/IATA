@@ -406,7 +406,11 @@
             <relatedList>RelatedHistoryList</relatedList>
         </relatedLists>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Data_Quality_Feedback__c.Account__c</relatedList>
