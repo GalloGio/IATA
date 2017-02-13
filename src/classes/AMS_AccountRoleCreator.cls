@@ -26,6 +26,7 @@ public with sharing class AMS_AccountRoleCreator
 
     public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
 
+    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO','AO'};
     
     // This funny looking method is a workaround to be able to use a variable (Set<Id>) in a dynamic query
     public static List<AMS_Accreditation_Contact__c> retrieveACsDynamically(String soqlString, String setName)
@@ -318,7 +319,7 @@ public with sharing class AMS_AccountRoleCreator
         Set<Id> accreditationAreaIds = aoMap.keyset();
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
-        List<AMS_Oscar__c> oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
+        List<AMS_Oscar__c> oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
 
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
@@ -327,7 +328,7 @@ public with sharing class AMS_AccountRoleCreator
                         // OSCAR at a time, let's "assume" that there is only one Account involved.
         for(AMS_Oscar__c oscar: oscars){
 
-            if(processesBlockedToMigrateOwners.contains(oscar.Process__c)){
+            if(processesBlockedToMigrateOwners.contains(oscar.Process__c) && !allowedLocationTypesForNewProcesses.contains(oscar.Account__r.Location_Type__c)){
 
 
                 accreditationAreaIdsLst = removeFromList(accreditationAreaIdsLst,oscar.AMS_Online_Accreditation__r.Id);

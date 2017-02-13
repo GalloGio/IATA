@@ -1,7 +1,7 @@
 <apex:page showHeader="false" sidebar="false" standardController="AMS_OSCAR__c" extensions="AMS_AccountHierarchySelectionController" tabStyle="AMS_OSCAR__c">
 
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
-	<apex:includeScript value="/support/console/20.0/integration.js"/>
+	<apex:includeScript value="/support/console/34.0/integration.js"/>
     <script type="text/javascript">
     	function logCLose(closetab) {
     		console.info(closetab);
@@ -26,6 +26,24 @@
 		    var tabId = result.id;
 		    sforce.console.closeTab(tabId);
 		};
+
+		function refreshTab(){
+
+				if (sforce.console.isInConsole()) {
+						sforce.console.getEnclosingTabId(function(enclosingResult){
+								sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+										sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+										closeTab();
+								});
+						});
+				} else {
+						// for inline Vf
+						window.top.location.href = '/'+redirectUrl
+						// for normal vf
+						// window.location.href = '/'+redirectUrl
+				}
+		}
+
 
 		function bindCheckboxes() {
 			$('[data-group="main"]').on("change", function () {
@@ -155,7 +173,7 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockButtons location="bottom">
-				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'closeTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
+				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
 				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>

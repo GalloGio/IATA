@@ -6,6 +6,7 @@
     <customButtons>Create_SIDRA_lite</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>Manage_Attachments</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>

@@ -295,6 +295,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>MITA_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Instant_Survey_Last_feedback_received__c</field>
             </layoutItems>
             <layoutItems>
