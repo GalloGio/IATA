@@ -437,7 +437,7 @@ public class AMS_OscarCase_RiskMgmt {
 		//	AACC.DEF_Non_Payment__c = true;
 		
 		//This was added for all change codes beeing created in AMS_ChangeCodesHelper
-		//AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
+		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
 		
 		AACC.AIMS_ID__C = sUniqueId;
 
