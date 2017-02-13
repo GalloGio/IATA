@@ -293,6 +293,13 @@ public class ams2gdp_BusinessLogic
 
 		for(Account acc: accounts)
 		{
+			if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
+			if(String.isBlank(acc.BillingCity))  acc.BillingStreet = '-';
+			if(String.isBlank(acc.BillingCountry))  acc.BillingStreet = '-';
+			if(String.isBlank(acc.ShippingStreet))  acc.BillingStreet = '-';
+			if(String.isBlank(acc.ShippingCity))  acc.BillingStreet = '-';
+			if(String.isBlank(acc.ShippingCountry))  acc.BillingStreet = '-';
+
 			if(String.isNotBlank(acc.BillingStreet) && String.isNotBlank(acc.BillingCity) && String.isNotBlank(acc.BillingCountry))
 			{
 				//Generate Location Address
