@@ -121,7 +121,11 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
    isEnhancedReporting = (paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT);       
    isRenewal = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
    isSubscriptionDescriptionVisible = (isRenewal || payNewRatePlan);
-     
+   String TransactionCategory='EBC';
+   if (paymentTarget.equals('addon storage')) TransactionCategory='EBCSLAO';  
+   if (paymentTarget.equals('email')) TransactionCategory='Credit Package';
+   if (paymentTarget.equals('addon reporting')) TransactionCategory='EBCALAO';
+   TermsAndConditions = getCurrentTermsAndConditionForProduct(TransactionCategory, selectedRatePlanId);   
   
   } // end of initialization
     public  EBC_Order__c billingAccountOrder {
@@ -1694,4 +1698,76 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     update billingAccountOrder;
     rereadBillingAccount();
   } // end of purchaseFulfillment
+    
+
+/**
+* Returns the currently active Terms & Conditions of a Product
+* @param oProductInfo The related Product Information object
+* @return A Terms_and_Conditions__c object
+*/
+public List<Terms_and_Conditions__c> TermsAndConditions { get; private set; }
+    
+public static List<Terms_and_Conditions__c> getCurrentTermsAndConditionForProduct(String sCategory, String sProductInfoId) {
+  List<Terms_and_Conditions__c> listTC = new List<Terms_and_Conditions__c>();
+  List<Product_Rate_Plan_Information__c> listPI = new List<Product_Rate_Plan_Information__c>();
+  
+  ListPI = [Select Related_Product_Information__c
+             From Product_Rate_Plan_Information__c
+           Where Product_Rate_Plan__c=:sProductInfoId
+           Limit 10];
+   
+    
+  Set<Id> ListId = new Set<Id>();
+  for(Product_Rate_Plan_Information__c item:ListPI){
+        ListId.add(item.Related_Product_Information__c);
+    }
+  listTC = getCurrentTermsAndCondition(sCategory);
+  
+  if (listTC.Size()==0) {listTC = getCurrentTermsAndCondition('EBC');}
+  if (ListId.Size()==0)  return listTC;
+    
+  listTC = [SELECT Effective_Start_Date__c
+              ,Is_Current__c
+                ,Product_Information__c
+                ,Name
+                ,Product_Information__r.Related_Product_Category__r.Display_Name__c
+                ,(SELECT Id
+                      ,ContentType
+                      ,BodyLength 
+                    FROM Attachments 
+                    WHERE IsDeleted = false ORDER BY CreatedDate desc) 
+             FROM Terms_and_Conditions__c
+             WHERE Product_Information__r.Related_Product_Category__r.Name=:sCategory
+               AND Id=:ListId
+               AND Effective_Start_Date__c <= :Datetime.now()
+             ORDER BY Effective_Start_Date__c DESC
+            Limit 1];
+        
+  if (listTC.Size()==0) {listTC = getCurrentTermsAndCondition('EBC');}
+  return listTC;
+    //Product_Information__c = :sProductInfoId
+}
+
+private static List<Terms_and_Conditions__c> getCurrentTermsAndCondition(String sCategory)
+{
+    List<Terms_and_Conditions__c> listTC = new List<Terms_and_Conditions__c>();
+    listTC = [SELECT Effective_Start_Date__c
+              ,Is_Current__c
+                ,Product_Information__c
+                ,Name
+                ,Product_Information__r.Related_Product_Category__r.Display_Name__c
+                ,(SELECT Id
+                      ,ContentType
+                      ,BodyLength 
+                    FROM Attachments 
+                    WHERE IsDeleted = false ORDER BY CreatedDate desc) 
+             FROM Terms_and_Conditions__c
+             WHERE Product_Information__r.Related_Product_Category__r.Name=:sCategory
+               AND Effective_Start_Date__c <= :Datetime.now()
+             ORDER BY Effective_Start_Date__c DESC
+            Limit 1];
+        
+    return listTC; 
+    
+}
 } // end of class vfIECEBC_PaymentComponentController
