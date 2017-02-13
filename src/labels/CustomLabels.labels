@@ -13230,6 +13230,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Thank you for contacting IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_ThankYouContacting_cns</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouContacting_cns</shortDescription>
+        <value>Thank you for contacting CNS</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_ThankYouInAdvance</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
