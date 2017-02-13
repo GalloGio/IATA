@@ -928,7 +928,7 @@ public without sharing class ISSP_Registration {
             system.debug('TradeName__c: ' + acc.TradeName__c);
 
             // for CNS automatically check the checkbox
-            if(communityName == 'CNS') {
+            if(communityName == 'CNS' && acc.Id == null) {
                 acc.CNS_Account__c = true;
                 acc.Location_Class__c = 'C';
                 con.CNS_Contact__c = true;
