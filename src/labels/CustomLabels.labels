@@ -13166,6 +13166,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>has changed your IATA Customer Portal status to</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_PortalUser_StatusChange_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_PortalUser_StatusChange_CNS</shortDescription>
+        <value>has changed your CNS Customer Portal status to</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Rejected_Reason</fullName>
         <categories>ISSP Emails</categories>
         <language>en_US</language>

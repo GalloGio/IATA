@@ -4,7 +4,7 @@
     <available>true</available>
     <description>Notify user when portal user status changes to Inactive CNS branding</description>
     <encodingKey>UTF-8</encodingKey>
-    <name>ISS - Portal User Status Change Inac VF_CNS</name>
+    <name>ISS_Portal_User_Status_Change_VF_CNS</name>
     <style>none</style>
     <subject>Notification of change of IATA User Portal Status</subject>
     <type>visualforce</type>
