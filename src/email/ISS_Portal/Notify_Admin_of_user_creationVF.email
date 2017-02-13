@@ -1,5 +1,3 @@
-<!--<messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}"  relatedToType="Contact" language="{!CASE(relatedTo.Preferred_Language__c, 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no', 'Chinese','zh', 'Japanese','ja','Portuguese','pt',   'EN')}">-->
-
 <messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Contact">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
