@@ -38,7 +38,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert lsConf;
         
         //Create Operational Calendar
-        Operational_calendar__c oc = new operational_calendar__c(First_Day__c = system.today(), Last_Day__c = system.today().addDays(15), Operation_Period_code__c = '123_456_789', Operation_Code__c='123_456', Period_Code__c='789');
+        Operational_calendar__c oc = new operational_calendar__c(First_Day__c = system.today(), Last_Day__c = system.today().addDays(15), Operation_Period_code__c = '123_456', Operation_Code__c='123_456', Period_Code__c='789');
         insert oc;
     }
 
