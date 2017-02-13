@@ -765,6 +765,7 @@ public class ams2gdp_BusinessLogic
  			if(territory.Appointment__r.Account__c != null){accountIds.add(territory.Appointment__r.Account__c);}
  		
  		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
+ 		Map<String, String> accreditationIdByAccountId = ams2gdp_Selector.getAccreditationByAccount(accountIds);
  		Map<String, Integer> rankByAccount = new Map<String, Integer>(); 
 		
  		//-- Build GSA Territory (GSA_Territory__c) records for each AMS Territory(AMS_Territory__c) records
@@ -797,6 +798,7 @@ public class ams2gdp_BusinessLogic
 
 			result.add(new GSA_Territory__c(AMS_GDP_Key__c = key+'GDP'
  				, Accreditation_ID__c = rank
+ 				, Related_Accreditation__c = accreditationIdByAccountId.get(territory.Appointment__r.Account__c)
  				, Related_Account__c = territory.Appointment__r.Account__c
  				, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(territory.Appointment__r.Account__c) 
  				, AIMS_Area_ID__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c
@@ -847,7 +849,8 @@ public class ams2gdp_BusinessLogic
 			location_class_codes.add(inspection.Account__r.Location_Class__c);
 			air_codes.add(air_code);
 
-			if(air_code.equalsIgnoreCase('IATAN')) iatan_status.add(inspection.Account__r.Status__c);
+			if(air_codes.equals('IATAN')||air_codes.equals('iatan')) 
+			iatan_status.add(inspection.Account__r.Status__c);
 			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(inspection.Account__r.Status__c);
 			//status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
 

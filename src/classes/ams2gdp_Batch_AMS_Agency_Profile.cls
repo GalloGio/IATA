@@ -34,6 +34,7 @@
 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Account__r.IATACode__c != null'
+			, 'GR_Item__c !=null'
 			, 'Account__c IN ('+accreditation_condition+')'
 		}; 
 
