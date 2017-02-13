@@ -3,7 +3,7 @@
 
 <br>
 Please note that {! IF(contains(User.Profile_Name__c, 'ISS Portal'), 'your ', '')} 
- {! IF(AND(contains(User.Profile_Name__c, 'ISS Portal', Contact.CNS_Contact__c) ), 'CNS ', 'IATA')}
+ {! IF(AND(contains(User.Profile_Name__c, 'ISS Portal', Contains(Contact.Community__c, 'CNS')) ), 'CNS ', 'IATA')}
  {! IF(contains(User.Profile_Name__c, 'ISS Portal'), 'Portal Administrator ' + User.Name, ' IATA')} has modified your Profile Information on the portal.
 <br>
 Your classification as a contact has been changed to:
