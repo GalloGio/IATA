@@ -634,6 +634,7 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		Most of the time, field to check is taken directly from the SIDRA/SIDRA Lite case.
 	***********************************************************************************************************************/ 
+	@TestVisible
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
 		
