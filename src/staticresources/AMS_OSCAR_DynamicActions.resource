@@ -14,7 +14,7 @@ var dyn_functions = {
                 var sResult = '';
                 if (r == true) {
                     
-					var argList = args.split(", ");
+                    var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
                     var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
@@ -173,18 +173,18 @@ var dyn_functions = {
                 }
                 sforce.connection.update(records);
            },
-		   SubmitForApproval:function (argsList) {
-		   
+           SubmitForApproval:function (argsList) {
+           
                /*
-				var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
-				
+                var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
+                
                 if(result == 'true'){
-                	alert('An email has been sent for your manager approval.');
+                    alert('An email has been sent for your manager approval.');
                 }
                 else{
-                	alert('An error has occurred.')
+                    alert('An error has occurred.')
                 }
-				*/
+                */
            },
            createIFAP:function(arg1){
                 var result = sforce.apex.execute("AMS_OSCAR_Webservice","createIFAPFromOSCAR", {oscarId: arg1}); 
@@ -434,7 +434,29 @@ var dyn_functions = {
                 if(confirm('Do you want to proceed reactivating agencies?')){
                     oscarIdsToRemove.push(arg);
 
-                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndoOrReactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"Reactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+
+            undoDeactivationBSPLink:function (arg) {
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed reactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndo",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
 
                     for (var i = 0; i < response.length; i++) {
                         if(response[i].result=='Ok'){
