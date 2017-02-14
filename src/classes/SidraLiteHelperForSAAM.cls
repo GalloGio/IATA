@@ -203,7 +203,7 @@ parentCase.Documentation_Complete__c.format() + ')');
                     if (parentCase.New_IFAP_Deadline_date__c >= Date.today() ) {
                         throw new SidraLiteException('Cannot update if New Deadline Date is future');
                     }
-                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                    if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                         childCase.SIDRA_Lite_Default_Date__c = Date.today();
                         childCase.Reason_for_Default__c = 'Annual Fees';
                         childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
@@ -221,7 +221,7 @@ parentCase.Documentation_Complete__c.format() + ')');
                     if (childCase.Propose_Default__c != null ) {
                         throw new SidraLiteException('Cannot create a 4th FS non-compliance case');
                     }
-                    if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                    if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                         childCase.Propose_Default__c = Date.today();
                         childCase.Termination_Reason__c = 'Non payment of Annual Fee';
                         childCase.Status = 'Re-opened';
@@ -246,7 +246,7 @@ parentCase.Documentation_Complete__c.format() + ')');
                 if (childCase.Propose_Default__c != null) {
                     throw new SidraLiteException('Cannot create a 3th FS non-compliance case');
                 }
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                     childCase.Propose_Default__c = Date.today();
                     childCase.Termination_Reason__c = 'Non payment of Annual Fee';
                     childCase.Status = 'Re-opened';
@@ -269,7 +269,7 @@ parentCase.Documentation_Complete__c.format() + ')');
                 if (parentCase.FS_Second_Deadline_Date__c >= Date.today()) {
                     throw new SidraLiteException('Cannot proceed with the 2nd FS non-compliance. The 2nd FS Deadline is ' + parentCase.FS_Second_Deadline_Date__c.format());
                 }
-                if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                     childCase.NOT_Date__c = Date.today();
                     childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
                     childCase.Status = 'Re-opened';
@@ -289,7 +289,7 @@ parentCase.Documentation_Complete__c.format() + ')');
                  }
                  parentCase.FS_third_non_compliance_date__c = Date.today();
                  //update child
-                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                 if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                     childCase.Propose_Default__c = DateTime.now();
                     childCase.Status = 'Re-opened';
                 } else {

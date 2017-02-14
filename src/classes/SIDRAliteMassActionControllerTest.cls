@@ -115,6 +115,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.filter.getListFinancialReviews();
         Test.stopTest();
     }
 

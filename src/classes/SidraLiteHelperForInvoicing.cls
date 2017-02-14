@@ -107,7 +107,7 @@ public with sharing class SidraLiteHelperForInvoicing {
                   if (parentCase.New_IFAP_Deadline_date__c >= Date.today() ) {
                       throw new SidraLiteException('Cannot update if New Deadline Date is future');
                   }
-                  if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                  if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                       childCase.SIDRA_Lite_Default_Date__c = Date.today();
                       childCase.Reason_for_Default__c = 'Annual Fees';
                       childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
@@ -125,7 +125,7 @@ public with sharing class SidraLiteHelperForInvoicing {
                   if (childCase.Propose_Default__c != null ) {
                       throw new SidraLiteException('Cannot create a 4th FS non-compliance case');
                   }
-                  if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+                  if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                       childCase.Propose_Default__c = Date.today();
                       childCase.Termination_Reason__c = 'Non payment of Annual Fee';
                   } else {
@@ -148,7 +148,7 @@ public with sharing class SidraLiteHelperForInvoicing {
               if (childCase.Propose_Default__c != null) {
                   throw new SidraLiteException('Cannot create a 3th FS non-compliance case');
               }
-              if (SidraLiteUtil.isAccountActive(parentCase.account)) {
+              if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
                   childCase.Propose_Default__c = Date.today();
                   childCase.Termination_Reason__c = 'Non payment of Annual Fee';
                   childCase.Status = 'Re-opened';

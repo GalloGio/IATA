@@ -286,18 +286,18 @@ global class WSSidraLite {
             if (account.Cases.isEmpty()) {
                 listNewComments.add(new CaseComment(
                     ParentId = sidraLiteCase.Id,
-                    CommentBody = 'Agent is already in Default, unable to find related SIDRA or SIDRA Lite case, please check the Account for other cases to update the new reinstatement requirements'
+                    CommentBody = 'Automated message: Agent is already in Default, unable to find related SIDRA or SIDRA Lite case, please check the Account for other cases to update the new reinstatement requirements'
                 ));
             } else {
                 Case relatedCase = account.Cases.get(0);
 
                 listNewComments.add(new CaseComment(
                     ParentId = sidraLiteCase.Id,
-                    CommentBody = 'Agent is already in default, please update Sidra/Sidra Lite ' + relatedCase.caseNumber + ' with the new reinstatement requirements'
+                    CommentBody = 'Automated message: Agent is already in default, please update Sidra/Sidra Lite ' + relatedCase.caseNumber + ' with the new reinstatement requirements'
                 ));
                 listNewComments.add(new CaseComment(
                     ParentId = relatedCase.Id,
-                    CommentBody = 'A new SIDRA lite case for ' + sidraLiteCase.SIDRA_lite_Reason__c + ' number ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
+                    CommentBody = 'Automated message: A new SIDRA lite case for ' + sidraLiteCase.SIDRA_lite_Reason__c + ' number ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
                 ));
 
                 // patch to set the terminated manual entry in new case, taking it from the termination date in realted Case
