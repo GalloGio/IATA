@@ -1,3 +1,4 @@
+
 <messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Contact">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
