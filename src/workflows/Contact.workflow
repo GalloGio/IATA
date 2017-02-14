@@ -123,6 +123,18 @@
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISS_Send_Change_Of_Portal_User_Status_Notification_cns</fullName>
+        <description>ISS Send Change Of Portal User Status Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
+    </alerts>
+    <alerts>
         <fullName>Renewal_Email_alert</fullName>
         <ccEmails>emailtosalesforce@63lv520ssbnqnqm4j9qg25k5r.2-8tfeay.eu3.le.salesforce.com</ccEmails>
         <description>Renewal Email alert</description>
@@ -437,7 +449,7 @@
             <name>ISS_Send_Change_Of_Portal_User_Status_Notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal Status. New users get the Welcome email message so we don&apos;t want to send this out to them, nor to Rejected or Inactivated users.</description>
         <formula>ISCHANGED( User_Portal_Status__c ) &amp;&amp;  (PRIORVALUE(User_Portal_Status__c)  &lt;&gt;  &quot;&quot;) &amp;&amp;  ( NOT(ISPICKVAL(User_Portal_Status__c, &apos;Rejected&apos;))  || NOT(ISPICKVAL(User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL(User_Portal_Status__c, &apos;Approved User&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Approved Admin&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Regional Administrator&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
