@@ -972,10 +972,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         c.Customer_recovery__c = true ;
         c.Status = 'Customer Recovery';
         c.RecordTypeId = RT_ComplaintIDFS_Id;
-              
-        if(RoleName.contains('Distribution - Airline Coding & MITA'))
+              //**INC301099** Delete this rule
+        /*if(RoleName.contains('Distribution - Airline Coding & MITA'))
             c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
-        else
+        else*/ 
             c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);

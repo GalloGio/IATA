@@ -6144,6 +6144,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         // USE Static Method
         if(checkCase == null || checkCase.size() == 0 ){
             AMS_RecordCreatorWebservice.createAccreditation(accountId, accreditationId, typeOfProcess, caseId);
+        }else{
+            case auxOscarCase = checkCase.get(0);
+            List<AMS_OSCAR__c> checkOscar = [Select id,Status__c  from AMS_OSCAR__c where id = :auxOscarCase.OSCAR__c];
+            AMS_OSCAR__c auxOscar = checkOscar.get(0);
+            auxOscar.Status__c = 'Open';
+            update auxOscar;
         }
          
     }

@@ -1776,7 +1776,7 @@ global with sharing class IDCardUtil {
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             idCards[0].Cancellation_Date__c = Date.Today(); 
-                            idCards[0].MustSyncWithAIMS__c = true;                            
+                            //fidCards[0].MustSyncWithAIMS__c = true;                            
                             update idcards[0];
                         }
                     } 

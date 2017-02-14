@@ -112,7 +112,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			*/
 			
-			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId 
+			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId, CNS_Agency__c
 							from Account 
 							where id in:mapAllHOs.keyset()]){
 				//setAllAccntsHiearchy.add(a.Id);
@@ -436,6 +436,7 @@ public class AMS_OscarCase_RiskMgmt {
 		//if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
 		//	AACC.DEF_Non_Payment__c = true;
 		
+		//This was added for all change codes beeing created in AMS_ChangeCodesHelper
 		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
 		
 		AACC.AIMS_ID__C = sUniqueId;
