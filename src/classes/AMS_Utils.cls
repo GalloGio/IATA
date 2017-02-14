@@ -1057,7 +1057,7 @@ public without sharing class AMS_Utils {
                     String onlineAccField = fieldsMapping.get(accfield);
                     Object newValue = onlineAcc.get(onlineAccField);
 
-                    if( acc.get(accfield) != newValue ){ 
+                    if( acc.get(accfield) != newValue ){
                         
                         if(AMS_AccountTriggerHandler.minorChangesAccountFields.contains(accfield.toLowerCase())){
                             accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', accfield, String.valueOf(acc.get(accfield)), String.valueOf(newValue)));
