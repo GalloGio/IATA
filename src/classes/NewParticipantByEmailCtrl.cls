@@ -16,13 +16,22 @@ public with sharing class NewParticipantByEmailCtrl {
                 lg = [SELECT Local_governance_type__c FROM LocalGovernance__c WHERE Id = :p.Local_Governance__c];
                 //p.Local_Group_Type__c = p.Local_Governance__r.Local_governance_type__c;
                 p.Local_Group_Type__c = lg.Local_governance_type__c;
+                changeParticipantRecordType();
              }
         }catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'The local group specified was not found'));            
         }
-        
         chooseContact = false;
-        c = new Contact();
+        String idFromPageStr = ApexPages.currentPage().getParameters().get('retURL').split('/')[1];
+        Id idFromPage = (Id)idFromPageStr;
+        Schema.SObjectType oT = idFromPage.getSObjectType();
+        Schema.DescribeSObjectResult descOR = oT.getDescribe();
+        if(descOR.getName() == 'Contact')
+        {
+            c = [SELECT id, Email FROM Contact WHERE id = :idFromPage];
+        } else {
+            c = new Contact();
+        }
     }
     
     public PageReference MySave(){ 
@@ -109,12 +118,35 @@ public with sharing class NewParticipantByEmailCtrl {
     
  		if(c.Account.RecordTypeId==rtHQ)
  			return c.AccountId;
-    	if(c.Account.RecordTypeId==rtBr)
+    	else if(c.Account.RecordTypeId==rtBr)
  			return c.Account.Top_Parent__c;
-    	if(c.Account.RecordTypeId==rtAg)
+    	else if(c.Account.RecordTypeId==rtAg)
     		return c.Account.ParentId==null ? c.AccountId : c.Account.ParentId;
+        else
+            return c.AccountId;
     	
     	return null;
     }
-    
+
+    public void changeParticipantRecordType()
+    {
+
+        String idGroup = ApexPages.currentPage().getParameters().get('paramTestGroup');
+        if(idGroup == null)
+        {
+            idGroup = p.Local_Governance__c;
+        }
+        lg = [SELECT Local_governance_type__c, RecordTypeId FROM LocalGovernance__c WHERE Id = :idGroup];
+        RecordType rtGroup = [SELECT Name FROM RecordType WHERE Id = :lg.RecordTypeId];
+        RecordType rtParticipantLocal = [SELECT Id FROM RecordType WHERE Name = 'Local Group Participants'];
+        RecordType rtParticipantRegDiv = [SELECT Id FROM RecordType WHERE Name = 'Reg/Div Group Participants'];
+        if(rtGroup.Name == 'Local Groups')
+        {
+            p.RecordTypeId = rtParticipantLocal.Id;
+        } else {
+            p.RecordTypeId = rtParticipantRegDiv.Id;
+        }
+
+    }
+
 }

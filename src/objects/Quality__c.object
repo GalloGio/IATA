@@ -595,6 +595,16 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <visibleLines>2</visibleLines>
     </fields>
     <fields>
+        <fullName>Additional_analysis_optional__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional analysis (optional)</label>
+        <length>3000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Africa_MENA_CC__c</fullName>
         <externalId>false</externalId>
         <label>Africa &amp; MENA - Countries Concerned</label>
@@ -1576,6 +1586,194 @@ IF (Action6_Closure_Date__c &lt;= Action6_Due_Date__c,&quot;Met&quot;,&quot;&quo
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Apparent_Cause__c</fullName>
+        <externalId>false</externalId>
+        <label>Apparent Cause</label>
+        <picklist>
+            <controllingField>Reason_for_requesting_exception__c</controllingField>
+            <picklistValues>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change in process in market (DD, VMFR, R=V… etc.)</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other (fill the field for other)</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Annual fees - Extend deadline for payment</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Expedite Conference decision</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+                <controllingFieldValues>AM ARM - IRR/Def Issue - Withdraw or Not Issue</controllingFieldValues>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+                <controllingFieldValues>Other (fill the field for other)</controllingFieldValues>
+                <controllingFieldValues>RS - Change of Calendar against the resolution</controllingFieldValues>
+                <controllingFieldValues>RS - Perform activities outside IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Perform adjustment in IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Withhold funds from airline</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>File upload error(IFAP/Portal)</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Extend deadline for submission</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</controllingFieldValues>
+                <controllingFieldValues>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+                <controllingFieldValues>AM ARM - Financial Accounts Issue - Waive need of financial review</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Perform activities outside IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Perform adjustment in IRIS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Perform activities outside IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Perform adjustment in IRIS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System error (BSPLink, CASSLink… etc)</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Perform activities outside IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Perform adjustment in IRIS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Perform activities outside IRIS</controllingFieldValues>
+                <controllingFieldValues>RS - Perform adjustment in IRIS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Withhold funds from airline</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+                <controllingFieldValues>RS - Withhold funds from airline</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error</fullName>
+                <default>false</default>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Extension</fullName>
+                <default>false</default>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Roles &amp; Responsibilities</fullName>
+                <default>false</default>
+                <controllingFieldValues>Excluded from Exception Analysis</controllingFieldValues>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Apparent_Cause_if_other__c</fullName>
+        <externalId>false</externalId>
+        <label>Apparent Cause (if other)</label>
+        <length>3000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Approval_Status__c</fullName>
@@ -3137,6 +3335,27 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <visibleLines>6</visibleLines>
     </fields>
     <fields>
+        <fullName>In_BCP_Scope__c</fullName>
+        <externalId>false</externalId>
+        <label>In BCP Scope?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Input_CM__c</fullName>
         <externalId>false</externalId>
         <label>Input CM</label>
@@ -3227,6 +3446,15 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Is_OI_logged__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is OI logged?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Key_Control_Type__c</fullName>
         <externalId>false</externalId>
         <label>Key Control Type</label>
@@ -3256,252 +3484,202 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
             <picklistValues>
                 <fullName>KC01 - Settlement Model Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC02 - Cross Border Transfer Rule</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC03 - Proration Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC04 - Documentation of Changes</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC05 - Over-Rem Settled in Next Cycle</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC06 - Claw-back Thru Adj Transaction</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC07 - HAR Oerformed by IATA Staff</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC08 - Approval of Set by 2 Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC09 - Seg of Duties Rule Followed</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC10 - Sanity Check on Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC11 - Suspended Agents/Airlines Flagged</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC12 - Approval of Updated Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC13 - VMFR Based on DPC Billing</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC14 - Subledger Implemented</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC15 - Direct Debit File Approval</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC16 - Adjustments to Billing File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC17 - Extrxn of Flggd Def AG w/ -ve Rem</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC18 - Settlement Calculation Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC19 - Holding of Bank Account Details</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC20 - Changes to AL Bank Accnt Details</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC21 - Rvw: AL Accnt Chnges on Set File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC22 - Manager Audit of Settlement File</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC23 - Set File Review by Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC24 - Set File Approval by Signatories</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC25 - Settlement Reports Produced</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC26 - Review of Settlement Reports</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC27 - Bank Transactions Reports Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC28 - Cash/Cheques Received in Office</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC29 - Agent Guarantees in Cash Deposits</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC30 - Bank Transaction Report Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC31 - Matching</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC32 - Exception Report Prep &amp; Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC33 - Over Remittance</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC34 - Short Remittance Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC35 - Negative Settlement Report Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC36 - Late Remittance Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC37 - Proration Adjustment File Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC38 - Validation of AG Defaults Action</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC39 - HAR Preparation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC40 - R&amp;S Manager HAR Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC41 - Amounts Entered in Acct Records</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC42 - CM/HUB Leader HAR Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC43 - Collection Method Rules</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC44 - IATA Agent Code Identifier Rule</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC45 - Weblink Sales Treatment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC46 - Weblink Sales Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC47 - 3rd Party Services Treatment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC48 - 3rd Party Sales Review</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC49 - Extrxn of WEBL &amp; 3rd-P Transaxns</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC50 - WEBL-non Air Discrepancy Report</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC01</fullName>
@@ -3526,7 +3704,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC01A</fullName>
@@ -3547,7 +3724,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC02</fullName>
@@ -3572,7 +3748,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC03</fullName>
@@ -3597,7 +3772,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC04</fullName>
@@ -3621,7 +3795,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC05</fullName>
@@ -3646,7 +3819,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC06</fullName>
@@ -3668,7 +3840,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC07</fullName>
@@ -3690,7 +3861,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC08</fullName>
@@ -3712,7 +3882,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC09</fullName>
@@ -3734,7 +3903,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC10</fullName>
@@ -3755,7 +3923,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC11</fullName>
@@ -3776,7 +3943,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC12</fullName>
@@ -3797,7 +3963,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC13</fullName>
@@ -3818,7 +3983,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC14</fullName>
@@ -3839,7 +4003,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC15</fullName>
@@ -3860,7 +4023,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC16</fullName>
@@ -3881,7 +4043,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC17</fullName>
@@ -3902,7 +4063,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC18</fullName>
@@ -3923,7 +4083,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC19</fullName>
@@ -3944,7 +4103,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC20</fullName>
@@ -3965,7 +4123,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC21</fullName>
@@ -3986,7 +4143,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC22</fullName>
@@ -4007,7 +4163,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC23</fullName>
@@ -4028,7 +4183,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC24</fullName>
@@ -4049,7 +4203,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC25</fullName>
@@ -4070,7 +4223,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC26</fullName>
@@ -4091,7 +4243,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC27</fullName>
@@ -4112,7 +4263,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC28</fullName>
@@ -4133,7 +4283,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC29</fullName>
@@ -4154,7 +4303,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC30</fullName>
@@ -4175,7 +4323,6 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -7160,6 +7307,30 @@ AND(Mandatory_Sec__c = &quot;YES&quot;, Responded_Sec__c = FALSE)
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Number_of_affected_customers__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>AG for AM/ARM, AL for AP</inlineHelpText>
+        <label>Number of affected customers</label>
+        <length>3000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>OI_number_if_logged__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>OI number (if logged)</label>
+        <referenceTo>Operational_Improvements__c</referenceTo>
+        <relationshipLabel>Exceptions</relationshipLabel>
+        <relationshipName>Exceptions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Object_Type__c</fullName>
         <description>Picklist to identify the object type</description>
         <externalId>false</externalId>
@@ -7701,6 +7872,81 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reason_for_requesting_exception__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason for requesting exception</label>
+        <picklist>
+            <picklistValues>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission (or increase)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG/FS / change BG/FS requirements</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - IRR/Def Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other (fill the field for other)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Reason_for_requesting_exception_if_othe__c</fullName>
+        <externalId>false</externalId>
+        <label>Reason for requesting exe (if other)</label>
+        <length>3000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
@@ -8380,14 +8626,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Remittance &amp; Settlement Automated (RS-A)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement Manual (RS-M)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Airline &amp; Location Coding and MITA/BIETA</fullName>
                 <default>false</default>
             </picklistValues>
@@ -8421,6 +8659,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </picklistValues>
             <picklistValues>
                 <fullName>International Airlines Travel Agent Network (IATAN)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Remittance &amp; Settlement (RS)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -8670,7 +8912,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Ad-hoc R&amp;S Processes</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Agency Changes</fullName>
@@ -8765,8 +9006,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Discrepancy Follow-up</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>DPC Management</fullName>
@@ -8806,7 +9045,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Hinge Account Reconciliation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Implementation and Appointment</fullName>
@@ -8939,13 +9177,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Master Data Management</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Matching</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Negative Remittance / Over Payment</fullName>
@@ -8984,8 +9219,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
                 <controllingFieldValues>Simplified Interline Settlement (SIS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -9011,8 +9245,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Proration and Adjustment</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Publications</fullName>
@@ -9023,7 +9255,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Reconciliation</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Recovery Service</fullName>
@@ -9033,8 +9264,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Remittance</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Remittance &amp; Settlement</fullName>
@@ -9054,8 +9283,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             <picklistValues>
                 <fullName>Settlement</fullName>
                 <default>false</default>
-                <controllingFieldValues>Remittance &amp; Settlement Automated (RS-A)</controllingFieldValues>
-                <controllingFieldValues>Remittance &amp; Settlement Manual (RS-M)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Systems and Products Lifecycle Management</fullName>
@@ -11650,6 +11877,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -12498,6 +12820,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15459,6 +15792,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -15637,14 +16025,6 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Post-Termination Recovery %28PTR%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16980,6 +17360,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -17828,6 +18303,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20789,6 +21275,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -20970,11 +21511,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22354,6 +22891,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -23202,6 +23834,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26163,6 +26806,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -26344,11 +27042,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27729,6 +28423,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -28593,6 +29382,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31558,6 +32358,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -31583,11 +32438,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32919,6 +33770,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -33783,6 +34729,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36748,6 +37705,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -36773,11 +37785,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38154,6 +39162,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -39002,6 +40105,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41963,6 +43077,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -42144,11 +43313,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43484,6 +44649,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -44332,6 +45592,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47293,6 +48564,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -47474,11 +48800,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -48858,6 +50180,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -49706,6 +51123,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52667,6 +54095,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -52848,11 +54331,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54233,6 +55712,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -55081,6 +56655,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58010,6 +59595,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -58191,11 +59831,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -59531,6 +61167,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -60379,6 +62110,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63308,6 +65050,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -63489,11 +65286,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -64873,6 +66666,101 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Agent bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bank error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in process in market %28DD%2C VMFR%2C R%3DV%E2%80%A6 etc%2E%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change in the Local Financial Criteria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit card processing error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error from other department</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extension to Force Majeure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>File upload error%28IFAP%2FPortal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Assessor error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDS error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Garnishment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Law change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Roles %26 Responsibilities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System error %28BSPLink%2C CASSLink%E2%80%A6 etc%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -65721,6 +67609,17 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Regional Execution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>In_BCP_Scope__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68650,6 +70549,61 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Reason_for_requesting_exception__c</picklist>
+            <values>
+                <fullName>AM ARM - Annual fees - Extend deadline for payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Expedite Conference decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Extend deadline for submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Accounts Issue - Waive need of financial review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - Extend deadline for submission %28or increase%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - Financial Security Issue - waive need for BG%2FFS %2F change BG%2FFS requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AM ARM - IRR%2FDef Issue - Withdraw or Not Issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Excluded from Exception Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other %28fill the field for other%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Change of Calendar against the resolution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform activities outside IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Perform adjustment in IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -68831,11 +70785,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>

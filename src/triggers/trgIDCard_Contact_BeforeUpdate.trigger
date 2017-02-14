@@ -1,4 +1,4 @@
-trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert) {
+trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before insert) {
 
     boolean CardToSync = false;
 
@@ -15,7 +15,9 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
             }
     }
 
-    if (trigger.isUpdate) {
+    if (trigger.isUpdate && IDCardUtil.isFirstTime) {
+
+        List<Contact> standardContacts = new List<Contact>();
 
         // force to sync ver num and ver num 2
         for (Contact c : trigger.new) {
@@ -27,8 +29,11 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
             } else if (c.Ver_Number_2__c != trigger.oldMap.get(c.Id).Ver_Number_2__c && !c.Ver_Number_2__c.startswith('Z')) {
                 c.Ver_Number__c = Decimal.valueOf(c.Ver_Number_2__c);
             }
+
+            if(c.RecordTypeId == contactTypeID) standardContacts.add(c);
         }
 
+        if(standardContacts.isEmpty()) return;
 
         //RA 7/8/2013
         //Shows a warning when the contact last name is update if an active IDCard is linked to the contact
@@ -40,14 +45,17 @@ trigger trgIDCard_Contact_BeforeUpdate on Contact (before update, before Insert)
         List <ID_Card__c> IDCards = [Select i.Valid_To_Date__c , i.Related_Contact__r.Id From ID_Card__c i where i.Valid_To_Date__c > Today and i.Cancellation_Date__c = null  and i.Card_Status__c = 'Printed/Delivered' and i.Related_Contact__c in : ids and  RecordTypeId = : rectypeid ];
 
 
-        for (Contact CurrentContact : trigger.new) {
+        for (Contact CurrentContact : standardContacts) {
+        	
+        	IDCardUtil.isFirstTime = false;
+        	
             //CurrentContact.addError(IDCards.size()+'   Related_Contact__r.Id  ' +IDCards[0].Related_Contact__r.Id+ '  CurrentContact.Id ' +CurrentContact.Id );
             Boolean isAdmin = false;
             if (currentUserProfile.Name.toLowerCase().contains('system administrator'))
                 isAdmin = true;
 
             Contact OldContact = Trigger.oldMap.get(CurrentContact.ID);
-            if (CurrentContact.RecordTypeId == contactTypeID && (!isAdmin || test.isRunningTest())) {
+            if (!isAdmin || test.isRunningTest()) {
 
                 //checks if theres any active IDCard for this contact.
 

@@ -108,6 +108,7 @@ public class NewParticipantByEmailCtrlTest {
         
         
         Test.setCurrentPage(new PageReference('NewParticipantByEmail'));
+        ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
         NewParticipantByEmailCtrl ctrl = new NewParticipantByEmailCtrl(
             								new ApexPages.StandardController(
                                                 new Participant__c(Local_Governance__c = lg.Id)
@@ -147,7 +148,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
         parts = [SELECT ID FROM Participant__c];
         //system.assertEquals(1, parts.size());
         
-        
+        ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
         ctrl = new NewParticipantByEmailCtrl(
             new ApexPages.StandardController(
                 new Participant__c(Local_Governance__c = lg.Id)
@@ -174,6 +175,7 @@ lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Go
         
         
         // try again to insert an email shared by 2 contacts and choose one of them who is incomplete
+        ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
         ctrl = new NewParticipantByEmailCtrl(
             new ApexPages.StandardController(
                 new Participant__c(Local_Governance__c = lg.Id)

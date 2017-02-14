@@ -50,7 +50,14 @@
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
                                 <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-                                <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_mega_menu}">{!mega_menus[product.megaMenu]}</a></li>
+								<li>
+									<a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+								</li>
+								<li>
+									<a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+								</li>
                                 <li>{!product.ProductName}</li>
                             </ol>
 
@@ -89,6 +96,18 @@
                                                         <td>
                                                             <apex:outputText styleClass="item-price item-price discounted-price" value="{0, number, currency}">
                                                                 <apex:param value="{!product.CustomerPrice}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:variable>
+
+                                                <!-- Setup fee if exist -->
+                                                <apex:variable var="setupFee" value="1" rendered="{! AND(product.setupFee != null , product.setupFee > 0) }">
+                                                    <tr>
+                                                        <th scope="row"><i>Flat fee</i></th>
+                                                        <td>
+                                                            <apex:outputText styleClass="item-price regular-price" value="{0, number, currency}">
+                                                                <apex:param value="{!product.setupFee}" />
                                                             </apex:outputText>
                                                         </td>
                                                     </tr>

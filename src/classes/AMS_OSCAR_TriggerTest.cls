@@ -1,7 +1,7 @@
 @isTest class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
-		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
     }
 
     @isTest static void insertOSCARTest() {
@@ -42,16 +42,6 @@
         
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-
-        /*List<AMS_Change_Code__c> accs = new List<AMS_Change_Code__c>();MACREVIEW
-        
-        AMS_Change_Code__c acc1 = new AMS_Change_Code__c(Name = 'FIN', Description__c = 'test FIN');MACREVIEW
-        AMS_Change_Code__c acc2 = new AMS_Change_Code__c(Name = 'DIS', Description__c = 'test DIS');MACREVIEW
-        
-        accs.add(acc1);MACREVIEW
-        accs.add(acc2);MACREVIEW
-        
-        insert accs;MACREVIEW *//**/
                 
         AMS_Oscar__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
@@ -123,7 +113,7 @@
     }
 
     @isTest static void updateOSCARTestOKSecondStep() {
-		Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         Test.startTest();
         
@@ -298,9 +288,9 @@
         Test.startTest();
         
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		update a;
-		Contact c = [select id from Contact where AccountId = :a.Id];
-		
+        update a;
+        Contact c = [select id from Contact where AccountId = :a.Id];
+        
         AMS_OSCAR__c oscar = [SELECT id, Status__c, OwnerId, (SELECT Id FROM Cases__r) from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
 
@@ -310,7 +300,7 @@
         }catch(DmlException e){ /*validation on queues*/ }
                      
         try{
-            oscar.Status__c = 'Closed_Not Accepted'; 
+            oscar.Status__c = 'Closed_ Not Accepted'; 
             update oscar;
         }     catch(DmlException e){ /*validation on queues*/ }               
 
@@ -413,7 +403,7 @@
         
         oscar = [SELECT id, status__c from AMS_OSCAR__C LIMIT 1];
         
-        oscar.status__c = 'Closed_Not Accepted';
+        oscar.status__c = 'Closed_ Not Accepted';
          
         try{
             update oscar;   
@@ -446,8 +436,8 @@
         Test.startTest();
         
         // List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
-		List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
-		
+        List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
+        
         String americas = null;
         String europe = null;
         String china = null;
@@ -462,7 +452,7 @@
             else if(q.DeveloperName.contains('China'))
                 china = q.id;
             else if(q.DeveloperName.contains('Africa'))
-            	africa = q.id;
+                africa = q.id;
             else if(q.DeveloperName.contains('AgencyManagementAP'))
                 asia = q.id;
         }
@@ -527,8 +517,8 @@
         ctry.Region__c = 'China & North Asia';
         update ctry;
 
-		a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		
+        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
         oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='4');
         insert oscar;
 
@@ -559,21 +549,37 @@
 
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
-        Test.startTest();
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
+        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
+        Test.startTest();
+        
+        Integer c = 0;
 
         for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
         {
+
+            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+            changeCode.name = 'NEW';
+            changeCode.reasonCode = '21';
+
+            changeCode.memoText = 'New application in progress';
+            changeCode.reasonDesc  = 'NEW APPLICATION';
+            changeCode.status  = '2';
+
+            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
 
             update oscarT;
 
+            if( c== 0){           
+            
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
             update oscarT;
 
@@ -582,6 +588,9 @@
             System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code fin created
 
+            }
+            else{
+
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -589,6 +598,10 @@
 
             System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code dis created
+                
+            }
+            
+            c++;
         }
 
         Test.stopTest();
@@ -693,6 +706,169 @@
         Test.stopTest();
     }
 
-    
-    
+    @isTest static void testSTEP7() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP7__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, IRIS_update_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.debug('oscar.IRIS_update_result__c' + oscar.IRIS_update_result__c);
+
+        system.assertEquals(oscar.IRIS_update_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP7__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, IRIS_update_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.IRIS_update_result__c, AMS_Utils.FAILED);
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP25() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP25__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Dossier_Validation__c, Validation_result__c, Status__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];
+
+        system.assertEquals(oscar.Dossier_Validation__c, Date.today());
+        system.assertEquals(oscar.Validation_result__c, AMS_Utils.PASSED);
+        system.assertEquals(oscar.Status__c, 'Pending Approval');
+
+        oscar.STEP25__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Dossier_Validation__c, Validation_result__c, Status__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.AGENCYCHANGES limit 1];
+
+        system.assertEquals(oscar.Dossier_Validation__c, Date.today());
+        system.assertEquals(oscar.Validation_result__c, AMS_Utils.FAILED);
+        system.assertEquals(oscar.Status__c, 'On Hold_Internal');
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP16() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
+            STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.BANKACCCHANGES;
+        oscar.STEP16__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar = [SELECT id, Finalization_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.Finalization_result__c, AMS_Utils.PASSED);
+
+        oscar.STEP16__c = AMS_Utils.FAILED;
+
+        update oscar;
+
+        oscar = [SELECT id, Finalization_result__c FROM AMS_OSCAR__c where Process__c = :AMS_Utils.BANKACCCHANGES limit 1];
+
+        system.assertEquals(oscar.Finalization_result__c, AMS_Utils.FAILED);
+
+        Test.stopTest();
+    }
+
+    @isTest static void testAppointmentsUpdate() {
+
+        AMS_OSCAR__c oscar = [SELECT Id, STEP10__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_GSA limit 1];
+
+        oscar.STEP10__c = AMS_Utils.FAILED;
+
+        update oscar;
+        
+        Test.startTest();
+
+        oscar.STEP10__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        List<AMS_Inspection__c> inspections = new List<AMS_Inspection__c>();
+
+        inspections = [SELECT id, Accreditation_Endorsement_Status_code__c FROM AMS_Inspection__c where OSCAR__c = :oscar.Id];
+
+        for(AMS_Inspection__c insp: inspections)
+            system.assertEquals(insp.Accreditation_Endorsement_Status_code__c, '9');
+
+        Test.stopTest();
+    }
+
+    @isTest static void testSTEP29() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP29__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP29__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void testVR_1() { 
+
+        Account a = [SELECT id,Status__c from Account where Name = 'Test2 Agency' LIMIT 1];
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP30__c, STEP31__c, STEP32__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+
+        Id volRelRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('VOLUNTARY RELINQUISHMENT').getRecordTypeId();
+
+        /*ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+        agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = a.Id));
+
+        insert agenciesinvolved;*/
+        
+        Test.startTest();
+
+        oscar.RecordTypeId = volRelRT;
+        oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
+        oscar.Form_Effective_date__c = Date.today();
+        oscar.STEP6__c = AMS_Utils.PASSED;
+       
+        update oscar;
+
+        oscar.Suspend_in_BSPLink_CASSLink__c = true;
+        oscar.STEP30__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar.STEP31__c = AMS_Utils.PASSED;
+
+        update oscar;
+        
+        oscar.STEP32__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
 }

@@ -239,7 +239,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS via GSSA</fullName>
+                <fullName>CASS Export via GSSA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Export Direct Participation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Import Direct Participation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Import via GHA</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>

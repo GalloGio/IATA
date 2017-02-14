@@ -94,6 +94,12 @@ global class AMS_OSCAR_Attachments {
         return link;
     }
 
+    webService static string getExpiringLinkWS(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+
     /*
         Delete an attachment archived attachment or Amazon Attachment
     */
@@ -101,15 +107,9 @@ global class AMS_OSCAR_Attachments {
     global static Boolean deleteAttachment(string strId, String fullName) {
         Schema.SObjectType attType = Id.valueOf(strId).getSObjectType();
         Boolean result = false;
-        if (attType == Schema.Attachment.SObjectType) {
-            result = deleteSalesforceAttachment(strId);
-        }
-        if (attType == Schema.Archived_Attachment__c.SObjectType) {
-            result = deleteArchivedAttachment(strId);
-        }
-        if (attType == Schema.AmazonFile__c.SObjectType) {
-            result = deleteAmazonAttachment(strId, fullName);
-        }
+        if (attType == Schema.Attachment.SObjectType)               result = deleteSalesforceAttachment(strId);
+        if (attType == Schema.Archived_Attachment__c.SObjectType)   result = deleteArchivedAttachment(strId);
+        if (attType == Schema.AmazonFile__c.SObjectType)            result = deleteAmazonAttachment(strId, fullName);
         //System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
         return result;
     }
@@ -203,11 +203,8 @@ global class AMS_OSCAR_Attachments {
     
     
     public Boolean getCanAttachFilesToCase() {
-        if(cse.Status != 'Draft') {
-            return true;
-        } else {
-            return false;
-        }
+        if(cse.Status == 'Draft') return false;
+        else return true;
     }
     
     public PageReference goToAttachmentPage() {

@@ -60,6 +60,9 @@
         <fullName>Email</fullName>
     </fields>
     <fields>
+        <fullName>IsRecurrence</fullName>
+    </fields>
+    <fields>
         <fullName>IsVisibleInSelfService</fullName>
     </fields>
     <fields>
@@ -888,7 +891,7 @@
     ISBLANK( ActivityDate ) 
   ) 
 )</errorConditionFormula>
-        <errorMessage>Please fill in the Milestone and the Deadline fields</errorMessage>
+        <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Close_Task</fullName>

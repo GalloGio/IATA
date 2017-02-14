@@ -279,6 +279,14 @@ private class AMS_InspectionHelperTest {
             		System.assertEquals('Approved', i.Account__r.Status__c);
             }
     
+            Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
+
+            System.assertEquals(isFalse,false);
+
+            Boolean isTrue = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins2);
+
+            System.assertEquals(isTrue,true);
+            
             Test.stopTest();
 	}
 	
@@ -313,5 +321,42 @@ private class AMS_InspectionHelperTest {
         
         a1 = [select Expiry_Date__c from Account where id = :a1.Id];
 		System.assertEquals(System.today(), a1.Expiry_Date__c);        
+    }
+
+    @isTest static void test_1To1RelationshipAppointmentMSO(){
+        Id StandardAccountRt = AMS_Utils.getId('Account', 'Standard_Account');
+        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry ;
+
+        Id airlineRT = AMS_Utils.getId('Account', 'IATA_Airline');
+        Account airline = new Account();
+        airline.Name = 'TestAirline';
+        airline.Sector__c = 'Airline';
+        airline.IATA_ISO_Country__c = ctry.id;
+        airline.RecordTypeId = airlineRT;
+        insert airline;
+
+        List<Account> agencylist = new List<Account>();
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = StandardAccountRt,IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', Category__c = 'MSO Member Sales Office');
+        agencylist.add(a1);
+        insert agencylist;
+
+        
+        Test.startTest();
+        List<AMS_Inspection__c> agencyInspectionList = new List<AMS_Inspection__c>();
+        AMS_Inspection__c ins1 = new AMS_Inspection__c(Account__c=a1.id,Airline__c=airline.id);
+        insert ins1;
+
+        AMS_Inspection__c ins2 = new AMS_Inspection__c(Account__c=a1.id,Airline__c=airline.id);
+
+        try {
+            insert ins2;
+        } catch (Exception e) {
+            Boolean expectedExceptionThrown =  e.getMessage().contains('An MSO Agency can only have 1 Appointment') ? true : false;
+            System.assertEquals(expectedExceptionThrown, true);
+        }
+
+             
     }
 }

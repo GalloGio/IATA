@@ -55,10 +55,10 @@ global with sharing class GenericAttachmentListController {
         
         if (this.isForPortal) {
             this.showFileIdentifier = false;
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
+            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
         } else {
             // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-            cse = [Select Recordtype.DeveloperName, Status from Case where id = :this.id];
+            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
             set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
             this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
         }
@@ -221,7 +221,7 @@ global with sharing class GenericAttachmentListController {
 	
 	
 	public Boolean getCanAttachFilesToCase() {
-        if(cse.Status != 'Draft') {
+        if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
             return true;
         } else {
             return false;
@@ -230,5 +230,29 @@ global with sharing class GenericAttachmentListController {
     
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
+    }
+
+    /**
+        download files from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getFilesFromAmazon(String objectId) {
+
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.name;
+            filedef.url = getExpiringLink(attach.fullName);
+            filedef.data = '';
+            listFileDef.add(filedef);
+        }
+        system.debug('aqui listFileDef ' + listFileDef);
+        return listFileDef;
+    }
+
+        global class FileDef {
+        String name;
+        String url;
+        String data;
     }
 }

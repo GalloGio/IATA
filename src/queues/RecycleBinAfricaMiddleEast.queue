@@ -4,6 +4,9 @@
     <email>csnotificationsame@iata.org</email>
     <name>Recycle Bin Africa &amp; Middle East</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>

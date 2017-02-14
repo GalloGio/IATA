@@ -4387,9 +4387,9 @@ IF(Account.IATACode__c != &apos;&apos;
 /*Prod*/ 
 IF(Account.IATACode__c != &apos;&apos; 
 , 
-&quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
+&quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
-&quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
+&quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Credit Card Payment Link</label>
@@ -5677,6 +5677,17 @@ Formula field that copies the E&amp;F Type.</description>
         <formula>TEXT (Account.EF_Type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>E&amp;F Account Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Client_Services_Specialist_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_Client_Services_Specialist_Email__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client Services Specialist Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -27209,9 +27220,10 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <fullName>Change_id_card_holder_cont_name</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
-ISPICKVAL($User.UserType,&quot;Standard&quot;), 
+ISPICKVAL($User.UserType,&quot;Standard&quot;),
 ID_Card_Holder__c=true,
-ISCHANGED(ISSP_Contact_Name__c )
+ISCHANGED(LastName),
+UPPER(PRIORVALUE(LastName)) &lt;&gt; UPPER(LastName)
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change name, please raise an internal case to ID Card team</errorMessage>
     </validationRules>

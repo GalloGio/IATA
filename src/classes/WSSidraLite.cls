@@ -13,14 +13,15 @@ global class WSSidraLite {
                 FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c,
                 ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,
                 RecordtypeId, Reason1__c, Decision__c, Suspension_Date__c, Bank_Guarantee_deadline__c, SAAM_Deadline_Date__c,
-                BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c,
+                BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c,
+                Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Comments__c,
                 Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c,
                 (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,
                     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,
                     FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,
                     ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c,
                     BSP_CASS__c, Reason_for_Default__c, Confirmation_moneys_not_received__c, DEF_Approval_Rejection__c, Termination_date_manual_entry__c,
-                    TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c,
+                    TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c, SAAM_Deadline_Date__c, Comments__c,
                     Account.Id, Account.Type, Account.Status__c
                     from Cases
                     where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE
@@ -44,13 +45,12 @@ global class WSSidraLite {
     webservice static Case createCase(Id caseId){
         Case cse = [
             Select Id, RecordtypeId, Decision__c, Suspension_Date__c, Region__c, BSPCountry__c, AccountId, Bank_Guarantee_deadline__c, Reason1__c, ContactId,
-                Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c, Account_Billing_Country__c,
-                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
-                (Select Id, CaseNumber from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
+                Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c, Account_Billing_Country__c, Comments__c,
+                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
+                (Select Id, CaseNumber, SIDRA_Lite_Reason__c from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
             from Case
             where id = :caseId];
 
-        testSidraLiteCountries(cse);
         if (cse.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
             return SidraLiteHelperForSMAP.createCase(cse);
         }
@@ -66,7 +66,10 @@ global class WSSidraLite {
     webservice static Case checkBussinesRules(Id caseId){
         try {
             Case parentCase = queryCase(caseId);
-            testSidraLiteCountries(parentCase);
+
+            if ( parentCase.account.Status__c == 'Terminated' ) {
+                throw new SidraLiteException('Account is Terminated, you cannot proceed with a Non-Compliance action');
+            }
 
             // check default bussiness rules, for insert and update
             SidraLiteManager.checkBussinessRules(parentCase);
@@ -97,7 +100,6 @@ global class WSSidraLite {
         try {
             // repeat process for update, but this time do the update
             Case parentCase = queryCase(caseId);
-            testSidraLiteCountries(parentCase);
             Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
             list<Case> listUpdate = updateSidraLiteAndParent(parentCase, foundChildCase);
             update listUpdate;
@@ -196,8 +198,8 @@ global class WSSidraLite {
                     from Cases
                     where RecordtypeId in (:SidraLiteManager.RECORDTYPE_SIDRA_LITE,:SidraLiteManager.RECORDTYPE_SIDRA)
                     and DEF_Approval_Rejection__c = 'Approved'
+                    and DEF_Withdrawal_Approval_Rejection__c != 'Approved'
                     and Update_AIMS_DEF__c != null
-                    and Id not in :listCases
                     order by Update_AIMS_DEF__c desc
                     limit 1)
                 From Account
@@ -206,8 +208,9 @@ global class WSSidraLite {
             list<CaseComment> listComments = new list<CaseComment>();
             for (Account account: listAccount) {
                 Case sidraLiteCase = mapAccountIdChildCase.get(account.id);
-                //Case ifapCase = mapAccountIdParentCase.get(account.id);
-                listComments.addAll(newCaseComments(sidraLiteCase, account));
+                if (sidraLiteCase!= null) {
+                    listComments.addAll(newCaseComments(sidraLiteCase, account));
+                }
             }
             if (!listComments.isEmpty()) {
                 insert listComments;
@@ -265,15 +268,4 @@ global class WSSidraLite {
         }
     }
 
-    /**
-        Sidra Lite Service is only available to certain countries
-        this method throws an error if the country is not in the list
-    **/
-    public static void testSidraLiteCountries(Case cse) {
-        set<string> validCountries = SidraLiteAllowedCountries__c.getAll().keyset();
-        if (!validCountries.contains(cse.BSPCountry__c) && !validCountries.contains(cse.Account_Billing_Country__c)) {
-            String country = cse.BSPCountry__c!=null? cse.BSPCountry__c: cse.Account_Billing_Country__c;
-            throw new SidraLiteException('This country is not part of the Sidra Lite Pilot: ' + country);
-        }
-    }
 }

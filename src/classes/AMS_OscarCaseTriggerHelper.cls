@@ -10,7 +10,35 @@ public class AMS_OscarCaseTriggerHelper {
 
     private static Id OSCARCaseRecordTypeID = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
 
+	//remove OSCAR from child case, if case is being cloned from OSCAR parent
+    public static void removeOscarFromChild(list<Case> triggerNew){
 
+		List<Case> casestoremoveoscar = new List<Case>();
+	    List<Id> parentcaseIds = new List<Id>();
+
+		//check parent record type
+		for(Case c: triggerNew)
+        	if(c.ParentId != null)
+            	parentcaseIds.add(c.ParentId);
+                
+        Map<Id, Case> parentCase = new Map<Id, Case>([SELECT Id, Oscar__c, RecordTypeId FROM Case WHERE Id IN :parentcaseIds AND RecordTypeId = :OSCARCaseRecordTypeID]);
+        
+        for(Case c: triggerNew){
+        	
+        	Case parent = parentCase.get(c.parentId);	
+        	
+        	if(c.ParentId != null && c.Oscar__c != null && parent.Oscar__c != null){
+            	if(c.RecordTypeId == OSCARCaseRecordTypeID && parent.RecordTypeId == OSCARCaseRecordTypeID && parent.Oscar__c <> null && c.Oscar__c == parent.Oscar__c)
+                	casestoremoveoscar.add(c);
+        	}         
+        }
+        
+	    for(Case c: casestoremoveoscar){ 
+          
+                c.Oscar__c = null;
+        }
+	}
+	
     public static void OSCARCaseCreationRules(list<Case> triggerNew){
 
         List<Case> oscarCases = new List<Case>();
@@ -79,15 +107,15 @@ public class AMS_OscarCaseTriggerHelper {
         }
     }
 
-    public static void renameOSCAR(list<Case> triggerNew){
+    public static void populateOscarFields(list<Case> triggerNew){
 
-        System.debug('Renaming OSCAR');
+        System.debug('Populating OSCAR fields');
 
         Set<Id> oscarIds = new Set<Id>();
         List<Case> oscarCases = new List<Case>();
 
-         for(Case c: triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  c.ParentId == null){
+         for(Case c : triggerNew){
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  (c.ParentId == null || (c.ParentId != null && c.Oscar__r.Process__c == 'VR.1.0')) ){
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
@@ -96,17 +124,27 @@ public class AMS_OscarCaseTriggerHelper {
         if(oscarCases.isEmpty()) return;
 
         List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
-        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name FROM AMS_OSCAR__c where Id = :oscarIds]);
+        Map<Id, AMS_OSCAR__c> oscars = new Map<Id, AMS_OSCAR__c> ([SELECT Id,Name,BusinessHours__c FROM AMS_OSCAR__c where Id = :oscarIds]);
 
-        for(Case c: oscarCases){
+        for(Case c : oscarCases){
+            if(!oscars.containsKey(c.Oscar__c)) continue;
+
+            Boolean changed = false;
             AMS_OSCAR__c oscar = oscars.get(c.OSCAR__c);
-            if(oscar!= null && oscar.Name != c.CaseNumber){
-
-                System.debug('Renaming OSCAR with ID ' + oscar.Id);
+            
+            if(oscar.Name != c.CaseNumber){
+                System.debug(loggingLevel.FINE, '____ [cls AMS_OscarCaseTriggerHelper - populateOscarFields] Renaming OSCAR - ' + oscar.Id + '('+c.CaseNumber+')');
                 
                 oscar.Name = c.CaseNumber;
-                oscarsToUpdate.add(oscar);
+                changed = true;
             }
+
+            if(oscar.BusinessHours__c != c.BusinessHoursId){
+                oscar.BusinessHours__c = c.BusinessHoursId;
+                changed = true;
+            }
+
+            if(changed) oscarsToUpdate.add(oscar);
         }
 
         if(!oscarsToUpdate.isEmpty()) update oscarsToUpdate;
@@ -192,7 +230,7 @@ public class AMS_OscarCaseTriggerHelper {
 
 
     //All cases having a parent which has Record Type OSCAR Communication must have the OSCAR field automaticaly populated
-    public static void fillOSCARLookup(list<Case> triggerNew){
+    /*public static void fillOSCARLookup(list<Case> triggerNew){
 
         List<Id> parentcaseIds = new List<Id>();
 
@@ -209,7 +247,7 @@ public class AMS_OscarCaseTriggerHelper {
                 c.Oscar__c = parent.Oscar__c;
         }
 
-    }
+    }*/
 
     public static Set<Id> caseIrregularityCreated{
         get{
@@ -224,11 +262,12 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> triggerNew = (List<Case>)Trigger.new;
 
         Id sidraRecTypeId = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+        Id sidraLiteRecTypeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
 
         List<Case> newSidraCases = new List<Case>();
         Map<Id, Account> accounts = new Map<Id, Account>();
         for(Case c : triggerNew){
-            if(c.RecordTypeId == sidraRecTypeId){
+            if(c.RecordTypeId == sidraRecTypeId || c.RecordTypeId == sidraLiteRecTypeId){
                 newSidraCases.add(c);
                 accounts.put(c.AccountId, null);
             }
@@ -250,7 +289,7 @@ public class AMS_OscarCaseTriggerHelper {
                                                                 , Threshold__c
                                                                 , Location_Class__c
                                                             FROM AMS_Country_Specific_Attributes__r
-                                                            WHERE RecordType.Name = 'Irregularity Threshold'
+                                                            WHERE RecordType.DeveloperName = 'Irregularity_Threshold'
                                                             AND Threshold__c != null
                                                             AND Location_Class__c != null)
                                                     FROM IATA_ISO_Country__c
@@ -264,7 +303,10 @@ public class AMS_OscarCaseTriggerHelper {
 
         for(Case c : newSidraCases){
             Account a = accounts.get(c.AccountId);
-            if(a != null) c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+            if(a != null){
+                 c.Acc_IRR_leading_to_DEF__c = thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c);
+                 system.debug(logginglevel.error, 'DTULLO 301 --> ' +  thresholds.get(''+a.IATA_ISO_Country__c+a.Location_Class__c));
+            }
         }
     }
     
@@ -307,6 +349,29 @@ public class AMS_OscarCaseTriggerHelper {
         return irr;
     }
 
+	
+	private static id RTSidra = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+	private static id RTSidraLite = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+	
+	public static void CreateRiskChangeCode(){
+		if(AMS_OscarCase_RiskMgmt.runOnce()){
+			map<id, case> mapNewCase = new map<id, case>();
+			map<id, case> mapOldCase = new map<id, case>();
+			
+			for(Case c : (List<Case>)Trigger.new){
+	            Case cOld = (Trigger.isInsert ? null : (Case)Trigger.oldMap.get(c.Id));
+	            if(c.RecordTypeId == RTSidra || c.RecordTypeId == RTSidraLite){
+	            	mapNewCase.put(c.Id, c);
+	            	if(cOld!=null)
+	            		mapOldCase.put(cOld.id, cOld);
+	            }
+	        }
+	        system.debug('DTULLO Helper 334 --> ' + mapNewCase.size());
+	        if(!mapNewCase.isEmpty())
+	        	AMS_OscarCase_RiskMgmt.CreateRiskChangeCode(mapOldCase, mapNewCase);
+		}
+		
+	}
 
     /*AMS-1580 and AMS-1585*/
     public static void copyDataFromOscar() {
@@ -366,7 +431,7 @@ public class AMS_OscarCaseTriggerHelper {
 			if(c.reason1__c != null)
 				newCaseSubject = c.reason1__c + ' - ' + oscars.get(c.Oscar__c).Account__r.Name;
 
-            if(newCaseSubject != null && c.Subject != newCaseSubject)
+            if(newCaseSubject != null && c.Subject != newCaseSubject && AMS_OscarMigrationFromCase.changeSubject)
                 c.Subject = newCaseSubject;
         }
     }

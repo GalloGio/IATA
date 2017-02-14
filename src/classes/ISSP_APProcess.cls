@@ -34,6 +34,7 @@ public without sharing class ISSP_APProcess {
     public string strAreaType{ get; set; } //AP Joining or Change
     public string strChangeType{ get; set; } //AP Joining or Change
     public string strLoB { get; set; } //Line of Business, BSP or CASS
+    public string dupLoB { get; set; } //INC300017
  
     public string strParentMembershipStatus {get; set;}
     public string strParentLegalName {get; set;}
@@ -753,6 +754,11 @@ public without sharing class ISSP_APProcess {
         
         try{
             newForm.Submitted_to_IATA__c = TRUE;
+            if(strAreaType == 'Airline Joining') {               
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Joining').RecordTypeId;   
+            } else {
+                newForm.RecordTypeId = Schema.SObjectType.AP_Process_Form__c.RecordTypeInfosByName.get(strLoB + ' Change').RecordTypeId;
+            }
             upsert newForm;
             newCase.Status = 'For Review and Acceptance';
             if(newCase.ownerid == APQueue('Airline Participation - Drafts').Id)
@@ -802,6 +808,9 @@ public without sharing class ISSP_APProcess {
         SYSTEM.DEBUG('Operation Type: ' + strOperationType);
         SYSTEM.DEBUG('LoB: ' + strLoB);
         
+        if(strLOB != null) //INC300017
+            dupLoB = strLOB;
+
         if(strAreaType=='Airline Joining') {
           if(strLoB=='CASS' || (isGSSAUser & category <> 'IBCS consolidator')) {
              isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
@@ -812,7 +821,7 @@ public without sharing class ISSP_APProcess {
           }
         } else {  //AP Change process, so based country list on Services Rendered
             if(!isGSSAUser) {
-              if(strLoB=='CASS') {
+              if(strLOB=='CASS' || dupLoB == 'CASS') {
                isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
                             WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='CASS Participation' AND Services_Rendered_Status__c='Active'
                              ORDER BY ISO_Country_formula__c];   
@@ -851,6 +860,28 @@ public without sharing class ISSP_APProcess {
           }
         
         return options;
+    }
+
+    public List<SelectOption> financialCountryNameList {
+        get {
+            List<SelectOption> options = new List<SelectOption>();
+            
+            list<IATA_ISO_Country__c> isoList;
+        
+            isoList = [SELECT Name,Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c,ISO_Code__c, AMS_Pilot_Country__c,
+                        IATA_Country_FR__c, IATA_Country_IT__c, IATA_Country_JP__c,
+                        IATA_Country_PT__c, IATA_Country_SP__c, IATA_Country_ZH__c
+                        FROM IATA_ISO_Country__c
+                        ORDER BY Name];
+            
+          options.add(new SelectOption('', Label.ISSP_SELECT_COUNTRY));
+          for(IATA_ISO_Country__c iso : isoList){
+            options.add(new SelectOption(iso.Name,iso.Name));
+          }
+            
+          return options;
+        }
+        set;
     }
     
     public List<SelectOption> countryNameList {

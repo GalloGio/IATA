@@ -8,6 +8,7 @@
     <customButtons>Create_IFAP_case</customButtons>
     <customButtons>EasyUpload</customButtons>
     <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>Migrate_SAAM_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -385,6 +386,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Rejection_Withdrawal_remarks__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason_for_change_of_Financial_result__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

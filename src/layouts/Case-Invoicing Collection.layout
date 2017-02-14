@@ -81,6 +81,10 @@
                 <field>SAAM_Deadline_Date__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>New_IFAP_Deadline_date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Termination_date__c</field>
             </layoutItems>
@@ -175,6 +179,14 @@
                 <behavior>Edit</behavior>
                 <field>Amount__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_the_agent_paid_invoice__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -193,10 +205,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Has_the_agent_responded_the_call__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Has_the_agent_paid_invoice__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -244,6 +252,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Age_Days__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Make_All_Attachments_Public__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

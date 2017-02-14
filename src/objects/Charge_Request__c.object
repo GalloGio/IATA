@@ -662,11 +662,14 @@
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
                 <controllingFieldValues>ICCS</controllingFieldValues>
                 <controllingFieldValues>NDC</controllingFieldValues>
+                <controllingFieldValues>Other</controllingFieldValues>
+                <controllingFieldValues>WebLink</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>EUR</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASS</controllingFieldValues>
+                <controllingFieldValues>Other</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -739,99 +742,99 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
         <label>Period</label>
         <picklist>
             <picklistValues>
-                <fullName>201501</fullName>
+                <fullName>201701</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201502</fullName>
+                <fullName>201702</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201503</fullName>
+                <fullName>201703</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201504</fullName>
+                <fullName>201704</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201505</fullName>
+                <fullName>201705</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201506</fullName>
+                <fullName>201706</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201507</fullName>
+                <fullName>201707</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201508</fullName>
+                <fullName>201708</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201509</fullName>
+                <fullName>201709</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201510</fullName>
+                <fullName>201710</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201511</fullName>
+                <fullName>201711</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201512</fullName>
+                <fullName>201712</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201601</fullName>
+                <fullName>201801</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201602</fullName>
+                <fullName>201802</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201603</fullName>
+                <fullName>201803</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201604</fullName>
+                <fullName>201804</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201605</fullName>
+                <fullName>201805</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201606</fullName>
+                <fullName>201806</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201607</fullName>
+                <fullName>201807</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201608</fullName>
+                <fullName>201808</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201609</fullName>
+                <fullName>201809</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201610</fullName>
+                <fullName>201810</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201611</fullName>
+                <fullName>201811</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>201612</fullName>
+                <fullName>201812</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -853,49 +856,42 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>AGTCOD_MSO</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRERU_CASS</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRSBL_CAIR</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>AIRSBL_PAIR</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADELW</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADHOC</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ADMIN</fullName>
@@ -907,42 +903,36 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_CCARD</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_COMAN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_ELWRN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_FILES</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_JOIN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_JOINS</fullName>
@@ -955,56 +945,48 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_PALMS</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RFABA</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RPACT</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_RSBCH</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_STATM</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPFEE_TRAIN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>BSPLNK_MSG</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_DGRR1</fullName>
@@ -1031,12 +1013,51 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>CASFEE_SEMNR</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code A4A Assignment Fee - 752539</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Annual A4A Retention Fee - 701903</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Annual Administration Fee - 701899</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Annual Retention Fee-  701900</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Application Fee - 752537</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Assignment Fee - 701907</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Reinstatement Fee - 701927</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Voluntary Change Request Fee - 701929</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>FDS_TDPMS</fullName>
@@ -1053,69 +1074,74 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_APPL</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_FEE</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_FEEN</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>GSSA_REGI</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINA</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINE</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_JOINF</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_SWICH</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>IBCS_YEAR</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Location Identifier Assignment Fee - 701920</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MITA annual fee - 701909</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MITA application fee - 701910</fullName>
+                <default>false</default>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -1133,13 +1159,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>NOIATA_CASS</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PDP / PTA Assignment Fee - 701924</fullName>
+                <default>false</default>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
@@ -1147,49 +1176,47 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TEST_FILE</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TSF_ADPX</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TSF_AGTD</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>VATTAX_CHARG</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WebLink - Implementation Fee (752545)</fullName>
+                <default>false</default>
+                <controllingFieldValues>WebLink</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>WEBLK_SCU</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>WEBLK_SCUX</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
-                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <sorted>true</sorted>
         </picklist>
@@ -1285,10 +1312,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>WebLink</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1341,6 +1372,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>NDCFEE_RENEW</controllingFieldValues>
                 <controllingFieldValues>VATTAX_CHARG</controllingFieldValues>
                 <controllingFieldValues>WEBLK_SCU</controllingFieldValues>
+                <controllingFieldValues>WebLink - Implementation Fee (752545)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>0.10</fullName>
@@ -1448,6 +1480,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>4500.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
+                <controllingFieldValues>Code Reinstatement Fee - 701927</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>5000.00</fullName>
@@ -1469,11 +1502,42 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1500.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
+                <controllingFieldValues>PDP / PTA Assignment Fee - 701924</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>100.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>TEST_CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1200.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>Code Annual Administration Fee - 701899</controllingFieldValues>
+                <controllingFieldValues>Code Application Fee - 752537</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3600.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>MITA application fee - 701910</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3800.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>Code A4A Assignment Fee - 752539</controllingFieldValues>
+                <controllingFieldValues>Code Annual A4A Retention Fee - 701903</controllingFieldValues>
+                <controllingFieldValues>Code Annual Retention Fee-  701900</controllingFieldValues>
+                <controllingFieldValues>Code Assignment Fee - 701907</controllingFieldValues>
+                <controllingFieldValues>Location Identifier Assignment Fee - 701920</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>22000.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>MITA annual fee - 701909</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7400.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>Code Voluntary Change Request Fee - 701929</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
