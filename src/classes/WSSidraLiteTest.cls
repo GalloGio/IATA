@@ -604,10 +604,13 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK1() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
-        insert oscar;
+        insert new AMS_Trigger_Execution_Manager__c(All__c = true);
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        oscar.Status__c = oscarCase.Status;
+        insert oscar;
+
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
