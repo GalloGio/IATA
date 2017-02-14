@@ -1043,7 +1043,7 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
-            Account acc = accounts.get(oscar.Account__c);
+            Account acc = accounts.get(oscar.Account__c); 
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
