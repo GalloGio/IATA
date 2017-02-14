@@ -157,10 +157,11 @@ public with sharing class SidraLiteHelperForIFAP {
                 }
                 parentCase.secondFSnonComplianceDate__c = Date.today();
                 parentCase.FS_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-                if (SidraLiteUtil.isPAssenger(account) && SidraLiteUtil.isAccountActive(account)) {
+                Boolean isLastSidraCase = SidraLiteUtil.isLastSidraCase(childCase);
+                if (SidraLiteUtil.isPAssenger(account) && (SidraLiteUtil.isAccountActive(account) || isLastSidraCase)) {
                     childCase.NOT_Date__c = Date.today();
                 }
-                if (SidraLiteUtil.isCargoCASS(account) && SidraLiteUtil.isAccountActive(account)) {
+                if (SidraLiteUtil.isCargoCASS(account) && (SidraLiteUtil.isAccountActive(account) || isLastSidraCase)) {
                     parentCase.SIDRA_Lite_Default_Date__c = Date.today();
                 }
                 //update child
@@ -203,7 +204,7 @@ public with sharing class SidraLiteHelperForIFAP {
                 }
                 parentCase.secondFAnonComplianceDate__c = Date.today();
                 parentCase.FA_Third_Deadline_Date__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
-                if ( SidraLiteUtil.isAccountActive(account) ) {
+                if (SidraLiteUtil.isAccountActive(account) || SidraLiteUtil.isLastSidraCase(childCase) ) {
                     childCase.SIDRA_Lite_Default_Date__c = Date.today();
                 }
                 //update child
