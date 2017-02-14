@@ -188,9 +188,12 @@ public with sharing class ISSP_Homepage {
                 return newPR;
             }
         }
-        User u = [SELECT Id, Contact.Account.CNS_Agency__c,  Contact.Account.CNS_Account__c FROM User WHERE Id =:UserInfo.getUserId()];
+        User u = [
+            SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+            FROM User WHERE Id =:UserInfo.getUserId()];
         Boolean isCNS = false;
-        if(u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c) { isCNS = true;}
+        if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
+            && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
         if(isCNS) {
             ApexPages.currentPage().getParameters().put('communityName','CNS');
         }
