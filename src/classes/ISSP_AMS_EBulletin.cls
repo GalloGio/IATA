@@ -1113,9 +1113,9 @@ system.debug('iDays: ' + iDays);
         //System.debug('splitEndDate - ' + splitEndDate);
 
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
-        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
+        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)),23,59,59);
         String period = '';
-
+        
         //System.debug('startDate - ' + startDate);
         //System.debug('endDate - ' + endDate);
 
