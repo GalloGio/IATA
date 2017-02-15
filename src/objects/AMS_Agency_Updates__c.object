@@ -234,6 +234,7 @@
         <fullName>AMS_1_agency</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>IATACode__c</columns>
         <columns>RelationShip__c</columns>
         <columns>Update_Type__c</columns>
         <columns>CREATEDBY_USER</columns>
@@ -242,7 +243,7 @@
         <filters>
             <field>IATACode__c</field>
             <operation>equals</operation>
-            <value>14350530025</value>
+            <value>01119200014</value>
         </filters>
         <label>AMS 1 agency</label>
         <language>en_US</language>
