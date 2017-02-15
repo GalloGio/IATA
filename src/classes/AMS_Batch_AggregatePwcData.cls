@@ -3,8 +3,9 @@
  * because in for(Account account : scope) loop, there's a call to two methods
  * that contains a query : 49 + 49 + 1 = 99 (- 100 SOQL Apex limit)
  */
-global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
-
+global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
+	public static boolean bIsAMS_Batch_AggregatePwcDataRunning = false;
+	
     /**
      * Attributes
      */
@@ -51,6 +52,7 @@ global with sharing class AMS_Batch_AggregatePwcData implements Database.Batchab
      * Execute method for PwC interfaces
      */
     global void execute(Database.BatchableContext batchableContext, List<account> scope) {
+    	AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning = true;
         processBatch(scope);
     }
 

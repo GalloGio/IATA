@@ -126,7 +126,7 @@ public without sharing class ISSP_Registration {
     
     public String country {get; set;}
     
-    // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL ‚ÄúFirst_Community‚Äù:
+    // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL ìFirst_Communityî:
     public string sRefererCommunity {get; set;}
     // EM: New
     public string urlredirect {get; set;}
@@ -894,7 +894,7 @@ public without sharing class ISSP_Registration {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('IATA Standard Account').getRecordTypeId();
+            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';

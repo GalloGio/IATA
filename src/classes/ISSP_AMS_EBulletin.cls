@@ -67,7 +67,9 @@ public with sharing class ISSP_AMS_EBulletin {
         displayLanguage = UserInfo.getLanguage();
 
         //set iso code to match datpicker format, in case of "english" the value is set to empty
-        displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US') || displayLanguage.equalsIgnoreCase('in')  ? '' : displayLanguage.replace('_', '-');
+        //displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US') || displayLanguage.equalsIgnoreCase('in')  ? '' : displayLanguage.replace('_', '-');
+        displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US')  ? '' : displayLanguage.replace('_', '-');
+
 
         //Get the custom setting with the name of the userguide custom setting (ex: "EBULLETIN-USERGUIDE-")
         String paramUserGuide = ISSP_CS__c.getValues('eBulletin_UserGuide').Value__c;
@@ -1113,9 +1115,9 @@ system.debug('iDays: ' + iDays);
         //System.debug('splitEndDate - ' + splitEndDate);
 
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
-        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
+        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)),23,59,59);
         String period = '';
-
+        
         //System.debug('startDate - ' + startDate);
         //System.debug('endDate - ' + endDate);
 
@@ -1176,7 +1178,6 @@ system.debug('iDays: ' + iDays);
                                              Enable_Minor_Changes_from_Portal__c,EBulletin_enabled__c
                                              FROM IATA_ISO_Country__c
                                              WHERE ISO_Code__c = :isocode
-                                             AND Sub_Region__c not in ('USA')
                                          ];
 
         return isocountry;
