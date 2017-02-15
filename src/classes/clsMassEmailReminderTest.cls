@@ -102,7 +102,7 @@ private class clsMassEmailReminderTest{
         ca.BatchNumber__c = controller.CaseParameter.BatchNumber__c;
         ca.EmailTemplate__c = e.Id;
         ca.ContactId = contact1.Id;
-        ca.FS_Letter_Sent__c = false;
+        ca.FS_Letter_Sent__c = true;
         
         Insert ca;
         List<Case> cases = [Select c.Mass_Email_Send__c,c.EmailTemplate__c,c.FS_Reminder_EmailTemplate__c,c.Reminder_EmailTemplate__c,c.FS_Mass_Email_Send__c From Case c Where c.Id=: ca.Id];     
