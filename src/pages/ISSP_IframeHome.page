@@ -12,6 +12,7 @@ function getQueryVariable(variable)
 }
 console.log('##### commparam in iframehome'+getQueryVariable('CommunityName'));
 var commParam = '&CommunityName=' + getQueryVariable('CommunityName');
+if(!getQueryVariable('CommunityName')) commParam = '';
 window.top.location.href = '/ISSP_Homepage?mid=M0S1' + commParam;
 
 </script>
