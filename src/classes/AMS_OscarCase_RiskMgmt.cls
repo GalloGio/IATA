@@ -38,7 +38,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Reinstatement change codes: clear expiry date on account
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
-    
+    private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
     
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -135,7 +135,23 @@ public class AMS_OscarCase_RiskMgmt {
 			
 			//Get all previously generated change code from same sidra/sidra lite
 			list<Agency_Applied_Change_code__c> lsAACC = new list<Agency_applied_change_code__c>();
-			for(Agency_Applied_Change_code__c aa:[select id, createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Account__c, Account__r.Location_Class__c, Change_Code__c, SIDRA_Case__c from Agency_Applied_Change_code__c where SIDRA_Case__c in:mapTrgNew.keyset() order by Account__c, CreatedDate desc]){
+			for(Agency_Applied_Change_code__c aa:[select id, createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, 
+												  Account__c, Account__r.Location_Class__c, Change_Code__c, SIDRA_Case__c 
+												  from Agency_Applied_Change_code__c 
+												  where SIDRA_Case__c in:mapTrgNew.keyset() 
+												  order by Account__c, CreatedDate desc]){
+				//Populate map with existing change code per sidra case. This is used to get the previuos status/reason in case of withdrawn
+				map<string, Agency_Applied_Change_code__c> mapAACCTmp;
+				if(mapPrevReasonFromCC.containsKey(aa.SIDRA_Case__c)){
+					mapAACCTmp = mapPrevReasonFromCC.get(aa.SIDRA_Case__c);
+				}else
+					mapAACCTmp = new map<string, Agency_Applied_Change_code__c>();
+				
+				mapAACCTmp.put(aa.Change_Code__c, aa);
+				
+				mapPrevReasonFromCC.put(aa.SIDRA_Case__c, mapAACCTmp);
+				
+				//Populate map with all existing change code per same account. 
 				list<Agency_Applied_Change_code__c> lsAACCtmp;
 				if(mapExistingChangeCodes.keyset().contains(aa.Account__c))
 					lsAACCtmp = mapExistingChangeCodes.get(aa.Account__c);
@@ -543,7 +559,24 @@ public class AMS_OscarCase_RiskMgmt {
 			//accnt.Status__c = sPrevStatus;
 			//accnt.PreviousStatus__c= sCurrStatus;
 			//bAccntToUpd = true;
-		}else{
+		}else if(cc.Reason_Code__c.toUpperCase().startsWithIgnoreCase('PREV;')){
+			set<string> SplittedCC = new set<string>();
+			for(integer i=1;i<cc.Reason_Code__c.toUpperCase().split(';').size();i++)
+				SplittedCC.add(cc.Reason_Code__c.toUpperCase().split(';').get(i));
+			
+			if(!SplittedCC.isEmpty()){
+				for(string sCCToGet:SplittedCC){
+					if(mapPrevReasonFromCC.containsKey(idCase)){
+						if(mapPrevReasonFromCC.get(idCase).containsKey(sCCToGet)){
+							sPrevStatus = mapPrevReasonFromCC.get(idCase).get(sCCToGet).AccountPreviousStatus__c;
+							AACC.AccountNewStatus__c = sPrevStatus;
+							AACC.AccountPreviousStatus__c = sCurrStatus;
+						}
+					}
+				}
+			}
+		}
+		else{
 			AACC.AccountNewStatus__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
 			AACC.AccountPreviousStatus__c = sCurrStatus;
 			//accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
@@ -575,6 +608,26 @@ public class AMS_OscarCase_RiskMgmt {
 					AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
 					//AACC.Reason_Description__c = sPrevReason.split('-').get(1);
 					AACC.PreviousReason__c = sCurrReason;
+				}
+			}
+		}else if(cc.Reason_Code__c.toUpperCase().startsWithIgnoreCase('PREV;')){
+			set<string> SplittedCC = new set<string>();
+			for(integer i=1;i<cc.Reason_Code__c.toUpperCase().split(';').size();i++)
+				SplittedCC.add(cc.Reason_Code__c.toUpperCase().split(';').get(i));
+			
+			if(!SplittedCC.isEmpty()){
+				for(string sCCToGet:SplittedCC){
+					if(mapPrevReasonFromCC.containsKey(idCase)){
+						if(mapPrevReasonFromCC.get(idCase).containsKey(sCCToGet)){
+							sPrevReason = mapPrevReasonFromCC.get(idCase).get(sCCToGet).PreviousReason__c;
+							if(sPrevReason.IndexOf('-')>0){
+								SplittedReason = sPrevReason.split('-');
+								AACC.Reason_Code__c = SplittedReason.get(0);
+								AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
+								AACC.PreviousReason__c = sCurrReason;
+							}
+						}
+					}
 				}
 			}
 		}else{
@@ -639,6 +692,22 @@ public class AMS_OscarCase_RiskMgmt {
 	@TestVisible
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
+		
+		if(condition.startsWithIgnoreCase('VALUES:')){
+			string sValue = null;
+			if(sFieldToCheck=='Parent.Status')
+				sValue = NewCaseValues.Parent.Status;
+			else
+				sValue = (string)NewCaseValues.get(sFieldToCheck);
+			
+			//if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
+			if(sValue==null)	 return false;
+			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
+			//if(setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
+			if(setValues.contains(sValue.toUpperCase()))
+				return true;
+			else return false;
+		}
 		
 		if(condition.equals('NOT BLANK')){
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null)
@@ -742,21 +811,6 @@ public class AMS_OscarCase_RiskMgmt {
 			return true;
 		}
 		
-		if(condition.startsWithIgnoreCase('VALUES:')){
-			string sValue = null;
-			if(sFieldToCheck=='Parent.Status')
-				sValue = NewCaseValues.Parent.Status;
-			else
-				sValue = (string)NewCaseValues.get(sFieldToCheck);
-			
-			//if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
-			if(sValue==null)	 return false;
-			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
-			//if(setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
-			if(setValues.contains(sValue.toUpperCase()))
-				return true;
-			else return false;
-		}
 		return false;
 	}
 	
