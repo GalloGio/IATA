@@ -35,17 +35,17 @@
         <label>Change Code</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>AccountNewStatus__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Change_Code__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Reason_Description__c</field>
             </layoutItems>
             <layoutItems>
@@ -89,7 +89,7 @@
                 <field>Created_Date_To_Show__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Date_time_of_change__c</field>
             </layoutItems>
         </layoutColumns>
@@ -97,6 +97,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Updated_AIMS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AIMS_Updated_by__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -112,17 +120,19 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Field_API_Name__c</fields>
+        <fields>Object_API_Name__c</fields>
+        <fields>Field_Old_Value__c</fields>
+        <fields>Field_New_Value__c</fields>
+        <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Object_API_Name__c</fields>
-        <fields>Field_API_Name__c</fields>
-        <fields>Field_New_Value__c</fields>
-        <fields>Field_Old_Value__c</fields>
-        <fields>Field_Lookup_New_Value__c</fields>
-        <fields>Field_Lookup_Old_Value__c</fields>
-        <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

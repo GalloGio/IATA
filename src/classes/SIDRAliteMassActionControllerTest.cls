@@ -115,6 +115,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.filter.getListFinancialReviews();
         Test.stopTest();
     }
 
@@ -283,14 +284,51 @@ public class SIDRAliteMassActionControllerTest {
     }
 
     @isTest
-    public static void testSearchOSCAR() {
+    public static void testSearchOSCAR_Reasons1() {
         Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID);
-        oscarCase.Reason1__c = 'CHO / CHS – Change of Ownership / Legal Status';
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS1).get(0);
         insert oscarCase;
 
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(
             RPM_Approval__c = 'Authorize Disapproval'
         );
+        insert oscar;
+
+        Test.startTest();
+        SIDRAliteMassActionController controller = new SIDRAliteMassActionController();
+        controller.filter.cse.RecordTypeId = SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID;
+        controller.filter.cse.Region__c = 'Americas';
+        controller.filter.cse.BSPCountry__c = 'Canada';
+
+        oscarCase.OSCAR__c = oscar.Id;
+        oscarCase.Region__c = 'Americas';
+        update oscarCase;
+
+        controller.search();
+        System.assert(controller.listWrapperCase.size()==1);
+        selectAll(controller);
+        controller.triggerSidraLiteAction();
+
+        for (SIDRAliteMassActionController.WrapperCase result: controller.listWrapperCase) {
+            System.assert(result.getIsSuccess());
+            result.getChildId();
+        }
+
+        controller.filter.getShortName();
+        controller.filter.getListReasons();
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testSearchOSCAR_Reasons2() {
+        Case oscarCase = createParentCase(SIDRAliteMassActionController.RECORDTYPE_OSCAR_ID);
+        oscarCase.Reason1__c = new list<String>(SidraLiteHelperForOSCAR.VALID_REASONS2).get(0);
+        oscarCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        oscarCase.Termination_date_manual_entry__c = null;
+        oscarCase.Documentation_Complete__c = null;
+        insert oscarCase;
+
+        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
         insert oscar;
 
         Test.startTest();

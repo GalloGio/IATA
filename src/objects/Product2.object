@@ -336,6 +336,10 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>DisplayUrl</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Display_Ecom_Customer_Type__c</fullName>
         <externalId>false</externalId>
         <label>Display Ecom Customer Type</label>
@@ -1496,6 +1500,15 @@ SIS Charge Code Type.</description>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ExternalDataSourceId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ExternalId</fullName>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Family</fullName>
@@ -3824,6 +3837,18 @@ The product will only appear on the Online Store when the date entered in this f
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>QuantityUnitOfMeasure</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Each</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
