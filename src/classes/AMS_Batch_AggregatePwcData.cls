@@ -18,7 +18,9 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
     private static final Integer defNonPayDefaultTimeframe = 12; // In months
     private static final Integer ownShaDefaultTimeframe = 12; // In months
     private static final List<String> ownShaChangeCodes = new List<String> {'CHC', 'CHO', 'CHI', 'CHJ', 'CCL', 'CCN', 'CIJ', 'CNL', 'COL', 'CON', 'COS', 'CSC', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN', 'SCL', 'SCM', 'SCN'};
-    private static final List<String> ownShaLastDateCodes = new List<String> {'CHO', 'CHI', 'CIJ', 'COL', 'CON', 'COS', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN'};
+    //WHY THIS SET CONTAINS LESS ITEMS THEN THE ONE ABOVE IF THEY SHOULD CHECK THE SAME THING!?!?!
+    //private static final List<String> ownShaLastDateCodes = new List<String> {'CHO', 'CHI', 'CIJ', 'COL', 'CON', 'COS', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN'};
+    private static final List<String> ownShaLastDateCodes = new List<String> {'CHC', 'CHO', 'CHI', 'CHJ', 'CCL', 'CCN', 'CIJ', 'CNL', 'COL', 'CON', 'COS', 'CSC', 'HIN', 'HIS', 'HNL', 'HSL', 'HSM', 'HSN', 'ONL', 'OSL', 'OSM', 'OSN', 'SCL', 'SCM', 'SCN'};
     private static final Id recordTypeDefLfcId =  RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('DEF_LFC');
     private static final Id recordTypeIrrsLfcId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRRS_LFC');
     private static final Id recordTypeIrrCpeId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('AMS_Country_Specific_Attribute__c').get('IRR_CPE');
@@ -104,7 +106,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
 
         // Get agency applied change codes
         List<Agency_Applied_Change_code__c> agencyAppliedChangeCodes = [
-            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
+            SELECT Id, Change_Code__c, Created_Date_To_Show__c, Account__c, DEF_Non_Payment2__c, Operation__c, Irregularities_Points__c, Account__r.Location_class__c, Irregularity_Type__c
             FROM Agency_Applied_Change_code__c
             WHERE Account__c IN :accountIds];
 
@@ -133,7 +135,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                 }
 
                 // For DEFNONPAY, only if this entry is in the right DEFNONPAY timeframe
-                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
+                if((agencyAppliedChangeCode.Change_Code__c.equals('DEF') && agencyAppliedChangeCode.DEF_Non_Payment2__c == true) && (currentDate < agencyAppliedChangeCode.Created_Date_To_Show__c.addMonths(defNonPayDefaultTimeframe))) {
                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'DEFNONPAY', 1, null);
                 }
 
