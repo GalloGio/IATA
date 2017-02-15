@@ -12953,7 +12953,7 @@ Can you please confirm which country you&apos;ve previously received support for
     </labels>
     <labels>
         <fullName>ISSP_Email_CNS_Service</fullName>
-        <categories>ISS, Email</categories>
+        <categories>ISSP, Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CNS_Service</shortDescription>
