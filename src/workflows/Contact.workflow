@@ -521,7 +521,7 @@
             <name>Alert_admins_that_a_contact_has_registered</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.User_Portal_Status__c</field>
             <operation>equals</operation>
@@ -533,27 +533,6 @@
             <value>ISS</value>
         </criteriaItems>
         <description>If a contact is created as a &quot;pending approval&quot; contact the administrators should now it.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISSP new portal user - CNS</fullName>
-        <actions>
-            <name>Alert_admins_that_a_contact_has_registered_cns</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Contact.User_Portal_Status__c</field>
-            <operation>equals</operation>
-            <value>Pending Approval</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Community__c</field>
-            <operation>startsWith</operation>
-            <value>CNS</value>
-        </criteriaItems>
-        <description>If a contact is created as a &quot;pending approval&quot; contact the administrators should now it.
-NB. done as a workflow because of Process Builder bug</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
