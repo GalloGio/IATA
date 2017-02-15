@@ -118,10 +118,14 @@ function selectedCases() {
             <apex:selectOptions value="{!filter.listIFAPCountries}" />
           </apex:selectList>
           <!--  Filter for IFAP Type: FA or FS  -->
-          <apex:selectList value="{!filter.ifapType}" label="IFAP Type" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
+          <apex:selectList value="{!filter.ifapType}" label="FA/FS" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
             <!--<apex:selectOption itemValue="" itemLabel="-- None --" />-->
             <apex:selectOption itemValue="FA" itemLabel="Financial Review" />
             <apex:selectOption itemValue="FS" itemLabel="Financial Security" />
+          </apex:selectList>
+          <!--  Filter for IFAP: Financial Review Type  -->
+          <apex:selectList value="{!filter.cse.Financial_Review_Type__c}" label="{!$ObjectType.Case.fields.Financial_Review_Type__c.label}" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
+            <apex:selectOptions value="{!filter.ListFinancialReviews}" />
           </apex:selectList>
           <!--  Filter for Reason  -->
           <apex:selectList value="{!filter.cse.Reason1__c}" label="Reason" multiselect="false" size="1" onchange="search();" rendered="{!OR(filter.isSAAM,filter.isOSCAR,filter.isInvoicing)}">
@@ -135,6 +139,15 @@ function selectedCases() {
             <apex:selectOption itemValue="IATA Cargo Agent" itemLabel="IATA Cargo Agent" />
             <apex:selectOption itemValue="CASS Associate" itemLabel="CASS Associate" />
             <apex:selectOption itemValue="TIDS Agent" itemLabel="TIDS Agent" />
+          </apex:selectList>
+
+          <!--  Filter for Action Date  -->
+          <apex:selectList value="{!filter.dateFilter}" label="Action Date Filter" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
+            <apex:selectOption itemValue="" itemLabel="-- None --" />
+            <apex:selectOption itemValue="LAST_N_DAYS:7" itemLabel="Last 7 days" />
+            <apex:selectOption itemValue="LAST_N_DAYS:14" itemLabel="Last 14 days" />
+            <apex:selectOption itemValue="LAST_N_DAYS:30" itemLabel="Last 30 days" />
+            <apex:selectOption itemValue="" itemLabel="More than 30 days" />
           </apex:selectList>
 
         </apex:pageBlockSection>
@@ -173,6 +186,10 @@ function selectedCases() {
           <apex:facet name="header">{!$ObjectType.Case.fields.CaseNumber.label}</apex:facet>
           <apex:outputLink value="/{!wrapper.cse.Id}?retURL={!$CurrentPage.URL}">{!wrapper.cse.CaseNumber}</apex:outputLink>
         </apex:column>
+
+        <apex:column value="{!wrapper.cse.Status}" />
+
+        <apex:column value="{!wrapper.cse.Financial_Review_Type__c}" rendered="{!filter.isIFAP}"/>
 
         <apex:column value="{!wrapper.cse.AccountId}" />
 
