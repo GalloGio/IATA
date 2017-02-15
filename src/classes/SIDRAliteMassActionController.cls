@@ -27,8 +27,8 @@ public with sharing class SIDRAliteMassActionController {
     public static final set<String> TYPE_ACCOUNT_PAX =   SidraLiteUtil.TYPE_ACCOUNT_PAX;
     public static final set<String> TYPE_ACCOUNT_CARGO = SidraLiteUtil.TYPE_ACCOUNT_CARGO;
     public static final set<String> TYPE_ACCOUNT_AGENT = SidraLiteUtil.TYPE_ACCOUNT_AGENT;
-    public static final set<String> STATUS_FOR_FS = SidraLiteManager.STATUS_FOR_FS;
-    public static final set<String> STATUS_FOR_FA = SidraLiteManager.STATUS_FOR_FA;
+    public static final set<String> STATUS_FOR_FS = SidraLiteHelperForIFAP.STATUS_FOR_FS;
+    public static final set<String> STATUS_FOR_FA = SidraLiteHelperForIFAP.STATUS_FOR_FA;
 
     public static final String FIRST_NON_COMPLIANCE = '1st Non-Compliance';
     public static final String SECOND_NON_COMPLIANCE = '2nd Non-Compliance';
@@ -39,8 +39,6 @@ public with sharing class SIDRAliteMassActionController {
     public WrapperFilter filter {get;set;}
     public Boolean showResultSection{get;set;}
     public Boolean showProcessBatchSection{get;set;}
-
-    private Date createdDt;
 
     // Confirm action section
     //public Boolean showConfirmTriggerSidraLiteAction {get;set;}
@@ -113,7 +111,7 @@ public with sharing class SIDRAliteMassActionController {
     }
 
     private String getBaseQuery(Id recordtypeId) {
-        String query = 'Select Id, Status, '
+        String query = 'Select Id, Status, Financial_Review_Type__c,'
             + ' FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c, Third_FA_non_Compliance_Date__c,'
             + ' FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c,'
             + ' ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,'
@@ -145,6 +143,10 @@ public with sharing class SIDRAliteMassActionController {
                 query += ' AND BSPCountry__c = \'' + country + '\'';
             }
         }
+        // add Financial_Review_Type__c filter
+        if (recordtypeId == RECORDTYPE_IFAP_ID && filter(this.filter.cse.Financial_Review_Type__c) != '') {
+            query += ' AND Financial_Review_Type__c = \'' + this.filter.cse.Financial_Review_Type__c + '\'';
+        }
         // add Reason Filter
         if (recordtypeId == RECORDTYPE_SAAM_ID || recordtypeId == RECORDTYPE_OSCAR_ID || recordtypeId == RECORDTYPE_INVOICING_ID) {
             String reason = filter(this.filter.cse.Reason1__c);
@@ -166,9 +168,6 @@ public with sharing class SIDRAliteMassActionController {
         String category = filter(this.filter.category);
         if (!isEmpty(category)) {
             query += ' AND Account.Category__c = \'' + category + '\'';
-        }
-        if (this.createdDt!= null ) {
-            query += ' AND CreatedDate >= :createdDt';
         }
         return query;
     }
@@ -211,6 +210,9 @@ public with sharing class SIDRAliteMassActionController {
             query1 += ' AND FS_Second_Deadline_Date__c = null';
             query1 += ' AND FS_Third_Deadline_Date__c = null';
             query1 += ' AND FS_Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query1 += ' AND FS_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase1.addAll(executeQuery(query1));
 
             String query2 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
@@ -218,6 +220,9 @@ public with sharing class SIDRAliteMassActionController {
             query2 += ' AND firstFSnonComplianceDate__c != null';
             query2 += ' AND secondFSnonComplianceDate__c = null';
             query2 += ' AND FS_Second_Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND FS_Second_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase2.addAll(executeQuery(query2));
 
             String query3 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
@@ -226,6 +231,9 @@ public with sharing class SIDRAliteMassActionController {
             query3 += ' AND secondFSnonComplianceDate__c != null';
             query3 += ' AND FS_third_non_compliance_date__c = null';
             query3 += ' AND FS_Third_Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query3 += ' AND FS_Third_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase3.addAll(executeQuery(query3));
         }
         //IF FA
@@ -237,6 +245,9 @@ public with sharing class SIDRAliteMassActionController {
             query1 += ' AND FA_Second_Deadline_Date__c = null';
             query1 += ' AND FA_Third_Deadline_Date__c = null';
             query1 += ' AND Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query1 += ' AND Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase1.addAll(executeQuery(query1));
 
             String query2 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
@@ -244,6 +255,9 @@ public with sharing class SIDRAliteMassActionController {
             query2 += ' AND firstFAnonComplianceDate__c != null';
             query2 += ' AND secondFAnonComplianceDate__c = null';
             query2 += ' AND FA_Second_Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND FA_Second_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase2.addAll(executeQuery(query2));
 
             String query3 = getBaseQuery(RECORDTYPE_IFAP.getRecordTypeId());
@@ -252,6 +266,9 @@ public with sharing class SIDRAliteMassActionController {
             query3 += ' AND secondFAnonComplianceDate__c != null';
             query3 += ' AND Third_FA_non_Compliance_Date__c = null';
             query3 += ' AND FA_Third_Deadline_Date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query3 += ' AND FA_Third_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase3.addAll(executeQuery(query3));
         }
 
@@ -284,6 +301,9 @@ public with sharing class SIDRAliteMassActionController {
         String query = getBaseQuery(RECORDTYPE_SMAP_ID);
         query += ' AND Decision__c includes (\'Prejudiced Collection of Funds\')';
         query += ' AND Suspension_Date__c <= TODAY';
+        if (!isEmpty(this.filter.dateFilter)) {
+            query += ' AND Suspension_Date__c = ' + this.filter.dateFilter;
+        }
 
         this.listWrapperCase = new list<WrapperCase>();
         for (Case cse: executeQuery(query)) {
@@ -296,83 +316,108 @@ public with sharing class SIDRAliteMassActionController {
     /**
         Search SAAM cases ready to process with SIDRA Lite, for 1st, 2nd and 3th non compliance
     **/
-    private set<String> SaamValidReasons1 = new set<String>{'Financial Security Renewal','Financial Security Request','Financial Security Update'};
-    private set<String> SaamValidReasons2 = new set<String>{'Certificate DGR'};
-    private set<String> SaamValidReasons3 = new set<String>{'Annual Fees'};
     private void searchSAAM(){
         list<Case> listCase1 = new list<Case>(); // list for 1st non compliance
         list<Case> listCase2 = new list<Case>(); // list for 2nd non compliance
         list<Case> listCase3 = new list<Case>(); // list for 3th non compliance
 
         // Financial Security
-        if (isEmpty(this.filter.cse.Reason1__c) || SaamValidReasons1.contains(this.filter.cse.Reason1__c)) {
+        if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS1.contains(this.filter.cse.Reason1__c)) {
             String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query1 += ' AND Reason1__c IN ' + serialize(SaamValidReasons1);
+            query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query1 += ' AND Bank_Guarantee_deadline__c < TODAY';
             query1 += ' AND Bank_Guarantee_received__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query1 += ' AND Bank_Guarantee_deadline__c = ' + this.filter.dateFilter;
+            }
             listCase1.addAll(executeQuery(query1));
 
             String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query2 += ' AND Reason1__c IN ' + serialize(SaamValidReasons1);
+            query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query2 += ' AND FS_Third_Deadline_Date__c = null';
             query2 += ' AND FS_Second_Deadline_Date__c < TODAY';
             query2 += ' AND Bank_Guarantee_received__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND FS_Second_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase2.addAll(executeQuery(query2));
 
             String query3 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query3 += ' AND Reason1__c IN ' + serialize(SaamValidReasons1);
+            query3 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS1);
             query3 += ' AND FS_third_non_compliance_date__c = null';
             query3 += ' AND FS_Third_Deadline_Date__c < TODAY';
             query3 += ' AND Bank_Guarantee_received__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query3 += ' AND FS_Third_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase3.addAll(executeQuery(query3));
         }
         // Certificate DGR
-        if (isEmpty(this.filter.cse.Reason1__c) || SaamValidReasons2.contains(this.filter.cse.Reason1__c)) {
+        if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS2.contains(this.filter.cse.Reason1__c)) {
             String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query1 += ' AND Reason1__c IN ' + serialize(SaamValidReasons2);
+            query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS2);
             query1 += ' AND SAAM_Deadline_Date__c < TODAY';
             query1 += ' AND Termination_date__c = null';
             query1 += ' AND Documentation_Complete__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase1.addAll(executeQuery(query1));
 
             String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query2 += ' AND Reason1__c IN ' + serialize(SaamValidReasons2);
+            query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS2);
             query2 += ' AND Termination_date__c < TODAY';
             query2 += ' AND Documentation_Complete__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+            }
             listCase2.addAll(executeQuery(query2));
 
             // no third non compliance for certificare DGR
         }
         // Annual Fees
-        if (isEmpty(this.filter.cse.Reason1__c) || SaamValidReasons3.contains(this.filter.cse.Reason1__c)) {
+        if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS3.contains(this.filter.cse.Reason1__c)) {
             String query1 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query1 += ' AND Reason1__c IN ' + serialize(SaamValidReasons3);
+            query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query1 += ' AND SAAM_Deadline_Date__c < TODAY';
             query1 += ' AND New_IFAP_deadline_Date__c = null';
             query1 += ' AND Termination_date__c = null';
             query1 += ' AND account.type IN (\'IATA Passenger Sales Agent\',\'IATA Cargo Agent\',\'TIDS Agent\',\'CASS Associate\')';
             query1 += ' AND isClosed = false';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
+            }
             listCase1.addAll(executeQuery(query1));
 
             String query2 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query2 += ' AND Reason1__c IN ' + serialize(SaamValidReasons3);
+            query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query2 += ' AND (';
             query2 += '     (account.type IN :TYPE_ACCOUNT_PAX';
             query2 += '     AND Termination_date__c = null';
-            query2 += '     AND New_IFAP_Deadline_date__c < TODAY)';
+            query2 += '     AND New_IFAP_Deadline_date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND New_IFAP_Deadline_date__c = ' + this.filter.dateFilter;
+            }
+            query2 += '     )';
             query2 += '     OR';
             query2 += '     (account.type IN :TYPE_ACCOUNT_CARGO';
             query2 += '     AND Termination_date__c < TODAY';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+            }
             query2 += '     )';
             query2 += ' )';
             query2 += ' AND isClosed = false';
             listCase2.addAll(executeQuery(query2));
 
             String query3 = getBaseQuery(RECORDTYPE_SAAM_ID);
-            query3 += ' AND Reason1__c IN ' + serialize(SaamValidReasons3);
+            query3 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
             query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
             query3 += ' AND Termination_date__c < TODAY';
             query3 += ' AND isClosed = false';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query3 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+            }
             listCase3.addAll(executeQuery(query3));
         }
 
@@ -384,7 +429,7 @@ public with sharing class SIDRAliteMassActionController {
         }
         for (Case cse: listCase2) {
             if (!cse.cases.isEmpty()) {
-                if (SaamValidReasons3.contains(cse.Reason1__c)
+                if (SidraLiteHelperForSAAM.VALID_REASONS3.contains(cse.Reason1__c)
                  && SidraLiteUtil.isCargoCASS(cse.account) && cse.Cases[0].Propose_Default__c!=null) {
                      // ignore these cases
                 } else {
@@ -404,22 +449,62 @@ public with sharing class SIDRAliteMassActionController {
         Search all OSCAR cases ready to create SIDRA Lite Cases
     **/
     private void searchOSCAR(){
-        String query = getBaseQuery(RECORDTYPE_OSCAR_ID);
-        query += ' AND (OSCAR__r.Step6__c = \'Failed\'';
-        query += ' OR OSCAR__r.Step9__c = \'Failed\'';
-        query += ' OR OSCAR__r.Step11__c = \'Failed\'';
-        query += ' OR OSCAR__r.Step12__c = \'Failed\'';
-        query += ' OR OSCAR__r.Step14__c = \'Failed\'';
-        query += ' OR OSCAR__r.RPM_Approval__c = \'Authorize Disapproval\')';
-
         this.listWrapperCase = new list<WrapperCase>();
-        for (Case cse: executeQuery(query)) {
-            try {
-                // check the reason
-                SidraLiteHelperForOSCAR.getOSCARReason(cse);
+
+        // Valid reasons 1
+        if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForOSCAR.VALID_REASONS1.contains(this.filter.cse.Reason1__c)) {
+            String query1 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS1);
+            query1 += ' AND (OSCAR__r.Step6__c = \'Failed\'';
+            query1 += ' OR OSCAR__r.Step9__c = \'Failed\'';
+            query1 += ' OR OSCAR__r.Step11__c = \'Failed\'';
+            query1 += ' OR OSCAR__r.Step12__c = \'Failed\'';
+            query1 += ' OR OSCAR__r.Step14__c = \'Failed\'';
+            query1 += ' OR OSCAR__r.RPM_Approval__c = \'Authorize Disapproval\')';
+
+            for (Case cse: executeQuery(query1)) {
+                try {
+                    // check the reason
+                    SidraLiteHelperForOSCAR.getOSCARReason(cse);
+                    addWrapper(new WrapperCase(cse));
+                } catch (WSSidraLite.SidraLiteException e) {
+                    // do not add cases with exception, it means that ther is already a sidra lite case for this reason
+                }
+            }
+        }
+
+        // Certificate DGR
+        list<Case> listCase1 = new list<Case>(); // list for 1st non compliance
+        list<Case> listCase2 = new list<Case>(); // list for 2nd non compliance
+
+        if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForOSCAR.VALID_REASONS2.contains(this.filter.cse.Reason1__c)) {
+            String query1 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS2);
+            query1 += ' AND SAAM_Deadline_Date__c < TODAY';
+            query1 += ' AND Termination_date__c = null';
+            query1 += ' AND Documentation_Complete__c = null';
+            listCase1.addAll(executeQuery(query1));
+
+            String query2 = getBaseQuery(RECORDTYPE_OSCAR_ID);
+            query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForOSCAR.VALID_REASONS2);
+            query2 += ' AND Termination_date__c < TODAY';
+            query2 += ' AND Documentation_Complete__c = null';
+            if (!isEmpty(this.filter.dateFilter)) {
+                query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+            }
+            listCase2.addAll(executeQuery(query2));
+
+            // no third non compliance for certificare DGR
+        }
+
+        for (Case cse: listCase1) {
+            if (cse.cases.isEmpty()) {
                 addWrapper(new WrapperCase(cse));
-            } catch (WSSidraLite.SidraLiteException e) {
-                // do not add cases with exception, it means that ther is already a sidra lite case for this reason
+            }
+        }
+        for (Case cse: listCase2) {
+            if (!cse.cases.isEmpty()) {
+                addWrapper(new WrapperCase(cse, cse.Cases[0], SECOND_NON_COMPLIANCE));
             }
         }
     }
@@ -436,16 +521,26 @@ public with sharing class SIDRAliteMassActionController {
         query1 += ' AND SAAM_Deadline_Date__c < TODAY';
         query1 += ' AND (account.type IN :TYPE_ACCOUNT_PAX OR account.type IN :TYPE_ACCOUNT_CARGO OR account.type IN :TYPE_ACCOUNT_AGENT)';
         query1 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
+        if (!isEmpty(this.filter.dateFilter)) {
+            query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
+        }
         listCase1 = executeQuery(query1);
 
         String query2 = getBaseQuery(RECORDTYPE_INVOICING_ID);
         query2 += ' AND Termination_date__c = null';
         query2 += ' AND (';
         query2 += ' (account.type IN :TYPE_ACCOUNT_PAX';
-        query2 += ' AND New_IFAP_Deadline_date__c < TODAY)';
+        query2 += ' AND New_IFAP_Deadline_date__c < TODAY';
+        if (!isEmpty(this.filter.dateFilter)) {
+            query2 += ' AND New_IFAP_Deadline_date__c = ' + this.filter.dateFilter;
+        }
+        query2 += ' )';
         query2 += ' OR';
         query2 += ' (account.type IN :TYPE_ACCOUNT_CARGO';
         query2 += ' AND Termination_date__c < TODAY )';
+        if (!isEmpty(this.filter.dateFilter)) {
+            query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+        }
         query2 += ' )';
         query2 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
         listCase2 = executeQuery(query2);
@@ -454,6 +549,9 @@ public with sharing class SIDRAliteMassActionController {
         query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
         query3 += ' AND Termination_date__c < TODAY';
         query3 += ' AND Has_the_agent_paid_invoice__c = \'Not paid\'';
+        if (!isEmpty(this.filter.dateFilter)) {
+            query3 += ' AND Termination_date__c = ' + this.filter.dateFilter;
+        }
         listCase3 = executeQuery(query3);
 
         this.listWrapperCase = new list<WrapperCase>();
@@ -521,6 +619,7 @@ public with sharing class SIDRAliteMassActionController {
         }
 
         // make the upsert and store the results in a map
+
         list<Database.UpsertResult> listResult = Database.upsert(listUpsert, false);
         map<Id,Database.UpsertResult> mapResults = new map<Id,Database.UpsertResult>();
         for (Integer i=0; i<listUpsert.size();i++) {
@@ -709,6 +808,7 @@ public with sharing class SIDRAliteMassActionController {
         public Account account {get; set;}
         public String ifapType {get; set;}
         public String category {get; set;}
+        public String dateFilter {get; set;}
 
         public WrapperFilter() {
             reset();
@@ -769,6 +869,16 @@ public with sharing class SIDRAliteMassActionController {
             return listOptions;
         }
 
+        public list<SelectOption> getListFinancialReviews() {
+            list<SelectOption> listOptions = new list<SelectOption>();
+            listOptions.add(new SelectOption('', '--None--'));
+            for(Schema.Picklistentry picklistEntry : Case.Financial_Review_Type__c.getDescribe().getPicklistValues()) {
+                listOptions.add(new SelectOption(picklistEntry.getValue(), picklistEntry.getLabel()));
+            }
+            return listOptions;
+        }
+
+
         public Boolean getIsIFAP() {
             return this.cse.RecordtypeId == RECORDTYPE_IFAP.getRecordTypeId();
         }
@@ -808,5 +918,9 @@ public with sharing class SIDRAliteMassActionController {
             return '';
         }
     }
+
+    //public String getPageInfo() {
+    //    return 'Page size : ' + Limits.getHeapSize() + '/' + Limits.getLimitHeapSize();
+    //}
 
 }
