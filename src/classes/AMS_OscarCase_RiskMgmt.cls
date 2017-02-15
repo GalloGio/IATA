@@ -438,6 +438,7 @@ public class AMS_OscarCase_RiskMgmt {
 		//if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
 		//	AACC.DEF_Non_Payment__c = true;
 		
+		//This was added for all change codes beeing created in AMS_ChangeCodesHelper
 		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
 		
 		AACC.AIMS_ID__C = sUniqueId;
@@ -635,6 +636,7 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		Most of the time, field to check is taken directly from the SIDRA/SIDRA Lite case.
 	***********************************************************************************************************************/ 
+	@TestVisible
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
 		
