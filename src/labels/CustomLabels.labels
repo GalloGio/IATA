@@ -12752,6 +12752,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Service has been rejected by your IATA Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_AccessRejected4_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_AccessRejected4_CNS</shortDescription>
+        <value>Service has been rejected by your CNS Customer Service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_AccessRejected_subject1</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -12936,6 +12944,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>New BSP/CASS Payment Contact</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_CNS_Portal</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CNS_Portal</shortDescription>
+        <value>CNS Customer Portal</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_CNS_Service</fullName>
         <categories>ISS, Email</categories>
         <language>en_US</language>
@@ -13086,6 +13102,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>For additional information, please, log a case with IATA Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Log_Case_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Log_Case_CNS</shortDescription>
+        <value>For additional information, please, log a case with CNS Customer Service</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_LoginInformation</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -13174,6 +13198,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>https://portal.iata.org/</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_PortalUrl_CNS</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_PortalUrl_CNS</shortDescription>
+        <value>https://portal.cnsc.net/cns</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_PortalUser_StatusChange</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -13222,6 +13254,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Thank you for contacting IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_ThankYouContacting_cns</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouContacting_cns</shortDescription>
+        <value>Thank you for contacting CNS</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_ThankYouInAdvance</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -13252,6 +13292,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Email_WelcomeTo</shortDescription>
         <value>Welcome to</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_Welcome_CNS</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Welcome_CNS</shortDescription>
+        <value>Welcome to CNS Customer Service Portal</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_YouCanAccess</fullName>
