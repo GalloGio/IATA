@@ -17,7 +17,7 @@
                 bottom: 246px;
             }
         </style>
-        <c:ISSP_Header ></c:ISSP_Header>    
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
         <body>
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script type="text/javascript">
@@ -45,7 +45,7 @@
         </script>
     
     <div class="container">   
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
         <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
     </div>
@@ -140,7 +140,7 @@
    </apex:form>
    </div>
     
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
         
   </body>  

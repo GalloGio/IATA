@@ -324,11 +324,11 @@ global without sharing class Comm_User_Helper {
         List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
         if (!userList.isEmpty()){
           system.debug('SENDING MAIL TO USER');
-          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id);
+          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id, commName);
         }
         else{
           system.debug('SENDING MAIL TO ADDRESS');
-          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName);
+          EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, commName);
         }
         
     } catch (exception ex) {
@@ -521,7 +521,7 @@ global without sharing class Comm_User_Helper {
               }
                
 
-                Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS, community);
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS, Community);
 
            
             return true;

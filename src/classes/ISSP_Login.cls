@@ -9,6 +9,7 @@ public without sharing class ISSP_Login {
 	  get{
 		return ApexPages.currentPage().getParameters().get('CommunityName');
 	  }set;}
+     public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 	  
  //detect browser for ISSP_Newlogin not working in frame in IE
   public string isIE {get
@@ -78,7 +79,8 @@ public without sharing class ISSP_Login {
     public PageReference login() {
 
         User oneUser;
-        String pageLink = '/ISSP_IframeHome';
+        String pageLink = '/ISSP_IframeHome'+ commParam;
+    
         String retURL = ApexPages.currentPage().getParameters().get('retUrl');
 
         list<User> userList = DAL_ISSP.getUserListByNameOrEmail(username);
@@ -94,7 +96,7 @@ public without sharing class ISSP_Login {
             system.debug('contact id: ' + oneUser.ContactId);
             system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);
             if(String.isNotBlank(retURL))
-                pageLink = retURL;
+                pageLink = retURL + commParam;
 			if (oneUser.Portal_User_Frozen_Checkbox__c){
 				show90Days = true;
 				ISSP_Login.reactivateUser(oneUser);

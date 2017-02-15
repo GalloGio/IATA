@@ -196,6 +196,7 @@ public without sharing class ISSP_AMS_Accreditation {
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
 
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
@@ -2359,7 +2360,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference redirectToCasesList() {
-        return new Pagereference('/ISSP_AMSCases');
+        return new Pagereference('/ISSP_AMSCases' + commParamFirst);
     }
 
     public class AccountChanges {
