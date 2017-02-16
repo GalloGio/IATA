@@ -16,6 +16,7 @@ global class WSSidraLite {
                 BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c,
                 Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Comments__c,
                 Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c,
+                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
                 (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,
                     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,
                     FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c,
@@ -41,6 +42,7 @@ global class WSSidraLite {
     /**
         WS to create a SIDRA lite case to input Case
         Actions are different depending on the parent case recordtype
+        ** Legacy code, will be removed **
     **/
     webservice static Case createCase(Id caseId){
         Case cse = [
@@ -62,8 +64,47 @@ global class WSSidraLite {
 
     /**
         Check Sidra lite bussines Rules and returns a case with default values to set in the layout
+        ** Legacy code, will be removed **
     **/
     webservice static Case checkBussinesRules(Id caseId){
+        try {
+            Case parentCase = queryCase(caseId);
+
+            if ( parentCase.account.Status__c == 'Terminated' ) {
+                throw new SidraLiteException('Account is Terminated, you cannot proceed with a Non-Compliance action');
+            }
+
+            // check default bussiness rules, for insert and update
+            SidraLiteManager.checkBussinessRules(parentCase);
+
+            // search for another SIDRA lite case related to current case
+            Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
+            // if another SidraLite case exists then we return this case
+            if( foundChildCase != null) {
+                // check bussines rules for update only
+                updateSidraLiteAndParent(parentCase, foundChildCase);
+                throwPopUpMessage(parentCase);
+                return null;
+            }
+            // if there is no case then we return a dummy case to prepopulate the new case layout
+            else {
+                // check bussines rules for insert only
+                SidraLiteManager.checkInsertBussinessRules(parentCase);
+                return createDummyCaseFirstNonCompliance(parentCase);
+            }
+        }catch (ShowConfirmationException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new SidraLiteException(e.getMessage());
+        }
+    }
+
+    /**
+        WS to create a SIDRA lite case to input Case
+        Actions are different depending on the parent case recordtype
+        First Check Sidra lite bussines Rules and returns a case with default values to set in the layout
+    **/
+    webservice static Case sidraLiteAction(Id caseId){
         try {
             Case parentCase = queryCase(caseId);
 
@@ -120,6 +161,10 @@ global class WSSidraLite {
             return SidraLiteHelperForSAAM.createDummyCaseFirstNonCompliance(parentCase);
         } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
             return SidraLiteHelperForInvoicing.createDummyCaseFirstNonCompliance(parentCase);
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
+            return SidraLiteHelperForSMAP.createDummyCaseFirstNonCompliance(parentCase);
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
+            return SidraLiteHelperForOSCAR.createDummyCaseFirstNonCompliance(parentCase);
         }
         return null;
     }
@@ -154,14 +199,17 @@ global class WSSidraLite {
     public static void throwPopUpMessage(Case parentCase) {
         if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_IFAP) {
             SidraLiteHelperForIFAP.throwPopUpMessage(parentCase);
-        }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SAAM) {
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SAAM) {
             SidraLiteHelperForSAAM.throwPopUpMessage(parentCase);
-        }
-        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
             SidraLiteHelperForInvoicing.throwPopUpMessage(parentCase);
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
+            SidraLiteHelperForSMAP.throwPopUpMessage(parentCase);
+        } else if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
+            SidraLiteHelperForOSCAR.throwPopUpMessage(parentCase);
+        } else {
+            throw new SidraLiteException('Case recordtype not valid');
         }
-        throw new SidraLiteException('Case recordtype not valid');
     }
 
     public static list<Case> updateSidraLiteAndParent(Case parentCase, Case childCase) {
@@ -173,6 +221,12 @@ global class WSSidraLite {
         }
         if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_INVOICING) {
             return SidraLiteHelperForInvoicing.updateSidraLiteAndParent(parentCase, childCase);
+        }
+        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
+            return SidraLiteHelperForSMAP.updateSidraLiteAndParent(parentCase, childCase);
+        }
+        if (parentCase.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
+            return SidraLiteHelperForOSCAR.updateSidraLiteAndParent(parentCase, childCase);
         }
         return null;
     }
@@ -232,18 +286,18 @@ global class WSSidraLite {
             if (account.Cases.isEmpty()) {
                 listNewComments.add(new CaseComment(
                     ParentId = sidraLiteCase.Id,
-                    CommentBody = 'Agent is already in Default, unable to find related SIDRA or SIDRA Lite case, please check the Account for other cases to update the new reinstatement requirements'
+                    CommentBody = 'Automated message: Agent is already in Default, unable to find related SIDRA or SIDRA Lite case, please check the Account for other cases to update the new reinstatement requirements'
                 ));
             } else {
                 Case relatedCase = account.Cases.get(0);
 
                 listNewComments.add(new CaseComment(
                     ParentId = sidraLiteCase.Id,
-                    CommentBody = 'Agent is already in default, please update Sidra/Sidra Lite ' + relatedCase.caseNumber + ' with the new reinstatement requirements'
+                    CommentBody = 'Automated message: Agent is already in default, please update Sidra/Sidra Lite ' + relatedCase.caseNumber + ' with the new reinstatement requirements'
                 ));
                 listNewComments.add(new CaseComment(
                     ParentId = relatedCase.Id,
-                    CommentBody = 'A new SIDRA lite case for ' + sidraLiteCase.SIDRA_lite_Reason__c + ' number ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
+                    CommentBody = 'Automated message: A new SIDRA lite case for ' + sidraLiteCase.SIDRA_lite_Reason__c + ' number ' + sidraLiteCase.caseNumber + ' has been created please update the agent with the aditional reinstatement requirements'
                 ));
 
                 // patch to set the terminated manual entry in new case, taking it from the termination date in realted Case

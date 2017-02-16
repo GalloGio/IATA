@@ -27,6 +27,22 @@ global with sharing class GenericAttachmentListController {
 	Boolean canAttachFiles;
     private Case cse;
 
+    public Boolean hasOscar{
+        get{
+            if(hasOscar == null) hasOscar = false;
+            return hasOscar;
+        }
+        private set;
+    }
+
+    public Case relatedCase {
+        get; 
+        set{
+            relatedCase = value;
+            hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
+        }
+    }
+	
 	// assgnTo variable
 	public Boolean isForPortal {
 		get;
@@ -58,6 +74,7 @@ global with sharing class GenericAttachmentListController {
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c from Case where id = :this.id];
 
         if (this.isForPortal) {
             this.showFileIdentifier = false;
@@ -236,5 +253,29 @@ global with sharing class GenericAttachmentListController {
 
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
+    }
+
+    /**
+        download files from Amazon
+    **/
+    @RemoteAction
+    global static list<FileDef> getFilesFromAmazon(String objectId) {
+
+        list<FileDef> listFileDef = new list<FileDef>();
+        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+            FileDef filedef = new FileDef();
+            filedef.name = attach.name;
+            filedef.url = getExpiringLink(attach.fullName);
+            filedef.data = '';
+            listFileDef.add(filedef);
+        }
+        system.debug('aqui listFileDef ' + listFileDef);
+        return listFileDef;
+    }
+
+        global class FileDef {
+        String name;
+        String url;
+        String data;
     }
 }

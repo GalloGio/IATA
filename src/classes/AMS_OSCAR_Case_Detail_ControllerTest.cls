@@ -15,6 +15,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		);
 		insert accre;
 
+		oscar.Process__c = AMS_Utils.AGENCYCHANGES;
 		oscar.AMS_Online_Accreditation__c = accre.Id;
 		update oscar;
 	}
@@ -33,8 +34,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			controller.save();
 
 			System.assert(controller.saveAction, 'Error saving');
-			System.assertEquals(null, controller.hasCase);
-			System.assert(controller.hasEditableFields, 'No editable fields');
+			System.assert(!controller.hasEditableFields, 'Found editable fields');
 			System.assert(controller.getExistOscarInspections(), 'No inspections found');
 		Test.stopTest();
 	}
