@@ -49,12 +49,22 @@ global without sharing class AMS_EBulletinReportWebservice {
 		System.debug('CSV File Generated: ' + file);
 		*/
 
+		String csvPrintable = '';
+		if(!csv.isAsciiPrintable())
+		{	
+			AMS_Utils.Utility_RowIterator rIt = New AMS_Utils.Utility_RowIterator(csv,'\n'); //Replace \n with whatever delineates your row
 
-		if(!csv.isAsciiPrintable()) csv = csv.replaceall('[^\\x00-\\x7F]', '');
+			String csvFirstRow;
+			while (rIt.hasNext()){
+			
+				csvFirstRow = rIt.next();
+				csvPrintable = csvPrintable + csvFirstRow.replaceall('[^\\x00-\\x7F]', '') + '\n';
+			} 
+		}
 
 		Attachment attachment = new Attachment();
 		attachment.ContentType = 'text/csv; charset=UTF-8';
-		attachment.Body = Blob.valueOf( csv );
+		attachment.Body = Blob.valueOf( csvPrintable );
 		
 
 		String csvName = 'EBulletin ' + recordTypeName + ' Report ';
