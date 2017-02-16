@@ -6,12 +6,12 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
     <layoutSections>
@@ -142,6 +142,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Birthdate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_isManager__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -292,6 +296,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Assessment_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MITA_Contact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -766,27 +766,86 @@ public without sharing class AMS_Utils {
     }
     */
 
+ public static String getLocationClassDescr(String endorsmentCode) {
+
+        /*
+            C-Cargo
+            D-Domestic
+            E-External Registrars
+            G-General Sales Agent
+            I = Imports
+            K-CATO
+            M-Members & Airlines Sales Offices
+            N-NISI
+            O-SATO
+            P-Passenger
+            S-SSI
+            R = CassAssociate
+            T-TIDS
+            Q = Courier
+            V-Travel Service Intermediaries-TSI (USA Only) 
+            X-Handling Agents and Shipping Lines
+            J-Joint Vent
+         */
+        if (endorsmentCode == 'P')
+            return 'Passenger';
+        else if (endorsmentCode == 'C')
+            return 'Cargo';
+        else if (endorsmentCode == 'D')
+            return 'Domestic';
+        else if (endorsmentCode == 'E')
+            return 'External Registrars';
+        else if (endorsmentCode == 'G')
+            return 'General Sales Agents';
+        else if (endorsmentCode == 'K')
+            return 'CATO';
+        else if (endorsmentCode == 'M')
+            return 'Members & Airlines Sales Offices';
+        else if (endorsmentCode == 'N')
+            return 'NISI';
+        else if (endorsmentCode == 'O')
+            return 'SATO';
+        else if (endorsmentCode == 'S')
+            return 'SSI';
+        else if (endorsmentCode == 'T')
+            return 'TIDS';
+        else if (endorsmentCode == 'V')
+            return 'Travel Service Intermediaries-TSI (USA Only)';
+        else if (endorsmentCode == 'X')
+            return 'Handling Agents and Shipping Lines';
+        else if (endorsmentCode == 'J')
+            return 'Joint Vent';
+        else if (endorsmentCode == 'I')
+            return 'Import';
+        else if (endorsmentCode == 'Q')
+            return 'Courier';
+        else if (endorsmentCode == 'R')
+            return 'CassAssociate';
+
+        return '';
+    }
+
     public static String getIATAReadableStatus(String endorsmentCode) {
 
         if (endorsmentCode == '0')
             return ACC_S0_TERMINATED;
-        if (endorsmentCode == '1')
+        else if (endorsmentCode == '1')
             return ACC_S1_NOTACCREDITED;
-        if (endorsmentCode == '2')
+        else if (endorsmentCode == '2')
             return ACC_S2_NEWAPPLICATIONPENDING;
-        if (endorsmentCode == '3')
+        else if (endorsmentCode == '3')
             return ACC_S3_NOTINOPERATION;
-        if (endorsmentCode == '4')
+        else if (endorsmentCode == '4')
             return ACC_S4_LISTED;
-        if (endorsmentCode ==  '5')
+        else if (endorsmentCode ==  '5')
             return ACC_S5_CASHNOCOMMISSION;
-        if (endorsmentCode == '6')
+        else if (endorsmentCode == '6')
             return ACC_S6_CASHWITHCOMMISSION;
-        if (endorsmentCode == '7')
+        else if (endorsmentCode == '7')
             return ACC_S7_UNDERREVIEW;
-        if (endorsmentCode == '8')
+        else if (endorsmentCode == '8')
             return ACC_S8_CHANGESPROCESSED;
-        if (endorsmentCode == '9')
+        else if (endorsmentCode == '9')
             return ACC_S9_APPROVED;
 
         return null;
@@ -796,23 +855,23 @@ public without sharing class AMS_Utils {
 
         if (statusDesc == ACC_S0_TERMINATED)
             return '0';
-        if (statusDesc == ACC_S1_NOTACCREDITED)
+        else if (statusDesc == ACC_S1_NOTACCREDITED)
             return '1';
-        if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
+        else if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
             return '2';
-        if (statusDesc == ACC_S3_NOTINOPERATION)
+        else if (statusDesc == ACC_S3_NOTINOPERATION)
             return '3';
-        if (statusDesc == ACC_S4_LISTED)
+        else if (statusDesc == ACC_S4_LISTED)
             return '4';
-        if (statusDesc == ACC_S5_CASHNOCOMMISSION)
+        else if (statusDesc == ACC_S5_CASHNOCOMMISSION)
             return '5';
-        if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
+        else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
             return '6';
-        if (statusDesc == ACC_S7_UNDERREVIEW)
+        else if (statusDesc == ACC_S7_UNDERREVIEW)
             return '7';
-        if (statusDesc == ACC_S8_CHANGESPROCESSED)
+        else if (statusDesc == ACC_S8_CHANGESPROCESSED)
             return '8';
-        if (statusDesc == ACC_S9_APPROVED)
+        else if (statusDesc == ACC_S9_APPROVED)
             return '9';
 
         return null;
@@ -974,7 +1033,7 @@ public without sharing class AMS_Utils {
                 Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                 Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                 Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c
+                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c, IATA_ISO_State__r.Valid_for_Address__c
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -984,7 +1043,7 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
-            Account acc = accounts.get(oscar.Account__c);
+            Account acc = accounts.get(oscar.Account__c); 
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
@@ -1011,8 +1070,8 @@ public without sharing class AMS_Utils {
                 }
 
                 if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
-                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.Shipping_ISO_State__r.Name));
-                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null));
+                    acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 }
                 if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
@@ -1024,8 +1083,8 @@ public without sharing class AMS_Utils {
                 acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
                 acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
                 acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
-                acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
+                acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
+                acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
@@ -1161,9 +1220,9 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                     accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
-                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.Shipping_ISO_State__r.Name);
+                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Name);
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
@@ -1350,7 +1409,40 @@ public without sharing class AMS_Utils {
     }
 
 
+/**
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation) 
+    */
+public static String transformLegalStatus(String companyType) {
 
+    if (companyType == null)
+        return null;
+
+    if (companyType.equalsIgnoreCase('A'))
+        return 'Association';
+    if (companyType.equalsIgnoreCase('C'))
+        return 'Corporation';
+    if (companyType.equalsIgnoreCase('E'))
+        return 'State Owned Enterprise';
+    if (companyType.equalsIgnoreCase('J'))
+        return 'Joint Venture';
+    if (companyType.equalsIgnoreCase('L'))
+        return 'Limited Company';
+    if (companyType.equalsIgnoreCase('O'))
+        return 'Other';
+    if (companyType.equalsIgnoreCase('P'))
+        return 'Partnership';
+    if (companyType.equalsIgnoreCase('R'))
+        return 'Limited Partnership';
+    if (companyType.equalsIgnoreCase('S'))
+        return 'Sole Proprietorship';
+    if (companyType.equalsIgnoreCase('T'))
+        return 'Trust Company';
+    if (companyType.equalsIgnoreCase('V'))
+        return 'Co-operative';
+
+    return '';
+
+}
 
 /**
     Method to help the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount)

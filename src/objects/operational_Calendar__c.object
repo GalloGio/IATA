@@ -211,6 +211,7 @@
         <columns>ISS_operation__c</columns>
         <columns>Operation_Code__c</columns>
         <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
         <columns>First_Day__c</columns>
         <columns>Last_Day__c</columns>
         <columns>Remittance_Day__c</columns>

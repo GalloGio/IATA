@@ -24,6 +24,9 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	//Available Discounts for the product 
 	public List<PriceDetail_DTO> discounts{get;set;}
 
+	public String selectedTopic{get;set;}
+	public String selectedTopicLabel{get;set;}
+
 	/**************************************************************************************************************
      *  IEC_ProductDetailsController: Class Constructor                                                           *
      *  Author: David Daboué                                                                                      *  
@@ -94,7 +97,7 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 
 
 
-		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
+		    Product2 sfProduct = [SELECT Id, Sell_through_eCommerce__c, Display_Ecom_Topic__c FROM Product2 WHERE Id = :product.ProductId LIMIT 1];
 
 
 			bIsInStock 		= 	product.InventoryStatus == 'In stock';
@@ -129,6 +132,29 @@ public with sharing class IEC_ProductDetailsController extends IEC_PageControlle
 	        validateCountryCompliance();
             if (!bIsProductCompliant) ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, labels.get('msgErrorProductNotCompliant')));
             
+			//*** get category
+			selectedCategory = new SelectOption('', '');
+			for(SelectOption so : categories)
+				if (so.getValue() == product.megaMenu)
+				{
+					selectedCategory = so;
+					break;
+				}
+
+			//*** get topic
+			selectedTopic = sfProduct.Display_Ecom_Topic__c;
+			selectedTopicLabel = '';
+			if (!String.isBlank(selectedTopic))
+			{
+				selectedTopic = selectedTopic.split(';')[0];   //*** take the first topic if contains multiple
+				if (subCategories.containsKey(selectedCategory.getValue()))
+					for (SelectOption so : subCategories.get(selectedCategory.getValue()))
+						if (so.getValue() == selectedTopic)
+						{
+							selectedTopicLabel = so.getLabel();
+							break;
+						}
+			}
 		}
 		else
 		{

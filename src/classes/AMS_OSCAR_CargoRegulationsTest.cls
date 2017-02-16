@@ -28,13 +28,16 @@
 
         	update oscar;
         	
-        	aregs = [SELECT Id, Notification_sent__c, Account__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(2, aregs.size());
+        	aregs = [SELECT Id, Notification_sent__c, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
+        	system.assertEquals(4, aregs.size());
 
         	//force DGR renewal oscar creation
-        	aregs[0].Notification_sent__c = true;
-
-        	update aregs[0];
+        	for(AMS_Agency_Regulation__c areg : aregs){
+                if(areg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
+                    areg.Notification_sent__c = true;
+                    update areg;
+                }
+            }
 
         }
         
@@ -105,8 +108,17 @@
 
         	update oscar;
 
-        	List<AMS_Agency_Regulation__c> aregs = [SELECT Id FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(2, aregs.size());
+        	List<AMS_Agency_Regulation__c> aregs = [SELECT Id, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
+        	system.assertEquals(4, aregs.size());
+
+
+            //force DGR renewal oscar creation
+            for(AMS_Agency_Regulation__c areg : aregs){
+                if(areg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA){
+                    areg.Notification_sent__c = true;
+                    update areg;
+                }
+            }
         }
         
         Test.stopTest();
@@ -154,13 +166,19 @@
 
         	update oscar;
 
-        	aregs = [SELECT Id, Account__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
-        	system.assertEquals(2, aregs.size());
+        	aregs = [SELECT Id, Account__c, Type_Of_Certificate__c FROM AMS_Agency_Regulation__c WHERE Account__c = :oscar.Account__c];
+        	system.assertEquals(4, aregs.size());
 
             //force DGR renewal oscar creation
         	aregs[0].Notification_sent__c = true;
 
-        	update aregs[0];
+            //force DGR renewal oscar creation
+            for(AMS_Agency_Regulation__c areg : aregs){
+                if(areg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
+                    areg.Notification_sent__c = true;
+                    update areg;
+                }
+            }
         }
         
         Test.stopTest();

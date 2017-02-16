@@ -1105,7 +1105,8 @@ public class AMS_OSCARTriggerHandler {
 			if(
 				(oscar.Status__c != null && oscar.Status__c != oldMap.get(oscar.Id).Status__c)
 				|| oscar.OwnerId != oldMap.get(oscar.Id).OwnerId
-				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED)
+				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED && oscar.Process__c != AMS_Utils.VOLRELINQUISH)
+				|| (oscar.Termination_Date__c != oldMap.get(oscar.Id).Termination_Date__c && oscar.Process__c == AMS_Utils.VOLRELINQUISH)
 			){
 				updatedOscars.add(oscar);
 			}
@@ -1135,8 +1136,12 @@ public class AMS_OSCARTriggerHandler {
         		c.OwnerId = updatedOSCAR.OwnerId;
         		caseChanged = true;
         	}
-        	if(c.Process_Start_Date__c == null){
+        	if(c.Process_Start_Date__c == null && updatedOSCAR.Process__c != AMS_Utils.VOLRELINQUISH){
         		c.Process_Start_Date__c = updatedOSCAR.Sanity_check_received__c;
+        		caseChanged = true;
+        	}
+        	if(c.Process_Start_Date__c != updatedOSCAR.Termination_Date__c && updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
+        		c.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
         		caseChanged = true;
         	}
 
@@ -1338,13 +1343,13 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Accreditation_Contact__c> allTrainedStaff = new List<AMS_Accreditation_Contact__c>(  [SELECT Id, Type_Of_Certificate__c, Valid_until__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c
 																									FROM AMS_Accreditation_Contact__c
 																									WHERE AMS_Pax_Accreditation_Form__c IN :onlineAccreditations
-																									AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT AND Valid_until__c > TODAY]);
-
+																									AND RecordTypeId = :AMS_Utils.AccreditationContactTrainedStaffRT /*AND Valid_until__c > TODAY*/]);
+		Id tsAccount = null;
 		for(AMS_Accreditation_Contact__c trainedStaff :allTrainedStaff){
 
 			System.debug('OSCARTriggerHandler -> validateCertificates: Found trained staff ' + trainedStaff);
 
-			Id tsAccount = trainedStaff.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c;
+			tsAccount = trainedStaff.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.Oscar__r.Account__c;
 
 			if(!trainedStaffPerAccount.containsKey(tsAccount))
 				trainedStaffPerAccount.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
@@ -1399,7 +1404,23 @@ public class AMS_OSCARTriggerHandler {
 						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
 				}else{
-					checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+					//RB: Here We will select only the DGR trained staff, which must have a Valid until date
+					Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
+					List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
+					
+					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+
+					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
+						if(trainedStaffToRemove.Type_Of_Certificate__c == 'DGR' && trainedStaffToRemove.Valid_until__c != null){
+							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+						}
+					}
+
+					system.debug('Trained staff to remove: '+ trainedStaffDGR);
+					system.debug('All Trained staff: '+ allTrainedStaff);
+
+					checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
 
 			}
@@ -1597,7 +1618,10 @@ public class AMS_OSCARTriggerHandler {
 			    Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
 			    updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
 
-			    if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH) changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+			    if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
+			    	updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
+			    	changesContainer.add(AMS_ChangeCodesHelper.generateVRChangeCode(AMS_Utils.SUSPENSION, updatedOSCAR, accountsInvolved.get(updatedOSCAR.Id), accounts, accountsChangeCode));
+			    }
 			}
 
 			if (oldOSCAR.STEP31__c != AMS_Utils.PASSED && updatedOSCAR.STEP31__c == AMS_Utils.PASSED) {

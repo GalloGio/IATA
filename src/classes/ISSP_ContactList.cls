@@ -215,7 +215,7 @@ public with sharing class ISSP_ContactList {
         system.debug('contactListViewMap >>> ' + contactListViewMap);
         //String queryConditions =  String.isBlank(selectedList) ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
         //if (selectedList == null) selectedList = '';
-        if(contactListViewMap.isEmpty())
+        if(contactListViewMap == null || contactListViewMap.isEmpty())
         	return 'WHERE ID = NULL';
         
         system.debug('selectedList: ' + selectedList);

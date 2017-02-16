@@ -189,11 +189,11 @@
              .row1 {padding-bottom:16px; vertical-align: text-top;}
 
         #container{width:100%;height: 40px;}
-        #right{float:right;width:20%;}
+        #right{float:right;width:30%;}
         #right:hover a{
             color:#FFF;
         }
-        #left{float:left;width:80%;}
+        #left{float:left;width:70%;}
 
         /*------------------------------------*\
             LISTS
@@ -309,12 +309,22 @@
     }
     function onSelect(dateText, inst) { 
         var date = $(this).datepicker('getDate');
+
+        //when user clicks on friday or saturday we need to advance for the next week in order to get the correct results
+        if(date.getDay() >= 5){
+            date.setDate(date.getDate() + 2);
+        }
+
         startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
         endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
 
+        //alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
+
         startDate.setDate(startDate.getDate() - 2);
         endDate.setDate(endDate.getDate() -2);
+
+        //alert('2 - startDate: '+startDate + ' || endDate: '+endDate);
 
         jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
         jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
@@ -344,13 +354,16 @@
         }
     }
     
+
+    var weekInitialStartDate;
+    var weekInitialEndDate;
+
     function getWeeklyMaxDay(){
         dayOfWeek = new Date().getDay();
         dayOfMonth = new Date().getDate();
         maxDay = dayOfMonth;
         testDay = 0;
 
-        // alert('dayOfWeek: '+dayOfWeek);
 
         if(dayOfWeek == 5){
             maxDay = maxDay-1;
@@ -364,7 +377,11 @@
             }
             maxDay = dayOfMonth-1;
         } 
-        // alert('maxDay: '+maxDay);
+        
+        //Initial values for the selected week
+        weekInitialStartDate=maxDay-6;
+        weekInitialEndDate=maxDay;
+        
         return maxDay;
     }
 
@@ -412,12 +429,18 @@
         // if(bIsStep3){
             //Ser current week as selected
             var date = $(this).datepicker('getDate');
-            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()-7);
-            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() -1);
+
+            // alert('0 - date: '+date + ' || date.getDay(): '+date.getDay());
+
+            startDate = new Date(date.getFullYear(), date.getMonth(), weekInitialStartDate);
+            endDate = new Date(date.getFullYear(), date.getMonth(), weekInitialEndDate);
+            
+            // alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
+
             var dateFormat = $.datepicker._defaults.dateFormat;
 
-            startDate.setDate(startDate.getDate() - 2);
-            endDate.setDate(endDate.getDate() -2);
+            // startDate.setDate(startDate.getDate() - 2);
+            // endDate.setDate(endDate.getDate() -2);
 
             jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
             jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
@@ -482,10 +505,11 @@
         <div class="panel-primary">
             <div class="panel-heading head_panel_green" id="container">
                 <div id="left"><h3 class="panel-title">{!$Label.ISSP_AMS_eBulletin_Title} - {!$Label.ISSP_AMS_eBulletin_Selection_Criteria}</h3></div>
-                <div id="right">   
+                <div id="right" >   
                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;
                     <h3 class="panel-title">
-                    <apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink>
+                    <!-- <apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink> -->
+                    <!-- <div style="padding-left:16px"> --><!-- {!$Label.ISSP_AMS_eBulletin_home_lbl1}&nbsp; --><apex:outputLink value="{!userGuideLink}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink>.<!-- </div> -->
                     </h3>
                 </div>
             </div>
@@ -758,7 +782,7 @@
                                             </apex:facet>
                                             
                                             <div class="alert alert-warning"  role="alert">
-                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily}
                                             </div>
 
 
@@ -1026,7 +1050,7 @@
                                             </apex:facet>
                                             
                                             <div class="alert alert-warning"  role="alert">
-                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer}
+                                                {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly}
                                             </div>
 
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
@@ -1155,7 +1179,8 @@
                 <div id="right">   
                     <h3 class="panel-title">
                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;
-                    <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink></a>
+                    <!-- <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink></a> -->
+                    <!-- <div style="padding-left:16px"> --><!-- {!$Label.ISSP_AMS_eBulletin_home_lbl1}&nbsp; --><apex:outputLink value="{!userGuideLink}" target="_blank">{!$Label.ISSP_AMS_eBulletin_eBulletin_UserGuide}</apex:outputLink>.<!-- </div> -->
                     </h3>
                 </div>
             </div>
