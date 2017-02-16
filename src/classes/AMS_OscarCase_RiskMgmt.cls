@@ -51,7 +51,9 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		if(!lsConf.isEmpty()){
 			list<case> lsAPDToCreate = new list<case>();
-			for(case c:[select id, AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()]){
+			//INC305031 changed the query from for to list;
+			List<Case> listCases = [select id, AccountId, (select id from Hierarchy_Account_Selections__r) from Case where id in:mapTrgNew.keyset()];
+			for(case c: listCases){
 				if(c.Hierarchy_Account_Selections__r.isEmpty())
 					lsAPDToCreate.add(c);
 			}

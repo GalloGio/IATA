@@ -84,7 +84,7 @@
     <fields>
         <fullName>AccountNewStatus__c</fullName>
         <externalId>false</externalId>
-        <label>Accoun Status</label>
+        <label>Account Status</label>
         <picklist>
             <picklistValues>
                 <fullName>Approved</fullName>

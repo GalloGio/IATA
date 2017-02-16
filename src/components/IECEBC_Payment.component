@@ -316,7 +316,19 @@
                                     <input class="user-input checkbox js-enable-accordion" data-target="#accordion-payment-method" type="checkbox" id="terms-and-conditions" onClick="ShowWaitingStatus('.sectionActions');sDoNothing();RadioButtonNotorSelectable(true);"/>
                                     <label class="custom-checkbox" for="terms-and-conditions"><i class="icon"></i></label>
                                 </div>
-                                <label class="input-label" for="terms-and-conditions">I agree to the eBroadcast <a href="#">Terms &amp; Conditions</a></label>
+                                <!--
+                                <label class="input-label" for="terms-and-conditions">Old I agree to the eBroadcast <a href="#">Terms &amp; Conditions</a></label>
+                                -->
+                                <apex:repeat id="repeatterms" var="terms" value="{!TermsAndConditions}" rows="1">
+                                
+                                <apex:repeat id="repeatAttachment" var="attach" value="{!terms.Attachments}" rows="1">
+                                   
+                                 <label class="input-label" for="terms-and-conditions">
+                                    I agree to the {!terms.Product_Information__r.Related_Product_Category__r.Display_Name__c} &nbsp;
+                                    <a href="{!URLFOR($Action.Attachment.Download, attach.Id)}" target="_blank">Terms &amp; Conditions</a>
+                                 </label>
+                                </apex:repeat>
+                                </apex:repeat>
                             </div>
                         </dd>   
                         <dt class="accordion-title is-disabled" data-index="3" id="accordion-payment-method">Payment method</dt>
@@ -543,17 +555,17 @@
                                 </apex:outputText>
                                 
                                 <apex:outputText id="EnhancedReportingPanel" rendered="{!isEnhancedReporting}">
-                                    <tr class="item less-space">
-                                        <th class="item-details" colspan="2">
-                                            <div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Prorated charge</div>
-                                            <div class="item-box">Start Date:
-                                                <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermStartDate}" /></apex:outputText>
-                                            </div>
-                                            <div class="item-box">End Date:
-                                                <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermEndDate}" /></apex:outputText>
-                                            </div>
-                                        </th>
-                                    </tr>
+                                  <tr class="item less-space">
+                    <th class="item-details" colspan="2">
+                      <div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Prorated charge</div>
+                      <div class="item-box">Start Date:
+                        <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermStartDate}" /></apex:outputText>
+                      </div>
+                      <div class="item-box">End Date:
+                        <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermEndDate}" /></apex:outputText>
+                      </div>
+                    </th>
+                  </tr>
                                 </apex:outputText>
                                 
                                 <tr class="sub-total">
