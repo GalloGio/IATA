@@ -379,7 +379,7 @@ public with sharing class AMS_AccountRoleCreator
 
             //get all the roles
             List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
-            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
 
             //Register New and Old Owners for EBulletion Report purposes
 
@@ -1206,7 +1206,7 @@ public with sharing class AMS_AccountRoleCreator
             for (AMS_Account_Role__c acctRole : allAccountRoles)
             {
                 if(acctId == acctRole.Account__c)
-                    oldOwnersList.add(new OwnerFieldsEntity (acctRole.Owner_Name__c, String.valueOf(acctRole.Percentage__c)));            
+                    oldOwnersList.add(new OwnerFieldsEntity ((acctRole.Owner_Account__r.Name != null ? acctRole.Owner_Account__r.Name:acctRole.Owner_Name__c) , String.valueOf(acctRole.Percentage__c)));            
             }
             
             OwnersByAccountWrapper oldOwnersWrapper = new OwnersByAccountWrapper(acctId , oldOwnersList);
