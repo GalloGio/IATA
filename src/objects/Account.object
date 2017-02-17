@@ -3082,7 +3082,7 @@
         <fullName>Airline_designator__c</fullName>
         <description>Field used for the airline designator code e.g. BA</description>
         <externalId>false</externalId>
-        <label>2-letter Airline Designator Code</label>
+        <label>IATA Designator (2-character)</label>
         <length>4</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -9088,7 +9088,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Legal_name__c</fullName>
         <description>Field used for the legal name of the airlines and the travel agents</description>
         <externalId>false</externalId>
-        <label>Legal/Registered name</label>
+        <label>Legal Name</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
