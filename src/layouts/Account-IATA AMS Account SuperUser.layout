@@ -2,8 +2,56 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
+    <customConsoleComponents>
+        <primaryTabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Cases</label>
+                    <page>AMS_DemoCaseListPage</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Hierarchy</label>
+                    <page>AMS_DemoTreeViewPage</page>
+                </sidebarComponents>
+                <style>Tabs</style>
+                <unit>Pixel</unit>
+                <width>200</width>
+            </containers>
+            <containers>
+                <height>90</height>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Top</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <page>AMSAgencyKPI</page>
+                    <unit>Percentage</unit>
+                    <width>100</width>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Pixel</unit>
+            </containers>
+        </primaryTabComponents>
+        <subtabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <height>100</height>
+                    <page>AMS_Translation_Account_Page</page>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Pixel</unit>
+                <width>50</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -590,7 +638,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E000000F3OD</masterLabel>
+        <masterLabel>00hw000000hfVzQ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
