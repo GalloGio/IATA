@@ -654,7 +654,7 @@ public with sharing class ISSP_PortalUserStatusChange {
                     string password =  ISSP_Registration.generatePassword();
                     ISSP_Registration.passwordMap.put(r.getId(),password);
                     system.setPassword(r.getId(), password);
-                    ml.add(createEmail( et.Id,r.getId()));
+                    ml.add(createEmail( et.Id,r.getId(), communityName));
                 }
             }
             Messaging.sendEmail(ml);
@@ -714,13 +714,15 @@ public with sharing class ISSP_PortalUserStatusChange {
         }  
     }
     
-       public static Messaging.SingleEmailMessage createEmail(string templateId,string userId){
+       public static Messaging.SingleEmailMessage createEmail(string templateId,string userId, string communityName){
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             mail.setTemplateId(templateId);
             mail.setTargetObjectId(userId);
             mail.setSaveAsActivity(false); 
-            mail.setReplyTo('noreply@iata.org'); 
-            mail.setSenderDisplayName('ISS Portal ');
+            if(communityName=='CNS'){
+                mail.setReplyTo('cns_noreply@cnsc.us'); mail.setSenderDisplayName('CNS Portal ');
+            }else{ mail.setReplyTo('noreply@iata.org'); mail.setSenderDisplayName('ISS Portal ');}            
+            
             return mail;
        }
        
