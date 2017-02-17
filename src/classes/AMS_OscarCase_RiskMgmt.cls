@@ -142,14 +142,14 @@ public class AMS_OscarCase_RiskMgmt {
 												  order by Account__c, CreatedDate desc]){
 				//Populate map with existing change code per sidra case. This is used to get the previuos status/reason in case of withdrawn
 				map<string, Agency_Applied_Change_code__c> mapAACCTmp;
-				if(mapPrevReasonFromCC.containsKey(aa.SIDRA_Case__c)){
-					mapAACCTmp = mapPrevReasonFromCC.get(aa.SIDRA_Case__c);
+				if(mapPrevReasonFromCC.containsKey(aa.Account__c)){
+					mapAACCTmp = mapPrevReasonFromCC.get(aa.Account__c);
 				}else
 					mapAACCTmp = new map<string, Agency_Applied_Change_code__c>();
 				
 				mapAACCTmp.put(aa.Change_Code__c, aa);
 				
-				mapPrevReasonFromCC.put(aa.SIDRA_Case__c, mapAACCTmp);
+				mapPrevReasonFromCC.put(aa.Account__c, mapAACCTmp);
 				
 				//Populate map with all existing change code per same account. 
 				list<Agency_Applied_Change_code__c> lsAACCtmp;
@@ -566,9 +566,9 @@ public class AMS_OscarCase_RiskMgmt {
 			
 			if(!SplittedCC.isEmpty()){
 				for(string sCCToGet:SplittedCC){
-					if(mapPrevReasonFromCC.containsKey(idCase)){
-						if(mapPrevReasonFromCC.get(idCase).containsKey(sCCToGet)){
-							sPrevStatus = mapPrevReasonFromCC.get(idCase).get(sCCToGet).AccountPreviousStatus__c;
+					if(mapPrevReasonFromCC.containsKey(AccountId)){
+						if(mapPrevReasonFromCC.get(AccountId).containsKey(sCCToGet)){
+							sPrevStatus = mapPrevReasonFromCC.get(AccountId).get(sCCToGet).AccountPreviousStatus__c;
 							AACC.AccountNewStatus__c = sPrevStatus;
 							AACC.AccountPreviousStatus__c = sCurrStatus;
 						}
@@ -617,9 +617,9 @@ public class AMS_OscarCase_RiskMgmt {
 			
 			if(!SplittedCC.isEmpty()){
 				for(string sCCToGet:SplittedCC){
-					if(mapPrevReasonFromCC.containsKey(idCase)){
-						if(mapPrevReasonFromCC.get(idCase).containsKey(sCCToGet)){
-							sPrevReason = mapPrevReasonFromCC.get(idCase).get(sCCToGet).PreviousReason__c;
+					if(mapPrevReasonFromCC.containsKey(AccountId)){
+						if(mapPrevReasonFromCC.get(AccountId).containsKey(sCCToGet)){
+							sPrevReason = mapPrevReasonFromCC.get(AccountId).get(sCCToGet).PreviousReason__c;
 							if(sPrevReason.IndexOf('-')>0){
 								SplittedReason = sPrevReason.split('-');
 								AACC.Reason_Code__c = SplittedReason.get(0);
@@ -905,7 +905,7 @@ public class AMS_OscarCase_RiskMgmt {
 						if(sPrevType=='W' || sPrevType=='D' || irr.Operation__c=='W' || irr.Operation__c=='D'){
 							sPrevType = irr.Operation__c;
 						}else{
-							sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + irr.Irregularities_Points__c + ';';
+							sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
 						}
 						
 						sPrevType = irr.Operation__c;
