@@ -573,7 +573,7 @@ background-color:#428bca;
 
       </button>
         <a href="/ISSP_Homepage?mid=M0S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
-      <img class="navbar-brand" height="70px"  src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;display:{!if(communityName== null,'','none')};"></img>
+      <img class="navbar-brand" height="70px"  src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002pjCr&oid=00D2000000008TF&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px;display:{!if(OR(communityName== null, communityName=='ISS'),'','none')};"></img>
        <img class="navbar-brand" height="70px" src="https://iata--cnslaura.cs86.my.salesforce.com/servlet/servlet.ImageServer?id=0157E0000006IOw&oid=00D7E0000000mLr&lastMod=1434447102000" style="padding-top: 5px; padding-bottom: 5px;margin-left: -25px; display:{!if(communityName=='CNS','','none')};"></img>
      </a>
       

@@ -196,6 +196,11 @@ public with sharing class ISSP_Homepage {
             && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
         if(isCNS) {
             ApexPages.currentPage().getParameters().put('communityName','CNS');
+        } else if(u.Contact.Account.RecordType.DeveloperName == 'IATA_Airline_BR' ||
+                    u.Contact.Account.RecordType.DeveloperName == 'IATA_Airline' ||
+                    u.Contact.Account.RecordType.DeveloperName == 'IATA_GSA') {
+            ApexPages.currentPage().getParameters().put('communityName','ISS');
+
         }
         return null;
     }
