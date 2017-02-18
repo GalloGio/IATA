@@ -215,7 +215,8 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         Test.startTest();
 
-        AMS_AlignOwnersInHierarchy.alignOwnersInHierarchyByAccountId();
+        AMS_AlignOwnersInHierarchy aoh = new AMS_AlignOwnersInHierarchy();
+        aoh.alignOwnersInHierarchyByAccountId();
 
         Test.stopTest();
 
