@@ -874,10 +874,7 @@ public class ams2gdp_BusinessLogic
 		//Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
 		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS');
 		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS');
-		system.debug('**air_code_references**'+air_code_references);
-		system.debug('**iatan_status_references**'+iatan_status_references);
-		system.debug('**iata_status_references**'+iata_status_references);
-
+		
 		
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>(); 
@@ -913,14 +910,14 @@ public class ams2gdp_BusinessLogic
 			{
 				
 				accreditation.Status__c = iata_status_references.get(inspection.Account__r.Status__c).Id;
-				system.debug('**status 1**'+inspection.Account__r.Status__c+accreditation.Status__c );
+			
 			}
 			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(inspection.Account__r.Status__c)) 
 
 			{
                
 				accreditation.Status__c = iatan_status_references.get(inspection.Account__r.Status__c).Id;
-			system.debug('**status 2**'+inspection.Account__r.Status__c+accreditation.Status__c );}
+			}
 			
 			//-- Set default record Type 			
 			if(recordTypes.containsKey('Live')) 

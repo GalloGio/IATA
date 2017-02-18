@@ -17,7 +17,7 @@
 
 						<apex:outputPanel layout="none" id="options">
 							<apex:outputPanel layout="block" styleclass="form-group" rendered="{!AND(jobName != 'ams2gdp_Batch_Update',jobName != '')}">
-								<label>Records</label>
+								<label>Records (using Semi-Column Separated SFDC ID’s)</label>
 								<apex:inputTextarea styleClass="form-control" value="{!recordIds}" />
 							</apex:outputPanel>
                             <apex:outputPanel layout="block" styleclass="checkbox" rendered="{!jobName == 'ams2gdp_Batch_Account'}">
