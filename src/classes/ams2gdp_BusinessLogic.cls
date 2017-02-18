@@ -293,15 +293,15 @@ public class ams2gdp_BusinessLogic
 
 		for(Account acc: accounts)
 		{
-			if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
-			if(String.isBlank(acc.BillingCity))  acc.BillingStreet = '-';
-			if(String.isBlank(acc.BillingCountry))  acc.BillingStreet = '-';
-			if(String.isBlank(acc.ShippingStreet))  acc.BillingStreet = '-';
-			if(String.isBlank(acc.ShippingCity))  acc.BillingStreet = '-';
-			if(String.isBlank(acc.ShippingCountry))  acc.BillingStreet = '-';
+			
+			
 
-			if(String.isNotBlank(acc.BillingStreet) && String.isNotBlank(acc.BillingCity) && String.isNotBlank(acc.BillingCountry))
+			if(!(String.isBlank(acc.BillingStreet) && String.isBlank(acc.BillingCity) && String.isBlank(acc.BillingCountry)))
 			{
+
+				if(String.isBlank(acc.BillingStreet))  acc.BillingStreet = '-';
+				if(String.isBlank(acc.BillingCity))  acc.BillingCity = '-';
+				if(String.isBlank(acc.BillingCountry))  acc.BillingCountry = '-';
 				//Generate Location Address
 				List<String> streetParts = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
 				String countryId = (acc.IATA_ISO_Country__c !=null)? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
@@ -321,8 +321,12 @@ public class ams2gdp_BusinessLogic
 				));
 			}
 
-			if(String.isNotBlank(acc.ShippingStreet) && String.isNotBlank(acc.ShippingCity) && String.isNotBlank(acc.ShippingCountry))
+			if(!(String.isBlank(acc.ShippingStreet) && String.isBlank(acc.ShippingCity) && String.isBlank(acc.ShippingCountry)))
 			{
+
+				if(String.isBlank(acc.ShippingStreet))  acc.ShippingStreet = '-';
+				if(String.isBlank(acc.ShippingCity))  acc.ShippingCity = '-';
+				if(String.isBlank(acc.ShippingCountry))  acc.ShippingCountry = '-';
 				//Generate Mailing Address
 				List<String> streetParts = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
 				String countryId = (acc.IATA_ISO_Shipping_Country__c !=null)? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
@@ -856,7 +860,7 @@ public class ams2gdp_BusinessLogic
 			location_class_codes.add(inspection.Account__r.Location_Class__c);
 			air_codes.add(air_code);
 
-			if(air_codes.equals('IATAN')||air_codes.equals('iatan')) 
+			if(air_code.equalsIgnoreCase('IATAN')) 
 			iatan_status.add(inspection.Account__r.Status__c);
 			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(inspection.Account__r.Status__c);
 			//status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
@@ -868,8 +872,12 @@ public class ams2gdp_BusinessLogic
 		Map<String, GDP_Reference_Table__c> location_class_references 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_class_codes, 'ORGCLASS'); 
 		Map<String, GDP_Reference_Table__c> air_code_references 		= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(air_codes, 'ORGABB'); 		
 		//Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
-		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS', 'WebStar');
-		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS', 'AIMS');
+		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS');
+		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS');
+		system.debug('**air_code_references**'+air_code_references);
+		system.debug('**iatan_status_references**'+iatan_status_references);
+		system.debug('**iata_status_references**'+iata_status_references);
+
 		
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, Integer> rankByAccount = new Map<String, Integer>(); 
@@ -900,8 +908,19 @@ public class ams2gdp_BusinessLogic
 			if(air_code_references.containsKey(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c)) accreditation.Endorsed_Accredited_By__c = air_code_references.get(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c).Id;
 			
 			//if(status_references.containsKey(inspection.Accreditation_Endorsement_Status_code__c)) accreditation.Status__c = status_references.get(inspection.Accreditation_Endorsement_Status_code__c).Id;
-			if((air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) && iata_status_references.containsKey(inspection.Account__r.Status__c)) accreditation.Status__c = iata_status_references.get(inspection.Account__r.Status__c).Id;
-			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(inspection.Account__r.Status__c)) accreditation.Status__c = iatan_status_references.get(inspection.Account__r.Status__c).Id;
+			
+			if((air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) && iata_status_references.containsKey(inspection.Account__r.Status__c)) 
+			{
+				
+				accreditation.Status__c = iata_status_references.get(inspection.Account__r.Status__c).Id;
+				system.debug('**status 1**'+inspection.Account__r.Status__c+accreditation.Status__c );
+			}
+			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(inspection.Account__r.Status__c)) 
+
+			{
+               
+				accreditation.Status__c = iatan_status_references.get(inspection.Account__r.Status__c).Id;
+			system.debug('**status 2**'+inspection.Account__r.Status__c+accreditation.Status__c );}
 			
 			//-- Set default record Type 			
 			if(recordTypes.containsKey('Live')) 
@@ -1072,7 +1091,6 @@ public class ams2gdp_BusinessLogic
 
 			gdpRecords.add(gdpRecord);
 		}
-
 		
 		result.addAll(gdpRecords);
 		
