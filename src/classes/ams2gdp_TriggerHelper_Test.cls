@@ -188,20 +188,20 @@ private class ams2gdp_TriggerHelper_Test
 		insert gdp_products;
 
 	//Generate AMS Address 
-		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(1, false);
-			//addresses[0].Account__c = accounts[0].Id;
-			//addresses[1].Account__c = accounts[1].Id;
+		List<AMS_Address__c> addresses = ams2gdp_TestDataGenerator.generateAMS_Addresses(2, false);
+			addresses[0].Account__c = accounts[0].Id;
+			addresses[1].Account__c = accounts[0].Id;
 			//ams_Affiliations[2].Account__c = accounts[1].Id;
 			//ams_Affiliations[3].Account__c = accounts[1].Id;
 		insert addresses;
 
-		//addresses[0].Email__c = 'test_a@test.com';
-		//addresses[1].Email__c = 'test_b@test.com';
+		addresses[1].Email__c = 'test_b@test.com';
 
-		update addresses;
+		update addresses[1];
+		List<AMS_Address__c> toDelete=new List<AMS_Address__c>();
+		toDelete.add(addresses[1]);
 
-		//delete addresses;
-
+		delete toDelete;
 		//system.assertEquals(0, [SELECT count() FROM Assoc_Affiliation_Membership__c]);
 	}
 }

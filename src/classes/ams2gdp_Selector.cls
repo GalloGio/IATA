@@ -246,7 +246,7 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-	public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDefinitionAndTable(Set<String> definitions, String table, String sys)
+	/*public static Map<String, GDP_Reference_Table__c> getGDPReferenceTablebyDefinitionAndTable(Set<String> definitions, String table, String sys)
 	{
 		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>(); 
 		
@@ -254,7 +254,7 @@ public class ams2gdp_Selector
 			result.put(tbl.Definition__c, tbl);
 		
 		return result;
-	}
+	}*/
 
 
 	public static Map<String,GDP_Reference_Table__c> getGDPReferenceTableByCodeandTable1(Set<String> codes)
