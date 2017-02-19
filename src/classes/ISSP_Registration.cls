@@ -1187,7 +1187,7 @@ public without sharing class ISSP_Registration {
             mail.setTemplateId(et.Id);
             mail.setTargetObjectId(userId);
             mail.setSaveAsActivity(false);
-            mail.setReplyTo('noreply@cnsc.us'); 
+            mail.setReplyTo('cns_noreply@cnsc.us'); 
             mail.setSenderDisplayName('CNS Portal ');
             Messaging.sendEmail(
             new Messaging.SingleEmailMessage[]{mail});
