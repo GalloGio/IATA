@@ -16412,7 +16412,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Sender Email CNS</shortDescription>
-        <value>noreply@cnsc.us</value>
+        <value>cns_noreply@cnsc.us</value>
     </labels>
     <labels>
         <fullName>ISSP_Service</fullName>
