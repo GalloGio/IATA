@@ -1078,7 +1078,7 @@
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
         <errorConditionFormula>AND(RecordType.DeveloperName == &apos;Ownership&apos;,
-
+Account__r.CNS_Agency__c == false,
 OR(ISBLANK(Account__c), (
 
 AND (
