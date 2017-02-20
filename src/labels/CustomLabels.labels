@@ -20099,6 +20099,20 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>https://iata.my.salesforce.com</value>
     </labels>
     <labels>
+        <fullName>SIDRA_Automated_Case_Message</fullName>
+        <categories>SIDRA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA Automated Case Message</shortDescription>
+        <value>Please be aware of another SIDRA Case created for this agency and this period but in another currency. Make sure that short payment amount in both currencies is communicated to the agent and only one IRR action will be applicable.
+ 
+Case number: {0}
+Short payment amount: {1}
+Currency: {2}
+Short Payment Amount USD: {3}
+Remittance date: {4}</value>
+    </labels>
+    <labels>
         <fullName>SIS</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
