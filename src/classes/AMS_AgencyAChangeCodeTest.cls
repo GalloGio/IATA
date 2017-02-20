@@ -153,7 +153,7 @@ private class AMS_AgencyAChangeCodeTest {
         account = accountLst.get(0);
    
         System.assertEquals(account.Name,accreditation.Account_Name__c);
-        System.assertEquals(account.Short_Name__c,accreditation.Short_Name__c);
+        System.assertEquals(account.Short_Name__c,accreditation.Trade_Name__c);
         System.assertEquals(account.TradeName__c,accreditation.Trade_Name__c);
         System.assertEquals(account.BillingCity,accreditation.Branch_Office_City__c);
         System.assertEquals(account.Email__c,accreditation.Branch_Office_Email__c);
