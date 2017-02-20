@@ -1,4 +1,4 @@
-<messaging:emailTemplate replyTo="cnsc-noreply@cnsc.us"  
+<messaging:emailTemplate replyTo="cns_noreply@cnsc.us"  
             subject="Case {!relatedTo.CaseNumber} - {!relatedTo.Subject}" 
             recipientType="User" relatedToType="Case"  language="EN">
 <messaging:emailHeader name="CaseId">
