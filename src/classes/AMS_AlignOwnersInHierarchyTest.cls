@@ -35,7 +35,7 @@ private class AMS_AlignOwnersInHierarchyTest {
         AMS_Agencies_Hierarchy__c h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H2');
         insert h2;
 
-        // create test account1
+        // create test account2
         Account account2 = new Account();
         account2.Name = 'Test account 2';
         account2.IATACode__c = '1234789';
@@ -215,7 +215,9 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         Test.startTest();
 
-        AMS_AlignOwnersInHierarchy.alignOwnersInHierarchyByAccountId();
+        AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
+
+        auxOwners.alignOwnersInHierarchyByAccountId();
 
         Test.stopTest();
 
@@ -223,18 +225,18 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
 
-        System.assertEquals(40,rolesFromAllAccounts.size());
+        System.assertEquals(16,rolesFromAllAccounts.size());
 
         oscarAccounts = new  Map<Id, Set<Id>>();
         oscarAccounts.put(oscar.Id, acctsChilds1Set);
 
 
-        System.assertEquals(true,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
         oscarAccounts = new  Map<Id, Set<Id>>();
         oscarAccounts.put(oscar2.Id, acctsChilds1Set2);
 
-        System.assertEquals(true,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
     }
     
