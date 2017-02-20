@@ -12,7 +12,6 @@ private class AMS_AlignOwnersInHierarchyTest {
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
         insert portugal;
 
-
         // create test account1
         Account account1 = new Account();
         account1.Name = 'Test account 1';
@@ -52,9 +51,26 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         insert account2;
 
+        // create test account3
+        Account account3 = new Account();
+        account3.Name = 'Test account 3';
+        account3.IATACode__c = '12347890';
+        account3.Type = 'IATA Travel Agent';
+        account3.BillingCity = 'Lisboa';
+        account3.BillingCountry = 'Portugal';
+        account3.BillingStreet = 'some street';
+        account3.Location_Type__c = 'HO';
+        account3.Accreditation_date__c = myDate1;
+        account3.recordTypeId = rtAgency;
+        account3.IATA_ISO_Country__c = portugal.Id;
+        account3.Location_Class__c = 'P';
+        account3.Purge_Flag__c = false;
+
+        insert account3;
+
         List<Account> brAccounts = new List<Account>();
 
-        List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
+        //List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
 
         for(integer i=0 ; i < 4 ; i++){
 
@@ -164,6 +180,8 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         insert rolesToInsert;
 
+        System.assertEquals(16,rolesToInsert.size());
+
 
     }
 
@@ -191,10 +209,18 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         acctsChilds1Set.add(acctsHO.get(0).Id);
 
+        List<AMS_Account_Role__c> rolesTest1 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds1 and active__c = true];
+
+        System.assertEquals(4,rolesTest1.size());
+
 
         List<Account> acctsChilds2 = [SELECT Id from Account where ParentId = :acctsHO.get(1).Id];
 
         Set<Id> acctsChilds1Set2 = new Set<Id>();
+
+        List<AMS_Account_Role__c> rolesTest2 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds2 and active__c = true];
+
+        System.assertEquals(4,rolesTest2.size());
 
         for(Account acct: acctsChilds2)
             acctsChilds1Set2.add(acct.Id);
@@ -238,6 +264,33 @@ private class AMS_AlignOwnersInHierarchyTest {
 
         System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
+    }
+
+    @isTest static void test_method_three() {
+
+    
+        Test.startTest();
+
+        AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
+
+        Account acc = [Select Id from Account Where IATACode__c = '1234567' Limit 1];
+
+        auxOwners.parentAccountId = acc.Id;
+
+        auxOwners.alignOwnersInHierarchyByAccountId();
+
+        Test.stopTest();
+
+        List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c];
+
+        // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
+
+        System.assertEquals(28,rolesFromAllAccounts.size());
+
+  
+
+
+ 
     }
     
     
