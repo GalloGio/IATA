@@ -7,7 +7,7 @@
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
- <apex:image value="{!if(relatedTo.CNS_Case__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+ <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
 <BR/>
 <i>{!$Label.ISSP_Email_do_not_reply}</i><p />
 {!$Label.ISSP_Email_Dear_Pre} {!relatedTo.Contact.Salutation} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
@@ -15,32 +15,32 @@
 Thank you for having recently initiated the {!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'), 'online application for the accreditation of your Travel Agency', relatedTo.Subject)}.
 <BR/>
 <BR/>
-This is to remind you that draft online {!relatedTo.CaseArea__c} applications must be submitted to {!if(relatedTo.CNS_Case__c, 'CNS', 'IATA')} within 2 weeks of their creation.
+This is to remind you that draft online {!relatedTo.CaseArea__c} applications must be submitted to {!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} within 2 weeks of their creation.
 <br/><br/>
 Case no. {!relatedTo.CaseNumber} will expire in 2 days, after which it will no longer be accessible on the customer portal and you will then be required to restart the application by creating a new online application.
 <BR/>
 
 <BR/>
-You can access this application on the Customer Portal in order to complete and submit it to {!if(relatedTo.CNS_Case__c, 'CNS', 'IATA')}.
+You can access this application on the Customer Portal in order to complete and submit it to {!if(relatedTo.CNSCase__c, 'CNS', 'IATA')}.
 <center><br />
 
 <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/{!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'),'ISSP_AMSCases','ISSP_APCases')}{!if(relatedTo.CNS_Case__c, '?CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
+href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/{!IF(OR(relatedTo.RecordType.DeveloperName == 'ProcessEuropeSCE',relatedTo.RecordType.DeveloperName == 'OSCAR_Communication'),'ISSP_AMSCases','ISSP_APCases')}{!if(relatedTo.CNSCase__c, '?CommunityName=CNS', '')}">{!$Label.ISSP_Email_IataPortal}</a>
   </center>
 
 <BR/>
 {!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
 <BR/>
-{!IF(relatedTo.CNS_Case__c, $Label.ISSP_Email_CNS_Service,$Label.ISSP_Email_IataService)}<BR/>
+{!IF(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Service,$Label.ISSP_Email_IataService)}<BR/>
 
 <p>
 <!--The URL of the following image is the one of PROD-->
 <a href="http://www.iata.org/customer-portal/Pages/index.aspx">
-<apex:image value="{!IF(relatedTo.CNS_Case__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
 </a>
 </p>
 
-<apex:image value="{!IF(relatedTo.CNS_Case__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000')}"/>
 
 </span>
 </div>
