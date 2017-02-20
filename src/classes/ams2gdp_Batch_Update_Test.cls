@@ -129,6 +129,15 @@ private class ams2gdp_Batch_Update_Test {
 			, Related_Account__c = accounts[0].Id
 			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
 		));
+		accreditations.add(new Accreditation__c(Webstar_Id__c = 'WEBSTAR001ACC1GDP'
+			, Accreditation_ID__c =2
+			, Class__c = classTables[0].Id
+			, Endorsed_Accredited_By__c = airCodeTables[0].Id
+			, Status__c = statusTables[0].Id
+			, RecordTypeID = accreditationRecordTypes.get('GDP')
+			, Related_Account__c = accounts[0].Id
+			, Related_GDP_Products_Account_View__c = gdpProducts[0].Id 
+		));
 		insert accreditations;
 
 		//GDP Phones & Address

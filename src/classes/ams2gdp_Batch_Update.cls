@@ -161,17 +161,11 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
             iata_code += prod.Check_Digit__c;
 
             if(String.isNotBlank(prod.AIMS_Id__c) && accountsByLegacyId.containsKey(prod.AIMS_ID__c.removeEnd('GDP')))
-            {
-                prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.AIMS_ID__c.removeEnd('GDP'));
-            }
+            { prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.AIMS_ID__c.removeEnd('GDP'));   }
             else if(String.isNotBlank(prod.Webstar_Id__c) && accountsByLegacyId.containsKey(prod.Webstar_Id__c.removeEnd('GDP')))
-            {
-                prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.Webstar_Id__c.removeEnd('GDP'));
-            }
-            else if(accountsByLegacyId.containsKey(iata_code))
-            {
-                prod.AMS_GDP_Key__c = accountsByLegacyId.get(iata_code);
-            }
+            {  prod.AMS_GDP_Key__c = accountsByLegacyId.get(prod.Webstar_Id__c.removeEnd('GDP'));  }
+            else if(accountsByLegacyId.containsKey(iata_code))  {
+                prod.AMS_GDP_Key__c = accountsByLegacyId.get(iata_code);    }
         }
         
         Database.update(gdp_products_account_views, false);
@@ -403,11 +397,8 @@ public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
             //{EXTERNAL_ID}{PHONE_TYPE}[GDP]
             if(String.isNotBlank(address.Related_Account__r.Id))
             {               
-              if(address.Address_Type__c=='Location')
-              address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'LOCGDP'; 
-              else if(address.Address_Type__c=='Mailing') 
-              address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'MAIGDP'; 
-
+              if(address.Address_Type__c=='Location')  address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'LOCGDP'; 
+              else if(address.Address_Type__c=='Mailing')  address.AMS_GDP_Key__c  = address.Related_Account__r.Id + 'MAIGDP'; 
             }          
         }
 

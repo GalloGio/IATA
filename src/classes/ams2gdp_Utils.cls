@@ -34,8 +34,7 @@ public class ams2gdp_Utils
 	 		//if(country_iso_code == 'CA' || country_iso_code == 'US')
 	 		{
 	 			//-- Canada or USA
-	 			if(phone_segment.length() < 10)
-	 			{
+	 			if(phone_segment.length() < 10){
 	 				parts.put('std',null);
 	 				parts.put('phone', phone_segment);}else{
 	 				parts.put('std',phone_segment.left(3));
@@ -94,20 +93,17 @@ public class ams2gdp_Utils
     		logs.add(new AMS2GDP_Log__c(Job_Name__c= err.jobName, AMS_Record_Id__c = err.amsRecordId, GDP_Record_Id__c = err.gdpRecordId, Message__c = err.message));
 
 			//Notify GDP Admin if errors are due to duplicates founded
-			if(String.isNotBlank(err.message) && err.message.containsIgnoreCase('Duplicate')) 
-			{
+			if(String.isNotBlank(err.message) && err.message.containsIgnoreCase('Duplicate')) {
 				/*Messaging.SingleEmailMessage msg = new Messaging.SingleEmailMessage();
 					msg.toAddresses = new String[]{email};
 					msg.subject = 'WARNING - Duplicate founded on '+err.jobName; */
 					body +=  err.message + '\n';}	}
 
     	if(logs.size() > 0) insert logs;
-    	if(body != '')
-    	{
+    	if(body != '')	{
     		message.plainTextBody = body;
     		try{Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});}
-    		catch(Exception ex){}		
-    	}
+    		catch(Exception ex){}}
     }
 
     /**
@@ -162,9 +158,8 @@ public class ams2gdp_Utils
 		Map<String, String> result = new Map<String, String>();
 
 		for(RecordType rt : [SELECT Id, Name FROM RecordType WHERE IsActive=true AND SobjectType = :obj])
-		{
-			result.put(rt.Name, rt.Id);
-		}
+		result.put(rt.Name, rt.Id);
+		
 
 		return result;
 	}
