@@ -8,7 +8,7 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
     public String parentAccountId { get; set; }
     public String test { get; set; }
-    public boolean isProfile { get; set; }
+    //public boolean isProfile { get; set; }
 
     public List<AMS_Account_Role__c> newOwners { get; set; }
 
