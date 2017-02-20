@@ -18,7 +18,7 @@ Please ensure you refer to this Case Number in any further contact with us about
 
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 Case Number:
-<a href="{!$Label.ISSP_Email_PortalUrl}{!relatedTo.id}{!IF(relatedTo.CNS_Case__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
+<a href="{!$Label.ISSP_Email_PortalUrl}{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 {!relatedTo.CaseNumber}.<BR/>
@@ -46,7 +46,7 @@ href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_Case?caseId={!relate
 
 
 
-<apex:image value="{!IF(relatedTo.CNS_Case__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000')}"/>
 
 <BR/>
 </span>
