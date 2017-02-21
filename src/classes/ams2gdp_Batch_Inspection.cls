@@ -27,6 +27,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'Account__r.IATACode__c != null'
+			,	'Account__r.Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
 			,	'Accreditation_Endorsement_organisation__r.Air_Code__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 		}; 
 

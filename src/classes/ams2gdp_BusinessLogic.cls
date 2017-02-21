@@ -872,8 +872,8 @@ public class ams2gdp_BusinessLogic
 		Map<String, GDP_Reference_Table__c> location_class_references 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_class_codes, 'ORGCLASS'); 
 		Map<String, GDP_Reference_Table__c> air_code_references 		= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(air_codes, 'ORGABB'); 		
 		//Map<String, GDP_Reference_Table__c> status_references 			= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(status_codes, 'STATUS');
-		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS');
-		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS');
+		Map<String, GDP_Reference_Table__c> iatan_status_references 	= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iatan_status, 'STATUS','Webstar');
+		Map<String, GDP_Reference_Table__c> iata_status_references 		= ams2gdp_Selector.getGDPReferenceTablebyDefinitionAndTable(iata_status, 'STATUS','AIMS');
 		
 		
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
@@ -898,6 +898,8 @@ public class ams2gdp_BusinessLogic
 				, Related_Account__c = inspection.Account__c
 				, Date__c = inspection.Date_Organisation_Status_attained__c
 			); 
+
+
 
 			//Class field is a Lookup & Location Class on Account is a Picklist 
 			if(location_class_references.containsKey(inspection.Account__r.Location_Class__c)) accreditation.Class__c = location_class_references.get(inspection.Account__r.Location_Class__c).Id;
