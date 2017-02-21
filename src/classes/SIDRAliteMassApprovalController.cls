@@ -4,6 +4,14 @@ public with sharing class SIDRAliteMassApprovalController{
     public static final String APPROVED = 'Approved';
     public static final String REJECTED = 'Rejected';
 
+    public static final String IRR = 'IRR';
+    public static final String IRR_WD = 'IRR Withdrawal';
+    public static final String DEF = 'DEF';
+    public static final String DEF_WD = 'DEF Withdrawal';
+    public static final String REI = 'REI';
+    public static final String TER = 'TER';
+    public static final String REI_AFTER_TER = 'REI After TER';
+
     public list<WrapperCase> listWrapperCase {get;set;}
     public list<WrapperCase> listWrapperResult {get;set;}
     public WrapperFilter filter {get;set;}
@@ -29,10 +37,9 @@ public with sharing class SIDRAliteMassApprovalController{
         Search all cases based on the filters selected by the user
     **/
     public void search() {
-        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId ';
+        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c ';
         query += ' From Case';
         query += ' Where RecordtypeId = :SIDRA_LITE_RECORDTYPE';
-        query += ' And isClosed = false';
 
         if (this.filter.cse.BSP_CASS__c != '' && this.filter.cse.BSP_CASS__c != null) {
             query += ' And BSP_CASS__c = \'' + this.filter.cse.BSP_CASS__c + '\'';
@@ -45,35 +52,41 @@ public with sharing class SIDRAliteMassApprovalController{
         if (this.filter.category != '' && this.filter.category != null) {
             query += ' AND Account.Category__c = \'' + String.escapeSingleQuotes(this.filter.category) + '\'';
         }
-        if (this.filter.selectedActionType == 'IRR') {
+        if (this.filter.selectedActionType == IRR) {
             query += ' And IRR_Approval_Rejection__c = null';
         }
-        if (this.filter.selectedActionType == 'IRR Withdrawal') {
+        if (this.filter.selectedActionType == IRR_WD) {
             query += ' And IRR_Withdrawal_Approval_Rejection__c = null';
             query += ' And IRR_Approval_Rejection__c = :APPROVED';
             if (this.filter.cse.IRR_Withdrawal_Reason__c != null) {
                 query += ' And IRR_Withdrawal_Reason__c = \'' + this.filter.cse.IRR_Withdrawal_Reason__c + '\'';
             }
         }
-        if (this.filter.selectedActionType == 'DEF') {
+        if (this.filter.selectedActionType == DEF) {
             query += ' And DEF_Approval_Rejection__c = null';
         }
-        if (this.filter.selectedActionType == 'DEF Withdrawal') {
+        if (this.filter.selectedActionType == DEF_WD) {
             query += ' And DEF_Withdrawal_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             if (this.filter.cse.DEF_Withdrawal_Reason__c != null) {
                 query += ' And DEF_Withdrawal_Reason__c = \'' + this.filter.cse.DEF_Withdrawal_Reason__c + '\'';
             }
         }
-        if (this.filter.selectedActionType == 'REI') {
+        if (this.filter.selectedActionType == REI) {
             query += ' And REI_ApprovalRejectin__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And DEF_Withdrawal_Approval_Rejection__c != :APPROVED';
         }
-        if (this.filter.selectedActionType == 'TER') {
+        if (this.filter.selectedActionType == TER) {
             query += ' And TER_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And (DEF_Withdrawal_Approval_Rejection__c != :APPROVED OR REI_ApprovalRejectin__c != :APPROVED)';
+        }
+        if (this.filter.selectedActionType == REI_AFTER_TER) {
+            query += ' And TER_Approval_Rejection__c = :APPROVED';
+            query += ' And Update_AIMS_TER__c != null';
+            query += ' And REI_ApprovalRejectin__c  = null';
+            query += ' And AG_Reinstatement_Request__c != null';
         }
 
         query += ' order by CaseNumber desc';
@@ -206,34 +219,40 @@ public with sharing class SIDRAliteMassApprovalController{
         String type = this.filter.selectedActionType;
         list<Case> listUpdateCase = new list<Case>();
         for (WrapperCase wrapper: this.listSelectedWrapper) {
-            if (type == 'IRR') {
+            if (type == IRR) {
                 wrapper.cse.IRR_Approval_Rejection__c = ApproveReject;
                 if (ApproveReject==APPROVED) {
                     wrapper.cse.Propose_Irregularity__c = DateTime.now();
                 }
-            } else if (type == 'IRR Withdrawal') {
+            } else if (type == IRR_WD) {
                 wrapper.cse.IRR_Withdrawal_Approval_Rejection__c = ApproveReject;
                 wrapper.cse.R_S_Confirm_IRRWD_Justifications__c = DateTime.now();
                 wrapper.cse.IRR_Withdrawal_Reason__c = filter.cse.IRR_Withdrawal_Reason__c;
                 wrapper.cse.IRR_Withdrawal_Remarks__c = filter.cse.IRR_Withdrawal_Remarks__c;
-            } else if (type == 'DEF') {
+            } else if (type == DEF) {
                 wrapper.cse.DEF_Approval_Rejection__c = ApproveReject;
                 wrapper.cse.Confirmation_moneys_not_received__c = DateTime.now();
                 wrapper.cse.Reason_for_Default__c = filter.cse.Reason_for_Default__c;
                 wrapper.cse.DEF_Approval_Rejection_Remarks__c = filter.cse.DEF_Approval_Rejection_Remarks__c;
-            } else if (type == 'DEF Withdrawal') {
+            } else if (type == DEF_WD) {
                 wrapper.cse.DEF_Withdrawal_Approval_Rejection__c = ApproveReject;
                 wrapper.cse.R_S_Confirm_DEFWD_Justifications__c = DateTime.now();
                 wrapper.cse.DEF_Withdrawal_Reason__c = filter.cse.DEF_Withdrawal_Reason__c;
                 wrapper.cse.DEF_Withdrawal_Approval_Rejection_Remark__c = filter.cse.DEF_Withdrawal_Approval_Rejection_Remark__c;
-            } else if (type == 'REI') {
+            } else if (type == REI) {
                 wrapper.cse.REI_ApprovalRejectin__c = ApproveReject;
                 wrapper.cse.REI_Approval_Rejection_remarks__c = filter.cse.REI_Approval_Rejection_remarks__c;
-            } else if (type == 'TER') {
+                wrapper.cse.Reason_of_REI_WD__c = filter.cse.Reason_of_REI_WD__c;
+                wrapper.cse.Type_of_REI_WD__c = filter.cse.Type_of_REI_WD__c;
+            } else if (type == TER) {
                 wrapper.cse.TER_Approval_Rejection__c = ApproveReject;
                 wrapper.cse.Termination_Reason__c = filter.cse.Termination_Reason__c;
                 wrapper.cse.FS_Action_requested__c = filter.cse.FS_Action_requested__c;
                 wrapper.cse.TER_Approval_Rejection_Remarks__c = filter.cse.TER_Approval_Rejection_Remarks__c;
+            } else if (type == REI_AFTER_TER) {
+                wrapper.cse.REI_ApprovalRejectin__c = ApproveReject;
+                wrapper.cse.Reason_of_REI_WD__c = filter.cse.Reason_of_REI_WD__c;
+                wrapper.cse.Type_of_REI_WD__c = filter.cse.Type_of_REI_WD__c;
             }
             listUpdateCase.add(wrapper.cse);
         }
@@ -254,7 +273,7 @@ public with sharing class SIDRAliteMassApprovalController{
             this.showProcessedSection = true;
         } catch (Exception e) {
             System.debug('updateCases ERROR: ' + e.getMessage());
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
         }
         reset();
     }
