@@ -3,5 +3,5 @@
     <apiVersion>37.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>AMS_Attachment_List_Page</label>
+    <label>AMS_AlignOwnersInHierarchy</label>
 </ApexPage>
