@@ -3,10 +3,8 @@ trigger Contacts on Contact (after delete, after insert, after undelete,
 
     if (Trigger.isBefore) {
         if (Trigger.isInsert) {
-            AccountDomainContactHandler.beforeInsert(Trigger.new);
         }
         if(Trigger.isUpdate) {
-            AccountDomainContactHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
         }
     }
 
