@@ -535,7 +535,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		 
 			List<AMS_Account_Role__c> ownersList = 
 					Database.query(
-						AMS_QueryUtils.getFieldsQuery('AMS_Account_Role__c',' Account__c,Owner_Name__c,Percentage__c ',' Account__c IN :acctIDSet and Active__c = TRUE order by Account__c')
+						AMS_QueryUtils.getFieldsQuery('AMS_Account_Role__c',' Account__c,Owner_Name__c,Owner_Account__r.Name,Percentage__c ',' Account__c IN :acctIDSet and Active__c = TRUE order by Account__c')
 					);
 
 			return getOwnersByAccountID(ownersList);	
@@ -556,7 +556,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		{
 			 
 			 AMS_AccountRoleCreator.OwnerFieldsEntity ownerRow = 
-			 			new AMS_AccountRoleCreator.OwnerFieldsEntity(owner.Owner_Name__c,String.valueOf(owner.Percentage__c));
+			 			new AMS_AccountRoleCreator.OwnerFieldsEntity( ( owner.Owner_Account__r.Name == null ? owner.Owner_Name__c : owner.Owner_Account__r.Name),String.valueOf(owner.Percentage__c));
 
 		
 			if(wrapperOwnersMap.containsKey(owner.Account__c))
