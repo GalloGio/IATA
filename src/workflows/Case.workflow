@@ -14687,7 +14687,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -14758,7 +14758,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
