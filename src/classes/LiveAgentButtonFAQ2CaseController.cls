@@ -91,34 +91,38 @@ public with sharing class LiveAgentButtonFAQ2CaseController {
          return RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get(caseRecordTypeName);
     }
 
-    private String countryRegion{
+    public IATA_ISO_Country__c country{
         get{
-            IATA_ISO_Country__c country = [SELECT Id, Name, ISO_Code__c, Region__c
-                                            FROM IATA_ISO_Country__c
-                                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND Name = :countryConcerned
-                                            LIMIT 1][0];
-            return country.Region__c;
+            if (country == null){
+                country = [SELECT Id, Name, ISO_Code__c, Region__c
+                            FROM IATA_ISO_Country__c
+                            WHERE Case_BSP_Country__c != null AND Case_BSP_Country__c != '' AND ISO_Code__c = :countryConcerned
+                            LIMIT 1][0];
+            }
+
+            return country;
         }
-        set;
+        set{
+
+        }
     }
 
     private String caseRecordTypeName{
         get{
-            if (countryRegion == 'Europe'){
+            if (country.Region__c == 'Europe'){
                 return 'CasesEurope';
-            }else if(countryRegion == 'Americas'){
+            }else if(country.Region__c == 'Americas'){
                 return 'CasesAmericas';
-            }else if(countryRegion == 'Africa & Middle East'){
+            }else if(country.Region__c == 'Africa & Middle East'){
                 return 'CasesMENA';
-            }else if(countryRegion == 'Asia & Pacific'){
+            }else if(country.Region__c == 'Asia & Pacific'){
                 return 'ExternalCasesIDFSglobal';
-            }else if(countryRegion == 'China & North Asia'){
+            }else if(country.Region__c == 'China & North Asia'){
                 return 'Cases_China_North_Asia';
             }
             return null;
         }
     }
-
     public LiveAgentButtonFAQ2CaseController() {
 
     }
