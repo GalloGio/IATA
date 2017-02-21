@@ -77,8 +77,6 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
         Set<Id> idsToQuery = accountsToRepopulateOwnersMap.keySet();
 
-        List<AMS_Account_Role__c> rolesTest =  [SELECT Id, Account__c from AMS_Account_Role__c];
-
         List<AMS_Account_Role__c> allRoles= Database.query( AMS_QueryUtils.getAllFieldQuery('AMS_Account_Role__c',null, + 'Account__c =:idsToQuery and active__c = true', false) );
 
         // List with HO->Roles
