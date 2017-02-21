@@ -44,8 +44,8 @@ private class clsMassEmailReminderTest{
         
         // Set some properties  
         EmailTemplate__c e = new EmailTemplate__c();
+        insert e;
         //e.recordType.Name = 'IFAP';
-        controller.CaseParameter.EmailTemplate__c = e.Id;
         controller.MassSendEmail();
         
         Apexpages.currentPage().getParameters().put('batchNumber','');
@@ -65,7 +65,6 @@ private class clsMassEmailReminderTest{
         controller.CaseParameter.EmailTemplate__c = e.Id;
         
         controller.MassSendEmail();
-        
         
         controller.SelectAll();
         controller.first();
@@ -88,6 +87,8 @@ private class clsMassEmailReminderTest{
         
         Boolean boo = controller.hasNext;
         boo = controller.hasPrevious;
+        boo = controller.hasFirst;
+        boo = controller.hasLast;
         
         Integer nbPages = controller.pageNumber; 
         
@@ -97,10 +98,32 @@ private class clsMassEmailReminderTest{
         
         
         Case ca = new Case();
+        ca.Status = 'Financial Security Requested';
+        ca.BatchNumber__c = controller.CaseParameter.BatchNumber__c;
+        ca.EmailTemplate__c = e.Id;
+        ca.ContactId = contact1.Id;
+        ca.FS_Letter_Sent__c = true;
         
         Insert ca;
         List<Case> cases = [Select c.Mass_Email_Send__c,c.EmailTemplate__c,c.FS_Reminder_EmailTemplate__c,c.Reminder_EmailTemplate__c,c.FS_Mass_Email_Send__c From Case c Where c.Id=: ca.Id];     
         
+        controller.runSearch();
+        controller.SelectAll();
+        controller.MassSendEmail();
+        controller.SelAllIsChecked = true;
+        controller.SelectAll();
+        controller.MassSendEmail();
+        controller.first();
+        Apexpages.currentPage().getParameters().put('type', 'FA - Financial Assessment');
+        ca.Status = 'Agent Notified (Email)';
+        ca.FA_Letter_Sent__c = false;
+        update ca;
+        controller.runSearch();
+        controller.SelAllIsChecked = true;
+        controller.SelectAll();
+        controller.MassSendEmail();
+        controller.first();
+
         clsMassEmailReminderController.cCase acas = new clsMassEmailReminderController.cCase(ca);
         System.runAs(new User(Id = System.UserInfo.getUserId())) {
             String emailTemplateId = '';
