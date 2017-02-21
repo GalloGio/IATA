@@ -35,6 +35,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         lsConf.add(new AMS_ChangeCodes__c(Name='STR', CHANGE_CODE__C='STR', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='Update_AIMS_REI_DEFWITH__c', FIELD2VALUES__C='NOT Blank', FIELD3__C='NOT_Date__c', FIELD3VALUES__C='Blank', FIELD4__C='Shut_Down_TKT_System_GDS_and_BSPlink__c', FIELD4VALUES__C='not blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='The removal of STDs will no longer apply as Agent submitted the requested Notice of Change', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=TRUE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
         lsConf.add(new AMS_ChangeCodes__c(Name='IRR', CHANGE_CODE__C='IRR', REASON_CODE__C='CURRENT', REASON_CODE_DESCRIPTION__C='CURRENT', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance', FIELD2__C='IRR_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Update_AIMS_IRR__c', FIELD3VALUES__C='NOT Blank', FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C=null, CLASS_TYPE__C='P;D;C', BULLETIN_MEMO_TEXT__C='Agent is served Notice of Irregularity due to <SIDRA Lite Reason> , agent is given 30 days to submit the required documents.  No monies outstanding', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
         lsConf.add(new AMS_ChangeCodes__c(Name='IRW', CHANGE_CODE__C='IRW', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance;Financial Security Non-compliance;Annual fees', FIELD2__C='IRR_Withdrawal_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='IRR_Withdrawal_Reason__c', FIELD3VALUES__C='VALUES:Exception raised', FIELD4__C='Update_AIMS_IRRWITH__c', FIELD4VALUES__C='NOT Blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Withdrawal of Irregularity due to Agency Administrator\'s decision', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
+        lsConf.add(new AMS_ChangeCodes__c(Name='DWD', CHANGE_CODE__C='DWD', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='NOT Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
         insert lsConf;
         
         //Create Operational Calendar
@@ -579,5 +580,46 @@ private class AMS_OscarCase_RiskMgmt_Test {
 		system.assertEquals(false, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'VALUES:CLOSED', null, mapExistingChangeCodes));
 		
 		test.StopTest();
+    }
+    
+    
+    static testMethod void checkPrevStatusReason(){
+    	Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
+
+		Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
+        insert parent;
+        
+        Case SidraLiteCase4 = new Case();
+        	SidraLiteCase4.AccountId = a.Id;
+            SidraLiteCase4.recordtypeId = SIDRALiteRTId;
+            SidraLiteCase4.ParentId = parent.Id;
+            SidraLiteCase4.SIDRA_Lite_Reason__c = 'Annual fees';
+            SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+        	SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+        	SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        insert SidraLiteCase4;
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        
+        test.StartTest();
+        SidraLiteCase4.DEF_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.Reason_for_Default__c = 'Technical Default';
+        SidraLiteCase4.Update_AIMS_DEF__c = system.now();
+        
+        update SidraLiteCase4;
+        system.assertEquals(1, [select id from Agency_applied_Change_code__c where Account__c =:a.Id].size(), 'DEF Created');
+        
+        AMS_OscarCase_RiskMgmt.EndRun();
+        
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Other';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = system.now();
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        
+        update SidraLiteCase4;
+        system.debug(logginglevel.error, 'DTULLO 620 --> ' + [Select id, change_code__c from Agency_applied_Change_code__c where Account__c =:a.Id]);
+        system.assert([select id from Agency_applied_Change_code__c where Account__c =:a.Id].size()>1);
+        
+        test.StopTest();
     }
 }
