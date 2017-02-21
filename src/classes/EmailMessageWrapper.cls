@@ -44,15 +44,15 @@ public Map<String, String>ParameterBodyMap    {get;set;}
          Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
          
          if (!orgAddressMap.isEmpty()){
-            if(community =='CNS'){
-                mail.setOrgWideEmailAddressId('cns_noreply@cnsc.us');
+            if(community.contains('CNS') ){
+                mail.setOrgWideEmailAddressId(orgAddressByEmail.get('cns_noreply@cnsc.us'));
             }else{
-                mail.setOrgWideEmailAddressId('noreply@iata.org');
+                mail.setOrgWideEmailAddressId(orgAddressByEmail.get('noreply@iata.org'));
             }
             
          }
          else{
-            if(community == 'CNS'){
+            if(community.contains('CNS') ){
                 mail.setSenderDisplayName('CNS noreply');
             }else{
             mail.setSenderDisplayName('IATA no reply');
