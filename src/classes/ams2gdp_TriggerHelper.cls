@@ -162,7 +162,7 @@ public with sharing class ams2gdp_TriggerHelper
 				if(oldAddress!=null && oldAddress.Account__c != newAddress.Account__c)  accountIdsToClearShippingAddress.add(oldAddress.Account__c);
 			}
 
-			if(oldAddress != null && oldAddress.Address_Type__c != null)
+			if(oldAddress != null && oldAddress.Address_Type__c != null && newAddress.Address_Type__c != null)
 			{
 				//If old address was Billing and new on change then Clear Account Billing Address
 				if(oldAddress.Address_Type__c.contains('Primary') && !newAddress.Address_Type__c.contains('Primary')) 
