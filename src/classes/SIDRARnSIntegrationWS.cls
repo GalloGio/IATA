@@ -330,7 +330,7 @@ global class SIDRARnSIntegrationWS {
             }
             Account account = listAccount.get(0);
 
-            String statementName = account.Site + Period.trim() + Operation.trim();
+            String statementName = Client.trim() + Period.trim() + Operation.trim();
             list<Account_Statement__c> listStatement = [
                 Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
                 from Account_Statement__c
