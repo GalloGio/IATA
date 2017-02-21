@@ -239,8 +239,6 @@ public without sharing class AMS_EBulletinReportHelper {
 		
 		List<String> locClsList = filters.programsList;
 
-		Datetime fromDate = filters.fromCCDate;
-		Datetime toDate   = filters.toCCDate; 
 
 
 		//system.debug('Records query: ' + AMS_QueryUtils.getFieldsQuery(objectBaseQuery,fieldsQuery, ' Change_Code__c in ( ' + convertToCSV(new List<String>(AMS_CustomSettingsUtils.ccNameSectionMap.keyset()), '\',\'') + ') '));
@@ -271,7 +269,7 @@ public without sharing class AMS_EBulletinReportHelper {
 		String filter2 		 = ' and Published_on_EBulletin__c = TRUE'; 
 		String filter3 		 = ' and Account__r.IATA_ISO_Country__r.ISO_Code__c IN :countriesFilter';		
 		String filter4 		 = ' and Account__r.Location_Class__c IN :locClsList';
-		String filter5 		 = ' and Created_Date_To_Show__c >= :fromDate  and Created_Date_To_Show__c < :toDate';
+		String filter5 		 = ' and Created_Date_To_Show__c > ' + filters.fromCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')  + ' and Created_Date_To_Show__c < ' + filters.toCCDate.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
 		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,Created_Date_To_Show__c';		
 
 		String filterCC  = filter1 + 
@@ -630,7 +628,7 @@ public without sharing class AMS_EBulletinReportHelper {
 */
 
 	/** 
-		  Get Record Value from CC History Objects
+		  Get Record Value
 	*/
 	private List<String> getRecordsFromAACCHist(String ccRecordSection, Agency_Applied_Change_code__c cc, List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesList)
 	{
@@ -657,7 +655,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			if(customFields.headersCustomMap.containsKey(position))
 			{
 				AMSEBulletinSettings__c headerVal = customFields.headersCustomMap.get(position).eBulletinSetting;
-				
+
 				if(!headerVal.Do_not_show__c)
 					recordsList.add(getRecordFromHeaderAPIValue(ccRecordSection,cc , headerVal, ccHistChangesPerAPIValMap));
 				else
@@ -737,7 +735,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			if(headerVal.Name == STATE || headerVal.Name == NEWSTATE)
 			{
 				List<String> countryStateList =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
-		
+				
 				AMS_ChangeCodesHelper.ObjectChange objValCountry = ccHistChangesPerAPIValMap.get(countryStateList.get(0).split(',').get(0).touppercase().replace('__R.NAME','__C'));
 
 
@@ -892,7 +890,7 @@ public without sharing class AMS_EBulletinReportHelper {
 				return	recordValue;
 			}
 		}
-		else if (headerVal.name == STATE){
+		if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
 			return processCountryOrState(cc,values);
 
