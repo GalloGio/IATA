@@ -298,8 +298,7 @@ public without sharing class AMS_EBulletinReportHelper {
 												  filterCC));
 		*/
 	
-		if(ccList.isEmpty())
-			throw new AMS_EBulletinException('01');
+		if(ccList.isEmpty()) throw new AMS_EBulletinException('01');
 		//system.debug('Records history query: ' +AMS_QueryUtils.getAllFieldQuery(objectHistBaseQuery,objectBaseQuery.replace('__c', '__r.Id') + ' IN :ccList', false));
 		
 		//Recover current active Owners Info from the Accounts linked to the Change Codes
@@ -332,13 +331,14 @@ public without sharing class AMS_EBulletinReportHelper {
 					});
 
 			String apiNameToRecover = 
-					ccHist.Object_API_Name__c.replace('__c','__r.') + ccHist.Field_API_Name__c.replace('__c','__r.Name');
+					ccHist.Object_API_Name__c.replace('__c','')  + '__r.' + ccHist.Field_API_Name__c.replace('__c','__r.Name');
 			
+
 			if(nameApiNameMap.containsKey(COUNTRY) && nameApiNameMap.get(COUNTRY).split(',').get(0) == apiNameToRecover)
 			{
 				countrySetIDs.add(ccHist.Field_Lookup_Old_Value__c);
 				countrySetIDs.add(ccHist.Field_Lookup_New_Value__c);
-				countryObjVal = ccHist.Object_API_Name__c;
+				countryObjVal = ccHist.Field_API_Name__c;
 			}
 		}
 
@@ -347,14 +347,21 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		if(countryObjVal != null)
 		{
-			List <SObject> countriesList = 
-					Database.query(
-						AMS_QueryUtils.getFieldsQuery(countryObjVal,nameApiNameMap.get(COUNTRY), ' ID IN :countrySetIDs')
-					);
+			
+			List<String> fielsToRecover = nameApiNameMap.get(COUNTRY).split(',');
+
+			String toRecover = '';
+
+			for(String field : fielsToRecover)
+				toRecover = toRecover + field.substring(field.lastIndexOf('.') + 1) + ',' ;
+			
+			toRecover = toRecover.substring(0,toRecover.length() -1);
+
+			List <SObject> countriesList = Database.query( AMS_QueryUtils.getFieldsQuery(countryObjVal,toRecover, ' ID IN :countrySetIDs'));
 		
 			//Country Iso Code
 			//
-			String isoCodeAPIVal = nameApiNameMap.get(COUNTRY).split(',').get(1).split('.').get(2);
+			String isoCodeAPIVal = toRecover.split(',').get(1);
 
 
 			for(SObject countryObj :countriesList)
@@ -710,17 +717,16 @@ public without sharing class AMS_EBulletinReportHelper {
 		String apiNameUpper = (headerVal.API_Name__c).split(',').get(0).touppercase();
 		
 		
-
 		//system.debug('headerVal.API_Name__c : ' + headerVal.API_Name__c );
 		
-		//system.debug('ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
+		//system.debug('diogo ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
 
 		//system.debug(cc.change_code__c + ': ' + apiNameUpper +  ' ccHistChangesPerAPIValMap.containsKey(apiNameUpper) : ' + ccHistChangesPerAPIValMap.containsKey(apiNameUpper.split(',').get(0)));
 		
 		//SPECIAL CONDITIONS
 		//
-		if(headerVal.Name == STATE || headerVal.Name == NEWSTATE) apiNameUpper.replace('__R.NAME','__C');
-
+		if(headerVal.Name == STATE || headerVal.Name == NEWSTATE) apiNameUpper = apiNameUpper.replace('__R.NAME','__C');
+				
 		if(headerVal.Name == SECTION) recordValue = ccRecordSection;
 		
 		// for OLD vs NEW fields
@@ -729,7 +735,7 @@ public without sharing class AMS_EBulletinReportHelper {
 			AMS_ChangeCodesHelper.ObjectChange objVal = ccHistChangesPerAPIValMap.get(apiNameUpper);
 
 			if(headerVal.Name == STATE || headerVal.Name == NEWSTATE)
-			{	
+			{
 				List<String> countryStateList =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
 		
 				AMS_ChangeCodesHelper.ObjectChange objValCountry = ccHistChangesPerAPIValMap.get(countryStateList.get(0).split(',').get(0).touppercase().replace('__R.NAME','__C'));
