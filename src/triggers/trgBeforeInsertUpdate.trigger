@@ -17,5 +17,11 @@ trigger trgBeforeInsertUpdate on Case (before insert, before update) {
                 cse.Groups__c = 'Default';
             }
         }
+        
+        //CNS -- define when a case created on the portal can be considered as a CNS Case. 
+        //Agents with CNSAcount__c = true cases will be allways CNS cases,
+        //Airlines or other types of accounts will lead to other rule, which is:
+        //if ??????
+        CNS_CaseHandler.ManageCNSCaseOnBeforeInsertUpdate(Trigger.new);
     }
 }
