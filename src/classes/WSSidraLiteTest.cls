@@ -7,7 +7,7 @@ public class WSSidraLiteTest {
             ParentId = parent.Id,
             accountId = parent.accountId,
             BSPCountry__c = 'Canada',
-            SIDRA_Lite_Reason__c = SidraLiteManager.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
+            SIDRA_Lite_Reason__c = SidraLiteHelperForIFAP.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
         );
         return cse;
     }
@@ -604,10 +604,13 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_OK1() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c();
-        insert oscar;
+        insert new AMS_Trigger_Execution_Manager__c(All__c = true);
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        AMS_Oscar__c oscar = new AMS_Oscar__c();
+        oscar.Status__c = oscarCase.Status;
+        insert oscar;
+
         oscarCase.Reason1__c = OSCARValidReasons.get(0);
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;

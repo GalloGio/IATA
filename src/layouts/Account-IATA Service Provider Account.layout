@@ -118,7 +118,11 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <excludeButtons>Merge</excludeButtons>
         <fields>FULL_NAME</fields>

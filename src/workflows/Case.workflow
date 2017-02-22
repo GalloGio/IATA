@@ -2093,6 +2093,18 @@
         <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Send_expiration_Reminder_CNS</fullName>
+        <description>ISSP Send expiration Reminder CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
+    </alerts>
+    <alerts>
         <fullName>ITDI_Email_Alert</fullName>
         <ccEmails>simardd@iata.org</ccEmails>
         <ccEmails>afarar@iata.org</ccEmails>
@@ -3555,6 +3567,17 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_email_notification_for_a_new_attachment_on_a_case_CNS</fullName>
+        <description>Send email notification for a new attachment on a case CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
     </alerts>
@@ -14723,7 +14746,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone,Chat</value>
+            <value>Internal Case,Phone,Chat,Voicemail</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -14758,7 +14781,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -15049,10 +15072,18 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     </rules>
     <rules>
         <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
         <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>ISSP_Send_expiration_Reminder</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>13</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
         <workflowTimeTriggers>
             <actions>
                 <name>ISS_Portal_Make_case_invisible</name>
@@ -15067,14 +15098,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>ISSP_Send_expiration_Reminder</name>
-                <type>Alert</type>
-            </actions>
-            <timeLength>13</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
@@ -16449,7 +16472,7 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>greaterOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Recurrence_Negative_Settlement__c</field>
@@ -16459,10 +16482,10 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>lessOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <description>SEDA :, the case be assigned to Airline Suspension Team automatically. 
-1) airline unpaid amount is greater than USD1000 
+1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000) 
 2) Recurrence Negative Settlement no matter the amount</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -17708,7 +17731,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>New_Attachment_From_Portal_User_False</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.New_Attachment_From_Portal_User__c</field>
             <operation>equals</operation>

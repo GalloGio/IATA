@@ -915,7 +915,7 @@ public without sharing class ISSP_Registration {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = getRecordTypeCode(customerTypeCreate);
+            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';
@@ -1191,7 +1191,7 @@ public without sharing class ISSP_Registration {
             mail.setTemplateId(et.Id);
             mail.setTargetObjectId(userId);
             mail.setSaveAsActivity(false);
-            mail.setReplyTo('noreply@cnsc.us'); 
+            mail.setReplyTo('cns_noreply@cnsc.us'); 
             mail.setSenderDisplayName('CNS Portal ');
             Messaging.sendEmail(
             new Messaging.SingleEmailMessage[]{mail});

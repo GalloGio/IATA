@@ -108,7 +108,11 @@
         <fields>ParentId</fields>
         <fields>IATACode__c</fields>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>

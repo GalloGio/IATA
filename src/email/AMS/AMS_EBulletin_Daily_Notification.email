@@ -1,6 +1,12 @@
+<table width="650" >
+<tr>
+    <th>
 <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
 <i>##ISSPLABEL##</i><p />
-
+</th>
+</tr>
+<tr>
+<td>
 <p>Dear ##USERNAME##, </p>
 
 <p>This is to inform you that occurrences were found based on your selected criteria.</p>
@@ -26,3 +32,8 @@
 <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
 </a>
 </p>
+
+
+</tr>
+</td>
+</table>
