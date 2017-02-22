@@ -8,7 +8,7 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
     public String parentAccountId { get; set; }
     public String test { get; set; }
-    public boolean isProfile { get; set; }
+    //public boolean isProfile { get; set; }
 
     public List<AMS_Account_Role__c> newOwners { get; set; }
 
@@ -76,8 +76,6 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         delete [SELECT Id from AMS_Account_Role__c where Account__C in:accountsToDeleteRoles and active__c = true];
 
         Set<Id> idsToQuery = accountsToRepopulateOwnersMap.keySet();
-
-        List<AMS_Account_Role__c> rolesTest =  [SELECT Id, Account__c from AMS_Account_Role__c];
 
         List<AMS_Account_Role__c> allRoles= Database.query( AMS_QueryUtils.getAllFieldQuery('AMS_Account_Role__c',null, + 'Account__c =:idsToQuery and active__c = true', false) );
 
