@@ -39,7 +39,9 @@ private class AMS_AgencyAChangeCodeTest {
         insert C1;
 
         createCaseAndOSCAR(HO1,C1);
-
+		
+		AMS_Status_Reason__c SetupReason= new AMS_Status_Reason__c(name='Test01', Reason_Code__c='91', Reason_Description__c='ACCREDITED - MEETS CRITERIA', Status_Code__c='9', Status_Description__c='Approved');
+		insert SetupReason;
     }
 
     static void createCaseAndOSCAR(Account theAccount, Contact theContact){
@@ -158,5 +160,20 @@ private class AMS_AgencyAChangeCodeTest {
     
         Test.stopTest();
     }
-
+	
+	
+	@isTest static void test_ManualCreationChangeCode(){
+		Account a = [select id from Account where Name = 'My Travels' limit 1];
+		
+		test.StartTest();
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c();
+		
+		cc.Account__c = a.Id;
+		cc.AccountNewStatus__c = 'Approved';
+		cc.Reason_Description__c  = 'ACCREDITED - MEETS CRITERIA';
+		
+		insert cc;
+		
+		system.assertEquals('91', [select Reason_Code__c from Agency_Applied_Change_code__c where id=:cc.Id].Reason_Code__c);
+	}
 }

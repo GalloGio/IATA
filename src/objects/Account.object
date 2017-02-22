@@ -2444,6 +2444,62 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_PWC_INT_DEFNONPAY__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEFNONPAY</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_DEF__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT DEF</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_IRRS__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT IRRS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_CHANGE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA CHANGE</label>
+        <length>1</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_PWC_INT_OWNSHA_LASTDATE__c</fullName>
+        <externalId>false</externalId>
+        <label>AMS PWC INT OWNSHA LASTDATE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>AM_Account_Manager__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>This link to the user playing the role of Account Manager for the account. Used to define the account managers for Airline Headquarters for the Account Management project.</description>
@@ -3026,7 +3082,7 @@
         <fullName>Airline_designator__c</fullName>
         <description>Field used for the airline designator code e.g. BA</description>
         <externalId>false</externalId>
-        <label>2-letter Airline Designator Code</label>
+        <label>IATA Designator (2-character)</label>
         <length>4</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -4603,6 +4659,15 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.CNS_Country__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Country</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>C_Code__c</fullName>
         <externalId>false</externalId>
         <label>C Code</label>
@@ -5895,6 +5960,15 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_OSCAR_Enabled__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.OSCAR_enabled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country OSCAR Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
@@ -7564,12 +7638,10 @@ Controlling picklist of E&amp;F Sub-Status Account</description>
             <picklistValues>
                 <fullName>Chapter 7</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <picklistValues>
                 <fullName>None</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
@@ -8081,6 +8153,66 @@ WSPN-Worldspan</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Has_a_Financial_Assessment_Contact_Formu__c</fullName>
+        <description>If true, then one of the related contacts, or one of the related contacts of the accounts under the hierarchy, is a financial assessment contact, otherwise it&apos;s false</description>
+        <externalId>false</externalId>
+        <formula>OR( Has_a_Financial_Assessment_Contact__c, Has_a_Financial_Assessment_Contact_Sum__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Has a Financial Assessment Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_a_Financial_Assessment_Contact_Sum__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If true, then one of the accounts under the hierarchy has a financial assessment contact, otherwise it&apos;s false</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Has a Financial Assessment Contact under this hierarchy</inlineHelpText>
+        <label>Has a FA Contact (under hierarchy)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_a_Financial_Assessment_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If true, then one of the related contacts is a financial assessment contact, otherwise it&apos;s false</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Has a Financial Assessment Contact in this account</inlineHelpText>
+        <label>Has a FA Contact (This account)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_an_Administrator_User_Portal_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>OR( Has_an_Administrator_User_Portal__c, Has_an_Administrator_User_Portal_Sum__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Has an Administrator User Portal</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_an_Administrator_User_Portal_Sum__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Has an Admin User Portal under hierarchy</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_an_Administrator_User_Portal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Search in all related contacts and if any of them is an Admin User portal this value is checked</description>
+        <externalId>false</externalId>
+        <label>Has an Admin User Portal (This account)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Has_cases_from_last_2_years__c</fullName>
@@ -8956,7 +9088,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Legal_name__c</fullName>
         <description>Field used for the legal name of the airlines and the travel agents</description>
         <externalId>false</externalId>
-        <label>Legal/Registered name</label>
+        <label>Legal Name</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -10247,7 +10379,7 @@ J-Joint Vent</inlineHelpText>
         <length>4</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -33405,6 +33537,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cash basis%2Fwith commission</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Changes processed</fullName>
                 <default>false</default>
             </values>
@@ -33413,7 +33549,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>No longer a customer</fullName>
+                <fullName>Not accreditated</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77261,7 +77397,7 @@ Source_System__c  &lt;&gt; &apos;AIMS&apos;
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
         <active>true</active>
         <description>Conditions to fit when an account becomes a MITA or BIETA member</description>
-        <errorConditionFormula>AND(
+        <errorConditionFormula>AND(OR(ISCHANGED(MITA_Member__c), ISCHANGED(BIETA_Member__c)),
   OR(
     MITA_Member__c,
     BIETA_Member__c

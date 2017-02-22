@@ -118,9 +118,10 @@ private class clMassCaseCreationNonComplianceTest {
 
         cList.add(aCase);
         
-    
+     
 
         controller.CaseParameter.BatchNumber__c = batch.id;
+
         controller.CaseParameter.Deadline_Date__c = Date.Today();
         controller.setcaseStatus('Financial Security Requested');
         controller.runSearch();

@@ -50,7 +50,14 @@
                             <!-- breadcrumb -->
                             <ol class="list breadcrumb">
                                 <li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
-                                <li><a href="{!$Site.BaseUrl}/IEC_ProductList?category={!selected_mega_menu}">{!mega_menus[product.megaMenu]}</a></li>
+								<li>
+									<a style="{! IF(selectedCategory.value == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}">{!selectedCategory.label}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == ''}" />
+								</li>
+								<li>
+									<a style="{! IF(selectedCategory.value == '' || selectedTopic == null || selectedTopic == '', 'display:none', '')}" href="{!$Site.BaseUrl}/IEC_ProductList?category={!selectedCategory.value}&topic={!selectedTopic}">{!selectedTopicLabel}</a>
+									<apex:outputText value="" rendered="{! selectedCategory.value == '' || selectedTopic == null || selectedTopic == ''}" />
+								</li>
                                 <li>{!product.ProductName}</li>
                             </ol>
 

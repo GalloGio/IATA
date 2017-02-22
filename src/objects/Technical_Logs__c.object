@@ -141,7 +141,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>0012000000Imbg5</value>
+            <value>001w000001JSj9C</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -226,6 +226,24 @@
             <value>96544766</value>
         </filters>
         <label>AMS - OK</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Sales_Order</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Operation__c</field>
+            <operation>contains</operation>
+            <value>AMS 2 MDM - Sales Order</value>
+        </filters>
+        <label>AMS - Sales Order</label>
         <language>en_US</language>
     </listViews>
     <nameField>

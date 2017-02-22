@@ -336,6 +336,10 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>DisplayUrl</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Display_Ecom_Customer_Type__c</fullName>
         <externalId>false</externalId>
         <label>Display Ecom Customer Type</label>
@@ -1498,6 +1502,15 @@ SIS Charge Code Type.</description>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>ExternalDataSourceId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ExternalId</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Family</fullName>
         <picklist>
             <picklistValues>
@@ -2062,6 +2075,10 @@ SIS Charge Code Type.</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Perishable Cargo Regulations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Publications Online</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3824,13 +3841,25 @@ The product will only appear on the Online Store when the date entered in this f
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>QuantityUnitOfMeasure</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Each</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>RCRM_Product__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag that indicates whether the product is included in the scope of the RCRM project.</description>
         <externalId>false</externalId>
         <inlineHelpText>Indicates whether the product is included in the scope of the RCRM project.</inlineHelpText>
         <label>RCRM Product</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -3900,6 +3929,10 @@ The product will only appear on the Online Store when the date entered in this f
             </picklistValues>
             <picklistValues>
                 <fullName>Russian</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chinese</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -4424,6 +4457,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Display_to_ECommerce__c</columns>
         <columns>Effective_To__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>IEC_Override_Profit_Center__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -6728,6 +6762,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publications Online</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Services Manual</fullName>
                 <default>false</default>
             </values>
@@ -7967,6 +8005,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>
@@ -9699,6 +9741,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publications Online</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Reservations Services Manual</fullName>
                 <default>false</default>
             </values>
@@ -10950,6 +10996,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>
@@ -13865,6 +13915,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Refinement_Language__c</picklist>
+            <values>
+                <fullName>Chinese</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>English</fullName>
                 <default>false</default>

@@ -206,6 +206,15 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Last_NotificationBatch_Run__c</fullName>
+        <defaultValue>now()</defaultValue>
+        <externalId>false</externalId>
+        <label>Last_NotigicationBatch_Run</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Last_Run__c</fullName>
         <externalId>false</externalId>
         <label>Last Run</label>
@@ -326,8 +335,12 @@
     <label>AMS eBulletin Profile</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Portal</fullName>

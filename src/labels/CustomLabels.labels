@@ -232,6 +232,14 @@
         <value>Change Reconsideration</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
+        <value>Change Rejection</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
         <categories>LeftSidePanel, Headers</categories>
         <language>en_US</language>
@@ -744,7 +752,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com, gregory.tarrusson@amadeus.com, rsamson@amadeus.com, palexandre@amadeus.com, ncedmsgcd@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, HelpDesk@farelogix.com, pricing@farelogix.com, nmoore@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, mike.walker@travelport.com, emyoon@topas.net, byyeom@topas.net,  e-tkt@topas.net, cscall@topas.net, accreditation@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, zpyu@travelsky.com, net_ncc@travelsky.com, net_mor@travelsky.com, jiajia@travelsky.com, iReq@abacus.com.sg,  support@abacus.com.sg, sowfung_leong@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es , pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp, alvarengam@iata.org, szajkod@iata.org</value>
+        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -10715,6 +10723,27 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Agency Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
+        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
+        <value>Pilot phase: please note that only &quot;Changes&quot; and &quot;New Processes&quot; related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10862,7 +10891,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_01</shortDescription>
-        <value>There are no Change Codes Information to extract for the specified period!</value>
+        <value>No occurrences were found, based on your criteria, for the specific period!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
@@ -12568,7 +12597,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.&lt;br/&gt;&lt;b&gt;The service is under a Pilot Phase:&lt;/b&gt; please note that Agency Information is not currently available worldwide.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
@@ -16781,6 +16810,167 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>GFA Communication queue</value>
     </labels>
     <labels>
+        <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PWC_Lithuania_DC</shortDescription>
+        <value>PwC Lithuania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Argentina_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Argentina_DC</shortDescription>
+        <value>PwC Argentina DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Azerbaijan_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Azerbaijan_DC</shortDescription>
+        <value>PwC Azerbaijan DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Central</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Central</shortDescription>
+        <value>PwC Central</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Change_Requests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Change_Requests</shortDescription>
+        <value>PwC Change Requests</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_China_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_China_DC</shortDescription>
+        <value>PwC China DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_DIP_Reviews</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_DIP_Reviews</shortDescription>
+        <value>PwC DIP Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Egypt_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Egypt_DC</shortDescription>
+        <value>PwC Egypt DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Estonia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Estonia_DC</shortDescription>
+        <value>PwC Estonia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Greece_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Greece_DC</shortDescription>
+        <value>PwC Greece DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_India_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_India_DC</shortDescription>
+        <value>PwC India DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Indonesia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Indonesia_DC</shortDescription>
+        <value>PwC Indonesia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Israel_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Israel_DC</shortDescription>
+        <value>PwC Israel DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Malaysia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Malaysia_DC</shortDescription>
+        <value>PwC Malaysia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Mongolia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Mongolia_DC</shortDescription>
+        <value>PwC Mongolia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Philippines_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Philippines_DC</shortDescription>
+        <value>PwC Philippines DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Poland_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Poland_DC</shortDescription>
+        <value>PwC Poland DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Romania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Romania_DC</shortDescription>
+        <value>PwC Romania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Slovenia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Slovenia_DC</shortDescription>
+        <value>PwC Slovenia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Spain_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Spain_DC</shortDescription>
+        <value>PwC Spain DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Sweden_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Sweden_DC</shortDescription>
+        <value>PwC Sweden DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Thailand_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Thailand_DC</shortDescription>
+        <value>PwC Thailand DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Vietnam_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Vietnam_DC</shortDescription>
+        <value>PwC Vietnam DC</value>
+    </labels>
+    <labels>
         <fullName>ISSP_WaitChangeMessage</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -18295,6 +18485,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Orders</shortDescription>
         <value>Orders</value>
+    </labels>
+    <labels>
+        <fullName>Oscar_Attachments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oscar Attachments</shortDescription>
+        <value>Oscar Attachments</value>
     </labels>
     <labels>
         <fullName>Overall_maximum_size</fullName>
