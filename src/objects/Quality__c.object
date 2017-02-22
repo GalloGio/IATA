@@ -3704,6 +3704,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC01A</fullName>
@@ -3724,6 +3725,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC02</fullName>
@@ -3748,6 +3750,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC03</fullName>
@@ -3772,6 +3775,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC04</fullName>
@@ -3795,6 +3799,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC05</fullName>
@@ -3819,6 +3824,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>New ISS Deployment (NID)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC06</fullName>
@@ -3840,6 +3846,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC07</fullName>
@@ -3861,6 +3868,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC08</fullName>
@@ -3882,6 +3890,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC09</fullName>
@@ -3903,6 +3912,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC10</fullName>
@@ -3923,6 +3933,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC11</fullName>
@@ -3943,6 +3954,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC12</fullName>
@@ -3963,6 +3975,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC13</fullName>
@@ -3983,6 +3996,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC14</fullName>
@@ -4003,6 +4017,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC15</fullName>
@@ -4023,6 +4038,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC16</fullName>
@@ -4043,6 +4059,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC17</fullName>
@@ -4063,6 +4080,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC18</fullName>
@@ -4083,6 +4101,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC19</fullName>
@@ -4103,6 +4122,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC20</fullName>
@@ -4123,6 +4143,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC21</fullName>
@@ -4143,6 +4164,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC22</fullName>
@@ -4163,6 +4185,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC23</fullName>
@@ -4183,6 +4206,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC24</fullName>
@@ -4203,6 +4227,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC25</fullName>
@@ -4223,6 +4248,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC26</fullName>
@@ -4243,6 +4269,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC27</fullName>
@@ -4263,6 +4290,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC28</fullName>
@@ -4283,6 +4311,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC29</fullName>
@@ -4303,6 +4332,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>KC30</fullName>
@@ -4323,6 +4353,7 @@ IF(CONTAINS(RecordType.Name , &quot;Force Majeure&quot;),&quot;Force Majeure&quo
                 <controllingFieldValues>ISS Lifecycle Mgmt</controllingFieldValues>
                 <controllingFieldValues>Invoicing &amp; Collection (IC)</controllingFieldValues>
                 <controllingFieldValues>Post-Termination Recovery (PTR)</controllingFieldValues>
+                <controllingFieldValues>Remittance &amp; Settlement (RS)</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
