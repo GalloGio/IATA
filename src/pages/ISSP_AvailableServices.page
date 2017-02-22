@@ -305,7 +305,7 @@
           </div>
           <div class="modal-body">
             <p>
-              {!$Label.ISSP_Thanks_for_request}
+              <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_Thanks_for_request_cns,$Label.ISSP_Thanks_for_request)}"/>
             </p>
           </div>
         </div>

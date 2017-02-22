@@ -16784,6 +16784,17 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
               IATA Customer Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_Thanks_for_request_cns</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Thanks_for_request_cns</shortDescription>
+        <value>Thanks for you request. 
+You have just received an email confirming your request.
+Regards,
+CNS Customer Services</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Title</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
