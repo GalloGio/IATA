@@ -1,4 +1,4 @@
-@isTest
+@isTest(SeeAllData=true)
 private class ISSP_UserTriggerHandler_Test {
 
     static testMethod void myUnitTest() {
@@ -27,14 +27,29 @@ private class ISSP_UserTriggerHandler_Test {
 	                            ProfileId = profileId,
 	                            IsActive = true);
     	insert newUser;
-    	
+
     	System.runAs (newUser){
     		Test.startTest();
 	    	newUser.email = 'test1234@test.test';
 	    	update newUser;
+
+	    	Map<Id, String> conEmailMap = new Map<Id, String>();
+	    	conEmailMap.put(contact.Id, contact.Email);
+	    	Map<Id, String> conFirstNameMap = new Map<Id, String>();
+	    	conFirstNameMap.put(contact.Id, contact.Firstname);
+	    	Map<Id, String> conLastNameMap = new Map<Id, String>();
+	    	conLastNameMap.put(contact.Id, contact.Lastname);
+	    	Set<Id> conEmailIdSet = new Set<Id>();
+	    	conEmailIdSet.add(contact.Id);
+	    	/*Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS'); 
+	        insert app;
+	        Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
+	        insert appRight;*/
+	    	ISSP_UserTriggerHandler.changeEmailFromContact(conEmailMap, conFirstNameMap, conLastNameMap, conEmailIdSet);
+
 	    	Test.stopTest();
     	}
-    	
+
     	String thisUsername = [SELECT Id, Email, Username FROM User WHERE Id = :newUser.Id].Username;
     	system.assertEquals(thisUsername, 'test1234.test.test@partner.iata.org');
     }
