@@ -13,7 +13,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c();
 		country.Name = 'United Kingdom';
 		country.ISO_Code_Numeric__c = 123;
-		country.ISO_Code__c = 'UK';
+		country.ISO_Code__c = 'GB';
 		country.Region__c = 'Europe';
 		country.Case_BSP_Country__c  = 'United Kingdom';
 		insert country;
@@ -31,6 +31,8 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 		Contact con = new Contact();
 		con.FirstName = 'test';
 		con.LastName = 'test';
+		con.Email = '123test@123.test';
+		con.Phone = '123456789';
 		con.AccountId = acc.Id;
 		insert con;
 
@@ -63,7 +65,7 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			pg.getParameters().put('topiclbl','testtopiclbl');
 			pg.getParameters().put('subtopiclbl','testsubtopiclbl');
 			pg.getParameters().put('csButton','english');
-			pg.getParameters().put('concernedCountry','United Kingdom');
+			pg.getParameters().put('concernedCountry','GB');
 			Test.setCurrentPage(pg);
 
 			LiveAgentButtonFAQ2CaseController ctrl = new LiveAgentButtonFAQ2CaseController();
@@ -77,9 +79,19 @@ private class LiveAgentButtonFAQ2CaseControllerTest {
 			System.assertEquals(ctrl.topicLabel, 'testtopiclbl');
 			System.assertEquals(ctrl.subTopicLabel, 'testsubtopiclbl');
             System.assertEquals(ctrl.buttonLanguage, 'en');
+			System.assertEquals(ctrl.getContactFirstName(),'Guest');
 			ctrl.getContactId();
 			ctrl.getAccountId();
-
+			ctrl.country.region__c='Americas';
+			System.assert(ctrl.getCaseRecordTypeId() != null);
+			ctrl.country.region__c='Africa & Middle East';
+			System.assert(ctrl.getCaseRecordTypeId() != null);
+			ctrl.country.region__c='Asia & Pacific';
+			System.assert(ctrl.getCaseRecordTypeId() != null);
+			ctrl.country.region__c='China & North Asia';
+			System.assert(ctrl.getCaseRecordTypeId() != null);
+			ctrl.country.region__c='testnull';
+			System.assert(ctrl.getCaseRecordTypeId() == null);
 		}
 	}
 }
