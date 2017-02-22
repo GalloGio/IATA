@@ -373,7 +373,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 6 AND 4 AND 5 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND 6 AND 4 AND (5 OR 7) AND (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
             <operation>equals</operation>
@@ -403,6 +403,11 @@
             <field>EmailMessage.CcAddress</field>
             <operation>notEqual</operation>
             <value>info.americas@iata.org</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ICCS Generic Request Management</value>
         </criteriaItems>
         <description>Change case status to Action Needed when an incoming email is received to a case with status Pending Customer or Escalated Externally. Including extra criteria for info.americas@iata.org in CC.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -524,7 +529,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),SIDRA,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Process,SEDA,Invoicing Collection Cases</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),SIDRA,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Process,SEDA,Invoicing Collection Cases,FDS ICCS Generic Request Management</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
