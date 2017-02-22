@@ -334,7 +334,9 @@ global class SIDRARnSIntegrationWS {
             list<Account_Statement__c> listStatement = [
                 Select Id, Name, Key__c, Account__c, Operation__c, Group__c, Period__c, Remittance_Date__c, Billing_Amount__c, Amount_to_be_Paid__c, Paid__c, Balance__c, CurrencyISOCode
                 from Account_Statement__c
-                Where Name = :statementName
+                Where Account__c = :account.Id
+                And Period__c = :Period
+                And Operation__c = :Operation
             ];
 
             Account_Statement__c statement = listStatement.isEmpty()? null: listStatement.get(0);
