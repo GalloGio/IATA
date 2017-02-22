@@ -162,7 +162,7 @@ public with sharing class ams2gdp_TriggerHelper
 				if(oldAddress!=null && oldAddress.Account__c != newAddress.Account__c)  accountIdsToClearShippingAddress.add(oldAddress.Account__c);
 			}
 
-			if(oldAddress != null && oldAddress.Address_Type__c != null && newAddress.Address_Type__c != null)
+			if(oldAddress != null && oldAddress.Address_Type__c != null && newAddress != null && newAddress.Address_Type__c != null)
 			{
 				//If old address was Billing and new on change then Clear Account Billing Address
 				if(oldAddress.Address_Type__c.contains('Primary') && !newAddress.Address_Type__c.contains('Primary')) 
@@ -215,10 +215,10 @@ public with sharing class ams2gdp_TriggerHelper
                 if(String.isNotBlank(adr.Fax_STD__c)) fax += adr.Fax_STD__c + ' ';
                 if(String.isNotBlank(adr.Fax__c)) fax += adr.Fax__c + ' ';
 
-				accountsToUpdateBillingAddress.add(new Account(Id = accId, BillingStreet = street, BillingCity = adr.City__c , BillingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : '', IATA_ISO_Country__c = adr.Country__c, BillingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : '', IATA_ISO_Billing_State__c = adr.State__c	, BillingPostalCode = adr.AMS_ZipCode__c , Email__c = adr.Email__c, Website = adr.Website__c, Fax = fax	, Phone = phone, TTY__c = adr.TTY__c));
+				if(accId!=null) accountsToUpdateBillingAddress.add(new Account(Id = accId, BillingStreet = street, BillingCity = adr.City__c , BillingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : '', IATA_ISO_Country__c = adr.Country__c, BillingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : '', IATA_ISO_Billing_State__c = adr.State__c	, BillingPostalCode = adr.AMS_ZipCode__c , Email__c = adr.Email__c, Website = adr.Website__c, Fax = fax	, Phone = phone, TTY__c = adr.TTY__c));
 			}
 
-			update accountsToUpdateBillingAddress; 
+			if(!accountsToUpdateBillingAddress.isEmpty()) update accountsToUpdateBillingAddress; 
 		}
 
 		if(!accountIdToUpdateShippingAddress_Address.isEmpty())
@@ -230,10 +230,10 @@ public with sharing class ams2gdp_TriggerHelper
                 if(String.isNotBlank(adr.Address_2__c)) street += ' ' + adr.Address_2__c;
                 if(String.isNotBlank(adr.Address_3__c)) street += ' ' + adr.Address_3__c;
 
-				accountsToUpdateShippingAddress.add(new Account(Id = accId, ShippingStreet = street, ShippingCity = adr.City__c , ShippingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : '', IATA_ISO_Shipping_Country__c = adr.Country__c, ShippingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : ''	, IATA_ISO_Shipping_State__c = adr.State__c	, ShippingPostalCode = adr.AMS_ZipCode__c ));
+				if(accId!=null) accountsToUpdateShippingAddress.add(new Account(Id = accId, ShippingStreet = street, ShippingCity = adr.City__c , ShippingCountry = (adr.Country__c != null)? countryNameById.get(adr.Country__c) : '', IATA_ISO_Shipping_Country__c = adr.Country__c, ShippingState = (adr.State__c != null)? stateNameById.get(adr.State__c) : ''	, IATA_ISO_Shipping_State__c = adr.State__c	, ShippingPostalCode = adr.AMS_ZipCode__c ));
 			}
 
-			update accountsToUpdateShippingAddress;
+			if(!accountsToUpdateShippingAddress.isEmpty()) update accountsToUpdateShippingAddress;
 		}
 	}
 
