@@ -116,6 +116,14 @@
                 <behavior>Readonly</behavior>
                 <field>CNS_Agency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_DSS_Compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opt_out_PCI_DSS__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

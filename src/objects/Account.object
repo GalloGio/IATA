@@ -10234,6 +10234,15 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Opt_out_PCI_DSS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Opt out PCI DSS</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Organization_Last_Change_Date__c</fullName>
         <externalId>false</externalId>
         <label>Organization Last Change Date</label>
@@ -10332,6 +10341,15 @@ J-Joint Vent</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>PCI_DSS_Compliant__c</fullName>
+        <externalId>false</externalId>
+        <label>PCI DSS Compliant</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>ParentId</fullName>
