@@ -3,6 +3,13 @@ private class SIDRAliteMassApprovalControllerTest {
 
     public static final String APPROVED = SIDRAliteMassApprovalController.APPROVED;
     public static final String REJECTED = SIDRAliteMassApprovalController.REJECTED;
+    public static final String IRR = SIDRAliteMassApprovalController.IRR;
+    public static final String IRR_WD = SIDRAliteMassApprovalController.IRR_WD;
+    public static final String DEF = SIDRAliteMassApprovalController.DEF;
+    public static final String DEF_WD = SIDRAliteMassApprovalController.DEF_WD;
+    public static final String REI = SIDRAliteMassApprovalController.REI;
+    public static final String TER = SIDRAliteMassApprovalController.TER;
+    public static final String REI_AFTER_TER = SIDRAliteMassApprovalController.REI_AFTER_TER;
 
     @isTest
     static void controllerWithoutCases_Test() {
@@ -27,7 +34,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Approval_Rejection__c = null,
-            Reason_for_Default__c = 'Non-payment'
+            Reason_for_Default__c = 'Non-payment',
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -36,7 +44,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.Reason_for_Default__c = cse.Reason_for_Default__c;
-        controller.filter.selectedActionType = 'DEF';
+        controller.filter.selectedActionType = DEF;
 
         test.startTest();
         // check that the case is searched
@@ -73,7 +81,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.Reason_for_Default__c = cse.Reason_for_Default__c;
-        controller.filter.selectedActionType = 'DEF';
+        controller.filter.selectedActionType = DEF;
 
         test.startTest();
         // check that the case is searched
@@ -102,7 +110,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             DEF_Withdrawal_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Reason__c  = 'Other'
+            DEF_Withdrawal_Reason__c  = 'Other',
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -111,7 +120,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.DEF_Withdrawal_Reason__c = cse.DEF_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'DEF Withdrawal';
+        controller.filter.selectedActionType = DEF_WD;
 
         test.startTest();
         // check that the case is searched
@@ -139,7 +148,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Withdrawal_Approval_Rejection__c = null,
-            DEF_Approval_Rejection__c = APPROVED
+            DEF_Approval_Rejection__c = APPROVED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -148,7 +158,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.DEF_Withdrawal_Reason__c = cse.DEF_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'DEF Withdrawal';
+        controller.filter.selectedActionType = DEF_WD;
 
         test.startTest();
         // check that the case is searched
@@ -183,7 +193,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR';
+        controller.filter.selectedActionType = IRR;
 
         test.startTest();
         // check that the case is searched
@@ -219,7 +229,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR';
+        controller.filter.selectedActionType = IRR;
 
         test.startTest();
         // check that the case is searched
@@ -257,7 +267,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.IRR_Withdrawal_Reason__c = cse.IRR_Withdrawal_Reason__c;
-        controller.filter.selectedActionType = 'IRR Withdrawal';
+        controller.filter.selectedActionType = IRR_WD;
 
         test.startTest();
         // check that the case is searched
@@ -294,7 +304,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'IRR Withdrawal';
+        controller.filter.selectedActionType = IRR_WD;
 
         test.startTest();
         // check that the case is searched
@@ -323,7 +333,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -332,7 +343,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.REI_Approval_Rejection_remarks__c = 'comment';
-        controller.filter.selectedActionType = 'REI';
+        controller.filter.selectedActionType = REI;
 
         test.startTest();
         // check that the case is searched
@@ -366,7 +377,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -375,7 +387,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
         controller.filter.cse.REI_Approval_Rejection_remarks__c = 'comment';
-        controller.filter.selectedActionType = 'REI';
+        controller.filter.selectedActionType = REI;
 
         test.startTest();
         // check that the case is searched
@@ -404,7 +416,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -412,7 +425,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'TER';
+        controller.filter.selectedActionType = TER;
 
         test.startTest();
         // check that the case is searched
@@ -441,7 +454,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            DEF_Withdrawal_Approval_Rejection__c = REJECTED
+            DEF_Withdrawal_Approval_Rejection__c = REJECTED,
+            SIDRA_Lite_Reason__c = 'Bankruptcy'
         );
         insert cse;
 
@@ -449,7 +463,7 @@ private class SIDRAliteMassApprovalControllerTest {
         SIDRAliteMassApprovalController controller = new SIDRAliteMassApprovalController();
         controller.filter.cse.Region__c = 'Europe';
         controller.filter.cse.BSP_CASS__c = 'BSP';
-        controller.filter.selectedActionType = 'TER';
+        controller.filter.selectedActionType = TER;
 
         test.startTest();
         // check that the case is searched
