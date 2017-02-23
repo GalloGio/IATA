@@ -1966,7 +1966,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2142,7 +2142,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7555,7 +7555,7 @@ and
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>{!Country}不存在该航协号。请选择正确的国家。如果相同错误再次出现，请联系航协客户窗口寻求帮助。请通过以下链接填写表格：http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>{!Country}不存在该航协号。请选择正确的国家。如果相同错误再次出现，请联系航协客户窗口寻求帮助。请通过以下链接填写表格：http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8507,7 +8507,7 @@ and
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>请联系航协客户入口寻求帮助，通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>请联系航协客户入口寻求帮助，通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -9110,7 +9110,7 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>您的注册申请无法完成，请联系航协客户入口寻求帮助，请通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>您的注册申请无法完成，请联系航协客户入口寻求帮助，请通过以下网址提交问询。http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>

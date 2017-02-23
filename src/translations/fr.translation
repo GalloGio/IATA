@@ -2165,7 +2165,7 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7598,7 +7598,7 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>Code IATA inexistant dans le pays suivant : {!Country}. Veuillez sélectionner le bon pays. Si la même erreur se répète, veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Code IATA inexistant dans le pays suivant : {!Country}. Veuillez sélectionner le bon pays. Si la même erreur se répète, veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8555,7 +8555,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>Veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -9160,7 +9160,7 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>Votre processus d&apos;enregistrement ne peut être finalisé. Veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Votre processus d&apos;enregistrement ne peut être finalisé. Veuillez contacter l&apos;assistance du portail clients d&apos;IATA en remplissant le formulaire disponible à l&apos;adresse suivante : http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>

@@ -1966,7 +1966,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2142,7 +2142,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7556,7 +7556,7 @@ and
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>ไม่มีรหัส IATA นี้ในประเทศ{!} กรุณาเลือกประเทศที่ถูกต้อง หากเกิดข้อผิดพลาดเดียวกันซ้ำอีก กรุณาติดต่อฝ่ายสนับสนุนพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>ไม่มีรหัส IATA นี้ในประเทศ{!} กรุณาเลือกประเทศที่ถูกต้อง หากเกิดข้อผิดพลาดเดียวกันซ้ำอีก กรุณาติดต่อฝ่ายสนับสนุนพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8243,7 +8243,7 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_PortalUserCreation_Description</name>
     </customLabels>
     <customLabels>
-        <label>กรุณาติดต่อฝ่ายสนับสนุนของพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>กรุณาติดต่อฝ่ายสนับสนุนของพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_PortalUserStatusChangeError</name>
     </customLabels>
     <customLabels>
@@ -9119,7 +9119,7 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>ไม่สามารถดำเนินกระบวนการลงทะเบียนของคุณได้อย่างสมบูรณ์ กรุณาติดต่อฝ่ายสนับสนุนของพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>ไม่สามารถดำเนินกระบวนการลงทะเบียนของคุณได้อย่างสมบูรณ์ กรุณาติดต่อฝ่ายสนับสนุนของพอร์ทัลลูกค้า IATA โดยกรอกแบบฟอร์มการสอบถามที่ http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
