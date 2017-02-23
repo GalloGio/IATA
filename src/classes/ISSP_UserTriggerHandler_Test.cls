@@ -28,6 +28,11 @@ private class ISSP_UserTriggerHandler_Test {
 	                            IsActive = true);
     	insert newUser;
 
+    	PermissionSet ps = new PermissionSet();
+	    ps.Name = 'Test';
+	    ps.Label = 'Test';
+	    insert ps;
+
     	System.runAs (newUser){
     		Test.startTest();
 	    	newUser.email = 'test1234@test.test';
@@ -46,6 +51,14 @@ private class ISSP_UserTriggerHandler_Test {
 	        Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 	        insert appRight;*/
 	    	ISSP_UserTriggerHandler.changeEmailFromContact(conEmailMap, conFirstNameMap, conLastNameMap, conEmailIdSet);
+	    	ISSP_UserTriggerHandler.updateSIS_permissionSet(conEmailIdSet, conEmailIdSet);
+
+	    	PermissionSetAssignment psa = new PermissionSetAssignment();
+		    psa.AssigneeId = UserInfo.getUserId();
+		    psa.PermissionSetId = ps.Id;
+		    insert psa;
+	    
+	    	ISSP_UserTriggerHandler.updateUserPermissionSet('Test', conEmailIdSet, conEmailIdSet);
 
 	    	Test.stopTest();
     	}
