@@ -45,8 +45,9 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
 
         // get all the relationships to extract the accounts involved
-        for(AMS_Agencies_Hierarchy__c h : [SELECT Id, (SELECT Hierarchy__c, Parent_Account__r.Top_Parent__r.Id, Parent_Account__c, Child_Account__c, Child_Account__r.Top_Parent__r.Id, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationships__r) FROM AMS_Agencies_Hierarchy__c WHERE Id In (SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:test)]) 
-            relationshipLst.addAll(h.AMS_Agencies_relationships__r);
+        for(AMS_Agencies_Hierarchy__c h : [SELECT Id, (SELECT Hierarchy__c, Parent_Account__r.Top_Parent__r.Id, Parent_Account__c, Child_Account__c, Child_Account__r.Status__c, Child_Account__r.Top_Parent__r.Id, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationships__r where Child_Account__r.Status__c != 'Terminated') FROM AMS_Agencies_Hierarchy__c WHERE Id In (SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:test)]) 
+                for(AMS_Agencies_relationhip__c rel : h.AMS_Agencies_relationships__r)
+            relationshipLst.add(rel);
 
         // The map with all HO -> Child Accounts
         Map<Id, List<Id>> accountsToRepopulateOwnersMap = new Map<Id, List<Id>>();
@@ -73,10 +74,10 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
         // now that we have divided HO and Child accounts, let's clean all the previous owners and create new ones.
 
-        delete [SELECT Id from AMS_Account_Role__c where Account__C in:accountsToDeleteRoles and active__c = true];
+        delete [SELECT Id from AMS_Account_Role__c where Account__C in:accountsToDeleteRoles and active__c = true and Account__r.Status__c != 'Terminated'];
 
         Set<Id> idsToQuery = accountsToRepopulateOwnersMap.keySet();
-
+        
         List<AMS_Account_Role__c> allRoles= Database.query( AMS_QueryUtils.getAllFieldQuery('AMS_Account_Role__c',null, + 'Account__c =:idsToQuery and active__c = true', false) );
 
         // List with HO->Roles
