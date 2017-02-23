@@ -118,6 +118,7 @@
               <apex:selectOption itemValue="IRR Withdrawal" itemLabel="IRR Withdrawal Approval" />
               <apex:selectOption itemValue="REI" itemLabel="REI Approval" />
               <apex:selectOption itemValue="TER" itemLabel="TER Approval" />
+              <apex:selectOption itemValue="REI After TER" itemLabel="REI After TER Approval" />
           </apex:selectList>
           <!--  Filter for Account Category  -->
           <apex:selectList value="{!filter.category}" label="Account Category" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
@@ -188,6 +189,11 @@
         <apex:column value="{!wrapper.cse.Reason_for_Default__c}" rendered="{!filter.selectedActionType=='REI'}"/>
         <apex:column value="{!wrapper.cse.REI_ApprovalRejectin__c}" rendered="{!filter.selectedActionType=='REI'}"/>
         <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='REI'}"/>
+        <!--Specific columns for REI After TER -->
+        <apex:column value="{!wrapper.cse.DEF_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.Reason_for_Default__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.REI_ApprovalRejectin__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
+        <apex:column value="{!wrapper.cse.DEF_Withdrawal_Reason__c}" rendered="{!filter.selectedActionType=='REI After TER'}"/>
         <!--Specific columns for TER -->
         <apex:column value="{!wrapper.cse.TER_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='TER'}"/>
         <apex:column value="{!wrapper.cse.Termination_Reason__c}" rendered="{!filter.selectedActionType=='TER'}"/>
@@ -246,6 +252,11 @@
           <apex:inputField value="{!filter.cse.DEF_Withdrawal_Approval_Rejection_Remark__c}" required="false" rendered="{!filter.selectedActionType=='DEF Withdrawal'}" style="width: 50%;"/>
           <!-- REI fields -->
           <apex:inputField value="{!filter.cse.REI_Approval_Rejection_remarks__c}" required="false" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <!-- REI After TER fields -->
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
           <!-- TER fields -->
           <apex:inputField value="{!filter.cse.Termination_Reason__c}" required="true" rendered="{!filter.selectedActionType=='TER'}"/>
           <apex:inputField value="{!filter.cse.FS_Action_requested__c}" required="true" rendered="{!filter.selectedActionType=='TER'}"/>
@@ -276,6 +287,11 @@
           <apex:inputField value="{!filter.cse.DEF_Withdrawal_Approval_Rejection_Remark__c}" required="false" rendered="{!filter.selectedActionType=='DEF Withdrawal'}" style="width: 50%;"/>
           <!-- REI fields -->
           <apex:inputField value="{!filter.cse.REI_Approval_Rejection_remarks__c}" required="false" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI'}" style="width: 50%;"/>
+          <!-- REI After TER fields -->
+          <apex:inputField value="{!filter.cse.Reason_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
+          <apex:inputField value="{!filter.cse.Type_of_REI_WD__c}" required="true" rendered="{!filter.selectedActionType=='REI After TER'}" style="width: 50%;"/>
           <!-- TER fields -->
           <apex:inputField value="{!filter.cse.TER_Approval_Rejection_Remarks__c}" required="false" rendered="{!filter.selectedActionType=='TER'}"/>
 
