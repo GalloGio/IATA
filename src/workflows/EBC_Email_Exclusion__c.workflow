@@ -13,19 +13,4 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Unsubscribe</template>
     </alerts>
-    <rules>
-        <fullName>EBC Unsubscribe</fullName>
-        <actions>
-            <name>EBC_End_User_Unsubscribe</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>EBC_Email_Exclusion__c.Type__c</field>
-            <operation>equals</operation>
-            <value>OPTOUT</value>
-        </criteriaItems>
-        <description>Every time User Unsubscribe from eBroadcast</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
 </Workflow>
