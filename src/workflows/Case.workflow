@@ -4800,9 +4800,9 @@
     <fieldUpdates>
         <fullName>DPCtoCLopes</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>alvesc@iata.org</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
-        <name>DPCtoCLopes</name>
+        <name>DPCtoAKalash</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>

@@ -269,6 +269,24 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Short_Name_Agency</fullName>
+        <description>Update the short name as the Trade name, and if there is no trade name it takes the Account name</description>
+        <field>Short_Name__c</field>
+        <formula>IF(
+OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
+IF (
+OR( ISNULL( Name ), Name == &apos;&apos;),
+Short_Name__c,
+Name
+),
+TradeName__c
+)</formula>
+        <name>Short Name Agency</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Site_index_field_updt</fullName>
         <field>Site_index__c</field>
         <formula>IF( OR( ISPICKVAL(Industry,&apos;Travel Agent&apos;), ISPICKVAL(Industry,&apos;Cargo Agent&apos;)),
@@ -473,6 +491,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>true</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
         <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Agency Short Name</fullName>
+        <actions>
+            <name>Short_Name_Agency</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
+        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
