@@ -52,6 +52,7 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -119,10 +120,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PCI_DSS_Compliant__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Opt_out_PCI_DSS__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
