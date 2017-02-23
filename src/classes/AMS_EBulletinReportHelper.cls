@@ -55,7 +55,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String IRRPERIODED		= 	'73-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
-	public static final String NEWCHANGECODE = 'NEW';
+	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
 
 	private static Decimal ownersTotalPercentage = 0;
 
@@ -676,7 +676,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				recordsList.add(strVal);
 			}
-			else if(cc.change_code__c == NEWCHANGECODE && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
+			else if(  NEWCHANGECODESET.contains(cc.change_code__c) && fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE)){
 				recordsList.add('');
 			}
 			else if(cc.change_code__c != IRRCHANGECODE && irrSet.contains(fieldsList.get(position - customFieldsCounter)) && nameFieldsList.get(position - customFieldsCounter) != REASON){
