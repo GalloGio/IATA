@@ -20104,7 +20104,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SIDRA Automated Case Message</shortDescription>
-        <value>Please be aware of another SIDRA Case created for this agency and this period but in another currency. Make sure that short payment amount in both currencies is communicated to the agent and only one IRR action will be applicable.
+        <value>Automated message: Please be aware of another SIDRA Case in another currency created for this agency in the same period. Make sure that the short payment amount in both currencies is communicated to the agent and only one IRR action will be applicable.
  
 Case number: {0}
 Short payment amount: {1}
