@@ -10,7 +10,7 @@
  <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1428578119000"/>
 <BR/>
 <i>{!$Label.ISSP_Email_do_not_reply}</i><p />
-{!$Label.ISSP_Email_Dear_Pre} {!if(relatedTo.Contact.Salutation!='Other', relatedTo.Contact.Salutation, '')} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+{!$Label.ISSP_Email_Dear_Pre} {!if(relatedTo.Contact.Salutation!='Others', relatedTo.Contact.Salutation, '')} {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
 Thank you for your recent enquiry. Case #{!relatedTo.CaseNumber}: "{!relatedTo.Subject}" has now been created and a Customer Service Representative will contact you shortly. <BR/>
 Please ensure you refer to this Case Number in any further contact with us about this enquiry. 
