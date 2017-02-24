@@ -126,14 +126,13 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
         <fields>Field_API_Name__c</fields>
         <fields>Object_API_Name__c</fields>
         <fields>Field_Old_Value__c</fields>
         <fields>Field_New_Value__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
