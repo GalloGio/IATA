@@ -138,10 +138,10 @@
 
     <!-- List Cases Section -->
     <apex:pageBlock title="Cases" mode="edit" id="results" rendered="{!!showProcessedSection}" >
-
-      <apex:pageBlockButtons location="both" rendered="{!filter.selectedActionType!=''}" >
-        <input id="trigger-action" class="btn" value="{!approvalButtonLabel}" onclick="triggerActionClick('APPROVED');" type="button"/>
-        <input id="trigger-action" class="btn" value="{!rejectionButtonLabel}" onclick="triggerActionClick('REJECTED');" type="button"/>
+      <apex:pageBlockButtons location="both" rendered="{!AND(NOT(ISNULL(listWrapperCase)),listWrapperCase.size>0)}" >
+        <input id="trigger-action" class="btn" value="{!approvalButtonLabel}" onclick="triggerActionClick('APPROVED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <input id="trigger-action" class="btn" value="{!rejectionButtonLabel}" onclick="triggerActionClick('REJECTED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <apex:commandButton value="Export to CSV" action="{!exportCSV}" />
       </apex:pageBlockButtons>
 
       <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!listWrapperCase.size=0}"/>

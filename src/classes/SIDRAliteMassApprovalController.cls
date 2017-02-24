@@ -37,7 +37,11 @@ public with sharing class SIDRAliteMassApprovalController{
         Search all cases based on the filters selected by the user
     **/
     public void search() {
-        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c ';
+        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, ';
+        query += ' DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, ';
+        query += ' TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, ';
+        query += ' Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c, ';
+        query += ' Subject, Owner.Name, Account.Name';
         query += ' From Case';
         query += ' Where RecordtypeId = :SIDRA_LITE_RECORDTYPE';
 
@@ -324,4 +328,53 @@ public with sharing class SIDRAliteMassApprovalController{
             this.category = '';
         }
     }
+
+    /**
+        Redirect to the Page in csv format
+    **/
+    public PageReference exportCSV() {
+        return Page.SIDRAliteMassApprovalExport;
+    }
+
+    /**
+        Returns a string with the content of current listWrapper in csv format
+    **/
+    public String getcsvContent() {
+        Map <String, Schema.SObjectField> mapCaseFields = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
+
+        // create csv header
+        String content = '"Id"';
+        content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('SIDRA_Lite_Reason__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('BSP_CASS__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Region__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('BSPCountry__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapCaseFields.get('AccountId').getDescribe().getLabel() + ' Id"';
+        content += ',"' + mapCaseFields.get('AccountId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapCaseFields.get('AIMS_status__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('CreatedDate').getDescribe().getLabel() + '"';
+        content += '\n';
+        // fill each line
+        for (WrapperCase wrapper: this.listWrapperCase) {
+            content += '"' +  wrapper.cse.Id + '"';
+            content += ',"' + wrapper.cse.CaseNumber + '"';
+            content += ',"' + wrapper.cse.Subject + '"';
+            content += ',"' + wrapper.cse.SIDRA_Lite_Reason__c + '"';
+            content += ',"' + wrapper.cse.BSP_CASS__c + '"';
+            content += ',"' + wrapper.cse.Region__c + '"';
+            content += ',"' + wrapper.cse.BSPCountry__c + '"';
+            content += ',"' + wrapper.cse.OwnerId + '"';
+            content += ',"' + wrapper.cse.Owner.Name + '"';
+            content += ',"' + wrapper.cse.AccountId + '"';
+            content += ',"' + wrapper.cse.Account.Name + '"';
+            content += ',"' + wrapper.cse.AIMS_status__c + '"';
+            content += ',"' + wrapper.cse.CreatedDate + '"';
+            content += '\n';
+        }
+        return content;
+    }
+
 }
