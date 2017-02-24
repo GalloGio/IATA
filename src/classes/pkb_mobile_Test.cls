@@ -378,11 +378,11 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c, Customer_emoticon__c  from Case where id =: resp.caseId];
+        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c/*, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
         system.assertEquals(emo, c.Customer_emoticon_value__c);
-        system.assert(c.Customer_emoticon__c.contains(emo) );
+        //system.assert(c.Customer_emoticon__c.contains(emo) );
 
 
     }
@@ -452,11 +452,11 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c, Customer_emoticon__c  from Case where id =: resp.caseId];
+        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c/*, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
         system.assertEquals(emo, c.Customer_emoticon_value__c);
-        system.assert(c.Customer_emoticon__c.contains(emo) );
+        //system.assert(c.Customer_emoticon__c.contains(emo) );
 
         List<PKB_Article_Feedback_Deflection__c> sessionDeflections = [ select Id,Session_ID__c , Contact__c
                                                             from PKB_Article_Feedback_Deflection__c

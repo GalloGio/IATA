@@ -2061,7 +2061,7 @@
     </alerts>
     <alerts>
         <fullName>ISSP_Send_DP_Service_Request_ILDS_email_notification</fullName>
-        <ccEmails>JIANGHT@iata.org</ccEmails>
+        <ccEmails>JIANGHT@iata.org,ZHOUJN@IATA.ORG,liuhy@iata.org</ccEmails>
         <description>ISSP Send DP Service Request ILDS email notification</description>
         <protected>false</protected>
         <senderAddress>iatacustomerservice@iata.org</senderAddress>
@@ -5092,23 +5092,22 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Closed</fullName>
+        <fullName>ICCS_Unique_Case</fullName>
         <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Id)</formula>
-        <name>ICCS Unique Case - Closed</name>
+        <formula>IF(IsClosed, CASESAFEID(Account.Id), CASESAFEID(Account.Id) +
+TEXT(ICCS_Product__c)+
+TEXT(ICCS_Country__c)+
+TEXT(ICCS_Currencies__c)+&quot;Open&quot;)</formula>
+        <name>ICCS Unique Case</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Open</fullName>
+        <fullName>ICCS_Unique_Case_Closed</fullName>
         <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Account.Id) +
-TEXT(ICCS_Product__c)+
-TEXT(ICCS_Country__c)+
-TEXT(ICCS_Currencies__c)+
-IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
-        <name>ICCS Unique Case - Open</name>
+        <formula>CASESAFEID(Id)</formula>
+        <name>ICCS Unique Case - Closed</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -6354,15 +6353,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_TER_MANUAL_ENTRY_TOTAL_OUTS_AMO</fullName>
-        <description>Total outs. amount field is cleared once the TER manual entry is filled</description>
-        <field>Total_Outstanding_Amounts_Default__c</field>
-        <name>SIDRA TER MANUAL ENTRY - TOTAL OUTS. AMO</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_TER_MANUAL_ENTRY_calc_all_outs</fullName>
         <description>When the TER manual entry date is updated, the field Calc ALL Outstanding amount (ter. date) field is cleared</description>
         <field>Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -7089,13 +7079,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fields>Case_Language__c</fields>
         <fields>Case_Queue_ID__c</fields>
         <fields>Case_Type__c</fields>
-        <fields>Classification_SFDC__c</fields>
         <fields>Classification_SIS__c</fields>
         <fields>Classification__c</fields>
         <fields>Comments__c</fields>
         <fields>Complaint_Description__c</fields>
         <fields>Complaint_Reason__c</fields>
-        <fields>Conclusion__c</fields>
         <fields>ContactId</fields>
         <fields>Country__c</fields>
         <fields>CreatedById</fields>
@@ -7854,7 +7842,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7944,7 +7932,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Operational_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7964,7 +7952,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Remittance_Settlement</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7984,7 +7972,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Risk_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -8028,7 +8016,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Type_of_customer_cargo_detail_export</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -8052,7 +8040,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Type_of_Customer_Travel_agent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
             <operation>equals</operation>
@@ -11137,7 +11125,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>DPC_Stakeholder_Communication_PQ_approved</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11157,7 +11145,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>DPC_Stakeholder_Communication_UAT_approved_DD</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11670,9 +11658,9 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ICCS Unique Case - Closed</fullName>
+        <fullName>ICCS Unique Case</fullName>
         <actions>
-            <name>ICCS_Unique_Case_Closed</name>
+            <name>ICCS_Unique_Case</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
@@ -11681,20 +11669,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>FDS ICCS Product Management</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>ICCS Unique Case - Open</fullName>
+        <fullName>ICCS Unique Case - Closed</fullName>
         <actions>
-            <name>ICCS_Unique_Case_Open</name>
+            <name>ICCS_Unique_Case_Closed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11713,7 +11696,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_an_Authorized_Signatories_ASP_Case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11743,7 +11726,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_an_ASP_Case_Without_CD_Users</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11814,7 +11797,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_Bank_Account_Creation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11848,7 +11831,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Set_Status_In_progress</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Creation Cases when the required form has been received / validated, and the Bank Account code populated.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS – Create Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11859,7 +11842,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_Bank_Account_Deletion</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11893,7 +11876,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Set_Status_In_progress</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Delete Cases when the required form has been received / validated, and the Bank Account code populated.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;, ISPICKVAL(CaseArea__c, &apos;ICCS – Delete Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11904,7 +11887,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_Bank_Account_Update</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11938,7 +11921,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ICCS_Set_Status_In_progress</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Set the Case Status to &quot;In progress&quot; for Bank Account Update Cases when the required form has been received / validated, and the Bank Account code populated.</description>
         <formula>AND (   RecordType.DeveloperName = &apos;FDS_ICCS_Bank_Account_Management&apos;, TEXT(Documentation_Complete__c) &lt;&gt; &apos;&apos;,  ISPICKVAL(CaseArea__c, &apos;ICCS – Update Bank Account&apos;), Do_Not_Send_Notification__c = false  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -11985,7 +11968,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_a_Case_CitiDirect_AFRD_Users</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12015,7 +11998,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_CitiDirect_Users_Card_Allocation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12134,7 +12117,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_CitiDirect_Users_Card_Removal</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12711,7 +12694,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>IDFS_SIDRA_Update_nbr_IRR_for_DEF</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) and 5</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14568,7 +14551,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_invisible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -14590,7 +14573,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISS_Portal_Make_case_visible</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14805,7 +14788,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_HP_ACR_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14831,7 +14814,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_ACCA_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14857,7 +14840,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_DBIndia_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14883,7 +14866,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_ILDS_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14909,7 +14892,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_Multicarta_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14935,7 +14918,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_Notification_to_Accelya_Maestro</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14966,7 +14949,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_T_Systems_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14997,7 +14980,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_HP_Service_Request_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15267,7 +15250,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 4) OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -15298,7 +15281,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16843,7 +16826,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16883,7 +16866,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2 OR 3) AND 4 and 5</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16918,7 +16901,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAsiaPacific</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16949,7 +16932,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2 ) AND 3 AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -17172,7 +17155,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_HD_Update_time_with_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17283,7 +17266,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Send_Case_Closure_Notification_to_the_customer</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17302,7 +17285,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Escalated_case_notification_to_CS_Manager</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17410,7 +17393,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Set_Escalated_Datetime</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17442,7 +17425,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND 3</booleanFilter>
+        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17452,10 +17435,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Web</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notEqual</operation>
         </criteriaItems>
         <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
         <triggerType>onCreateOnly</triggerType>
@@ -17526,7 +17505,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Make_new_case_visible_in_CustPortal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -17550,7 +17529,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Update_Assigned_to_SIS_Agent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17609,7 +17588,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Update_DateTime_Waiting_for_Customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17646,7 +17625,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Helpdesk_Update_resolution_case_age</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17740,20 +17719,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Partner</value>
         </criteriaItems>
         <description>Send email notification on all Cases when is added a new comment by a portal user</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Set a case to Confidential mode</fullName>
-        <actions>
-            <name>Update_to_IDFS_Confidential_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.Set_CONFIDENTIAL__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

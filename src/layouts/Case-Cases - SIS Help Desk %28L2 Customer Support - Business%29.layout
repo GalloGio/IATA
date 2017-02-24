@@ -152,10 +152,6 @@
                 <field>IsVisibleInSelfService</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>First_Call_Resolution__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_Age_Days__c</field>
             </layoutItems>
