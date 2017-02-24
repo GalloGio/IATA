@@ -4,8 +4,7 @@ trigger trgBeforeInsertUpdate on Case (before insert, before update) {
     if ((Trigger.isUpdate || Trigger.isInsert) && Trigger.isBefore) {
 
         for (Case cse : Trigger.new) {
-            cse.CNSCase__c=true;
-            
+           
             CS_Email2CasePremium__c code;
 
             if (cse.OwnerProfile__c != null && cse.OwnerProfile__c != '')
