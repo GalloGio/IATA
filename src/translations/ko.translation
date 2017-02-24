@@ -1969,7 +1969,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2145,7 +2145,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7560,7 +7560,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>{!Country}에 존재하지 않는 IATA 코드. 정확한 국가를 선택해주십시오. 같은 오류가 반복되면, 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터로 연락해주십시오. http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>{!Country}에 존재하지 않는 IATA 코드. 정확한 국가를 선택해주십시오. 같은 오류가 반복되면, 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터로 연락해주십시오. http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8517,7 +8517,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -9120,7 +9120,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 등록 처리를 완료할 수 없습니다. 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>귀하의 등록 처리를 완료할 수 없습니다. 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>

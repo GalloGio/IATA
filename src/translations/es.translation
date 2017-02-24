@@ -2165,7 +2165,7 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Avise de la información incorrecta de la agencia &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Avise de la información incorrecta de la agencia &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7585,7 +7585,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>El código IATA no existe en {!Country}. Seleccione el país adecuado. Si el error persiste, póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>El código IATA no existe en {!Country}. Seleccione el país adecuado. Si el error persiste, póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8542,7 +8542,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -9147,7 +9147,7 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>No se puede completar el proceso de registro. Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>No se puede completar el proceso de registro. Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
