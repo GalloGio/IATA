@@ -92,7 +92,7 @@ window.onload = function HighlightBar() {
 
         //Skip redirect if exception page
         if (formsCollection!= null && formsCollection.length > 0) {
-            if (formsCollection[0].action != null && formsCollection[0].action.indexOf("/Exception")!=-1) {
+            if (formsCollection[0].action != null && formsCollection[0].action.indexOf("/Exception{!if(communityName=='CNS','&CommunityName='+communityName,'')}")!=-1) {
                 skipredirect = true;
               }
         }
