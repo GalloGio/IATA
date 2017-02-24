@@ -9532,6 +9532,26 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ValidContactDomainName__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid Contact DomainName</label>
+        <picklist>
+            <picklistValues>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>WebStar_ID__c</fullName>
         <caseSensitive>false</caseSensitive>
         <externalId>true</externalId>
@@ -12043,6 +12063,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -13321,6 +13352,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -14493,6 +14535,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             <values>
                 <fullName>SIS User</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -15682,6 +15735,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>iiNET User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16997,6 +17061,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -18248,6 +18323,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -19422,6 +19508,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Staff</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21795,6 +21892,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Approved User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24314,6 +24422,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>iiNET User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27119,6 +27238,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Deactivated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
