@@ -1518,7 +1518,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <picklistValues>
                 <fullName>3600.00</fullName>
                 <default>false</default>
-                <controllingFieldValues>MITA application fee - 701910</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3800.00</fullName>
@@ -1528,6 +1527,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValues>Code Annual Retention Fee-  701900</controllingFieldValues>
                 <controllingFieldValues>Code Assignment Fee - 701907</controllingFieldValues>
                 <controllingFieldValues>Location Identifier Assignment Fee - 701920</controllingFieldValues>
+                <controllingFieldValues>MITA application fee - 701910</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>22000.00</fullName>

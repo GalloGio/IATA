@@ -52,6 +52,7 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -115,6 +116,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CNS_Agency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_DSS_Compliant__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -548,6 +553,7 @@
         <fields>Percentage__c</fields>
         <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
         <sortField>Active__c</sortField>
         <sortOrder>Desc</sortOrder>

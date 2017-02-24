@@ -13526,10 +13526,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>IDFS_SIDRA_IRRWD_R_S_comments_reset</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>IRR_Withdrawal_ApprovalDate_Reset</name>
             <type>FieldUpdate</type>
         </actions>
