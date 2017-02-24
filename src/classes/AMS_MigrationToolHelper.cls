@@ -1,4 +1,4 @@
-public with sharing class AMS_MigrationToolHelper {
+public without sharing class AMS_MigrationToolHelper {
 	// this class is responsible for migrating Portal SAAM cases and SAAM cases that need to be converted into Comunication Cases (w/ AMS_OSCAR__c objects)
 	
 	final static ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
