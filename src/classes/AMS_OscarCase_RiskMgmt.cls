@@ -814,6 +814,8 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		
 		return false;
+	}
+    
 	
 	//Check if there all the fields that lead to generation of change code had a change
 	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
