@@ -222,14 +222,10 @@
 
                    <!-- For e-mail field, display if this a valid e-mail -->
                    <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                       <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
-                           <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
-                           <apex:outputText value="&nbsp;" escape="false" />
-                       </apex:outputpanel>
-                       <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
-                           <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" id="emadomvalinvpopup"><apex:image url="{! $Resource.IntelliMail__cross }" width="16" height="16" /></span>
-                           <apex:outputText value="&nbsp;" escape="false" />
-                       </apex:outputpanel>
+                      <span title="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', $Label.ISSP_ContactList_HoverPopup_Text, '') }" id="emadomvalinvpopup">
+                        <apex:outPutField value="{!item.recordContact.ValidContactDomainImage__c}" />
+                        <apex:outputText value="&nbsp;" escape="false" />
+                      </span>
                    </apex:outputpanel>
 
                     <apex:facet name="header">
