@@ -32,7 +32,6 @@ private class CNS_CaseHandlerTest {
         insert c;
 
         //Custom setting values
-        //select Id, Topic__c, Subtopics__c, Subtopics2__c from ISSP_CNS_Topics_Subtopics__c
         List <ISSP_CNS_Topics_Subtopics__c> cnsTopics = new List <ISSP_CNS_Topics_Subtopics__c> ();
         for(Integer i=0; i< 2; i++){
             ISSP_CNS_Topics_Subtopics__c cnsT = new ISSP_CNS_Topics_Subtopics__c ();
@@ -50,7 +49,6 @@ private class CNS_CaseHandlerTest {
 
         Account agency = [select Id, CNS_Account__c, Name, Sector__c, Category__c, RecordTypeId from Account where Name='test cns portal agency' limit 1];
         Contact cnsContct = [select Id, LastName, CNS_Contact__c, RecordTypeId, AccountId from Contact where AccountId =: agency.Id];
-       // List <ISSP_CNS_Topics_Subtopics__c> cnsTopics = [];
         RecordType rtId= [select Id from RecordType where sObjectType='Case' and DeveloperName='CasesAmericas'];
        
         Case cnsCase = new Case(
@@ -61,8 +59,14 @@ private class CNS_CaseHandlerTest {
             Subject='cns case test',
             Topic__c ='CNS Topic 1'
             );
-        insert cnsCase;
+
+        Test.startTest();
+            insert cnsCase;
+        Test.stopTest();
         
+        Case cnsCaseAfter = [Select Id, CNSCase__c from Case where Id =: cnsCase.Id limit 1];
+
+        System.assertEquals(cnsCaseAfter.CNSCase__c, true);
     }
     
     

@@ -834,6 +834,10 @@ public without sharing class ISSP_Registration {
 
             }
 
+            if(communityName == 'CNS' && selectedCustomerType == 'Agency' ) {
+                con.CNS_Contact__c = true;
+            }
+
 
             try {
                 if (sRefererCommunity == constISS){ if(communityName=='' || communityName==null){ con.community__c= 'ISS Customer Portal';} else if(communityName=='CNS'){ con.community__c= 'CNS Customer Portal'; }}	
