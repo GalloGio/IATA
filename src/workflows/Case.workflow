@@ -11037,7 +11037,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Reset_reopen_reason2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 and 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -13404,7 +13404,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ReopenCase</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
@@ -16059,7 +16059,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>AccreditationDataEntryReason</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16095,7 +16095,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoBELUX</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16116,7 +16116,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoCHLI</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16138,7 +16138,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_CZSL</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16160,7 +16160,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16182,7 +16182,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_ROMO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16212,7 +16212,7 @@ For cases coming from web forms</description>
             <name>ChangerecordtypetoInternalSCE</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
@@ -16280,7 +16280,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16294,7 +16294,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoFR</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16308,7 +16308,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoIT</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16322,7 +16322,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoUK</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -17902,7 +17902,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 OR 2 OR 3 OR 4) AND 5 AND 6) OR 7</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18032,7 +18032,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18077,7 +18077,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAsiaPacific</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 OR 2) AND 3 AND 5) OR ((4 OR 6) AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18118,7 +18118,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 OR 2 OR 3 OR ((1 OR 2) AND 5)) AND 4) or (5 and 6)</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18163,7 +18163,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_Europe</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 OR 2) AND 3 AND 4) AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
