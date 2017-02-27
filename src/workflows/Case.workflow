@@ -15017,7 +15017,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Switch_from_ISS_portal_RT_to_Euro</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17952,7 +17952,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 4) OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.IFAP_Country_ISO__c</field>
