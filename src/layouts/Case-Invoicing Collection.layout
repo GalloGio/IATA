@@ -4,7 +4,7 @@
     <customButtons>Accept_Case</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -317,7 +317,7 @@
                 <height>200</height>
                 <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>

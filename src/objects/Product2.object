@@ -2793,7 +2793,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
     </fields>
     <fields>
         <fullName>IsActive</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>IsNewRelease__c</fullName>
