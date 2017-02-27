@@ -3971,36 +3971,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Case_Area_Operational_Management</fullName>
-        <description>updates case area field to Operational Management</description>
-        <field>CaseArea__c</field>
-        <literalValue>Operational Management</literalValue>
-        <name>Case Area = Operational Management</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Area_Remittance_Settlement</fullName>
-        <description>updates case area field to Remittance &amp; Settlement</description>
-        <field>CaseArea__c</field>
-        <literalValue>Remittance &amp; Settlement</literalValue>
-        <name>Case Area = Remittance &amp; Settlement</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Area_Risk_Management</fullName>
-        <description>updates case area field to Risk Management</description>
-        <field>CaseArea__c</field>
-        <literalValue>Agency Risk Management</literalValue>
-        <name>Case Area = Risk Management</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Case_Area_Risk_Management_process</fullName>
         <field>CaseArea__c</field>
         <literalValue>Risk Management Process</literalValue>
@@ -6479,28 +6449,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_HD_Update_time_with_customer</fullName>
-        <field>Date_Time_Pending_Customer__c</field>
-        <formula>NOW()</formula>
-        <name>SIS HD - Update time with customer</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIS_HD_update_time_with_customer_field</fullName>
         <field>Time_With_Customer__c</field>
         <formula>IF(NOT(ISNULL(Date_Time_Pending_Customer__c)),NOW() - Date_Time_Pending_Customer__c, null)</formula>
         <name>SIS HD - update time with customer field</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Helpdesk_Update_resolution_case_age</fullName>
-        <field>Time_With_Support__c</field>
-        <formula>NOW() - CreatedDate</formula>
-        <name>SIS Helpdesk -Update resolution case age</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -6512,15 +6464,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>SIS Make new case visible in CustPortal</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Set_Escalated_Datetime</fullName>
-        <field>Date_Time_Escalated__c</field>
-        <formula>NOW()</formula>
-        <name>SIS Set Escalated Datetime</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -6539,16 +6482,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>SIS - Update Assigned to SIS Agent</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Update_DateTime_Waiting_for_Customer</fullName>
-        <description>Update Date/Time Waiting for Customer field with current date/time</description>
-        <field>Date_Time_Waiting_for_Customer_Feedback__c</field>
-        <formula>NOW()</formula>
-        <name>SIS Update DateTime Waiting for Customer</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -6764,37 +6697,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Type_of_Customer_Cargo_agent</fullName>
-        <field>Type_of_customer__c</field>
-        <literalValue>IATA Cargo Agent</literalValue>
-        <name>Type of Customer = IATA cargo agent</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Type_of_Customer_Travel_agent</fullName>
-        <field>Type_of_customer__c</field>
-        <literalValue>IATA Travel Agent</literalValue>
-        <name>Type of Customer = Travel agent</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Type_of_customer_IATA_employee</fullName>
         <field>Type_of_customer__c</field>
         <literalValue>IATA Employee</literalValue>
         <name>Type of customer = IATA employee</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Type_of_customer_cargo_detail_export</fullName>
-        <field>Cargo_Business__c</field>
-        <literalValue>Export</literalValue>
-        <name>Type of customer cargo business - Export</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -7928,10 +7834,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>Americas%3A Operational Management Case Area</fullName>
-        <actions>
-            <name>Case_Area_Operational_Management</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -7948,10 +7850,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>Americas%3A Remittance %26 Settlement Case Area</fullName>
-        <actions>
-            <name>Case_Area_Remittance_Settlement</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -7968,10 +7866,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>Americas%3A Risk Management Case Area</fullName>
-        <actions>
-            <name>Case_Area_Risk_Management</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
@@ -8008,14 +7902,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>Automatic type of customer - Cargo</fullName>
-        <actions>
-            <name>Type_of_Customer_Cargo_agent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Type_of_customer_cargo_detail_export</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
@@ -8036,10 +7922,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>Automatic type of customer - Travel</fullName>
-        <actions>
-            <name>Type_of_Customer_Travel_agent</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Account.Type</field>
@@ -11121,10 +11003,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>DPC Create Communication Task - PQ Approved</fullName>
-        <actions>
-            <name>DPC_Stakeholder_Communication_PQ_approved</name>
-            <type>Task</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -11141,10 +11019,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </rules>
     <rules>
         <fullName>DPC Create Communication Task - UAT approved - DD</fullName>
-        <actions>
-            <name>DPC_Stakeholder_Communication_UAT_approved_DD</name>
-            <type>Task</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -17151,10 +17025,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     </rules>
     <rules>
         <fullName>SIS HD - Update time with customer</fullName>
-        <actions>
-            <name>SIS_HD_Update_time_with_customer</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -17389,10 +17259,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Escalated_Case_notification_to_the_Customer</name>
             <type>Alert</type>
         </actions>
-        <actions>
-            <name>SIS_Set_Escalated_Datetime</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -17584,10 +17450,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     </rules>
     <rules>
         <fullName>SIS Help Desk - Update Date%2FTime Waiting for Customer Feedback field when the case status is changed</fullName>
-        <actions>
-            <name>SIS_Update_DateTime_Waiting_for_Customer</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -17621,10 +17483,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     </rules>
     <rules>
         <fullName>SIS Helpdesk - Resolved case</fullName>
-        <actions>
-            <name>SIS_Helpdesk_Update_resolution_case_age</name>
-            <type>FieldUpdate</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -18469,26 +18327,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <protected>false</protected>
         <status>Completed</status>
         <subject>Confirmation IATA/IATAN ID Card Application</subject>
-    </tasks>
-    <tasks>
-        <fullName>DPC_Stakeholder_Communication_PQ_approved</fullName>
-        <assignedToType>owner</assignedToType>
-        <dueDateOffset>7</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>High</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>DPC Stakeholder Communication - PQ approved</subject>
-    </tasks>
-    <tasks>
-        <fullName>DPC_Stakeholder_Communication_UAT_approved_DD</fullName>
-        <assignedToType>owner</assignedToType>
-        <dueDateOffset>7</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>High</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>DPC Stakeholder Communication - UAT approved - DD</subject>
     </tasks>
     <tasks>
         <fullName>Due_diligence_alert</fullName>
