@@ -276,6 +276,8 @@ public class AMS_OscarCase_RiskMgmt {
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 					
+
+                        
 					if(CCToBeGenerated){
 						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
@@ -813,17 +815,18 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		return false;
 	}
-	
+    
 	
 	//Check if there all the fields that lead to generation of change code had a change
 	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
+		
 		if(OldCaseValues!=null){
-			if( (Field1==null || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
-				(Field2==null || (Field2 != null && NewCaseValues.get(Field2) == OldCaseValues.get(Field2))) &&
-				(Field3==null || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
-				(Field4==null || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
-				(Field5==null || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
-				(Field6==null || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
+			if( ((Field1==null || Field1.toUpperCase() == 'PARENT.STATUS' || Field1.toUpperCase() ==  'CHANGECODE' || Field1.toUpperCase()== 'EXISTS') || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
+				((Field2==null || Field2.toUpperCase() == 'PARENT.STATUS' || Field2.toUpperCase() ==  'CHANGECODE' || Field2.toUpperCase()== 'EXISTS') || (Field2 != null && NewCaseValues.get(Field2) == OldCaseValues.get(Field2))) &&
+				((Field3==null || Field3.toUpperCase() == 'PARENT.STATUS' || Field3.toUpperCase() ==  'CHANGECODE' || Field3.toUpperCase()== 'EXISTS') || (Field3 != null && NewCaseValues.get(Field3) == OldCaseValues.get(Field3))) &&
+				((Field4==null || Field4.toUpperCase() == 'PARENT.STATUS' || Field4.toUpperCase() ==  'CHANGECODE' || Field4.toUpperCase()== 'EXISTS') || (Field4 != null && NewCaseValues.get(Field4) == OldCaseValues.get(Field4))) &&
+				((Field5==null || Field5.toUpperCase() == 'PARENT.STATUS' || Field5.toUpperCase() ==  'CHANGECODE' || Field5.toUpperCase()== 'EXISTS') || (Field5 != null && NewCaseValues.get(Field5) == OldCaseValues.get(Field5))) &&
+				((Field6==null || Field6.toUpperCase() == 'PARENT.STATUS' || Field6.toUpperCase() ==  'CHANGECODE' || Field6.toUpperCase()== 'EXISTS') || (Field6 != null && NewCaseValues.get(Field6) == OldCaseValues.get(Field6)))
 				)
 				return false;
 		}
