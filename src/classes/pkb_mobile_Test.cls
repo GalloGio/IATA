@@ -266,14 +266,24 @@ public class pkb_mobile_Test {
         system.assert(!resp.isSuccess);
 
     }
-
-
+     @isTest
+    static void test_mobileKnowledgeArticleData(){
+         pkb_mobile_proxy.mobileKnowledgeArticleData mkad = new pkb_mobile_proxy.mobileKnowledgeArticleData();
+         String summary = mkad.summary;
+         String urlName = mkad.urlName;
+         DateTime lastModifiedDate = mkad.lastModifiedDate;
+         DateTime firstPublishedDate = mkad.firstPublishedDate;
+    }
     //public static pkb_mobile_proxy.ResponseItem getArticleDetail(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static void test_getArticleDetail() {
 
         pkb_mobile_proxy.ResponseItem resp = null;
-
+        pkb_mobile_proxy.ArticleDetail artcDetail = new pkb_mobile_proxy.ArticleDetail(); 
+        String urlName = artcDetail.urlName;
+        DateTime lastModifiedDate = artcDetail.lastModifiedDate;
+        DateTime firstPublishedDate = artcDetail.firstPublishedDate;
+        DateTime lastPublishedDate = artcDetail.lastPublishedDate;
         //with setup
         populatePKB2Environment();
         PKB__c pkS = populateSetup();
@@ -669,8 +679,9 @@ public class pkb_mobile_Test {
         pkb_mobile_proxy.RequestItem testRequestItem = null;
 
 
-        Test.startTest();
-
+        Test.startTest(); 
+        Object phoneCallAvailable = pkb_mobile_proxy.getPhoneCallAvailable();
+        pkb_mobile_proxy.PKBDataCategory pKBDataCategory = new pkb_mobile_proxy.PKBDataCategory('testc', 'testr');
     //case0 : invoke with null
         response=pkb_mobile_proxy.getRemoteAction(null);
         system.assert(response.Contains('"isSuccess":false'));
@@ -678,7 +689,7 @@ public class pkb_mobile_Test {
     //case1 : invoke with empty
         response=pkb_mobile_proxy.getRemoteAction('{}');
         system.assert(response.Contains('"isSuccess":false'));
-
+ 
     //case2 : invoke with invalid json string
         response=pkb_mobile_proxy.getRemoteAction('{NOT VALID}');
         system.assert(response.Contains('"isSuccess":false'));
@@ -719,6 +730,11 @@ public class pkb_mobile_Test {
 
 
         Test.stopTest();
+    }
+
+    static testMethod void testSendEmail(){
+     //   Object e = new Object('First exception');       
+        pkb_mobile_proxy.notifyAdmin(new TestException('Test Exc'), 'testIntro', 'testAdminEmail@test.com');
     }
 
 
@@ -832,6 +848,7 @@ public class pkb_mobile_Test {
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
         pkb_mobile_proxy tmp = new pkb_mobile_proxy();
+        String selectedCategory = tmp.selectedCategory;
     }
 
 

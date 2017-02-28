@@ -275,6 +275,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Email__c</fields>
         <fields>RECORDTYPE</fields>
         <fields>Agency_owner__c</fields>
         <fields>Agency_role__c</fields>

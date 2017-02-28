@@ -121,7 +121,7 @@ private class AMS_Case_Popup_ctrlTest {
     	
     	AMS_Case_Popup_ctrl controller = new AMS_Case_Popup_ctrl(new ApexPages.standardController(SidraLiteCase));
     	
-    	system.assertNotEquals('', controller.sMsgToDisplay);
+    	system.assertEquals('', controller.sMsgToDisplay);
     	test.StopTest();
     }
 }

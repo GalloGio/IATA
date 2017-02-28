@@ -1226,7 +1226,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -3416,7 +3416,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <protected>false</protected>
         <shortDescription>IDCard_PaymentByChequeP2</shortDescription>
         <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
     </labels>
     <labels>
         <fullName>IDCard_PaymentByCreditP1</fullName>
@@ -3724,7 +3724,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ReportAgencyIncorrectInfo</shortDescription>
-        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
+        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_ReportAgencyIncorrectInfo2</fullName>
@@ -4610,7 +4610,7 @@ Your ID Card application manager has been informed of your request.</value>
         <value>I have read and accept the 
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
+&lt;a href=&quot;JavaScript:newPopup(&apos; http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Terms_ConditionCA</fullName>
@@ -14134,7 +14134,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_IATAcertificate</fullName>
@@ -15488,7 +15488,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PortalUserStatusChange</shortDescription>
-        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_PortalUserStatusChange_ActiveProcessedError</fullName>

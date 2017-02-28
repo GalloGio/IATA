@@ -2,6 +2,8 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>NewRelatedAccount</customButtons>
     <customButtons>Create_MSO_agency</customButtons>
+    <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>

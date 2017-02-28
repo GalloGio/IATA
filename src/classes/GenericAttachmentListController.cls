@@ -74,7 +74,7 @@ global with sharing class GenericAttachmentListController {
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c from Case where id = :this.id];
+        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
 
         if (this.isForPortal) {
             this.showFileIdentifier = false;
@@ -251,6 +251,14 @@ global with sharing class GenericAttachmentListController {
         }
     }
 
+    public Boolean getParentIsOscar() {
+        if((relatedCase.parent.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
     }

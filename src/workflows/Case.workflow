@@ -4823,9 +4823,9 @@
     <fieldUpdates>
         <fullName>DPCtoCLopes</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>alvesc@iata.org</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
-        <name>DPCtoCLopes</name>
+        <name>DPCtoAKalash</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -13549,10 +13549,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>IDFS_SIDRA_IRRWD_R_S_comments_reset</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>IRR_Withdrawal_ApprovalDate_Reset</name>
             <type>FieldUpdate</type>
         </actions>
@@ -14710,7 +14706,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>

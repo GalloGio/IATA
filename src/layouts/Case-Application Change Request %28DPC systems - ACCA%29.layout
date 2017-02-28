@@ -428,9 +428,9 @@
             </layoutItems>
             <layoutItems>
                 <height>200</height>
-                <page>CaseAttachmentsView</page>
+                <page>GenericAttachmentListCase</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
