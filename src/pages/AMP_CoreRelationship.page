@@ -1,6 +1,6 @@
 <apex:page showHeader="true" sidebar="true" standardController="Account" extensions="AMP_CoreRelationshipExtension">
 
-	<apex:pageBlock title="Membership on Main IATA Industry Groups">
+	<apex:pageBlock >
 		<apex:pageBlockTable value="{!lsParticipantWrappers}" var="participant">
 			<apex:column headerValue="IATA Group Name" style="width:15%;">
 				<apex:outputLink value="/{!participant.groupId}" target="_blank">{!participant.groupName}</apex:outputLink>

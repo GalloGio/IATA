@@ -10661,7 +10661,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <length>255</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -77345,7 +77345,23 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <fullName>General_Public_Admin_only</fullName>
         <active>true</active>
         <description>Only administrators can edit General Public accounts</description>
-        <errorConditionFormula>IF((CONTAINS(Name, &quot;General Public&quot;) || CONTAINS(Name, &quot;general public&quot;) || CONTAINS(Name, &quot;GENERAL PUBLIC&quot;) || CONTAINS(Name, &quot;General public&quot;) || TEXT(Sector__c) = &quot;General Public&quot; || ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;)) &amp;&amp; NOT(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;System administrator&quot;)), TRUE, FALSE)</errorConditionFormula>
+        <errorConditionFormula>AND
+(
+OR
+(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
+TEXT(Sector__c) = &quot;General Public&quot; ||
+ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
+,
+OR
+(ISCHANGED(Sector__c),
+ISCHANGED(Category__c),
+ISCHANGED(Name),
+ISCHANGED(IATA_ISO_Country__c),
+ISCHANGED(RecordTypeId))
+,
+NOT
+(CONTAINS($User.Profile_Name__c, &quot;System Administrator&quot;) || CONTAINS($User.Profile_Name__c, &quot;Restricted Profile - automated process&quot;))
+)</errorConditionFormula>
         <errorMessage>Please contact an administrator if you wish to create or modify a general public account</errorMessage>
     </validationRules>
     <validationRules>
