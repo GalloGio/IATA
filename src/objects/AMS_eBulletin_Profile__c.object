@@ -97,6 +97,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Agency_Info_Reinstatements__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Agency_Info_Reinstatements</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Agency_Info_Reviews__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Reviews</description>
