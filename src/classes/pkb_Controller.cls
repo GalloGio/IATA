@@ -77,6 +77,44 @@ public without sharing class pkb_Controller {
   
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+  public Boolean isCNS{ get {
+        User u = [
+          SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+          FROM User WHERE Id =:UserInfo.getUserId()];
+        Boolean isCNS = false;
+        if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
+          && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
+        return isCNS;
+    } set;
+    }
+  public String lsExcludeTopics { get {
+        List <String> tmpTopics = new List<String>();
+        List <String> lsExcludeTopics = new List<String>();
+        //Select Custom Setting to set permissions
+        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c
+                                                            FROM ISSP_FAQ2Case_Permissions__c
+                                                            Where Subtopic__c =: null
+                                                            AND Topic__c != null
+                                                            ];
+        for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
+        {
+            //Check if the topic has matched Custom setting record
+            if (per.topic__c != null )
+            {
+                if (per.Sector_Permission__c.startsWith('CNS'))
+                {
+                    tmpTopics = per.Topic__c.split(',');
+                }
+            }
+        }
+
+        for(String s: tmpTopics) {
+            s = s.replace('_',' ');
+            lsExcludeTopics.add(s);
+        }
+        return JSON.serialize(lsExcludeTopics);
+    } set;
+  }
 
   public pkb_Controller() { }
 
