@@ -88,7 +88,6 @@ public without sharing class pkb_Controller {
     } set;
     }
   public String lsExcludeTopics { get {
-        List <String> tmpTopics = new List<String>();
         List <String> lsExcludeTopics = new List<String>();
         //Select Custom Setting to set permissions
         List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c
@@ -103,15 +102,11 @@ public without sharing class pkb_Controller {
             {
                 if (per.Sector_Permission__c.startsWith('CNS'))
                 {
-                    tmpTopics = per.Topic__c.split(',');
+                    lsExcludeTopics = per.Topic__c.replace('_',' ').split(',');
                 }
             }
         }
 
-        for(String s: tmpTopics) {
-            s = s.replace('_',' ');
-            lsExcludeTopics.add(s);
-        }
         return JSON.serialize(lsExcludeTopics);
     } set;
   }
