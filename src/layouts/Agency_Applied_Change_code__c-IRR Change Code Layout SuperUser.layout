@@ -49,7 +49,7 @@
                 <field>Reason_Description__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Reason_Code__c</field>
             </layoutItems>
         </layoutColumns>
