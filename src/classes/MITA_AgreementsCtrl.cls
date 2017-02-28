@@ -567,6 +567,13 @@ public with sharing class MITA_AgreementsCtrl {
                 return this.agreement.Airline_1__c==this.sourceAccount.Id ? this.agreement.Airline_2__r.Name_on_AOC__c : this.agreement.Airline_1__r.Name_on_AOC__c;
             }
         }
+        public Account getOther() {
+            if (this.agreement.Id == null) {
+                return this.agreementPax.Airline_1__c==this.sourceAccount.Id ? this.agreementPax.Airline_2__r : this.agreementPax.Airline_1__r;
+            } else {
+                return this.agreement.Airline_1__c==this.sourceAccount.Id ? this.agreement.Airline_2__r : this.agreement.Airline_1__r;
+            }
+        }
         public String getAgreementType() {
             // change agreement type for all one way agreements (each side of the agreement has a different name, defined in MAP_ONE_WAY_TYPES)
             if (this.agreement.Airline_2__c == this.sourceAccount.Id) {
