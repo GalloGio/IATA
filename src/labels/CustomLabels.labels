@@ -136,6 +136,13 @@
         <value>Generate Certificates</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action13</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action13</shortDescription>
+        <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
