@@ -1970,7 +1970,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2146,7 +2146,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7562,7 +7562,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>Codice IATA inesistente in {!Country}. Selezioni il paese corretto. Se l&apos;errore si verifica ancora, contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Codice IATA inesistente in {!Country}. Selezioni il paese corretto. Se l&apos;errore si verifica ancora, contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8519,7 +8519,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -9124,7 +9124,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
