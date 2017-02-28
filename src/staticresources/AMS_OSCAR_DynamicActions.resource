@@ -17,8 +17,17 @@ var dyn_functions = {
                     var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c,Account__r.Location_Class__c, Account__r.Sector__c , Account__r.Company_type__C FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+
                     var records = resultOscarData.getArray("records");
+
+                    if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'I' && records[0].Account__r.Sector__c == 'Cargo Agent' && records[0].AMS_Online_Accreditation__r.Link_agent_name__c == null ){
+                        var resultLinkAgent = confirm("The “Link Agent Name” field is not filled. Are you sure you want to proceed ?");
+                        if(resultLinkAgent == false){
+                            sResult = 'Please fill the Link Agent Name before proceding';
+                            return 'false';
+                        }
+                    }
 
                     //Prevent error with cross reference fields
                     var oscar = new sforce.SObject("AMS_OSCAR__c");
