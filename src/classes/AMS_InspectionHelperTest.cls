@@ -272,11 +272,11 @@ private class AMS_InspectionHelperTest {
             	if(i.Accreditation_Endorsement_Status_code__c == '4')
             		System.assertEquals('Listed', i.Account__r.Status__c);
             	if(i.Accreditation_Endorsement_Status_code__c == '5')
-            		System.assertEquals('Listed(BSP)', i.Account__r.Status__c);
+            		System.assertEquals('ARC registered', i.Account__r.Status__c);
             	if(i.Accreditation_Endorsement_Status_code__c == '6')
-            		System.assertEquals('Under review', i.Account__r.Status__c);
+            		System.assertEquals('Review', i.Account__r.Status__c);
             	if(i.Accreditation_Endorsement_Status_code__c == '7')
-            		System.assertEquals('Approved', i.Account__r.Status__c);
+            		System.assertEquals('Endorsed', i.Account__r.Status__c);
             }
     
             Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
