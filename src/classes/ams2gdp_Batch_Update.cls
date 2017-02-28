@@ -58,6 +58,10 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         {
             query = 'SELECT Id, AIMS_Id__c, Airline_Code__c, Territory_ISO_Country__c, Territory_IATA_Numeric_Country_Code__c FROM GSA_Territory__c WHERE AMS_GDP_Key__c = null AND AIMS_Id__c != null';
         }
+         else if(job == 'updateAMSAppointment')
+        {
+            query = 'SELECT Id FROM AMS_Inspection__c WHERE Accreditation_Endorsement_organisation__r.Air_Code__c IN (\'IATAN\',\'IATA\',\'DOM\')';
+        }
         else if(job == 'clearLogs')
         {
             query = 'SELECT Id FROM AMS2GDP_Log__c  ';
@@ -103,6 +107,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         else if(job == 'updateAdjacentAirport') updateAdjacentAirport((List<Adjacent_Airport__c>) scope);
         else if(job == 'updateAgencyProfileSpecialization') updateAgencyProfileSpecialization((List<GDP_Agency_Profile_Specialization__c>) scope);
         else if(job == 'updateGSATerritory') updateGSATerritory((List<GSA_Territory__c>) scope);
+        else if(job == 'updateAMSAppointment') updateAMSAppointment((List<AMS_Inspection__c>) scope);
         else if(job =='clearLogs') clearData(scope);
         else if(job =='clearGDPRecords') clearData(scope);
         else if(job == 'clearLiveRecords') clearData(scope);
@@ -647,6 +652,10 @@ public static void updateGDPAddress(List<GDP_Address__c> gdp_address)
             if(territoryByLegacyId.containsKey(key)) gsa.AMS_GDP_Key__c = territoryByLegacyId.get(key)+'GDP';
         }
 
+        Database.update(lst,false); 
+    }
+    public static void updateAMSAppointment(List<AMS_Inspection__c> lst)
+    {
         Database.update(lst,false); 
     }
 }
