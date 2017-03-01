@@ -6540,6 +6540,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>총 여덟 자리 이상</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7772,6 +7776,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>하나 이상의 문자</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7984,6 +7992,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>비밀번호 충족 요건은 하기와 같습니다:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>새로운 서비스 요청</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8070,6 +8082,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label>IATA 포털에 게시된 새로운 공지 사항</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>하나 이상의 숫자</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>사무실 이메일 주소</label>

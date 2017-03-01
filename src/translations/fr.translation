@@ -6577,6 +6577,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8 caractères</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7810,6 +7814,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>1 lettre</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>Téléchargement des informations du compte...</label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -8022,6 +8030,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>Le mot de passe doit contenir au moins:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>Nouvelle demande de service</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8108,6 +8120,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Nouvelle notification sur votre portail IATA</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>1 nombre</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>Email Bureau</label>

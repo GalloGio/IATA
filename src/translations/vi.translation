@@ -6537,6 +6537,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8 kí tự</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7769,6 +7773,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>1 kí tự chữ cái</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7981,6 +7989,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>Mật khẩu của bạn phải chứa ít nhất:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>Yêu Cầu Dịch Vụ Mới</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8067,6 +8079,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
     <customLabels>
         <label>Thông báo mới tại cổng thông tin IATA của bạn</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>1 kí tự số</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Office_Email --></label>
