@@ -71,10 +71,10 @@ public without sharing class pkb_Controller {
   public String publishStatus { get { return DEFAULT_PUBLISH_STATUS; } }
 
   public Boolean facebook { get {return Site.getTemplate().getUrl().endsWith('pkb_Template_fb');} }
-  
+
   public Integer viewCount {get; set;}//TF
   public Integer satisfiedCount {get; set;}//TF
-  
+
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
   public Boolean isCNS{ get {
@@ -126,7 +126,7 @@ public without sharing class pkb_Controller {
     // that pulls together KAV data and combines it with the article type data from describe calls.
 
     theArticle = (KnowledgeArticle)sc.getRecord();
-    
+
     // populate the props with ural param values as needed
     String q = ApexPages.currentPage().getParameters().get(QUERY_PARAM);
     String l = ApexPages.currentPage().getParameters().get(LANGUAGE_PARAM);
@@ -135,7 +135,7 @@ public without sharing class pkb_Controller {
 
 
     if (!isBlank(l)) selectedLanguage = String.escapeSingleQuotes(l);
-      
+
     if (!isBlank(c)){
         system.debug('Setting category');
         selectedCategoryFull = String.escapeSingleQuotes(c);
@@ -143,7 +143,7 @@ public without sharing class pkb_Controller {
         List <String> categorySplit = selectedCategoryFull.split('##');
         selectedCategory = categorySplit[0];
         if (categorySplit.size() == 2){
-            selectedCategoryTranslated = categorySplit[1]; 
+            selectedCategoryTranslated = categorySplit[1];
         }
     }
     if (!isBlank(fs)) feedbackSource = fs; // need to validate this value is in the picklist when inserting
@@ -425,7 +425,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
         return selectedCategory.replace(',', ', ').replace(':', ': ').replace('_', ' ');
     }
   }
-    
+
 
   private String resolveSelectedLanguage(){
     String result='';
@@ -448,7 +448,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
             //use language from settings
             //List<String> lLang = new List<String>();
             //lLang.addAll(availableLanguagesSet);
-            
+
             //R03 AS - Portal Redesign; get logged in user's language
              result = UserInfo.getLanguage();
           }
@@ -476,7 +476,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
                     system.debug('not multilanguage: ' + selectedLanguage);
                 }
                 else{
-                    
+
                     /**
                     //use language from settings
                     List<String> lLang = new List<String>();
@@ -486,7 +486,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
                     selectedLanguage = pkb_SettingsController.DEFAULT_LANGUAGE;
                     system.debug('multilanguage: ' + selectedLanguage);
                     **/
-                    
+
                     //Use logged in User's language
                     selectedLanguage = UserInfo.getLanguage();
                 }
@@ -888,7 +888,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
   public String rootCategory3       { get { return (kbSettings == null ? null : kbSettings.Root_Category_3__c); } }
   public String fbAppId             { get { return (kbSettings == null ? null : kbSettings.FBAppId__c); } }
 
-    
+
   /* ***** SEARCH RESULTS PAGINATION NAVIGATION ***** */
 
   public Integer currPage {
@@ -1050,7 +1050,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
     // ctore that takes the ID of a KnowledgeArticle record and queries the KAV record from it
     public KnowledgeArticleData(Id i, String lang) {
       system.debug('article id: ' + i);
-      
+
       String q = '';
       String pub = pkb_Controller.DEFAULT_PUBLISH_STATUS;
       q += 'select ' +join(kavFields, ',')+ ' from KnowledgeArticleVersion';
@@ -1058,7 +1058,7 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
       system.debug('FAQ query: ' + q);
       KnowledgeArticleVersion kav = (KnowledgeArticleVersion)Database.query(q);
       init(kav);
-      
+
     }
 
     public void init(KnowledgeArticleVersion kav) {
@@ -1320,36 +1320,36 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
         returnList.addAll(sortOptionList(greater));
         return returnList;
     }
-    
+
     //TF
     public PageReference retrieveArticle() {
-      
+
         string myartid = ApexPages.currentPage().getParameters().get('artid');
         string myartType = ApexPages.currentPage().getParameters().get('artType');
         string myartURL = ApexPages.currentPage().getParameters().get('artURL');
         viewCount = 100;
         if (myartType == 'FAQ__kav'){
-      AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting 
-                                        FROM ArticleStatistics__c 
+      AggregateResult[] articleStatRecords = [SELECT URL_Name__c, Stat_Type__c, Count(Id) Counting
+                                        FROM ArticleStatistics__c
                                         WHERE URL_Name__c =: myartURL
                                         GROUP BY URL_Name__c, Stat_Type__c];
       Integer artStatSize = Integer.valueOf(articleStatRecords.size());
-        
+
       for (Integer i = 0; i < artStatSize; i++) {
         String statType = String.valueOf(articleStatRecords[i].get('Stat_Type__c'));
-              
+
               // If the satistic type of the group id 'View' --> will get the number of records in that group
               if (statType == ENV.ArticleStatType.View) {
                   viewCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
               }
-              
+
               // The satistic type of the group id 'Satisfied'
               if (statType == ENV.ArticleStatType.Satisfied) {
                   satisfiedCount = Integer.valueOf(articleStatRecords[i].get('Counting'));
               }
       }
         }
-        
+
         return null;
     }
 }

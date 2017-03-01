@@ -1,0 +1,30 @@
+34.0 APEX_CODE,DEBUG;APEX_PROFILING,FINEST;CALLOUT,INFO;DB,INFO;SYSTEM,FINE;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+11:37:25.0 (766381)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.cnsaku|Central European Time|GMT+01:00
+11:37:25.0 (799997)|EXECUTION_STARTED
+11:37:25.0 (805879)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001Zkns|VF: /apex/ISSP_Bannerpreviewpage
+11:37:25.62 (62924638)|CUMULATIVE_LIMIT_USAGE
+11:37:25.62 (62924638)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 0 out of 100
+  Number of query rows: 0 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+11:37:25.62 (62924638)|TOTAL_EMAIL_RECIPIENTS_QUEUED|0
+11:37:25.62 (62924638)|CUMULATIVE_LIMIT_USAGE_END
+
+11:37:25.0 (62965968)|CODE_UNIT_FINISHED|VF: /apex/ISSP_Bannerpreviewpage
+11:37:25.0 (64539412)|EXECUTION_FINISHED
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING_BEGIN
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING|No profiling information for SOQL operations
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING|No profiling information for SOSL operations
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING|No profiling information for DML operations
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING|No profiling information for method invocations
+11:37:25.67 (67244411)|CUMULATIVE_PROFILING_END

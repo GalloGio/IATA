@@ -1,0 +1,101 @@
+27.0 APEX_CODE,DEBUG;APEX_PROFILING,FINEST;CALLOUT,INFO;DB,INFO;SYSTEM,FINE;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+11:48:31.0 (271137)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.cnsaku|Central European Time|GMT+01:00
+11:48:31.0 (301726)|EXECUTION_STARTED
+11:48:31.0 (306852)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001ZnAF|VF: /apex/ImportantContacts
+11:48:31.5 (5772289)|SYSTEM_MODE_ENTER|true
+11:48:31.6 (6214580)|SYSTEM_MODE_ENTER|true
+11:48:31.6 (6423770)|SYSTEM_MODE_ENTER|true
+11:48:31.0 (20494439)|SYSTEM_MODE_ENTER|true
+11:48:31.0 (20889069)|SYSTEM_MODE_ENTER|false
+11:48:31.0 (20897425)|SYSTEM_MODE_EXIT|false
+11:48:31.0 (20942548)|SYSTEM_MODE_ENTER|false
+11:48:31.0 (20997743)|SYSTEM_METHOD_ENTRY|[20]|ApexPages.StandardController.getRecord()
+11:48:31.0 (58090812)|SYSTEM_METHOD_EXIT|[20]|ApexPages.StandardController.getRecord()
+11:48:31.0 (58171929)|SYSTEM_METHOD_ENTRY|[21]|ApexPages.StandardController.getRecord()
+11:48:31.0 (58239756)|SYSTEM_METHOD_EXIT|[21]|ApexPages.StandardController.getRecord()
+11:48:31.0 (58303286)|SYSTEM_METHOD_ENTRY|[21]|ImportantContactsController.__sfdc_AccountId(Id)
+11:48:31.0 (58327543)|SYSTEM_METHOD_EXIT|[21]|ImportantContactsController.__sfdc_AccountId(Id)
+11:48:31.0 (58341382)|SYSTEM_MODE_EXIT|false
+11:48:31.0 (58447514)|SYSTEM_MODE_ENTER|true
+11:48:31.0 (58530755)|SYSTEM_MODE_ENTER|false
+11:48:31.0 (58549235)|SYSTEM_METHOD_ENTRY|[5]|ImportantContactsController.__sfdc_AccountId()
+11:48:31.0 (58572851)|SYSTEM_METHOD_EXIT|[5]|ImportantContactsController.__sfdc_AccountId()
+11:48:31.0 (58633536)|SYSTEM_CONSTRUCTOR_ENTRY|[6]|<init>()
+11:48:31.0 (58654693)|SYSTEM_CONSTRUCTOR_EXIT|[6]|<init>()
+11:48:31.0 (58687628)|SYSTEM_METHOD_ENTRY|[7]|ImportantContactsController.__sfdc_AccountId()
+11:48:31.0 (58700929)|SYSTEM_METHOD_EXIT|[7]|ImportantContactsController.__sfdc_AccountId()
+11:48:31.0 (63868606)|SOQL_EXECUTE_BEGIN|[7]|Aggregations:0|SELECT Id, FirstName, LastName, Email, Phone, Title, Membership_Function__c, Airline_Contact_Type__c FROM Contact 
+11:48:31.0 (88452538)|SOQL_EXECUTE_END|[7]|Rows:1
+11:48:31.0 (88570278)|SYSTEM_METHOD_ENTRY|[7]|Database.QueryLocator.iterator()
+11:48:31.0 (88872295)|SYSTEM_METHOD_EXIT|[7]|Database.QueryLocator.iterator()
+11:48:31.0 (89081985)|SYSTEM_MODE_EXIT|false
+11:48:31.100 (100324541)|SYSTEM_MODE_ENTER|true
+11:48:31.100 (100617702)|SYSTEM_MODE_ENTER|true
+11:48:31.0 (102889885)|VF_SERIALIZE_VIEWSTATE_BEGIN|066w0000001ZnAF
+11:48:31.0 (106225167)|VF_SERIALIZE_VIEWSTATE_END
+11:48:31.109 (109717404)|CUMULATIVE_LIMIT_USAGE
+11:48:31.109 (109717404)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+11:48:31.109 (109717404)|TOTAL_EMAIL_RECIPIENTS_QUEUED|0
+11:48:31.109 (109717404)|STATIC_VARIABLE_LIST|
+  char[]:DigitTens:0
+  long:serialVersionUID:0
+  String:_sfdcSuppressedCodeLocations:0
+  long:serialVersionUID:0
+  String:_sfdcAdditionalCodeLocations:0
+  double:MAX_VALUE:0
+  Boolean:FALSE:0
+  long:serialVersionUID:0
+  String:__sfdcInnerTypes:0
+  String:_sfdcAdditionalCodeLocations:0
+  double:MIN_VALUE:0
+  int:SIZE:0
+  double:NEGATIVE_INFINITY:0
+  int:MAX_VALUE:0
+  char[]:digits:0
+  double:NaN:0
+  Boolean:TRUE:0
+  String:__sfdcParameterizedTypes:0
+  int:MIN_VALUE:0
+  char[]:DigitOnes:0
+  int:BYTES:0
+  String:__sfdcProperties:0
+  int:MIN_EXPONENT:0
+  int[]:sizeTable:0
+  String:_sfdcAdditionalCodeLocations:0
+  int:MAX_EXPONENT:0
+  String:_sfdcAdditionalCodeLocations:0
+  int:SIZE:0
+  double:POSITIVE_INFINITY:0
+  double:MIN_NORMAL:0
+  int:BYTES:0
+
+11:48:31.109 (109717404)|CUMULATIVE_LIMIT_USAGE_END
+
+11:48:31.0 (109917483)|CODE_UNIT_FINISHED|VF: /apex/ImportantContacts
+11:48:31.0 (111254072)|EXECUTION_FINISHED
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING_BEGIN
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING|No profiling information for SOQL operations
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING|No profiling information for SOSL operations
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING|No profiling information for DML operations
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING|method invocations|
+Class.ImportantContactsController.<init>: line 20, column 1: global SObject getRecord(): executed 1 time in 37 ms
+External entry point: public List<Contact> __sfdc_lstImportantContacts(): executed 1 time in 31 ms
+Class.ImportantContactsController.__sfdc_lstImportantContacts: line 7, column 1: public Id __sfdc_AccountId(): executed 6 times in 31 ms
+Class.ImportantContactsController.<init>: line 21, column 1: global SObject getRecord(): executed 2 times in 0 ms
+Class.ImportantContactsController.__sfdc_lstImportantContacts: line 5, column 1: public Id __sfdc_AccountId(): executed 1 time in 0 ms
+Class.ImportantContactsController.__sfdc_lstImportantContacts: line 6, column 1: global public List<Contact>(): executed 1 time in 0 ms
+
+11:48:31.113 (113869159)|CUMULATIVE_PROFILING_END

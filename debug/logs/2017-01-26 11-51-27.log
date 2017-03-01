@@ -1,0 +1,237 @@
+28.0 APEX_CODE,DEBUG;APEX_PROFILING,INFO;CALLOUT,INFO;DB,INFO;SYSTEM,DEBUG;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+10:50:58.0 (677211)|USER_INFO|[EXTERNAL]|0057E00000289Fo|aku.luukka.me.com@partner.iata.org|Greenwich Mean Time|GMTZ
+10:50:58.0 (712413)|EXECUTION_STARTED
+10:50:58.0 (717754)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000000U4K5|VF: /apex/ISSP_Homepage
+10:50:58.0 (32049441)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (39376837)|SOQL_EXECUTE_BEGIN|[40]|Aggregations:0|SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate, Email, ContactId FROM User WHERE Id = :tmpVar1
+10:50:58.0 (44474811)|SOQL_EXECUTE_END|[40]|Rows:1
+10:50:58.0 (44870681)|USER_DEBUG|[45]|DEBUG|LastPasswordChangeDate: 2017-01-23 10:32:29
+10:50:58.0 (44950942)|USER_DEBUG|[46]|DEBUG|LastPasswordChangeDate addDays: 2017-04-23 10:32:29
+10:50:58.0 (45019969)|USER_DEBUG|[47]|DEBUG|LastPasswordChangeDate now: 2017-01-26 10:50:58
+10:50:58.0 (45095357)|USER_DEBUG|[54]|DEBUG|password date not passed
+10:50:58.0 (49926448)|SOQL_EXECUTE_BEGIN|[66]|Aggregations:0|SELECT Id FROM Portal_Application_Right__c WHERE (Portal_Application__c = :tmpVar1 AND Contact__c = :tmpVar2 AND Right__c = 'Access Granted')
+10:50:58.0 (56686291)|SOQL_EXECUTE_END|[66]|Rows:0
+10:50:58.0 (56991564)|USER_DEBUG|[77]|DEBUG|IS BSP: false
+10:50:58.0 (101861371)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (101975055)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (101984023)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (102205816)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (102813592)|SOQL_EXECUTE_BEGIN|[61]|Aggregations:0|SELECT Id, languagelocalekey, ContactId, ProfileId FROM User WHERE Id = :tmpVar1
+10:50:58.0 (113536933)|SOQL_EXECUTE_END|[61]|Rows:1
+10:50:58.0 (113819261)|USER_DEBUG|[62]|DEBUG|
+
+
+ user:User:{Id=0057E00000289FoQAI, LanguageLocaleKey=en_US, ContactId=0037E00000NYseaQAD, ProfileId=00ew0000001QoBpAAK, CurrencyIsoCode=USD}
+
+
+
+10:50:58.0 (116444772)|SOQL_EXECUTE_BEGIN|[68]|Aggregations:0|SELECT Id, Credit_Card_Payment_Link__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.Top_Parent__c, Account.Industry, Account.Accumulated_Irregularities__c, Account.Category__c, Account.Status__c, AccountId FROM Contact WHERE Id = :tmpVar1
+10:50:58.0 (137185411)|SOQL_EXECUTE_END|[68]|Rows:1
+10:50:58.0 (147614027)|SOQL_EXECUTE_BEGIN|[100]|Aggregations:0|SELECT Id FROM Case WHERE (is_Portal_user_equal_case_contact__c = 'true' AND Visible_on_ISS_Portal__c = TRUE AND CreatedDate > :tmpVar1 AND RecordType.Name != 'IATA Financial Review' AND IsClosed = FALSE)
+10:50:58.0 (168406868)|SOQL_EXECUTE_END|[100]|Rows:0
+10:50:58.0 (168812444)|USER_DEBUG|[106]|DEBUG|MY OPEN: 0
+10:50:58.0 (169770564)|SOQL_EXECUTE_BEGIN|[108]|Aggregations:0|SELECT Id FROM Case WHERE (Status = 'Pending customer' AND is_Portal_user_equal_case_contact__c = 'true' AND Visible_on_ISS_Portal__c = TRUE AND CreatedDate > :tmpVar1 AND RecordType.Name != 'IATA Financial Review')
+10:50:58.0 (186277219)|SOQL_EXECUTE_END|[108]|Rows:0
+10:50:58.0 (186465809)|USER_DEBUG|[114]|DEBUG|INPUT OPEN: 0
+10:50:58.0 (190697996)|SOQL_EXECUTE_BEGIN|[21]|Aggregations:0|SELECT Name, value__c FROM ISSP_CS__c
+10:50:58.0 (194114365)|SOQL_EXECUTE_END|[21]|Rows:33
+10:50:58.0 (200873215)|SOQL_EXECUTE_BEGIN|[138]|Aggregations:0|SELECT Id FROM profile WHERE Name = :tmpVar1
+10:50:58.0 (204538014)|SOQL_EXECUTE_END|[138]|Rows:1
+10:50:58.0 (204934045)|SOQL_EXECUTE_BEGIN|[139]|Aggregations:0|SELECT Id FROM profile WHERE Name = :tmpVar1
+10:50:58.0 (207390027)|SOQL_EXECUTE_END|[139]|Rows:1
+10:50:58.0 (207690628)|SOQL_EXECUTE_BEGIN|[140]|Aggregations:0|SELECT Id FROM RecordType WHERE (Name = 'Standard' AND SobjectType = 'Contact')
+10:50:58.0 (228037155)|SOQL_EXECUTE_END|[140]|Rows:1
+10:50:58.0 (229306987)|USER_DEBUG|[142]|DEBUG|NOT IS PARTNER
+10:50:58.0 (229331884)|USER_DEBUG|[143]|DEBUG|TOP PARENT: 0017E00000Rlv8SQAR
+10:50:58.0 (229904047)|SOQL_EXECUTE_BEGIN|[145]|Aggregations:0|SELECT Id FROM Case WHERE (ContactId = :tmpVar1 AND IsClosed = FALSE AND Visible_on_ISS_Portal__c = TRUE AND CreatedDate > :tmpVar2 AND isSISUser__c = 'true')
+10:50:58.0 (249174489)|SOQL_EXECUTE_END|[145]|Rows:0
+10:50:58.0 (249369487)|USER_DEBUG|[151]|DEBUG|COMPANY OPEN: 0
+10:50:58.0 (251541188)|SOQL_EXECUTE_BEGIN|[154]|Aggregations:0|SELECT Notificatin_color__c, n.Type__c, n.Subject__c, n.Message__c, n.Id, n.Due_date__c, n.CreatedDate, Critical_notification__c, Number_of_views__c FROM Notification__c n WHERE (Contact__c = :tmpVar1 AND Archive__c = FALSE) ORDER BY Critical_notification__c DESC NULLS FIRST, CreatedDate DESC NULLS FIRST
+10:50:58.0 (258641709)|SOQL_EXECUTE_END|[154]|Rows:0
+10:50:58.0 (261050943)|SOQL_EXECUTE_BEGIN|[155]|Aggregations:0|SELECT p.Application_Name__c, p.PortalServiceTranslatedName__c, p.Portal_Application__r.Description__c, p.Portal_Application__r.Service_Description__c, p.Portal_Application__r.Requestable__c, p.Portal_Application__r.New_Window__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Application_icon_del__c, p.Right__c, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c FROM Portal_Application_Right__c p WHERE (p.Contact__c = :tmpVar1 AND p.My_Apps__c = TRUE AND (p.Right__c = 'Access Granted' OR p.Right__c = 'Access Requested') AND p.Portal_Application__r.Hide_on_Homepage__c = FALSE) ORDER BY p.Right__c DESC NULLS FIRST, p.Portal_Application__r.Name ASC NULLS FIRST
+10:50:58.0 (297834030)|SOQL_EXECUTE_END|[155]|Rows:0
+10:50:58.0 (298504442)|SOQL_EXECUTE_BEGIN|[156]|Aggregations:0|SELECT p.Name, p.Description__c, p.Service_Description__c, p.Visible__c, p.Requestable__c, p.Application_icon__c, p.Application_URL__c, New_Window__c FROM Portal_Applications__c p WHERE (p.Visible__c = TRUE AND p.Requestable__c = FALSE)
+10:50:58.0 (347492965)|SOQL_EXECUTE_END|[156]|Rows:0
+10:50:58.0 (348175732)|SOQL_EXECUTE_BEGIN|[157]|Aggregations:0|SELECT p.Application_icon_del__c, p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__r.New_Window__c, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c FROM Portal_Application_Right__c p WHERE (p.Contact__r.AccountId = :tmpVar1 AND p.Right__c = 'Access Requested')
+10:50:58.0 (357593106)|SOQL_EXECUTE_END|[157]|Rows:0
+10:50:58.0 (358549173)|SOQL_EXECUTE_BEGIN|[162]|Aggregations:0|SELECT p.Description__c, p.Service_Description__c, p.Visible__c, p.Requestable__c, p.Application_icon__c, p.Application_URL__c, p.Confirm_Box__c, p.Confirm_Text__c FROM Portal_Applications__c p WHERE (p.Visible__c = TRUE AND p.Requestable__c = TRUE AND p.Hide_on_Homepage__c = FALSE AND id != :tmpVar1)
+10:50:58.0 (374066094)|SOQL_EXECUTE_END|[162]|Rows:0
+10:50:58.0 (374446364)|SOQL_EXECUTE_BEGIN|[48]|Aggregations:0|SELECT Id, Name FROM Profile WHERE Id = :tmpVar1
+10:50:58.0 (377056314)|SOQL_EXECUTE_END|[48]|Rows:1
+10:50:58.0 (377427910)|USER_DEBUG|[304]|DEBUG|SFI Start checkloginSurvey Method
+10:50:58.0 (379353806)|SOQL_EXECUTE_BEGIN|[307]|Aggregations:0|SELECT Name, Survey_Link__c, isActive__c, PopupDelayTime__c FROM ISSPLoginSurvey__c WHERE isActive__c = :tmpVar1
+10:50:58.0 (381950618)|SOQL_EXECUTE_END|[307]|Rows:0
+10:50:58.0 (382072467)|USER_DEBUG|[308]|DEBUG|SFI LoginSurvey_List()
+10:50:58.0 (382182637)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (387655364)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (387754241)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (387762172)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (390605303)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (390744559)|USER_DEBUG|[48]|DEBUG|KER1 START ISSP_CaseList(ISSP_Homepage controller)
+10:50:58.0 (391268812)|SOQL_EXECUTE_BEGIN|[69]|Aggregations:0|SELECT Id, ContactId FROM User WHERE Id = :tmpVar1
+10:50:58.0 (398328383)|SOQL_EXECUTE_END|[69]|Rows:1
+10:50:58.0 (398894021)|SOQL_EXECUTE_BEGIN|[71]|Aggregations:0|SELECT Id FROM Portal_Application_Right__c WHERE (Contact__c = :tmpVar1 AND Right__c = 'Access Granted' AND Portal_Application__r.Name = 'Airline Participation')
+10:50:58.0 (408742145)|SOQL_EXECUTE_END|[71]|Rows:0
+10:50:58.0 (409606250)|SOQL_EXECUTE_BEGIN|[81]|Aggregations:0|SELECT Id, Name FROM Profile WHERE Id = :tmpVar1
+10:50:58.0 (414849820)|SOQL_EXECUTE_END|[81]|Rows:1
+10:50:58.0 (415180260)|USER_DEBUG|[109]|DEBUG|initFilters user id >> 0057E00000289FoQAI
+10:50:58.0 (415876540)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (415886118)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (415933131)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (416109546)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (420032347)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (423050924)|SOQL_EXECUTE_BEGIN|[78]|Aggregations:1|SELECT Id, (SELECT Id, PermissionSetId, AssigneeId FROM Assignments WHERE AssigneeId = :tmpVar1) FROM PermissionSet WHERE Id = :tmpVar2
+10:50:58.0 (431557637)|SOQL_EXECUTE_END|[78]|Rows:1
+10:50:58.0 (435581689)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (437973361)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: ISSP_AP_Cases
+10:50:58.0 (438030842)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (438234440)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: 9_MyPendingCases
+10:50:58.0 (438256733)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (438560318)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: 3_MyRecentCases
+10:50:58.0 (438587163)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (439326638)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: 4B_MyClosedCases
+10:50:58.0 (439349016)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (439825051)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: 2_MyOpenCases
+10:50:58.0 (439846988)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (440175214)|USER_DEBUG|[130]|DEBUG|caseListViewItem.Name: 4_AllClosedCases
+10:50:58.0 (440197293)|USER_DEBUG|[131]|DEBUG|apUser: false
+10:50:58.0 (441105171)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (441433833)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (441463529)|USER_DEBUG|[172]|DEBUG|isLogined:
+10:50:58.0 (466381333)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (466390483)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (466439541)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (466740189)|SOQL_EXECUTE_BEGIN|[151]|Aggregations:0|SELECT Id, ContactId FROM User WHERE Id = :tmpVar1
+10:50:58.0 (470822394)|SOQL_EXECUTE_END|[151]|Rows:1
+10:50:58.0 (471282474)|SOQL_EXECUTE_BEGIN|[152]|Aggregations:0|SELECT Id FROM Portal_Application_Right__c WHERE (Contact__c = :tmpVar1 AND Portal_Application__r.Name LIKE 'Treasury Dashboard%' AND Right__c = 'Access Granted')
+10:50:58.0 (478834827)|SOQL_EXECUTE_END|[152]|Rows:0
+10:50:58.0 (478981112)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (479703434)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (480297387)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (480562767)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (480948981)|SOQL_EXECUTE_BEGIN|[40]|Aggregations:0|SELECT Id, ToU_Accepted__c, UID__c, LastPasswordChangeDate, Email, ContactId FROM User WHERE Id = :tmpVar1
+10:50:58.0 (485029718)|SOQL_EXECUTE_END|[40]|Rows:1
+10:50:58.0 (485183446)|USER_DEBUG|[45]|DEBUG|LastPasswordChangeDate: 2017-01-23 10:32:29
+10:50:58.0 (485239221)|USER_DEBUG|[46]|DEBUG|LastPasswordChangeDate addDays: 2017-04-23 10:32:29
+10:50:58.0 (485270141)|USER_DEBUG|[47]|DEBUG|LastPasswordChangeDate now: 2017-01-26 10:50:59
+10:50:58.0 (485311702)|USER_DEBUG|[54]|DEBUG|password date not passed
+10:50:58.0 (485784745)|SOQL_EXECUTE_BEGIN|[66]|Aggregations:0|SELECT Id FROM Portal_Application_Right__c WHERE (Portal_Application__c = :tmpVar1 AND Contact__c = :tmpVar2 AND Right__c = 'Access Granted')
+10:50:58.0 (489627882)|SOQL_EXECUTE_END|[66]|Rows:0
+10:50:58.0 (489740044)|USER_DEBUG|[77]|DEBUG|IS BSP: false
+10:50:58.0 (490589215)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (490672348)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (490772140)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (490995995)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (491041905)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (491187929)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (491358880)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (491400163)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (496340695)|USER_DEBUG|[211]|DEBUG|sortFullExp: CaseNumber DESC
+10:50:58.0 (496369407)|USER_DEBUG|[212]|DEBUG|selectedList: 3_MyRecentCases
+10:50:58.0 (496410647)|USER_DEBUG|[213]|DEBUG|soqlOrder: CreatedDate DESC
+10:50:58.0 (496906069)|USER_DEBUG|[173]|DEBUG|caseListViewMap >>> {2_MyOpenCases=ISSPCaseListView__c:{LastModifiedDate=2016-03-10 08:44:18, IsDeleted=false, Field_Set_API_Name__c=ISSP_MyOpenCases, Label_API_name__c=ISSP_Homepage_My_open_cases, isAdmin__c=false, CurrencyIsoCode=USD, Profiles_Id__c=00ew0000001QRzB;00ew0000001QRzH;00ew0000001QRzE;00ew0000001QRzC;00ew0000001QRzF;00ew0000001QRzD;00ew0000001QRzI;00ew0000001QoD2;00ew0000001QoBu;00ew0000001QoBp;00ew0000001QoC9;00ew0000001QTw4;00ew0000001QVfv;00ew0000001QRzG, SetupOwnerId=00D7E0000000m99UAA, Name=2_MyOpenCases, SystemModstamp=2016-03-10 08:44:18, CreatedById=005w0000003ZibRAAS, CreatedDate=2015-06-16 09:32:45, Id=a3Iw0000000QXRqEAO, LastModifiedById=005w0000003XkoWAAS, SOQL_Filter__c=where is_Portal_user_equal_case_contact__c = 'true' and RecordType.Name != 'IATA Financial Review' and IsClosed = false and CreatedDate > 2014-01-13T00:00:00Z and Visible_on_ISS_Portal__c = true and isSISUser__c = 'true'}, 3_MyRecentCases=ISSPCaseListView__c:{LastModifiedDate=2016-03-10 08:44:41, IsDeleted=false, Field_Set_API_Name__c=ISSP_MyRecentCases, Label_API_name__c=ISSP_MyRecentCases, isAdmin__c=false, CurrencyIsoCode=USD, Profiles_Id__c=00ew0000001QRzB;00ew0000001QRzH;00ew0000001QRzE;00ew0000001QRzC;00ew0000001QRzF;00ew0000001QRzD;00ew0000001QRzI;00ew0000001QoD2;00ew0000001QoBu;00ew0000001QoBp;00ew0000001QoC9;00ew0000001QRzG, SetupOwnerId=00D7E0000000m99UAA, Name=3_MyRecentCases, SystemModstamp=2016-12-03 14:26:16, CreatedById=005w0000003ZibRAAS, SOQL_Order__c=CreatedDate DESC, CreatedDate=2015-06-16 09:33:07, Id=a3Iw0000000QXSyEAO, LastModifiedById=005w0000003XkoWAAS, SOQL_Filter__c=where is_Portal_user_equal_case_contact__c = 'true' and RecordType.Name != 'IATA Financial Review' and CreatedDate > 2014-01-13T00:00:00Z and Visible_on_ISS_Portal__c = true and isSISUser__c = 'true'}, 4B_MyClosedCases=ISSPCaseListView__c:{LastModifiedDate=2016-03-10 08:45:02, IsDeleted=false, Field_Set_API_Name__c=ISSP_MyClosedCases, Label_API_name__c=ISSP_MyClosedCases, isAdmin__c=false, CurrencyIsoCode=USD, Profiles_Id__c=00ew0000001QRzB;00ew0000001QRzH;00ew0000001QRzE;00ew0000001QRzC;00ew0000001QRzF;00ew0000001QRzD;00ew0000001QRzI;00ew0000001QoD2;00ew0000001QoBu;00ew0000001QoBp;00ew0000001QoC9;00ew0000001QTw4;00ew0000001QVfv;00ew0000001QRzG, SetupOwnerId=00D7E0000000m99UAA, Name=4B_MyClosedCases, SystemModstamp=2016-03-10 08:45:02, CreatedById=005w0000003ZibRAAS, CreatedDate=2015-06-16 09:33:15, Id=a3Iw0000000QXTNEA4, LastModifiedById=005w0000003XkoWAAS, SOQL_Filter__c=where is_Portal_user_equal_case_contact__c = 'true' and RecordType.Name != 'IATA Financial Review' and IsClosed = true and CreatedDate > 2014-01-13T00:00:00Z and Visible_on_ISS_Portal__c = true and isSISUser__c = 'true'}, 9_MyPendingCases=ISSPCaseListView__c:{LastModifiedDate=2016-03-10 08:45:19, IsDeleted=false, Field_Set_API_Name__c=ISSP_MyOpenCases, Label_API_name__c=ISSP_Homepage_My_pending_cases, isAdmin__c=false, CurrencyIsoCode=USD, Profiles_Id__c=00ew0000001QRzB;00ew0000001QRzH;00ew0000001QRzE;00ew0000001QRzC;00ew0000001QRzF;00ew0000001QRzD;00ew0000001QRzI;00ew0000001QoD2;00ew0000001QoBu;00ew0000001QoBp;00ew0000001QoC9;00ew0000001QoBp;00e20000000h0gF;00ew0000001QRzG, SetupOwnerId=00D7E0000000m99UAA, Name=9_MyPendingCases, SystemModstamp=2016-03-10 08:45:19, CreatedById=005w0000003ZibRAAS, CreatedDate=2015-06-16 09:33:05, Id=a3Iw0000000QXStEAO, LastModifiedById=005w0000003XkoWAAS, SOQL_Filter__c=where is_Portal_user_equal_case_contact__c = 'true' and RecordType.Name != 'IATA Financial Review' and IsClosed = false and CreatedDate > 2014-01-13T00:00:00Z and Visible_on_ISS_Portal__c = true and isSISUser__c = 'true' and Status = 'Pending customer'}}
+10:50:58.0 (497082932)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (497125416)|USER_DEBUG|[57]|DEBUG|
+
+
+SQL String: select  Account.Name , Contact.Name   ,CaseNumber,Type_of_case_Portal__c,Subject,Country_concerned_by_the_query__c,CreatedDate,Portal_Case_Status__c from Case  where is_Portal_user_equal_case_contact__c = 'true' and RecordType.Name != 'IATA Financial Review' and CreatedDate > 2014-01-13T00:00:00Z and Visible_on_ISS_Portal__c = true and isSISUser__c = 'true' order by CreatedDate DESC limit 5
+
+
+
+10:50:58.0 (497134730)|SYSTEM_MODE_EXIT|true
+10:50:58.0 (497922976)|SOQL_EXECUTE_BEGIN|[223]|Aggregations:0|select  Account.Name , Contact.Name   ,CaseNumber,Type_of_case_Portal__c,Subject,Country_concerned_by_the_query__c,CreatedDate,Portal_Case_Status__c from Case  
+10:50:58.0 (527728074)|SOQL_EXECUTE_END|[223]|Rows:0
+10:50:58.0 (528130259)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (528417033)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (528470133)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (530605970)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (538605418)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (539049753)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (539211025)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (539527838)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (545494363)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (546353498)|SOQL_EXECUTE_BEGIN|[53]|Aggregations:0|SELECT Id, ContactId FROM User WHERE id = :tmpVar1
+10:50:58.0 (549629069)|SOQL_EXECUTE_END|[53]|Rows:1
+10:50:58.0 (550444732)|SOQL_EXECUTE_BEGIN|[55]|Aggregations:0|SELECT Id, Name, Status__c, User_Portal_Status__c, OwnerId, Account.BillingCountry, Account.sector__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c FROM Contact WHERE Id = :tmpVar1
+10:50:58.0 (559716466)|SOQL_EXECUTE_END|[55]|Rows:1
+10:50:58.0 (559979912)|USER_DEBUG|[60]|DEBUG|KER0  PortalContact Contact:{Id=0037E00000NYseaQAD, Name=Aku Luukka, Status__c=Active, User_Portal_Status__c=Approved User, OwnerId=005w0000003W3iuAAC, AccountId=0017E00000Rlv8SQAR, RecordTypeId=012w0000000QBMhAAO, CurrencyIsoCode=USD}
+10:50:58.0 (560416963)|USER_DEBUG|[90]|DEBUG|SFII  TodayInstanse 2017-01-26
+10:50:58.0 (560573146)|USER_DEBUG|[118]|DEBUG|SFII  soql select id ,Background_image__c ,Background_image_url_link__c ,Background_image_url_link_target__c ,Country__c ,Publication_end_date__c ,Publication_start_date__c ,Sector__c ,Status__c ,User_portal_Status__c ,DE_Zone_text_1__c ,Zone_1_text__c ,Zone_1_text_background_colour__c ,ZH_Zone_1_text__c ,Zone_1_text_colour__c ,FR_Zone_1_text__c ,Zone_1_text_hyperlink__c ,Zone_1_text_hyperlink_target_window__c ,IT_Zone_text_1__c ,JA_Zone_1_text__c ,KO_Zone_1_text__c ,PT_Zone_1_text__c ,Zone_1_text_size__c ,ES_Zone_1_text__c ,Zone_2_text__c ,Zone_2_text_background_colour__c ,ZH_Zone_2_text__c ,Zone_2_text_colour__c ,FR_Zone_2_text__c ,Zone_2_text_hyperlink__c ,Zone_2_text_hyperlink_target_window__c ,IT_Zone_2_text__c ,JA_Zone_2_text__c ,KO_Zone_2_text__c ,PT_Zone_2_text__c ,Zone_2_text_size__c ,ES_Zone_2_text__c ,Zone_3_text__c ,Zone_3_text_background_colour__c ,ZH_Zone_text_3__c ,Zone_3_text_colour__c ,FR_Zone_3_text__c ,Zone_3_text_hyperlink__c ,Zone_3_text_hyperlink_target_window__c ,IT_Zone_3_text__c ,JA_Zone_3_text__c ,KO_Zone_3_text__c ,PT_Zone_3_text__c ,Zone_3_text_size__c ,ES_Zone_3_text__c ,AR_Zone_text_1__c ,ID_Zone_text_1__c ,TH_Zone_text_1__c ,VI_Zone_text_1__c ,AR_Zone_text_2__c ,DE_Zone_text_2__c ,ID_Zone_text_2__c ,TH_Zone_text_2__c ,VI_Zone_text_2__c ,AR_Zone_text_3__c ,DE_Zone_text_3__c ,ID_Zone_text_3__c ,TH_Zone_text_3__c ,VI_Zone_text_3__c From ISSP_Banner__c Where Status__c  = 'Active' AND Publication_start_date__c < 2017-01-26 AND Publication_end_date__c > 2017-01-26 AND User_portal_Status__c includes ('Approved User') AND Sector__c includes ('Cargo Agent') AND Name != 'Ban-001'
+10:50:58.0 (563680193)|SOQL_EXECUTE_BEGIN|[119]|Aggregations:0|select id ,Background_image__c ,Background_image_url_link__c ,Background_image_url_link_target__c ,Country__c ,Publication_end_date__c ,Publication_start_date__c ,Sector__c ,Status__c ,User_portal_Status__c ,DE_Zone_text_1__c ,Zone_1_text__c ,Zone_1_text_background_colour__c ,ZH_Zone_1_text__c ,Zone_1_text_colour__c ,FR_Zone_1_text__c ,Zone_1_text_hyperlink__c ,Zone_1_text_hyperlink_target_window__c ,IT_Zone_text_1__c ,JA_Zone_1_text__c ,KO_Zone_1_text__c ,PT_Zone_1_text__c ,Zone_1_text_size__c ,ES_Zone_1_text__c ,Zone_2_text__c ,Zone_2_text_background_colour__c ,ZH_Zone_2_text__c ,Zone_2_text_colour__c ,FR_Zone_2_text__c ,Zone_2_text_hyperlink__c ,Zone_2_text_hyperlink_target_window__c ,IT_Zone_2_text__c ,JA_Zone_2_text__c ,KO_Zone_2_text__c ,PT_Zone_2_text__c ,Zone_2_text_size__c ,ES_Zone_2_text__c ,Zone_3_text__c ,Zone_3_text_background_colour__c ,ZH_Zone_text_3__c ,Zone_3_text_colour__c ,FR_Zone_3_text__c ,Zone_3_text_hyperlink__c ,Zone_3_text_hyperlink_target_window__c ,IT_Zone_3_text__c ,JA_Zone_3_text__c ,KO_Zone_3_text__c ,PT_Zone_3_text__c ,Zone_3_text_size__c ,ES_Zone_3_text__c ,AR_Zone_text_1__c ,ID_Zone_text_1__c ,TH_Zone_text_1__c ,VI_Zone_text_1__c ,AR_Zone_text_2__c ,DE_Zone_text_2__c ,ID_Zone_text_2__c ,TH_Zone_text_2__c ,VI_Zone_text_2__c ,AR_Zone_text_3__c ,DE_Zone_text_3__c ,ID_Zone_text_3__c ,TH_Zone_text_3__c ,VI_Zone_text_3__c From ISSP_Banner__c Where Status__c  = 'Active' AND Publication_start_date__c < 2017-01-26 AND Publication_end_date__c > 2017-01-26 AND User_portal_Status__c includes ('Approved User') AND Sector__c includes ('Cargo Agent') AND Name != 'Ban-001' order by Publication_start_date__c Desc Limit 8
+10:50:58.0 (579140005)|SOQL_EXECUTE_END|[119]|Rows:1
+10:50:58.0 (579673404)|USER_DEBUG|[121]|DEBUG|SFII  unFilteredBanner_List (ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD})
+10:50:58.0 (579777563)|USER_DEBUG|[122]|DEBUG|SFII  unFilteredBanner_List size 1
+10:50:58.0 (580155074)|USER_DEBUG|[126]|DEBUG|SFII  Banners_List (ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD})
+10:50:58.0 (580397071)|USER_DEBUG|[134]|DEBUG|SFIIcountry  UserPortalCountry Switzerland
+10:50:58.0 (580444070)|USER_DEBUG|[135]|DEBUG|SFIIcountry  UserPortalRegion Europe
+10:50:58.0 (580782142)|USER_DEBUG|[137]|DEBUG|SFIIcountry  ban.Country__c All - CNS
+10:50:58.0 (580851044)|USER_DEBUG|[138]|DEBUG|aaaaa - 0057E00000289FoQAI
+10:50:58.0 (581417574)|SOQL_EXECUTE_BEGIN|[139]|Aggregations:0|SELECT Id, ContactId, AccountId, Contact.Account.CNS_Agency__c FROM User WHERE Id = :tmpVar1
+10:50:58.0 (593094294)|SOQL_EXECUTE_END|[139]|Rows:1
+10:50:58.0 (593620817)|SOQL_EXECUTE_BEGIN|[140]|Aggregations:0|SELECT Id, Contact.Account.CNS_Agency__c FROM User WHERE Id = :tmpVar1
+10:50:58.0 (601262129)|SOQL_EXECUTE_END|[140]|Rows:1
+10:50:58.0 (601550884)|USER_DEBUG|[141]|DEBUG|aaaaa - true
+10:50:58.0 (601701603)|USER_DEBUG|[142]|DEBUG|aaaaa - User:{Id=0057E00000289FoQAI, ContactId=0037E00000NYseaQAD, AccountId=0017E00000Rlv8SQAR, CurrencyIsoCode=USD}
+10:50:58.0 (602740151)|USER_DEBUG|[157]|DEBUG|SFIIcountry tmpBanner_set {ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD}}
+10:50:58.0 (603682018)|USER_DEBUG|[27]|DEBUG|SFII Last  Banners_List (ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD})
+10:50:58.0 (603778783)|USER_DEBUG|[190]|DEBUG|SFII  START setBannerLanguage
+10:50:58.0 (603837028)|USER_DEBUG|[192]|DEBUG|SFII   currentLanguageen_US
+10:50:58.0 (604497309)|USER_DEBUG|[256]|DEBUG|SFII   wrapItemWrapperBanner:[Zone_text_1=hello, Zone_text_2=is it me you're looking for, Zone_text_3=hi there, bannerItem=ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD}]
+10:50:58.0 (604732366)|USER_DEBUG|[34]|DEBUG|SFII Last  wrapperBanItem_List (WrapperBanner:[Zone_text_1=hello, Zone_text_2=is it me you're looking for, Zone_text_3=hi there, bannerItem=ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD}])
+10:50:58.0 (604785381)|USER_DEBUG|[35]|DEBUG|SFII Last  wrapperBanItem_List.size() 1
+10:50:58.0 (604904197)|USER_DEBUG|[38]|DEBUG|SFII  FirstBannerId a4w7E00000057qDQAQ
+10:50:58.0 (605056437)|USER_DEBUG|[40]|DEBUG|SFII 2 Last  wrapperBanItem_List (WrapperBanner:[Zone_text_1=hello, Zone_text_2=is it me you're looking for, Zone_text_3=hi there, bannerItem=ISSP_Banner__c:{Id=a4w7E00000057qDQAQ, Country__c=All - CNS, Publication_end_date__c=2117-01-25 00:00:00, Publication_start_date__c=2017-01-11 00:00:00, Sector__c=Cargo Agent, Status__c=Active, User_portal_Status__c=Approved User;Approved Admin;Pending Approval, Zone_1_text__c=hello, Zone_1_text_background_colour__c=orange, Zone_1_text_colour__c=White, Zone_1_text_hyperlink_target_window__c=_self, Zone_1_text_size__c=medium, Zone_2_text__c=is it me you're looking for, Zone_2_text_colour__c=steelblue, Zone_2_text_size__c=x-large, Zone_3_text__c=hi there, Zone_3_text_size__c=medium, CurrencyIsoCode=USD}])
+10:50:58.0 (605103481)|USER_DEBUG|[41]|DEBUG|SFII 2 Last  wrapperBanItem_List.size() 1
+10:50:58.0 (606230629)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (609810632)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (638045984)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (639494120)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (640206642)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (640321877)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (641125896)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (641415143)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (641526548)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (642899789)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (648698399)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (652739717)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (652750904)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (652820663)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (653436303)|SOQL_EXECUTE_BEGIN|[13]|Aggregations:0|SELECT id, contact.Account.Sector__c, contact.Account.Category__c FROM User WHERE Id = :tmpVar1
+10:50:58.0 (671262096)|SOQL_EXECUTE_END|[13]|Rows:1
+10:50:58.0 (671502259)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (672161741)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (672843758)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (673054380)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (673365170)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (675736553)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (675807161)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (675818317)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (675917851)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (675959755)|SYSTEM_MODE_ENTER|false
+10:50:58.0 (676023745)|SYSTEM_MODE_EXIT|false
+10:50:58.0 (683139848)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (688816441)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (688921838)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (689011659)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (689110094)|SYSTEM_MODE_ENTER|true
+10:50:58.0 (689964063)|VF_SERIALIZE_VIEWSTATE_BEGIN|066w0000000U4K5
+10:50:58.0 (695391290)|VF_SERIALIZE_VIEWSTATE_END
+10:50:58.709 (709789858)|CUMULATIVE_LIMIT_USAGE
+10:50:58.709 (709789858)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 33 out of 100
+  Number of query rows: 51 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 341 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+10:50:58.709 (709789858)|CUMULATIVE_LIMIT_USAGE_END
+
+10:50:58.0 (709837254)|CODE_UNIT_FINISHED|VF: /apex/ISSP_Homepage
+10:50:58.0 (711316301)|EXECUTION_FINISHED

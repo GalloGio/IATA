@@ -1,0 +1,83 @@
+31.0 APEX_CODE,DEBUG;APEX_PROFILING,FINEST;CALLOUT,INFO;DB,INFO;SYSTEM,FINE;VALIDATION,INFO;VISUALFORCE,INFO;WORKFLOW,INFO
+11:36:42.0 (627852)|USER_INFO|[EXTERNAL]|005w0000003Pu27|luukkaa@iata.org.prod.cnsaku|Central European Time|GMT+01:00
+11:36:42.0 (663893)|EXECUTION_STARTED
+11:36:42.0 (668393)|CODE_UNIT_STARTED|[EXTERNAL]|066w0000001ZkRp|VF: /apex/ISSP_Contact_User
+11:36:42.0 (7426562)|SYSTEM_MODE_ENTER|true
+11:36:42.0 (8299756)|SYSTEM_MODE_ENTER|false
+11:36:42.0 (8309015)|SYSTEM_MODE_EXIT|false
+11:36:42.0 (8388975)|SYSTEM_MODE_ENTER|false
+11:36:42.0 (8663656)|SYSTEM_METHOD_ENTRY|[6]|ISSP_Contact_User.__sfdc_thisUser(User)
+11:36:42.0 (8699253)|SYSTEM_METHOD_EXIT|[6]|ISSP_Contact_User.__sfdc_thisUser(User)
+11:36:42.0 (8747636)|SYSTEM_METHOD_ENTRY|[8]|ApexPages.StandardController.getId()
+11:36:42.0 (8790673)|SYSTEM_METHOD_EXIT|[8]|ApexPages.StandardController.getId()
+11:36:42.0 (11550178)|SOQL_EXECUTE_BEGIN|[7]|Aggregations:0|SELECT Id, Portal_User_Frozen_Checkbox__c FROM User WHERE ContactId = :tmpVar1
+11:36:42.0 (16707639)|SOQL_EXECUTE_END|[7]|Rows:1
+11:36:42.0 (16907063)|SYSTEM_METHOD_ENTRY|[9]|List<User>.isEmpty()
+11:36:42.0 (16947871)|SYSTEM_METHOD_EXIT|[9]|List<User>.isEmpty()
+11:36:42.0 (16998542)|SYSTEM_METHOD_ENTRY|[10]|ISSP_Contact_User.__sfdc_thisUser(User)
+11:36:42.0 (17017670)|SYSTEM_METHOD_EXIT|[10]|ISSP_Contact_User.__sfdc_thisUser(User)
+11:36:42.0 (17027080)|SYSTEM_MODE_EXIT|false
+11:36:42.0 (29007691)|SYSTEM_MODE_ENTER|true
+11:36:42.36 (36084810)|CUMULATIVE_LIMIT_USAGE
+11:36:42.36 (36084810)|LIMIT_USAGE_FOR_NS|(default)|
+  Number of SOQL queries: 1 out of 100
+  Number of query rows: 1 out of 50000
+  Number of SOSL queries: 0 out of 20
+  Number of DML statements: 0 out of 150
+  Number of DML rows: 0 out of 10000
+  Maximum CPU time: 0 out of 10000
+  Maximum heap size: 0 out of 6000000
+  Number of callouts: 0 out of 100
+  Number of Email Invocations: 0 out of 10
+  Number of future calls: 0 out of 50
+  Number of queueable jobs added to the queue: 0 out of 50
+  Number of Mobile Apex push calls: 0 out of 10
+
+11:36:42.36 (36084810)|TOTAL_EMAIL_RECIPIENTS_QUEUED|0
+11:36:42.36 (36084810)|STATIC_VARIABLE_LIST|
+  char[]:DigitTens:0
+  long:serialVersionUID:0
+  long:serialVersionUID:0
+  String:_sfdcAdditionalCodeLocations:0
+  double:MAX_VALUE:0
+  Boolean:FALSE:0
+  long:serialVersionUID:0
+  double:MIN_VALUE:0
+  int:SIZE:0
+  double:NEGATIVE_INFINITY:0
+  int:MAX_VALUE:0
+  String:__sfdcProperties:0
+  char[]:digits:0
+  double:NaN:0
+  Boolean:TRUE:0
+  int:MIN_VALUE:0
+  char[]:DigitOnes:0
+  int:BYTES:0
+  int:MIN_EXPONENT:0
+  int[]:sizeTable:0
+  int:MAX_EXPONENT:0
+  int:SIZE:0
+  double:POSITIVE_INFINITY:0
+  double:MIN_NORMAL:0
+  String:_sfdcAdditionalCodeLocations:0
+  int:BYTES:0
+
+11:36:42.36 (36084810)|CUMULATIVE_LIMIT_USAGE_END
+
+11:36:42.0 (36330049)|CODE_UNIT_FINISHED|VF: /apex/ISSP_Contact_User
+11:36:42.0 (37510384)|EXECUTION_FINISHED
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING_BEGIN
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING|SOQL operations|
+Class.ISSP_Contact_User.<init>: line 7, column 1: [SELECT Id, Portal_User_Frozen_Checkbox__c FROM User
+								WHERE ContactId = :ctrl.getId()]: executed 1 time in 8 ms
+
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING|No profiling information for SOSL operations
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING|No profiling information for DML operations
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING|method invocations|
+External entry point: public void <init>(ApexPages.StandardController): executed 1 time in 9 ms
+Class.ISSP_Contact_User.<init>: line 6, column 1: public void __sfdc_thisUser(User): executed 1 time in 0 ms
+Class.ISSP_Contact_User.<init>: line 8, column 1: global String getId(): executed 1 time in 0 ms
+Class.ISSP_Contact_User.<init>: line 9, column 1: global public Boolean isEmpty(): executed 1 time in 0 ms
+Class.ISSP_Contact_User.<init>: line 10, column 1: public void __sfdc_thisUser(User): executed 1 time in 0 ms
+
+11:36:42.39 (39773248)|CUMULATIVE_PROFILING_END
