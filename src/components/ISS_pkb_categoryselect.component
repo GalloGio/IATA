@@ -86,10 +86,13 @@
     $(document).ready(function(){
         var isCNS = {!isCNS};
         var excludeTopics = JSON.parse('{!lsExcludeTopics}');
-        $('a.jstree-anchor').each(function(index, value) {
-            // console.log($(this).text());
-            if(isCNS && excludeTopics.indexOf($(this).text()) !== -1) {
-                $(this).parents('li').hide();
+        $('li.jstree-node').each(function(index, value) {
+            // the apiname is hidden in the id: FAQ:<apiname>##<label>
+            // so we need to parse it
+            var apiname = $(this).attr('id').split(':')[1].split('##')[0];
+            // console.log(apiname);
+            if(isCNS && excludeTopics.indexOf(apiname) !== -1) {
+                $(this).hide();
             }
         });
     });
