@@ -585,7 +585,7 @@
                             
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
-                                    <label class="lbl" for="businessinputwebsite">Web site</label>
+                                    <label class="lbl" for="businessinputwebsite">[{!$Label.Web_Site}]</label>
                                 </div>
                                 <div class="col-md-7 emailBR">
                                     <apex:inputHidden id="businesswebsite" value="{!branchOffice.WebSite}" />

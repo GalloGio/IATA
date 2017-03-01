@@ -20740,6 +20740,13 @@ title,Title,Name</value>
         <value>Web</value>
     </labels>
     <labels>
+        <fullName>Web_Site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Web Site</shortDescription>
+        <value>Web Site</value>
+    </labels>
+    <labels>
         <fullName>Welcome_Message</fullName>
         <categories>eCommerce Content</categories>
         <language>en_US</language>
