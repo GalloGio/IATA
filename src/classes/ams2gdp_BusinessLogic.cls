@@ -1068,6 +1068,7 @@ public class ams2gdp_BusinessLogic
 			else if(agencies.GR_Code__c=='SS') gdpAgencies.Sales_Sea__c=ref1.Id;
 			else if(agencies.GR_Code__c=='AT') gdpAgencies.Main_Activity__c=ref1.Id;
 			else if(agencies.GR_Code__c=='SH') gdpAgencies.Sales_Accomodation__c=ref1.Id;
+			else if(agencies.GR_Code__c=='TR') gdpAgencies.Sales_Tour__c=ref1.Id;
 
 			gdpRecordByAccount.put(agencies.Account__c, gdpAgencies);
 
