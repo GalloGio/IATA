@@ -1606,7 +1606,7 @@ public without sharing class vfISSP_FAQ2Case
                     //Check if the topic has matched Custom setting record
                     if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
                     {
-                        if ((per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) && !per.Sector_Permission__c.startsWith('CNS'))||
+                        if ((per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS'))||
                             per.Sector_Permission__c.contains('All') ||
                             (isCNS && per.Sector_Permission__c.startsWith('CNS')))
                         {
