@@ -102,7 +102,7 @@ public without sharing class pkb_Controller {
             {
                 if (per.Sector_Permission__c.startsWith('CNS'))
                 {
-                    lsExcludeTopics = per.Topic__c.replace('_',' ').split(',');
+                    lsExcludeTopics = per.Topic__c.split(',');
                 }
             }
         }
