@@ -64,7 +64,8 @@ public class ISSP_BuyCertificate_Test {
 			cs.Field_Set_API_Name__c = 'ISSP_View_Certificate';
 			insert cs;
 			cttr.initialization();
-			//cttr.getCases();
+			cttr.getCases();
+			cttr.getAccounts();
 			//cttr.refresh();
         
 			cttr.setSortDirection('DESC');

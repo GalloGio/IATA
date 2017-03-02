@@ -44,6 +44,14 @@
                 <behavior>Readonly</behavior>
                 <field>CNS_Agency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -51,7 +59,7 @@
                 <field>Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
@@ -146,7 +154,7 @@
                 <field>Fax</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>In_a_Airport__c</field>
             </layoutItems>
         </layoutColumns>
@@ -205,6 +213,10 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Reason__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Accreditation_date__c</field>
             </layoutItems>
@@ -217,7 +229,7 @@
                 <field>License_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>GDS__c</field>
             </layoutItems>
             <layoutItems>
@@ -337,6 +349,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Comments_Reason_for_creation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Source_System__c</field>
             </layoutItems>
         </layoutColumns>
@@ -430,8 +446,9 @@
         <fields>Percentage__c</fields>
         <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -457,15 +474,16 @@
         <relatedList>Case.Account_Concerned__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
+        <fields>SIDRA_Case__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>Source__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>

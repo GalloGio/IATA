@@ -14,20 +14,37 @@ private class AMS_EBulletinReport_Test {
 		/**
 		 1. Iso Countries
 		*/
-		List<IATA_ISO_Country__c> isoCountriesSet = new List<IATA_ISO_Country__c>();
+		List<IATA_ISO_Country__c> isoCountriesList = new List<IATA_ISO_Country__c>();
 
 
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
-        isoCountriesSet.add(italy);
+        isoCountriesList.add(italy);
         
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='PT', Region__c='Europe', ISS_Office_Location__c='Portugal');
-        isoCountriesSet.add(portugal);
+        isoCountriesList.add(portugal);
         
         IATA_ISO_Country__c us = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US', Region__c='Americas', ISS_Office_Location__c='United States');
-        isoCountriesSet.add(us);
+        isoCountriesList.add(us);
 
-        insert isoCountriesSet;
+        insert isoCountriesList;
+
+		/**
+		 1. Iso State
+		*/
+		List<IATA_ISO_State__c> isoStatesList = new List<IATA_ISO_State__c>();
+
+
+        IATA_ISO_State__c alabama = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(2).Id ,Name='Alabama', ISO_Code__c='	US-AL');
+        isoStatesList.add(alabama);
+        
+
+        IATA_ISO_State__c alasca = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(2).Id ,Name='Alaska', ISO_Code__c='US-AK');
+        isoStatesList.add(alasca);
+        
+
+        insert isoStatesList;
+
 		
 		/**
 		 2. Create Accounts
@@ -90,6 +107,8 @@ private class AMS_EBulletinReport_Test {
 		 
 		AMS_OSCAR_JSON.ChangeCode changeCode1 = new AMS_OSCAR_JSON.ChangeCode();
 		AMS_OSCAR_JSON.ChangeCode changeCode2 = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_OSCAR_JSON.ChangeCode changeCode3 = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_OSCAR_JSON.ChangeCode changeCode4 = new AMS_OSCAR_JSON.ChangeCode();
 
 		changeCode1.name = 'CTA';
 		changeCode1.reasonCode = 'Change data';
@@ -97,27 +116,54 @@ private class AMS_EBulletinReport_Test {
 		changeCode1.reasonDesc  = 'Accredited-Meets Criteria.';
 		changeCode1.status  = null;
 
+		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Account','TradeName__c','new Trade Name' ,'Old Trade Name' );
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
+
 		changeCode2.name = 'CAD';
 		changeCode2.reasonCode = 'Change data';
 		changeCode2.memoText = 'Minor Changes';//createMemoText(accountChanges);
 		changeCode2.reasonDesc  = 'Accredited-Meets Criteria.';
 		changeCode2.status  = null;
 
-		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
-		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name','new Value Name Case','old Value Name Case' );
 
-		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name2','new Value Name 2' ,'old Value Name 2' );
-		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name2','new Value Name Case 2','old Value Name Case 2' );
+		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Account','Email__c','aa@aa.aa' ,'bb@bb.bb' );
 
-		List <AMS_ChangeCodesHelper.ObjectChange> objChangeList = new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2};
-
-		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
 		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct2 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange3,objChange4});
 
 
-		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
-		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null}, 
-		                                          new List<Account> {acc1,acc2}, 
+		changeCode3.name = 'CNL';
+		changeCode3.reasonCode = 'Change in Progress';
+		changeCode3.memoText = 'Change of Shareholding, Name and Location in process';//createMemoText(accountChanges);
+		changeCode3.reasonDesc  = 'Change of Shareholding, Name and Location in process';
+		changeCode3.status  = null;
+
+
+
+		AMS_ChangeCodesHelper.ObjectChange objChange5 = new AMS_ChangeCodesHelper.ObjectChange('Account','Iso_State__c','Alabama','Alaska',isoStatesList.get(0).Id,isoStatesList.get(1).Id );
+		AMS_ChangeCodesHelper.ObjectChange objChange6 = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners','Name,Percentage\nAdrien Silva,60\nWilliam Carvalho,40','Name,Percentage\nRui Patricio,100' );
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct3 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange5,objChange6});
+
+
+
+		changeCode4.name = 'CHL';
+		changeCode4.reasonCode = 'Change in Progress';
+		changeCode4.memoText = 'Change of Location I process';//createMemoText(accountChanges);
+		changeCode4.reasonDesc  = 'Change of Location I process';
+		changeCode4.status  = null;
+
+		AMS_ChangeCodesHelper.ObjectChange objChange7 = new AMS_ChangeCodesHelper.ObjectChange('Account','IATA_ISO_Country__c','Portugal','Italy',isoCountriesList.get(1).Id,isoCountriesList.get(0).Id);
+
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct4 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange7});
+
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2,objChangeListStruct3,objChangeListStruct4},
+		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2,changeCode3,changeCode4},new List<AMS_OSCAR__c>{null,null,null,null}, 
+		                                          new List<Account> {acc1,acc2,acc1,acc2}, 
 		                                          false);
 		//NEW APPROVALS
 
@@ -176,9 +222,9 @@ private class AMS_EBulletinReport_Test {
 
 		AMS_eBulletin_Profile__c dailyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
-                    	 Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
-                    	 Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
-                    	 RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c
+                        Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
+                        Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
+                        RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c
                     	 FROM AMS_eBulletin_Profile__c
                      	 WHERE User__c = :Userinfo.getuserid() and RecordType.Name = 'Daily'
                     	LIMIT 1
@@ -202,9 +248,9 @@ private class AMS_EBulletinReport_Test {
 		
 		AMS_eBulletin_Profile__c dailyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
-                    	 Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
-                    	 Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
-                    	 RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c
+                        Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
+                        Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
+                        RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c
                     	 FROM AMS_eBulletin_Profile__c
                      	 WHERE User__c = :Userinfo.getuserid() and  RecordType.Name = 'Daily'
                     	LIMIT 1
@@ -229,9 +275,9 @@ private class AMS_EBulletinReport_Test {
 
         AMS_eBulletin_Profile__c weeklyProfile = 
 						[ SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
-                    	 Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
-                    	 Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
-                    	 RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c
+                        Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
+                        Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
+                        RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c
                     	 FROM AMS_eBulletin_Profile__c
                      	 WHERE User__c = :Userinfo.getuserid() and RecordType.Name = 'Weekly'
                     	LIMIT 1
@@ -382,7 +428,7 @@ private class AMS_EBulletinReport_Test {
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLF',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES FINALISED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLI',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES IN PROCESS'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLM',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES IN PROCESS'));
-		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLO',Daily__c=FALSE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
+		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLO',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CLR',Daily__c=FALSE,Weekly__c=FALSE,Section__c=''));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CNF',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES FINALISED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CNL',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES IN PROCESS'));
@@ -398,6 +444,7 @@ private class AMS_EBulletinReport_Test {
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CTA',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES FINALISED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CWD',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGE WITHDRAWN'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DEF',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
+		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DFE ',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DIS',Daily__c=FALSE,Weekly__c=TRUE,Section__c='NEW APPLICATIONS DISAPPROVED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DWD',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='FIN',Daily__c=FALSE,Weekly__c=TRUE,Section__c='NEW APPROVALS'));
@@ -450,9 +497,8 @@ private class AMS_EBulletinReport_Test {
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='STR',Daily__c=TRUE,Weekly__c=TRUE,Section__c='REVIEWS/NOTICES OF TERM.'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='TER',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='TRW',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
-		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRR',Daily__c=FALSE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
-		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRW',Daily__c=FALSE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
-
+		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRR',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
+		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRW',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
 
 		insert eBulletinExtraction;
 
@@ -464,78 +510,81 @@ private class AMS_EBulletinReport_Test {
 		List<AMSEBulletinSettings__c> eBulletinSettings = new List <AMSEBulletinSettings__c>();
 
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='0-Section',Label__c='Section',API_Name__c='Section',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=0,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='1-Change Code',Label__c='Change Code',API_Name__c='Change_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=1,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='2-Change Code',Label__c='Change Code',API_Name__c='Reason_Description__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=1,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='3-Agency Code',Label__c='Agency Code',API_Name__c='Account__r.IATACode__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=2,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='4-Agency Name',Label__c='Agency Name',API_Name__c='Account__r.Name',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=3,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='5-Location Type',Label__c='Location Type',API_Name__c='Account__r.Location_Type__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=4,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='6-Hierarchy',Label__c='Hierarchy',API_Name__c='Account__r.Parent.IATACode__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=5,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='7-Trade Name',Label__c='Trade Name',API_Name__c='Account__r.TradeName__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=6,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='8-City',Label__c='City',API_Name__c='Account__r.BillingCity',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=7,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='9-Country or State',Label__c='Country or State',API_Name__c='Account__r.IATA_ISO_Billing_State__r.name,Account__r.IATA_ISO_Billing_State__r.ISO_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=8,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='10-Country or State',Label__c='Country or State',API_Name__c='Account__r.IATA_ISO_Country__r.name,Account__r.IATA_ISO_Country__r.ISO_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=8,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='11-Street',Label__c='Street',API_Name__c='Account__r.BillingStreet',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=9,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='12-Phone Number',Label__c='Phone Number',API_Name__c='Account__r.Phone',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=10,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='13-Email',Label__c='Email',API_Name__c='Account__r.Email__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=11,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='14-VAT Number 1',Label__c='VAT Number 1',API_Name__c='Account__r.VAT_Number__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=12,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='15-VAT Number 2',Label__c='VAT Number 2',API_Name__c='Account__r.VAT_Number_2__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=13,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='16-Status',Label__c='Status',API_Name__c='Account__r.Status__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=14,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='17-Effective Date',Label__c='Effective Date',API_Name__c='OSCAR__r.Change_effective_as_of__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=15,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='18-User Date',Label__c='User Date',API_Name__c='CreatedDate_User__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=16,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='19-Application Date',Label__c='Application Date',API_Name__c='CreatedDate',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=17,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='20-Reason',Label__c='Reason',API_Name__c='Reason_Description__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=18,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='21-Remarks',Label__c='Remarks',API_Name__c='Bulletin_Information__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=19,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='22-Owners',Label__c='Owners',API_Name__c='Owners',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=20,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='23-Owner1',Label__c='Owner1',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=21,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='24-Owner1 %',Label__c='Owner1 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=22,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='25-Owner2',Label__c='Owner2',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=23,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='26-Owner2 %',Label__c='Owner2 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=24,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='27-Owner3',Label__c='Owner3',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=25,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='28-Owner3 %',Label__c='Owner3 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=26,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='29-Owner4',Label__c='Owner4',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=27,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='30-Owner4 %',Label__c='Owner4 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=28,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='31-Owner5',Label__c='Owner5',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=29,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='32-Owner5 %',Label__c='Owner5 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=30,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='33-Owner6',Label__c='Owner6',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=31,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='34-Owner6 %',Label__c='Owner6 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=32,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='35-Owner7',Label__c='Owner7',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=33,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='36-Owner7 %',Label__c='Owner7 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=34,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='37-Owner8',Label__c='Owner8',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=35,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='38-Owner8 %',Label__c='Owner8 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=36,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='39-New Agency Name',Label__c='New Agency Name',API_Name__c='Account__r.Name',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=37,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='40-New Location Type',Label__c='New Location Type',API_Name__c='Account__r.Location_Type__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=38,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='41-New Hierarchy',Label__c='New Hierarchy',API_Name__c='Account__r.Parent.IATACode__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=39,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='42-New Trade Name',Label__c='New Trade Name',API_Name__c='Account__r.TradeName__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=40,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='43-New City',Label__c='New City',API_Name__c='Account__r.BillingCity',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=41,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='44-New Country or State',Label__c='New Country or State',API_Name__c='Account__r.IATA_ISO_Billing_State__r.name,Account__r.IATA_ISO_Billing_State__r.ISO_Code__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=42,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='45-New Country or State',Label__c='New Country or State',API_Name__c='Account__r.IATA_ISO_Country__r.name,Account__r.IATA_ISO_Country__r.ISO_Code__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=42,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='46-New Street',Label__c='New Street',API_Name__c='Account__r.BillingStreet',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=43,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='47-New Phone Number',Label__c='New Phone Number',API_Name__c='Account__r.Phone',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=44,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='48-New Email',Label__c='New Email',API_Name__c='Account__r.Email__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=45,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='49-New VAT Number 1',Label__c='New VAT Number 1',API_Name__c='Account__r.VAT_Number__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=46,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='50-New VAT Number 2',Label__c='New VAT Number 2',API_Name__c='Account__r.VAT_Number_2__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=47,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='51-New Owners',Label__c='New Owners',API_Name__c='Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=48,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='52-New Owner1',Label__c='New Owner1',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=49,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='53-New Owner1 %',Label__c='New Owner1 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=50,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='54-New Owner2',Label__c='New Owner2',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=51,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='55-New Owner2 %',Label__c='New Owner2 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=52,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='56-New Owner3',Label__c='New Owner3',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=53,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='57-New Owner3 %',Label__c='New Owner3 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=54,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='58-New Owner4',Label__c='New Owner4',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=55,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='59-New Owner4 %',Label__c='New Owner4 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=56,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='60-New Owner5',Label__c='New Owner5',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=57,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='61-New Owner5 %',Label__c='New Owner5 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=58,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='62-New Owner6',Label__c='New Owner6',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=59,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='63-New Owner6 %',Label__c='New Owner6 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=60,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='64-New Owner7',Label__c='New Owner7',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=61,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='65-New Owner7 %',Label__c='New Owner7 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=62,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='66-New Owner8',Label__c='New Owner8',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=63,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='67-New Owner8 %',Label__c='New Owner8 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=64,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='68-IRR: Reason',Label__c='IRR: Reason',API_Name__c='Reason_Description__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=65,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='69-IRR: Period',Label__c='IRR: Period',API_Name__c='Start_Date__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=66,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='70-IRR: Period',Label__c='IRR: Period',API_Name__c='End_Date__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=66,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='71-IRR: Point',Label__c='IRR: Point',API_Name__c='Irregularities_Points__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=67,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='72-IRR: Accumulated Irregularities',Label__c='IRR: Accumulated Irregularities',API_Name__c='Account__r.Accumulated_Irregularities__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=68,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='1-Change Code',Label__c='Change Code',API_Name__c='Change_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=1,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='2-Agency Code',Label__c='Agency Code',API_Name__c='Account__r.IATACode__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=2,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='3-Agency Name',Label__c='Agency Name',API_Name__c='Account__r.Name',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=3,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='4-Location Type',Label__c='Location Type',API_Name__c='Account__r.Location_Type__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=4,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='5-Legal Status',Label__c='Legal Status',API_Name__c='Account__r.Company_Type__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=5,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='6-Program',Label__c='Program',API_Name__c='Account__r.Location_Class__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=6,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='7-Hierarchy',Label__c='Hierarchy HO',API_Name__c='Account__r.Parent.IATACode__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=7,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='8-Trade Name',Label__c='Trade Name',API_Name__c='Account__r.TradeName__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=8,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='9-City',Label__c='City',API_Name__c='Account__r.BillingCity',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=9,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='10-Country or State',Label__c='Country or State',API_Name__c='Account__r.Iso_State__r.name,Account__r.Iso_State__r.ISO_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=10,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='11-Country or State',Label__c='Country or State',API_Name__c='Account__r.IATA_ISO_Country__r.name,Account__r.IATA_ISO_Country__r.ISO_Code__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=10,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='12-Street',Label__c='Street',API_Name__c='Account__r.BillingStreet',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=11,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='13-Phone Number',Label__c='Phone Number',API_Name__c='Account__r.Phone',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=12,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='14-Email',Label__c='Email',API_Name__c='Account__r.Email__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=13,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='15-VAT Number 1',Label__c='VAT Number 1',API_Name__c='Account__r.VAT_Number__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=14,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='16-VAT Number 2',Label__c='VAT Number 2',API_Name__c='Account__r.VAT_Number_2__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=15,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='17-Status',Label__c='Status',API_Name__c='AccountNewStatus__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=16,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='18-Effective Date',Label__c='User Date',API_Name__c='Created_Date_To_Show__c ',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=17,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='19-User Date',Label__c='Effective Date',API_Name__c='CreatedDate_User__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=18,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='20-Application Date',Label__c='Application Date',API_Name__c='Created_Date_To_Show__c ',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=19,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='21-Reason',Label__c='Reason',API_Name__c='Reason_Description__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=20,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='22-Remarks',Label__c='Remarks',API_Name__c='Bulletin_Information__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=21,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='23-Owners',Label__c='Owners',API_Name__c='Owners',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=22,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='24-Owner1',Label__c='Owner1',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=23,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='25-Owner1 %',Label__c='Owner1 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=24,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='26-Owner2',Label__c='Owner2',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=25,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='27-Owner2 %',Label__c='Owner2 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=26,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='28-Owner3',Label__c='Owner3',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=27,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='29-Owner3 %',Label__c='Owner3 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=28,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='30-Owner4',Label__c='Owner4',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=29,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='31-Owner4 %',Label__c='Owner4 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=30,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='32-Owner5',Label__c='Owner5',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=31,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='33-Owner5 %',Label__c='Owner5 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=32,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='34-Owner6',Label__c='Owner6',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=33,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='35-Owner6 %',Label__c='Owner6 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=34,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='36-Owner7',Label__c='Owner7',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=35,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='37-Owner7 %',Label__c='Owner7 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=36,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='38-Owner8',Label__c='Owner8',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=37,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='39-Owner8 %',Label__c='Owner8 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=38,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='40-Owners Total %',Label__c='Owners Total %',API_Name__c='OwnersTotal',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=39,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='41-New Agency Name',Label__c='New Agency Name',API_Name__c='Account__r.Name',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=40,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='42-New Location Type',Label__c='New Location Type',API_Name__c='Account__r.Location_Type__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=41,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='43-New Hierarchy',Label__c='New Hierarchy',API_Name__c='Account__r.Parent.IATACode__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=42,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='44-New Trade Name',Label__c='New Trade Name',API_Name__c='Account__r.TradeName__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=43,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='45-New City',Label__c='New City',API_Name__c='Account__r.BillingCity',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=44,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='46-New Country or State',Label__c='New Country or State',API_Name__c='Account__r.IATA_ISO_Billing_State__r.name,Account__r.IATA_ISO_Billing_State__r.ISO_Code__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=45,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='47-New Country or State',Label__c='New Country or State',API_Name__c='Account__r.IATA_ISO_Country__r.name,Account__r.IATA_ISO_Country__r.ISO_Code__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=45,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='48-New Street',Label__c='New Street',API_Name__c='Account__r.BillingStreet',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=46,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='49-New Phone Number',Label__c='New Phone Number',API_Name__c='Account__r.Phone',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=47,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='50-New Email',Label__c='New Email',API_Name__c='Account__r.Email__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=48,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='51-New VAT Number 1',Label__c='New VAT Number 1',API_Name__c='Account__r.VAT_Number__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=49,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='52-New VAT Number 2',Label__c='New VAT Number 2',API_Name__c='Account__r.VAT_Number_2__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=50,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='53-New Owners',Label__c='New Owners',API_Name__c='Owners',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=51,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='54-New Owner1',Label__c='New Owner1',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=52,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='55-New Owner1 %',Label__c='New Owner1 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=53,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='56-New Owner2',Label__c='New Owner2',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=54,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='57-New Owner2 %',Label__c='New Owner2 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=55,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='58-New Owner3',Label__c='New Owner3',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=56,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='59-New Owner3 %',Label__c='New Owner3 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=57,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='60-New Owner4',Label__c='New Owner4',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=58,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='61-New Owner4 %',Label__c='New Owner4 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=59,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='62-New Owner5',Label__c='New Owner5',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=60,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='63-New Owner5 %',Label__c='New Owner5 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=61,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='64-New Owner6',Label__c='New Owner6',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=62,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='65-New Owner6 %',Label__c='New Owner6 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=63,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='66-New Owner7',Label__c='New Owner7',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=64,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='67-New Owner7 %',Label__c='New Owner7 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=65,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='68-New Owner8',Label__c='New Owner8',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=66,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='69-New Owner8 %',Label__c='New Owner8 %',API_Name__c='Account__r.Owners',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=67,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='70-New Owners Total %',Label__c='New Owners Total %',API_Name__c='OwnersTotal',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=68,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=TRUE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='71-IRR: Reason',Label__c='IRR: Reason',API_Name__c='Reason_Description__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=69,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='72-IRR: Period',Label__c='IRR: Period',API_Name__c='Start_Date__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=70,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='73-IRR: Period',Label__c='IRR: Period',API_Name__c='End_Date__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=70,do_not_show__c=TRUE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='74-IRR: Point',Label__c='IRR: Point',API_Name__c='Irregularities_Points__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=71,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='75-IRR: Accumulated Irregularities',Label__c='IRR: Accumulated Irregularities',API_Name__c='Account__r.Accumulated_Irregularities__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=72,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=TRUE));
 
 		insert eBulletinSettings;
 

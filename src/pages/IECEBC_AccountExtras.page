@@ -40,6 +40,14 @@
 									<section class="columns main-container campaign-cost">
 										<apex:form id="addOnPurchasedForm">
 											<h2 class="heading-2 strong">Current add ons</h2>
+                                            <apex:outputText rendered="{!isOneAddonLeftToBeSold}">
+                                                <h2 class="heading-2">None subscribed</h2>
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!isAllAddonSold}">
+                                                <h2 class="heading-2 strong">All add ons purchased</h2>
+                                            </apex:outputText>
+                                            
 											<ul class="list addon-list">
 												<apex:repeat id="addOnPurchasedOptionRepeat" value="{!productRatePlanWrapperAddonCurrentList}" var="prpPurchased">
 													<li class="list-item">
@@ -68,9 +76,10 @@
 											<apex:actionFunction action="{!selectRatePlanAddon}" name="updateAddonSelection" rerender="paymentConfirmationForm,paymentConfirmationOutputPanel">
 												<apex:param name="recIndex" assignTo="{!selectedRatePlanIndex}" value=""/>
 											</apex:actionFunction>
-											
+											<!--
 											<h2 class="heading-2 strong">Get add ons</h2>
 											<p class="description light">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+											-->
 											<ul class="list addon-list js-checkbox-list">
 												<apex:repeat id="addOnSelectionOptionRepeat" value="{!productRatePlanWrapperAddonOptionList}" var="prpOption">
 													<li class="list-item">

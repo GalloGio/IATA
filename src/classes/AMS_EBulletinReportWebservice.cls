@@ -19,7 +19,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	webservice static ID generateEBulletinReport( AMS_eBulletin_Profile__c eBulletinProfile,Datetime startDate, Datetime endDate, String period){
 
 
-		if(period.equalsIgnoreCase('Last') && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
+		if(period == 'last' && eBulletinProfile.Last_Run__c != null && eBulletinProfile.Last_Run__c > startDate)
 			startDate = eBulletinProfile.Last_Run__c;
 
 
@@ -37,6 +37,8 @@ global without sharing class AMS_EBulletinReportWebservice {
 		//{
 		String csv = header + '\n' + body;
 
+		//if(!str.isAsciiPrintable) csv = csv.replaceall('[^\\x00-\\x7F]', '');
+
 		/*ContentVersion file = new ContentVersion(
 			  title = 'testChangeCodes_'+date.today()+'.csv',
 			  versionData = Blob.valueOf( csv ),
@@ -47,12 +49,22 @@ global without sharing class AMS_EBulletinReportWebservice {
 		System.debug('CSV File Generated: ' + file);
 		*/
 
+		String csvPrintable = '';
+		if(!csv.isAsciiPrintable())
+		{	
+			AMS_Utils.Utility_RowIterator rIt = New AMS_Utils.Utility_RowIterator(csv,'\n'); //Replace \n with whatever delineates your row
 
-
+			String csvFirstRow;
+			while (rIt.hasNext()){
+			
+				csvFirstRow = rIt.next();
+				csvPrintable = csvPrintable + csvFirstRow.replaceall('[^\\x00-\\x7F]', '') + '\n';
+			} 
+		}
 
 		Attachment attachment = new Attachment();
-		//attachment.ContentType= 'text/csv;charset=ANSI';
-		attachment.Body = Blob.valueOf( csv );
+		attachment.ContentType = 'text/csv; charset=UTF-8';
+		attachment.Body = Blob.valueOf( csvPrintable );
 		
 
 		String csvName = 'EBulletin ' + recordTypeName + ' Report ';
@@ -69,7 +81,7 @@ global without sharing class AMS_EBulletinReportWebservice {
 	 	
 	 	insert attachment;
 
-	 	updateEbulletinProfile(system.now(),eBulletinProfile.Id);
+	 	updateEbulletinProfile(system.now(),eBulletinProfile.Id,attachment.id);
 
 		return attachment.id;
 	//}
@@ -176,15 +188,17 @@ global without sharing class AMS_EBulletinReportWebservice {
 	}
 
   @future
-  static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID) {
+  static void updateEbulletinProfile(Datetime dateLastRun, ID ebProfileID, ID attachmentID) {
 
 	//Set the last run time
 	AMS_eBulletin_Profile__c ebProfile = [select Last_Run__c from AMS_eBulletin_Profile__c where id = :ebProfileID ];
 
  	ebProfile.Last_Run__c = dateLastRun;
-	
+
 	update ebProfile;
 
+    Datetime limitDate = system.now().addDays(-5);
+	delete [select id from attachment where parentid = :ebProfileID and id <> :attachmentID and createdDate < :limitDate ];
   }
 
 

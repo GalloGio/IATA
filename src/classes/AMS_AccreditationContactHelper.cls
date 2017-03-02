@@ -41,6 +41,7 @@ public with sharing class AMS_AccreditationContactHelper
         return roleContactMap;
     }
     
+    /* DNG - not being used 
     public static List<AMS_Account_Role__c> findAllRolesForAccount(String accountId)
     {
         String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Account_Role__c');
@@ -50,7 +51,7 @@ public with sharing class AMS_AccreditationContactHelper
         List<AMS_Account_Role__c> roleList = Database.query(query);
         return roleList;
     }
-    
+    */
     
     
     public static Map<Id, Contact> findContactsByEmail(Set<String> emailSet)

@@ -406,9 +406,13 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export, 
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import, 
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics, 
-&quot;ASD&quot;, $Label.ISSP_ASD, 
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
+&quot;ASD&quot;, $Label.ISSP_ASD,
+&quot;RHC&quot;, &quot;RHC&quot;,
+&quot;E-Bulletin&quot;, $Label.ISSP_EBulletin,
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
+&quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>

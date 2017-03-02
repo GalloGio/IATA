@@ -276,6 +276,7 @@
 &quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change,
 &quot;BSPLink&quot;, $Label.ISSP_BSPLink,
 &quot;CassLink&quot;, $Label.ISSP_CassLink,
+&quot;E-Bulletin&quot;, $Label.ISSP_EBulletin, 
 &quot;IFAP&quot;, $Label.ISSP_IFAP,
 &quot;Resource Center&quot;, $Label.ISSP_Resource_Center,
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_Simplified_Interline_Settlement,
@@ -289,6 +290,7 @@
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import,
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
+&quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -304,6 +306,7 @@ Name
         <formula>CASE( Name ,
       &quot;BSPLink&quot;, $Label.BSPLink_Description,
       &quot;CassLink&quot;, $Label.CASSLink_Description,
+      &quot;E-Bulletin&quot;, $Label.ISSP_EBulletin_Description, 
       &quot;IFAP&quot;, $Label.IFAP_Description,
       &quot;Join BSP / CASS&quot;, $Label.ISSP_Join_BSP_CASS_Description,
       &quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request_Description,

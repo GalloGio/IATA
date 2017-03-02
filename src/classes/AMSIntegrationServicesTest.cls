@@ -158,7 +158,7 @@ private class AMSIntegrationServicesTest {
     
     @isTest static void test_updateAccountGDPData2() {
         Test.startTest();
-        String accountId = [select id from Account where Name = 'Test1 Account'].id;
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
         Boolean result = AMSIntegrationServices.updateAccountGDPData2(accountId, 'A', true, 'LOCTYPA','EN','12345','P');
         System.assertEquals(true, result);
         
@@ -167,10 +167,10 @@ private class AMSIntegrationServicesTest {
         result = AMSIntegrationServices.updateAccountShortName(accountId,'ashortname');
         System.assertEquals(true, result);
 
-        Account acc = [select id, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
+        Account acc = [select id, Name, GDP_Location_Type__c, GDP_Opt_In__c/*,Accumulated_Irregularities__c*/ ,Short_Name__c from Account];
         system.assertEquals(true, acc.GDP_Opt_In__c);
        // system.assertEquals(12, acc.Accumulated_Irregularities__c );
-        system.assertEquals('ashortname', acc.Short_Name__c );
+        system.assertEquals('Test1 Account', acc.Short_Name__c );
 
         GDP_Reference_Table__c g = [select id from GDP_Reference_Table__c];
         System.assertEquals(g.id, acc.GDP_Location_Type__c);

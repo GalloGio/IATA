@@ -1175,7 +1175,7 @@
         }]
       },
       {
-        "Name": "AMS_OSCAR_REJECTION_FINALIZATION",
+        "Name": "AMS_OSCAR_CHANGE_REJECTION_FINALIZATION",
         "Steps": [{
           "Name": "STEP18",
           "Required": [],
@@ -3248,6 +3248,10 @@
           "Actions": [{
                 "FunctionName": "reactivateBSPLink",
                 "ActionLabel": "AMS_OSCAR_Action11",
+                "args": ["oscarid"]
+              },{
+                "FunctionName": "undoDeactivationBSPLink",
+                "ActionLabel": "AMS_OSCAR_Action13",
                 "args": ["oscarid"]
               }],
           "Automations": [{

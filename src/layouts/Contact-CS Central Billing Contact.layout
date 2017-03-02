@@ -160,7 +160,11 @@
         <fields>Phone</fields>
         <fields>Email</fields>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>

@@ -50,7 +50,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -64,6 +64,7 @@
         <relationshipName>IATA_ISO_States</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -74,6 +75,7 @@
         <description>IEC - true means to display in list of provinves for eCommerce because the ISO code matched with SAP</description>
         <externalId>false</externalId>
         <label>Valid for Ecommerce</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -83,6 +85,7 @@
         <label>ISO CODE STANDARD</label>
         <length>25</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -93,6 +96,7 @@
         <label>ISO Code</label>
         <length>6</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -103,6 +107,7 @@
         <label>Informatica Value</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -115,9 +120,19 @@
         <label>Local Language</label>
         <length>255</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valid_for_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for Address</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>numeric_code__c</fullName>
@@ -126,6 +141,7 @@
         <label>numeric code</label>
         <length>10</length>
         <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -145,10 +161,13 @@
     </listViews>
     <nameField>
         <label>ISO State Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>IATA ISO States</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>ISO_Code__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
 </CustomObject>

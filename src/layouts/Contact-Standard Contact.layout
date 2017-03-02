@@ -143,6 +143,10 @@
                 <behavior>Edit</behavior>
                 <field>Birthdate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_isManager__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -291,6 +295,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>MITA_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Instant_Survey_Last_feedback_received__c</field>
             </layoutItems>
             <layoutItems>
@@ -352,11 +360,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>APJC_Participant__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>LCAG_Member__c</field>
             </layoutItems>
             <layoutItems>

@@ -38,7 +38,7 @@ global class AMS_BSPLinkIntegration {
 	//Webservice invoked from SIDRA Lite
 	webservice static list<Response> ProcessBSPLinkFromCase(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
 		list<Response> lsToReturn = new list<Response>();
-		list<Case> lsCase = [select id, Shut_Down_TKT_System_GDS_and_BSPlink__c from case where id=:CaseId];
+		list<Case> lsCase = [select id, Shut_Down_TKT_System_GDS_and_BSPlink__c, Open_TKT_System__c from case where id=:CaseId];
 		response r = new response();
 		
 		if(lsCase.isEmpty()){
@@ -68,9 +68,11 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		if(bCaseToUpd){
-			for(case c:lsCase)
-				c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation')){
+			for(Case c:lsCase){
+				if(sProcess=='Deactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+				if(sProcess=='Reactivation') c.Open_TKT_System__c = system.now();
+			}
 			update lsCase;
 		}
 		
@@ -79,7 +81,13 @@ global class AMS_BSPLinkIntegration {
 	
 	//Webservice invoked from Left Side Panel (Voluntary Relinquishment process mainly)
 	webservice static list<Response> ProcessBSPLink(String sProcess, List<Id> objectIds, string sTypeOfRemoval){
-		return ProcessRequest(sProcess, objectIds, sTypeOfRemoval, null);
+		List<Case> cases = [SELECT Id FROM Case WHERE OSCAR__c IN :objectIds AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )];
+		if(cases.isEmpty() || cases.size() > 1){
+			return new List<Response>{
+				new Response('', 'Error', 'Related case not found')
+			};
+		}
+		return ProcessBSPLinkFromCase(sProcess, objectIds, sTypeOfRemoval, cases[0].Id);
 	}
 	
 	private static list<response> ProcessRequest(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
@@ -126,9 +134,9 @@ global class AMS_BSPLinkIntegration {
 			//Check sProcess variable 
 			if(sProcess=='Deactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
 				
-				map<id, string> mapBPEEmails = new map<id, string>();
-				for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
-					mapBPEEmails.put(c.AccountId, c.Email);
+				//map<id, string> mapBPEEmails = new map<id, string>();
+				//for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
+				//	mapBPEEmails.put(c.AccountId, c.Email);
 				
 				//DO Login
 				Response GenerateToken = GrantToken(BSPLinkParameter.EndpointToken__c, BSPLinkParameter.Username__c, BSPLinkParameter.Password__c, BSPLinkParameter.GrantType__c);
@@ -139,9 +147,11 @@ global class AMS_BSPLinkIntegration {
 						Response resp;
 						if(sProcess == 'Deactivation') 		resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter);
 						
-						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
+						system.debug('DTULLO 142 --> ' + AA);
 						
-						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter, mapBPEEmails.get(AA.Account__c));
+						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter);
+						
+						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter);
 
 
 				    	if(resp.result == 'Ok'){
@@ -204,7 +214,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = Resp200.access_token;
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, '');
     	}
     	catch(exception e){
     		oReturn.IATACode='';
@@ -243,7 +253,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode = AA.IATACode__c;
@@ -256,7 +266,7 @@ global class AMS_BSPLinkIntegration {
     
     
     //Method to invoke the webservice exposed by BSPLink to undo a deactivation of an agency
-    global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sEmail){
+    global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
     	Response oReturn = new Response();
     	
     	HttpRequest req = new HttpRequest();
@@ -271,10 +281,10 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-    	BodyRequest.Bpe = sEmail;				//EmailAddress of the agent
+    	BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
     	req.setBody(JSON.serialize(BodyRequest));
     	req.setTimeout(120000); 
-    	
+    	system.debug('DTULLO 277 --> ' + AA.IATACode__c);
     	try{
 	    	HTTPResponse resp = http.send(req);
 	    	//All good
@@ -284,7 +294,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode=AA.IATACode__c;
@@ -296,7 +306,7 @@ global class AMS_BSPLinkIntegration {
     }
     
     //Method to invoke the webservice exposed by BSPLink to reactivate an agency
-    global static Response AgentReactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sEmail){
+    global static Response AgentReactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
     	Response oReturn = new Response();
     	
     	HttpRequest req = new HttpRequest();
@@ -311,7 +321,7 @@ global class AMS_BSPLinkIntegration {
     	BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
     	BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
     	BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-    	BodyRequest.Bpe = sEmail;				//EmailAddress of the agent
+    	BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
     	req.setBody(JSON.serialize(BodyRequest));
     	req.setTimeout(120000); 
     	
@@ -324,7 +334,7 @@ global class AMS_BSPLinkIntegration {
 	    		oReturn.result = 'Ok';
 	    		oReturn.description = '';
 	    	}else
-	    		oReturn = FormatErrorOutput(resp);
+	    		oReturn = FormatErrorOutput(resp, AA.IATACode__c);
     	}
     	catch(exception e){
     		oReturn.IATACode = AA.IATACode__c;
@@ -369,13 +379,15 @@ global class AMS_BSPLinkIntegration {
 				}
 			}
 		}else if (sType.equalsIgnoreCase('AccountsInvolved')) {
-			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			//DTULLO: added check on the record-type
+			//for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r) FROM AMS_Oscar__c WHERE Id IN :objectIds]){
+			for(AMS_Oscar__c oscar : [SELECT Id, Account__c, (SELECT Id, Account__c FROM AMS_Process_Detail__r where recordtype.developername='Agency_Involved') FROM AMS_Oscar__c WHERE Id IN :objectIds]){
 				setAccntToRemove.add(oscar.Account__c);
 				for(AMS_Process_Detail__c pd : oscar.AMS_Process_Detail__r) setAccntToRemove.add(pd.Account__c);
 			}
 		}
 		
-		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c
+		list<Agency_Authorization__c> lsToReturn = [select Id, Account__c, Account__r.Sector__c, Status__c, IATACode__c, ISO_Country__c, Email_Used_for_BSP_Creation__c
 													from Agency_Authorization__c where Authority__c='BSPLink' and Account__c in:setAccntToRemove];
 		
 		/* Future enhancements? if they do not exists, create. Will encounter error "You have uncommitted..."
@@ -453,19 +465,31 @@ global class AMS_BSPLinkIntegration {
     	webservice string IATACode;
     	webservice string result;
     	webservice string description;	//In case of login, contains the token
+
+    	global Response(){ }
+
+    	global Response(String iataCode, String result, String description){
+    		this.IATACode = iataCode; 
+    		this.result = result; 
+    		this.description = description;
+    	}
     }
     
     //Generic method to format the error output
-    static response FormatErrorOutput(HTTPResponse resp){
+    static response FormatErrorOutput(HTTPResponse resp, string sIATACode){
+    	system.debug('DTULLO 462 --> ' + sIATACode);
     	Response oReturn = new Response();
     	if(resp.getStatusCode()==400){ //Managed Error
     		ErrorResponse Resp400 = (ErrorResponse)JSON.Deserialize(resp.getBody(), ErrorResponse.class);
+    		system.debug('DTULLO --> 465 ' + Resp400);
 			oReturn.result = 'Error';
 			oReturn.description = Resp400.error + ': ' + Resp400.error_description;
     	}else{ //Other Type Of Error
     		oReturn.result = 'Error';
     		oReturn.description = resp.getStatusCode() + ' - ' + resp.getStatus();
     	}
+    	
+    	oReturn.IATACode = sIATACode;
     	return oReturn;
     }
 }

@@ -437,11 +437,6 @@
                 <controllingFieldValues>Cargo</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-                <controllingFieldValues>Cargo</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
                 <fullName>ICAP</fullName>
                 <default>false</default>
                 <controllingFieldValues>Cargo</controllingFieldValues>
@@ -778,173 +773,6 @@ Record Type + Group Type + ISO_Country_Name</description>
     </fields>
     <label>Industry Group</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>Region__c</columns>
-        <columns>Resolution__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-        </filters>
-        <label>All Local Governance</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>AllAmericasAPJC</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Resolution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>contains</operation>
-            <value>APJC</value>
-        </filters>
-        <label>All Americas APJC</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDFSAmericasHUB</group>
-            <role>CountryManagerArgentina</role>
-            <role>CountryManagerBrazil</role>
-            <role>CountryManagerCanada</role>
-            <role>CountryManagerColombia</role>
-            <role>CountryManagerDominicanReplublic</role>
-            <role>CountryManagerPeru</role>
-            <role>CountryManagerTrinidadTobago</role>
-            <roleAndSubordinatesInternal>CountryManagerChile</roleAndSubordinatesInternal>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>AllAmericasLCAG</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Resolution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>contains</operation>
-            <value>LCAG</value>
-        </filters>
-        <label>All Americas LCAG</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDFSAmericasHUB</group>
-            <role>CountryManagerArgentina</role>
-            <role>CountryManagerBrazil</role>
-            <role>CountryManagerCanada</role>
-            <role>CountryManagerChile</role>
-            <role>CountryManagerColombia</role>
-            <role>CountryManagerDominicanReplublic</role>
-            <role>CountryManagerPeru</role>
-            <role>CountryManagerTrinidadTobago</role>
-            <roleAndSubordinatesInternal>StaffChile</roleAndSubordinatesInternal>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>AllAmericasOthers</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Resolution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>notContain</operation>
-            <value>LCAG,APJC</value>
-        </filters>
-        <label>All Americas Others</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDFSAmericasHUB</group>
-            <role>CountryManagerChile</role>
-            <roleAndSubordinatesInternal>StaffChile</roleAndSubordinatesInternal>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>AllEURAPJC</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Resolution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>contains</operation>
-            <value>APJC</value>
-        </filters>
-        <label>All Europe APJC</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDFSAmericasHUB</group>
-            <role>CountryManagerChile</role>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_Americas</fullName>
-        <columns>NAME</columns>
-        <columns>IATA_Office__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>LAST_ACTIVITY</columns>
-        <columns>Resolution__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </filters>
-        <label>All Americas</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDFSAmericasHUB</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Belgium_meetings</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>IATA_Office__c</field>
-            <operation>contains</operation>
-            <value>Belgium</value>
-        </filters>
-        <label>Belgium meetings</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>HUBMadrid</group>
-            <group>IDFSBelgiumLuxembourg</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Local_Groups</fullName>
         <columns>NAME</columns>
         <columns>Cargo_Passenger__c</columns>
@@ -960,29 +788,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             <value>LocalGovernance__c.Local_Groups</value>
         </filters>
         <label>All Local Groups</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Local_Groups_ASPAC</fullName>
-        <columns>NAME</columns>
-        <columns>Cargo_Passenger__c</columns>
-        <columns>Local_Governance_type__c</columns>
-        <columns>Region__c</columns>
-        <columns>Cluster__c</columns>
-        <columns>Country__c</columns>
-        <columns>Group_Owner__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>LocalGovernance__c.Local_Groups</value>
-        </filters>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific</value>
-        </filters>
-        <label>Local Groups ASPAC</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1125,10 +930,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1420,10 +1221,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>CGA</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EACP JC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1723,10 +1520,6 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>EACP JC</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>ICAP</fullName>
                 <default>false</default>
             </values>
@@ -1962,7 +1755,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
         <errorConditionFormula>AND(
-  NOT( $User.Profile_Name__c =&quot;System Administrator&quot;), 
+  NOT(OR($User.Profile_Name__c =&quot;System Administrator&quot;, $User.Profile_Name__c =&quot;Account management team&quot;)), 
   AND(
   RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
   ISCHANGED(Name)

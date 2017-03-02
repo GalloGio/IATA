@@ -128,6 +128,17 @@
             ServiceConsoleIntegration(redirectUrl);
         }
 
+        function oscarAttachments()
+        {
+            var redirectUrl =  "/apex/AMS_OSCAR_Attachment_List?id={!relatedCase.OSCAR__c}";
+
+            if (typeof(srcUp) == 'function') {
+                srcUp(redirectUrl); 
+            }else{
+                window.open(redirectUrl); 
+            }
+        }
+
          </script>
     <apex:form >
         <apex:pageBlock >
@@ -151,6 +162,11 @@
                                     <input value="Transfer Attachments" class="btn"
                                         name="transferAtt" onclick="TransferAttachments();return false;"
                                         title="Transfer Attachments" type="button"  style="display: {!IF(( StandardRedirect == true),"inline","none")}" />
+
+
+                                    <input value="OSCAR Attachments" class="btn"
+                                        name="oscarAtt" onclick="oscarAttachments();return false;"
+                                        title="OSCAR Attachments" type="button"  style="display: {!IF(( hasOscar == true),"inline","none")}" />
                                 </td>
                             </tr>
                         </tbody>
@@ -171,11 +187,11 @@
                             <tbody>
                                 <tr class="headerRow">
                                     <th class="actionColumn" scope="col">Action</th>
-                                    <th class=" zen-deemphasize" scope="col">{!$Label.ISSP_Public}</th>
+                                    <th class=" zen-deemphasize" scope="col" style="display: {!IF(( aCaseId != null),"table-cell","none")}" >{!$Label.ISSP_Public}</th>
                                     <th class=" zen-deemphasize" scope="col">Name</th>
                                     <th class=" zen-deemphasize" scope="col">File Size</th>
                                     <th class=" zen-deemphasize" scope="col">Created Date</th>
-                                    <th class=" zen-deemphasize" scope="col">Created By</th>
+                                    <th class=" zen-deemphasize" scope="col" style="display: {!IF(( aCaseId != null),"table-cell","none")}" >Created By</th>
                                     <th class=" zen-deemphasize" scope="col">Location</th>
                                 </tr>
 
@@ -252,9 +268,9 @@
                                         <td class=" zen-deemphasize" scope="col">
                                             <apex:outputField value="{!attachment.Original_Creation_Date__c}" />
                                         </td>
-                                        <td class=" dataCell ">
+                                        <!--<td class=" dataCell ">
                                             <apex:outputField value="{!attachment.OriginalCreatedBy__c}" />
-                                        </td>
+                                        </td>-->
                                         <td class=" dataCell " scope="row">Archived</td>
                                     </tr>
                                 </apex:repeat>

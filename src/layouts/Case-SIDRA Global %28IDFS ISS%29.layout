@@ -8,6 +8,7 @@
     <customButtons>Deactivate_BSPLink</customButtons>
     <customButtons>Undo_Deactivation_BSPLink</customButtons>
     <customButtons>Reactivate_BSPLink</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -1184,7 +1185,7 @@
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <height>1</height>
                 <page>AMS_Case_AccIrr_Popup</page>
                 <showLabel>false</showLabel>
@@ -1279,6 +1280,18 @@
         <fields>Financial_Institution__c</fields>
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Release_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Account__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <relatedList>Agency_Applied_Change_code__c.SIDRA_Case__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

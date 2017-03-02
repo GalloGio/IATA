@@ -67,7 +67,9 @@ public with sharing class ISSP_AMS_EBulletin {
         displayLanguage = UserInfo.getLanguage();
 
         //set iso code to match datpicker format, in case of "english" the value is set to empty
-        displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US') || displayLanguage.equalsIgnoreCase('in')  ? '' : displayLanguage.replace('_', '-');
+        //displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US') || displayLanguage.equalsIgnoreCase('in')  ? '' : displayLanguage.replace('_', '-');
+        displayLanguageDatePicker = displayLanguage.equalsIgnoreCase('en_US')  ? '' : displayLanguage.replace('_', '-');
+
 
         //Get the custom setting with the name of the userguide custom setting (ex: "EBULLETIN-USERGUIDE-")
         String paramUserGuide = ISSP_CS__c.getValues('eBulletin_UserGuide').Value__c;
@@ -386,7 +388,7 @@ system.debug('iDays: ' + iDays);
 
             //Checks if "Select All" is checked or not
             if(!dailyCountrySelectAll){
-
+				
                 //Remove Select values from the "Selected" list that doens't exist anymore on the "to select" list
                 for(Integer i=dailyCountrySelected.size()-1; i >= 0 ; i--){
                     Boolean bExist = false;
@@ -507,10 +509,12 @@ system.debug('iDays: ' + iDays);
 
         for(String aux : lSelectedCountries){
             
+            System.debug('populateSelectedCountries - mCountries:' + mCountries);
             if(!mCountries.containsKey(aux)){
                 continue;
             }
             
+
             IATA_ISO_Country__c iso = mCountries.get(aux);
 
             if (applyLanguage == 'es') {
@@ -603,6 +607,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_SP__c];
             } else if (applyLanguage == 'fr') {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -612,6 +617,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY IATA_Country_FR__c];
             } else {
                 isoList = [SELECT Name, Id, IATA_Contry_KR__c, IATA_COUNTRY_EN__c, ISO_Code__c, AMS_Pilot_Country__c,
@@ -621,6 +627,7 @@ system.debug('iDays: ' + iDays);
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
                 AND Region__c in :sRegion
+                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             }
 
@@ -665,6 +672,7 @@ system.debug('iDays: ' + iDays);
                 FROM IATA_ISO_Country__c
                 WHERE Case_BSP_Country__c != null
                 AND Case_BSP_Country__c != ''
+                AND Sub_Region__c not in ('USA')
                 ORDER BY Name];
             
             for (IATA_ISO_Country__c iso : isoList) {
@@ -681,7 +689,7 @@ system.debug('iDays: ' + iDays);
                     SELECT Agency_Info_Agency_Changes__c,Agency_Info_Defaults__c,Agency_Info_Irregularities__c,Agency_Info_New_Aplication_Processes__c,
                         Agency_Info_Reviews__c,Agency_Info_Termination_Closures__c,Area_1__c,Area_2__c,Area_3__c,CountriesList__c,CreatedDate,Daily_Frequency__c,
                         Id,LastModifiedDate,Name,Opt_out_Bulletin__c,Program_Cargo__c,Program_CASS_Associates__c,Program_Passage__c,Program_Domestic__c,Suspend_Subscription__c,
-                        RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c
+                        RecordTypeId,User__c, TimeZone__c,Opt_in__c,StatusDisplay__c,Last_Run__c
                     FROM AMS_eBulletin_Profile__c
                     WHERE User__c = :Userinfo.getuserid()
                     LIMIT 2
@@ -1046,6 +1054,7 @@ system.debug('iDays: ' + iDays);
         Id res;
         try{
             res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
+            fetchAMSProcessForm();
         }catch(Exception e){
             System.debug('dailyFileDownload Exception - ' + e);
             System.debug('dailyFileDownload Exception - ' + e.getTypeName());
@@ -1106,9 +1115,9 @@ system.debug('iDays: ' + iDays);
         //System.debug('splitEndDate - ' + splitEndDate);
 
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
-        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
+        Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)),23,59,59);
         String period = '';
-
+        
         //System.debug('startDate - ' + startDate);
         //System.debug('endDate - ' + endDate);
 

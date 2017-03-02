@@ -185,6 +185,10 @@
         <name>AMS_OSCAR_Action12</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action13 --></label>
+        <name>AMS_OSCAR_Action13</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -235,6 +239,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_CHANGE_RECONSIDERATION --></label>
         <name>AMS_OSCAR_CHANGE_RECONSIDERATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_CHANGE_REJECTION_FINALIZATION --></label>
+        <name>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_OSCAR_CHANGE_WITHDRAWAL --></label>
@@ -1965,7 +1973,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2141,7 +2149,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -5853,223 +5861,235 @@ and
         <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyChanges --></label>
+        <label>代理店の変更</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin AgencyChanges HelpText --></label>
+        <label>代理店の変更の詳細情報はこちらをご覧ください。</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
+        <label>代理店情報</label>
         <name>ISSP_AMS_eBulletin_AgencyInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area1 --></label>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</name>
+    </customLabels>
+    <customLabels>
+        <label>地域 1 - 北・中央・南アメリカ &amp; その周辺諸国</label>
         <name>ISSP_AMS_eBulletin_Area1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area2 --></label>
+        <label>地域 2 - ヨーロッパ、中東 &amp; アフリカ</label>
         <name>ISSP_AMS_eBulletin_Area2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area3 --></label>
+        <label>地域 3 - 極東、オーストラリア、ニュージーランド &amp; 太平洋諸国</label>
         <name>ISSP_AMS_eBulletin_Area3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AvailableCountries --></label>
+        <label>利用可能な国</label>
         <name>ISSP_AMS_eBulletin_AvailableCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CASS --></label>
+        <label>CASS アソシエイト、輸入、運送業者</label>
         <name>ISSP_AMS_eBulletin_CASS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Cargo --></label>
+        <label>貨物</label>
         <name>ISSP_AMS_eBulletin_Cargo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Countries --></label>
+        <label>国</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CountrySelection --></label>
+        <label>国の選択</label>
         <name>ISSP_AMS_eBulletin_CountrySelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Country_SelectAll --></label>
+        <label>すべて選択</label>
         <name>ISSP_AMS_eBulletin_Country_SelectAll</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin --></label>
+        <label>DAILY eブリティン</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin_Enable --></label>
+        <label>DAILY eブリティンの有効化</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin DAILY Setup --></label>
+        <label>保存 &amp; DAILYの設定</label>
         <name>ISSP_AMS_eBulletin_DAILY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
+        <label>デイリーの頻度</label>
         <name>ISSP_AMS_eBulletin_DailyFrequency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
+        <label>デフォルト</label>
         <name>ISSP_AMS_eBulletin_Defaults</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Defaults HelpText --></label>
+        <label>デフォルト後の復帰を含むデフォルト情報</label>
         <name>ISSP_AMS_eBulletin_Defaults_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Description --></label>
+        <label>代理店関連の変更に関する DAILY &amp; WEEKLY レポート作成を許可します。</label>
         <name>ISSP_AMS_eBulletin_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Disabled --></label>
+        <label>未購読</label>
         <name>ISSP_AMS_eBulletin_Disabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Domestic --></label>
+        <label>国内 (インドネシア &amp; 中国のみ)</label>
         <name>ISSP_AMS_eBulletin_Domestic</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
+        <label>購読</label>
         <name>ISSP_AMS_eBulletin_Enabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_00 --></label>
+        <label>エラーが発生しました。後でもう一度やり直してください。</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_00</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ErrorMsg_01 --></label>
+        <label>指定された期間に検出されるコード変更情報はありません。</label>
         <name>ISSP_AMS_eBulletin_ErrorMsg_01</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
+        <label>フィルターオプション (DAILY)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsDaily</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsWeekly --></label>
+        <label>フィルターオプション (WEEKLY)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsWeekly</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Filter_Geographic_Area --></label>
+        <label>地域別フィルター</label>
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_GeographicArea --></label>
+        <label>地域</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Instructions --></label>
+        <label>説明書</label>
         <name>ISSP_AMS_eBulletin_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Irregularities --></label>
+        <label>イレギュラリティー</label>
         <name>ISSP_AMS_eBulletin_Irregularities</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Irregularities HelpText --></label>
+        <label>不規則情報に関してはこちらをご覧ください</label>
         <name>ISSP_AMS_eBulletin_Irregularities_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
+        <label>新しい申請プロセス</label>
         <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin NewApplications HelpText --></label>
+        <label>新しい申請についてのの詳細情報はこちらをご覧ください。</label>
         <name>ISSP_AMS_eBulletin_NewApplications_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
+        <label>デイリー eメールの通知を解除する</label>
         <name>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Weekly_Notifications --></label>
+        <label>ウィークリー eメールの通知を解除する</label>
         <name>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Passenger --></label>
+        <label>旅客</label>
         <name>ISSP_AMS_eBulletin_Passenger</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Processing_eBulletin --></label>
+        <label>eブリティンを処理中</label>
         <name>ISSP_AMS_eBulletin_Processing_eBulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Program --></label>
+        <label>プログラム</label>
         <name>ISSP_AMS_eBulletin_Program</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ProgramSelection --></label>
+        <label>プログラム選択</label>
         <name>ISSP_AMS_eBulletin_ProgramSelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone --></label>
+        <label>タイムゾーンのeブリティンを受け取る</label>
         <name>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
+        <label>レビュー</label>
         <name>ISSP_AMS_eBulletin_Reviews</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Reviews HelpText --></label>
+        <label>終了通知を含みます</label>
         <name>ISSP_AMS_eBulletin_Reviews_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
+        <label>レポートを実行:</label>
         <name>ISSP_AMS_eBulletin_RunReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_LastExecution --></label>
+        <label>今日最後のダウンロード以降</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_Today --></label>
+        <label>終日</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_Today</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectWeek --></label>
+        <label>週を選択:</label>
         <name>ISSP_AMS_eBulletin_SelectWeek</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectedCountries --></label>
+        <label>選択した国</label>
         <name>ISSP_AMS_eBulletin_SelectedCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Criteria --></label>
+        <label>選択基準</label>
         <name>ISSP_AMS_eBulletin_Selection_Criteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Download --></label>
+        <label>選択基準 / レポートのダウンロード</label>
         <name>ISSP_AMS_eBulletin_Selection_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Status --></label>
+        <label>ステータス</label>
         <name>ISSP_AMS_eBulletin_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SubscriptionInformation --></label>
+        <label>購読情報</label>
         <name>ISSP_AMS_eBulletin_SubscriptionInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Termination_Closures --></label>
+        <label>解除 &amp; 終了</label>
         <name>ISSP_AMS_eBulletin_Termination_Closures</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin Termination HelpText --></label>
+        <label>解除後の復帰と自発的な放棄を含みます</label>
         <name>ISSP_AMS_eBulletin_Termination_HelpText</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
+        <label>タイムゾーンの選択</label>
         <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Title --></label>
+        <label>AIRS / CAIRS オンライン ブリテン</label>
         <name>ISSP_AMS_eBulletin_Title</name>
     </customLabels>
     <customLabels>
@@ -6077,71 +6097,71 @@ and
         <name>ISSP_AMS_eBulletin_Unavailable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
+        <label>WEEKLY eブリティン</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable --></label>
+        <label>WEEKLY eブリティンを有効化</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS eBulletin WEEKLY Setup --></label>
+        <label>保存 &amp; WEEKLYの設定</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Setup</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
+        <label>デイリーレポートをダウンロード</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadDailyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadWeeklyReport --></label>
+        <label>ウィークリーレポートをダウンロード</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_EditSelectionCriteria --></label>
+        <label>選択基準を編集</label>
         <name>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_SaveGenerateReport --></label>
+        <label>保存 &amp; レポートを生成</label>
         <name>ISSP_AMS_eBulletin_btn_SaveGenerateReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_eBulletin_UserGuide --></label>
+        <label>eブリティン ユーザーガイド</label>
         <name>ISSP_AMS_eBulletin_eBulletin_UserGuide</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_btn --></label>
+        <label>eブリティンに移動</label>
         <name>ISSP_AMS_eBulletin_home_btn</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl1 --></label>
+        <label>以下にお問い合わせください</label>
         <name>ISSP_AMS_eBulletin_home_lbl1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl2 --></label>
+        <label>ユーザーガイド</label>
         <name>ISSP_AMS_eBulletin_home_lbl2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl3 --></label>
+        <label>選択基準を管理してレポートを作成します。</label>
         <name>ISSP_AMS_eBulletin_home_lbl3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl4 --></label>
+        <label>使用についてのヘルプが必要</label>
         <name>ISSP_AMS_eBulletin_home_lbl4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_1 --></label>
+        <label>7 日を経過した DAILY アイテムをレポートする場合は、WEEKLY レポートをダウンロードしてください。</label>
         <name>ISSP_AMS_eBulletin_info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_2 --></label>
+        <label>(事前に WEEKLY のフィルターオプションを調整する必要があるかもしれません)</label>
         <name>ISSP_AMS_eBulletin_info_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_Daily_available_days --></label>
+        <label>今後 7 日間 DAILY ブリティンを利用可能:</label>
         <name>ISSP_AMS_eBulletin_info_Daily_available_days</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_lbl_Enable --></label>
+        <label>有効:</label>
         <name>ISSP_AMS_eBulletin_lbl_Enable</name>
     </customLabels>
     <customLabels>
@@ -6521,6 +6541,10 @@ and
     <customLabels>
         <label><!-- ISSP Change Request Description --></label>
         <name>ISSP_Change_Request_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>8文字</label>
+        <name>ISSP_characters_new_password</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email --></label>
@@ -7159,7 +7183,7 @@ and
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EnterValidString --></label>
+        <label>ローマ字でご入力をお願い致します</label>
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
@@ -7755,6 +7779,10 @@ and
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>英字1文字</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7967,6 +7995,10 @@ and
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>パスワードは以下の要件を満たす必要があります</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>新規サービスリクエスト</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8053,6 +8085,10 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
     <customLabels>
         <label>IATAポータルでの新しい通知</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>数字1文字</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>会社のEメール</label>
@@ -8499,7 +8535,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>http://www.iata.org/customer-portal/Pages/contactus.aspx からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
+        <label>http://www.iata.org/customer-portal/Pages/index.aspx? からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -8641,6 +8677,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label>充足</label>
         <name>ISSP_Satisfactory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Save --></label>
+        <name>ISSP_Save</name>
     </customLabels>
     <customLabels>
         <label>保存&amp;新規</label>
@@ -8964,6 +9004,98 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_View_GFA_Communication</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
+        <name>ISSP_View_PWC_Lithuania_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Argentina_DC --></label>
+        <name>ISSP_View_PwC_Argentina_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Azerbaijan_DC --></label>
+        <name>ISSP_View_PwC_Azerbaijan_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Central --></label>
+        <name>ISSP_View_PwC_Central</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Change_Requests --></label>
+        <name>ISSP_View_PwC_Change_Requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_China_DC --></label>
+        <name>ISSP_View_PwC_China_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_DIP_Reviews --></label>
+        <name>ISSP_View_PwC_DIP_Reviews</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Egypt_DC --></label>
+        <name>ISSP_View_PwC_Egypt_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Estonia_DC --></label>
+        <name>ISSP_View_PwC_Estonia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Greece_DC --></label>
+        <name>ISSP_View_PwC_Greece_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_India_DC --></label>
+        <name>ISSP_View_PwC_India_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Indonesia_DC --></label>
+        <name>ISSP_View_PwC_Indonesia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Israel_DC --></label>
+        <name>ISSP_View_PwC_Israel_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Malaysia_DC --></label>
+        <name>ISSP_View_PwC_Malaysia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Mongolia_DC --></label>
+        <name>ISSP_View_PwC_Mongolia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Philippines_DC --></label>
+        <name>ISSP_View_PwC_Philippines_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Poland_DC --></label>
+        <name>ISSP_View_PwC_Poland_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Romania_DC --></label>
+        <name>ISSP_View_PwC_Romania_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Slovenia_DC --></label>
+        <name>ISSP_View_PwC_Slovenia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Spain_DC --></label>
+        <name>ISSP_View_PwC_Spain_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Sweden_DC --></label>
+        <name>ISSP_View_PwC_Sweden_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Thailand_DC --></label>
+        <name>ISSP_View_PwC_Thailand_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Vietnam_DC --></label>
+        <name>ISSP_View_PwC_Vietnam_DC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_WaitChangeMessage</name>
     </customLabels>
@@ -8996,6 +9128,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_btn_AddComment</name>
     </customLabels>
     <customLabels>
+        <label>8文字</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>新しいケースを記録する前に、FAQ（よくある質問）をご覧になりますか。</label>
         <name>ISSP_consult_FAQ</name>
     </customLabels>
@@ -9012,7 +9148,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>登録プロセスを完了することができません。http://www.iata.org/customer-portal/Pages/contactus.aspx からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
+        <label>登録プロセスを完了することができません。http://www.iata.org/customer-portal/Pages/index.aspx? からお問い合わせフォームに記入し、IATAカスタマーサービスポータルにご連絡ください。</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
@@ -9022,6 +9158,18 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>貴社には、請求書タイプ{!invoiceType}をご利用いただけません。カスタマーサービスにお問い合わせください。</label>
         <name>ISSP_invoiceType_is_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label>英字1文字</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードは以下の要件を満たす必要があります</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
+        <label>数字1文字</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>/</label>
@@ -9464,12 +9612,20 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
     <customLabels>
+        <label><!-- LiveAgentCheckingAvailableAgents --></label>
+        <name>LiveAgentCheckingAvailableAgents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentCustomSettingNotFound --></label>
         <name>LiveAgentCustomSettingNotFound</name>
     </customLabels>
     <customLabels>
         <label><!-- LiveAgentFootNote --></label>
         <name>LiveAgentFootNote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentNEW --></label>
+        <name>LiveAgentNEW</name>
     </customLabels>
     <customLabels>
         <label><!-- LiveAgentOfflineButton --></label>
@@ -9584,19 +9740,19 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Add --></label>
+        <label>追加</label>
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Down --></label>
+        <label>下へ</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Remove --></label>
+        <label>削除</label>
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Up --></label>
+        <label>上へ</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
@@ -9714,6 +9870,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label><!-- Orders --></label>
         <name>Orders</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Oscar Attachments --></label>
+        <name>Oscar_Attachments</name>
     </customLabels>
     <customLabels>
         <label><!-- Overall maximum size --></label>
@@ -10940,6 +11100,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Web</name>
     </customLabels>
     <customLabels>
+        <label><!-- Web Site --></label>
+        <name>Web_Site</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Welcome Message --></label>
         <name>Welcome_Message</name>
     </customLabels>
@@ -11240,6 +11404,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>BLND_Snapshot</name>
     </customTabs>
     <customTabs>
+        <label><!-- CNS E-Bulletin --></label>
+        <name>CNS_E_Bulletin</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Campaign Customers --></label>
         <name>Campaign_Customers</name>
     </customTabs>
@@ -11388,62 +11556,26 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Role</name>
+        <name>EF_Frequency</name>
         <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12162,139 +12294,34 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
+        <name>EF_Payment_Method</name>
         <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Sector</name>
-        <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12329,22 +12356,18 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12619,17 +12642,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Manager_Approval</name>
         <picklistValues>
             <masterLabel>Approved</masterLabel>
@@ -12653,34 +12665,190 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Method</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

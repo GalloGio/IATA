@@ -8,7 +8,11 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
     ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
 
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
-
+  
+  //DTULLO: added to skip trigger execution if aggreagating data for PwC
+  if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
+  
+  
   if(trigger.isBefore && (trigger.isInsert || trigger.isupdate )){
 
     AccountTriggerHelper.copyInfoFromHqToBranchOnInsertAndUpdate(trigger.New, trigger.OldMap);

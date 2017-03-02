@@ -166,6 +166,7 @@ public without sharing class AMS_Utils {
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
     public static final String SECTOR_PASSENGER = 'Travel Agent';
+    public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -719,17 +720,17 @@ public without sharing class AMS_Utils {
 
         if(oscar != null){
 
-       		if( aacNEW.Change_Code__c == 'NEW' ){
-            	oscar.First_Step_Completed__c = true;
+            if( aacNEW.Change_Code__c == 'NEW' ){
+                oscar.First_Step_Completed__c = true;
 
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
-        	}
+            }
 
-        	if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
-        	if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
-        	if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
-        	    for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
-        	}
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+            if( oscar.RecordTypeId == RECTYPE_NEW && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created');
+            if( oscar.RecordTypeId == RECTYPE_CHANGE && !oscar.First_Step_Completed__c){
+                for(String status : AACC_FINALS) if(aacNEW.Bulletin_Information__c.endsWith(status)) oscar.addError('Approval/Disapproval can only be made after the initial change code was created');
+            }
             if(aacNEW.Change_Code__c == 'FIN' && new Set<String>{'C','P'}.contains(oscar.Location_Class__c)){
                 oscarAgency.Annual_Renewal_Certificates__c = true;
                 toReturn = oscarAgency;
@@ -765,27 +766,86 @@ public without sharing class AMS_Utils {
     }
     */
 
+ public static String getLocationClassDescr(String endorsmentCode) {
+
+        /*
+            C-Cargo
+            D-Domestic
+            E-External Registrars
+            G-General Sales Agent
+            I = Imports
+            K-CATO
+            M-Members & Airlines Sales Offices
+            N-NISI
+            O-SATO
+            P-Passenger
+            S-SSI
+            R = CassAssociate
+            T-TIDS
+            Q = Courier
+            V-Travel Service Intermediaries-TSI (USA Only) 
+            X-Handling Agents and Shipping Lines
+            J-Joint Vent
+         */
+        if (endorsmentCode == 'P')
+            return 'Passenger';
+        else if (endorsmentCode == 'C')
+            return 'Cargo';
+        else if (endorsmentCode == 'D')
+            return 'Domestic';
+        else if (endorsmentCode == 'E')
+            return 'External Registrars';
+        else if (endorsmentCode == 'G')
+            return 'General Sales Agents';
+        else if (endorsmentCode == 'K')
+            return 'CATO';
+        else if (endorsmentCode == 'M')
+            return 'Members & Airlines Sales Offices';
+        else if (endorsmentCode == 'N')
+            return 'NISI';
+        else if (endorsmentCode == 'O')
+            return 'SATO';
+        else if (endorsmentCode == 'S')
+            return 'SSI';
+        else if (endorsmentCode == 'T')
+            return 'TIDS';
+        else if (endorsmentCode == 'V')
+            return 'Travel Service Intermediaries-TSI (USA Only)';
+        else if (endorsmentCode == 'X')
+            return 'Handling Agents and Shipping Lines';
+        else if (endorsmentCode == 'J')
+            return 'Joint Vent';
+        else if (endorsmentCode == 'I')
+            return 'Import';
+        else if (endorsmentCode == 'Q')
+            return 'Courier';
+        else if (endorsmentCode == 'R')
+            return 'CassAssociate';
+
+        return '';
+    }
+
     public static String getIATAReadableStatus(String endorsmentCode) {
 
         if (endorsmentCode == '0')
             return ACC_S0_TERMINATED;
-        if (endorsmentCode == '1')
+        else if (endorsmentCode == '1')
             return ACC_S1_NOTACCREDITED;
-        if (endorsmentCode == '2')
+        else if (endorsmentCode == '2')
             return ACC_S2_NEWAPPLICATIONPENDING;
-        if (endorsmentCode == '3')
+        else if (endorsmentCode == '3')
             return ACC_S3_NOTINOPERATION;
-        if (endorsmentCode == '4')
+        else if (endorsmentCode == '4')
             return ACC_S4_LISTED;
-        if (endorsmentCode ==  '5')
+        else if (endorsmentCode ==  '5')
             return ACC_S5_CASHNOCOMMISSION;
-        if (endorsmentCode == '6')
+        else if (endorsmentCode == '6')
             return ACC_S6_CASHWITHCOMMISSION;
-        if (endorsmentCode == '7')
+        else if (endorsmentCode == '7')
             return ACC_S7_UNDERREVIEW;
-        if (endorsmentCode == '8')
+        else if (endorsmentCode == '8')
             return ACC_S8_CHANGESPROCESSED;
-        if (endorsmentCode == '9')
+        else if (endorsmentCode == '9')
             return ACC_S9_APPROVED;
 
         return null;
@@ -795,23 +855,23 @@ public without sharing class AMS_Utils {
 
         if (statusDesc == ACC_S0_TERMINATED)
             return '0';
-        if (statusDesc == ACC_S1_NOTACCREDITED)
+        else if (statusDesc == ACC_S1_NOTACCREDITED)
             return '1';
-        if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
+        else if (statusDesc == ACC_S2_NEWAPPLICATIONPENDING)
             return '2';
-        if (statusDesc == ACC_S3_NOTINOPERATION)
+        else if (statusDesc == ACC_S3_NOTINOPERATION)
             return '3';
-        if (statusDesc == ACC_S4_LISTED)
+        else if (statusDesc == ACC_S4_LISTED)
             return '4';
-        if (statusDesc == ACC_S5_CASHNOCOMMISSION)
+        else if (statusDesc == ACC_S5_CASHNOCOMMISSION)
             return '5';
-        if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
+        else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
             return '6';
-        if (statusDesc == ACC_S7_UNDERREVIEW)
+        else if (statusDesc == ACC_S7_UNDERREVIEW)
             return '7';
-        if (statusDesc == ACC_S8_CHANGESPROCESSED)
+        else if (statusDesc == ACC_S8_CHANGESPROCESSED)
             return '8';
-        if (statusDesc == ACC_S9_APPROVED)
+        else if (statusDesc == ACC_S9_APPROVED)
             return '9';
 
         return null;
@@ -822,24 +882,26 @@ public without sharing class AMS_Utils {
         if (endorsmentCode == '0') {
             return 'Terminated';
         }
-        if (endorsmentCode == '2') {
-            return 'New application pending';
+        if (endorsmentCode == '1') {
+            return 'On hold';
         }
-
+        if (endorsmentCode == '2') {
+            return 'Applicant';
+        }
+        if (endorsmentCode == '3') {
+            return 'Unregisterable STP';
+        }
         if (endorsmentCode == '4') {
             return 'Listed';
         }
-
         if (endorsmentCode ==  '5') {
-            return 'Listed(BSP)';
+            return 'ARC registered';
         }
-
         if (endorsmentCode == '6') {
-            return 'Under review';
+            return 'Review';
         }
-
         if (endorsmentCode == '7') {
-            return 'Approved';
+            return 'Endorsed';
         }
 
         return null;
@@ -973,7 +1035,7 @@ public without sharing class AMS_Utils {
                 Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
                 Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
                 Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
-                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c
+                ,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c, IATA_ISO_State__r.Valid_for_Address__c
                 FROM AMS_Pax_Accreditation_Form__c
                 WHERE Id IN :oscarOnlineAccredIds]);
 
@@ -983,7 +1045,7 @@ public without sharing class AMS_Utils {
 
         for (AMS_OSCAR__c oscar : oscars) {
 
-            Account acc = accounts.get(oscar.Account__c);
+            Account acc = accounts.get(oscar.Account__c); 
 
             AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
 
@@ -1010,8 +1072,8 @@ public without sharing class AMS_Utils {
                 }
 
                 if(acc.ShippingState != onlineAcc.Shipping_ISO_State__r.Name){
-                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.Shipping_ISO_State__r.Name));
-                    acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
+                    accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingState', acc.ShippingState, onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null));
+                    acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 }
                 if(acc.ShippingCountry != onlineAcc.Shipping_ISO_Country__r.Name){
                     accChanges.add(new AMS_ChangeCodesHelper.ObjectChange('Account', 'ShippingCountry', acc.ShippingCountry, onlineAcc.Shipping_ISO_Country__r.Name));
@@ -1023,8 +1085,8 @@ public without sharing class AMS_Utils {
                 acc.GDS__c = transformGDS(onlineAcc.ISSP_AMS_GDS_with_signed_contract__c);
                 acc.BillingCountry = onlineAcc.Branch_Office_Country__r.Name;
                 acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
-                acc.ShippingState = onlineAcc.Shipping_ISO_State__r.Name;
-                acc.BillingState = onlineAcc.IATA_ISO_State__r.Name;
+                acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
+                acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
@@ -1160,9 +1222,9 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
                     accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
-                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.Shipping_ISO_State__r.Name);
+                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Name);
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
@@ -1349,7 +1411,40 @@ public without sharing class AMS_Utils {
     }
 
 
+/**
+    Method to help the transformation between Company Type (Acccount) and Specify Legal Status (AMS Online Accreditation) 
+    */
+public static String transformLegalStatus(String companyType) {
 
+    if (companyType == null)
+        return null;
+
+    if (companyType.equalsIgnoreCase('A'))
+        return 'Association';
+    if (companyType.equalsIgnoreCase('C'))
+        return 'Corporation';
+    if (companyType.equalsIgnoreCase('E'))
+        return 'State Owned Enterprise';
+    if (companyType.equalsIgnoreCase('J'))
+        return 'Joint Venture';
+    if (companyType.equalsIgnoreCase('L'))
+        return 'Limited Company';
+    if (companyType.equalsIgnoreCase('O'))
+        return 'Other';
+    if (companyType.equalsIgnoreCase('P'))
+        return 'Partnership';
+    if (companyType.equalsIgnoreCase('R'))
+        return 'Limited Partnership';
+    if (companyType.equalsIgnoreCase('S'))
+        return 'Sole Proprietorship';
+    if (companyType.equalsIgnoreCase('T'))
+        return 'Trust Company';
+    if (companyType.equalsIgnoreCase('V'))
+        return 'Co-operative';
+
+    return '';
+
+}
 
 /**
     Method to help the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount)
@@ -1780,7 +1875,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     return categoryCustomerMap.get(category);
 
 }
-
+    
+    /*
     public static final Date knownSunday = date.newInstance(2012, 7, 1);
     
     private static Map<String, Set<Integer>> weekendDaysPerBusinessHours{
@@ -1871,7 +1967,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         System.debug(loggingLevel.Debug, '____ [cls AMS_Utils - AddBusinessDays] finalDate - ' + finalDate);
         return finalDate;
     } 
-
+    */
     public static Date lastDayOfMonth(Date dateField) {
         return dateField.addMonths(1).toStartOfMonth().addDays(-1);
     }
@@ -1925,30 +2021,30 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         }
 
     }
- 	public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
-	    //invalid range
-	    if(maxRange-minRange < 0)
-	        return -1;
-	
-	    Integer candidate = minRange;
-	    
-		for(Integer occupiedSlot : orderedSlotsOccupied){
-			if(occupiedSlot > candidate){
-				System.debug('Candidate found : ' + candidate);
-				return candidate;
-			}
-			else if(occupiedSlot == candidate){
-				candidate++;
-				if(candidate > maxRange){
-					return -1;
-				}
-			}
-		}
-		
-		return candidate;
-	}
-	
-	public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
+    public static Integer findGapInRange(Integer minRange, Integer maxRange, List<Integer> orderedSlotsOccupied){
+        //invalid range
+        if(maxRange-minRange < 0)
+            return -1;
+    
+        Integer candidate = minRange;
+        
+        for(Integer occupiedSlot : orderedSlotsOccupied){
+            if(occupiedSlot > candidate){
+                System.debug('Candidate found : ' + candidate);
+                return candidate;
+            }
+            else if(occupiedSlot == candidate){
+                candidate++;
+                if(candidate > maxRange){
+                    return -1;
+                }
+            }
+        }
+        
+        return candidate;
+    }
+    
+    public static String CASE_REF_FORMAT = 'ref:{0}.{1}:ref';
 
     @testVisible
     private static String shortenOrgId(String id) {
@@ -1993,11 +2089,50 @@ public static String fetchTypeOfCustomer (String locationType , String category)
          );
     }
 
-	
+
     public static boolean isProcessUsingAppointments(AMS_OSCAR__c oscar){
         Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO};
         Set<String> oscarCNSProcessesWithAppointments = new Set <String>{new_HO,new_BR,new_BR_ABROAD};
 
         return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
+    }
+
+
+
+    public class Utility_RowIterator implements Iterator<String>, Iterable<String>
+    {
+       private String m_Data;
+       private Integer m_index = 0;
+       private String m_rowDelimiter = '\n';
+
+       public Utility_RowIterator(String fileData)
+       {
+          m_Data = fileData; 
+       }
+       public Utility_RowIterator(String fileData, String rowDelimiter)
+       {
+          m_Data = fileData; 
+          m_rowDelimiter = rowDelimiter;
+       }
+
+       public Boolean hasNext()
+       {
+          return m_index < m_Data.length() ? true : false;
+       }
+       public String next()
+       {     
+          Integer key = m_Data.indexOf(m_rowDelimiter, m_index);
+
+          if (key == -1)
+            key = m_Data.length();
+
+          String row = m_Data.subString(m_index, key);
+          m_index = key + 1;
+          return row;
+       }
+       public Iterator<String> Iterator()
+       {
+          return this;   
+       }
     }
 }

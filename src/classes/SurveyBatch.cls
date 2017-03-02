@@ -118,7 +118,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-							   WhoClosedCase__r.Profile.Name
+                               WhoClosedCase__r.Profile.Name
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -130,6 +130,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     CasesPart1 = new Set<Id>();
     for (Case c : casesToBeProcessed)
       CasesPart1.add(c.Id);
+
 
 
 
@@ -270,7 +271,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
     email.setBccAddresses(new list<string> {'guerreirom@iata.org', 'rovedaa@iata.org'});
-    email.setPlainTextBody(log);
+    email.setPlainTextBody(log);  
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
     system.debug(LoggingLevel.error, '################### MANDO ' + (errors + success) + ' email');
@@ -367,7 +368,16 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
             (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
-            (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela')) { //INC267186
+            (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
+            (c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon') ||
+            (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon') ||
+            (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado') ||
+            (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk') ||
+            (c.Owner.FirstName == 'Victor Manuel' && c.Owner.LastName == 'Meana Solanas') ||
+            (c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
+            (c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
+            (c.Owner.FirstName == 'Taynara'&& c.Owner.LastName == 'Lorentz') ||
+            (c.Owner.FirstName == 'José' && c.Owner.LastName == 'González-Cela de Cominges')) { //INC267186
           IATAcases ++;
           IATAcaseslog += c.id + ', ';
           continue;
@@ -850,8 +860,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           else     countersMap.put(c.Region__c, --n);
         }
 
-
-      }
+        //start INC292755 recordType = Airline Coding Application
+      }else if(c.RecordType.DeveloperName == 'Airline_Coding_Application' &&
+                       c.Status == 'Closed' &&
+                       !c.Contact.Email.contains('@iata.org') &&
+                       !c.Contact.Email.contains('@salesforce.com')){
+        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');    
+      } //end INC292755
 
       /****** Preparing the email *****/
       if (template != null) {
@@ -966,11 +981,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         c.Customer_recovery__c = true ;
         c.Status = 'Customer Recovery';
         c.RecordTypeId = RT_ComplaintIDFS_Id;
-              
-        if(RoleName.contains('Distribution - Airline Coding & MITA'))
+              //**INC301099** Delete this rule
+        /*if(RoleName.contains('Distribution - Airline Coding & MITA'))
             c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
-        else
-        	c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
+        else*/ 
+            c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);
       }
