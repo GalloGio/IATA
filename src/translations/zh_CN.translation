@@ -9150,10 +9150,6 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
         <name>ISSP_of</name>
     </customLabels>
     <customLabels>
-        <label>您公司有未付的账单，请点击这里查看 <a href="/ISSP_CaseList?ListViewName=901_MyPaymentsCases&mid=M4S3&admin=true">here</a></label>
-        <name>ISSP_outstanding_invoices</name>
-    </customLabels>
-    <customLabels>
         <label>reCAPTCHA验证失败</label>
         <name>ISSP_reCAPTCHA_verification_Failed</name>
     </customLabels>
