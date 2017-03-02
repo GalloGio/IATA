@@ -193,6 +193,8 @@ public without sharing class ISSP_AMS_Accreditation {
     //public List<AMS_Accreditation_Contact__c> trainedStaffList{get;set;}
     public Id trainedStaffId {get; set;}
 
+    public String agencyCodesConcernedForPDF {get; set;}
+
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -455,8 +457,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (isNoticeOfChange) {
                     sectorDisplay = Label.ISSP_AMS_NoC_Notice_of_Change;
                     
-                    if(newForm.Agency_Codes_Concerned__c != null)
-                         agencyCodesConcerned = getAgencyCodesConcerned();
+                    agencyCodesConcernedForPDF = '';
+                    if(newForm.Agency_Codes_Concerned__c != null) {
+                        agencyCodesConcerned = getAgencyCodesConcerned();
+                        agencyCodesConcernedForPDF = newForm.Agency_Codes_Concerned__c.replace(',',', ');
+                    }
                     
                     PDFPerRegionCS = getPDFPerRegionCS();
                 }
