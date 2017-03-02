@@ -58,17 +58,22 @@ global class CongaManager {
         //String url = CONGA8_URL;
         String url = CONGA8_URL + '?sessionId=' + apiSessionId;
         url += '&serverUrl=' + apiServerURL;
-        url += '?id=' + caseId;
+        url += '&id=' + caseId;
         url += '&TemplateId=' + congaTemplate;
         url += '&DefaultPDF=1';
         //url +='OFN=[file name]';
 
         // send email
         url += '&ds7=2'; //returns automatically to send mail SF page
-        url += '&EmailTemplateId=' + emailTemplateId;
+        if (emailTemplateId!=null) {
+            url += '&EmailTemplateId=' + emailTemplateId;
+        }
         url += '&EmailFromID=' + OrgWideDefaultsId;
         url += '&EmailToId=' + contactId;
         url += '&EmailRelatedToId=' + emailRelatedCaseId;
+        url += '&SC0=1';
+        url += '&SC1=Attachments';
+
         if (listQueries!=null && !listQueries.isEmpty()) {
             url += '&QueryId=' + String.join(listQueries,',');
         }
@@ -80,14 +85,16 @@ global class CongaManager {
         PageReference pageref = new PageReference(CONGA8_URL);
         pageref.getParameters().put('sessionId', apiSessionId);
         pageref.getParameters().put('serverUrl', apiServerURL);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('DefaultPDF', '1');
 
         // create attachment
         pageref.getParameters().put('ds7', '0');
         pageref.getParameters().put('EmailFromID', OrgWideDefaultsId);
         pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', emailRelatedCaseId);
+        pageref.getParameters().put('EmailRelatedToId', String.valueof(emailRelatedCaseId).substring(0,15));
+        pageref.getParameters().put('SC0', '1');
+        pageref.getParameters().put('SC1', 'Attachments');
         String url = pageref.getURL();
         if (listQueries!=null && !listQueries.isEmpty()) {
             url += '&QueryId=' + String.join(listQueries,',');

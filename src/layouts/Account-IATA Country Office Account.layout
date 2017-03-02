@@ -215,7 +215,11 @@
             <relatedList>RelatedHistoryList</relatedList>
         </relatedLists>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>LocalGovernance__c.IATA_Office__c</relatedList>

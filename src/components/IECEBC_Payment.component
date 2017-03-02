@@ -20,9 +20,9 @@
             //Method Selection
             this.document.getElementById('{!$Component.formShoppingCart.hiddenSelectedPaymentType}').value = methodName;
             console.log( 'values loaded');
-            if (methodName=='ICH') sChooseICHMethod();
-            if (methodName=='BANK_TRANSFER') sChooseBankTransferMethod();
-            if (methodName=='CREDIT_CARD') sChooseCreditCardMethod();
+            if (methodName=='ICH') {ShoworHideBankTransfer('#payment-method-container-ich');sChooseICHMethod();}
+            if (methodName=='BANK_TRANSFER') {ShoworHideBankTransfer('#payment-method-container-bank');sChooseBankTransferMethod();}
+            if (methodName=='CREDIT_CARD') {ShoworHideBankTransfer('#payment-method-container-creditcard');sChooseCreditCardMethod();}
             if (creditCardExternalId=='') RadioButtonNotorSelectable(true);
         }
         
@@ -99,6 +99,41 @@
          jQuery('#accordion-payment-method-panel').removeClass(openterms);
          jQuery('#accordion-payment-method-panel').addClass(closeterms);
          }
+         
+    }
+    
+    function ShoworHideBankTransfer(sectiontarget)
+    {
+     var opendiv='is-open';
+     var closediv='is-hidden';
+     
+     jQuery(sectiontarget).removeClass(closediv);
+     jQuery(sectiontarget).addClass(opendiv);
+        
+     //open or close other section
+     if (sectiontarget=='#payment-method-container-bank'){
+         sectiontarget='#payment-method-container-creditcard';
+         jQuery(sectiontarget).removeClass(opendiv);
+         jQuery(sectiontarget).addClass(closediv);
+         
+         return;
+      }
+     if (sectiontarget=='#payment-method-container-creditcard'){
+         sectiontarget='#payment-method-container-bank';
+         jQuery(sectiontarget).removeClass(opendiv);
+         jQuery(sectiontarget).addClass(closediv);
+         
+         return;
+      }
+     if (sectiontarget=='#payment-method-container-ich'){
+         sectiontarget='#payment-method-container-bank';
+         jQuery(sectiontarget).removeClass(opendiv);
+         jQuery(sectiontarget).addClass(closediv);
+         sectiontarget='#payment-method-container-creditcard';
+         jQuery(sectiontarget).removeClass(opendiv);
+         jQuery(sectiontarget).addClass(closediv);
+      }
+         
          
     }
     function RadioButtonNotorSelectable(flag){
@@ -281,7 +316,19 @@
                                     <input class="user-input checkbox js-enable-accordion" data-target="#accordion-payment-method" type="checkbox" id="terms-and-conditions" onClick="ShowWaitingStatus('.sectionActions');sDoNothing();RadioButtonNotorSelectable(true);"/>
                                     <label class="custom-checkbox" for="terms-and-conditions"><i class="icon"></i></label>
                                 </div>
-                                <label class="input-label" for="terms-and-conditions">I agree to the eBroadcast <a href="#">Terms &amp; Conditions</a></label>
+                                <!--
+                                <label class="input-label" for="terms-and-conditions">Old I agree to the eBroadcast <a href="#">Terms &amp; Conditions</a></label>
+                                -->
+                                <apex:repeat id="repeatterms" var="terms" value="{!TermsAndConditions}" rows="1">
+                                
+                                <apex:repeat id="repeatAttachment" var="attach" value="{!terms.Attachments}" rows="1">
+                                   
+                                 <label class="input-label" for="terms-and-conditions">
+                                    I agree to the {!terms.Product_Information__r.Related_Product_Category__r.Display_Name__c} &nbsp;
+                                    <a href="{!URLFOR($Action.Attachment.Download, attach.Id)}" target="_blank">Terms &amp; Conditions</a>
+                                 </label>
+                                </apex:repeat>
+                                </apex:repeat>
                             </div>
                         </dd>   
                         <dt class="accordion-title is-disabled" data-index="3" id="accordion-payment-method">Payment method</dt>
@@ -328,7 +375,7 @@
                                 </div>
                                 
                                 <apex:form id="paymentMethodsection">
-                                <div class="payment-method-container">
+                                <div class="payment-method-container" id="payment-method-container-creditcard">
                                     <table class="data-table table-saved-cards js-card-data-table">
                                         <tbody>
                                             <tr class="heading">
@@ -392,7 +439,7 @@
                                     -->
                                 </div>
                                 <!-- Bank transfer -->
-                                <div class="payment-method-container bank is-hidden">
+                                <div class="payment-method-container bank is-hidden" id="payment-method-container-bank">
                                     <div class="alert note">
                                         <div class="alert-message">
                                             <p>If you want to pay by bank transfer,<Br/>please contact us at <a href="mailto:globaldata@iata.org">globaldata@iata.org</a>.</p>
@@ -404,6 +451,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 </apex:form>
                             </div>
                             <!-- New credit card -->
@@ -489,7 +537,7 @@
                                 
                                 </apex:repeat>
                                 
-                                <apex:outputPanel id="subscriptionDescriptionPanel" rendered="{!isSubscriptionDescriptionVisible}">
+                                <apex:outputText id="subscriptionDescriptionPanel" rendered="{!isSubscriptionDescriptionVisible}">
                                     <tr class="item less-space">
                                         <th class="item-details" colspan="2">
                                             <div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Your subscription parameters will be</div>
@@ -504,7 +552,21 @@
                                             </div>
                                         </th>
                                     </tr>
-                                </apex:outputPanel>
+                                </apex:outputText>
+                                
+                                <apex:outputText id="EnhancedReportingPanel" rendered="{!isEnhancedReporting}">
+                                  <tr class="item less-space">
+                    <th class="item-details" colspan="2">
+                      <div class="title-label"><i class="fa fa-info-circle" aria-hidden="true"></i> Prorated charge</div>
+                      <div class="item-box">Start Date:
+                        <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermStartDate}" /></apex:outputText>
+                      </div>
+                      <div class="item-box">End Date:
+                        <apex:outputText value=" {0, date, d MMMM yyyy}"><apex:param value="{!newSubscriptionTermEndDate}" /></apex:outputText>
+                      </div>
+                    </th>
+                  </tr>
+                                </apex:outputText>
                                 
                                 <tr class="sub-total">
                                     <th>

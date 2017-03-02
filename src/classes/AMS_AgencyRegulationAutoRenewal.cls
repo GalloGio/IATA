@@ -90,7 +90,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates();
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencyriskmgmt@iata.org'];
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
@@ -106,8 +106,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 				system.debug('CHECK comcasecontact' + keyContactsPerAccount.get(agReg.Account__c).get(0));
 				//if no admin is found just use one of the existing keyContacts
-				if(comCasecontact == null)
-					comCasecontact = keyContactsPerAccount.get(agReg.Account__c).get(0);
+				if(comCasecontact == null) comCasecontact = keyContactsPerAccount.get(agReg.Account__c).get(0);
 			}
 
 			if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
@@ -165,12 +164,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveDGR, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
-            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3){
-                return true;
-            }else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999){
-                 //India has this particular exception to the normal behaviour, no check is to be done
-                 return false;
-            }
+            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3) return true;
+            //India has this particular exception to the normal behaviour, no check is to be done
+            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999) return false;
             else if(accountData.Location_Class__c == 'C'){
                 if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveDGR < 2 )
                     return true;
@@ -326,8 +322,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
             
             }
 
-            if(!Test.isRunningTest() && !mailsToSend.isEmpty()){
-                Messaging.sendEmail(mailsToSend);
+            if(!mailsToSend.isEmpty()){
+                if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
                 for(Messaging.SingleEmailMessage mail: mailsToSend)
                 {
                     EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
@@ -364,14 +360,15 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         
         for(Schema.Picklistentry pe: prefLanguages){
             EmailTemplate langTemplate = countryTemplates.get('AMS_DGR_Renewal_' + pe.getValue());
-            if(langTemplate == null) //English is default and must exist in the system
-                countryTemplates.get('AMS_DGR_Renewal_English');
+
+            //English is default and must exist in the system
+            if(langTemplate == null) countryTemplates.get('AMS_DGR_Renewal_English');
+
             multilangTemplates.put(pe.getValue(), langTemplate.Id);
         }
 
         //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
-        if(multilangTemplates.isEmpty())
-            multilangTemplates.put('English', countryTemplates.get('AMS_DGR_Renewal_English').Id);
+        if(multilangTemplates.isEmpty()) multilangTemplates.put('English', countryTemplates.get('AMS_DGR_Renewal_English').Id);
 
         system.debug('DGR templates mapping ' + multilangTemplates);
 
@@ -381,10 +378,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
     //return templateId based on lang selected, default English if none is found
     private static Id getSpecificLangTemplate(String lang, Map<String, Id> availableTemplates){
-        if(availableTemplates.get(lang) != null)
-            return availableTemplates.get(lang);
-        else 
-            return availableTemplates.get('English');
+        if(availableTemplates.get(lang) != null) return availableTemplates.get(lang);
+        else return availableTemplates.get('English');
     }
 
 }

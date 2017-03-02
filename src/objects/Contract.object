@@ -253,7 +253,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_End_Date__c</fullName>
-        <description>This field represents the end date of the contract's current cycle.</description>
+        <description>This field represents the end date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
@@ -262,7 +262,7 @@ E&amp;F CRM Project</description>
     </fields>
     <fields>
         <fullName>Current_Cycle_Start_Date__c</fullName>
-        <description>This field represents the starting date of the contract's current cycle.</description>
+        <description>This field represents the starting date of the contract&apos;s current cycle.</description>
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
@@ -2329,6 +2329,33 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EF_Payment_Method</picklist>
+            <values>
+                <fullName>Bank transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS payments</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPCR %2F SPDR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Virtual Account Payment</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

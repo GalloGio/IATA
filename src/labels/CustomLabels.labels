@@ -136,6 +136,13 @@
         <value>Generate Certificates</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action13</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action13</shortDescription>
+        <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -230,6 +237,14 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_RECONSIDERATION</shortDescription>
         <value>Change Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
+        <value>Change Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
@@ -737,14 +752,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailCC</shortDescription>
-        <value>airline-mgmt@iata.org, agbisitj@iata.org,alcocerm@iata.org,alvarengam@iata.org,arcel@iata.org,boulaghmena@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,haywards@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kaluschkem@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,oleksikr@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,stifaniy@iata.org,torneroc@iata.org,vitel@iata.org,voevodam@iata.org,vonglasowv@iata.org,weblinkcs@iata.org,windmullet@iata.org,airlinecoding@iata.org,petterssonl@iata.org,valenciad@iata.org,hattinghc@iata.org</value>
+        <value>agbisitj@iata.org,alvarengam@iata.org,arcel@iata.org,bestr@iata.org,boulaghmena@iata.org,careenn@iata.org,chanc@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,farrella@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,hattinghc@iata.org,haywards@iata.org,hughesg@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kalajil@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,McbrideG@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,MomchilovM@iata.org,OueidatG@iata.org,petterssonl@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,reckmannr@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,rossje@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,szajkod@iata.org,TruchetP@iata.org,torneroc@iata.org,vitel@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailGDS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com, gregory.tarrusson@amadeus.com, rsamson@amadeus.com, palexandre@amadeus.com, ncedmsgcd@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, HelpDesk@farelogix.com, pricing@farelogix.com, nmoore@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, mike.walker@travelport.com, emyoon@topas.net, byyeom@topas.net,  e-tkt@topas.net, cscall@topas.net, accreditation@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, zpyu@travelsky.com, net_ncc@travelsky.com, net_mor@travelsky.com, jiajia@travelsky.com, iReq@abacus.com.sg,  support@abacus.com.sg, sowfung_leong@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es , pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp</value>
+        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -1218,7 +1233,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -3408,7 +3423,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <protected>false</protected>
         <shortDescription>IDCard_PaymentByChequeP2</shortDescription>
         <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
     </labels>
     <labels>
         <fullName>IDCard_PaymentByCreditP1</fullName>
@@ -3716,7 +3731,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ReportAgencyIncorrectInfo</shortDescription>
-        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
+        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_ReportAgencyIncorrectInfo2</fullName>
@@ -4602,7 +4617,7 @@ Your ID Card application manager has been informed of your request.</value>
         <value>I have read and accept the 
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
+&lt;a href=&quot;JavaScript:newPopup(&apos; http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Terms_ConditionCA</fullName>
@@ -10715,6 +10730,27 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Agency Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
+        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
+        <value>Pilot phase: please note that only &quot;Changes&quot; and &quot;New Processes&quot; related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10862,7 +10898,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_01</shortDescription>
-        <value>There are no Change Codes Information to extract for the specified period!</value>
+        <value>No occurrences were found, based on your criteria, for the specific period!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
@@ -12568,7 +12604,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.&lt;br/&gt;&lt;b&gt;The service is under a Pilot Phase:&lt;/b&gt; please note that Agency Information is not currently available worldwide.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
@@ -13992,7 +14028,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_IATAcertificate</fullName>
@@ -15339,7 +15375,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PortalUserStatusChange</shortDescription>
-        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_PortalUserStatusChange_ActiveProcessedError</fullName>
@@ -16150,6 +16186,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Satisfactory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SaveNew</fullName>
         <categories>ISSP, Contacts</categories>
         <language>en_US</language>
@@ -16781,6 +16824,167 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>GFA Communication queue</value>
     </labels>
     <labels>
+        <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PWC_Lithuania_DC</shortDescription>
+        <value>PwC Lithuania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Argentina_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Argentina_DC</shortDescription>
+        <value>PwC Argentina DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Azerbaijan_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Azerbaijan_DC</shortDescription>
+        <value>PwC Azerbaijan DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Central</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Central</shortDescription>
+        <value>PwC Central</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Change_Requests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Change_Requests</shortDescription>
+        <value>PwC Change Requests</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_China_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_China_DC</shortDescription>
+        <value>PwC China DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_DIP_Reviews</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_DIP_Reviews</shortDescription>
+        <value>PwC DIP Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Egypt_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Egypt_DC</shortDescription>
+        <value>PwC Egypt DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Estonia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Estonia_DC</shortDescription>
+        <value>PwC Estonia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Greece_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Greece_DC</shortDescription>
+        <value>PwC Greece DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_India_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_India_DC</shortDescription>
+        <value>PwC India DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Indonesia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Indonesia_DC</shortDescription>
+        <value>PwC Indonesia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Israel_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Israel_DC</shortDescription>
+        <value>PwC Israel DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Malaysia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Malaysia_DC</shortDescription>
+        <value>PwC Malaysia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Mongolia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Mongolia_DC</shortDescription>
+        <value>PwC Mongolia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Philippines_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Philippines_DC</shortDescription>
+        <value>PwC Philippines DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Poland_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Poland_DC</shortDescription>
+        <value>PwC Poland DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Romania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Romania_DC</shortDescription>
+        <value>PwC Romania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Slovenia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Slovenia_DC</shortDescription>
+        <value>PwC Slovenia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Spain_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Spain_DC</shortDescription>
+        <value>PwC Spain DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Sweden_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Sweden_DC</shortDescription>
+        <value>PwC Sweden DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Thailand_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Thailand_DC</shortDescription>
+        <value>PwC Thailand DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Vietnam_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Vietnam_DC</shortDescription>
+        <value>PwC Vietnam DC</value>
+    </labels>
+    <labels>
         <fullName>ISSP_WaitChangeMessage</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16844,6 +17048,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add Comment</value>
     </labels>
     <labels>
+        <fullName>ISSP_characters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP characters new password</shortDescription>
+        <value>8 characters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_consult_FAQ</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -16900,6 +17112,30 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Portal_Application_Right_Trigger</shortDescription>
         <value>The Invoice Type {!invoiceType} is not available for your company. Please contact customer service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_letters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP letters new password</shortDescription>
+        <value>1 letter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_new_password_must_have</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP new password must have</shortDescription>
+        <value>Your password must have at least:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_number_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP number new password</shortDescription>
+        <value>1 number</value>
     </labels>
     <labels>
         <fullName>ISSP_of</fullName>
@@ -17823,7 +18059,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentButtonLanguage</shortDescription>
-        <value>Start a Chat</value>
+        <value>Chat with us!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentCheckingAvailableAgents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentCheckingAvailableAgents</shortDescription>
+        <value>Chat Support - checking for available agents:</value>
     </labels>
     <labels>
         <fullName>LiveAgentCustomSettingNotFound</fullName>
@@ -17840,11 +18083,19 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
     </labels>
     <labels>
+        <fullName>LiveAgentNEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentNEW</shortDescription>
+        <value>NEW!&amp;nbsp
+&lt;!--&lt;span&gt;&lt;/span&gt;--&gt;</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentOfflineButton</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentOfflineButton</shortDescription>
-        <value>offline</value>
+        <value>Sorry - No agents available</value>
     </labels>
     <labels>
         <fullName>LiveAgentPlaceHolder</fullName>
@@ -18280,6 +18531,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Orders</shortDescription>
         <value>Orders</value>
+    </labels>
+    <labels>
+        <fullName>Oscar_Attachments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oscar Attachments</shortDescription>
+        <value>Oscar Attachments</value>
     </labels>
     <labels>
         <fullName>Overall_maximum_size</fullName>
@@ -20526,6 +20784,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Web</shortDescription>
         <value>Web</value>
+    </labels>
+    <labels>
+        <fullName>Web_Site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Web Site</shortDescription>
+        <value>Web Site</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>

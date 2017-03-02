@@ -31,14 +31,14 @@ public with sharing class CNS_EBulletin {
     public String eBulletin_StartDate_day { get; set; }
 
     public AMS_eBulletin_Profile__c newFormDaily {get {
-    	
-    	return this.newFormDaily;
-    	
+        
+        return this.newFormDaily;
+        
     } set;}
     public AMS_eBulletin_Profile__c newFormWeekly {get {
-    	
-    	return this.newFormWeekly;
-    	
+        
+        return this.newFormWeekly;
+        
     } set;}
     public Contact con {get; set;}
     public String displayLanguage {get; set;}
@@ -693,14 +693,14 @@ public with sharing class CNS_EBulletin {
     /*private void popContact() {
         User user = DAL_ISSP.getUser(Userinfo.getUserId());
         if(user.ContactId != null){
-	        system.debug('user.ContactId ' + user.ContactId);
-	        con = DAL_ISSP.getContact(user.ContactId);
-	
-	        if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
-	            bIsAdmin = true;
+            system.debug('user.ContactId ' + user.ContactId);
+            con = DAL_ISSP.getContact(user.ContactId);
+    
+            if (con.User_Portal_Status__c == 'Administrator' || con.User_Portal_Status__c == 'Approved Admin' || con.User_Portal_Status__c == 'Regional Administrator' || con.User_Portal_Status__c == 'R. Administrator' )
+                bIsAdmin = true;
         }else{
-        	//TODO CNS ### check if admin?
-        	//bIsAdmin = true;
+            //TODO CNS ### check if admin?
+            //bIsAdmin = true;
         }
     }*/
 
@@ -765,7 +765,7 @@ public with sharing class CNS_EBulletin {
     }
 
     public boolean saveAMSForm() {
-	
+    
         boolean bRes = true;
 
         //only saves records on the 1st time
@@ -886,37 +886,37 @@ public with sharing class CNS_EBulletin {
     }
  
     public Pagereference goToStep1() {
-     	Pagereference pageRef = Page.CNS_EBulletin;
-     	pageref.getParameters().put('step','1');
-     	pageref.setRedirect(true);
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1');
+        pageref.setRedirect(true);
         return pageref;
     }
 
      public Pagereference goToStep1_1() {
-     	Pagereference pageRef = Page.CNS_EBulletin;
-     	pageref.getParameters().put('step','1_1');
-     	pageref.setRedirect(true);
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1_1');
+        pageref.setRedirect(true);
         return pageref;
     }
 
      public Pagereference goToStep1_2() {
-     	Pagereference pageRef = Page.CNS_EBulletin;
-     	pageref.getParameters().put('step','1_2');
-     	pageref.setRedirect(true);
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','1_2');
+        pageref.setRedirect(true);
         return pageref;
     }
 
     public Pagereference goToStep2() {
-     	Pagereference pageRef = Page.CNS_EBulletin;
-     	pageref.getParameters().put('step','2');
-     	pageref.setRedirect(true);
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','2');
+        pageref.setRedirect(true);
         return pageref;
     }
 
     public Pagereference goToStep3() {
-     	Pagereference pageRef = Page.CNS_EBulletin;
-     	pageref.getParameters().put('step','3');
-     	pageref.setRedirect(true);
+        Pagereference pageRef = Page.CNS_EBulletin;
+        pageref.getParameters().put('step','3');
+        pageref.setRedirect(true);
         return pageref;
     }
 
@@ -929,25 +929,74 @@ public with sharing class CNS_EBulletin {
         Datetime endDate;
         String period = todayPeriod == null?'':todayPeriod;
 
-        Id res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
+        Id res;
+        try{
+            res = callGenerateEBulletinReportWS( newFormDaily, startDate, startDate.addDays(1), period);
+        }catch(Exception e){
+            
+            if(e.getTypeName().contains('AMS_EBulletinException')){
 
-        dailyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
+                string labelValue = '';
+
+                if(e.getMessage().equalsIgnoreCase('00')){
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
+                }else if(e.getMessage().equalsIgnoreCase('01')){
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_01;
+                }else{
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
+                }                
+
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
+                ApexPages.addMessage(myMsg);
+            }
+        }
+
+        if(res == null){
+            dailyFileDownload = '';
+        }else{
+            dailyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
+        }
 
         return null;
     }
     
+    
+
     public Pagereference weeklyReportDownload() {
 
         List<String> splitStartDate = pWeekStart.split('/');
         List<String> splitEndDate = pWeekEnd.split('/');
-
+   
         Datetime startDate = Datetime.newInstance(Integer.valueOf(splitStartDate.get(2)), Integer.valueOf(splitStartDate.get(1)), Integer.valueOf(splitStartDate.get(0)));
         Datetime endDate = Datetime.newInstance(Integer.valueOf(splitEndDate.get(2)), Integer.valueOf(splitEndDate.get(1)), Integer.valueOf(splitEndDate.get(0)));
         String period = '';
 
-        Id res = callGenerateEBulletinReportWS( newFormWeekly , startDate, endDate, period);
+        Id res;
+        try{
+            res = callGenerateEBulletinReportWS( newFormWeekly , startDate, endDate, period);
+        }catch(Exception e){
+    
+            if(e.getTypeName().contains('AMS_EBulletinException')){
+                string labelValue = '';
 
-        weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
+                if(e.getMessage().equalsIgnoreCase('00')){
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
+                }else if(e.getMessage().equalsIgnoreCase('01')){
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_01;
+                }else{
+                    labelValue = Label.ISSP_AMS_eBulletin_ErrorMsg_00;
+                }                
+
+                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, labelValue);
+                ApexPages.addMessage(myMsg);
+            }
+        }
+
+        if(res == null){
+            weeklyFileDownload = '';
+        }else{
+            weeklyFileDownload = '/servlet/servlet.FileDownload?file=' + res;
+        }         
 
         return null;
     }

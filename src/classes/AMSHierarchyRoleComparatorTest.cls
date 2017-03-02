@@ -42,7 +42,8 @@ private class AMSHierarchyRoleComparatorTest
 		AMS_Account_Role__c owner2Acct3 = new AMS_Account_Role__c(Account__c = a3.Id, Owner_Account__c = ownerAccount.Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
 		AMS_Account_Role__c emplo1Acct3 = new AMS_Account_Role__c(Account__c = a3.Id, Contact__c = co1.Id, recordTypeId = employeeRecTypeId);
 
-		List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1Acct1,owner2Acct1,owner1Acct2,owner2Acct2,owner1Acct3,owner2Acct3,emplo1Acct3};
+		//List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1Acct1,owner2Acct1,owner1Acct2,owner2Acct2,owner1Acct3,owner2Acct3,emplo1Acct3};
+		List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1Acct1,owner2Acct1,owner1Acct2,owner2Acct2,owner1Acct3,owner2Acct3};
 		insert ownersList;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Process__c = AMS_Utils.new_HO);

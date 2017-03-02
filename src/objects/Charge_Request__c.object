@@ -1020,6 +1020,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Code A4A Assignment Fee - 752539</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Annual A4A Retention Fee - 701903</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Code Annual Administration Fee - 701899</fullName>
                 <default>false</default>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
@@ -1030,7 +1040,22 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Code Application Fee - 752537</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Code Assignment Fee - 701907</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Reinstatement Fee - 701927</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Code Voluntary Change Request Fee - 701929</fullName>
                 <default>false</default>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
@@ -1105,6 +1130,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValues>CASS</controllingFieldValues>
             </picklistValues>
             <picklistValues>
+                <fullName>Location Identifier Assignment Fee - 701920</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
                 <fullName>MITA annual fee - 701909</fullName>
                 <default>false</default>
                 <controllingFieldValues>Coding/MITA</controllingFieldValues>
@@ -1135,6 +1165,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>BSP</controllingFieldValues>
                 <controllingFieldValues>CASS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PDP / PTA Assignment Fee - 701924</fullName>
+                <default>false</default>
+                <controllingFieldValues>Coding/MITA</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>TEST_CASS</fullName>
@@ -1445,6 +1480,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>4500.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>BSPFEE_JOINS</controllingFieldValues>
+                <controllingFieldValues>Code Reinstatement Fee - 701927</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>5000.00</fullName>
@@ -1466,6 +1502,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1500.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>CASFEE_DGRR2</controllingFieldValues>
+                <controllingFieldValues>PDP / PTA Assignment Fee - 701924</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>100.00</fullName>
@@ -1476,22 +1513,31 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <fullName>1200.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>Code Annual Administration Fee - 701899</controllingFieldValues>
+                <controllingFieldValues>Code Application Fee - 752537</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3600.00</fullName>
                 <default>false</default>
-                <controllingFieldValues>Code Assignment Fee - 701907</controllingFieldValues>
-                <controllingFieldValues>MITA application fee - 701910</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>3800.00</fullName>
                 <default>false</default>
+                <controllingFieldValues>Code A4A Assignment Fee - 752539</controllingFieldValues>
+                <controllingFieldValues>Code Annual A4A Retention Fee - 701903</controllingFieldValues>
                 <controllingFieldValues>Code Annual Retention Fee-  701900</controllingFieldValues>
+                <controllingFieldValues>Code Assignment Fee - 701907</controllingFieldValues>
+                <controllingFieldValues>Location Identifier Assignment Fee - 701920</controllingFieldValues>
+                <controllingFieldValues>MITA application fee - 701910</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>22000.00</fullName>
                 <default>false</default>
                 <controllingFieldValues>MITA annual fee - 701909</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7400.00</fullName>
+                <default>false</default>
+                <controllingFieldValues>Code Voluntary Change Request Fee - 701929</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

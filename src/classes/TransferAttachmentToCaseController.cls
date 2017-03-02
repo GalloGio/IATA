@@ -32,13 +32,10 @@ public with sharing class TransferAttachmentToCaseController {
             CaseWrapper cw = new CaseWrapper();
             cw.CaseRecord = c;
             cw.isSelected = false;
-            if ( c.Id == sourceCase.ParentId) {
-                cw.strRelationship = 'Parent';
-            } else if (c.ParentId == sourceCase.Id) {
-                cw.strRelationship = 'Child';
-            } else if (c.ParentId == sourceCase.ParentId) {
-                cw.strRelationship = 'Sibling';
-            }
+
+            if ( c.Id == sourceCase.ParentId)           cw.strRelationship = 'Parent';
+            else if (c.ParentId == sourceCase.Id)       cw.strRelationship = 'Child';
+            else if (c.ParentId == sourceCase.ParentId) cw.strRelationship = 'Sibling';
 
             lstRelatedCases.add(cw);
         }
@@ -106,11 +103,11 @@ public with sharing class TransferAttachmentToCaseController {
         }
 
         for(CaseWrapper cw : listTargetCaseSelected  ){
-                     if(sourceCase.id == cw.caserecord.id ){
-                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You selected the same source case as destination, please reselect a proper case'));
-                        return;
-                        }
-                     }
+            if(sourceCase.id == cw.caserecord.id ){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You selected the same source case as destination, please reselect a proper case'));
+                return;
+            }
+        }
 
 
 
@@ -144,11 +141,9 @@ public with sharing class TransferAttachmentToCaseController {
                 // if it is an amazon file, clone it and do the copy to amazon
                 if (attach.getIsAmazon() ) {
                     AmazonFile newAtt = attach.transfer(cw.CaseRecord.Id);
-                    if ( newAtt == null ) {
-                        errors++;
-                    } else {
-                        lstNewAmazon.add(newAtt.amazonFile);
-                    }
+
+                    if ( newAtt == null ) errors++;
+                    else lstNewAmazon.add(newAtt.amazonFile);
                 }
             }
         }
