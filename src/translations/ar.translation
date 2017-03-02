@@ -6539,6 +6539,10 @@ and
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8 رموز</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7771,6 +7775,10 @@ and
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>حرف واحد</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7983,6 +7991,10 @@ and
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>يجب تحقق التالي في كلمة المرور:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>طلب خدمة جديدة</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8065,6 +8077,10 @@ and
     <customLabels>
         <label>هناك تنبيه جديد على بوابة IATA الخاصة بك</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم واحد</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>عنوان البريد الإلكتروني للمكتب</label>

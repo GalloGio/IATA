@@ -6539,6 +6539,10 @@ and
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8位字符</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7771,6 +7775,10 @@ and
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>1个字母</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7983,6 +7991,10 @@ and
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>您的密码至少需要包含</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>新的服务申请</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8069,6 +8081,10 @@ and
     <customLabels>
         <label>IATA 门户网站新通知</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>1个数字</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>办公邮箱</label>
@@ -9148,10 +9164,6 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
     <customLabels>
         <label>/</label>
         <name>ISSP_of</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP_outstanding_invoices --></label>
-        <name>ISSP_outstanding_invoices</name>
     </customLabels>
     <customLabels>
         <label>reCAPTCHA验证失败</label>

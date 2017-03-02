@@ -6568,6 +6568,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8 caracteres</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7801,6 +7805,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>1 letra</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>Cargando datos de la cuenta...</label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -8013,6 +8021,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>La contraseña debe contener al menos:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>Nueva solicitud de servicio</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8099,6 +8111,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label>Nueva notificación en el portal de IATA</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>1 número</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>Correo electrónico de su oficina</label>

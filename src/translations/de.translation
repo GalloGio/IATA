@@ -6544,6 +6544,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label>8 Zeichen</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -7776,6 +7780,10 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Last_updated_statement</name>
     </customLabels>
     <customLabels>
+        <label>1 Buchstabe</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Loading Account --></label>
         <name>ISSP_Loading_Account</name>
     </customLabels>
@@ -7989,6 +7997,10 @@ Ihr Browser (Internet Explorer 7/8) wird ab Juni 2015 nicht mehr unterstützt. A
         <name>ISSP_NewUser</name>
     </customLabels>
     <customLabels>
+        <label>Die Mindestanforderungen für Passwort sind:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
         <label>Neue Serviceanfrage</label>
         <name>ISSP_New_Service_Request</name>
     </customLabels>
@@ -8075,6 +8087,10 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
     <customLabels>
         <label>Ihr IATA-Portal enthält eine neue Benachrichtigung.</label>
         <name>ISSP_Notification_subject</name>
+    </customLabels>
+    <customLabels>
+        <label>1 Zahl</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>Büro E-Mail</label>
