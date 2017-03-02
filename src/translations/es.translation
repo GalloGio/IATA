@@ -2673,7 +2673,7 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
+&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-SP.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
         <name>ID_Card_Terms_Condition</name>
     </customLabels>
     <customLabels>
