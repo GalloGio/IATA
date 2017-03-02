@@ -38,7 +38,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 							  FROM Account
 							  WHERE Id = :this.currentUser.Contact.AccountId];
 
-		if(accs.size()!=1)	ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, 'Error in the system: cannot open the selected account'));
+		if(accs.size()!=1)	ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, Label.ISSP_cannot_open_the_selected_account));
 		else{
 
 			acc = accs[0];
@@ -370,7 +370,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 					mitatypesToIsSenior.put(t,((Date)a.get(d)) < ((Date)myacc.get(d)));
 			}
 			if(MITAdateToType.get('MITA_IATA_Interline_Passenger__c')!=null && MITAdateToType.get('MITA_IATA_Interline_Cargo__c')!=null)
-				MITAdateToType.put('The Passenger and Cargo Interline Traffic Agreement',MITAdateToType.get('MITA_IATA_Interline_Passenger__c'));
+				MITAdateToType.put(Label.ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement,MITAdateToType.get('MITA_IATA_Interline_Passenger__c'));
 
 			for(String d : BIETAdateToType.keyset()){
 				String t = BIETAdateToType.get(d);
@@ -386,17 +386,17 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
 		}
 
 		private Map<String,String> MITAdateToType = new Map<String,String>{
-			'MITA_IATA_Interline_Passenger__c'=>'The Passenger Interline Agreement',
-			'MITA_IATA_Interline_Cargo__c'=>'The Cargo Interline Agreement',
-			'MITA_One_way_Pass_Issuing_Airline__c'=>'The One Way Issuing Airline',
-			'MITA_One_way_Pass_Participating__c'=>'The One Way Participating Airline'
+			'MITA_IATA_Interline_Passenger__c'=>Label.ISSP_The_Passenger_Interline_Agreement,
+			'MITA_IATA_Interline_Cargo__c'=>Label.ISSP_The_Cargo_Interline_Agreement,
+			'MITA_One_way_Pass_Issuing_Airline__c'=>Label.ISSP_The_One_Way_Issuing_Airline,
+			'MITA_One_way_Pass_Participating__c'=>Label.ISSP_The_One_Way_Participating_Airline
 		};
 		private Map<String,String> BIETAdateToType = new Map<String,String>{
-			'BIETA_Bilateral_Date__c'=>'Bilateral, both carriers can issue electronic tickets',
-			'BIETA_One_way_Electronic_Issuing_Airline__c'=>'One Way Passenger Issuing Airline',
-			'BIETA_One_way_Electronic_Participating__c'=>'One Way Passenger Participating',
-			'BIETA_One_way_Intermodal_Issuing_Airline__c'=>'One Way Intermodal Issuing Date',
-			'BIETA_One_way_Intermodal_Participating__c'=>'One Way Intermodal Participating Date'
+			'BIETA_Bilateral_Date__c'=>Label.ISSP_Bilateral_both_carriers_can_issue_electronic_tickets,
+			'BIETA_One_way_Electronic_Issuing_Airline__c'=>Label.ISSP_One_Way_Passenger_Issuing_Airline,
+			'BIETA_One_way_Electronic_Participating__c'=>Label.ISSP_One_Way_Passenger_Participating,
+			'BIETA_One_way_Intermodal_Issuing_Airline__c'=>Label.ISSP_One_Way_Intermodal_Issuing_Date,
+			'BIETA_One_way_Intermodal_Participating__c'=>Label.ISSP_One_Way_Intermodal_Participating_Date
 		};
 
 
