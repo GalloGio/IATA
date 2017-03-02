@@ -7007,16 +7007,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_to_IDFS_Confidential_Record_Type</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IDFS_Confidential</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Update to IDFS Confidential Record Type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>sMAP_Update_Decision_Date</fullName>
         <field>Decision_Date__c</field>
         <formula>NOW()</formula>
@@ -15006,7 +14996,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Assign_to_ISSP_queue</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>If automatic assignment rule fail, the case is assigned to a specific queue.</description>
         <formula>AND(  LEFT($Profile.Name, 3) = &apos;ISS&apos;,  $User.Id = OwnerId )</formula>
         <triggerType>onCreateOnly</triggerType>
