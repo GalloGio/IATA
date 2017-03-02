@@ -1338,10 +1338,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Libyan Arab Jamahiriya</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Lithuania</fullName>
                 <default>false</default>
             </picklistValues>
