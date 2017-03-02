@@ -357,7 +357,7 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from Case where CreatedById =: UserInfo.getUserId()].size();
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -368,7 +368,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData.put('questionBody','WHAT WHOULD PKB2 DO');//;
         testRequestItem.contactData.put('latitude','0.2');//;
         testRequestItem.contactData.put('longitude','0.2');//;
-        testRequestItem.contactData.put('emoIcon',emo);//;
+        //testRequestItem.contactData.put('emoIcon',emo);//;
 
         pkb_mobile_proxy.ResponseItem resp =  pkb_mobile_controller.processContactUs(testRequestItem);
         Test.stopTest();
@@ -378,10 +378,10 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c/*, Customer_emoticon__c*/  from Case where id =: resp.caseId];
+        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-        system.assertEquals(emo, c.Customer_emoticon_value__c);
+        //system.assertEquals(emo, c.Customer_emoticon_value__c);
         //system.assert(c.Customer_emoticon__c.contains(emo) );
 
 
@@ -400,7 +400,7 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -431,7 +431,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData = new map<String,String>();
 
         initialSize = [select Id from Case where CreatedById =: UserInfo.getUserId()].size();
-        emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         testRequestItem.sessionId = 'TESTSESSION';
         testRequestItem.contactData.put('firstName','TEST');//
@@ -441,7 +441,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData.put('questionBody','WHAT WHOULD PKB2 DO');//;
         testRequestItem.contactData.put('latitude','0.2');//;
         testRequestItem.contactData.put('longitude','0.2');//;
-        testRequestItem.contactData.put('emoIcon',emo);//;
+        //testRequestItem.contactData.put('emoIcon',emo);//;
 
         resp =  pkb_mobile_controller.processContactUs(testRequestItem);
         Test.stopTest();
@@ -452,10 +452,10 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c/*, Customer_emoticon__c*/  from Case where id =: resp.caseId];
+        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-        system.assertEquals(emo, c.Customer_emoticon_value__c);
+        //system.assertEquals(emo, c.Customer_emoticon_value__c);
         //system.assert(c.Customer_emoticon__c.contains(emo) );
 
         List<PKB_Article_Feedback_Deflection__c> sessionDeflections = [ select Id,Session_ID__c , Contact__c
@@ -539,7 +539,7 @@ public class pkb_mobile_Test {
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
 
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
