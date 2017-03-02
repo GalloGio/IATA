@@ -16186,6 +16186,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Satisfactory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SaveNew</fullName>
         <categories>ISSP, Contacts</categories>
         <language>en_US</language>
