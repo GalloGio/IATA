@@ -352,7 +352,7 @@
                                             <apex:pageblock mode="edit" id="Filter">
                                             <div>
                                             <apex:outputPanel rendered="{!communityName=='CNS'}">
-                                                For CNS documents please click <a href="http://www.cnsc.net/Pages/default.aspx">here</a>
+                                                <apex:outputLabel value="{!$Label.ISSP_CNS_Documents}" escape="false"/>
                                                 <br /><br />
                                             </apex:outputPanel>
                                             </div>
