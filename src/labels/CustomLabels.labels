@@ -136,6 +136,13 @@
         <value>Generate Certificates</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action13</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action13</shortDescription>
+        <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -16299,6 +16306,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Satisfactory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SaveNew</fullName>
         <categories>ISSP, Contacts</categories>
         <language>en_US</language>
@@ -17172,6 +17186,14 @@ CNS Customer Services</value>
         <value>Add Comment</value>
     </labels>
     <labels>
+        <fullName>ISSP_characters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP characters new password</shortDescription>
+        <value>8 characters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_consult_FAQ</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -17228,6 +17250,30 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Portal_Application_Right_Trigger</shortDescription>
         <value>The Invoice Type {!invoiceType} is not available for your company. Please contact customer service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_letters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP letters new password</shortDescription>
+        <value>1 letter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_new_password_must_have</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP new password must have</shortDescription>
+        <value>Your password must have at least:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_number_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP number new password</shortDescription>
+        <value>1 number</value>
     </labels>
     <labels>
         <fullName>ISSP_of</fullName>
@@ -20876,6 +20922,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Web</shortDescription>
         <value>Web</value>
+    </labels>
+    <labels>
+        <fullName>Web_Site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Web Site</shortDescription>
+        <value>Web Site</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>
