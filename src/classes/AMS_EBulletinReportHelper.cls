@@ -760,8 +760,6 @@ public without sharing class AMS_EBulletinReportHelper {
 					recordValue = processOwners(headerVal , oldOwners , OWNERPOS);
 
 				
-				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME,null);				
-
 			}
 			else if(apiNameUpper == OWNERSTOTALAPINAME)
 			{
@@ -873,22 +871,18 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processCustomHeader(AMSEBulletinSettings__c headerVal,Agency_Applied_Change_code__c cc)
 	{
-		if(oldOwners.isempty() && !headerVal.is_Field_New__c)
-		{	
-			if(headerVal.Api_Name__c == OWNERAPINAME ) 
-			{	
-				return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
-			}
-			else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
-				
-				if(ownersTotalPercentage == 0) return '';
+		
+		if(headerVal.Api_Name__c == OWNERAPINAME ) 
+			return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),(headerVal.is_Field_New__c ? NEWOWNERPOS:OWNERPOS));
+		else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
+			
+			if(ownersTotalPercentage == 0) return '';
 
-				String recordValue = String.valueOf(ownersTotalPercentage);
-				
-				ownersTotalPercentage = 0;
+			String recordValue = String.valueOf(ownersTotalPercentage);
+			
+			ownersTotalPercentage = 0;
 
-				return	recordValue;
-			}
+			return	recordValue;
 		}
 		if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
