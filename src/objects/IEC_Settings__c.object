@@ -434,32 +434,6 @@
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
-    <fields>
-        <fullName>EBC_ExactTarget_Username__c</fullName>
-        <defaultValue>&quot;kejia.hu@cgi.com&quot;</defaultValue>
-        <description>EBC ExactTarget Username</description>
-        <externalId>false</externalId>
-        <inlineHelpText>EBC ExactTarget Username</inlineHelpText>
-        <label>EBC ExactTarget Username</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>EBC_ExactTarget_Password__c</fullName>
-        <defaultValue>&quot;Alban2016%&quot;</defaultValue>
-        <description>EBC ExactTarget Password</description>
-        <externalId>false</externalId>
-        <inlineHelpText>EBC ExactTarget Password</inlineHelpText>
-        <label>EBC ExactTarget Password</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <label>IEC Settings</label>
     <visibility>Public</visibility>
 </CustomObject>
