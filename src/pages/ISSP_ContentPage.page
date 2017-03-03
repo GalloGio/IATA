@@ -258,7 +258,7 @@
                         <div class="panel-body" id="body-results">
                             
 
-                                 <apex:outputpanel id="opp_results">
+                                 <apex:outputpanel id="opp_results" rendered="{!communityName!='CNS'}">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="searchInput_" placeholder="{!$Label.ISSP_Search}"/>
@@ -350,6 +350,12 @@
                                         <div class="panel-body" id="body-filter">
 
                                             <apex:pageblock mode="edit" id="Filter">
+                                            <div>
+                                            <apex:outputPanel rendered="{!communityName=='CNS'}">
+                                                <apex:outputLabel value="{!$Label.ISSP_CNS_Documents}" escape="false"/>
+                                                <br /><br />
+                                            </apex:outputPanel>
+                                            </div>
                                                  <div id="contactUs">
                                                     Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                                         Contact Us

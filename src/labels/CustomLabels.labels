@@ -11744,6 +11744,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
+        <fullName>ISSP_CNS_Documents</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_Documents</shortDescription>
+        <value>For CNS documents please click &lt;a href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_quote</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
