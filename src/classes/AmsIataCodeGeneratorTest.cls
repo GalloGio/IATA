@@ -1145,6 +1145,172 @@ public class  AmsIataCodeGeneratorTest
 
     }
 
+     static testMethod void validateCASSNumberandIATACodeErrors(){
+        
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        
+        //HO
+        Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'HO', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',REASON_FOR_CREATION__C = 'Created by customer'
+                         ,CASS_Number__c ='000', IATACode__c = '02310000000');
+       
+        
+        insert account1;
+        
+        
+        //BR
+        Account account1Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR1',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com', ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                         ,CASS_Number__c ='001', Top_Parent__c = account1.Id);
+       
+        
+        
+
+        //BR
+        Account account2Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR2',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                        ,CASS_Number__c ='002', Top_Parent__c = account1.Id, IATACode__c = '123456789');
+       
+        
+        List<Account> accounts = new List<Account>{account1Br,account2Br};
+        insert accounts;
+
+        Contact contact1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = account1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
+
+        insert contact1;
+        
+    
+        AMS_Agencies_Hierarchy__c hier = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+
+        insert hier;
+
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account1Br.Id, HO_Flag__c = 'true'));
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account2Br.Id, HO_Flag__c = 'true'));
+
+        insert rels;
+
+        
+        Test.startTest();
+
+        AMS_OSCAR__c oscar1 = createCaseAndOSCARNoCass(account1,contact1,null);
+        AMS_OSCAR__c oscar2 = createCaseAndOSCARNoCass(account1Br,contact1,null);
+        AMS_OSCAR__c oscar3 = createCaseAndOSCAR(account2Br,contact1,null);
+
+        AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , CASS_Number__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
+        accreditationObj.CASS_Number__c = null;
+        update accreditationObj;
+
+
+        String[] result2 = AmsIataCodeGenerator.generatedAgencyIATACode(account1Br.Id,oscar2.AMS_Online_Accreditation__c);
+
+        accreditationObj = [SELECT ID , IATACode__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar3.Id)];
+        accreditationObj.IATACode__c = '123456789';
+        update accreditationObj;
+
+        String[] result3 = AmsIataCodeGenerator.generatedAgencyIATACode(account2Br.Id,oscar3.AMS_Online_Accreditation__c);       
+
+      
+        accreditationObj = [SELECT ID , IATACode__c, Location_Class__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar3.Id)];
+        accreditationObj.Location_Class__c = 'A';
+        accreditationObj.IATACode__c = null;
+        update accreditationObj;
+
+        account2Br.IATACode__c = null;
+        update account2Br;
+        
+        String[] result4 = AmsIataCodeGenerator.generatedAgencyIATACode(account2Br.Id,oscar3.AMS_Online_Accreditation__c);       
+
+
+        System.assertEquals(result2[0],'2');
+        System.assertEquals(result2[1].contains('C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA CODE.'),true);
+
+        System.assertEquals(result3[0],'2');
+        System.assertEquals(result3[1].contains('This account has already an existing IATA code.'),true);
+
+        System.assertEquals(result4[0],'2');
+        System.assertEquals(result4[1], 'IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.');
+
+        Test.stopTest();
+
+    }
+
+    static testMethod void validateNonNumericIATACodeDigitCreation(){
+        
+        ID standardRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('Standard_Account') ;
+        
+        //HO
+        Account account1 = new Account(RecordTypeId = standardRT, Name = 'My Travels HO',  IATA_ISO_Country__c = c2.Id, 
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'HO', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com',REASON_FOR_CREATION__C = 'Created by customer'
+                         ,CASS_Number__c ='000', IATACode__c = '02310000000');
+       
+        
+        insert account1;
+        
+        
+        //BR
+        Account account1Br = new Account(RecordTypeId = standardRT, Name = 'My Travels BR1',  IATA_ISO_Country__c = c2.Id,
+                         Sector__c = 'Cargo Agent', Category__c = 'Non-IATA Cargo Agent', 
+                         Location_Class__c = 'C', Location_Type__c = 'BR', Status__c = 'New application pending',
+                         Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com', ParentId=account1.Id,REASON_FOR_CREATION__C = 'Created by customer'
+                         ,CASS_Number__c ='001', Top_Parent__c = account1.Id);
+       
+        
+        
+        List<Account> accounts = new List<Account>{account1Br};
+        insert accounts;
+
+        Contact contact1 = new Contact(FirstName = 'First', LastName = 'Contact',  AccountId = account1.Id, Email = 'thecontact1@gmail.com', Phone = '123123123');
+
+        insert contact1;
+        
+    
+        AMS_Agencies_Hierarchy__c hier = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+
+        insert hier;
+
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = hier.Id, Parent_Account__c = account1.Id, Child_Account__c = account1Br.Id, HO_Flag__c = 'true'));
+
+        insert rels;
+
+        
+        Test.startTest();
+
+        AMS_OSCAR__c oscar2 = createCaseAndOSCARNoCass(account1Br,contact1,null);
+
+        AMS_Pax_Accreditation_Form__c accreditationObj = [SELECT ID , A_code__c, N_code__c, C_code__c,IATACode__c,Location_Class__C,Chk_Dgt__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
+        accreditationObj.A_code__c = null;
+        accreditationObj.N_code__c = null;
+        accreditationObj.C_code__c = null;
+        update accreditationObj;
+
+        AmsIataCodeGenerator.checkDigitCreation(accreditationObj, account1Br, true);
+
+       
+        accreditationObj = [SELECT ID , A_code__c, N_code__c, C_code__c,IATACode__c,Location_Class__C,Chk_Dgt__c from AMS_Pax_Accreditation_Form__c where Id in (select AMS_Online_Accreditation__c from AMS_OSCAR__c where Id = :oscar2.Id)];
+        accreditationObj.IATACode__c = 'BR400000042';
+        accreditationObj.A_code__c = '4';
+        accreditationObj.N_code__c = '0000';
+        accreditationObj.C_code__c = 'BR';
+        update accreditationObj;
+
+        AmsIataCodeGenerator.checkDigitCreation(accreditationObj, account1Br, true);
+
+        Test.stopTest();
+
+    }
+
     static AMS_OSCAR__c createCaseAndOSCAR(Account theAccount, Contact theContact, String cassNumber){
 
         // Create the Staging area for the Account
@@ -1178,5 +1344,35 @@ public class  AmsIataCodeGeneratorTest
 
         
     }
-  
+
+    static AMS_OSCAR__c createCaseAndOSCARNoCass(Account theAccount, Contact theContact, String cassNumber){
+
+        // Create the Staging area for the Account
+        //ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+
+        Case cse = new Case();
+        insert cse;
+
+        ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
+
+        AMS_Pax_Accreditation_Form__c theStagingAcc = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = theAccount.Name, IATAcode__c = theAccount.IATAcode__c, Branch_Office_Country__c = c2.Id, 
+                                                            Location_Class__c = theAccount.Location_Class__c, Location_Type__c = theAccount.Location_Type__c, SAAM_Case__c = cse.id);
+        insert theStagingAcc;
+
+        System.debug('Staging location class is ' + theStagingAcc.Location_Class__c);
+
+        // Create OSCAR and Communication Case
+        ID rtNew = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+        AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtNew, Account__c = theAccount.Id, Process__c = 'NEW.HO.1.0', AMS_Online_Accreditation__c = theStagingAcc.Id );
+        insert theOscar;
+
+        cse.Oscar__c = theOscar.Id;
+
+        update cse;
+
+        return theOscar;
+
+        
+    }
 }
