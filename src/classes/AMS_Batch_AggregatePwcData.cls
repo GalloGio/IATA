@@ -183,7 +183,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                         // Positive and negative
                         if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                             updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                        } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                        } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                             updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                         }
 
@@ -237,7 +237,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                             // Positive and negative
                             if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                                 updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                            } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                            } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                                 updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                             }
 
@@ -268,7 +268,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                                 // Positive and negative
                                 if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'A' || agencyAppliedChangeCode.Operation__c == '' || agencyAppliedChangeCode.Operation__c == null)) || (agencyAppliedChangeCode.Change_Code__c == 'IRS')) {
                                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_POS', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
-                                } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && agencyAppliedChangeCode.Operation__c == 'W') || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
+                                } else if((agencyAppliedChangeCode.Change_Code__c == 'IRR' && (agencyAppliedChangeCode.Operation__c == 'W' || agencyAppliedChangeCode.Operation__c == 'D')) || (agencyAppliedChangeCode.Change_Code__c == 'IRW')) {
                                     updateAggregatePwcData(agencyAppliedChangeCode.Account__c, 'IRRS_NEG', agencyAppliedChangeCode.Irregularities_Points__c.intValue(), null);
                                 }
 
