@@ -9542,6 +9542,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
   &quot;&quot; )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>if the company has any company domains defined, this field shows information on whether the domain of this contact is among the valid ones or not.</inlineHelpText>
         <label>Email domain validity check</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

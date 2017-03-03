@@ -13485,6 +13485,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>IATAN Passenger Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>IATA Passenger Sales Agent</fullName>
                 <default>false</default>
             </picklistValues>
