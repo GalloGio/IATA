@@ -717,6 +717,12 @@ public without sharing class vfISSP_FAQ2Case
         }
         articleViewLines = buildArticleViewLines(selectDataCategory.topCategoryName, subtopic, Userinfo.getLanguage());
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
+
+        if(selectDataCategory.CategoryName.startsWith('CNS')) {
+            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].ISO_Code__c;
+            this.newCase.IFAP_Country_ISO__c = usaId ;
+            this.newCase1.IFAP_Country_ISO__c = usaId ;
+        }
     }
     /*
      * End Actions  
