@@ -23,7 +23,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>globaldata@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>EBC/EBC_Campaign_Sent</template>
     </alerts>
     <alerts>
