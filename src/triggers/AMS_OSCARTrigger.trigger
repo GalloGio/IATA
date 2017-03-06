@@ -285,11 +285,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 	                        changeCode.memoText = '';
                     	}
 
-						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
+						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
 
                         if(accountActiveChangeCode.size() > 0){
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+                            changeCode.status = accountActiveChangeCode[0].Account__r.Status__c;
                         }
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);

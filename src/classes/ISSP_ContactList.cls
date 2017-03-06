@@ -240,7 +240,7 @@ public with sharing class ISSP_ContactList {
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate , Name , Account.Name ';
+                String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }

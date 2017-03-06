@@ -33,6 +33,7 @@ public class GenericAttachmentListControllerTest {
 	}
 	
 	static testMethod void testDeleteAttachment() {
+
 		Case cse = new Case();
 		insert cse;
 		
@@ -125,5 +126,116 @@ public class GenericAttachmentListControllerTest {
 		controller.cancelPopupAttach();
 		Test.stopTest();
 	}
+
+	static testMethod void testIsOscarParent() {
+		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		insert cse;
+		
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getParentIsOscar();
+		Test.stopTest();
+	}
+
+	static testMethod void testIsOscarParent2() {
+		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		insert cse;
+
+		GenericAttachmentListController controller2 = new GenericAttachmentListController();
+		controller2.isForPortal = false;
+		controller2.id = cse.Id;
+		controller2.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller2.getParentIsOscar();
+		Test.stopTest();
+	}
+
+	static testMethod void testGetCanAttachFilesToCase() {
+		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'Draft';
+		cse.Reason1__c = 'CLO - Closure';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getCanAttachFilesToCase();
+		Test.stopTest();
+	}
+
+	static testMethod void testGetCanAttachFilesToCase2() {
+		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'Draft';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.getCanAttachFilesToCase();
+		Test.stopTest();
+	}
+
+	static testMethod void testgoToAttachmentPage() {
+		ID rtOSCAR = Schema.SObjectType.Case.getRecordTypeInfosByName().get('Cases - Europe').getRecordTypeId();
+
+		Case parentCase = new Case();
+		parentCase.recordTypeId = rtOSCAR;
+		insert parentCase;
+
+		Case cse = new Case();
+		cse.ParentId = parentCase.Id;
+		cse.Status = 'In Progress';
+		cse.Reason1__c = 'CLO - Closure';
+		insert cse;
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		controller.relatedCase.recordTypeId = rtOSCAR;
+		
+		Test.startTest();
+		controller.goToAttachmentPage();
+		Test.stopTest();
+	}
+
 
 }

@@ -136,6 +136,13 @@
         <value>Generate Certificates</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action13</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action13</shortDescription>
+        <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3416,7 +3423,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <protected>false</protected>
         <shortDescription>IDCard_PaymentByChequeP2</shortDescription>
         <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
     </labels>
     <labels>
         <fullName>IDCard_PaymentByCreditP1</fullName>
@@ -3724,7 +3731,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ReportAgencyIncorrectInfo</shortDescription>
-        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
+        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_ReportAgencyIncorrectInfo2</fullName>
@@ -4610,7 +4617,7 @@ Your ID Card application manager has been informed of your request.</value>
         <value>I have read and accept the 
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
+&lt;a href=&quot;JavaScript:newPopup(&apos; http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Terms_ConditionCA</fullName>
@@ -14021,7 +14028,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_IATAcertificate</fullName>
@@ -15368,7 +15375,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PortalUserStatusChange</shortDescription>
-        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_PortalUserStatusChange_ActiveProcessedError</fullName>
@@ -16177,6 +16184,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Satisfactory</shortDescription>
         <value>Satisfactory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>ISSP_SaveNew</fullName>
@@ -17034,6 +17048,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add Comment</value>
     </labels>
     <labels>
+        <fullName>ISSP_characters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP characters new password</shortDescription>
+        <value>8 characters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_consult_FAQ</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -17090,6 +17112,30 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Portal_Application_Right_Trigger</shortDescription>
         <value>The Invoice Type {!invoiceType} is not available for your company. Please contact customer service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_letters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP letters new password</shortDescription>
+        <value>1 letter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_new_password_must_have</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP new password must have</shortDescription>
+        <value>Your password must have at least:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_number_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP number new password</shortDescription>
+        <value>1 number</value>
     </labels>
     <labels>
         <fullName>ISSP_of</fullName>
@@ -20738,6 +20784,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Web</shortDescription>
         <value>Web</value>
+    </labels>
+    <labels>
+        <fullName>Web_Site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Web Site</shortDescription>
+        <value>Web Site</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>

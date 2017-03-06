@@ -882,24 +882,26 @@ public without sharing class AMS_Utils {
         if (endorsmentCode == '0') {
             return 'Terminated';
         }
-        if (endorsmentCode == '2') {
-            return 'New application pending';
+        if (endorsmentCode == '1') {
+            return 'On hold';
         }
-
+        if (endorsmentCode == '2') {
+            return 'Applicant';
+        }
+        if (endorsmentCode == '3') {
+            return 'Unregisterable STP';
+        }
         if (endorsmentCode == '4') {
             return 'Listed';
         }
-
         if (endorsmentCode ==  '5') {
-            return 'Listed(BSP)';
+            return 'ARC registered';
         }
-
         if (endorsmentCode == '6') {
-            return 'Under review';
+            return 'Review';
         }
-
         if (endorsmentCode == '7') {
-            return 'Approved';
+            return 'Endorsed';
         }
 
         return null;

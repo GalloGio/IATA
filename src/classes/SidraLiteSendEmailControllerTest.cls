@@ -1,11 +1,19 @@
-@isTest(SeeAllData='true')
+@isTest
 public class SidraLiteSendEmailControllerTest {
 
     public static Case getSidraCase() {
+        APXTConga4__Conga_Merge_Query__c cm1 = new APXTConga4__Conga_Merge_Query__c();
+        cm1.APXTConga4__Name__c = 'Parent Case';
+        insert cm1;
+        APXTConga4__Conga_Merge_Query__c cm2 = new APXTConga4__Conga_Merge_Query__c();
+        cm2.APXTConga4__Name__c = 'Parent Account';
+        insert cm2;
+
         Account account = new Account(
             Name = 'test account',
             Sector__c = 'Travel Agent',
             Category__c = 'Travel Agency Association'
+
         );
         insert account;
 
@@ -22,8 +30,17 @@ public class SidraLiteSendEmailControllerTest {
 
     @isTest
     static void controller_ErrorNoCaseId() {
+        APXTConga4__Conga_Merge_Query__c cm1 = new APXTConga4__Conga_Merge_Query__c();
+        cm1.APXTConga4__Name__c = 'Parent Case';
+        insert cm1;
+
+        APXTConga4__Conga_Merge_Query__c cm2 = new APXTConga4__Conga_Merge_Query__c();
+        cm2.APXTConga4__Name__c = 'Parent Account';
+        insert cm2;
+
         Account acc = new Account(Name='test');
         insert acc;
+
         ApexPages.StandardController stdController = new ApexPages.StandardController(acc);
 
         Test.startTest();
@@ -58,8 +75,44 @@ public class SidraLiteSendEmailControllerTest {
     }
 
     @isTest
+    static void controller_ErrorNoCase() {
+        Case cse = getSidraCase();
+        ApexPages.StandardController stdController = new ApexPages.StandardController(cse);
+        ApexPages.currentPage().getParameters().put('id',cse.Id);
+        ApexPages.currentPage().getParameters().put('sessionId','test_session_id');
+        ApexPages.currentPage().getParameters().put('serverUrl','http://testhost.com');
+        delete cse;
+
+        Test.startTest();
+        SidraLiteSendEmailController controller = new SidraLiteSendEmailController(stdController);
+        controller.returnToCase();
+        Test.stopTest();
+    }
+
+    @isTest
     static void controller_OK() {
         Case cse = getSidraCase();
+        cse.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
+        update cse;
+        SidraLiteEmailTemplates__c template = new SidraLiteEmailTemplates__c();
+        template.Name = 'Test Template';
+        template.SidraLiteAction__c = 'REI';
+        template.SidraLiteReason__c = 'Financial Review Non-compliance';
+        template.Country__c = 'All Region';
+        template.Region__c = 'Europe';
+        template.TypeOfCustomer__c = 'Travel Agency Association';
+        insert template;
+        APXTConga4__Conga_Template__c ct = new APXTConga4__Conga_Template__c();
+        Insert ct;
+        SidraLiteCongaTemplates__c templateConga = new SidraLiteCongaTemplates__c();
+        templateConga.Name = 'Test Template Conga';
+        templateConga.SidraLiteAction__c = 'REI';
+        templateConga.SidraLiteReason__c = 'Financial Review Non-compliance';
+        templateConga.Country__c = 'All Region';
+        templateConga.Region__c = 'Europe';
+        templateConga.TypeOfCustomer__c = 'Travel Agency Association';
+        templateConga.EmailTemplate__c = ct.Id;
+        insert templateConga;
         ApexPages.StandardController stdController = new ApexPages.StandardController(cse);
         ApexPages.currentPage().getParameters().put('id',cse.Id);
         ApexPages.currentPage().getParameters().put('sessionId','test_session_id');
@@ -68,10 +121,39 @@ public class SidraLiteSendEmailControllerTest {
         Test.startTest();
         SidraLiteSendEmailController controller = new SidraLiteSendEmailController(stdController);
         controller.returnToCase();
+        controller.selectedType = 'REI';
         controller.findTemplates();
+        controller.goToCongaSendEmail();
 
         System.assert(SidraLiteSendEmailController.QUERY_PARENT_CASE!=null,'Conga Query "IRR letter gen. Conga 2010 - CS" not found');
         System.assert(SidraLiteSendEmailController.QUERY_ACCOUNT!=null,'Conga Query "IRR letter gen. Conga 2010 - CS" not found');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void controller_OK_withoutTemplate() {
+        Case cse = getSidraCase();
+        cse.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
+        update cse;
+        SidraLiteCongaTemplates__c templateConga = new SidraLiteCongaTemplates__c();
+        templateConga.Name = 'Test Template Conga';
+        templateConga.SidraLiteAction__c = 'REI';
+        templateConga.SidraLiteReason__c = 'Financial Review Non-compliance';
+        templateConga.Country__c = 'All Region';
+        templateConga.Region__c = 'Europe';
+        templateConga.TypeOfCustomer__c = 'Travel Agency Association';
+        insert templateConga;
+        ApexPages.StandardController stdController = new ApexPages.StandardController(cse);
+        ApexPages.currentPage().getParameters().put('id',cse.Id);
+        ApexPages.currentPage().getParameters().put('sessionId','test_session_id');
+        ApexPages.currentPage().getParameters().put('serverUrl','http://testhost.com');
+
+        Test.startTest();
+        SidraLiteSendEmailController controller = new SidraLiteSendEmailController(stdController);
+        controller.returnToCase();
+        controller.selectedType = 'REI';
+        controller.findTemplates();
+
         Test.stopTest();
     }
 
