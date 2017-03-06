@@ -13232,7 +13232,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_PortalUrl_CNS</shortDescription>
-        <value>https://portal.cnsc.net/cns</value>
+        <value>https://portal.cnsc.net/cns/</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_PortalUser_StatusChange</fullName>
