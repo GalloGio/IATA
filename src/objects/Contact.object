@@ -9536,9 +9536,9 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <description>Shows an image to represent a valid or invalid domain for current contact email, used for ISSP portal</description>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL(ValidContactDomainName__c, &quot;valid&quot;),
-  IMAGE(&quot;/resource/1475750392000/intellimail__check&quot;, &quot;valid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 23, 152),
 IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
-  IMAGE(&quot;/resource/1488191467000/AccountDomainValidation_Invalid&quot;, &quot;invalid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 23, 211),
   &quot;&quot; )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

@@ -85,7 +85,19 @@
             { "name": "name", "targets": 3},
             { "name": "type", "targets": 4},
             { "name": "active", "targets": 5, "width": "110px" }
-          ]
+          ],
+          "language": {
+              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+              "info": "{!$Label.ISSP_Showing_page}",
+              "infoEmpty": "{!$Label.ISSP_No_records_available}",
+              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+              "search": "{!$Label.ISSP_Search}",
+              "paginate": {
+                "next": "{!$Label.ISSP_Next}",
+                "previous": "{!$Label.ISSP_Previous}"
+              }
+          }
         });
 
         $(agreementsTable.rows().nodes()).find(".iconx").attr('src',$('.mastericonx').attr('src'));
@@ -194,8 +206,8 @@
 					<h2>{!acc.Name} / {!acc.Airline_designator__c} / {!acc.IATACode__c}</h2><br/>
 					<!-- CUSTOM TAB HEADER -->
 					<div class="mytabheadercontainer level1" >
-						<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')">Existing Agreements</div>
-						<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">Agreements available</div>
+						<div class="mytabheader level1 active" id="hdExisting" onclick="showTab('Existing')">{!$Label.ISSP_Existing_Agreements}</div>
+						<div class="mytabheader level1" id="hdAdd" onclick="showTab('Add')">{!$Label.ISSP_Agreements_available}</div>
 					</div>
 
 					<!-- TAB CONTAINER -->
@@ -224,20 +236,20 @@
 												<apex:outputText value="{!MITAagreementTypes}" escape="false" />
 											</div>
 											<div style="float:right; visibility: hidden;" >
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />Show all the agreements<br/>
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>Active agreemnents<br/>
-												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />Inactive agreemnents<br/>
+												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}<br/>
+												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}<br/>
+												<input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="false" />{!$Label.ISSP_Inactive_agreements}<br/>
 											</div>
 
 											<table id="MITAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact" >
 												<thead>
 													<tr>
-                            <th>IATA Designator</th>
-                            <th>3 Digit Code</th>
-                            <th>Airline Prefix</th>
-														<th>Airline</th>
-														<th>Agreement type</th>
-														<th>Active</th>
+														<th>{!$Label.ISSP_IATA_Designator}</th>
+														<th>{!$Label.ISSP_3_Digit_Code}</th>
+														<th>{!$Label.ISSP_Airline_Prefix}</th>
+														<th>{!$Label.ISSP_Airline}</th>
+														<th>{!$Label.ISSP_Agreement_type}</th>
+														<th>{!$Label.ISSP_Active}</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -306,20 +318,20 @@
 												<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
 											</div>
 											<div style="float:right; visibility: hidden;" >
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />Show all the agreements<br/>
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>Active agreemnents<br/>
-												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />Inactive agreemnents<br/>
+												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />{!$Label.ISSP_Show_all_the_agreements}<br/>
+												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>{!$Label.ISSP_Active_agreements}<br/>
+												<input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="false" />{!$Label.ISSP_Inactive_agreements}<br/>
 											</div>
 
 											<table id="BIETAagreementsTable" class="agreementsTable dataTable no-footer hover row-border compact" >
 												<thead>
 													<tr>
-														<th>IATA Designator</th>
-                            <th>3 Digit Code</th>
-                            <th>Airline Prefix</th>
-														<th>Airline</th>
-														<th>Agreement type</th>
-														<th>Active</th>
+														<th>{!$Label.ISSP_IATA_Designator}</th>
+														<th>{!$Label.ISSP_3_Digit_Code}</th>
+														<th>{!$Label.ISSP_Airline_Prefix}</th>
+														<th>{!$Label.ISSP_Airline}</th>
+														<th>{!$Label.ISSP_Agreement_type}</th>
+														<th>{!$Label.ISSP_Active}</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -403,11 +415,11 @@
 						 			<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 						 				<thead>
 											<tr>
-												<th>IATA designator</th>
-												<th>3 Digit Code</th>
-                        <th>Airline Prefix</th>
-												<th>Airline</th>
-												<th>Available types</th>
+												<th>{!$Label.ISSP_IATA_Designator}</th>
+												<th>{!$Label.ISSP_3_Digit_Code}</th>
+												<th>{!$Label.ISSP_Airline_Prefix}</th>
+												<th>{!$Label.ISSP_Airline}</th>
+												<th>{!$Label.ISSP_Available_types}</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -489,11 +501,11 @@
 						 			<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 						 				<thead>
 											<tr>
-                        <th>IATA designator</th>
-												<th>3 Digit Code</th>
-                        <th>Airline Prefix</th>
-												<th>Airline</th>
-												<th>Available types</th>
+												<th>{!$Label.ISSP_IATA_Designator}</th>
+												<th>{!$Label.ISSP_3_Digit_Code}</th>
+												<th>{!$Label.ISSP_Airline_Prefix}</th>
+												<th>{!$Label.ISSP_Airline}</th>
+												<th>{!$Label.ISSP_Available_types}</th>
 											</tr>
 										</thead>
 										<tbody>
