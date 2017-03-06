@@ -1585,12 +1585,7 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('SFI PermissionList: ' + PermissionList);
         system.debug('SFI PermissionList SIZE: ' + PermissionList.size());
 
-        User u = [
-            SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
-            FROM User WHERE Id =:UserInfo.getUserId()];
-        Boolean isCNS = false;
-        if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
-            && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
+        Boolean isCNS = ISSP_Utilities.isCNS();
 
         if(PermissionList != null && PermissionList.size() > 0){
             for (SelectOption top : this.lst_selectTopics)

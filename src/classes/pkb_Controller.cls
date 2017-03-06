@@ -77,16 +77,8 @@ public without sharing class pkb_Controller {
   
   //CNS
   public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-  public Boolean isCNS{ get {
-        User u = [
-          SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
-          FROM User WHERE Id =:UserInfo.getUserId()];
-        Boolean isCNS = false;
-        if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
-          && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
-        return isCNS;
-    } set;
-    }
+  public Boolean isCNS{ get { return ISSP_Utilities.isCNS(); } set; }
+
   public String lsExcludeTopics { get {
         List <String> lsExcludeTopics = new List<String>();
         //Select Custom Setting to set permissions
