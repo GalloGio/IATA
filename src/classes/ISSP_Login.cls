@@ -121,7 +121,13 @@ public without sharing class ISSP_Login {
     	thisUser.IsActive = true;
 		thisUser.Portal_User_Frozen_Checkbox__c = false;
 		update thisUser;
-		Boolean success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.ISSP, false);
+        Boolean success = false;
+        if(thisUser.Contact.Community__c.contains('CNS')){
+            success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.CNS, false);
+        }else{
+            success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.ISSP, false);
+        }
+        
 
     	/*
     	//show90Days = false;
