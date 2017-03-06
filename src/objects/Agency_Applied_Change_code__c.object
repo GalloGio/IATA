@@ -277,6 +277,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DWD</fullName>
                 <default>false</default>
             </picklistValues>
