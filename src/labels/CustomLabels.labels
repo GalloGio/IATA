@@ -5602,6 +5602,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>2-letter Airline Designator Code</value>
     </labels>
     <labels>
+        <fullName>ISSP_3_Digit_Code</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP 3 Digit Code</shortDescription>
+        <value>3 Digit Code</value>
+    </labels>
+    <labels>
         <fullName>ISSP_60Day_Password_Reset</fullName>
         <categories>ISSP_ChangePassword, s6</categories>
         <language>en_US</language>
@@ -11435,6 +11443,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Approve</value>
     </labels>
     <labels>
+        <fullName>ISSP_Active</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Active_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active agreements</shortDescription>
+        <value>Active agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -11499,6 +11523,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Agent Accredited</value>
     </labels>
     <labels>
+        <fullName>ISSP_Agreement_type</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreement type</shortDescription>
+        <value>Agreement type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Agreements_available</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreements available</shortDescription>
+        <value>Agreements available</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Airline</fullName>
         <categories>ISSP, FAQ</categories>
         <language>en_US</language>
@@ -11513,6 +11553,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Airline Contact Type</shortDescription>
         <value>Contact Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Airline_Prefix</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Airline Prefix</shortDescription>
+        <value>Airline Prefix</value>
     </labels>
     <labels>
         <fullName>ISSP_Airlines_fly_3_billion</fullName>
@@ -11641,6 +11689,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Available Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_Available_types</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Available types</shortDescription>
+        <value>Available types</value>
+    </labels>
+    <labels>
         <fullName>ISSP_BSPLink</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -11702,6 +11758,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_Become_Accredited_Agent</shortDescription>
         <value>IATA Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Bilateral, both carriers can issue electronic tickets</shortDescription>
+        <value>Bilateral, both carriers can issue electronic tickets</value>
     </labels>
     <labels>
         <fullName>ISSP_Branches</fullName>
@@ -13289,6 +13353,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Excess</value>
     </labels>
     <labels>
+        <fullName>ISSP_Existing_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Existing Agreements</shortDescription>
+        <value>Existing Agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_External_Links</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -14015,6 +14087,14 @@ this is the tiess topic help</value>
         <value>.</value>
     </labels>
     <labels>
+        <fullName>ISSP_IATA_Designator</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP IATA Designator</shortDescription>
+        <value>IATA Designator</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -14354,6 +14434,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_InactiveUser_Subscription_Portal</shortDescription>
         <value>IMPORTANT - The following persons have an active product subscription. Their user cannot be deactivated. Please contact IATA if these contacts no longer work for your company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Inactive_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Inactive agreements</shortDescription>
+        <value>Inactive agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_InvalidPassword</fullName>
@@ -15078,6 +15166,38 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Old_Passwords</shortDescription>
         <value>Please note that you are not allowed to re-use your last 4 passwords.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Intermodal_Issuing_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Issuing Date</shortDescription>
+        <value>One Way Intermodal Issuing Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Intermodal_Participating_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Participating Date</shortDescription>
+        <value>One Way Intermodal Participating Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Issuing Airline</shortDescription>
+        <value>One Way Passenger Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Participating</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Participating</shortDescription>
+        <value>One Way Passenger Participating</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>
@@ -16364,6 +16484,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Should be mandatory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Show_all_the_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Show all the agreements</shortDescription>
+        <value>Show all the agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Showing_page</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16671,6 +16799,46 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
               IATA Customer Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_The_Cargo_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Cargo Interline Agreement</shortDescription>
+        <value>The Cargo Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Issuing Airline</shortDescription>
+        <value>The One Way Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Participating_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Participating Airline</shortDescription>
+        <value>The One Way Participating Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger Interline Agreement</shortDescription>
+        <value>The Passenger Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger and Cargo Interline Traffic Agreement</shortDescription>
+        <value>The Passenger and Cargo Interline Traffic Agreement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Title</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -16822,6 +16990,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_View_GFA_Communication</shortDescription>
         <value>GFA Communication queue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_My_Company_MITA_BIETA_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP View My Company MITA/BIETA Agreements</shortDescription>
+        <value>View My Company MITA/BIETA Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
@@ -17046,6 +17222,14 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <protected>false</protected>
         <shortDescription>ISSP_btn_AddComment</shortDescription>
         <value>Add Comment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_cannot_open_the_selected_account</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP cannot open the selected account</shortDescription>
+        <value>Error in the system: cannot open the selected account</value>
     </labels>
     <labels>
         <fullName>ISSP_characters_new_password</fullName>
