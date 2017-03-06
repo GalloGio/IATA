@@ -357,12 +357,14 @@
                                             </apex:outputPanel>
                                             </div>
                                                  <div id="contactUs">
-                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
+                                                    Can't find what you need?<br /><a href="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                                         Contact Us
                                                     </a>
+                                                    <apex:outputPanel rendered="{!communityName!='CNS'}">
                                                     <br /><br />
                                                     Located in the United States?<br />
                                                     Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
+                                                    </apex:outputPanel>
                                                     <p />
 
                                                 </div>
