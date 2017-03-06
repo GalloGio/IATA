@@ -18,7 +18,7 @@ Please ensure you refer to this Case Number in any further contact with us about
 
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 Case Number:
-<a href="{!$Label.ISSP_Email_PortalUrl_CNS}/{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
+<a href="{!$Label.ISSP_Email_PortalUrl_CNS}{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
 </apex:outputPanel>
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 {!relatedTo.CaseNumber}.<BR/>
@@ -36,7 +36,7 @@ Subject:
 please access it on your:
 <center><br />
 <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
-href="{!$Label.ISSP_Email_PortalUrl_CNS}/ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}&CommunityName=CNS">{!$Label.ISSP_Email_CNS_Portal}</a>
+href="{!$Label.ISSP_Email_PortalUrl_CNS}ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}&CommunityName=CNS">{!$Label.ISSP_Email_CNS_Portal}</a>
   </center>
 </apex:outputPanel>
 <BR/>
