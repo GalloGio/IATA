@@ -198,6 +198,29 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>IATA_Country_Office</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>IATA Country Office</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>IATA Country Office</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>IATA Regional Office</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>ICCS_Administrator</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>

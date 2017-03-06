@@ -185,6 +185,10 @@
         <name>AMS_OSCAR_Action12</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action13 --></label>
+        <name>AMS_OSCAR_Action13</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -1970,7 +1974,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2146,7 +2150,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7562,7 +7566,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>Codice IATA inesistente in {!Country}. Selezioni il paese corretto. Se l&apos;errore si verifica ancora, contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Codice IATA inesistente in {!Country}. Selezioni il paese corretto. Se l&apos;errore si verifica ancora, contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8519,7 +8523,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
@@ -8661,6 +8665,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label>Soddisfacente</label>
         <name>ISSP_Satisfactory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Save --></label>
+        <name>ISSP_Save</name>
     </customLabels>
     <customLabels>
         <label>Salva e crea nuovo</label>
@@ -9108,6 +9116,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>ISSP_btn_AddComment</name>
     </customLabels>
     <customLabels>
+        <label>8 caratteri</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>Si desidera consultare le domande ricorrenti prima di aprire un nuovo caso?</label>
         <name>ISSP_consult_FAQ</name>
     </customLabels>
@@ -9124,7 +9136,7 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
@@ -9134,6 +9146,18 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label>Il tipo di fattura {!invoiceType} non � disponibile per la sua azienda. Contatti l&apos;assistenza clienti</label>
         <name>ISSP_invoiceType_is_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label>1 lettera</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
+        <label>La password deve contenere almeno:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
+        <label>1 numero</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>di</label>
@@ -11064,6 +11088,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Web</name>
     </customLabels>
     <customLabels>
+        <label><!-- Web Site --></label>
+        <name>Web_Site</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Welcome Message --></label>
         <name>Welcome_Message</name>
     </customLabels>
@@ -11516,6 +11544,60 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Payment_Terms</name>
         <picklistValues>
             <masterLabel>07 days after invoice date</masterLabel>
@@ -11611,146 +11693,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <picklistValues>
             <masterLabel>Travel Agent</masterLabel>
             <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12469,26 +12411,45 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Manager_Approval</name>
+        <name>EF_Invoice_Distribution</name>
         <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12789,26 +12750,93 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Frequency</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

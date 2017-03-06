@@ -2,8 +2,56 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
+    <customConsoleComponents>
+        <primaryTabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>true</isContainerAutoSizeEnabled>
+                <region>Left</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Cases</label>
+                    <page>AMS_DemoCaseListPage</page>
+                </sidebarComponents>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <label>Hierarchy</label>
+                    <page>AMS_DemoTreeViewPage</page>
+                </sidebarComponents>
+                <style>Tabs</style>
+                <unit>Pixel</unit>
+                <width>200</width>
+            </containers>
+            <containers>
+                <height>90</height>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Top</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <page>AMSAgencyKPI</page>
+                    <unit>Percentage</unit>
+                    <width>100</width>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Pixel</unit>
+            </containers>
+        </primaryTabComponents>
+        <subtabComponents>
+            <containers>
+                <isContainerAutoSizeEnabled>false</isContainerAutoSizeEnabled>
+                <region>Right</region>
+                <sidebarComponents>
+                    <componentType>VisualForcePage</componentType>
+                    <height>100</height>
+                    <page>AMS_Translation_Account_Page</page>
+                    <unit>Percentage</unit>
+                </sidebarComponents>
+                <style>Stack</style>
+                <unit>Pixel</unit>
+                <width>50</width>
+            </containers>
+        </subtabComponents>
+    </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -51,6 +99,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Link_agent_code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_DSS_Compliant__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -211,6 +263,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -442,8 +498,9 @@
         <fields>Percentage__c</fields>
         <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -473,15 +530,24 @@
         <fields>Change_Code__c</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
+        <fields>SIDRA_Case__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>Source__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -562,6 +628,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <fields>Type_Of_Certificate__c</fields>
+        <fields>Issued_on__c</fields>
+        <fields>Validity__c</fields>
+        <fields>Expiry_Date__c</fields>
+        <relatedList>AMS_Agency_Regulation__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>AMS_Agency_Affiliation__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -590,7 +666,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E000000F3OD</masterLabel>
+        <masterLabel>00hw000000hfVzQ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

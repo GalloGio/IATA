@@ -6118,6 +6118,10 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
                 <fullName>AFI</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>MENA</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Type__c</picklist>

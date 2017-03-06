@@ -106,12 +106,19 @@ public class ISSP_Ctrl_ContentPage
  
   system.debug('susana accessToLibrariesCS : ' + accessToLibrariesCS.size());
   
+  User u = [
+      SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+      FROM User WHERE Id =:UserInfo.getUserId()];
+  Boolean isCNS = false;
+  if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
+      && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
+
   //get library names which can be visible based on account sector and record type
   for(Access_to_Libraries_on_Portal__c a : accessToLibrariesCS){
       system.debug('susana accessToLibrariesCS group : ' + a);
-      if((a.Category_of_Account__c == UserPortalCategory && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) || 
-          a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType){
-          
+      if(!isCNS && ((a.Category_of_Account__c == UserPortalCategory && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) ||
+          a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) ){
+
           system.debug('CS group match');
           String libs = String.valueOf(a.Library_visibility__c);
           system.debug('susana libraries : ' + libs);

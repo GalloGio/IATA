@@ -828,7 +828,6 @@
                 <fullName>Zimbabwe</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>

@@ -203,12 +203,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public String encIsoCountry{
         get{
-            for (SelectOption option : countryList){
-                if (option.getValue() == newCase.IFAP_Country_ISO__c){
-                    return EncodingUtil.urlEncode(option.getLabel(), 'UTF-8');
-                }
-            }
-            return null;
+            return EncodingUtil.urlEncode(newCase.IFAP_Country_ISO__c, 'UTF-8');
         }
     }
     public String region{
@@ -722,6 +717,12 @@ public without sharing class vfISSP_FAQ2Case
         }
         articleViewLines = buildArticleViewLines(selectDataCategory.topCategoryName, subtopic, Userinfo.getLanguage());
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
+
+        if(selectDataCategory.CategoryName.startsWith('CNS')) {
+            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].ISO_Code__c;
+            this.newCase.IFAP_Country_ISO__c = usaId ;
+            this.newCase1.IFAP_Country_ISO__c = usaId ;
+        }
     }
     /*
      * End Actions  
@@ -1584,6 +1585,13 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('SFI PermissionList: ' + PermissionList);
         system.debug('SFI PermissionList SIZE: ' + PermissionList.size());
 
+        User u = [
+            SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+            FROM User WHERE Id =:UserInfo.getUserId()];
+        Boolean isCNS = false;
+        if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c)
+            && u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency') { isCNS = true;}
+
         if(PermissionList != null && PermissionList.size() > 0){
             for (SelectOption top : this.lst_selectTopics)
             {
@@ -1604,7 +1612,9 @@ public without sharing class vfISSP_FAQ2Case
                     //Check if the topic has matched Custom setting record
                     if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
                     {
-                        if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) || per.Sector_Permission__c.contains('All'))
+                        if ((per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS'))||
+                            per.Sector_Permission__c.contains('All') ||
+                            (isCNS && per.Sector_Permission__c.startsWith('CNS')))
                         {
                             FoundExcludePermission = true ;
                         }

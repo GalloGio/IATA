@@ -14,20 +14,37 @@ private class AMS_EBulletinReport_Test {
 		/**
 		 1. Iso Countries
 		*/
-		List<IATA_ISO_Country__c> isoCountriesSet = new List<IATA_ISO_Country__c>();
+		List<IATA_ISO_Country__c> isoCountriesList = new List<IATA_ISO_Country__c>();
 
 
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
-        isoCountriesSet.add(italy);
+        isoCountriesList.add(italy);
         
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='PT', Region__c='Europe', ISS_Office_Location__c='Portugal');
-        isoCountriesSet.add(portugal);
+        isoCountriesList.add(portugal);
         
         IATA_ISO_Country__c us = new IATA_ISO_Country__c(Name='United States', ISO_Code__c='US', Region__c='Americas', ISS_Office_Location__c='United States');
-        isoCountriesSet.add(us);
+        isoCountriesList.add(us);
 
-        insert isoCountriesSet;
+        insert isoCountriesList;
+
+		/**
+		 1. Iso State
+		*/
+		List<IATA_ISO_State__c> isoStatesList = new List<IATA_ISO_State__c>();
+
+
+        IATA_ISO_State__c alabama = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(2).Id ,Name='Alabama', ISO_Code__c='	US-AL');
+        isoStatesList.add(alabama);
+        
+
+        IATA_ISO_State__c alasca = new IATA_ISO_State__c(	IATA_ISO_Country__c = isoCountriesList.get(2).Id ,Name='Alaska', ISO_Code__c='US-AK');
+        isoStatesList.add(alasca);
+        
+
+        insert isoStatesList;
+
 		
 		/**
 		 2. Create Accounts
@@ -90,6 +107,8 @@ private class AMS_EBulletinReport_Test {
 		 
 		AMS_OSCAR_JSON.ChangeCode changeCode1 = new AMS_OSCAR_JSON.ChangeCode();
 		AMS_OSCAR_JSON.ChangeCode changeCode2 = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_OSCAR_JSON.ChangeCode changeCode3 = new AMS_OSCAR_JSON.ChangeCode();
+		AMS_OSCAR_JSON.ChangeCode changeCode4 = new AMS_OSCAR_JSON.ChangeCode();
 
 		changeCode1.name = 'CTA';
 		changeCode1.reasonCode = 'Change data';
@@ -97,27 +116,54 @@ private class AMS_EBulletinReport_Test {
 		changeCode1.reasonDesc  = 'Accredited-Meets Criteria.';
 		changeCode1.status  = null;
 
+		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Account','TradeName__c','new Trade Name' ,'Old Trade Name' );
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
+
 		changeCode2.name = 'CAD';
 		changeCode2.reasonCode = 'Change data';
 		changeCode2.memoText = 'Minor Changes';//createMemoText(accountChanges);
 		changeCode2.reasonDesc  = 'Accredited-Meets Criteria.';
 		changeCode2.status  = null;
 
-		AMS_ChangeCodesHelper.ObjectChange objChange1 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
-		AMS_ChangeCodesHelper.ObjectChange objChange2 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name','new Value Name Case','old Value Name Case' );
 
-		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name2','new Value Name 2' ,'old Value Name 2' );
-		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Case','Name2','new Value Name Case 2','old Value Name Case 2' );
+		AMS_ChangeCodesHelper.ObjectChange objChange3 = new AMS_ChangeCodesHelper.ObjectChange('Account','Name','new Value Name' ,'old Value Name' );
+		AMS_ChangeCodesHelper.ObjectChange objChange4 = new AMS_ChangeCodesHelper.ObjectChange('Account','Email__c','aa@aa.aa' ,'bb@bb.bb' );
 
-		List <AMS_ChangeCodesHelper.ObjectChange> objChangeList = new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2};
-
-		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct1 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange1,objChange2});
 		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct2 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange3,objChange4});
 
 
-		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
-		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null}, 
-		                                          new List<Account> {acc1,acc2}, 
+		changeCode3.name = 'CNL';
+		changeCode3.reasonCode = 'Change in Progress';
+		changeCode3.memoText = 'Change of Shareholding, Name and Location in process';//createMemoText(accountChanges);
+		changeCode3.reasonDesc  = 'Change of Shareholding, Name and Location in process';
+		changeCode3.status  = null;
+
+
+
+		AMS_ChangeCodesHelper.ObjectChange objChange5 = new AMS_ChangeCodesHelper.ObjectChange('Account','Iso_State__c','Alabama','Alaska',isoStatesList.get(0).Id,isoStatesList.get(1).Id );
+		AMS_ChangeCodesHelper.ObjectChange objChange6 = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners','Name,Percentage\nAdrien Silva,60\nWilliam Carvalho,40','Name,Percentage\nRui Patricio,100' );
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct3 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange5,objChange6});
+
+
+
+		changeCode4.name = 'CHL';
+		changeCode4.reasonCode = 'Change in Progress';
+		changeCode4.memoText = 'Change of Location I process';//createMemoText(accountChanges);
+		changeCode4.reasonDesc  = 'Change of Location I process';
+		changeCode4.status  = null;
+
+		AMS_ChangeCodesHelper.ObjectChange objChange7 = new AMS_ChangeCodesHelper.ObjectChange('Account','IATA_ISO_Country__c','Portugal','Italy',isoCountriesList.get(1).Id,isoCountriesList.get(0).Id);
+
+
+		AMS_ChangeCodesHelper.ObjectChangesStruct objChangeListStruct4 = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objChange7});
+
+
+		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2,objChangeListStruct3,objChangeListStruct4},
+		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2,changeCode3,changeCode4},new List<AMS_OSCAR__c>{null,null,null,null}, 
+		                                          new List<Account> {acc1,acc2,acc1,acc2}, 
 		                                          false);
 		//NEW APPROVALS
 
@@ -398,6 +444,7 @@ private class AMS_EBulletinReport_Test {
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CTA',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGES FINALISED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='CWD',Daily__c=FALSE,Weekly__c=TRUE,Section__c='CHANGE WITHDRAWN'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DEF',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
+		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DFE ',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DIS',Daily__c=FALSE,Weekly__c=TRUE,Section__c='NEW APPLICATIONS DISAPPROVED'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DWD',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='FIN',Daily__c=FALSE,Weekly__c=TRUE,Section__c='NEW APPROVALS'));
@@ -452,8 +499,6 @@ private class AMS_EBulletinReport_Test {
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='TRW',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRR',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
 		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='VRW',Daily__c=TRUE,Weekly__c=TRUE,Section__c='TERMINATIONS AND CLOSURES'));
-		eBulletinExtraction.add(new AMSEBulletinCCExtration__c(Name='DFE ',Daily__c=TRUE,Weekly__c=TRUE,Section__c='DEFAULT INFORMATION'));
-
 
 		insert eBulletinExtraction;
 
@@ -482,9 +527,9 @@ private class AMS_EBulletinReport_Test {
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='15-VAT Number 1',Label__c='VAT Number 1',API_Name__c='Account__r.VAT_Number__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=14,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='16-VAT Number 2',Label__c='VAT Number 2',API_Name__c='Account__r.VAT_Number_2__c',Daily__c=FALSE,Weekly__c=TRUE,Number_Order__c=15,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='17-Status',Label__c='Status',API_Name__c='AccountNewStatus__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=16,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='18-Effective Date',Label__c='Effective Date',API_Name__c='OSCAR__r.Change_effective_as_of__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=17,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='19-User Date',Label__c='User Date',API_Name__c='CreatedDate_User__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=18,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
-		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='20-Application Date',Label__c='Application Date',API_Name__c='Created_Date_To_Show__c ',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=19,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='18-Effective Date',Label__c='User Date',API_Name__c='Created_Date_To_Show__c ',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=17,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='19-User Date',Label__c='Effective Date',API_Name__c='CreatedDate_User__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=18,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
+		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='20-Application Date',Label__c='Application Date',API_Name__c='Created_Date_To_Show__c ',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=19,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='21-Reason',Label__c='Reason',API_Name__c='Reason_Description__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=20,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='22-Remarks',Label__c='Remarks',API_Name__c='Bulletin_Information__c',Daily__c=TRUE,Weekly__c=TRUE,Number_Order__c=21,do_not_show__c=FALSE,do_not_query__c=FALSE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));
 		eBulletinSettings.add( new AMSEBulletinSettings__c(Name='23-Owners',Label__c='Owners',API_Name__c='Owners',Daily__c=FALSE,Weekly__c=FALSE,Number_Order__c=22,do_not_show__c=FALSE,do_not_query__c=TRUE,Is_Field_New__c=FALSE,IRR_Field__c=FALSE));

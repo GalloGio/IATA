@@ -63,7 +63,7 @@ public with sharing class ISSP_ChangePassword {
             	PageReference pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);
                 if(pageRef == null && newPassword == confirmNewPassword && Test.isRunningTest())
                 {
-                    pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes');
+                    pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                 }
             	if (pageRef != null){
             		if (tempPass){

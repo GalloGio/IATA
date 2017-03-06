@@ -197,7 +197,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
-
+    public String agencyCodesConcernedForPDF {get; set;}
+    
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -402,6 +403,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 system.debug('amsOfficeType ' + amsOfficeType);
 
+                fetchAMSProcessForm();
+                
+                newForm.HO_Account__c = vHQAccountId;
+
                 //Need to get Id for Account for country of application concerned
                 if (newCase.Account_Concerned__c==null) {
                     vAccountConcernedId = newForm.HO_Account__c;
@@ -411,9 +416,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 
                 if (isNoticeOfChange && vAccountConcernedId != null)
                     fetchAccountConcernedDetails();
-                
-                fetchAMSProcessForm();
-
+     
                 if (newForm.Agent_Type__c == null) {
                     newForm.Agent_Type__c = 'IATA Cargo Agent'; //Default Type of Agent to Cargo if case created internally - Open - EDMC - and online form not yet created
                 }
@@ -458,8 +461,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (isNoticeOfChange) {
                     sectorDisplay = Label.ISSP_AMS_NoC_Notice_of_Change;
                     
-                    if(newForm.Agency_Codes_Concerned__c != null)
-                         agencyCodesConcerned = getAgencyCodesConcerned();
+                    agencyCodesConcernedForPDF = '';
+                    if(newForm.Agency_Codes_Concerned__c != null) {
+                        agencyCodesConcerned = getAgencyCodesConcerned();
+                        agencyCodesConcernedForPDF = newForm.Agency_Codes_Concerned__c.replace(',',', ');
+                    }
                     
                     PDFPerRegionCS = getPDFPerRegionCS();
                 }

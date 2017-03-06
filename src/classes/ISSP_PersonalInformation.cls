@@ -62,7 +62,12 @@ public with sharing class ISSP_PersonalInformation {
         }
         set;
     }
-    
+    public List<Account_Domain__c> validEmailDomains {
+        get {
+            return AccountDomainHandler.getAccountDomains(this.con.AccountId);
+        }
+        set;
+    }
     public string iataCode {get;set;}
     public string accountType {get;private set;}
     public list<String> errorMessage {get; set;}
@@ -316,7 +321,27 @@ public with sharing class ISSP_PersonalInformation {
 			ValidatedAirlineUser_Str = ValidatedAirlineUser_Str != '' ? ValidatedAirlineUser_Str.substring(0,ValidatedAirlineUser_Str.length()-1) : '';
 		}
 	}
-    
+
+    /**
+    * Navigate to page email domain validation (management)
+    */
+    public Pagereference goToEmaDomVal() {
+
+        // Create new url
+        Pagereference pageReference = new Pagereference('/ISSP_CompanyInformation_emadomval');
+
+        // And return it
+        return pageReference;
+
+    }
+
+    /**
+        Check if current Account RT is allowed to show the Account Domain Section
+    **/
+    public Boolean getAccountDomainValidRT() {
+        return ISSP_AccountDomainPermission__c.getInstance(this.con.Account.RecordType.DeveloperName) != null;
+    }
+
     public List<SelectOption> getPAXBranches() {
         
         System.DeBUG('vHQAccountId for BR Accounts: ' + vHQAccountId);

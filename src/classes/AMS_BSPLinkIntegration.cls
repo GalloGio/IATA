@@ -69,12 +69,9 @@ global class AMS_BSPLinkIntegration {
 		}
 		
 		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation')){
-			for(case c:lsCase){
-				if(sProcess=='Deactivation')
-					c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
-					
-				if(sProcess=='Reactivation')
-					c.Open_TKT_System__c = system.now();
+			for(Case c:lsCase){
+				if(sProcess=='Deactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
+				if(sProcess=='Reactivation') c.Open_TKT_System__c = system.now();
 			}
 			update lsCase;
 		}
@@ -84,7 +81,13 @@ global class AMS_BSPLinkIntegration {
 	
 	//Webservice invoked from Left Side Panel (Voluntary Relinquishment process mainly)
 	webservice static list<Response> ProcessBSPLink(String sProcess, List<Id> objectIds, string sTypeOfRemoval){
-		return ProcessRequest(sProcess, objectIds, sTypeOfRemoval, null);
+		List<Case> cases = [SELECT Id FROM Case WHERE OSCAR__c IN :objectIds AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )];
+		if(cases.isEmpty() || cases.size() > 1){
+			return new List<Response>{
+				new Response('', 'Error', 'Related case not found')
+			};
+		}
+		return ProcessBSPLinkFromCase(sProcess, objectIds, sTypeOfRemoval, cases[0].Id);
 	}
 	
 	private static list<response> ProcessRequest(String sProcess, List<Id> objectIds, string sTypeOfRemoval, id CaseId){
@@ -462,6 +465,14 @@ global class AMS_BSPLinkIntegration {
     	webservice string IATACode;
     	webservice string result;
     	webservice string description;	//In case of login, contains the token
+
+    	global Response(){ }
+
+    	global Response(String iataCode, String result, String description){
+    		this.IATACode = iataCode; 
+    		this.result = result; 
+    		this.description = description;
+    	}
     }
     
     //Generic method to format the error output

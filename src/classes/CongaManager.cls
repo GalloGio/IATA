@@ -85,14 +85,14 @@ global class CongaManager {
         PageReference pageref = new PageReference(CONGA8_URL);
         pageref.getParameters().put('sessionId', apiSessionId);
         pageref.getParameters().put('serverUrl', apiServerURL);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('DefaultPDF', '1');
 
         // create attachment
         pageref.getParameters().put('ds7', '0');
         pageref.getParameters().put('EmailFromID', OrgWideDefaultsId);
         pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', emailRelatedCaseId);
+        pageref.getParameters().put('EmailRelatedToId', String.valueof(emailRelatedCaseId).substring(0,15));
         pageref.getParameters().put('SC0', '1');
         pageref.getParameters().put('SC1', 'Attachments');
         String url = pageref.getURL();
