@@ -1,29 +1,29 @@
 <apex:page controller="ISSP_PersonalInformation" extensions="ISSP_PersonalInformationWithoutSharing"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
      <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
      <script type="text/javascript">
      $(document).ready(function() {
-  		if({!isEditMode}){
-  			$('.saveMode').hide();
+        if({!isEditMode}){
+            $('.saveMode').hide();
             $('.editMode').show();
             $('.editModeBtn').show();
-    	} else {
-    		$('.selected-flag').hide();
-    	}
+        } else {
+            $('.selected-flag').hide();
+        }
          //alert({!isEditMode});
-  		}); 
+        }); 
      </script>
       <style>
-           	.has-error .hiddenerror {display: inline !important;}
-           	.errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
-           	.btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
-         	.required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
+            .has-error .hiddenerror {display: inline !important;}
+            .errormsg {font-weight: bold; font-size: 14px; color: #C90435;}
+            .btn-success2 {color: #ffffff;background-color: #a1bc00;border: 1px solid #4E8E15;font-weight: bold;cursor: pointer;}
+            .required {color: #C90435;font-size: 24px;padding: 0 5px 0 0;}
     </style>
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <a name="form"></a>
@@ -54,13 +54,13 @@
                                 <div class="col-lg-7">
                                 <apex:inputField styleclass="form-control editMode editModeTradeName latinonly" value="{!con.Account.TradeName__c}"/>
                                 <div class="hiddenerror" style="display: none;">
-                    				<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
-                  				</div>
-                               	<span class="saveMode saveModeTradeName" style="line-height: 24px;">
-                                	<apex:outputField value="{!con.Account.TradeName__c}"/>
+                                    <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
+                                </div>
+                                <span class="saveMode saveModeTradeName" style="line-height: 24px;">
+                                    <apex:outputField value="{!con.Account.TradeName__c}"/>
                                     <apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModeTradeName').hide();$('.editModeTradeName').show();$('.editModeBtn').show();" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent, NOT(bBlockTradeNameChange))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
-                            	</div>
+                                </div>
                             </div>
                             <!-- end row -->
                            
@@ -131,14 +131,14 @@
                         <div class="form-group row">
                             <div class="lbl col-lg-5">
                                 <label class="lbl" for="exampleInputEmail1"><apex:outputText escape="false" value="{!IF(isIATAAgencyAcct,'*', '&nbsp;')}" styleClass="required"/>{!$Label.ISSP_Registration_BusinessPhone}</label>
-                           	</div>
+                            </div>
                             
                             <div class="col-lg-7 phone">
                                     <apex:inputHidden id="businessphone" value="{!con.Account.Phone}" />
                                     <apex:inputField id="businessphoneinput" styleclass="form-control editMode editModePhone col-lg-8 rec" value="{!con.Account.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');"/>
                                     <div class="hiddenerror" style="display: none;">
-                    					<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
-                  					</div>   
+                                        <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                                    </div>   
                                     <span class="saveMode saveModePhone" style="line-height: 36px;">
                                         <apex:outputField value="{!con.Account.Phone}"/>
                                         <span style="padding-left:10px"><apex:outputLink value="#form" styleClass="saveMode" onclick="$('.saveModePhone').hide();$('.phone .selected-flag').show();$('.editModePhone').show();$('.editModeBtn').show()" rendered="{!AND(bIsAdmin,isIATAAgencyAcct,bIsMinorChangeEnabled,!isTerminatedAgent)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
@@ -212,20 +212,20 @@
                             
                             <!-- DTULLO 20160202. Add DDS Section -->
                             <apex:outputPanel rendered="{!AND(bIsAdmin, con.Account.DDS_Status__c=='Opt-Out')}">
-	                            <div class="row">
-	                            	<apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Status__c.Label}" />
-	                                <div class="col-lg-7">
-	                                	<apex:outPutField value="{!con.Account.DDS_Status__c}"/>
-	                                </div>
-	                            </div>
-	                            <div class="row">
-	                            	<apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Last_Update_Date__c.Label}" />
-	                                <div class="col-lg-7">
-	                                	<apex:outPutField value="{!con.Account.DDS_Last_Update_Date__c}"/>&nbsp;
-	                                	<apex:outputLink value="/ISSP_ChangeDDS_OI">{!$Label.ISSP_Opt_In}</apex:outputLink>
-	                                </div>
-	                            </div>
-	                        </apex:outputPanel>
+                                <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Status__c.Label}" />
+                                    <div class="col-lg-7">
+                                        <apex:outPutField value="{!con.Account.DDS_Status__c}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.DDS_Last_Update_Date__c.Label}" />
+                                    <div class="col-lg-7">
+                                        <apex:outPutField value="{!con.Account.DDS_Last_Update_Date__c}"/>&nbsp;
+                                        <apex:outputLink value="/ISSP_ChangeDDS_OI">{!$Label.ISSP_Opt_In}</apex:outputLink>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
                             <!-- end row --> 
                             
                             <apex:outputpanel rendered="{!isValidatedAirlineUser}">
@@ -237,11 +237,11 @@
                                 </div>
                             </apex:outputpanel>
                              <div class="row">
-           						<div class="col-md-12 col-md-offset-9"  style="clear: both; ">
-               						<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton" reRender="companyProfile"/>
-                					<button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
-            					</div>
-         					</div>
+                                <div class="col-md-12 col-md-offset-9"  style="clear: both; ">
+                                    <apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtn" onClick="if(!validateCompanyProfile())return false;" action="{!saveAccount}" value="{!$Label.site.save}" id="loginButton" reRender="companyProfile"/>
+                                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtn" onClick="clearErrorMessages();$('.saveMode').show();$('.editMode').hide();$('.editModeBtn').hide();$('.alert').hide();$('.selected-flag').hide();" >{!$Label.site.cancel}</button>
+                                </div>
+                            </div>
                              
                         </div>
                         <!-- end panel -->
@@ -288,7 +288,7 @@
           utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
                     
-    	natfax.intlTelInput("setNumber", fax.val());
+        natfax.intlTelInput("setNumber", fax.val());
         
         function setInternationalPhoneNo(p) {
             if(p=='phone') {
@@ -300,7 +300,7 @@
             }
         }
      
-     	function setInternationalPhoneNoBR(p) {
+        function setInternationalPhoneNoBR(p) {
             if(p=='phone') {
                 phoneBR.val(natphoneBR.intlTelInput("getNumber"));
             } else if(p=='mobile') {
@@ -473,7 +473,7 @@
         
         <apex:form id="branchOffice" rendered="{!AND(isIATAAgencyAcct, bIsAdmin, PAXBranches.size > 1)}" >
             <apex:actionFunction name="getBranchOffice" action="{!getBranchOffice}" reRender="branchOffice">
-        	   <apex:param value="" assignTo="{!selectedBranchAccount}" name="selectedBranchAccount"/>
+               <apex:param value="" assignTo="{!selectedBranchAccount}" name="selectedBranchAccount"/>
             </apex:actionFunction>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
@@ -491,7 +491,7 @@
                         <br/>
                         <hr/>
 
-            	</div>
+                </div>
                 
                 <apex:outputPanel rendered="{!branchOffice != null}" style="padding-top:12px">
                   <div class="col-md-6">
@@ -512,10 +512,10 @@
                                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
                                 </div>
                                 <span class="saveModeBR saveModeTradeNameBR" style="line-height: 24px;">
-                                	<apex:outputField value="{!branchOffice.TradeName__c}"/>
+                                    <apex:outputField value="{!branchOffice.TradeName__c}"/>
                                     <apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModeTradeNameBR').hide();$('.editModeTradeNameBR').show();$('.editModeBtnBR').show();" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR, NOT(bBlockTradeNameChangeBR))}"> [{!$Label.ISSP_edit_lowercase}]</apex:outputLink>
                                     </span>
-                            	</div>
+                                </div>
                             </div>
                 <div class="row">
                                 <apex:outPutPanel layout="block" >
@@ -532,7 +532,7 @@
                                         <div>{!branchOffice.IATACode__c} </div>
                                     </div>
                                 </apex:outPutPanel>
-              	</div>
+                </div>
                 <div class="row">
                                 <apex:outputPanel rendered="{!branchOffice.Sector__c != null}" layout="block">
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Sector__c.Label}</label>
@@ -550,21 +550,21 @@
                                     </div>
                                 </apex:outputPanel>
                             </div>
-                	<div class="row">
+                    <div class="row">
                                     <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Location_Type__c.Label}" />
                                     <div class="col-lg-7"><apex:outPutField value="{!branchOffice.Location_Type__c}"/></div>
-                	</div>
+                    </div>
                     <div class="form-group row">
                             <div class="lbl col-lg-5">
                                 <label class="lbl" for="exampleInputEmail1"><apex:outputText escape="false" value="{!IF(isIATAAgencyAcctBR,'*', '&nbsp;')}" styleClass="required"/>{!$Label.ISSP_Registration_BusinessPhone}</label>
-                           	</div>
+                            </div>
                             
                             <div class="col-lg-7 phoneBR">
                                     <apex:inputHidden id="businessphone" value="{!branchOffice.Phone}" />
                                     <apex:inputField id="businessphoneinput" styleclass="form-control editModeBR editModePhoneBR col-lg-8 recBR" value="{!branchOffice.PhoneNational__c}" onblur="setInternationalPhoneNoBR('phone');"/>
                                     <div class="hiddenerror" style="display: none;">
-                    					<p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
-                  					</div>   
+                                        <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_Registration_Error_BusinessPhone}</p>
+                                    </div>   
                                     <span class="saveModeBR saveModePhoneBR" style="line-height: 36px;">
                                         <apex:outputField value="{!branchOffice.Phone}"/>
                                         <span style="padding-left:10px"><apex:outputLink value="#formBR" styleClass="saveMode" onclick="$('.saveModePhoneBR').hide();$('.phoneBR .selected-flag').show();$('.editModePhoneBR').show();$('.editModeBtnBR').show()" rendered="{!AND(bIsAdmin,bUserHO,isIATAAgencyAcctBR,bIsMinorChangeEnabledBR,!isTerminatedAgentBR)}">[{!$Label.ISSP_edit_lowercase}]</apex:outputLink></span>
@@ -603,7 +603,7 @@
                             
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
-                                    <label class="lbl" for="businessinputwebsite">[{!$Label.Web_Site}]</label>
+                                    <label class="lbl" for="businessinputwebsite">Web site</label>
                                 </div>
                                 <div class="col-md-7 emailBR">
                                     <apex:inputHidden id="businesswebsite" value="{!branchOffice.WebSite}" />
@@ -640,10 +640,10 @@
                             
                         
                 <script>
-     	var natphoneBR = $("input[name='{!$Component.branchOffice.businessphoneinput}']");
+        var natphoneBR = $("input[name='{!$Component.branchOffice.businessphoneinput}']");
         var phoneBR = $("input[name='{!$Component.branchOffice.businessphone}']");
      
-     	natphoneBR.intlTelInput({
+        natphoneBR.intlTelInput({
             defaultCountry: '{!accountCountryISOCodeBR}',
             nationalMode: true,
             preferredCountries: [""],
@@ -651,7 +651,7 @@
           utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
                     
-     	natphoneBR.intlTelInput("setNumber", phoneBR.val());
+        natphoneBR.intlTelInput("setNumber", phoneBR.val());
                     
         // var natmobileBR = $("input[name='{!$Component.companyProfile.businessmobileinput}']");
         // var mobileBR = $("input[name='{!$Component.companyProfile.businessmobile}']");
@@ -677,7 +677,7 @@
           utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
         });
                     
-    	natfaxBR.intlTelInput("setNumber", faxBR.val());
+        natfaxBR.intlTelInput("setNumber", faxBR.val());
         
         function setInternationalPhoneNo(p) {
             if(p=='phone') {
@@ -689,7 +689,7 @@
             }
         }
      
-     	function setInternationalPhoneNoBR(p) {
+        function setInternationalPhoneNoBR(p) {
             if(p=='phone') {
                 phoneBR.val(natphoneBR.intlTelInput("getNumber"));
             } else if(p=='mobile') {
@@ -706,9 +706,9 @@
       </script>
                </div>
             <div class="ol-md-3 col-md-offset-10 "  style="clear: both; ">
-               		<apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtnBR" onClick="if(!validateCompanyProfileBR())return false;" action="{!saveAccountBR}" value="{!$Label.site.save}" id="loginButton" reRender="branchOffice"/>
-                	<button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
-            	</div>
+                    <apex:commandButton styleclass="btn_iata btn-success btn_save editModeBtnBR" onClick="if(!validateCompanyProfileBR())return false;" action="{!saveAccountBR}" value="{!$Label.site.save}" id="loginButton" reRender="branchOffice"/>
+                    <button type="button" class="btn_iata btn-danger btn_cancel editModeBtnBR" onClick="clearErrorMessagesBR();$('.saveModeBR').show();$('.editModeBR').hide();$('.editModeBtnBR').hide();$('.alert').hide();$('.phoneBR .selected-flag').hide();$('.faxBR .selected-flag').hide();" >{!$Label.site.cancel}</button>
+                </div>
                 </apex:outputPanel>
             </div>
           </div>
@@ -716,12 +716,12 @@
         </apex:form>
         
         
-          <c:ISSP_CustomFooter />
+          <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
     <script>
       function validateCompanyProfile(){
-      	var flag = true;
-        	$('#recFields').hide();
+        var flag = true;
+            $('#recFields').hide();
             $('.rec').each(function (){
                             $(this).parents('.form-group').removeClass('has-error');
                             if(!$(this).val()){
@@ -739,7 +739,7 @@
             return flag;
         }
      
-     	function validateLatinCharsOnly(){
+        function validateLatinCharsOnly(){
         var regExLatin = new RegExp("^[\\x00-\\x7F\\xA0-\\xFF]+$");
         var flag = true;
             $('.latinonly').each(function (){
@@ -790,10 +790,10 @@
         }
               
         function clearErrorMessages() {
-        	$('.rec').each(function (){
+            $('.rec').each(function (){
                     $(this).parents('.form-group').removeClass('has-error');
                 }
-        	)
+            )
             $('.latinonly').each(function (){
                     $(this).parents('.form-group').removeClass('has-error');
                 }
