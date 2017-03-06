@@ -436,7 +436,7 @@ Object to store comments related to objectives, or independent comments that we 
                 <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
                 <controllingFieldValues>SFO</controllingFieldValues>
             </picklistValues>
@@ -955,7 +955,7 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1323,7 +1323,7 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
