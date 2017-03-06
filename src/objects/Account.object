@@ -8160,7 +8160,7 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <formula>OR( Has_a_Financial_Assessment_Contact__c, Has_a_Financial_Assessment_Contact_Sum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Has a Financial Assessment Contact</label>
+        <label>Has FA Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
