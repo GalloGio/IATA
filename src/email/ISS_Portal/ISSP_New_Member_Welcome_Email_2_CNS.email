@@ -46,7 +46,7 @@ width:90%;
   <br />
    <hr style="width:80%"/>
    <p> 
-   Dear {!if(Contact.Salutation='Others', ' ', Contact.Salutation)}  {!Receiving_User.FirstName} {!Receiving_User.LastName},
+   Dear {!Receiving_User.FirstName} {!Receiving_User.LastName},
     </p>
     <p>
       Welcome to CNS Customer Portal.<br />Your e-mail adress is
