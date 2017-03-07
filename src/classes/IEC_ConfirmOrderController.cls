@@ -278,6 +278,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 			addConfirmMessage(successMessage);
 			isOrderConfirmed=true;
+
+			//*** send information to Pardot
+			sendFormHandlerToPardot(sfOrder.Id);
 		}
 		catch(Exception ex){
 			//log Subscription exception
@@ -319,5 +322,46 @@ public class IEC_ConfirmOrderController extends IEC_PageController
         }
         catch(Exception ex){System.debug('EXCPTION:: '+ex.getMessage());}
     }
+
+	/****************************************************************************************************
+	    Created by CGI, Thai 2017-01-25
+	        Send information to Pardot
+	****************************************************************************************************/
+	@future (callout=true) static void sendFormHandlerToPardot(Id idOrder)
+	{
+		String URL = Utility.getTextSetting('Pardot Campaign');
+		if (URL != '')
+			try
+			{
+				//*** get data
+				Order oOrder = [select OrderNumber, BillToContact_Email__c, BillToContact.Email
+				                     , Discount_Amount__c, Total_Freight_Charge__c, Total_handling_charges__c, Taxes__c, SubTotal_Amount__c, Total_Amount__c
+				                     , (select SAP_Product_Number__c, Quantity, UnitPrice, Discount__c, SubTotal__c, Freight_Charge__c, Handling_charges__c, Tax__c, Total__c
+				                        from OrderItems)
+				                from Order where Id = :idOrder limit 1][0];
+
+				//*** build URL with all data to send
+				URL += '?order=' + EncodingUtil.urlEncode(oOrder.OrderNumber, 'UTF-8')
+				     + '&email=' + EncodingUtil.urlEncode(oOrder.BillToContact_Email__c == null ? (oOrder.BillToContact.Email == null ? '' : oOrder.BillToContact.Email) : oOrder.BillToContact_Email__c, 'UTF-8')
+				     + '&total_discount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Discount_Amount__c == null ? 0.00 : oOrder.Discount_Amount__c), 'UTF-8')
+				     + '&total_shipping=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Freight_Charge__c == null ? 0.00 : oOrder.Total_Freight_Charge__c), 'UTF-8')
+				     + '&total_tax=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Taxes__c == null ? 0.00 : oOrder.Taxes__c), 'UTF-8')
+				     + '&total_amount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Amount__c == null ? 0.00 : oOrder.Total_Amount__c), 'UTF-8');
+				for (Integer i1 = 0; i1 < oOrder.OrderItems.size(); i1++)
+					URL += '&product' + (i1 + 1) + '=' + EncodingUtil.urlEncode(oOrder.OrderItems[i1].SAP_Product_Number__c, 'UTF-8')
+					     + '&quantity' + (i1 + 1) + '=' + EncodingUtil.urlEncode(String.valueOf(oOrder.OrderItems[i1].Quantity), 'UTF-8');
+
+				//*** send to Pardot
+				HttpRequest httpReq = new HttpRequest();
+				httpReq.setMethod('POST');
+				httpReq.setEndpoint(URL);
+				Http httpTarget = new Http();
+				HttpResponse httpResp = httpTarget.send(httpReq);
+			}
+			catch (Exception e)
+			{
+				IECErrorLogger.logApexException('IEC_ConfirmOrderController.sendFormHandlerToPardot', URL, e.getMessage(), e.getStackTraceString());
+			}
+	} //*** end of "sendFormHandlerToPardot"
 
 }
