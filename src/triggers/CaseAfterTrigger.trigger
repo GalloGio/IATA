@@ -168,7 +168,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	*    If the case area is "ICCS - Remove Product", the existing PA record's status field is updated to "Inactive". If the case area is
 	*    "ICCS – Update Payment Instructions", the ICCS Bank Account field at PA level is updated with the info entered in the same field
 	*    at Case level. If the case area is "ICCS – Delete Bank Account", the Bank Account record's status is set to "Inactive". For the "ICCS – Update Bank Account"
-	*    Case Area, the Bank Account currency is updated.
+	*    Case Area, the Bank Account currency is updated.*/
 	if(trgICCSManageProductAssignment){	
 		if(trigger.isInsert || trigger.isUpdate){
 			for (Case c : Trigger.new) {

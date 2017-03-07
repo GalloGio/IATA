@@ -7,7 +7,6 @@
 06 - UserInfoUpdate - All: Common, isInsert, isUpdate								FILE
 07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate			FILE
 08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate						FILE
-09 - trgAccountFieldsUpdate - All: isInsert											FILE
 10 - trgBeforeInsertUpdate - All: Common											FILE
 11 - CalculateBusinessHoursAges - All: isUpdate										FILE
 12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate								FILE
@@ -34,7 +33,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean UserInfoUpdate = true;								//22222222222222
     boolean trgCheckBusinessHoursBeforeInsert = false;
     boolean trgSidraCaseBeforeInsertUpdate = true;				//22222222222222
-    //boolean trgAccountFieldsUpdate = true;
     boolean trgBeforeInsertUpdate = true; 						//11111111111111
     boolean CalculateBusinessHoursAges = true;					//22222222222222
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
@@ -1179,51 +1177,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         else{*/
         /*Constantin*/
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
-        
-        /*trgAccountFieldsUpdate Trigger.isInsert*/ 
-        /*This trigger updates case fields if the user profile is "Overage High Volume Customer Portal User Cloned"*/
-        //self service portal is not used anymore (Skype for Business - conversation with Pedro 13/02/2017 - 15.30)
-        /*if(trgAccountFieldsUpdate){
-        	system.debug('trgAccountFieldsUpdate Trigger.isInsert');
-            profileId = UserInfo.getProfileId();
-            System.debug('Profile ID : '+profileId);
-            //if(UserInfo.getProfileId() != null){      
-            profileList = [SELECT Id,Name FROM Profile WHERE Id =: UserInfo.getProfileId() limit 1];
-            if(profileList.size() > 0){
-                profileName = profileList[0].Name;
-            }
-            //} 
-            if(profileName != null){
-            	system.debug('##ROW##');
-                //profileName = profile.Name;
-                System.debug('Profile Name : ' + profileName);
-                //if(profileName.contains('Customer Portal Manager Standard Cloned'))
-                //if(profileName.contains('Overage High Volume Customer Portal User Cloned'))
-                if('Overage High Volume Customer Portal User Cloned'.equals(profileName)){
-                	system.debug('##ROW##');
-                    for(Case newCase : Trigger.New){
-                        if(newCase.ContactId != null){
-                            ContIds.add(newCase.ContactId);
-                        }                              
-                    }
-                    lstConts = [SELECT Id, AccountId FROM Contact WHERE Id IN: ContIds];
-                    for(Case newCase : Trigger.New){
-                        for(Integer i=0;i<lstConts.Size();i++){
-                            if(newCase.ContactId != null){
-                                if(newCase.ContactId == lstConts[i].Id){
-                                    newCase.AccountId = lstConts[i].AccountId;
-                                    newCase.Power_User_Account__c = lstConts[i].AccountId;
-                                    newCase.IsVisibleInSelfService = True;
-                                    System.debug('Power User Account : ' + newCase.Power_User_Account__c);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }                                
-        }*/
-        /*trgAccountFieldsUpdate Trigger isInsert*/
         
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         if(Case_FSM_Handle_NonCompliance_BI_BU){
