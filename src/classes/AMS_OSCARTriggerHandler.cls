@@ -481,15 +481,20 @@ public class AMS_OSCARTriggerHandler {
 						system.debug(LoggingLevel.ERROR, '[LF]: agenciesWithMultipleCode '+agenciesWithMultipleCode);
 						system.debug(LoggingLevel.ERROR, '[LF]: agenciesWithSingleCode '+agenciesWithSingleCode);
 
-						// Apply cascade changes: change code + data migration
-						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithSingleCode));
-
-
-						// Apply cascade + no cascade changes: change code + data migration
-						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithMultipleCode));
-
+						if(!agenciesWithSingleCode.isEmpty())
+						{
+							// Apply cascade + no cascade changes: change code + data migration
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithSingleCode));
+						}
+						
+						if(!agenciesWithMultipleCode.isEmpty())
+						{
+							// Apply cascade + no cascade changes: change code + data migration
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, agenciesWithMultipleCode));
+						}
+						
 
 						// Apply change of location to children SAs not explicitly involved in the change
 						if(SAsNotInvolved.size()>0){
@@ -600,15 +605,19 @@ public class AMS_OSCARTriggerHandler {
 						system.debug(LoggingLevel.ERROR, '[LF]: agenciesWithMultipleCode '+agenciesWithMultipleCode);
 						system.debug(LoggingLevel.ERROR, '[LF]: agenciesWithSingleCode '+agenciesWithSingleCode);
 
-						// Apply cascade changes: change code + data migration
-						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithSingleCode));
+						if(!agenciesWithSingleCode.isEmpty())
+						{
+							// Apply cascade changes: change code + data migration
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithSingleCode, cascadingTOCs, accounts, oscarOnlineAccreditation));
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config2, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithSingleCode));
+						}
 
-
-						// Apply cascade + no cascade changes: change code + data migration
-						accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
-						changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithMultipleCode));
-
+						if(!agenciesWithMultipleCode.isEmpty())
+						{
+							// Apply cascade + no cascade changes: change code + data migration
+							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, agenciesWithMultipleCode, oscar.Type_of_change__c, accounts, oscarOnlineAccreditation));
+							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.APPROVAL, agenciesWithMultipleCode));
+						}
 
 						// Apply change of location to children SAs not explicitly involved in the change
 						if(SAsNotInvolved.size()>0){
