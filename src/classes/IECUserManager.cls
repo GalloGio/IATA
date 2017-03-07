@@ -68,7 +68,8 @@ public without sharing class IECUserManager {
         
      try{   
         
-    list<User> userList = Comm_User_Helper.getUserListByNameOrEmail(sUsername);
+    //list<User> userList = Comm_User_Helper.getUserListByNameOrEmail(sUsername);
+    list<User> userList = Comm_User_Helper.getUserListByNameOrEmail2(sUsername);
        
        if(userList == null || userlist.size() == 0) {
         
@@ -77,6 +78,14 @@ public without sharing class IECUserManager {
         return null;
        }
         
+        //EM: Need to reactivate the user 
+        else if (userList.size() == 1 && userList[0].Portal_User_Frozen_Checkbox__c == true) {
+                Pagereference pr = Page.IEC_Home;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_Frozen_User_Alert_Message)); 
+                reactivateUser(userList[0].UserName);
+                return null;
+       }
+
         boolean firstLogin = false;
           
         list<User> users = [Select Id, Username, LastLoginDate, uid__C from user where( username =:suserName or email =: suserName) and userType = 'PowerPartner' and LastLoginDate = null ];    
