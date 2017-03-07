@@ -678,15 +678,6 @@
         <errorDisplayField>Contact__c</errorDisplayField>
         <errorMessage>You must enter a value</errorMessage>
     </validationRules>
-	<validationRules>
-        <fullName>Require_Account</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(OR(ISPICKVAL(Type__c, &quot;Sold To&quot;), ISPICKVAL(Type__c, &quot;Bill To&quot;), ISPICKVAL(Type__c, &quot;Ship To&quot;))
-  , ISBLANK(Account__c)
-)</errorConditionFormula>
-        <errorDisplayField>Account__c</errorDisplayField>
-        <errorMessage>You must enter a value</errorMessage>
-    </validationRules>
     <validationRules>
         <fullName>Require_Type</fullName>
         <active>true</active>
