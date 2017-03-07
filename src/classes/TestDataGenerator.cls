@@ -281,6 +281,28 @@ public with sharing class TestDataGenerator
         return new List<Zuora.zApi.SaveResult>{sr};
     }
 
+    public static List<Zuora.zApi.SaveResult> generatePaymentResults(List<Zuora.zObject> lstInvoicePayment, String strType){
+        List<Zuora.zApi.SaveResult> lstSaveResult = new List<Zuora.zApi.SaveResult>();
+        for (Integer i = 0; i < lstInvoicePayment.size(); i++)
+        {
+            Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
+            sr.Id = '2c92c0f850dca6710150dea56af04z' + i;
+            if (strType == 'error')
+            {
+                sr.Success = false;
+                Zuora.zObject error = new Zuora.zObject('Error');
+                error.setValue('Code', 'Invalid card');
+                error.setValue('Field', 'ReferenceId');
+                error.setValue('Message', 'Invalid credit card');
+                sr.Errors = new List<Zuora.zObject>{error};
+            }
+            else
+                sr.Success = true;
+            lstSaveResult.add(sr);
+        }
+        return lstSaveResult;
+    }
+
     public static List<Zuora.zApi.SaveResult> generatePaymentResultsWithError(){
         Zuora.zApi.SaveResult sr = new Zuora.zApi.SaveResult();
         sr.Success = false;
@@ -305,7 +327,16 @@ public with sharing class TestDataGenerator
         set<Id> orderIds = orderMap.keySet();
         for(Id orderId : orderIds){
             Zuora.zObject pay = new Zuora.zObject('Payment');
-            pay.setValue('ReferenceId','4468443943645000001521');
+            if (orderMap.get(orderId).Sales_Order_Remark__c == 'error')
+            {
+                pay.setValue('Status', 'Error');
+                pay.setValue('GatewayResponseCode', 'code');
+                pay.setValue('GatewayState', 'state');
+                pay.setValue('GatewayResponse', 'response');
+            }
+            else
+                pay.setValue('ReferenceId','4468443943645000001521');
+            pay.setValue('Id', '2c92c0f850dca6710150dea56af04813');
             pay.setValue('SFDCOrderId__c',orderId);
             payments.add(pay);
         }
@@ -431,7 +462,7 @@ public with sharing class TestDataGenerator
     public static List<Contact> generateContacts(String accountId, Integer nb, Boolean doInsert){
         List<Contact> contacts = new List<Contact>();
         for(Integer i = 0; i < nb; i++){
-            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@z1x2y3.com', phone='(514) 111 2222',AccountId=accountId));
+            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@test.com', phone='(514) 111 2222',AccountId=accountId));
         }
         if(doInsert)
             insert contacts;
@@ -1150,7 +1181,7 @@ public with sharing class TestDataGenerator
         listCS.add(new Apex_Setting__c(Name='Order sold status to send notification', Text_1__c='Paid'));
         listCS.add(new Apex_Setting__c(Name='Order Cancel status', Text_1__c='Cancelled'));
         listCS.add(new Apex_Setting__c(Name='Order Paid Status for Payment Types', Text_1__c='Credit Card,ICH'));
-        listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CSR', Text_1__c='Credit Card Deferred,Bank Transfer,Check'));
+        listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CSR', Text_1__c='Credit Card Deferred,Bank Transfer,Check,ICH,Bill me later'));
         listCS.add(new Apex_Setting__c(Name='Order Payment Types allowed for CUS', Text_1__c='Bank Transfer,Credit Card,ICH,Check'));
         listCS.add(new Apex_Setting__c(Name='Order fields to allow modification1', Text_1__c='SAP_Order_Number__c,Status,Zuora_Credit_Card_Id__c'));
         listCS.add(new Apex_Setting__c(Name='Order fields to allow modification2', Text_1__c='Payment_Transaction_Number__c,Zuora_Transaction_Id__c'));
@@ -1505,26 +1536,6 @@ public with sharing class TestDataGenerator
         return ret;
     }
 
-    public static List<Discount_DTO> generateDiscounts(Integer nb)
-    {
-        List<Discount_DTO> ret = new List<Discount_DTO>(); 
-
-        for(integer x = 0; x < nb; x++)
-        {
-            Discount_DTO disc = new Discount_DTO();
-                disc.isPercentageDiscount = (Math.mod(x, 2) == 0 ) ? false : true;
-                disc.discountName = 'Discount '+x;
-
-                //disc.discountType = (Math.mod(x, 2) == 0 ) ? 'Discount-Fixed Amount' : 'Discount-Percentage';
-                disc.discountValue = Utility.generateRandomDecimal(1, 50); 
-                disc.chargeId = generateZuoraFakeId();
-                disc.planId = generateZuoraFakeId();
-            ret.add(disc);
-        }
-
-        return ret; 
-    }
-
     /****************************************************************************************************
         Created by CGI, Thai 2015-11-11
             Generate payment threshold data
@@ -1536,6 +1547,7 @@ public with sharing class TestDataGenerator
         data.add(new IEC_Payment_Threshold__c(Name='Bank Transfer', Payment_Type__c='Bank Transfer', Min_amount__c=1, Max_amount__c=10000));
         data.add(new IEC_Payment_Threshold__c(Name='Check', Payment_Type__c='Check', Min_amount__c=1, Max_amount__c=10000));
         data.add(new IEC_Payment_Threshold__c(Name='ICH', Payment_Type__c='ICH', Min_amount__c=1, Max_amount__c=10000));
+        data.add(new IEC_Payment_Threshold__c(Name='Bill me later', Payment_Type__c='Bill me later', Min_amount__c=1, Max_amount__c=10000));
         insert data; 
     } //*** end of "generatePaymentThreshold"
     

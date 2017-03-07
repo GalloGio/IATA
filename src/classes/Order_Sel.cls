@@ -241,7 +241,7 @@ public without sharing class Order_Sel extends Selector{
                      , Pricebook2Id
                      , Payment_Transaction_Number__c, Zuora_Transaction_Id__c, Zuora_GatewayResponse__c, Zuora_Credit_Card_Id__c, Is_Paid__c
                      , CreatedById, CreatedDate, LastModifiedById, LastModifiedDate, StatusCode
-                     , Campaign__c,BillTo_Location__c,ShipTo_Location__c,BillTo_Location__r.VAT_Number__c, ShipTo_Location__r.VAT_Number__c
+                     , Campaign__c,SoldTo_Location__c,BillTo_Location__c,ShipTo_Location__c,BillTo_Location__r.VAT_Number__c, ShipTo_Location__r.VAT_Number__c
                      , BillTo_Location__r.Is_Postal_Code_Required__c, ShipTo_Location__r.Is_Postal_Code_Required__c
                      , BillTo_Address__r.Street__c, BillTo_Address__r.City__c, BillTo_Address__r.Country__c,BillTo_Address__r.ISO_Country_Code__c, BillTo_Address__c 
                      , BillTo_Address__r.State__c,BillTo_Address__r.ISO_State_Code__c, BillTo_Address__r.ZipCode__c, BillTo_Address__r.ISO_Country__r.Name
@@ -443,7 +443,7 @@ public without sharing class Order_Sel extends Selector{
 
         //*** ensure Sold To, Bill To, Ship To location records are created
         //*** -> same method was called from controller but somehow data is not found in this method
-        Location_Svc.InitializeContactLocations(c.Id);
+        Location_Svc.initializeDefaultLocations(new List<Id>{c.Id});
 
         //--@todo: make sure contact has billTo and shipTo 
 
@@ -532,7 +532,7 @@ public without sharing class Order_Sel extends Selector{
             }
             
             //*** set Bill To address based on account address -> no Bill To location
-            //*** -> this scenario should not happen due to command Location_Svc.InitializeContactLocations earlier
+            //*** -> this scenario should not happen due to command Location_Svc.initializeDefaultLocations earlier
             //if (String.isBlank(newOrder.BillingStreet))
             //{
             //    newOrder.BillingStreet         = Utility.removeNewline(a.BillingStreet);
@@ -597,7 +597,7 @@ public without sharing class Order_Sel extends Selector{
             }
             
             //*** set Ship To address based on account address -> no Ship To location
-            //*** -> this scenario should not happen due to command Location_Svc.InitializeContactLocations earlier
+            //*** -> this scenario should not happen due to command Location_Svc.initializeDefaultLocations earlier
             //if (String.isBlank(newOrder.ShipTo_Location__c))
             //    if (String.isBlank(a.ShippingStreet))
             //    {

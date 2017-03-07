@@ -105,7 +105,7 @@ public without sharing class Location_Dom {
         	
         //}
         for (Integer i = 0; i < newList.size(); i++)
-            if (newList[i].Active__c == true &&
+            if (newList[i].Active__c == true && oldList[i].SAP_Id__c == newList[i].SAP_Id__c &&
                 (oldList[i].Address__c != newList[i].Address__c || oldList[i].Email__c != newList[i].Email__c ||
                  oldList[i].Phone__c != newList[i].Phone__c || oldList[i].VAT_Number__c != newList[i].VAT_Number__c))
                 locationsToSync.add(newList[i]);

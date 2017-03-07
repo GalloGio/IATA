@@ -12,6 +12,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 	public String orderPaymentType{get;set;}
   	public String orderCreditCardId{get;set;}
 
+	public Boolean stopProcess { get; set; }
 
 	public IEC_ConfirmOrderController() 
 	{
@@ -20,7 +21,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 
 	public void initorder()
 	{
-		sfOrder = IECOrder_Svc.getPenddingOrder();
+		sfOrder = IECOrder_Svc.getPenddingOrder(true);
 		vfOrder = new Order_DTO(sfOrder);
 	}
 
@@ -61,6 +62,23 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			}
 		}
 
+		//*** check if all SAP partners are valid
+		stopProcess = false;
+		if (String.isBlank(sfOrder.SoldToAccount_Partner_Number__c) || String.isBlank(sfOrder.BillToContact_Partner_Number__c) || String.isBlank(sfOrder.ShipToContact_Partner_Number__c))
+		{
+			stopProcess = true;
+			addErrorMessage(Label.IEC_SAP_Customer_Issue);
+			return null;
+		}
+
+		//*** check if has a payment method -> check again in method "submitOrder"
+		if (String.isBlank(sfOrder.Payment_Type__c) || (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && card == null))
+		{
+			stopProcess = true;
+			addErrorMessage(Label.IEC_Error_PleaseSelectPaymentMethod);
+			return null;
+		}
+
 		isOrderConfirmed = false;
 		return null;		
 	}
@@ -71,103 +89,6 @@ public class IEC_ConfirmOrderController extends IEC_PageController
      **************************************************************************************************************/
 	public PageReference submitOrder()
 	{
-		//-- Validate BillToLocation & ShipToLocation are valid in SAP 
-		List<Location__c> locations2Resend = new List<Location__c>();
-		List<Location__c> locations = new Location_Sel().getLocations(new Set<Id>{
-			sfOrder.BillTo_Location__c,
-			sfOrder.ShipTo_Location__c	
-		});
-
-		if((locations == null || locations.size() != 2) && !Test.isRunningTest())
-		{
-			addErrorMessage('Your Billing or Shipping are not properly set. Please update your customer informations');
-			return null;
-		} 
-
-		
-		for(Location__c loc : locations)
-		{
-			if(String.isBlank(loc.SAP_Id__c))
-			{
-				locations2Resend.add(loc);
-			}
-		}
-
-		if(locations2Resend.size() > 0)
-		{
-			
-			Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request> requestByLocation = new Map<Id, SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request>(); 
-	        
-	        //-- Sold To Location By Contact 
-	        Set<Id> contactIds = new Set<Id>();
-	        for(Location__c location : locations2Resend)
-	        {
-	            contactIds.add(location.Contact__c);
-	        }
-
-	        Location_Sel lSelector = new Location_Sel(); 
-	        Map<Id, Location__c> soldToLocationByContactId = lSelector.getSoldToLocationByContactId(contactIds);
-
-	        //-- Locations MAP 
-	        Map<Id, Location__c> locationById = new Map<Id, Location__c>(locations2Resend);
-
-	        for(Location__c location : locations2Resend)
-	        {
-	            requestByLocation.put(location.Id, IECAddress_Svc.createCustomerMasterRequestObject(location, soldToLocationByContactId));
-	        }
-
-	        //-- Set Authentication header 
-	        SAP_CustomerMaster.HTTPS_Port req = new SAP_CustomerMaster.HTTPS_Port(); 
-	        req = IECAddress_Svc.setCalloutHeader(req);
-
-	        //-- Do Callouts for each location 
-	        Boolean calloutsHasErrors = false; 
-	        List<Location__c> location2Update = new List<Location__c>();
-	        for(Id locationId : requestByLocation.keySet())
-	        {
-	            SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Request request = requestByLocation.get(locationId);
-
-	            try
-	            {
-	                SAP_CustomerMaster.DT_SFDC_CustomerMasterUpdate_Response response = req.SI_SFDC_CustomerMasterUpdate_SYNC(request);
-	                if(response.Error != null){
-	                	String msg = (request.RequestType.endsWith('SH')) 
-	                		? 'Shipping' 
-	                		: 'Billing';
-
-	                	addErrorMessage('Please update your '+msg+' details: ' + response.Error.Message);
-	                	calloutsHasErrors = true;
-	                }else{
-	                	if(request.RequestType.endsWith('SH'))
-	                		location2Update.add(new Location__c(Id = locationId, SAP_Id__c = response.SAP_ShipTo.SAPShipToID));
-	                	else
-	                		location2Update.add(new Location__c(Id = locationId, SAP_Id__c = response.SAP_BillTo.SAPBillToID));
-	                }
-	            }
-	            catch(Exception ex)
-	            {
-	            	addErrorMessage(ex.getMessage());
-	            	calloutsHasErrors = true;
-	            }
-	        }
-	        
-	        if(location2Update.size() > 0)
-	        	update location2Update;
-
-			if(calloutsHasErrors)
-				return null;
-		}
-
-		//If page has errors show them to customer 		
-		if(ApexPages.hasMessages())
-		{
-			for( ApexPages.Message msg : ApexPages.getMessages())
-			{
-				addErrorMessage(msg.getSummary());
-			}	
-			return null;		
-		}
-
 		try
 		{
 			Map<Id,Zuora.zApi.SubscribeResult> subscribeSub;
@@ -213,7 +134,10 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				}
 
 				//Call Zuora to Create Subscriptions for credit card payment method
-				if(!Test.isRunningTest()) subscribeSub = Order_Svc.subscribe(new set<Id>{vfOrder.orderId}, orderPy,orderId_paymentType);//orderId_paymentType
+				if(!Test.isRunningTest())
+					subscribeSub = Order_Svc.subscribe(new set<Id>{vfOrder.orderId}, orderPy,orderId_paymentType);//orderId_paymentType
+				else if (card != null)   //*** generate test data
+					subscribeSub = new Map<Id,Zuora.zApi.SubscribeResult>{vfOrder.orderId => null};
 				if (subscribeSub == null || subscribeSub.size() == 0) {
 					addErrorMessage(Label.Order_transaction_failed_message);
 					return null;
@@ -226,7 +150,11 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				iecOrderId_paymentMethod.put(sfOrder.Id,zAccPaymentMethod);
 
 				try{
-					Map<Id,String> orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(subscribeSub,iecOrderId_paymentMethod);
+					Map<Id,String> orderItemsResponse;
+					if(!Test.isRunningTest())
+						orderItemsResponse = Order_Svc.parseSubscribeResult2UpdateItems(subscribeSub,iecOrderId_paymentMethod);
+					else   //*** generate test data
+						orderItemsResponse = new Map<Id,String>{vfOrder.orderId => (card.name != 'TEST FAILED' ? 'Success' : 'Failed')};
 					for(Id ordItem : orderItemsResponse.keySet())
 						if (orderItemsResponse.get(ordItem) != 'Success') {
 							addErrorMessage(Label.Order_transaction_failed_message);
