@@ -334,10 +334,22 @@ For UP (US Proctectorates), use the Territory_State_Abbreviation, otherwise, it 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Territory_State_Abbreviation_Visible__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Territory_Country_Name__c=&quot;Australia&quot;||Territory_Country_Name__c=&quot;Brazil&quot;||Territory_Country_Name__c= 
+&quot;Canada&quot;||Territory_Country_Name__c=&quot;United States&quot;||Territory_Country_Name__c=&quot;Venezuela&quot;,LEFT(Territory_State_Abbreviation__c,6),null)</formula>
+        <label>Territory State Abbrev. (GDP Files)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Territory_State_Abbreviation__c</fullName>
         <externalId>false</externalId>
-        <label>Territory State Abbreviation</label>
-        <length>6</length>
+        <label>Territory State Abbrev.(ISO State Table)</label>
+        <length>10</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
