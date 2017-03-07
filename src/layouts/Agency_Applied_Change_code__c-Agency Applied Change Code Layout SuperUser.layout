@@ -12,6 +12,10 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Name</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Account__c</field>
             </layoutItems>
@@ -23,7 +27,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Name</field>
+                <field>SIDRA_Case__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -49,7 +53,7 @@
                 <field>Reason_Description__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Reason_Code__c</field>
             </layoutItems>
         </layoutColumns>
@@ -122,14 +126,13 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>CREATED_DATE</fields>
         <fields>Field_API_Name__c</fields>
         <fields>Object_API_Name__c</fields>
         <fields>Field_Old_Value__c</fields>
         <fields>Field_New_Value__c</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>UPDATEDBY_USER</fields>
         <relatedList>AMS_Agency_A_Change_code_History__c.Agency_Applied_Change_Code__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
@@ -140,7 +143,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000Fbhp</masterLabel>
+        <masterLabel>00hw000000hfW1H</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

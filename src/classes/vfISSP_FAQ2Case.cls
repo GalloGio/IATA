@@ -199,12 +199,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public String encIsoCountry{
         get{
-            for (SelectOption option : countryList){
-                if (option.getValue() == newCase.IFAP_Country_ISO__c){
-                    return EncodingUtil.urlEncode(option.getLabel(), 'UTF-8');
-                }
-            }
-            return null;
+            return EncodingUtil.urlEncode(newCase.IFAP_Country_ISO__c, 'UTF-8');
         }
     }
     public String region{

@@ -13526,10 +13526,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>Alert</type>
         </actions>
         <actions>
-            <name>IDFS_SIDRA_IRRWD_R_S_comments_reset</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>IRR_Withdrawal_ApprovalDate_Reset</name>
             <type>FieldUpdate</type>
         </actions>
@@ -15944,7 +15940,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS)</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>

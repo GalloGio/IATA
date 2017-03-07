@@ -51,7 +51,7 @@ public with sharing class NewParticipantByEmailCtrl {
         //ONE CONTACT
         }else if(contacts.size()==1){         
             p.Contact__c = contacts.values()[0].Id;
- 			p.Head_Quartier__c = calculateMainAccount(contacts.values()[0]);
+ 			//p.Head_Quartier__c = calculateMainAccount(contacts.values()[0]);
  			
             List<Participant__c> ps = [SELECT Id FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
             if(ps.size()>0){
@@ -83,10 +83,10 @@ public with sharing class NewParticipantByEmailCtrl {
     }
     
  
-    public pageReference chooseContact(){
+    public pageReference chooseContact(){        
         String contactId = System.currentPageReference().getParameters().get('contactId');
         p.Contact__c = contactId;
-        p.Head_Quartier__c = calculateMainAccount(contacts.get(contactId));
+        //p.Head_Quartier__c = calculateMainAccount(contacts.get(contactId));
         
         List<Participant__c> ps = [SELECT Id FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
         if(ps.size()>0){

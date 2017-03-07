@@ -44,6 +44,7 @@ private class SIDRAliteMassEmailControllerTest{
         cse.DEF_Approval_Rejection__c = APPROVED;
         cse.Inform_Agent_DEF__c = null;
         cse.Reason_for_Default__c = 'Non-payment';
+        cse.SIDRA_Lite_Reason__c = 'Bankruptcy';
         update cse;
 
         test.startTest();

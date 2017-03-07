@@ -100,6 +100,18 @@
                 <behavior>Readonly</behavior>
                 <field>Link_agent_code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PCI_DSS_Compliant__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_a_Financial_Assessment_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_a_Financial_Assessment_Contact_Formu__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -145,6 +157,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Invoicing_and_Collection__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_an_Administrator_User_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_an_Administrator_User_Portal_Formula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -259,6 +279,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -490,8 +514,9 @@
         <fields>Percentage__c</fields>
         <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -519,17 +544,26 @@
     <relatedLists>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>Source__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

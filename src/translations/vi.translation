@@ -185,6 +185,10 @@
         <name>AMS_OSCAR_Action12</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action13 --></label>
+        <name>AMS_OSCAR_Action13</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -1968,7 +1972,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     </customLabels>
     <customLabels>
         <label>&quot;We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;customer service&lt;/a&gt; team.&quot;</label>
         <name>IDCard_PaymentByChequeP2</name>
     </customLabels>
     <customLabels>
@@ -2144,7 +2148,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
@@ -7557,7 +7561,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>Mã IATA không tồn tại trong {!Country}. Xin vui lòng chọn đúng Quốc Gia. Nếu lặp lại cùng một lỗi, xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Mã IATA không tồn tại trong {!Country}. Xin vui lòng chọn đúng Quốc Gia. Nếu lặp lại cùng một lỗi, xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -8243,7 +8247,7 @@ Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều đư�
         <name>ISSP_PortalUserCreation_Description</name>
     </customLabels>
     <customLabels>
-        <label>Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_PortalUserStatusChangeError</name>
     </customLabels>
     <customLabels>
@@ -8656,6 +8660,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Đáp ứng</label>
         <name>ISSP_Satisfactory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Save --></label>
+        <name>ISSP_Save</name>
     </customLabels>
     <customLabels>
         <label>Lưu &amp; Mới</label>
@@ -9103,6 +9111,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
         <name>ISSP_btn_AddComment</name>
     </customLabels>
     <customLabels>
+        <label>8 kí tự</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có muốn tham khảo phần FAQ (Câu Hỏi Thường Gặp) trước khi đăng một trường hợp mới không?</label>
         <name>ISSP_consult_FAQ</name>
     </customLabels>
@@ -9119,7 +9131,7 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>Không thể hoàn tất quá trình đăng ký của bạn. Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/contactus.aspx</label>
+        <label>Không thể hoàn tất quá trình đăng ký của bạn. Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
     </customLabels>
     <customLabels>
@@ -9129,6 +9141,18 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label>Loại Hóa Đơn {!invoiceType} không có sẵn cho công ty của bạn. Xin vui lòng liên hệ với bộ phận dịch vụ khách hàng</label>
         <name>ISSP_invoiceType_is_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label>1 kí tự chữ cái</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu của bạn phải chứa ít nhất:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
+        <label>1 kí tự số</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>của</label>
@@ -11060,6 +11084,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Web</name>
     </customLabels>
     <customLabels>
+        <label><!-- Web Site --></label>
+        <name>Web_Site</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Welcome Message --></label>
         <name>Welcome_Message</name>
     </customLabels>
@@ -11512,87 +11540,26 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
+        <name>EF_Manager_Approval</name>
         <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11627,14 +11594,30 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>EF_Payment_Terms</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11937,29 +11920,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
             <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12678,6 +12638,84 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>Sector</name>
         <picklistValues>
             <masterLabel>Accommodation</masterLabel>
@@ -12749,62 +12787,52 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Role</name>
+        <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
