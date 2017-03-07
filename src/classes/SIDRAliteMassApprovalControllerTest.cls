@@ -37,7 +37,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             DEF_Approval_Rejection__c = null,
             Reason_for_Default__c = 'Non-payment',
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            SIDRA_Lite_Default_Date__c = Date.today()
         );
         insert cse;
 
@@ -52,6 +53,9 @@ private class SIDRAliteMassApprovalControllerTest {
         // check that the case is searched
         controller.search();
         System.AssertEquals(1,controller.listWrapperCase.size());
+
+        controller.exportCSV();
+        controller.getcsvContent();
 
         //mark case and approve it
         controller.selectedIds = cse.Id;
@@ -75,7 +79,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             DEF_Approval_Rejection__c = null,
-            Reason_for_Default__c = 'Non-payment'
+            Reason_for_Default__c = 'Non-payment',
+            SIDRA_Lite_Default_Date__c = Date.today()
         );
         insert cse;
 
@@ -115,7 +120,8 @@ private class SIDRAliteMassApprovalControllerTest {
             DEF_Withdrawal_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
             DEF_Withdrawal_Reason__c  = 'Other',
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Request_DEF_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -154,7 +160,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             DEF_Withdrawal_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Request_DEF_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -266,7 +273,8 @@ private class SIDRAliteMassApprovalControllerTest {
             BSPCountry__c = 'France',
             IRR_Withdrawal_Approval_Rejection__c = null,
             IRR_Approval_Rejection__c = APPROVED,
-            IRR_Withdrawal_Reason__c = 'Other'
+            IRR_Withdrawal_Reason__c = 'Other',
+            AG_Request_IRR_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -305,7 +313,8 @@ private class SIDRAliteMassApprovalControllerTest {
             Region__c = 'Europe',
             BSPCountry__c = 'France',
             IRR_Withdrawal_Approval_Rejection__c = null,
-            IRR_Approval_Rejection__c = APPROVED
+            IRR_Approval_Rejection__c = APPROVED,
+            AG_Request_IRR_Withdrawal__c = DateTime.now()
         );
         insert cse;
 
@@ -344,7 +353,8 @@ private class SIDRAliteMassApprovalControllerTest {
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
             DEF_Withdrawal_Approval_Rejection__c = REJECTED,
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Reinstatement_Request__c = DateTime.now()
         );
         insert cse;
 
@@ -389,7 +399,8 @@ private class SIDRAliteMassApprovalControllerTest {
             REI_ApprovalRejectin__c = null,
             DEF_Approval_Rejection__c = APPROVED,
             DEF_Withdrawal_Approval_Rejection__c = REJECTED,
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            AG_Reinstatement_Request__c = Date.today()
         );
         insert cse;
 
@@ -429,7 +440,8 @@ private class SIDRAliteMassApprovalControllerTest {
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
             DEF_Withdrawal_Approval_Rejection__c = REJECTED,
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            Propose_Default__c = DateTime.now()
         );
         insert cse;
 
@@ -468,7 +480,8 @@ private class SIDRAliteMassApprovalControllerTest {
             TER_Approval_Rejection__c = null,
             DEF_Approval_Rejection__c = APPROVED,
             DEF_Withdrawal_Approval_Rejection__c = REJECTED,
-            SIDRA_Lite_Reason__c = 'Bankruptcy'
+            SIDRA_Lite_Reason__c = 'Bankruptcy',
+            Propose_Default__c = DateTime.now()
         );
         insert cse;
 
