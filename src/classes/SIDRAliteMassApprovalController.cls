@@ -11,6 +11,7 @@ public with sharing class SIDRAliteMassApprovalController{
     public static final String REI = 'REI';
     public static final String TER = 'TER';
     public static final String REI_AFTER_TER = 'REI After TER';
+    public static final String NOT_APPROVAL = 'NOT';
 
     public list<WrapperCase> listWrapperCase {get;set;}
     public list<WrapperCase> listWrapperResult {get;set;}
@@ -41,12 +42,15 @@ public with sharing class SIDRAliteMassApprovalController{
         query += ' DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, ';
         query += ' TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, ';
         query += ' Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c, ';
-        query += ' Subject, Owner.Name, Account.Name';
+        query += ' NOT_Approval__c, NOT_Date__c, Subject, Owner.Name, Account.Name, Account.Status__c';
         query += ' From Case';
         query += ' Where RecordtypeId = :SIDRA_LITE_RECORDTYPE';
 
         if (this.filter.cse.BSP_CASS__c != '' && this.filter.cse.BSP_CASS__c != null) {
             query += ' And BSP_CASS__c = \'' + this.filter.cse.BSP_CASS__c + '\'';
+        }
+        if (this.filter.cse.SIDRA_Lite_Reason__c != '' && this.filter.cse.SIDRA_Lite_Reason__c != null) {
+            query += ' And SIDRA_Lite_Reason__c = \'' + this.filter.cse.SIDRA_Lite_Reason__c + '\'';
         }
         // Region is mandatory
         query += ' And Region__c = \'' + this.filter.cse.Region__c + '\'';
@@ -62,16 +66,20 @@ public with sharing class SIDRAliteMassApprovalController{
         if (this.filter.selectedActionType == IRR_WD) {
             query += ' And IRR_Withdrawal_Approval_Rejection__c = null';
             query += ' And IRR_Approval_Rejection__c = :APPROVED';
+            query += ' And AG_Request_IRR_Withdrawal__c != null';
             if (this.filter.cse.IRR_Withdrawal_Reason__c != null) {
                 query += ' And IRR_Withdrawal_Reason__c = \'' + this.filter.cse.IRR_Withdrawal_Reason__c + '\'';
             }
         }
         if (this.filter.selectedActionType == DEF) {
             query += ' And DEF_Approval_Rejection__c = null';
+            query += ' And SIDRA_Lite_Default_Date__c != null';
+            query += ' And Account.Status__c != \'Terminated\'';
         }
         if (this.filter.selectedActionType == DEF_WD) {
             query += ' And DEF_Withdrawal_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
+            query += ' And AG_Request_DEF_Withdrawal__c != null';
             if (this.filter.cse.DEF_Withdrawal_Reason__c != null) {
                 query += ' And DEF_Withdrawal_Reason__c = \'' + this.filter.cse.DEF_Withdrawal_Reason__c + '\'';
             }
@@ -80,17 +88,25 @@ public with sharing class SIDRAliteMassApprovalController{
             query += ' And REI_ApprovalRejectin__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And DEF_Withdrawal_Approval_Rejection__c != :APPROVED';
+            query += ' And AG_Reinstatement_Request__c != null';
         }
         if (this.filter.selectedActionType == TER) {
             query += ' And TER_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And (DEF_Withdrawal_Approval_Rejection__c != :APPROVED OR REI_ApprovalRejectin__c != :APPROVED)';
+            query += ' And Propose_Default__c != null';
+            query += ' And Account.Status__c != \'Terminated\'';
         }
         if (this.filter.selectedActionType == REI_AFTER_TER) {
             query += ' And TER_Approval_Rejection__c = :APPROVED';
             query += ' And Update_AIMS_TER__c != null';
             query += ' And REI_ApprovalRejectin__c  = null';
             query += ' And AG_Reinstatement_Request__c != null';
+        }
+        if (this.filter.selectedActionType == NOT_APPROVAL) {
+            query += ' And NOT_Date__c != null';
+            query += ' And NOT_Approval__c = null';
+            query += ' And Account.Status__c != \'Terminated\'';
         }
 
         query += ' order by CaseNumber desc';
@@ -257,6 +273,8 @@ public with sharing class SIDRAliteMassApprovalController{
                 wrapper.cse.REI_ApprovalRejectin__c = ApproveReject;
                 wrapper.cse.Reason_of_REI_WD__c = filter.cse.Reason_of_REI_WD__c;
                 wrapper.cse.Type_of_REI_WD__c = filter.cse.Type_of_REI_WD__c;
+            } else if (type == NOT_APPROVAL) {
+                wrapper.cse.NOT_Approval__c = ApproveReject;
             }
             listUpdateCase.add(wrapper.cse);
         }
