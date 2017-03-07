@@ -460,9 +460,10 @@ public with sharing class TestDataGenerator
             @param doInsert : insert or not the records
     ****************************************************************************************************/
     public static List<Contact> generateContacts(String accountId, Integer nb, Boolean doInsert){
+        Long lngTimeStamp = system.now().getTime();
         List<Contact> contacts = new List<Contact>();
         for(Integer i = 0; i < nb; i++){
-            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + i, Email = 'test'+i+'@test.com', phone='(514) 111 2222',AccountId=accountId));
+            contacts.add(new Contact(FirstName = 'firstName', LastName = 'LastName ' + lngTimeStamp + i, Email = 'test'+lngTimeStamp+i+'@test.com', phone='(514) 111 2222',AccountId=accountId));
         }
         if(doInsert)
             insert contacts;
