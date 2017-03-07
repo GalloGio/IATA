@@ -85,9 +85,9 @@
                             <apex:outputText rendered="{!NOT(displayContactUs)}">
                                 <apex:outputText rendered="{!NOT(viewingArticle)}">
                                     <br/>
-                                    <c:pkb_featured pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
-                                    <c:pkb_popular pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
-                                    <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="true" />
+                                    <c:pkb_featured pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" communityName="{!communityName}"/>
+                                    <c:pkb_popular pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" communityName="{!communityName}"/>
+                                    <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="true" communityName="{!communityName}"/>
                                 </apex:outputText>
                                 
                                 <apex:outputText rendered="{!viewingArticle}">
