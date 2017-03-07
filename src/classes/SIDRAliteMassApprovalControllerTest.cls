@@ -23,6 +23,8 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         controller.cancelMassApproveCases();
         controller.cancelMassRejectCases();
+        controller.exportCSV();
+        controller.getcsvContent();
         test.stopTest();
     }
 
@@ -60,6 +62,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -98,6 +101,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmRejection = true;
         controller.confirmMassRejectCases();
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -138,6 +142,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -177,6 +182,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -213,6 +219,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -248,6 +255,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -288,6 +296,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -325,6 +334,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -370,6 +380,7 @@ private class SIDRAliteMassApprovalControllerTest {
         cse.Reason_of_REI_WD__c = 'Commissioner decision';
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -410,6 +421,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
@@ -450,6 +462,7 @@ private class SIDRAliteMassApprovalControllerTest {
         //controller.confirmApproval = true;
         controller.confirmMassApproveCases();
         controller.massApproveUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was approved
@@ -488,6 +501,7 @@ private class SIDRAliteMassApprovalControllerTest {
         controller.confirmMassRejectCases();
         //controller.confirmRejection = true;
         controller.massRejectUpdateCases();
+        controller.getcsvContent();
         test.stopTest();
 
         //check taht case was rejected
