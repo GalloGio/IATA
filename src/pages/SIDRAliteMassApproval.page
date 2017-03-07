@@ -108,6 +108,7 @@
 
         <apex:pageBlockSection id="filterSection" columns="1">
           <apex:inputField value="{!filter.cse.BSP_CASS__c}" styleclass="filterBox" onchange="search();"/>
+          <apex:inputField value="{!filter.cse.SIDRA_Lite_Reason__c}" styleclass="filterBox" onchange="search();"/>
           <apex:inputField value="{!filter.cse.Region__c}" styleclass="filterBox regionPicklist" required="true" onchange="search();"/>
           <apex:inputField value="{!filter.cse.BSPCountry__c}" styleclass="filterBox" onchange="search();"/>
           <!--  Filter for Action Type  -->
@@ -119,6 +120,7 @@
               <apex:selectOption itemValue="REI" itemLabel="REI Approval" />
               <apex:selectOption itemValue="TER" itemLabel="TER Approval" />
               <apex:selectOption itemValue="REI After TER" itemLabel="REI After TER Approval" />
+              <apex:selectOption itemValue="NOT" itemLabel="NOT Approval" />
           </apex:selectList>
           <!--  Filter for Account Category  -->
           <apex:selectList value="{!filter.category}" label="Account Category" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
@@ -138,10 +140,10 @@
 
     <!-- List Cases Section -->
     <apex:pageBlock title="Cases" mode="edit" id="results" rendered="{!!showProcessedSection}" >
-
-      <apex:pageBlockButtons location="both" rendered="{!filter.selectedActionType!=''}" >
-        <input id="trigger-action" class="btn" value="{!approvalButtonLabel}" onclick="triggerActionClick('APPROVED');" type="button"/>
-        <input id="trigger-action" class="btn" value="{!rejectionButtonLabel}" onclick="triggerActionClick('REJECTED');" type="button"/>
+      <apex:pageBlockButtons location="both" rendered="{!AND(NOT(ISNULL(listWrapperCase)),listWrapperCase.size>0)}" >
+        <input id="trigger-action" class="btn" value="{!approvalButtonLabel}" onclick="triggerActionClick('APPROVED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <input id="trigger-action" class="btn" value="{!rejectionButtonLabel}" onclick="triggerActionClick('REJECTED');" type="button" style="display: {!IF(filter.selectedActionType='','none','')}"/>
+        <apex:commandButton value="Export to CSV" action="{!exportCSV}" />
       </apex:pageBlockButtons>
 
       <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!listWrapperCase.size=0}"/>
@@ -198,6 +200,8 @@
         <apex:column value="{!wrapper.cse.TER_Approval_Rejection__c}" rendered="{!filter.selectedActionType=='TER'}"/>
         <apex:column value="{!wrapper.cse.Termination_Reason__c}" rendered="{!filter.selectedActionType=='TER'}"/>
         <apex:column value="{!wrapper.cse.Termination_date__c}" rendered="{!filter.selectedActionType=='TER'}"/>
+        <!--Specific columns for NOT -->
+        <apex:column value="{!wrapper.cse.NOT_Date__c}" rendered="{!filter.selectedActionType=='NOT'}"/>
 
         <apex:column value="{!wrapper.cse.AccountId}"/>
         <apex:column value="{!wrapper.cse.AIMS_status__c}"/>
