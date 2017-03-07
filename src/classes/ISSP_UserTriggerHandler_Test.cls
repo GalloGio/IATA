@@ -66,10 +66,12 @@ private class ISSP_UserTriggerHandler_Test {
 		    psa.AssigneeId = UserInfo.getUserId();
 		    psa.PermissionSetId = ps.Id;
 		    insert psa;
-	    
+	    	
+	    	Set<Id> emptySet = new Set<Id>();
 	    	ISSP_UserTriggerHandler.updateUserPermissionSet('Test', conEmailIdSet, conEmailIdSet);
 	    	ISSP_UserTriggerHandler.deleteTwoFactor(conEmailIdSet);
-	    	ISSP_UserTriggerHandler.updateFederation(conLastNameMap);	    	
+	    	ISSP_UserTriggerHandler.updateFederation(conLastNameMap);
+	    	ISSP_UserTriggerHandler.updateUserPermissionSet('Test', conEmailIdSet, emptySet);	    	
 
 	    	Test.stopTest();
     	}
