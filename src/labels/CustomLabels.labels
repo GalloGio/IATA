@@ -12628,7 +12628,9 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EMADOMVAL ImportantInformation</shortDescription>
-        <value>By keeping updated the list of email domains of your company, you help us flagging contacts that may be located under your company and don&apos;t have a valid domain, also making it easier for you as an admin to locate them and take corrective actions if needed (deactivate them as contacts in the company). Please add here any valid domain for the company, worldwide (it may be different domains are valid in different locations).</value>
+        <value>By keeping an updated list of valid company email domains, the system will be able to flag any contact under your account with a different domain. 
+With this feature, Portal Administrators will be able to easily identify the non-compliant contacts and take corrective actions if needed such as deactivating them. 
+Please add below all your company valid email domains, including different ones used in different locations.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_RemoveConfirmMsg</fullName>

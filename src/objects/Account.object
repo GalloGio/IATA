@@ -8160,7 +8160,8 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <formula>OR( Has_a_Financial_Assessment_Contact__c, Has_a_Financial_Assessment_Contact_Sum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Has a Financial Assessment Contact</label>
+        <inlineHelpText>Has a financial assessment contact under this account or any from the hierarchy</inlineHelpText>
+        <label>Has FA Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8191,6 +8192,7 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <formula>OR( Has_an_Administrator_User_Portal__c, Has_an_Administrator_User_Portal_Sum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Has an admin user under this account or any from the same hierarchy</inlineHelpText>
         <label>Has an Admin Portal User</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -8209,6 +8211,7 @@ WSPN-Worldspan</inlineHelpText>
         <defaultValue>false</defaultValue>
         <description>Search in all related contacts and if any of them is an Admin User portal this value is checked</description>
         <externalId>false</externalId>
+        <inlineHelpText>Has an admin contact under this account</inlineHelpText>
         <label>Has an Admin Portal User (This account)</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
