@@ -2937,6 +2937,18 @@
         <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
+        <label><!-- SAP Customer Issue on Address --></label>
+        <name>IEC_SAP_Customer_Address_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SAP Customer Issue --></label>
+        <name>IEC_SAP_Customer_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SAP Customer Issue on Shipping Address --></label>
+        <name>IEC_SAP_Customer_Shipping_Address_Issue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
         <name>IEC_Trial_RequestFail</name>
     </customLabels>
@@ -11501,6 +11513,44 @@
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_User_Role</name>
         <picklistValues>
             <masterLabel>Airline Services Specialists</masterLabel>
@@ -11529,6 +11579,33 @@
         <picklistValues>
             <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
             <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11834,32 +11911,6 @@
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Manager_Approval</name>
         <picklistValues>
             <masterLabel>Approved</masterLabel>
@@ -11880,134 +11931,6 @@
         <picklistValues>
             <masterLabel>Rejected</masterLabel>
             <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12079,6 +12002,36 @@
         <picklistValues>
             <masterLabel>Travel Agent</masterLabel>
             <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12794,6 +12747,65 @@
         <picklistValues>
             <masterLabel>ZWL</masterLabel>
             <translation><!-- ZWL --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
