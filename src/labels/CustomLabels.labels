@@ -5134,6 +5134,27 @@ and
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_SAP_Customer_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Address</shortDescription>
+        <value>There is an error with your address.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue</shortDescription>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Shipping Address</shortDescription>
+        <value>There is an error with your shipping address.&lt;br/&gt;Please change shipping address or contact CSR for assistance!</value>
+    </labels>
+    <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -18103,7 +18124,9 @@ lblAttention:Attention</value>
         <value>errMissCompany:Company name cannot be empty
 errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
-errMissState:State/Province cannot be empty</value>
+errMissState:State/Province cannot be empty
+msgAddrExist:Shipping address is already in system.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
