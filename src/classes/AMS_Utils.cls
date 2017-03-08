@@ -1218,13 +1218,13 @@ public without sharing class AMS_Utils {
                 if (fieldsToMigrate.contains('ISSP_AMS_GDS_with_signed_contract__c'))
                     accountFieldNewValue.put('GDS__c', transformGDS(oscarOnlineAccreditation.ISSP_AMS_GDS_with_signed_contract__c));
                 if (fieldsToMigrate.contains('Branch_Office_Country__c'))
-                    accountFieldNewValue.put('IATA_ISO_Country__c', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
+                    accountFieldNewValue.put('BillingCountry', oscarOnlineAccreditation.Branch_Office_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_Country__c'))
-                    accountFieldNewValue.put('IATA_ISO_Shipping_Country__c', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
+                    accountFieldNewValue.put('ShippingCountry', oscarOnlineAccreditation.Shipping_ISO_Country__r.Name);
                 if (fieldsToMigrate.contains('Shipping_ISO_State__c'))
-                    accountFieldNewValue.put('IATA_ISO_Shipping_State__c', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
+                    accountFieldNewValue.put('ShippingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.Shipping_ISO_State__r.Name : null);
                 if (fieldsToMigrate.contains('IATA_ISO_State__c'))
-                    accountFieldNewValue.put('IATA_ISO_Billing_State__c', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
+                    accountFieldNewValue.put('BillingState', oscarOnlineAccreditation.IATA_ISO_State__r.Valid_for_Address__c == true ? oscarOnlineAccreditation.IATA_ISO_State__r.Name : null);
                 //if (fieldsToMigrate.contains('ISSP_AMS_Total_Ownership__c'))
                     //AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(new List<AMS_Pax_Accreditation_Form__c>{onlineAcc}, accountsAffected);
 
