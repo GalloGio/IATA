@@ -83,7 +83,7 @@ public without sharing class Contact_Sel extends Selector {
         return new map<Id,Contact>([
                                     SELECT 
                                         Id,FirstName,LastName,Email,Phone,Tax_1_ID__c,Tax_2_ID__c,Title,Name,Salutation,
-                                        MailingStreet,MailingCity,MailingPostalCode,MailingState,MailingCountry, IsDeleted,
+                                        MailingStreet,MailingCity,MailingPostalCode,MailingState,MailingCountry, IsDeleted, Account.CurrencyIsoCode, Account.Parent.CurrencyIsoCode,
                                         Account.BillingStreet,Account.BillingCity,Account.BillingPostalCode,Account.BillingState,Account.BillingCountry,
                                         Account.ShippingStreet,Account.ShippingCity,Account.ShippingPostalCode,Account.ShippingState,Account.ShippingCountry,
                                         Account.Sector__c, Account.Name, Account.Parent.Name, Account.Parent.Sector__c, Account.Parent.BillingStreet, 

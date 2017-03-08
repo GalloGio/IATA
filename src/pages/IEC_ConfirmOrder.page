@@ -1,4 +1,4 @@
-<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" 
+<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" id="pgConfirmOrder"
 	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
 	
 	<!--[if lte IE 8]>
@@ -440,7 +440,7 @@
 					                    <li><apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
 					                    <li>
 											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);" />
-								        	<button class="button wide" type="button" onclick="submitOrder();">
+								        	<button class="button wide" type="button" onclick="submitOrder();" style="{! IF(stopProcess, 'display:none', '')}">
 						                		{!$Label.Submit_Order}
 												<apex:actionStatus id="submitStatus"> 
 					                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -485,4 +485,5 @@
 			</script>
 		</body>
 	</html>
+
 </apex:page>

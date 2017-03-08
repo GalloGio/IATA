@@ -92,10 +92,14 @@ public without sharing class Utility {
         Created by Kevin Ky 2015-08-17
             Send email to a list of email addresses
     ****************************************************************************************************/
-    public static void sendEmail(List<String> recipients,String emailSubject,String body,Boolean useHTML,List<Messaging.EmailFileAttachment> fileAttachments) { 
+    public static void sendEmail(List<String> recipients,String emailSubject,String body,Boolean useHTML,List<Messaging.EmailFileAttachment> fileAttachments){
+    	sendEmail(recipients, emailSubject, body, useHTML, fileAttachments, true);
+    }
+    
+    public static Messaging.SingleEmailMessage sendEmail(List<String> recipients,String emailSubject,String body,Boolean useHTML,List<Messaging.EmailFileAttachment> fileAttachments, Boolean send) { 
         
-        if(recipients == null) return;
-        if(recipients.size() == 0) return;
+        if(recipients == null) return null;
+        if(recipients.size() == 0) return null;
         // Create a new single email message object
         // that will send out a single email to the addresses in the To, CC & BCC list.
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();        
@@ -121,7 +125,9 @@ public without sharing class Utility {
             mail.setFileAttachments(fileAttachments);
         }
         // Send the email you have created.
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        if(send)
+        	Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        return mail;
     } //*** end of "sendEmail"
 
     
