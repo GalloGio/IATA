@@ -2356,6 +2356,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Open_TKT_System__c</fullName>
+        <externalId>false</externalId>
+        <label>Inform GDS to Open TKT System</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Operational_Systems_Updated__c</fullName>
         <externalId>false</externalId>
         <label>BSPlink/CASSlink updated</label>
@@ -3954,6 +3964,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Shut_Down_TKT_System_GDS_and_BSPlink__c</fullName>
+        <externalId>false</externalId>
+        <label>Inform GDS to Shut Down TKT System</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
