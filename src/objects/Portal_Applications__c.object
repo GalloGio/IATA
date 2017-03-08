@@ -424,12 +424,23 @@ Name
         <visibleLines>5</visibleLines>
     </fields>
     <fields>
+        <fullName>VisibleCNS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the service should be visible on the CNS portal branding.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines if the service should be visible on the CNS portal branding.</inlineHelpText>
+        <label>Visible CNS</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
         <formula>OR( 
 AND( 
 Agency__c = true, 
-CONTAINS($User.Customer_type__c,&quot;Agency&quot;) 
+CONTAINS($User.Customer_type__c,&quot;Agency&quot;),
+VisibleCNS__c=false
 ), 
 AND( 
 Not_ICH_Airline__c = true, 
@@ -453,8 +464,8 @@ AND(
 Name = &quot;Resource Center&quot;, 
 CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
 ), 
-Name = &quot;Payment Link&quot;, 
-Name = &quot;Resource Center&quot; 
+AND(Name = &quot;Payment Link&quot;, VisibleCNS__c=false), 
+AND(Name = &quot;Resource Center&quot;, VisibleCNS__c=false)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
