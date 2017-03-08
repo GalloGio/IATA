@@ -429,7 +429,7 @@ Name
         <description>Defines if the service should be visible on the CNS portal branding.</description>
         <externalId>false</externalId>
         <inlineHelpText>Defines if the service should be visible on the CNS portal branding.</inlineHelpText>
-        <label>Not Visible on CNS</label>
+        <label>Visible on CNS</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
