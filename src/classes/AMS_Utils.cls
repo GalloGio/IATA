@@ -1240,8 +1240,8 @@ public without sharing class AMS_Utils {
                         Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
                         Schema.DisplayType fldType = field.getDescribe().getType();
                         
-                        system.debug('Field value to migrate to account: ' + accFieldApiName);
-                        system.debug('Field Type to migrate to account: ' + fldType);
+                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('DDD Field Type to migrate to account: ' + fldType);
 
                         //Add Account Changes to be used when generating the Change Codes History Entities
                         
@@ -1259,6 +1259,9 @@ public without sharing class AMS_Utils {
                             oldValue = String.valueOf(acc.get(accFieldApiName));
                             newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
                        }
+                        
+                        system.debug('DDD oldValue:' + oldValue);
+                        system.debug('DDD newValue:' + newValue);
                         
                         if (oldValue != newValue)
                             objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));

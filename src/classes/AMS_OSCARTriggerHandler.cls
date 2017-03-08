@@ -754,6 +754,8 @@ public class AMS_OSCARTriggerHandler {
 			//
 			List<Account> accsToUpdateFromCC = new List<Account>();
 
+			system.debug('DDD changesContainer: ' + changesContainer);
+
 
 			//insert the change codes
 			if (changesContainer.size() > 0) {
@@ -800,7 +802,7 @@ public class AMS_OSCARTriggerHandler {
 
 						//******* Add "Custom" changes struct for the Ownership mapping ******** END
 
-						system.debug('accountsToUpdate.get(acc):' + accountsToUpdate.get(acc));
+						system.debug('DDD accountsToUpdate.get(acc):' + accountsToUpdate.get(acc));
 
 						objectChanges.add(accountsToUpdate.get(acc));
 
