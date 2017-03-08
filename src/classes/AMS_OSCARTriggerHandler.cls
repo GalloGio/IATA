@@ -786,16 +786,20 @@ public class AMS_OSCARTriggerHandler {
 							if (oldNewOwnersByOscar.getOldOwnersByAccountId(acc.Id) != null) oldOwnerCSV = oldNewOwnersByOscar.getOldOwnersByAccountId(acc.Id).allOwnersCSV;
 							if (oldNewOwnersByOscar.getNewOwnersByAccountId(acc.Id) != null) newOwnerCSV = oldNewOwnersByOscar.getNewOwnersByAccountId(acc.Id).allOwnersCSV;
 
+							AMS_ChangeCodesHelper.ObjectChange objectChangesOwnership;
 
-        		            AMS_ChangeCodesHelper.ObjectChange objectChangesOwnership = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners',oldOwnerCSV,newOwnerCSV);
+							if(oldOwnerCSV != newOwnerCSV) objectChangesOwnership = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners',oldOwnerCSV,newOwnerCSV);
 
-							if(accountsToUpdate.get(acc) == null)
+							if( objectChangesOwnership != null && accountsToUpdate.get(acc) == null)
 							{
 								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesOwnership});
 								objectChanges.add(acctChangesStruct);
+
+								system.debug('DDD accountsToUpdate add Owners Info:' + accountsToUpdate.get(acc));
+
 							}
 
-							else
+							else if ( objectChangesOwnership != null)
 								accountsToUpdate.get(acc).changes.add(objectChangesOwnership);
 
 						}
