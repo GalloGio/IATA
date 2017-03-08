@@ -118,11 +118,15 @@ function selectedCases() {
             <apex:selectOptions value="{!filter.listIFAPCountries}" />
           </apex:selectList>
           <!--  Filter for IFAP Type: FA or FS  -->
-          <apex:selectList value="{!filter.ifapType}" label="FA/FS" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
-            <!--<apex:selectOption itemValue="" itemLabel="-- None --" />-->
-            <apex:selectOption itemValue="FA" itemLabel="Financial Review" />
-            <apex:selectOption itemValue="FS" itemLabel="Financial Security" />
-          </apex:selectList>
+        <apex:pageBlockSectionItem HelpText="To filter cases based on the time frame of when the action supposed to be taken">
+          <apex:outputLabel value="FA/FS"/>
+            <apex:selectList value="{!filter.ifapType}" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
+              <!--<apex:selectOption itemValue="" itemLabel="-- None --" />-->
+              <apex:selectOption itemValue="FA" itemLabel="Financial Review" />
+              <apex:selectOption itemValue="FS" itemLabel="Financial Security" />
+            </apex:selectList>
+        </apex:pageBlockSectionItem>
+
           <!--  Filter for IFAP: Financial Review Type  -->
           <apex:selectList value="{!filter.cse.Financial_Review_Type__c}" label="{!$ObjectType.Case.fields.Financial_Review_Type__c.label}" multiselect="false" size="1" styleclass="filterBox" onchange="search();" rendered="{!filter.isIFAP}">
             <apex:selectOptions value="{!filter.ListFinancialReviews}" />
@@ -161,7 +165,7 @@ function selectedCases() {
 
       <apex:pageBlockButtons location="both">
         <input id="trigger-action" class="btn" value="Trigger Sidra Lite Action" onclick="triggerActionClick();" type="button"/>
-        <!--<apex:commandButton value="Trigger Sidra Lite Action" action="{!confirmTriggerSidraLiteAction}" rerender="mainForm" status="Loading" />-->
+        <apex:commandButton value="Export to CSV" action="{!exportCSV}" rendered="{!AND(listWrapperCase!=null,listWrapperCase.size>0)}"/>
       </apex:pageBlockButtons>
 
       <apex:pageMessage summary="No cases found" severity="info" strength="3" rendered="{!OR(listWrapperCase==null,listWrapperCase.size==0)}"/>
@@ -191,6 +195,11 @@ function selectedCases() {
 
         <apex:column value="{!wrapper.cse.Financial_Review_Type__c}" rendered="{!filter.isIFAP}"/>
 
+        <apex:column rendered="{!filter.isIFAP}">
+          <apex:facet name="header">FA/FS</apex:facet>
+          <apex:OutputText value="{!wrapper.ifapType}"/>
+        </apex:column>
+
         <apex:column value="{!wrapper.cse.AccountId}" />
 
         <apex:column value="{!wrapper.cse.Account_Billing_Country__c}" rendered="{!filter.isIFAP}"/>
@@ -200,10 +209,6 @@ function selectedCases() {
 
         <apex:column value="{!wrapper.cse.Key_Customer_Case__c}" />
 
-        <apex:column rendered="{!filter.isIFAP}">
-          <apex:facet name="header">IFAP Type</apex:facet>
-          <apex:OutputText value="{!wrapper.ifapType}"/>
-        </apex:column>
         <apex:column value="{!wrapper.cse.Reason1__c}" rendered="{!!filter.isIFAP}"/>
 
         <apex:column >

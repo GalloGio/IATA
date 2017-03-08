@@ -2,7 +2,7 @@
  *  IEC_ShoppingCartController: IEC_ShoppingCart page Controller                                                  *
  *  Author: David Daboué - CGI                                                                                    *        
  ******************************************************************************************************************/
-public class IEC_ShoppingCartController extends IEC_PageController
+public without sharing class IEC_ShoppingCartController extends IEC_PageController
 {
 	//Page parameters
     public Map<String, String> pageParams;
@@ -40,6 +40,10 @@ public class IEC_ShoppingCartController extends IEC_PageController
 		Order_Sel oSelector = new Order_Sel();
 		OrderItem_Sel oiSelector = new OrderItem_Sel();
 
+		//*** check/initialize default locations -> error will be checked in the checkout flow
+		if (loggedCustomer != null && (loggedCustomer.sfContact.BillTo_Location__c == null || loggedCustomer.sfContact.ShipTo_Location__c == null))
+			Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
+
 		if(pageParams.containsKey('order'))
 		{
 			String orderNumber = pageParams.get('order');
@@ -72,7 +76,7 @@ public class IEC_ShoppingCartController extends IEC_PageController
 		else if(loggedCustomer != null)
 		{
 			//-- Find pending order/orderItems Of the customer
-			Order pendingOrder = IECOrder_Svc.getPenddingOrder(); // oSelector.getPenddingOrder(loggedCustomer.sfUser.Id);
+			Order pendingOrder = IECOrder_Svc.getPenddingOrder(true); // oSelector.getPenddingOrder(loggedCustomer.sfUser.Id);
 			List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
 			refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
 
@@ -124,7 +128,7 @@ public class IEC_ShoppingCartController extends IEC_PageController
 				List<OrderItem> orderItems2delete = new List<OrderItem>();
 
 				//-- Update OrderItem in Database
-				Order pendingOrder =  IECOrder_Svc.getPenddingOrder();
+				Order pendingOrder =  IECOrder_Svc.getPenddingOrder(true);
 
 				//-- Find OrderItems of pendingOrder with ProductOCde in items.keySet()
 				Map<Id, List<OrderItem>> mapOrderItems =  new OrderItem_Sel().getOrderItems(new Set<Id>{pendingOrder.Id});

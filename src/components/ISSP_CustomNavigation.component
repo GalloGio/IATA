@@ -1,4 +1,4 @@
-<apex:component controller="ISSP_TC_Accept" allowDML="true" 
+<apex:component controller="ISSP_TC_Accept" allowDML="true"
                  language="{!selectedLanguage}"
                 >
 
@@ -21,10 +21,10 @@
       }
     }
  </script><!-- end jquery initialisation -->
- 
+
     <script src="{!urlfor($Resource.sessionTime2)}" type="text/javascript" > </script>
     <script src="{!urlfor($Resource.sessionTime2_aux)}" type="text/javascript" > </script>
- 
+
     <script type="text/javascript" charset="utf-8">
     //if ({!isBSP} == true){
      if (false){
@@ -138,7 +138,7 @@ window.onload = function HighlightBar() {
     if(menuid=="M4"){
      $("#casebreadcrumbs").text("{!$Label.ISSP_Company_Administration}");
      $("#casebreadcrumbs2").text("{!$Label.ISSP_Company_Cases}");
-     $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");    
+     $("#casebreadcrumbs3").text(" {!$Label.ISSP_PageDescription_ISSP_CaseList_adminview}");
 
     }
         };
@@ -522,12 +522,12 @@ background-color:#428bca;
     function tarnsferSearchQuery() {
         //createCookie("searchInput", document.getElementById("searchInput").value, 1);
         //alert(document.cookie);
-        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value); 
+        window.top.location.replace("/ISSP_SearchResult?q=" + document.getElementById("searchInput").value);
     }
 
     function enterKey(evt) {
       var evt = (evt) ? evt : ((event) ? event : null);
-      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+      var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
       if ((evt.keyCode == 13) && (node.type=="text"))  {
            tarnsferSearchQuery();
       }
@@ -622,7 +622,7 @@ background-color:#428bca;
       </select>
       -->
       <apex:form id="LselectLanguage">
-      	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);"> 
+      	<apex:selectList id="LanguageLocaleKeySelect" value="{!selectedLanguage}" size="1" onchange="changeLanguageLocaleKey(this);">
               <apex:selectOption itemValue="-- Language --" itemLabel="Language"/>
               <apex:selectOptions value="{!languages}"/>
         </apex:selectList>
@@ -743,7 +743,7 @@ background-color:#428bca;
       </ul>
 
       <ul  class="nav navbar-nav collapse" id="seven">
-          <li> <a href="/MITA_PortalMyAgreements?mid=M7S1" id="M7S1" >View My Company MITA/BIETA Agreements</a> </li>
+          <li> <a href="/MITA_PortalMyAgreements?mid=M7S1" id="M7S1" >{!$Label.ISSP_View_My_Company_MITA_BIETA_Agreements}</a> </li>
       </ul>
 
       <ul class="pull-right" id="searchbox">
@@ -754,7 +754,7 @@ background-color:#428bca;
 
         <input id="searchInput" type="text" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" class="form-control"/>
 
-        <button class="searchbutton btn-group" type="button" onclick="tarnsferSearchQuery();"> 
+        <button class="searchbutton btn-group" type="button" onclick="tarnsferSearchQuery();">
             <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
         </button>
 
@@ -783,10 +783,10 @@ background-color:#428bca;
             </apex:outputPanel>
           </div>
           <center>
-            <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage" role="menuitem" title="Logout" target="_top"> 
+            <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage" role="menuitem" title="Logout" target="_top">
               <span class="glyphicon glyphicon-log-out" aria-hidden="true" style="font-size:1.5em;"></span>
                <h3>{!$Label.Logout}</h3>
-           </a> 
+           </a>
           </center>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
