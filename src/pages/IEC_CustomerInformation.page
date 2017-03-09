@@ -110,7 +110,7 @@
                                                     <div class="field-group text inline mandatory {!IF(errors['email']!='false', ' error','')}" data-placement="left">
                                                         <label>
                                                             <span class="input-label">{!$Label.Email_address}</span>
-                                                            <apex:inputText id="email" value="{!vfOrder.billToAddress.email}" styleClass="email user-input text validate[required, custom[email]]" />
+                                                            <apex:inputText id="email" value="{!vfOrder.billToAddress.email}" disabled="true" styleClass="email user-input text validate[required, custom[email]]" />
                                                         </label>
                                                     </div>
                                                 </div>
@@ -220,7 +220,7 @@
                                 </apex:variable>
 
                                 <!-- Cart Empty -->
-                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0)}">
+                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
                                         <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>

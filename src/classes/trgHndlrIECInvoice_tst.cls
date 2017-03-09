@@ -256,20 +256,20 @@ public class trgHndlrIECInvoice_tst {
         List<Zuora__CustomerAccount__c> lstBillingAccount;
         IECCustomer loggedCustomer;
         
-        Test.startTest();   //*** (Thai) to increase # SOQL and to complete future
-
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         System.runAs(usr) {
             loggedCustomer = IECCustomer.getCurrentIECCustomer();
         }
 
+        Test.startTest();   //*** (Thai) to increase # SOQL and to complete future
+
         Contact oContact = new Contact_Sel().getContactById(usr.contactId);
         Account oAccount = new Account_Sel().getAccountById(oContact.AccountId);
         //-- Generate locations
         List<IECAddress__c> addresses = TestDataGenerator.generateAddresses(1, true);
-        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null);
-        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId);
-        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId);
+        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null, 'ST-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'BT-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'SH-' + String.valueOf(addresses[0].Id).right(7));
 
         oAccount.SoldTo_Location__c = soldToLocation.Id;
         update oAccount;
@@ -339,20 +339,20 @@ public class trgHndlrIECInvoice_tst {
         List<Zuora__CustomerAccount__c> lstBillingAccount;
         IECCustomer loggedCustomer;
         
-        Test.startTest();
-
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         System.runAs(usr) {
             loggedCustomer = IECCustomer.getCurrentIECCustomer();
         }
 
+        Test.startTest();
+
         Contact oContact = new Contact_Sel().getContactById(usr.contactId);
         Account oAccount = new Account_Sel().getAccountById(oContact.AccountId);
         //-- Generate locations
         List<IECAddress__c> addresses = TestDataGenerator.generateAddresses(1, true);
-        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null);
-        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId);
-        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId);
+        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null, 'ST-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'BT-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'SH-' + String.valueOf(addresses[0].Id).right(7));
 
         oAccount.SoldTo_Location__c = soldToLocation.Id;
         update oAccount;
@@ -410,5 +410,9 @@ public class trgHndlrIECInvoice_tst {
         //delete [select Id from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c];
         //IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
         //system.assert(0 < [select count() from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c], 'Order should be created');
+        
+        //*** cover methods in class "IEC_ZSubscriptionProductCharge_Sel" because not used in real script anymore
+        IEC_ZSubscriptionProductCharge_Sel cls = new IEC_ZSubscriptionProductCharge_Sel();
+        system.assertNotEquals(cls.getZSubscriptionProductChargeByProdRatePlanChargeZId(new Set<String>{oSubscription.Zuora__External_Id__c}, new Set<String>{'xyz'}, false, null).size(), 0);
     }
 }
