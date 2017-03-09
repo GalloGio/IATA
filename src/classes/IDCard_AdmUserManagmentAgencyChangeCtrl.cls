@@ -10,8 +10,6 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 	
 	public List<SelectOption> months {get;set;}
 
-	public List<SelectOption> title {get;set;}
-
 	public AgencyChangeWrapper theChosenOne {get;set;}
 	
 	public boolean moreThan1000Iatacodes {get;set;}
@@ -27,6 +25,8 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
     //public String UIR {get;set;}
 
 	public boolean success {get;set;}
+
+
 	
 	public IDCard_AdmUserManagmentAgencyChangeCtrl(){
 		initialize(true);
@@ -46,6 +46,8 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
             	moreThan1000Iatacodes = true;
             }
 		
+		
+		
 		packages = new List<SelectOption>(); 
         packages.add(new SelectOption('','--None--'));          
         for(Schema.PicklistEntry ple : ID_Card_Application__c.Package_of_Travel_Professionals_Course_1__c.getDescribe().getPicklistValues())
@@ -55,15 +57,10 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         months.add(new SelectOption('','--None--'));          
         for(Schema.PicklistEntry ple : ID_Card_Application__c.Start_date_agency_month__c.getDescribe().getPicklistValues())
             months.add(new SelectOption(ple.getValue(),ple.getLabel()));
-        
-        title = new List<SelectOption>();
-        title.add(new SelectOption('','--None--'));
-        for(Schema.PicklistEntry ple : ID_Card_Application__c.Title__c.getDescribe().getPicklistValues())
-        	title.add(new SelectOption(ple.getValue(),ple.getLabel()));
-
+            
         if(ApexPages.currentPage().getParameters().get('ImagedSaved')!=null){
         	Id idapp= ApexPages.currentPage().getParameters().get('ImagedSaved');
-        	List<ID_Card_Application__c> apps = database.query('select Id, Displayed_Name__c, IATA_Code__c, VER_number__c, First_Name__c, Last_name__c, Photo__c, Title__c, Email_admin__c  '+
+        	List<ID_Card_Application__c> apps = database.query('select Id, Displayed_Name__c, IATA_Code__c, VER_number__c, First_Name__c, Last_name__c, Photo__c  '+
 				                                     			'from ID_card_application__c where  Id = :idapp LIMIT 1');
 		
 			if(apps.size()==1){
@@ -71,9 +68,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 				theChosenOne.newIataCode = apps[0].IATA_Code__c;
 				theChosenOne.verNum = apps[0].VER_number__c;
 				theChosenOne.photo = apps[0].Photo__c;
-				theChosenOne.title = apps[0].Title__c;
-				theChosenOne.email = apps[0].Email_admin__c;
-				//theChosenOne.previousContact = new Contact(FirstName = apps[0].First_name__c, LastName = apps[0].Last_Name__c);
+				theChosenOne.previousContact = new Contact(FirstName = apps[0].First_name__c, LastName = apps[0].Last_Name__c);
 			}			
         	
         }
@@ -100,10 +95,6 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			acg.previousContact = c;
 			acg.verNum = c.Ver_Number_2__c;
 			acg.oldIATACode = c.IATA_Code__c;
-			acg.title = c.Title;
-			acg.firstName = c.FirstName;
-			acg.lastName = c.LastName;
-			acg.email = c.Email;			
 			currentRecords.put(acg.verNum, acg);
 		}if(findcontact.size()==0) {
 			//currentRecord.previousContact =NULL;
@@ -121,21 +112,13 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 	
 	public void confirmContact(){
 		success = true;
-		//system.debug('aqui theChosenOne.email ' + theChosenOne.email + ' theChosenOne.title ' + theChosenOne.title);
 		if(String.isBlank(addId)){
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You have to select a valid existing Id Card applicant.'));
 			success = false;
 			//return;
 		}
 		theChosenOne = currentRecords.get(addid);
-		system.debug('aqui theChosenOne.email  ' + theChosenOne.email + ' theChosenOne.title ' + theChosenOne.title);
-		
-		String fNameSize = theChosenOne.firstName;
-		String lNameSize = theChosenOne.lastName;
-		Integer totalSize = fNameSize.length() + lNameSize.length();
-
-		system.debug('aqui fNameSize ' + fNameSize.length() + ' lNameSize ' + lNameSize.length());
-
+		system.debug('aqui theChosenOne ' + theChosenOne + ' addid ' + addid);
 		if(String.isBlank(theChosenOne.newIataCode) || !keyContactAndDelegateForAccountList.keyset().contains(theChosenOne.newIataCode)){
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'You have to select a valid IATA code for the applicant'));
 			//theChosenOne = null;
@@ -162,17 +145,6 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			success = false;
 			//return;
         }
-        if(String.isBlank(theChosenOne.email)){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Schema.SobjectType.Contact.fields.Email.label+' : please insert a Email Address.'));
-				success = false;
-		}if(String.isBlank(theChosenOne.title)){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Schema.SobjectType.Contact.fields.Title.label+' : please select a Title.'));
-				success = false;
-		
-		}if((fNameSize.length() + lNameSize.length()) > 22){
-				Apexpages.addMessage(new Apexpages.Message(Apexpages.Severity.ERROR,'The concatenation of First and Last Name should not pass 22 characters, you have now ' + totalSize + ' characters. Please reduce the Last Name.'));
-		}
-
 		try{
 			Integer year = Integer.valueOf(theChosenOne.startyear);
 			if(year>date.today().year()){
@@ -185,7 +157,6 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         		//theChosenOne = null;
 				success = false;
 				//return;
-
 			}
 		}catch(Exception e){
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Schema.SobjectType.ID_Card_Application__c.fields.Start_Date_Agency_year__c.label+' : please insert a valid year.'));
@@ -317,15 +288,15 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 		public Contact previousContact {set;get;}
 		public String packageTravel1 {get;set;}
 		public String packageTravel2 {get;set;}
-		public String title {get;set;}
-		public String firstName {get;set;}
-		public String lastName {get;set;}
-		public String email {get;set;}
-		public String displayedName {get;set;}
 		//public boolean TerminatedIATACode {get;set;}
 		public string startmonth {get;set;}
 		public string startyear {get;set;}
 		
+        public String awsImageURL {
+        	get{
+        		return IDCardUtil.AWSImageAuthorizationLink(this.photo);
+    		} set;}
+
 		public AgencyChangeWrapper(){
 			
 		}
@@ -344,4 +315,5 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 	public integer getCurrentRecordsSize(){
 		return currentRecords.keyset().size();
 	}
+
 }
