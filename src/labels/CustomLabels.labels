@@ -9334,6 +9334,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Welcome to the online IATA Agency Accreditation application.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
+        <value>Welcome to the online CNS Agency Endorsement application.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9420,6 +9428,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 SAA</shortDescription>
         <value>IATA Online Agency Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_SAA_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 SAA</shortDescription>
+        <value>CNS Online Agency Endorsement &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
@@ -11750,6 +11766,20 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_CNS_Documents</shortDescription>
         <value>For CNS documents please click &lt;a href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CNS_Endorsement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_Endorsement</shortDescription>
+        <value>CNS Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CNS_PaymentLink_ServiceName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_PaymentLink_ServiceName</shortDescription>
+        <value>Payment Link</value>
     </labels>
     <labels>
         <fullName>ISSP_CNS_quote</fullName>

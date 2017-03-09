@@ -291,6 +291,8 @@
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_CNS_Endorsement,
+&quot;CNS Payment Link&quot;, $Label.ISSP_CNS_PaymentLink_ServiceName,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
