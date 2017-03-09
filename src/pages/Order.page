@@ -414,7 +414,7 @@
                                 <div class="panel-heading">{! labels['lblShipTo']}</div>
                                 <div class="panel-body address-panel">
                                     
-                                   <apex:outputPanel layout="block" styleClass="row">
+                                    <apex:outputPanel layout="block" styleClass="row">
                                         <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
                                         <div class="col-md-7"><apex:outputField value="{!vfOrder.ShipTo_same_BillTo__c}" /></div>
                                     </apex:outputPanel>
@@ -664,14 +664,15 @@
                                         
                                         <apex:outputPanel id="sectionBillTo" layout="block">
                                             
-                                            <apex:pageMessages id="msgErrors" />
+                                            <apex:pageMessages id="msgErrors" escape="false" />
 
                                             <apex:outputPanel layout="block" styleClass="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
                                                 <div class="col-md-7"><div class="requiredBlock"></div>
-                                                    <apex:inputField value="{!vfOrder.BillToContactId}" styleClass="MaxColumnWidth" >
+                                                    <apex:inputField value="{!vfOrder.BillToContactId}" styleClass="MaxColumnWidth" rendered="{!!editMod}" >
                                                         <apex:actionSupport event="onchange" action="{!getContactLocations}" reRender="BillToReadOnly, sectionBillTo, sectionSoldTo,messagesContainer" status="billToLoading" />
                                                     </apex:inputField>
+                                                    <apex:outputField value="{!vfOrder.BillToContactId}" styleClass="MaxColumnWidth" rendered="{!editMod}"/>
                                                 </div>
                                             </apex:outputPanel>
                                             <br />
@@ -700,11 +701,11 @@
                                             <br />
                                             <div class="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblAccountName']}" /></div>
-                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Account_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblContactName']}" /></div>
-                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Contact_First_Name__c}" styleClass="MaxColumnWidth" />&nbsp;<apex:outputField value="{!billToLocation.Contact_Last_Name__c}" styleClass="MaxColumnWidth" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Name__c}" styleClass="MaxColumnWidth" /></div>
                                             </div>
                                             <!-- <apex:outputPanel layout="block" styleClass="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblSalutation']}" /></div>
@@ -730,11 +731,11 @@
 
                                             <div class="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblPhone']}" /></div>
-                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Phone__c}" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Phone__c}" /></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
-                                                <div class="col-md-7"><apex:outputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                <div class="col-md-7"><apex:outputField value="{!vfOrder.BillToContact_Email__c}" styleClass="MaxColumnWidth" /></div>
                                             </div>
 
                                             <div class="row">
@@ -774,7 +775,7 @@
                                             <!-- Edit Mode -->
                                             <apex:outputPanel rendered="{!editMod}" id="billTo">
                                                 <br /> <br />
-                                                <!-- <apex:pageMessages id="messageErrors" /> -->
+                                                <!-- <apex:pageMessages id="messageErrors" escape="false" /> -->
 
                                                 <apex:actionFunction name="completeAddress" action="{!autoCompleteBillToAddresses}" rerender="billTo" status="autoCompBillToLoading">
                                                     <apex:param name="firstParam" assignTo="{!fullAddress}" value="" />
@@ -786,7 +787,8 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblEmail']}" /></div>
-                                                    <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div>
+                                                    <!-- <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div> -->
+                                                    <div class="col-md-7"><apex:outputField value="{!billToLocation.Email__c}" styleClass="MaxColumnWidth" /></div>
                                                 </div>
                                                 
                                                 <div class="row">
@@ -887,9 +889,9 @@
                                     <div class="panel-heading">
                                         <div style="{!IF(vfOrder.ShipToContactId != null,'width: 70%;float: left;',false)}">{! labels['lblShipTo']}</div>
                                         <div>
-                                        <apex:commandLink action="{!addShpAddressOrder}" value="Add address" id="addShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null,true,false) && !editModShp}" />
+                                        <apex:commandLink action="{!addShpAddressOrder}" value="Add address" id="addShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null,true,false) && vfOrder.ShipTo_same_BillTo__c != true && !editModShp}" />
                                             &nbsp;&nbsp;
-                                            <apex:commandLink action="{!editShpAddressOrder}" value="Edit address" id="editShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null,true,false) && !editModShp}" /> 
+                                            <apex:commandLink action="{!editShpAddressOrder}" value="Edit address" id="editShpAddressOrder" reRender="ShipToReadOnly" status="shipToLoading" rendered="{!IF(vfOrder.ShipToContactId != null && selectedShipToLocation != null && selectedShipToLocation != '',true,false) && vfOrder.ShipTo_same_BillTo__c != true && !editModShp}" /> 
                                             <apex:commandLink action="{!saveAddressOrder}" value="Save" id="saveAddressOrderHead" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading"/>
                                             &nbsp;&nbsp;
                                             <apex:commandLink action="{!CancelAddressOrder}" value="cancel" id="cancelAddressOrderHead" reRender="ShipToReadOnly" rendered="{!editModShp}" status="shipToLoading" />
@@ -898,33 +900,37 @@
                                     </div>
                                     <div class="panel-body address-panel">
                                         <apex:actionRegion immediate="true" >
-                                            <apex:outputPanel id="sectionShipTo" layout="block">                                                
-                                               <apex:outputPanel layout="block" styleClass="row">
+                                            <apex:outputPanel id="sectionShipTo" layout="block">
+                                            
+                                                <apex:pageMessages escape="false" />
+                                                
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{!!editModShp}">
                                                     <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
                                                     <div class="col-md-7">
                                                         <apex:inputField value="{!vfOrder.ShipTo_same_BillTo__c}">
-                                                            <apex:actionSupport event="onchange" reRender="sectionShipTo" />
+                                                            <apex:actionSupport event="onchange" reRender="ShipToReadOnly" />
                                                         </apex:inputField>
                                                     </div>
                                                 </apex:outputPanel>
                                                 <apex:outputPanel layout="block" styleClass="row" rendered="{!vfOrder.ShipTo_same_BillTo__c != true}">
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblContact']}" /></div>
                                                     <div class="col-md-7"><div class="requiredBlock"></div>
-                                                        <apex:inputField value="{!vfOrder.ShipToContactId}" styleClass="MaxColumnWidth">
+                                                        <apex:inputField value="{!vfOrder.ShipToContactId}" styleClass="MaxColumnWidth" rendered="{!!editModShp}">
                                                             <apex:actionSupport event="onchange" onsubmit="hiddenPop();" action="{!getContactShipToLocations}" reRender="ShipToReadOnly, sectionShipTo,messagesContainer" status="shipToLoading" />
                                                         </apex:inputField>
+                                                        <apex:outputField value="{!vfOrder.ShipToContactId}" styleClass="MaxColumnWidth" rendered="{!editModShp}"/>
                                                     </div>
                                                 </apex:outputPanel>
                                                 <br />
                                                 
 
-                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true}">
+                                                <apex:outputPanel layout="block" styleClass="row" rendered="{! vfOrder.ShipTo_same_BillTo__c != true && !editModShp}">
                                                     <!-- Show the location pickList values for billto contact -->
                                                     <div class="col-md-5"><apex:outputLabel value="{! labels['lblChooseShipTo']}" /></div>
                                                     <div class="col-md-7"><div class="requiredBlock"></div>
                                                         <apex:selectList value="{!selectedShipToLocation}" size="1">
                                                             <apex:selectOptions value="{!ShipToLocations}"/>
-                                                            <apex:actionSupport event="onchange" action="{!shipToContactDetails}" reRender="sectionShipTo,messagesContainer" status="shipToLoading" />
+                                                            <apex:actionSupport event="onchange" action="{!shipToContactDetails}" reRender="ShipToReadOnly,sectionShipTo,messagesContainer" status="shipToLoading" />
                                                         </apex:selectList>
                                                         <apex:actionStatus id="shipToLoading" >
                                                             <apex:facet name="start" >
@@ -1007,12 +1013,12 @@
                                                 <!-- Edit Mode -->
                                                 <apex:outputPanel rendered="{!editModShp}" id="shipTo">
                                                     <br /> <br />
-                                                    <apex:pageMessages id="shipMessageErrors" />
+                                                    <apex:pageMessages id="shipMessageErrors" escape="false" />
 
-                                                    <apex:outputPanel layout="block" styleClass="row">
+                                                    <!-- <apex:outputPanel layout="block" styleClass="row">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblCompany']}" /></div>
                                                         <div class="col-md-7"><apex:inputField value="{!vfOrder.ShipToAccount_Name__c}" styleClass="MaxColumnWidth" /></div>
-                                                    </apex:outputPanel>
+                                                    </apex:outputPanel> -->
                                                     <apex:outputPanel layout="block" styleClass="row">
                                                         <div class="col-md-5"><apex:outputLabel value="{! labels['lblAttention']}" /></div>
                                                         <div class="col-md-7"><div class="requiredBlock"></div><apex:inputField value="{!vfOrder.ShipToContact_Name__c}" styleClass="MaxColumnWidth" /></div>

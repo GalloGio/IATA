@@ -59,7 +59,7 @@
                                     </apex:facet>
                                 </apex:actionStatus>
 
-                                <apex:outputPanel id="billToAddress" layout="block" styleClass="row" >
+                                <apex:outputPanel id="billToAddress" layout="block" styleClass="row" rendered="{! !stopProcess}" >
                                     <div class="columns small-12 medium-6">     <!-- first column - begin -->
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
@@ -126,7 +126,7 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label">{!labels['lblEmail']}</span>
-                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
+                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" disabled="true" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
                                             </label>
                                             <div id="required_billToEmail" class="input-aid">
                                                 <p>{!labels['msgNoEmail']}</p>
@@ -160,8 +160,8 @@
                             <!-- buttons for billing address -->
                             <div class="footer-actions">
                                 <ul class="list actions text-right">
-                                    <li><apex:commandLink styleClass="text-link" action="{!cancelBillToAddress}" value="{!labels['btnCancel']}" status="billToRunningStatus" reRender="errorMessage,billToAddress" /></li>
-                                    <li><apex:commandButton styleClass="button wide" value="{!labels['btnSave']}" action="{!saveBillToAddress}" reRender="errorMessage" oncomplete="$(window).scrollTop(0);" /></li>
+                                    <li><apex:commandLink styleClass="text-link" action="{!cancelBillToAddress}" value="{!labels['btnCancel']}" status="billToRunningStatus" reRender="errorMessage,billToAddress" rendered="{! !stopProcess}" /></li>
+                                    <li><apex:commandButton styleClass="button wide" value="{!labels['btnSave']}" action="{!saveBillToAddress}" status="billToRunningStatus" reRender="errorMessage" oncomplete="$(window).scrollTop(0);" rendered="{! !stopProcess}" /></li>
                                 </ul>
                             </div>
                             
@@ -175,7 +175,7 @@
                                     </apex:facet>
                                 </apex:actionStatus>
 
-                                <div class="field-group select default choose-address">
+                                <div class="field-group select default choose-address" style="{! IF(stopProcess, 'display:none', '')}">
                                     <div class="custom-user-input select">
                                         <i class="icon chevron-down"></i>
                                         <apex:selectList id="shipToAddressName" value="{!currentShipToLocationId}" multiselect="false" size="1" styleClass="user-input select" >
@@ -186,7 +186,7 @@
                                     <apex:commandLink styleClass="text-link" action="{!prepareNewShipToAddress}" value="{!labels['btnAdd']}" status="shipToRunningStatus" reRender="errorMessage,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" />
                                 </div>
 
-                                <apex:outputPanel id="shipToIsDefaultGroup">
+                                <apex:outputPanel id="shipToIsDefaultGroup" rendered="{! !stopProcess}">
                                     <div class="field-group checkbox pageAddress:formAddress:shipToIsDefault">
                                         <div class="checkbox-box">
                                             <div class="custom-user-input checkbox">
@@ -198,7 +198,7 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel id="shipToAddress" layout="block" styleClass="row" >
+                                <apex:outputPanel id="shipToAddress" layout="block" styleClass="row" rendered="{! !stopProcess}" >
                                     <div class="columns small-12 medium-6">     <!-- first column - begin -->
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
@@ -316,9 +316,9 @@
                             <!-- buttons for shipping address -->
                             <apex:outputPanel id="shipToButtonSection" layout="block" styleClass="footer-actions" >
                                 <ul class="list actions text-right">
-                                    <li><apex:commandLink styleClass="text-link" action="{!cancelShipToAddress}" value="{!labels['btnCancel']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" /></li>
+                                    <li><apex:commandLink styleClass="text-link" action="{!cancelShipToAddress}" value="{!labels['btnCancel']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" rendered="{! !stopProcess}" /></li>
                                     <li><apex:commandLink styleClass="button secondary wide" action="{!deleteShipToAddress}" value="{!labels['btnDelete']}" status="shipToRunningStatus" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" rendered="{!showShipToDelete == true && isDefaultShipTo != true}" onclick="if (!confirm('{! msgConfirmDelete}')) {return};" oncomplete="$(window).scrollTop(0);" /></li>
-                                    <li><apex:commandButton styleClass="button wide" action="{!saveShipToAddress}" value="{!labels['btnSave']}" status="shipToRunningStatus" oncomplete="$(window).scrollTop(0);" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToButtonSection"/></li>
+                                    <li><apex:commandButton styleClass="button wide" action="{!saveShipToAddress}" value="{!labels['btnSave']}" status="shipToRunningStatus" oncomplete="$(window).scrollTop(0);" reRender="errorMessage,shipToAddressName,shipToIsDefaultGroup,shipToButtonSection" rendered="{! !stopProcess}" /></li>
                                 </ul>
                             </apex:outputPanel>
 
