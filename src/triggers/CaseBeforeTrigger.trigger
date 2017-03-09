@@ -31,20 +31,20 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean trgCaseIFAP = false;
     boolean ISSP_CreateNotificationForCase = true; 				//11111111111111
     boolean trgCase_BeforeDelete = true;  						//11111111111111
-    boolean UserInfoUpdate = true;								//22222222222222
+    boolean UserInfoUpdate = false;								//22222222222222
     boolean trgCheckBusinessHoursBeforeInsert = false;
-    boolean trgSidraCaseBeforeInsertUpdate = true;				//22222222222222
+    boolean trgSidraCaseBeforeInsertUpdate = false;				//22222222222222
     //boolean trgAccountFieldsUpdate = true;
     boolean trgBeforeInsertUpdate = true; 						//11111111111111
-    boolean CalculateBusinessHoursAges = true;					//22222222222222
+    boolean CalculateBusinessHoursAges = false;					//22222222222222
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
-    boolean trgICCSCaseValidation = true;						//22222222222222
+    boolean trgICCSCaseValidation = false;						//22222222222222
     boolean trgParentCaseUpdate = false;
-    boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
+    boolean Case_FSM_Handle_NonCompliance_BI_BU = false;		//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
     boolean trgCreateUpdateServiceRenderedRecord = false;
-    boolean updateAccountFieldBasedOnIATAwebCode = true;		//22222222222222
+    boolean updateAccountFieldBasedOnIATAwebCode = false;		//22222222222222
     boolean CaseBeforInsert = false;
     boolean AMS_OSCARCaseTrigger = false;
     boolean trgAccelyaRequestSetCountry = false;
@@ -192,7 +192,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger*/
         
-        /*UserInfoUpdate Trigger*/
+        /*UserInfoUpdate Trigger
         if(UserInfoUpdate){//FLAG 
         	system.debug('UserInfoUpdate');
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
@@ -307,7 +307,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         *       For FDS_ICCS_Bank_Account_Management cases:
         *       - for "delete bank account" cases, it checks that the bank account is not currently assigned to an active PA.
         *
-        *       If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.*/
+        *       If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.
         
         if(trgICCSCaseValidation){//FLAG
         	system.debug('trgICCSCaseValidation');
@@ -465,7 +465,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCSCaseValidation Trigger*/
         
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger*/
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger
         //Run only for non-compliance case. Put parent id (FSM Case) into a set 
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU');
@@ -608,7 +608,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCreateUpdateServiceRenderedRecord Trigger*/
         
-        /*updateAccountFieldBasedOnIATAwebCode Trigger*/
+        /*updateAccountFieldBasedOnIATAwebCode Trigger
         if(updateAccountFieldBasedOnIATAwebCode){
             try {
             	system.debug('updateAccountFieldBasedOnIATAwebCode');
@@ -1067,7 +1067,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger.isInsert*/
         
-        /*UserInfoUpdate Trigger.isInsert*/
+        /*UserInfoUpdate Trigger.isInsert
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isInsert');
             for (Case aCase: Trigger.New){                
@@ -1111,7 +1111,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isInsert*/
         
-        /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
+        /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert
         //Constantin
         if(trgSidraCaseBeforeInsertUpdate){
         	system.debug('trgSidraCaseBeforeInsertUpdate rigger.isInsert');
@@ -1225,7 +1225,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }*/
         /*trgAccountFieldsUpdate Trigger isInsert*/
         
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert');
             //FSM Case(s) found! Proceed with the logic
@@ -1628,7 +1628,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger.isUpdate*/
         
-        /*UserInfoUpdate Trigger.isUpdate*/
+        /*UserInfoUpdate Trigger.isUpdate
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isUpdate');
             for (Case updatedCase: Trigger.New){
@@ -1668,7 +1668,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
         
-        /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
+        /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate
         if(trgSidraCaseBeforeInsertUpdate){//FLAG
         	Set<Id> accountIds = new Set<Id>();
         	system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
@@ -1739,7 +1739,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
         
-        /*CalculateBusinessHoursAges Trigger.isUpdate*/
+        /*CalculateBusinessHoursAges Trigger.isUpdate
         if(CalculateBusinessHoursAges){//FLAG
         	system.debug('CalculateBusinessHoursAges Trigger.isUpdate');
             // Handling of DPC cases - automatic status change
@@ -1861,7 +1861,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }            
         /*trgParentCaseUpdate Trigger.isUpdate*/
         
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate*/
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate');
             //FSM Case(s) found! Proceed with the logic
@@ -2091,7 +2091,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCase_BeforeDelete Trigger.isDelete*/
     }
     
-    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
+    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU
     private static Date getMondayIfOnWeekend(date deaddate){
         Date RefDate = date.NewInstance(1900,1,7);
         integer dayOfWeek = math.mod(RefDate.daysBetween(deaddate),7);
