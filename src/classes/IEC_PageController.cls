@@ -95,7 +95,7 @@ public virtual class IEC_PageController
 
 			System.debug('User Logged IN');
 			OrderItem_Sel oiSelector = new OrderItem_Sel();
-			Order pendingOrder = IECOrder_Svc.getPenddingOrder(); 
+			Order pendingOrder = IECOrder_Svc.getPenddingOrder(false); 
 			List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
 			
 			for(OrderItem oi : pendingOrderItems)
