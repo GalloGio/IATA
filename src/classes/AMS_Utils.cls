@@ -219,10 +219,7 @@ public without sharing class AMS_Utils {
     @future
     public static void sendEmailAmsSupport( string subject, string message) {
 
-        if (Test.isRunningTest() ) {
-            System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-            return;
-        }
+        
 
         //List<ID> userIDs = getUserIds(getSupportEmails());
         List<ID> userIDs = new List<ID>();
@@ -249,8 +246,13 @@ public without sharing class AMS_Utils {
                 emailsToSend.add(mail);
 
             }
-
-            Messaging.sendEmail(emailsToSend);
+            
+            if (Test.isRunningTest() ) {
+                Messaging.sendEmail(emailsToSend);
+                System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
+                return;
+            }
+                
 
         } catch (Exception  e1) {
             system.debug('Failed to send email to users:' + e1.getMessage());
@@ -1678,22 +1680,6 @@ public static Map<String, Schema.SObjectField> getObjectFields(String objectApiN
     Schema.SObjectType leadSchema = schemaMap.get(objectApiName);
 
     return leadSchema.getDescribe().fields.getMap();
-
-}
-
-
-
-public class ChangeCodeStruct {
-
-    private Agency_Applied_Change_code__c changeCode {get; set;}
-    private Account acct {get; set;}
-
-    public ChangeCodeStruct(Agency_Applied_Change_code__c changeCode, Account acct) {
-
-        this.changeCode = changeCode;
-        this.acct = acct;
-
-    }
 
 }
 
