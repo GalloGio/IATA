@@ -239,7 +239,8 @@ public class AMS_OSCARTriggerHandler {
 		List<AMS_Utils.Container> changesContainer = new List<AMS_Utils.Container>();
 
 		//store all the updates to be made on account as consequence of migration of data from staging area to master data
-		Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+
+		Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new Map<Id,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 
 		// Account Fields Information
 		Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
@@ -790,25 +791,25 @@ public class AMS_OSCARTriggerHandler {
 
 							if(oldOwnerCSV != newOwnerCSV) objectChangesOwnership = new AMS_ChangeCodesHelper.ObjectChange('Account','Owners',oldOwnerCSV,newOwnerCSV);
 
-							if( objectChangesOwnership != null && accountsToUpdate.get(acc) == null)
+							if( objectChangesOwnership != null && accountsToUpdate.get(acc.Id) == null)
 							{
 								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesOwnership});
 								objectChanges.add(acctChangesStruct);
 
-								system.debug('DDD accountsToUpdate add Owners Info:' + accountsToUpdate.get(acc));
+								system.debug('DDD accountsToUpdate add Owners Info:' + accountsToUpdate.get(acc.Id));
 
 							}
 
 							else if ( objectChangesOwnership != null)
-								accountsToUpdate.get(acc).changes.add(objectChangesOwnership);
+								accountsToUpdate.get(acc.Id).changes.add(objectChangesOwnership);
 
 						}
 
 						//******* Add "Custom" changes struct for the Ownership mapping ******** END
 
-						system.debug('DDD accountsToUpdate.get(acc):' + accountsToUpdate.get(acc));
+						system.debug('DDD accountsToUpdate.get(acc):' + accountsToUpdate.get(acc.Id));
 
-						objectChanges.add(accountsToUpdate.get(acc));
+						objectChanges.add(accountsToUpdate.get(acc.Id));
 
 						index++;
 					}
@@ -823,7 +824,14 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 
-			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountsToUpdate.keySet()));
+			set<Account> accountToupdateSet = new set<Account>();
+
+			for(Id acctId : accountsToUpdate.keySet())
+			{
+				accountToupdateSet.add(accounts.get(acctId));
+			}
+
+			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountToupdateSet));
 
 			if (!mergedAccountUpdate.isEmpty()) {
 				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = true;

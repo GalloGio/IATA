@@ -1149,7 +1149,7 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
 
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
@@ -1157,7 +1157,7 @@ public without sharing class AMS_Utils {
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+        Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
         Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
         
@@ -1274,7 +1274,7 @@ public without sharing class AMS_Utils {
 
                     AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
 
-                    accountsToUpdate.put(acc,acctChangesStruct);
+                    accountsToUpdate.put(acc.Id,acctChangesStruct);
                 }
 
         }
