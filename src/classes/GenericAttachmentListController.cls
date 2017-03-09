@@ -38,11 +38,13 @@ global with sharing class GenericAttachmentListController {
     }
 	
 	// assgnTo variable
+	private static Boolean isForPortalStatic = false; // used only for Remote actions
 	public Boolean isForPortal {
 		get;
 		set {
 			if (this.isForPortal == null ) {
 				this.isForPortal = value;
+				isForPortalStatic = value;
 				init();
 			}
 		}
@@ -68,7 +70,7 @@ global with sharing class GenericAttachmentListController {
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c from Case where id = :this.id];
+        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
 
         if (this.isForPortal) {
             this.showFileIdentifier = false;
@@ -244,26 +246,39 @@ global with sharing class GenericAttachmentListController {
             return false;
         }
     }
+
+    public Boolean getParentIsOscar() {
+        if((relatedCase.parent.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     public PageReference goToAttachmentPage() {
         return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
     }
 
     /**
-        download files from Amazon
+        get a list of files with valid links to download them from Amazon
+        this funcion needs a isportal variable to know what files can retrieve
     **/
     @RemoteAction
-    global static list<FileDef> getFilesFromAmazon(String objectId) {
-
+    global static list<FileDef> getAllExpiringLink(String objectId) {
+        list<WrapperAttach> listAttach = new list<WrapperAttach>();
+        if (isforPortalStatic) {
+            listAttach = WrapperAttach.getListAttachmentsForPortal(objectId);
+        } else {
+            listAttach = WrapperAttach.getListAttachments(objectId);
+        }
         list<FileDef> listFileDef = new list<FileDef>();
-        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+        for (WrapperAttach attach: listAttach) {
             FileDef filedef = new FileDef();
             filedef.name = attach.name;
             filedef.url = getExpiringLink(attach.fullName);
             filedef.data = '';
             listFileDef.add(filedef);
         }
-        system.debug('aqui listFileDef ' + listFileDef);
         return listFileDef;
     }
 

@@ -104,6 +104,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Sent_to_external_system__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Updated_AIMS__c</field>
             </layoutItems>
             <layoutItems>

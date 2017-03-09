@@ -3249,6 +3249,10 @@
                 "FunctionName": "reactivateBSPLink",
                 "ActionLabel": "AMS_OSCAR_Action11",
                 "args": ["oscarid"]
+              },{
+                "FunctionName": "undoDeactivationBSPLink",
+                "ActionLabel": "AMS_OSCAR_Action13",
+                "args": ["oscarid"]
               }],
           "Automations": [{
             "Status": "Passed",

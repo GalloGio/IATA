@@ -3,7 +3,6 @@
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -52,6 +51,14 @@
                 <behavior>Readonly</behavior>
                 <field>Link_agent_code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_a_Financial_Assessment_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_a_Financial_Assessment_Contact_Formu__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -97,6 +104,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Invoicing_and_Collection__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_an_Administrator_User_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Has_an_Administrator_User_Portal_Formula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -448,7 +463,7 @@
         <fields>Termination_Date__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
@@ -477,9 +492,9 @@
         <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
-        <fields>SIDRA_Case__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
@@ -596,7 +611,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E000000EtbW</masterLabel>
+        <masterLabel>00hw000000hfUvS</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
