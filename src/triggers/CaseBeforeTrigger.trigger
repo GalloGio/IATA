@@ -21,7 +21,7 @@
 21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate									FILE
 22 - trgAccelyaRequestSetCountry - All: Common, isInsert							FILE
 */
-
+ 
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
@@ -190,7 +190,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger*/
         
-        /*UserInfoUpdate Trigger
+        /*UserInfoUpdate Trigger*/
         if(UserInfoUpdate){//FLAG 
         	system.debug('UserInfoUpdate');
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
@@ -305,7 +305,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         *       For FDS_ICCS_Bank_Account_Management cases:
         *       - for "delete bank account" cases, it checks that the bank account is not currently assigned to an active PA.
         *
-        *       If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.
+        *       If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.*/
         
         if(trgICCSCaseValidation){//FLAG
         	system.debug('trgICCSCaseValidation');
@@ -463,7 +463,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCSCaseValidation Trigger*/
         
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger*/
         //Run only for non-compliance case. Put parent id (FSM Case) into a set 
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU');
@@ -566,7 +566,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCS_ASP_Case_Validation Trigger*/
         
-        /*trgCreateUpdateServiceRenderedRecord Trigger
+        /*trgCreateUpdateServiceRenderedRecord Trigger*/
         //Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, the case record type is "IDFS Airline Participation Process" and the case is approved
         if(trgCreateUpdateServiceRenderedRecord){
         	system.debug('trgCreateUpdateServiceRenderedRecord');
@@ -606,7 +606,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCreateUpdateServiceRenderedRecord Trigger*/
         
-        /*updateAccountFieldBasedOnIATAwebCode Trigger
+        /*updateAccountFieldBasedOnIATAwebCode Trigger*/
         if(updateAccountFieldBasedOnIATAwebCode){
             try {
             	system.debug('updateAccountFieldBasedOnIATAwebCode');
@@ -768,7 +768,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
     
-        /*trgAccelyaRequestSetCountry Trigger
+        /*trgAccelyaRequestSetCountry Trigger*/
         //GM - IMPRO - START
         //this trigger doesn't work... the for loop below needs a list to be filled, the loop below does really fire on all the cases or just on the Accelya subset?
         if(trgAccelyaRequestSetCountry){
@@ -798,7 +798,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
             }
         }   
-        trgAccelyaRequestSetCountry Trigger*/
+        /*trgAccelyaRequestSetCountry Trigger*/
                 
         /*trgBeforeInsertUpdate Trigger*/ /*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
         if(trgBeforeInsertUpdate){//FLAG
@@ -825,7 +825,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Trigger.isInsert*/
     if (Trigger.isInsert) {
         
-        /*trgCase Trigger.isInsert
+        /*trgCase Trigger.isInsert*/
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isInsert');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
@@ -1065,7 +1065,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger.isInsert*/
         
-        /*UserInfoUpdate Trigger.isInsert
+        /*UserInfoUpdate Trigger.isInsert*/
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isInsert');
             for (Case aCase: Trigger.New){                
@@ -1109,7 +1109,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isInsert*/
         
-        /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert
+        /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         //Constantin
         if(trgSidraCaseBeforeInsertUpdate){
         	system.debug('trgSidraCaseBeforeInsertUpdate rigger.isInsert');
@@ -1178,52 +1178,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*Constantin*/
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         
-        /*trgAccountFieldsUpdate Trigger.isInsert*/ 
-        /*This trigger updates case fields if the user profile is "Overage High Volume Customer Portal User Cloned"*/
-        //self service portal is not used anymore (Skype for Business - conversation with Pedro 13/02/2017 - 15.30)
-        /*if(trgAccountFieldsUpdate){
-        	system.debug('trgAccountFieldsUpdate Trigger.isInsert');
-            profileId = UserInfo.getProfileId();
-            System.debug('Profile ID : '+profileId);
-            //if(UserInfo.getProfileId() != null){      
-            profileList = [SELECT Id,Name FROM Profile WHERE Id =: UserInfo.getProfileId() limit 1];
-            if(profileList.size() > 0){
-                profileName = profileList[0].Name;
-            }
-            //} 
-            if(profileName != null){
-            	system.debug('##ROW##');
-                //profileName = profile.Name;
-                System.debug('Profile Name : ' + profileName);
-                //if(profileName.contains('Customer Portal Manager Standard Cloned'))
-                //if(profileName.contains('Overage High Volume Customer Portal User Cloned'))
-                if('Overage High Volume Customer Portal User Cloned'.equals(profileName)){
-                	system.debug('##ROW##');
-                    for(Case newCase : Trigger.New){
-                        if(newCase.ContactId != null){
-                            ContIds.add(newCase.ContactId);
-                        }                              
-                    }
-                    lstConts = [SELECT Id, AccountId FROM Contact WHERE Id IN: ContIds];
-                    for(Case newCase : Trigger.New){
-                        for(Integer i=0;i<lstConts.Size();i++){
-                            if(newCase.ContactId != null){
-                                if(newCase.ContactId == lstConts[i].Id){
-                                    newCase.AccountId = lstConts[i].AccountId;
-                                    newCase.Power_User_Account__c = lstConts[i].AccountId;
-                                    newCase.IsVisibleInSelfService = True;
-                                    System.debug('Power User Account : ' + newCase.Power_User_Account__c);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }                                
-        }*/
-        /*trgAccountFieldsUpdate Trigger isInsert*/
-        
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert');
             //FSM Case(s) found! Proceed with the logic
@@ -1329,7 +1284,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         
-        /*CaseBeforInsert Trigger.isInsert
+        /*CaseBeforInsert Trigger.isInsert*/
         if(CaseBeforInsert){
         	system.debug('CaseBeforInsert Trigger.isInsert');
             ISSP_Case.preventTrigger = true;
@@ -1418,7 +1373,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*AMS_OSCARCaseTrigger Trigger.isInsert*/
         
-        /*trgAccelyaRequestSetCountry Trigger.isInsert
+        /*trgAccelyaRequestSetCountry Trigger.isInsert*/
         if(trgAccelyaRequestSetCountry){
         	system.debug('trgAccelyaRequestSetCountry Trigger.isInsert');
         	//GM - IMPRO - START
@@ -1626,7 +1581,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCaseIFAP Trigger.isUpdate*/
         
-        /*UserInfoUpdate Trigger.isUpdate
+        /*UserInfoUpdate Trigger.isUpdate*/
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isUpdate');
             for (Case updatedCase: Trigger.New){
@@ -1666,7 +1621,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
         
-        /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate
+        /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
         if(trgSidraCaseBeforeInsertUpdate){//FLAG
         	Set<Id> accountIds = new Set<Id>();
         	system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
@@ -1737,7 +1692,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
         
-        /*CalculateBusinessHoursAges Trigger.isUpdate
+        /*CalculateBusinessHoursAges Trigger.isUpdate*/
         if(CalculateBusinessHoursAges){//FLAG
         	system.debug('CalculateBusinessHoursAges Trigger.isUpdate');
             // Handling of DPC cases - automatic status change
@@ -1816,7 +1771,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCase_SIS_ICH_AreaVsType Trigger.isUpdate*/
         
-        /*trgParentCaseUpdate Trigger.isUpdate
+        /*trgParentCaseUpdate Trigger.isUpdate*/
         if(trgParentCaseUpdate){//FLAG
         	system.debug('trgParentCaseUpdate Trigger.isUpdate');
             // Created Date - 16-12-2010 
@@ -1859,7 +1814,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }            
         /*trgParentCaseUpdate Trigger.isUpdate*/
         
-        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate
+        /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate*/
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate');
             //FSM Case(s) found! Proceed with the logic
@@ -2089,7 +2044,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCase_BeforeDelete Trigger.isDelete*/
     }
     
-    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU
+    /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
     private static Date getMondayIfOnWeekend(date deaddate){
         Date RefDate = date.NewInstance(1900,1,7);
         integer dayOfWeek = math.mod(RefDate.daysBetween(deaddate),7);
