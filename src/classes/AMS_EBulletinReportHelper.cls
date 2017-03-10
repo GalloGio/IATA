@@ -29,15 +29,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	
 	public static final String HIERARCHY	= 	'7-Hierarchy';
 
-
-	public static final String STATUS			= 	'17-Status';
-	public static final String REASON			= 	'21-Reason';
-
 	public static final String STATE  	        = 	'10-Country or State';
 	public static final String COUNTRY  	    =	'11-Country or State';
+
+	public static final String STATUS			= 	'18-Status';
+	public static final String REASON			= 	'22-Reason';
+
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'24-Owner1';
+	public static final String OWNERS 	   	 	   =	'25-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,14 +45,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWHIERARCHY	= 	'43-New Hierarchy';
+	public static final String NEWLEGALSTATUS	= 	'44-New Legal Status';
+	public static final String NEWHIERARCHY	= 	'45-New Hierarchy';
 	
-	public static final String NEWSTATE 	    =	'46-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'47-New Country or State';
+	public static final String NEWSTATE 	    =	'48-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'49-New Country or State';
 
-	public static final String IRRREASON 		=	'71-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'72-IRR: Period';
-	public static final String IRRPERIODED		= 	'73-IRR: Period';
+	public static final String IRRREASON 		=	'74-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'75-IRR: Period';
+	public static final String IRRPERIODED		= 	'76-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
@@ -646,7 +647,9 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		Integer customFieldsCounter = 0, positionMax = headersList.size();
 		
+		system.debug('DDD CC: ' + cc.change_Code__c);
 		
+		system.debug('DDD ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
 
 
 		for (Integer position = 0 ; position < positionMax ; position++)
@@ -766,6 +769,10 @@ public without sharing class AMS_EBulletinReportHelper {
 				recordValue = String.valueOf(ownersTotalPercentage);
 				ownersTotalPercentage = 0;
 			
+			}
+			else if (headerVal.Name == NEWLEGALSTATUS)
+			{
+				recordValue = AMS_Utils.transformLegalStatus(objVal.newValue);
 			}
 			else
 			{

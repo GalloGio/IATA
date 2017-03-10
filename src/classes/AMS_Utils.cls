@@ -1447,7 +1447,7 @@ public static String transformLegalStatus(String companyType) {
     if (companyType.equalsIgnoreCase('V'))
         return 'Co-operative';
 
-    return '';
+    return companyType;
 
 }
 
