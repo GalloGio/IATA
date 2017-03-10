@@ -448,7 +448,7 @@
                                 <apex:pageblock rendered="{!NOT(isNewCase)}">
                                     <apex:pagemessages />
                                     <apex:pageblockbuttons >
-                                        <apex:commandbutton action="{!assignToIATA}" value="Assign to IATA" rendered="{!AND(isPWCProfile && newCase.status != 'Closed', newCase.Owner.Name='GFA Communication queue')}" />
+                                        <apex:commandbutton action="{!assignToIATA}" value="Assign to IATA" rendered="{!AND(isPWCProfile, newCase.status != 'Closed')}" />
                                         <apex:commandbutton action="{!close}" value="Close case" rendered="{!AND(isPWCCase,newCase.Status!='Closed')}" />
                                         <apex:outputpanel rendered="{!isDPCUser}">
                                             <apex:commandbutton action="{!edit}" value="Edit" rendered="{!AND(isACRAccepted, NOT(isEditMode), NOT(CaseStatus='CLOSED'))}" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />

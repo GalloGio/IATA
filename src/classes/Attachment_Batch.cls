@@ -10,7 +10,7 @@ global class Attachment_Batch implements Database.Batchable<sObject> {
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC){
-        String query = 'SELECT Id FROM Attachment WHere Name LIKE \'801%\'';
+        String query = 'SELECT Id, ParentId FROM Attachment WHere Name LIKE \'801%\'' + (!Test.isRunningTest() ? ' and CreatedDate < TODAY' : '');
         return Database.getQueryLocator(query);
     }
 

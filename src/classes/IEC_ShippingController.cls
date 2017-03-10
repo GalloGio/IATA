@@ -1,4 +1,4 @@
-global class IEC_ShippingController extends IEC_PageController 
+global without sharing class IEC_ShippingController extends IEC_PageController 
 {
     public Order sfOrder{get;set;}
     public Order_DTO vfOrder{get;set;} 
@@ -57,10 +57,14 @@ global class IEC_ShippingController extends IEC_PageController
     
     Id currentShipToLocationId;
     String currentShipToPartner;
-    Boolean forceShipToCustomerToSAP;   //*** indicate customer needs to be sent to SAP immediately
+    //Boolean forceShipToCustomerToSAP;   //*** indicate customer needs to be sent to SAP immediately
     public Boolean recalculateFreightTax;
 
     public Boolean taxFreightCalculateWithError {get;set;}
+
+    public Boolean stopProcess { get; set; }
+    public Boolean isShipToError { get; set; }
+    public Boolean showNewAddress { get; set; }
 
     public String getExtraParamString(){
         String extraParam = ''; 
@@ -89,27 +93,44 @@ global class IEC_ShippingController extends IEC_PageController
     public IEC_ShippingController() 
     {
         taxFreightCalculateWithError = false;
-        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2, '\n', ':');
+        labels = Utility.buildMapFromString(Label.LabelsVF_Order + '\n' + Label.LabelsVF_Order2 + '\n' + Label.LabelsVF_Order3, '\n', ':');
         discountLabels = Utility.buildMapFromString(Label.Labels_IECDiscountType, '\n', ':');
         recreateZuoraAccount=false;//Used to force zAccount recreation for unit test purpose
     }
 
     public void initializeOrder()
     {
-        sfOrder = IECOrder_Svc.getPenddingOrder();
+        sfOrder = IECOrder_Svc.getPenddingOrder(true);
         orderPaymentType = sfOrder.Payment_Type__c;
+
+        //*** check if sold to and bill to partner are valid
+        isShipToError = false;
+        if (String.isBlank(sfOrder.SoldToAccount_Partner_Number__c) || String.isBlank(sfOrder.BillToContact_Partner_Number__c))
+        {
+            stopProcess = true;
+            addErrorMessage(Label.IEC_SAP_Customer_Issue);
+            return;
+        }
+        else if (String.isBlank(sfOrder.ShipToContact_Partner_Number__c))
+        {
+            isShipToError = true;
+            addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);
+        }
 
         OrderItem_Sel oiSelector = new OrderItem_Sel();
         List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(sfOrder.Id);
         
         refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
 
-        String tx = Order_Svc.getSAP_Freight_Tax(sfOrder.Id);
-        //system.debug('tx ' + tx);
-        
-        if(tx != null && tx.startsWith('Error')){
-        	addErrorMessage('Error found in Freight & Taxes calculation ' + tx);
-            taxFreightCalculateWithError = true;
+        if (!isShipToError)
+        {
+            String tx = Order_Svc.getSAP_Freight_Tax(sfOrder.Id);
+            //system.debug('tx ' + tx);
+            
+            if(tx != null && tx.startsWith('Error')){
+                addErrorMessage('Error found in Freight & Taxes calculation ' + tx);
+                taxFreightCalculateWithError = true;
+            }
         }
         
         sfOrder = IECOrder_Svc.getPenddingOrder(sfOrder.Id);
@@ -141,9 +162,17 @@ global class IEC_ShippingController extends IEC_PageController
         }
 
         //*** initialize default locations for first time customer
+        stopProcess = false;
+        showNewAddress = false;
+        List<String> lstError = Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
+        if (lstError[0] != null && (lstError[0].startsWith('\nST') || lstError[0].startsWith('\nBT')))
+        {
+            stopProcess = true;
+            addErrorMessage(Label.IEC_SAP_Customer_Issue);
+            return null;
+        }
         if (loggedCustomer.billTo == null || loggedCustomer.shipTos == null || loggedCustomer.shipTos.size() == 0)
         {
-            Location_Svc.InitializeContactLocations(loggedCustomer.sfContact.Id);
             loggedCustomer = Customer_DTO.getCustomerByUser(UserInfo.getUserId());
             Customer_DTO.setCustomerAddresses(loggedCustomer);
         }
@@ -156,6 +185,8 @@ global class IEC_ShippingController extends IEC_PageController
         loadCreditCards();
 
         initializeOrder();
+        if (stopProcess == true)
+            return null;
      
         //-- Validate cart is not empty 
         if(vfOrder.orderItems==null || vfOrder.orderItems.size() == 0){addErrorMessage(Label.Warning_Empty_Cart);return null;}
@@ -487,7 +518,7 @@ global class IEC_ShippingController extends IEC_PageController
     public void loadCreditCards()
     {
       //-- Load credit cards 
-      loggedCustomer.loadActiveCreditCards();
+      try { loggedCustomer.loadActiveCreditCards(); } catch (Exception e) { loggedCustomer.creditcards = new List<IEC_CreditCard_DTO>(); }
       creditcards = loggedCustomer.creditcards;
     }
 
@@ -631,6 +662,8 @@ global class IEC_ShippingController extends IEC_PageController
      **************************************************************************************************************/
     public PageReference saveNewAddress()
     {
+        showNewAddress = true;
+        
         //-- Validate Address
         if(!validateAddress(newShipToAddress))
         {
@@ -654,42 +687,86 @@ global class IEC_ShippingController extends IEC_PageController
             //-- Find IECAddress if exist or create new IECAddress
             IECAddress_Sel adrSelector = new IECAddress_Sel();
             List<IECAddress__c> addresses = adrSelector.getAddress(newShipToAddress.street1,newShipToAddress.city,newShipToAddress.countryCode,newShipToAddress.stateCode,newShipToAddress.postalCode);
-            IECAddress__c adr = (addresses != null & addresses.size() > 0) ? addresses[0] : IECAddress_Svc.newAddress(newShipToAddress.street1,newShipToAddress.city,newShipToAddress.countryCode,newShipToAddress.stateCode,newShipToAddress.postalCode);
+            IECAddress__c adr = (addresses != null & addresses.size() > 0) ? addresses[0] : IECAddress_Svc.newAddressForSAPSync(newShipToAddress.street1,newShipToAddress.city,newShipToAddress.countryCode,newShipToAddress.stateCode,newShipToAddress.postalCode);
 
             //-- Validate if location exist (same IECAddress And Contct)
-            List<Location__c> shippingLocations = Location_Sel.getLocationsByContactIdAndType(loggedCustomer.sfContact.Id, IECConstants.SHIPTO);
+            List<Location__c> shippingLocations = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{loggedCustomer.sfContact.Id}, IECConstants.SHIPTO, true).values();
             Location__c shippingLocation;
             for(Location__c loc : shippingLocations)
             {
                 if(loc.Address__c == adr.Id)
                 {
-                    shippingLocation = loc;
-                    break;
+                    addErrorMessage(labels.get('msgAddrExist'));
+                    return null;
+                    //shippingLocation = loc;
+                    //break;
                 }
             }
 
             //-- Create new ShipTo Location if not exist
-            if(shippingLocation!=null)
+            //if(shippingLocation!=null)
+            //{
+            //    if(String.isNotBlank(newShipToAddress.addressName)) shippingLocation.Address_Name__c = newShipToAddress.addressName;
+            //    if(String.isNotBlank(newShipToAddress.email))       shippingLocation.Email__c = newShipToAddress.email;
+            //    if(String.isNotBlank(newShipToAddress.phone))       shippingLocation.Phone__c = newShipToAddress.phone;
+            //    if(String.isNotBlank(newShipToAddress.vatNumber))   shippingLocation.VAT_Number__c = newShipToAddress.vatNumber;
+            //}
+            //else
+                shippingLocation = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = adr.Id, Address__r = adr, Address_Name__c = newShipToAddress.addressName
+                                                 , Account__c = shippingLocations[0].Account__c, Account__r = shippingLocations[0].Account__r
+                                                 , Contact__c = shippingLocations[0].Contact__c, Contact__r = shippingLocations[0].Contact__r, Attention__c = shippingLocations[0].Contact__r.Name
+                                                 , Email__c = newShipToAddress.email, Phone__c = newShipToAddress.phone, VAT_Number__c = newShipToAddress.vatNumber);
+            
+            //*** send to SAP
+            List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{shippingLocation}, null, false);
+            if (lstSyncResult[0] != null)
             {
-                if(String.isNotBlank(newShipToAddress.addressName)) shippingLocation.Address_Name__c = newShipToAddress.addressName;
-                if(String.isNotBlank(newShipToAddress.email))       shippingLocation.Email__c = newShipToAddress.email;
-                if(String.isNotBlank(newShipToAddress.phone))       shippingLocation.Phone__c = newShipToAddress.phone;
-                if(String.isNotBlank(newShipToAddress.vatNumber))   shippingLocation.VAT_Number__c = newShipToAddress.vatNumber;
-                update shippingLocation;
-            }               
-            else shippingLocation = Location_Svc.createLocation(adr.Id, loggedCustomer.sfContact.Id, newShipToAddress.email, newShipToAddress.phone, newShipToAddress.vatNumber, IECConstants.SHIPTO, newShipToAddress.attention, newShipToAddress.addressName);
+                addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+                return null;
+            }
             
-            
-            //-- Select new created address
-            sfOrder.ShipTo_Location__c = shippingLocation.Id;
+            //*** commit change
+            Savepoint sp = Database.setSavepoint();
+            try
+            {
+                if (adr.Id == null)
+                    insert adr;
+                
+                if (shippingLocation.Address__c == null)
+                    shippingLocation.Address__c = shippingLocation.Address__r.Id;
+                upsert shippingLocation;
+                
+                //-- Select new created address
+                sfOrder.ShipTo_Location__c      = shippingLocation.Id;
+                sfOrder.ShipToAccount_Name__c   = vfOrder.shipToContact.accountName;
+                sfOrder.ShipToContact_Name__c   = shippingLocation.Attention__c;
+                sfOrder.ShipToContact_Phone__c  = shippingLocation.Phone__c;
+                sfOrder.ShipToContact_Email__c  = shippingLocation.Email__c;
+                sfOrder.ShipTo_Address__c       = shippingLocation.Address__c;
+                sfOrder.ShippingStreet          = shippingLocation.Address__r.Street__c;
+                sfOrder.ShippingCity            = shippingLocation.Address__r.City__c;
+                sfOrder.ShippingPostalCode      = shippingLocation.Address__r.ZipCode__c;
+                sfOrder.ShippingCountry         = shippingLocation.Address__r.ISO_Country__r.Name;
+                sfOrder.ShippingCountryCode__c  = shippingLocation.Address__r.ISO_Country__r.ISO_Code__c;
+                sfOrder.ShippingState           = shippingLocation.Address__r.ISO_State__r.Name;
+                sfOrder.ShippingStateCode__c    = shippingLocation.Address__r.ISO_State__r.ISO_Code__c;
+                sfOrder.Shipping_Instruction__c = vfOrder.shipToInstructions;
+                sfOrder.ShipToContact_VAT_Number__c = shippingLocation.VAT_Number__c;
+                update sfOrder;
+                vfOrder.shipToContact.contactName = sfOrder.ShipToContact_Name__c;
+                vfOrder.shipToContact.phone = sfOrder.ShipToContact_Phone__c;
+                vfOrder.shipToContact.email = sfOrder.ShipToContact_Email__c;
+            }
+            catch(Exception ex)
+            {
+                addErrorMessage(ex.getMessage());
+                Database.rollback(sp);
+                return null;
+            }
 
             //-- Reset new Adrress object
             newShipToAddress = new Address_DTO();
             shippingAddresses = fetchShippingAddresses();
-
-            //*** send to SAP if no SAP Id
-            if (shippingLocation.SAP_Id__c == null)
-                forceShipToCustomerToSAP = true;
 
             //*** set control variables
             currentShipToLocationId = shippingLocation.Id;
@@ -697,6 +774,8 @@ global class IEC_ShippingController extends IEC_PageController
             recalculateFreightTax = true;
 
             hasError = false;
+            isShipToError = false;
+            showNewAddress = false;
 
             return null;
         }catch(Exception ex){
@@ -779,7 +858,7 @@ global class IEC_ShippingController extends IEC_PageController
                         }
 
                         //Refresh Order
-                        sfOrder = IECOrder_Svc.getPenddingOrder();
+                        sfOrder = IECOrder_Svc.getPenddingOrder(true);
                         vfOrder = new Order_DTO(sfOrder);
                     }
                 }
@@ -856,7 +935,7 @@ global class IEC_ShippingController extends IEC_PageController
                     }
 
                     //Refresh Order
-                    sfOrder = IECOrder_Svc.getPenddingOrder();
+                    sfOrder = IECOrder_Svc.getPenddingOrder(true);
                     vfOrder = new Order_DTO(sfOrder);
 
                     break;
@@ -1124,30 +1203,50 @@ global class IEC_ShippingController extends IEC_PageController
     public void changeShipToAddress()
     {
         Location__c locationShipTo;
+        List<IEC_Error_Log__c> lstSyncResult;
+
         hasError = false;
+        showNewAddress = false;
+        isShipToError = false;
         
         if (!String.isBlank(String.valueOf(sfOrder.ShipTo_Location__c)))
         {
             //*** one address selected
-            locationShipTo = new Location_Sel().getLocations(new Set<Id>{sfOrder.ShipTo_Location__c})[0];
+            locationShipTo = Location_Sel.getLocationToSyncSAP(new List<Id>{sfOrder.ShipTo_Location__c}, null, null, null, null).values()[0];
             
-            //*** recalculate shipping & taxes
-            recalculateFreightTax = true;
-            currentShipToPartner = locationShipTo.SAP_Id__c;
-            calculateFreightTaxDTO();
+            //*** try to get SAP Id if necessary
+            if (String.isBlank(locationShipTo.SAP_Id__c))
+            {
+                lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
+                isShipToError = (lstSyncResult[0] != null);
+            }
+            if (isShipToError)
+                addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);
+            else
+            {
+                //*** recalculate shipping & taxes
+                recalculateFreightTax = true;
+                currentShipToPartner = locationShipTo.SAP_Id__c;
+                calculateFreightTaxDTO();
+            }
+            
+            //*** update location if sent to SAP
+            if (lstSyncResult != null && !isShipToError)
+                update locationShipTo;
             
             //*** copy address information to order
             sfOrder.ShipToAccount_Name__c   = vfOrder.shipToContact.accountName;
             sfOrder.ShipToContact_Name__c   = locationShipTo.Attention__c;
             sfOrder.ShipToContact_Phone__c  = locationShipTo.Phone__c;
             sfOrder.ShipToContact_Email__c  = locationShipTo.Email__c;
-            sfOrder.ShippingStreet          = locationShipTo.Street__c;
-            sfOrder.ShippingCity            = locationShipTo.City__c;
-            sfOrder.ShippingPostalCode      = locationShipTo.ZipCode__c;
-            sfOrder.ShippingCountry         = locationShipTo.ISO_Country_Name__c;
-            sfOrder.ShippingCountryCode__c  = locationShipTo.ISO_Country_Code__c;
-            sfOrder.ShippingState           = locationShipTo.ISO_State_Name__c;
-            sfOrder.ShippingStateCode__c    = locationShipTo.ISO_State_Code__c;
+            sfOrder.ShipTo_Address__c       = locationShipTo.Address__c;
+            sfOrder.ShippingStreet          = locationShipTo.Address__r.Street__c;
+            sfOrder.ShippingCity            = locationShipTo.Address__r.City__c;
+            sfOrder.ShippingPostalCode      = locationShipTo.Address__r.ZipCode__c;
+            sfOrder.ShippingCountry         = locationShipTo.Address__r.ISO_Country__r.Name;
+            sfOrder.ShippingCountryCode__c  = locationShipTo.Address__r.ISO_Country__r.ISO_Code__c;
+            sfOrder.ShippingState           = locationShipTo.Address__r.ISO_State__r.Name;
+            sfOrder.ShippingStateCode__c    = locationShipTo.Address__r.ISO_State__r.ISO_Code__c;
             sfOrder.Shipping_Instruction__c = vfOrder.shipToInstructions;
             sfOrder.ShipToContact_VAT_Number__c = locationShipTo.VAT_Number__c;
             update sfOrder;
@@ -1173,10 +1272,14 @@ global class IEC_ShippingController extends IEC_PageController
     ****************************************************************************************************/
     public void changeShipToAddressOption()
     {
-        System.debug('sfOrder::'+sfOrder);
         Location_Sel selector = new Location_Sel();
-        Map<Id, Location__c> mapId_Location = selector.getContactsLocations(new Set<Id>{sfOrder.ShipToContactId});  //*** only active locations
+        Map<Id, Location__c> mapId_Location = Location_Sel.getLocationToSyncSAP(null, null, new List<Id>{sfOrder.ShipToContactId}, null, true);  //*** only active locations
         Location__c locationBillTo, locationShipTo, location;
+        List<IEC_Error_Log__c> lstSyncResult;
+
+        hasError = false;
+        showNewAddress = false;
+        isShipToError = false;
 
         if (vfOrder.shipToSameAsBilTo == true)
         {
@@ -1196,27 +1299,29 @@ global class IEC_ShippingController extends IEC_PageController
             
             //*** create Ship To location if not found
             if (locationShipTo == null)
+                locationShipTo = new Location__c(Active__c = true, Type__c = IECConstants.SHIPTO, Address__c = locationBillTo.Address__c, Address__r = locationBillTo.Address__r
+                                               , Account__c = locationBillTo.Account__c, Account__r = locationBillTo.Account__r
+                                               , Contact__c = locationBillTo.Contact__c, Contact__r = locationBillTo.Contact__r, Attention__c = locationBillTo.Contact__r.Name, Address_Name__c = 'New'
+                                               , Email__c = locationBillTo.Email__c, Phone__c = locationBillTo.Phone__c , VAT_Number__c = locationBillTo.VAT_Number__c);
+            
+            //*** send to SAP if no SAP Id
+            if (String.isBlank(locationShipTo.SAP_Id__c))
             {
-                 System.debug('createLocation called');
-                locationShipTo = Location_Svc.createLocation(locationBillTo.Address__c, sfOrder.ShipToContactId, locationBillTo.Email__c, locationBillTo.Phone__c, locationBillTo.VAT_Number__c, IECConstants.SHIPTO, loggedCustomer.sfContact.Name, null);
-                forceShipToCustomerToSAP = true;
-            }
-            else
-            {
-                //*** send to SAP if no SAP Id
-                if (locationShipTo.SAP_Id__c == null) forceShipToCustomerToSAP = true;
-                
-                //*** update information if necessary 
-                if (!locationShipTo.Active__c || locationShipTo.VAT_Number__c != locationBillTo.VAT_Number__c)
+                lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
+                if (lstSyncResult[0] != null)
                 {
-                    //locationShipTo = selector.getLocations(new Set<Id>{locationShipTo.Id})[0];
-                    locationShipTo.Active__c = true;
-                    locationShipTo.VAT_Number__c = locationBillTo.VAT_Number__c;
-                    update locationShipTo;
-                    forceShipToCustomerToSAP = true;
+                    addErrorMessage(Label.IEC_SAP_Customer_Address_Issue);
+                    return;
                 }
             }
-            System.debug('locationShipTo::'+locationShipTo);
+            
+            //*** update information if necessary 
+            if (locationShipTo.Id == null || lstSyncResult != null || locationShipTo.VAT_Number__c != locationBillTo.VAT_Number__c)
+            {
+                locationShipTo.VAT_Number__c = locationBillTo.VAT_Number__c;
+                upsert locationShipTo;
+            }
+            
             //*** copy address information to order
             sfOrder.ShipTo_same_BillTo__c   = true;
             sfOrder.ShipTo_Location__c      = locationShipTo.Id;
@@ -1224,13 +1329,14 @@ global class IEC_ShippingController extends IEC_PageController
             sfOrder.ShipToContact_Name__c   = locationShipTo.Attention__c;
             sfOrder.ShipToContact_Phone__c  = locationShipTo.Phone__c;
             sfOrder.ShipToContact_Email__c  = locationShipTo.Email__c;
+            sfOrder.ShipTo_Address__c       = locationShipTo.Address__c;
             sfOrder.ShippingStreet          = sfOrder.BillingStreet;
             sfOrder.ShippingCity            = sfOrder.BillingCity;
             sfOrder.ShippingPostalCode      = sfOrder.BillingPostalCode;
             sfOrder.ShippingCountry         = sfOrder.BillingCountry;
-            sfOrder.ShippingCountryCode__c  = sfOrder.ShippingCountryCode__c;
+            sfOrder.ShippingCountryCode__c  = sfOrder.BillingCountryCode__c;
             sfOrder.ShippingState           = sfOrder.BillingState;
-            sfOrder.ShippingStateCode__c    = sfOrder.ShippingStateCode__c;
+            sfOrder.ShippingStateCode__c    = sfOrder.BillingStateCode__c;
             sfOrder.Shipping_Instruction__c = vfOrder.shipToInstructions;
             sfOrder.ShipToContact_VAT_Number__c = locationShipTo.VAT_Number__c;
             update sfOrder;
@@ -1266,18 +1372,18 @@ global class IEC_ShippingController extends IEC_PageController
         Created by CGI, Thai 2016-05-19
             Immediately send customer to SAP -> to be called from VF to force a separate context
     ****************************************************************************************************/
-    public void sendShipToCustomerToSAP()
-    {
-        if (forceShipToCustomerToSAP != true)
-            return;
+    //public void sendShipToCustomerToSAP()
+    //{
+    //    if (forceShipToCustomerToSAP != true)
+    //        return;
         
-        Location_Sel selector = new Location_Sel();
-        List<Location__c> lstLocation = selector.getLocations(new Set<Id>{sfOrder.ShipTo_Location__c});
-        IECAddress_Svc.syncCustomerMasterWithSAP(lstLocation);
-        lstLocation = selector.getLocations(new Set<Id>{sfOrder.ShipTo_Location__c});
-        currentShipToPartner = lstLocation[0].SAP_Id__c;
-        forceShipToCustomerToSAP = false;
-    } //*** end of "sendShipToCustomerToSAP"
+    //    Location_Sel selector = new Location_Sel();
+    //    List<Location__c> lstLocation = selector.getLocations(new Set<Id>{sfOrder.ShipTo_Location__c});
+    //    IECAddress_Svc.syncCustomerMasterWithSAP(lstLocation);
+    //    lstLocation = selector.getLocations(new Set<Id>{sfOrder.ShipTo_Location__c});
+    //    currentShipToPartner = lstLocation[0].SAP_Id__c;
+    //    forceShipToCustomerToSAP = false;
+    //} //*** end of "sendShipToCustomerToSAP"
 
 
     /****************************************************************************************************

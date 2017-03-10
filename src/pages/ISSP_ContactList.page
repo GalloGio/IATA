@@ -14,34 +14,31 @@
 
     // When document is ready
     j$(document).ready(function() {
+        onready();
+    });
 
-        // Into our j$ prototype
-        j$(function() {
-
-            // Color invalid domain in red
-            j$(".domainpartred").each(function(){
-                var inner = $(this).html();
-                var innserSplited = inner.split('@');
-                var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
-                $(this).html(innserSplited[0]).append(domainColorSpan);
-                $('.colorred').css("color", "red");
-            });
-
-            // Color valid domain in green
-            j$(".domainpartgreen").each(function(){
-                var inner = $(this).html();
-                var innserSplited = inner.split('@');
-                var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
-                $(this).html(innserSplited[0]).append(domainColorSpan);
-                $('.colorgreen').css("color", "green");
-            });
-
-            // Create Jquery tooltip only for the invalid email domain validation (cross)
-            j$("#emadomvalinvpopup").tooltip();
-
+    function onready() {
+        // Color invalid domain in red
+        j$(".domainpartred").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorred').css("color", "red");
         });
 
-    });
+        // Color valid domain in green
+        j$(".domainpartgreen").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorgreen').css("color", "green");
+        });
+
+        // Create Jquery tooltip only for the invalid email domain validation (cross)
+        j$(".emadomvalinvpopup").tooltip();
+    }
 
     function selectAllCheckboxes(obj,receivedInputID){
         var inputCheckBox = document.getElementsByTagName("input");
@@ -169,6 +166,7 @@
 
     <apex:pageBlock id="Contacts" >
       <!--  <apex:pageBlockButtons location="top"> -->
+      <script>onready();</script>
       <br />
       <div class="row">
           <div class="{!if(!isAdmin,"col-md-3","")}">
@@ -221,11 +219,16 @@
                   <apex:column >
 
                    <!-- For e-mail field, display if this a valid e-mail -->
-                   <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                      <span title="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', $Label.ISSP_ContactList_HoverPopup_Text, '') }" id="emadomvalinvpopup">
-                        <apex:outPutField value="{!item.recordContact.ValidContactDomainImage__c}" />
-                        <apex:outputText value="&nbsp;" escape="false" />
-                      </span>
+                  <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                          <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
+                      </apex:outputpanel>
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                          <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
+                              <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
+                          </span>
+                      </apex:outputpanel>
+                      <apex:outputText value="&nbsp;" escape="false" />
                    </apex:outputpanel>
 
                     <apex:facet name="header">

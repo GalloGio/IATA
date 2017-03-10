@@ -36,7 +36,7 @@ public with sharing class DAL_ISSP {
                     OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c, 
                     User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c ,
                     AccountId, Account.Name, Account.Status__c, Account.BillingStreet, Account.BillingCity,
-                    Account.BillingCountry, Account.IATACode__c, Account.BillingPostalCode,Account.BillingState,
+                    Account.BillingCountry, Account.IATACode__c, Account.Airline_Prefix__c, Account.BillingPostalCode,Account.BillingState,
                     Account.TradeName__c, Account.ParentId, Account.Top_Parent__c, Account.Airline_designator__c,
                     Account.Accumulated_Irregularities__c,Account.Sector__c,Account.Category__c,Account.VAT_Number__c,
                    	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
