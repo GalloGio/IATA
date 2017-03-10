@@ -513,7 +513,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		} //trigger.isinsert trigger.isupdate
 	} //if trgCreateUpdateServiceRenderedRecord
-	/*trgCreateUpdateServiceRenderedRecord Trigger*/
+	/*trgCreateUpdateServiceRenderedRecord Trigger*/ 
 	
 	/*trgCaseEscalationMailNotificationICH Trigger
 	if(trgCaseEscalationMailNotificationICH){

@@ -21,7 +21,7 @@
 21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate									FILE
 22 - trgAccelyaRequestSetCountry - All: Common, isInsert							FILE
 */
-
+ 
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
