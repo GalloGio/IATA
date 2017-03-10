@@ -2196,7 +2196,9 @@ public without sharing class Order_Svc
                     lstResults = null;
                 }
             }else{
-                lstResults = TestDataGenerator.generatePaymentResults();
+                lstResults = TestDataGenerator.generatePaymentResults(lstInvoicePayment, lstOrder[0].Invoice_Text__c);
+                for(Integer i = 0; i < lstResults.size(); i++)
+                    resultByOrderId.put(lstOrder[i].Id, lstResults[i]);
             }
         }
 

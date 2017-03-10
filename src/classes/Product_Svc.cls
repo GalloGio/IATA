@@ -311,10 +311,10 @@ public class Product_Svc
         String body = '';
         String bodyChanged = '';
         list<EmailTemplate> lstEmailTemplate = new list<EmailTemplate>();
-        if(!Test.isRunningTest()){
+        //if(!Test.isRunningTest()){
             //Get the email template to add on the body of the task for manager and alternate manager
             lstEmailTemplate = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product Effective to template Id'));
-        }
+        //}
 
         //Get all the product api name that we handle the change event
         map<String,String> apiName_Label = productApiNames();
@@ -416,9 +416,9 @@ public class Product_Svc
         List<Mail_DTO> lstMailDto = new List<Mail_DTO>();
         //get the email template
         List<EmailTemplate> fieldModifiedTemp = new List<EmailTemplate>();
-        if(!Test.isRunningTest()){
+        //if(!Test.isRunningTest()){
             fieldModifiedTemp = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product field changed template Id')); 
-        }
+        //}
         for(Id producId : productId_FieldsTable.keySet()){
             //get the product
             Product2 prd = productsMap.get(producId);
