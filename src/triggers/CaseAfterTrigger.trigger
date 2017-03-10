@@ -20,17 +20,17 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = false;
     boolean trgCaseLastSIDRADate = false;
 	boolean trgCase_ContactLastSurveyUpdate = false;
-	boolean trgParentCaseUpdate = false;
+	boolean trgParentCaseUpdate = true;									//3333333333333
 	boolean trgICCSManageProductAssignment = false;
 	boolean trgICCS_ASP_CaseClosed = false;
-	boolean trgCreateUpdateServiceRenderedRecord = false;
+	boolean trgCreateUpdateServiceRenderedRecord = true;				//3333333333333
 	boolean trgCaseEscalationMailNotificationICH = false;
 	boolean trgCheckSISCaseRecycleBinAfterInsert = true;				//2222222222222
 	boolean trgCustomerPortalCaseSharing = false;
-	boolean CaseBeforInsert = false;
+	boolean CaseBeforInsert = true;										//3333333333333
 	boolean AMS_OSCARCaseTrigger = false;
-	boolean trgAccelyaRequestSetCountry = false;
-	boolean trgCase = false;
+	boolean trgAccelyaRequestSetCountry = true;							//3333333333333
+	boolean trgCase = true;												//3333333333333
     /**********************************************************************************************************************************/
     
     /*Record type*/
@@ -445,7 +445,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	
 	/*trgCreateUpdateServiceRenderedRecord Trigger*/
 	/*Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, 
-	 * the case record type is "IDFS Airline Participation Process" and the case is approved
+	 *the case record type is "IDFS Airline Participation Process" and the case is approved*/
 	if(trgCreateUpdateServiceRenderedRecord){ 
 		if(trigger.isInsert || trigger.isUpdate){
 			string airlineLeaving = 'Airline Leaving';
@@ -469,7 +469,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			    for(Case_Reason_Service__c ReasonServiceMapping:Case_Reason_Service__c.getall().values()) {
 					ServicesPerReason.put(ReasonServiceMapping.name,ReasonServiceMapping);
 					ServicesToCheck.add(ReasonServiceMapping.name);
-			    } 
+			    }
 			    string STC = '';
 			    for (string s:ServicesToCheck) {
 					STC += s + ', ';
@@ -480,6 +480,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		        //Initial Validation 
 		        for (Case c : casesToTrigger){
 		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
+			            system.debug('483  ');
 			            caseMap.put(c.id,c);
 			            caseIdPerAccID.put(c.accountID,c.id);
 					}else if( !ServicesToCheck.contains(c.reason1__c)){
@@ -492,6 +493,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		            	if(casesWithErrorOnAcct.get(idc) <> null){  
 		                	casesWithErrorOnAcct.get(idc).addError(' Errors during the validation of the Account related to the case: Wrong recordtype or not linked to a proper Headquarter ');
 						}else{
+							system.debug('496  ');
 		                	USRRcases.add(caseMap.get(idc));
 						}   
 		            }
@@ -500,7 +502,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		            //  take a look at this just in case of mass upload of the cases it checks if within the list of cases there's 2 times the same case. start (it adds an error to the wrong ones)  
 		            ServiceRenderedCaseLogic.massInsertDuplicateCheck(casesConsValid,ServicesPerReason);
 		            // VALIDATION OF THE SERVICES RENDERED: WE LOOK IF WE HAVE DUPLICATES IN THE DATABASE NOT IN THE MASS ENTRY...
-		            list<Case> caseWithServicesOK =ServiceRenderedCaseLogic.ServicesValidation(casesConsValid,ServicesPerReason);
+		            list<Case> caseWithServicesOK = ServiceRenderedCaseLogic.ServicesValidation(casesConsValid,ServicesPerReason);
 		            // separating leaving case from Joining cases and then saving the services rendered             
 		            if(!caseWithServicesOK.isEmpty()){
 						ServiceRenderedCaseLogic.saveTheServices(caseWithServicesOK,ServicesPerReason);
@@ -584,13 +586,16 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgCaseLastSIDRADate Trigger.isInsert*/
 		
-		/*trgParentCaseUpdate Trigger.isInsert
+		/*trgParentCaseUpdate Trigger.isInsert*/
 		if(trgParentCaseUpdate){
+			system.debug('trgParentCaseUpdate Trigger.isInsert');
 			// Created Date - 16-12-2010 
 			//  TO FUTURE REVIEWER....IT WILL BE NICE TO FIND OUT WHY THIS TRIGGER WAS DEVELOPED AND WHY THE CONDITION ON LINE 18 FOR ALL CASES BUT IFAP
 			// PLEASE REVIEW IT...
 			for(Case c: trigger.new){
-				if(c.parentId != null && ! (c.RecordTypeId == IFAPcaseRecordTypeID || c.Reason1__c == 'FA/ FS Non-Compliance') && ( c.RecordTypeId != FSMcaseRecordTypeID)){
+				if(c.parentId != null && 
+					!(c.RecordTypeId == IFAPcaseRecordTypeID || c.Reason1__c == 'FA/ FS Non-Compliance') 
+					&& ( c.RecordTypeId != FSMcaseRecordTypeID)){
 					IFAPcases.add(c);
 				}
 			}
@@ -618,6 +623,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*trgCheckSISCaseRecycleBinAfterInsert Trigger.isInsert*/
 		if(trgCheckSISCaseRecycleBinAfterInsert){
+			system.debug('trgCheckSISCaseRecycleBinAfterInsert Trigger.isInsert');
 			boolean isCaseMustBeDeleted;
 			Set<Id> SISidSet = new Set<Id>();
 			
@@ -629,11 +635,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				if ((newCaseObj.Origin == 'E-mail to Case - IS Help Desk' || newCaseObj.Origin == 'E-mail to Case - SIS Help Desk') 
 						&& newCaseObj.RecordTypeid != null && newCaseObj.RecordTypeid == SISHelpDeskRecordtype) {
 					// Email From Address is excluded? Email Address is excluded?
-					system.debug('inside the control');
 					if (clsCheckOutOfOfficeAndAutoReply.IsFromAddressExcluded(newCaseObj, 'SIS') || clsCheckOutOfOfficeAndAutoReply.IsSubjectExcluded(newCaseObj, 'SIS') ) {
-						system.debug('inside the control');
 						if (!newCaseObj.IsDeleted){
-							system.debug('inside the control');
 							SISidSet.add(newCaseObj.id);
 							isCaseMustBeDeleted = true;
 						}
@@ -695,8 +698,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		} //if trgCustomerPortalCaseSharing
 		/*trgCustomerPortalCaseSharing Trigger.isInsert*/
 		
-		/*CaseBeforInsert Trigger.isInsert
-		if(CaseBeforInsert){	
+		/*CaseBeforInsert Trigger.isInsert*/
+		if(CaseBeforInsert){
+			system.debug('CaseBeforInsert Trigger.isInsert');
 	        ISSP_Case.preventTrigger = true;
 	        User[] users = [Select u.UserType From User u where u.Id =: UserInfo.getUserId()];
 	        system.debug('#ROW# '+users);
@@ -735,7 +739,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isInsert*/
 		
-		/*trgAccelyaRequestSetCountry Trigger.isInsert
+		/*trgAccelyaRequestSetCountry Trigger.isInsert*/
 		if(trgAccelyaRequestSetCountry){
 			Set<Id> AccelyacaseIds = new Set<Id>{};
 			list<Case> caseListtoValidate = new List<Case>{};
@@ -770,8 +774,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgAccelyaRequestSetCountry Trigger.isInsert*/
 		
-		/*trgCase Trigger.isInsert
+		/*trgCase Trigger.isInsert*/
 		if(trgCase){
+			system.debug('trgCase Trigger.isUpdate');
 			SidraLiteManager.afterInsertSidraLiteCases(Trigger.new);
 		}
 		/*trgCase Trigger.isInsert*/

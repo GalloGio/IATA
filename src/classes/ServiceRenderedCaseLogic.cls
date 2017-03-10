@@ -77,7 +77,7 @@ public class ServiceRenderedCaseLogic {
     
    
    public static void saveTheServices(list<Case> caseWithServicesOK, map<String,Case_Reason_Service__c> ServicesPerReason){
-    
+    						 system.debug('save the services ');
                              list<Case> joiningCases = new list<Case>();
                              list<Case> leavingCases = new list<Case>();
                              list<Id> ConsumerIdsFromNewCases = new list<Id>();
@@ -112,7 +112,7 @@ public class ServiceRenderedCaseLogic {
    
    public static void massInsertDuplicateCheck(list<Case> Cases, map<String,Case_Reason_Service__c> ServicesPerReason){
    
-              
+              		system.debug('mass Insert Duplicate Check  ');
                     map<String,list<Case>> KeyPerCase = new map<String,list<Case>>();
                                     
                     string key ;    
@@ -156,7 +156,7 @@ public class ServiceRenderedCaseLogic {
    }
  
    public static list<Case> ServicesValidation(list<Case> casesOkConsumer, map<String,Case_Reason_Service__c> ServicesPerReason){
-                
+                system.debug('service validation  ');
                 list<Id> accountIds = new list<Id>();
                 list<Case> caseWithServicesOK  = new list<Case>();
                 
@@ -303,7 +303,7 @@ public class ServiceRenderedCaseLogic {
 
 
      public static list<Case> airlineConsumerValidation(list<Case> cases){
-           
+           	system.debug('airline consumer validation ');
             list<case> casesOkConsumer = new list<Case>();
             map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
             

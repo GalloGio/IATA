@@ -41,7 +41,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = false;
+    boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
     boolean updateAccountFieldBasedOnIATAwebCode = true;		//22222222222222
     boolean CaseBeforInsert = false;
     boolean AMS_OSCARCaseTrigger = false;
@@ -566,7 +566,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCS_ASP_Case_Validation Trigger*/
         
-        /*trgCreateUpdateServiceRenderedRecord Trigger
+        /*trgCreateUpdateServiceRenderedRecord Trigger*/
         //Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, the case record type is "IDFS Airline Participation Process" and the case is approved
         if(trgCreateUpdateServiceRenderedRecord){
         	system.debug('trgCreateUpdateServiceRenderedRecord');
