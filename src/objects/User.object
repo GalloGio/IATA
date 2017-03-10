@@ -382,7 +382,7 @@
         <fullName>Customer_type__c</fullName>
         <externalId>false</externalId>
         <formula>CASE(Contact.Account.RecordType.Name, 
-   &quot;Agency&quot;, &quot;Agency&quot;,
+   &quot;Agency&quot;, If( OR(Contact.Account.CNS_Account__c, Contact.Account.CNS_Agency__c),&quot;CNS Agency&quot;, &quot;Agency&quot;),
    &quot;Airline Branch&quot;, &quot;Airline&quot;,
    &quot;Airline Headquarters&quot;, &quot;Airline&quot;,
    &quot;General Sales Agent Branch&quot;,IF(ISBLANK(Contact.Account.IATACode__c), &quot;GSA&quot;, &quot;GSSA&quot;),
