@@ -332,6 +332,12 @@ public class AMS_OSCARTriggerHandler {
 
 
 		Map<Id, Account> accounts = getAccounts(accountIds);
+
+		//<Account Id, Current Location Type>
+		// Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
+		// )
+		Map<Id, String> locationTypePerAccountID = getAccountsLocationType(accounts);
+
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
 		//Here we will save the accounts that will suffer ownership changes
@@ -749,14 +755,21 @@ public class AMS_OSCARTriggerHandler {
 					throw new AMSException('Performing this operation will result in hierarchy ownership inconsistency. Please make sure the owners being processed match with the owners of the target agency.');
 			}
 
+			set<Account> accountToupdateSet = new set<Account>();
 
-			//************Create Change Codes ****************
+			for(Id acctId : accountsToUpdate.keySet())
+			{
+				accountToupdateSet.add(accounts.get(acctId));
+			}
+
+
+			//************Create Change Codes History ****************
 			//
 			//
+			
+
+			
 			List<Account> accsToUpdateFromCC = new List<Account>();
-
-			system.debug('DDD changesContainer: ' + changesContainer);
-
 
 			//insert the change codes
 			if (changesContainer.size() > 0) {
@@ -776,6 +789,30 @@ public class AMS_OSCARTriggerHandler {
 					integer index = 0;
 					for(Account acc : c.accts)
 					{
+		
+						//******* Add "Custom" changes struct for the Location Type mapping ******** INI
+
+						if(locationTypePerAccountID.containsKey(acc.Id) && acc.Location_Type__c !=  locationTypePerAccountID.get(acc.Id))
+						{
+							system.debug('DDD Old Location_Type__c: '  + locationTypePerAccountID.get(acc.Id));
+
+							system.debug('DDD New Location_Type__c: '  + acc.Location_Type__c);
+							
+							AMS_ChangeCodesHelper.ObjectChange objectChangesLocationType =  new AMS_ChangeCodesHelper.ObjectChange('Account','Location_Type__c',locationTypePerAccountID.get(acc.Id),acc.Location_Type__c);
+
+							if(accountsToUpdate.get(acc.Id) == null)
+							{
+								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesLocationType});
+								objectChanges.add(acctChangesStruct);
+
+								system.debug('DDD accountsToUpdate add Location Type Info:' + accountsToUpdate.get(acc.Id));
+
+							}
+							else
+								accountsToUpdate.get(acc.Id).changes.add(objectChangesLocationType);
+						}
+
+
 						//******* Add "Custom" changes struct for the Ownership mapping ******** INI
 
 						AMS_AccountRoleCreator.OldAndNewOwners oldNewOwnersByOscar = oldAndNewOwnersMap.get(theoscars[index].AMS_Online_Accreditation__c);
@@ -805,7 +842,7 @@ public class AMS_OSCARTriggerHandler {
 
 						}
 
-						//******* Add "Custom" changes struct for the Ownership mapping ******** END
+	
 
 						system.debug('DDD accountsToUpdate.get(acc):' + accountsToUpdate.get(acc.Id));
 
@@ -814,21 +851,11 @@ public class AMS_OSCARTriggerHandler {
 						index++;
 					}
 
-					//throw new AMSException('STOP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
 
 				}
 				//create change codes
 
 				accsToUpdateFromCC = AMS_ChangeCodesHelper.createAAChangeCodes(objectChanges,changeCodes, theoscars, accts, false);
-			}
-
-
-			set<Account> accountToupdateSet = new set<Account>();
-
-			for(Id acctId : accountsToUpdate.keySet())
-			{
-				accountToupdateSet.add(accounts.get(acctId));
 			}
 
 			List<Account> mergedAccountUpdate = mergeAccountsToUpdate(accsToUpdateFromCC, new List<Account>(accountToupdateSet));
@@ -1740,4 +1767,22 @@ public class AMS_OSCARTriggerHandler {
 
 		return changeOscars;
 	}
+
+	public static Map<Id,String> getAccountsLocationType(Map<Id,Account> accountsMap) {
+
+
+		Map<Id,String> locationTypeAccountID = new Map<Id,String> ();
+
+		for(Id accId : accountsMap.keySet())
+		{
+			String currentLocationType = accountsMap.get(accId).Location_Type__c;
+
+			locationTypeAccountID.put(accId,currentLocationType);
+		}		
+
+
+
+		return locationTypeAccountID;
+	}
+
 }
