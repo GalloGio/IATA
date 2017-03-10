@@ -5042,7 +5042,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
-                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
