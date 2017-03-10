@@ -1396,7 +1396,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     
     else if (Trigger.isUpdate) {
         
-        /*trgCase Trigger.isUpdate
+        /*trgCase Trigger.isUpdate*/
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isUpdate');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
