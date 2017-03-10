@@ -448,6 +448,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	 *the case record type is "IDFS Airline Participation Process" and the case is approved*/
 	if(trgCreateUpdateServiceRenderedRecord){ 
 		if(trigger.isInsert || trigger.isUpdate){
+			system.debug('trgCreateUpdateServiceRenderedRecord');
 			string airlineLeaving = 'Airline Leaving';
 			string airlineJoining = 'Airline Joining';
 			string airlineSuspension = 'Airline Suspension Process';
@@ -479,6 +480,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		        map<Id,Case> caseMap = new map<Id,Case>();  
 		        //Initial Validation 
 		        for (Case c : casesToTrigger){
+		        	system.debug('REASON: '+c.reason1__c);
 		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
 			            system.debug('483  ');
 			            caseMap.put(c.id,c);
