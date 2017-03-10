@@ -19,7 +19,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = false;
     boolean trgCaseLastSIDRADate = false;
-	boolean trgCase_ContactLastSurveyUpdate = false;
+	boolean trgCase_ContactLastSurveyUpdate = true;						//4444444444444
 	boolean trgParentCaseUpdate = true;									//3333333333333
 	boolean trgICCSManageProductAssignment = true;						//3333333333333
 	boolean trgICCS_ASP_CaseClosed = false;
@@ -889,7 +889,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
         }
 		/*trgCaseLastSIDRADate Trigger.isUpdate*/
 		
-		/*trgCase_ContactLastSurveyUpdate Trigger.isUpdate
+		/*trgCase_ContactLastSurveyUpdate Trigger.isUpdate*/
 		if(trgCase_ContactLastSurveyUpdate){
 			// This part of the code update a Case's Contact field Instant_Survey_Last_survey_sent__c, if the Case field Instant_Survey_Last_survey_sent__c is updated            
             // Get all Cases' contact and put it in a Map.
