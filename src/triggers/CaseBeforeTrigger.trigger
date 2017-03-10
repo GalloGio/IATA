@@ -38,7 +38,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
     boolean trgICCSCaseValidation = true;						//22222222222222
     boolean trgParentCaseUpdate = true;							//33333333333333
-    boolean Case_FSM_Handle_NonCompliance_BI_BU = true;         //22222222222222
+    boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
     boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
