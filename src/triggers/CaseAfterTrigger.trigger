@@ -21,7 +21,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     boolean trgCaseLastSIDRADate = false;
 	boolean trgCase_ContactLastSurveyUpdate = false;
 	boolean trgParentCaseUpdate = true;									//3333333333333
-	boolean trgICCSManageProductAssignment = false;
+	boolean trgICCSManageProductAssignment = true;						//3333333333333
 	boolean trgICCS_ASP_CaseClosed = false;
 	boolean trgCreateUpdateServiceRenderedRecord = true;				//3333333333333
 	boolean trgCaseEscalationMailNotificationICH = false;
