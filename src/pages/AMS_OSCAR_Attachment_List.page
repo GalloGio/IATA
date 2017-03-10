@@ -1,12 +1,15 @@
 <apex:page controller="AMS_OSCAR_Attachments" title="Manage Attachments" >
     <!-- <c:GenericAttachmentList sobjectId="{!oscCase.Id}" uploaderWizard="AMS_File" sourceSystem="Internal" scrollable="true"/> -->
-    
+
     <apex:includeScript value="/support/console/30.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
     <apex:includeScript value="{!URLFOR($Resource.Tablesorter, 'jquery.tablesorter.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:stylesheet value="{!URLFOR($Resource.Tablesorter,'/themes/blue/style.css')}" />
+
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
 
     <c:Loading />
     <style>
@@ -18,7 +21,7 @@
         .iocontainer{
             padding-right: 15px !important;
         }
-    
+
         .iocontainer:hover{
             background-color: #e3f3ff;
             background: url("../img/func_icons/util/pencil12.gif") no-repeat center right 2px;
@@ -28,7 +31,7 @@
             font-weight: bold;
             color: #FA6A00;
         }
-        
+
         /*this makes sure that even blank fields have a height and can be clicked*/
         .output:after{
             content: "\00a0";
@@ -180,12 +183,13 @@
           startLoading();
           AMS_OSCAR_Attachments.getAllExpiringLink("{!caseId}",function(result, event){
           // alert(result);
-          try {
-            downloadAndZipFiles(result, "files.zip");
-          } catch (e) {
-            alert(e);
-          }
-          stopLoading();
+              try {
+                var zipfiles = new ZipFiles(result, "files.zip");
+                zipfiles.downloadZip();
+              } catch (e) {
+                alert(e);
+              }
+              stopLoading();
           }, {buffer: true, escape: false, timeout: 120000} );
         }
     </script>

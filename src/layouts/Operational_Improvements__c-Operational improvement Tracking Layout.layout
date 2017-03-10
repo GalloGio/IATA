@@ -233,7 +233,7 @@
                 <field>Open_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Date_Time_Closed__c</field>
             </layoutItems>
         </layoutColumns>

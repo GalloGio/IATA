@@ -138,7 +138,7 @@ public without sharing class Location_Sel extends Selector
             'Address__r.ISO_Country__r.Name,Address__r.ISO_Country__c,Address__r.ISO_Country__r.ISO_Code__c, ' + 
             'Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.Name, Address__r.ISO_State__c, ' + 
             'Address__r.Street__c,Address__r.City__c,Address__r.Country__c,Address__r.State__c,Address__r.ZipCode__c, Address__r.IEC_Zip_Postal_Code_required__c, ' +
-            'Address__r.ISO_Country__r.VAT_Validation_Required__c ' +
+            'Address__r.ISO_Country__r.VAT_Validation_Required__c, Contact__r.AccountId, Contact__r.Account.Name ' +
             'FROM {1} ' + 
             'WHERE Id in :locationIds and Active__c = true ' , 
             new List<String>{
@@ -179,7 +179,7 @@ public without sharing class Location_Sel extends Selector
             'Address__r.ISO_Country__r.Name,Address__r.ISO_Country__c,Address__r.ISO_Country__r.ISO_Code__c, ' + 
             'Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.Name, Address__r.ISO_State__c, ' + 
             'Address__r.Street__c,Address__r.City__c,Address__r.Country__c,Address__r.State__c,Address__r.ZipCode__c, Address__r.IEC_Zip_Postal_Code_required__c, ' +
-            'Address__r.ISO_Country__r.VAT_Validation_Required__c ' +
+            'Address__r.ISO_Country__r.VAT_Validation_Required__c, Contact__r.AccountId, Contact__r.Account.Name ' +
             'FROM {1} ' + 
             'WHERE Id in :locationIds ' , 
             new List<String>{
@@ -311,4 +311,28 @@ public without sharing class Location_Sel extends Selector
 
         return ret;
     }
+
+	/****************************************************************************************************
+	    Created by Thai 2016-12-09
+	        Return location records with all necessary information to synchronize to SAP
+	****************************************************************************************************/
+	public static Map<Id, Location__c> getLocationToSyncSAP(List<Id> lstLocationId, List<Id> lstAccountId, List<Id> lstContactId, String strType, Boolean activeOnly)
+	{
+		String SOQL = ' select Id, Type__c, VAT_Number__c, Phone__c, Email__c, Attention__c, SAP_Id__c, Active__c'
+		            +       ', Address__c, Address__r.Street__c, Address__r.City__c, Address__r.ZipCode__c'
+		            +       ', Address__r.ISO_State__c, Address__r.ISO_State__r.Name, Address__r.ISO_State__r.ISO_Code__c, Address__r.ISO_State__r.IEC_Valid_SAP__c'
+		            +       ', Address__r.ISO_Country__r.Name, Address__r.ISO_Country__r.ISO_Code__c, Address__r.ISO_Country__c'
+		            +       ', Contact__c, Contact__r.Name, Contact__r.Salutation, Contact__r.FirstName, Contact__r.LastName'
+		            +       ', Account__c, Account__r.Name, Account__r.Phone, Account__r.Email__c, Account__r.Default_Payment_Type__c'
+		            +       ', Account__r.SoldTo_Location__r.SAP_Id__c'
+		            + ' from Location__c where Type__c in (\'Sold To\',\'Bill To\',\'Ship To\')'
+		            + (lstLocationId != null && lstLocationId.size() > 0 ? ' and Id in :lstLocationId' : '')
+		            + (lstAccountId != null && lstAccountId.size() > 0 ? ' and Account__c in :lstAccountId' : '')
+		            + (lstContactId != null && lstContactId.size() > 0 ? ' and Contact__c in :lstContactId' : '')
+		            + (!String.isBlank(strType) ? ' and Type__c = :strType' : '')
+		            + (activeOnly != null && activeOnly ? ' and Active__c = true' : '');
+		List<Location__c> lstLocation = Database.query(SOQL);
+		return new Map<Id, Location__c>(lstLocation);
+	} //*** end of "getLocationToSyncSAP"
+
 }
