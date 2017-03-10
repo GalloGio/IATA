@@ -7115,8 +7115,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fields>Kale_Status__c</fields>
         <fields>L2_Support_Priority__c</fields>
         <fields>LastModifiedDate</fields>
-        <fields>LastReferencedDate</fields>
-        <fields>LastViewedDate</fields>
         <fields>Last_Action_Closure_Date__c</fields>
         <fields>Last_CS_action_request__c</fields>
         <fields>Last_Default_Action_Date__c</fields>
