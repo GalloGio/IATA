@@ -218,6 +218,7 @@ public with sharing class IECOrder_Svc {
                 //-- Create Cookie 
                 orderCookie = createOrderCookie(productNumber,qty, 1);
                 ApexPages.currentPage().setCookies(new Cookie[]{orderCookie});
+                nbs = 1;
             }
 
 	        Cookie cookieToModified = IECOrder_Svc.getOrderCookie(nbs);
@@ -605,7 +606,7 @@ public with sharing class IECOrder_Svc {
 
     public static void changePenddingOrder(Order newPendding)
     {
-        Order o = getPenddingOrder();
+        Order o = getPenddingOrder(true);
         if(String.isBlank(o.IEC_Order_Previous_Type__c))
         {
             try{delete o;}catch(Exception ex){}    
@@ -633,12 +634,12 @@ public with sharing class IECOrder_Svc {
 
     public static Order getPenddingOrder(String orderId)
     {
-        if(orderId == null) return getPenddingOrder(); 
+        if(orderId == null) return getPenddingOrder(true); 
 
         return Order_Sel.getOrderForVF(orderId);
     }
 
-    public static Order getPenddingOrder()
+    public static Order getPenddingOrder(Boolean createOrder)
     {
         Order pendingOrder;
         
@@ -679,7 +680,10 @@ public with sharing class IECOrder_Svc {
         }
         else 
         {
-            return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+            if (createOrder)
+                return orderSelector.initializeOrder(oCurrentCustomer.sfAccount, oCurrentCustomer.sfContact);
+            else
+                return new Order();
         }
     }
 
@@ -815,321 +819,6 @@ public with sharing class IECOrder_Svc {
         ];
 
         return (quotes.size() == 1);
-    }
-
-    
-    public void coverage(){
-        Integer x = 0;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        x++;
-        
-
     }
 
 }

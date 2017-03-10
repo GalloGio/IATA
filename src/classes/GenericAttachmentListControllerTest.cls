@@ -22,6 +22,8 @@ public class GenericAttachmentListControllerTest {
 		System.assert(controller.isAdminUser);
 		System.assert(controller.getTransferAttachmentsUrl() != null);
 		controller.cancelPopupAttach();
+		controller.getCanAttachFilesToCase();
+		controller.goToAttachmentPage();
 		Test.stopTest();
 		
 	}
@@ -124,6 +126,38 @@ public class GenericAttachmentListControllerTest {
 		att.description = 'test description';
 		controller.updateAttach();
 		controller.cancelPopupAttach();
+		Test.stopTest();
+	}
+
+	static testMethod void testGetAllExpiringLink1() {
+		Case cse = new Case();
+		insert cse;
+
+		Attachment attachment = WrapperAttachTest.createAttachment(cse);
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = false;
+		controller.id = cse.Id;
+		WrapperAttach att = new WrapperAttach(attachment, null);
+
+		Test.startTest();
+		GenericAttachmentListController.getAllExpiringLink(cse.Id);
+		Test.stopTest();
+	}
+
+	static testMethod void testGetAllExpiringLink2() {
+		Case cse = new Case();
+		insert cse;
+
+		Attachment attachment = WrapperAttachTest.createAttachment(cse);
+
+		GenericAttachmentListController controller = new GenericAttachmentListController();
+		controller.isForPortal = true;
+		controller.id = cse.Id;
+		WrapperAttach att = new WrapperAttach(attachment, null);
+
+		Test.startTest();
+		GenericAttachmentListController.getAllExpiringLink(cse.Id);
 		Test.stopTest();
 	}
 

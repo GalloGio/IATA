@@ -31,6 +31,14 @@
                 <field>Legal_name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -154,6 +162,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VAT_Number_2__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Location_Class__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
