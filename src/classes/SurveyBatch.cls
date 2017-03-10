@@ -118,7 +118,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-                               WhoClosedCase__r.Profile.Name
+                               WhoClosedCase__r.Profile.Name, CNSCase__c
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -580,6 +580,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           n = countersMap.get(c.Region__c);
           if (n == 1)  countersMap.remove(c.Region__c);
           else     countersMap.put(c.Region__c, --n);
+        }
+        // new rule for CNS
+        else if (c.CNSCase__c == true) {
+            template = templates.get('Clicktools_Contact_Email_EN_CNS');
+
         }
 
 
