@@ -454,6 +454,7 @@
                                                 <h5 class="blueback">{!$Label.ISSP_External_Links}</h5>
 
                                                 <apex:repeat value="{!externalLinksList}" var="app">
+                                                <apex:outputPanel rendered="{!OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false))}">
                                                     <ul class="nav1">
                                                         <span class="appfocus">
                                                               <li id="Serv3"  class="left-color">
@@ -469,6 +470,7 @@
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
                                                     </script>
+                                                </apex:outputPanel>
                                                 </apex:repeat>
                                         </div>
                                       <a class="pull-right btn_iata_success btn-sm btn-block " href="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}"> {!$Label.ISSP_Homepage_New_Service_Request}</a>
