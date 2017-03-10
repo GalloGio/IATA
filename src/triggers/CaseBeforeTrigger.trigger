@@ -7,7 +7,6 @@
 06 - UserInfoUpdate - All: Common, isInsert, isUpdate								FILE
 07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate			FILE
 08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate						FILE
-09 - trgAccountFieldsUpdate - All: isInsert											FILE
 10 - trgBeforeInsertUpdate - All: Common											FILE
 11 - CalculateBusinessHoursAges - All: isUpdate										FILE
 12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate								FILE
@@ -27,27 +26,26 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgProcessISSCase = false;
-    boolean trgCase = false;
+    boolean trgCase = true;										//33333333333333
     boolean trgCaseIFAP = false;
     boolean ISSP_CreateNotificationForCase = true; 				//11111111111111
     boolean trgCase_BeforeDelete = true;  						//11111111111111
     boolean UserInfoUpdate = false;								//22222222222222
     boolean trgCheckBusinessHoursBeforeInsert = false;
     boolean trgSidraCaseBeforeInsertUpdate = false;				//22222222222222
-    //boolean trgAccountFieldsUpdate = true;
     boolean trgBeforeInsertUpdate = true; 						//11111111111111
     boolean CalculateBusinessHoursAges = false;					//22222222222222
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
     boolean trgICCSCaseValidation = false;						//22222222222222
-    boolean trgParentCaseUpdate = false;
+    boolean trgParentCaseUpdate = true;							//33333333333333
     boolean Case_FSM_Handle_NonCompliance_BI_BU = false;		//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = false;
+    boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
     boolean updateAccountFieldBasedOnIATAwebCode = false;		//22222222222222
-    boolean CaseBeforInsert = false;
+    boolean CaseBeforInsert = true;								//33333333333333
     boolean AMS_OSCARCaseTrigger = false;
-    boolean trgAccelyaRequestSetCountry = false;
+    boolean trgAccelyaRequestSetCountry = true;					//33333333333333
     
     /**********************************************************************************************************************************/
     /*Record type*/
