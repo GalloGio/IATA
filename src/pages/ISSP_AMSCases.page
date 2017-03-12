@@ -47,23 +47,23 @@
     <div class="container">   
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
-        <img src="/resource/1440419254000/IATA_Logo_Large" width="138" height="102" style="float:left"/>
+        <img src="{!if(communityName=='CNS','/resource/1440419254000/CNS_Logo_Large','/resource/1440419254000/IATA_Logo_Large')}" width="138" height="102" style="float:left"/>
     </div>
     <div style="padding-top:16px;padding-left:44px">
-        <h3>{!$Label.ISSP_AMS_Step0_SAA}</h3>
-        <apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro}" escape="false"/>
+        <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, $Label.ISSP_AMS_Step0_SAA)}</h3>
+        <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, $Label.ISSP_AMS_Step0_Intro)}" escape="false"/>
     </div>
     <div style="padding-left:138px">
           <apex:form > 
         <table width="100%">
             <tr>
-                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Agency_Accreditation}"/></h3></td>
+                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Agency_Accreditation_CNS, $Label.ISSP_AMS_Step0_Agency_Accreditation)}"/></h3></td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Changes}" rendered="{!isoCountry.Enable_Notice_of_Change__c}"/></h3></td>
             </tr>
             <tr>
                 <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
-                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AMS_Step0_New_Application}"/>
-                    <div><apex:outputText value="{!$Label.ISSP_AMS_Step0_Intro_Accred}" escape="false"/>
+                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, $Label.ISSP_AMS_Step0_New_Application)}"/>
+                    <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, $Label.ISSP_AMS_Step0_Intro_Accred)}" escape="false"/>
                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </div>
                 </td>
@@ -94,8 +94,8 @@
             </tr>
                 <tr>
                     <td style="padding-top:20px">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Agency_Article}"/>
-                        <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!$Label.ISSP_Article}</apex:outputLink></a>
+                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Agency_Article}" rendered="{!communityName!='CNS'}"/>
+                        <a href="#"><apex:outputLink value="{!$Label.ISSP_PKB_URL}{!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}/How_To/Customer-Portal-Troubleshooting/?l={!CASE(displayLanguage, 'ar', 'ar', 'fr', 'fr', 'it', 'it', 'de', 'de', 'es', 'es', 'pt_BR', 'pt_BR', 'ja', 'ja', 'ko', 'ko', 'in', 'in', 'th', 'th', 'vi', 'vi', 'zh_CN', 'zh_CN', 'en_US')}" rendered="{!$Site.RegistrationEnabled}" target="_blank">{!if(communityName=='CNS', '', $Label.ISSP_Article)}</apex:outputLink></a>
                     </td>
                     <td style="vertical-align:bottom" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'none','moveup')))}">
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin)}"/>
@@ -119,16 +119,16 @@
                 
             <apex:pageBlockTable value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(IsEmpty)}">
             <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
             </apex:column>
             <apex:column value="{!MyAMSCases.Subject}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.Portal_Case_Status__c}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             <apex:column value="{!MyAMSCases.CreatedDate}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}"/>
             </apex:pageBlockTable>
             
-            <apex:outputText styleClass="bg-info" value="{!$Label.ISSP_AMS_No_Pending}" rendered="{!IsEmpty}"/>
+            <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!IsEmpty}"/>
                 
             </apex:pageBlock>    
                 
