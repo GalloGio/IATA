@@ -57,8 +57,8 @@ Financial and Distribution Services
 <apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c && relatedTo.Groups__c = 'Default'}">
 <p style="BACKGROUND-COLOR: white; MARGIN-BOTTOM: 0pt">
 <b><span style="FONT-FAMILY: 'Arial','sans-serif'; COLOR: #333399; FONT-SIZE: 12pt">
-{!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} Customer Service Americas
-<br/>International Air Transport Association
+{!if(relatedTo.CNSCase__c, 'CNS', 'IATA')} Customer Service {!if(relatedTo.CNSCase__c, '', 'Americas')}
+<br/>{!if(relatedTo.CNSCase__c, '', 'International Air Transport Association')}
 </span></b>
 </p>
 </apex:outputPanel>

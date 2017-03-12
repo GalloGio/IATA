@@ -1,4 +1,4 @@
-<messaging:emailTemplate replyTo="{!$Label.ISSP_CaseCommentEmail}"  
+<messaging:emailTemplate replyTo="{!if(relatedTo.CNSCas)$Label.ISSP_CaseCommentEmail}"  
             subject="{!$Label.ISSP_Email_CaseComment_Subject}{!relatedTo.CaseNumber} {!relatedTo.Case_Thread_ID__c}" 
             recipientType="User" relatedToType="Case"  language="{!CASE(relatedTo.Contact.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}">
 <messaging:emailHeader name="CaseId">
