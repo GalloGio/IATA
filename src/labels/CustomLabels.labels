@@ -9580,6 +9580,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Application for Approval as an IATA Passenger / Cargo Sales Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_Title_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title</shortDescription>
+        <value>Application for Approval as an CNS Passenger / Cargo Sales Agent</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10372,6 +10380,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
         <value>E. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
+        <value>E. Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
