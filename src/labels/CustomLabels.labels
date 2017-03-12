@@ -8832,6 +8832,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>You don&apos;t have any pending Agency accreditation applications.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_No_Pending_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS No Pending CNS</shortDescription>
+        <value>You don&apos;t have any pending Agency endorsement applications.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_No_Requirements</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9315,6 +9323,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Apply for Agency Accreditation</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Agency_Accreditation_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Agency Accreditation CNS</shortDescription>
+        <value>Apply for Agency Endorsement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Agency_Article</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9363,14 +9378,6 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Welcome to the online IATA Agency Accreditation application.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
-        <value>Welcome to the online CNS Agency Endorsement application.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9379,12 +9386,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro Accred CNS</shortDescription>
+        <value>Please note that online endorsement applications must be submitted by an Authorised Signatory of the Agency.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred Msg</shortDescription>
         <value>If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
+        <value>Welcome to the online CNS Agency Endorsement application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
@@ -9401,6 +9424,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 New Application</shortDescription>
         <value>New Accreditation Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_New_Application_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 New Application CNS</shortDescription>
+        <value>New Endorsement Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Ongoing_Drafts</fullName>
@@ -9576,6 +9607,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Title</shortDescription>
         <value>Application for Approval as an IATA Passenger / Cargo Sales Agent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Title_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title</shortDescription>
+        <value>Application for Approval as an CNS Passenger / Cargo Sales Agent</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
@@ -10370,6 +10409,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
         <value>E. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
+        <value>E. Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>

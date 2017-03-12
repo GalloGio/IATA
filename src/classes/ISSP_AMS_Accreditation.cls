@@ -318,11 +318,15 @@ public without sharing class ISSP_AMS_Accreditation {
         lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
         lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
         lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
-        lblStepE = Label.ISSP_AMS_Step5_ProgressBar;
+        if(communityName=='CNS'){lblStepE = Label.ISSP_AMS_Step5_ProgressBar_CNS;}
+            else{ lblStepE = Label.ISSP_AMS_Step5_ProgressBar;}
+       
         lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
         lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
         lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;
-        lblStep1Title = Label.ISSP_AMS_Step1_Title;
+        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;}
+            else{ lblStep1Title = Label.ISSP_AMS_Step1_Title;}
+       
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
         lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
