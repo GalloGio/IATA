@@ -96,7 +96,7 @@
               <apex:pageBlockSection columns="1" collapsible="false">
                   <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}
+                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
                             </apex:outputpanel>                       
                         </apex:facet>
@@ -162,14 +162,14 @@
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_NoC_Change_of_Location}
+                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
                             </apex:outputpanel>                       
                 </apex:facet>
               
             	<apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">    
-              		<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Location}</apex:outputPanel>
-					<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Location_After_Change}</apex:outputPanel>   
+              		<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NOC_Current_Location_New, $Label.ISSP_AMS_NOC_Current_Location)}</apex:outputPanel>
+					<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NoC_Location_After_Change_New, $Label.ISSP_AMS_NoC_Location_After_Change)}</apex:outputPanel>   
                 
              		<apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
               			<apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Location_Details_are_correct__c.Label}" />
@@ -273,7 +273,7 @@
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_NoC_Change_Ownership_Shareholding}
+                                {!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
                             </apex:outputpanel>                    
                 </apex:facet>
@@ -399,7 +399,7 @@
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}" />
                             <apex:outputText value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}"/>                                   
                             
-                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q1}" />
+                            <apex:outputLabel value="{!IF(newlabels, $Label.ISSP_AMS_NoC_Q1_New, $Label.ISSP_AMS_NoC_Q1)}" />
                             <apex:outputText value="{!newForm.Will_such_change_affect_the_premises__c}"/>
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Please_provide_details_for_the_change__c.Label}" />
                             <apex:outputfield value="{!newForm.Please_provide_details_for_the_change__c}" />

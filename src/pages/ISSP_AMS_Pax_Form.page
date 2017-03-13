@@ -794,7 +794,7 @@
                                 {!$Label.ISSP_Loading_Travel_Agency_Details}
                             </apex:facet>
                         </apex:actionstatus>
-                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(OR(isHOAccredited, isTerminatedAgent), 'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
+                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(OR(isHOAccredited, isTerminatedAgent), 'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!IF(newlabels, $Label.ISSP_AMS_Update_Agency_New, $Label.ISSP_AMS_Update_Agency)}</apex:commandlink>
                         <apex:pageblocksectionitem rendered="{!newCase.Reason1__c!='New BR Abroad'}">
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
@@ -1060,7 +1060,7 @@
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Step3_4_People_SubTitle}</strong></div>
                       
-                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,$Label.ISSP_AMS_Step3_4_Branch_People)}" styleClass="col-md-12" escape="false"/>
+                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,IF(newlabels, $Label.ISSP_AMS_Step3_4_Branch_People_New, $Label.ISSP_AMS_Step3_4_Branch_People))}" styleClass="col-md-12" escape="false"/>
                        
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}
@@ -1207,7 +1207,7 @@
                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
                        </div>
                      <apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad')}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
-                     <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0)}"/>
+                     <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" styleClass="alert alert-info" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), List_AgencyCompanies.size==0)}"/>
                      <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" >
                             <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
                             <apex:column value="{!agencycon.Registration_number__c}"/>

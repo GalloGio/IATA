@@ -47,7 +47,7 @@
         </div>
         
         <center>
-            <h3 class="panel-title">{!IF(BEGINS(sectorValue, 'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, $Label.ISSP_AMS_StepsAll_Cargo_Title)}</h3>
+            <h3 class="panel-title">{!IF(BEGINS(sectorValue, 'Travel_Agent'), $Label.ISSP_AMS_StepsAll_Travel_Title, IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title))}</h3>
         </center>
 
         <div class="content">

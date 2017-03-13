@@ -781,7 +781,7 @@
         <div class="panel-heading head_panel_green">
             <h3 class="panel-title">
                 <!-- IMPORTANT - If new Agent_Type__c are created we need to add here the new Label-->
-                {!IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), $Label.ISSP_AMS_StepsAll_Cargo_Title,
+                {!IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title),
                     IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                         $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title))}
             </h3>
@@ -964,7 +964,7 @@
                                 {!$Label.ISSP_Loading_Cargo_Agency_Details}
                             </apex:facet>
                         </apex:actionstatus>
-                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(OR(isHOAccredited,isTerminatedAgent),'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
+                        <apex:commandlink styleclass="pull-right" style="margin-right:5px;display:{!IF(OR(isHOAccredited,isTerminatedAgent),'none','')}" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!IF(newlabels, $Label.ISSP_AMS_Update_Agency_New, $Label.ISSP_AMS_Update_Agency)}</apex:commandlink>
                         <apex:pageblocksectionitem >
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
@@ -1165,13 +1165,13 @@
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                            $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency, $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
+                            IF(newlabels, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency_New, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency), $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
                         </apex:outputpanel>
                     </apex:facet>
                        <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Step3_3_1_Title}</strong></div>
                        <div class="col-md-12">
                            <apex:outputText escape="false" value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                                                   $Label.ISSP_AMS_Step3_4_People,
+                                                   IF(newlabels, $Label.ISSP_AMS_Step3_4_People_New, $Label.ISSP_AMS_Step3_4_People),
                                                    $Label.ISSP_AMS_Step3_4_People_Intermediary)}" />
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -1293,11 +1293,11 @@
                         <apex:facet name="header">
                             <apex:outputpanel >
                                 {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                                    $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title, $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
+                                    IF(newlabels, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title_New, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title), $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
                             </apex:outputpanel>
                         </apex:facet>
                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="{!IF(NOT(isocountry.EACP_Country__c),$Label.ISSP_AMS_Step3_4_Q1_Agency,$Label.ISSP_AMS_Step3_4_Q1_Intermediary)}"/>
+                            <apex:outputLabel value="{!IF(NOT(isocountry.EACP_Country__c),IF(newlabels, $Label.ISSP_AMS_Step3_4_Q1_Agency_New, $Label.ISSP_AMS_Step3_4_Q1_Agency),$Label.ISSP_AMS_Step3_4_Q1_Intermediary)}"/>
                             <apex:selectRadio id="changeItem1" style="width:100px;{!IF(AND(isValError, newForm.Has_your_firm_ever_held_a_Cargo_Agency__c==null), 'border:2px red solid;', '')}" value="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4.r2c2}');">
                                 <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                 <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
@@ -1636,7 +1636,7 @@
                         </apex:outputPanel>
                         
                             <apex:pageBlockSectionItem labelStyle="text-align:left">
-                                <apex:outputLabel value="{!$Label.ISSP_AMS_Step3_4_Q19}"/>
+                                <apex:outputLabel value="{!IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_New, $Label.ISSP_AMS_Step3_4_Q19)}"/>
                                 <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_a_sole_proprietor__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_a_sole_proprietor__c}" >
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                  
@@ -1645,7 +1645,7 @@
                             <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                         
                             <apex:pageBlockSectionItem >
-                                <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_Step3_4_20_Agency, $Label.ISSP_AMS_Step3_4_20_Intermediary)}"/>
+                                <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Agency_New, $Label.ISSP_AMS_Step3_4_20_Agency), IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Intermediary_New, $Label.ISSP_AMS_Step3_4_20_Intermediary))}"/>
                                 <apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Been_director_or_had_a_financial__c==null), 'border:2px red solid;', '')}" value="{!newForm.Been_director_or_had_a_financial__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r17c2}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
                                     <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />

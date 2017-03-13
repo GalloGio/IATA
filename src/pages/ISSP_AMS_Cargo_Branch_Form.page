@@ -397,8 +397,8 @@
      
      <div class="panel-primary">
         <div class="panel-heading head_panel_green">
-            <h3 class="panel-title">{!IF(amsAgentType == 'IATA Cargo Agent', $Label.ISSP_AMS_StepsAll_Cargo_Title, 
-                                        IF(amsAgentType == 'IATA Passenger Sales Agent', $Label.ISSP_AMS_StepsAll_Passenger_Title, 
+            <h3 class="panel-title">{!IF(amsAgentType == 'IATA Cargo Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title), 
+                                        IF(amsAgentType == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                                             IF(amsAgentType == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                                                 IF(amsAgentType == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
                                                     IF(amsAgentType == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
@@ -630,8 +630,8 @@
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_1}</strong></div>
                        <div class="col-md-12">
-                       	{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1}<br/><br/>
-                        {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2}<br/><br/>
+                       	{!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1)}<br/><br/>
+                        {!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2)}<br/><br/>
                         {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3}<br/>
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -696,7 +696,7 @@
                      <div class="col-md-12">
                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
                        </div>
-                     <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!List_AgencyCompanies.size==0}"/>
+                     <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" styleClass="alert alert-info" rendered="{!List_AgencyCompanies.size==0}"/>
                      <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_AgencyCompanies.size>0}">
                             <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
                             <apex:column value="{!agencycon.Registration_number__c}"/>
