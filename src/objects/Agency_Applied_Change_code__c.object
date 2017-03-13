@@ -277,6 +277,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DWD</fullName>
                 <default>false</default>
             </picklistValues>
@@ -486,6 +490,19 @@ AND(
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <description>Show the IATA Code from the related Account</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <inlineHelpText>Show the IATA Code from the related Account</inlineHelpText>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IRR_Expiration_Date__c</fullName>
@@ -1544,6 +1561,10 @@ AND(
             </values>
             <values>
                 <fullName>DFE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOM</fullName>
                 <default>false</default>
             </values>
             <values>

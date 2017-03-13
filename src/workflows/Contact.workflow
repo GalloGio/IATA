@@ -496,7 +496,7 @@
             <name>ISSP_Notify_Portal_User_Status_Change_UnknownContact</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal User, when Status = Rejected AND Reason for Inactivation = Unknown Contact</description>
         <formula>ISCHANGED(Portal_Inactivation_Reason__c)</formula>
         <triggerType>onAllChanges</triggerType>
@@ -555,11 +555,37 @@
             <name>ISSP_BSPCASS_Payment_contact</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
+        <booleanFilter>1 AND NOT( 2)</booleanFilter>
         <criteriaItems>
             <field>Contact.BSP_CASS_Payment_contact__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
+        </criteriaItems>
+        <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISSP_BSPCASS Payment contact - CNS</fullName>
+        <actions>
+            <name>ISSP_BSPCASS_Payment_contact_cns</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.BSP_CASS_Payment_contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
         </criteriaItems>
         <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

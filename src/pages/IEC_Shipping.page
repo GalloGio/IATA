@@ -376,8 +376,9 @@
                                         <input type="hidden" id="total_items" value="{!vfOrder.orderItems.size}" />
                                     </apex:outputPanel>
 
-                                    <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" oncomplete="sendShipToCustomerToSAP();" reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" />
-                                    <apex:actionFunction name="sendShipToCustomerToSAP" action="{!sendShipToCustomerToSAP}" oncomplete="calculateTax();" status="runningShipToStatus" />
+                                    <!-- <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" oncomplete="sendShipToCustomerToSAP();" reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" /> -->
+                                    <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" reRender="shipToLocation,shippingInstructionSection,errorBloc,shippingFormValidationError" status="runningShipToStatus" />
+                                    <!-- <apex:actionFunction name="sendShipToCustomerToSAP" action="{!sendShipToCustomerToSAP}" oncomplete="calculateTax();" status="runningShipToStatus" /> -->
                                     <apex:actionFunction name="calculateTax" action="{!calculateFreightTaxDTO}" status="runningShipToStatus" reRender="orderTotalTaxes,orderTotalFreight,orderTotalHandling,orderTotalAmount" />
 
                                     <apex:actionFunction name="generateQuote" action="{!generateQuote}" status="quoteStatus" oncomplete="javascript:closeModal('#quote-modal')" reRender="inner_wrapper" />
@@ -493,7 +494,7 @@
                                                     <h2 class="group-title">Shipping address</h2>
                                                     
                                                     <div class="field-group radio inline">
-                                                       <div class="radio-box">
+                                                        <div class="radio-box">
                                                             <div class="custom-user-input radio">
                                                                 <input class="user-input radio validate[required]" type="radio" name="shipping-address" onclick="same_address_selected();" id="shipping-address-same" />
                                                                 <label class="custom-radio" for="shipping-address-same"><i class="icon"></i></label>
@@ -532,7 +533,10 @@
                                                             <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
                                                                 <apex:pageMessages escape="false"/>
                                                                 <script type="text/javascript">
-                                                                    showNewAddressForm();
+                                                                    if ({!showNewAddress} == true)
+                                                                       showNewAddressForm();
+                                                                    else
+                                                                       hideNewAddressForm();
                                                                 </script>
                                                             </apex:outputPanel>
                                                         </apex:outputPanel>
@@ -615,7 +619,8 @@
                                                             <div class="action text-right">
                                                                 <ul class="list actions">
                                                                     <li><apex:commandLink styleClass="text-link" value="Cancel" onclick="javascript:hideNewAddressForm();" /></li>
-                                                                    <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); sendShipToCustomerToSAP();" /></li>
+                                                                    <!-- <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); sendShipToCustomerToSAP();" /></li> -->
+                                                                    <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); calculateTax();" /></li>
                                                                 </ul>
                                                                 <apex:actionStatus id="saveAdrStatus">
                                                                     <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
@@ -1010,7 +1015,7 @@
                                     <div class="footer-actions text-right">
                                         <apex:outputPanel id="displayButton">
                                             
-                                            <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError}">
+                                            <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">
                                                 <ul class="list actions">
                                                     <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}">
                                                     <li>
@@ -1046,7 +1051,7 @@
                                 </apex:form>
 
                                 <!-- Cart Empty -->
-                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0)}">
+                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
                                         <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>

@@ -13,6 +13,10 @@
         <label>Country of publication</label>
         <picklist>
             <picklistValues>
+                <fullName>All - Globally</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Afghanistan</fullName>
                 <default>false</default>
             </picklistValues>
@@ -22,10 +26,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Algeria</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>All - Globally</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -828,7 +828,6 @@
                 <fullName>Zimbabwe</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -840,18 +839,6 @@
         <externalId>false</externalId>
         <label>Country visibilty</label>
         <picklist>
-            <picklistValues>
-                <fullName>Afghanistan</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Albania</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Algeria</fullName>
-                <default>false</default>
-            </picklistValues>
             <picklistValues>
                 <fullName>All - Globally</fullName>
                 <default>false</default>
@@ -874,6 +861,18 @@
             </picklistValues>
             <picklistValues>
                 <fullName>All - Region Europe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Afghanistan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Albania</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Algeria</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -1668,7 +1667,7 @@
                 <fullName>Zimbabwe</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
