@@ -2228,13 +2228,13 @@ public without sharing class ISSP_AMS_Accreditation {
     public Pagereference goToStep3Section2() {
         if (isNoticeOfChange)
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_two' );
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_two' + commParam);
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_two');
     }
 
     public Pagereference goToStep3Section3() {
         if (isNoticeOfChange)
             return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_three' );
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_three');
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_three');
     }
 
     public Pagereference goToStep3Section4() {
