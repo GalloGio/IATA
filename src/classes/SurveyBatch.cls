@@ -918,10 +918,16 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     */
     // Sends the email
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
+    UtilityCS__c senderCNS = UtilityCS__c.getInstance('SurveyEmailSenderCNS');
     List<Messaging.Singleemailmessage> emailToBeSent = new List<Messaging.SingleemailMessage>();
     for (Email em : MyEmailToBeSent) {
       Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-      if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
+      if (!Test.isRunningTest() && sender != null)  {
+          email.setOrgWideEmailAddressId(sender.value__c);
+          if(em.cas.CNSCase__c) {
+              email.setOrgWideEmailAddressId(senderCNS.value__c);
+          }
+      }
 
       //id userid = ContactIdToUserId.get(em.cas.ContactId);
       //if(userid!=null){
