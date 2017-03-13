@@ -74,7 +74,7 @@
     </fields>
     <fields>
         <fullName>EBC_ExactTarget_Password__c</fullName>
-        <defaultValue>&quot;Traveltrade!14&quot;</defaultValue>
+        <defaultValue>&quot;Alban2016%&quot;</defaultValue>
         <description>EBC ExactTarget Password</description>
         <externalId>false</externalId>
         <inlineHelpText>EBC ExactTarget Password</inlineHelpText>
@@ -87,7 +87,7 @@
     </fields>
     <fields>
         <fullName>EBC_ExactTarget_Username__c</fullName>
-        <defaultValue>&quot;debonol@iata.org_1&quot;</defaultValue>
+        <defaultValue>&quot;kejia.hu@cgi.com&quot;</defaultValue>
         <description>EBC ExactTarget Username</description>
         <externalId>false</externalId>
         <inlineHelpText>EBC ExactTarget Username</inlineHelpText>
