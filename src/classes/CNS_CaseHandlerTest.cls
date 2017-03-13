@@ -68,6 +68,30 @@ private class CNS_CaseHandlerTest {
 
         System.assertEquals(cnsCaseAfter.CNSCase__c, true);
     }
+
+    @isTest static void manageEndorsementCNSCaseOnBeforeInsertUpdateTest() {
+
+        Account agency = [select Id, CNS_Account__c, Name, Sector__c, Category__c, RecordTypeId from Account where Name='test cns portal agency' limit 1];
+        Contact cnsContct = [select Id, LastName, CNS_Contact__c, RecordTypeId, AccountId from Contact where AccountId =: agency.Id];
+        RecordType rtId= [select Id from RecordType where sObjectType='Case' and DeveloperName='CasesAmericas'];
+       
+        Case cnsCase = new Case(
+            AccountId=agency.Id,
+            ContactId = cnsContct.Id,
+            RecordTypeId = rtId.Id,
+            Origin ='Portal',
+            Subject='cns case test',
+            CaseArea__c='Accreditation Process'
+            );
+
+        Test.startTest();
+            insert cnsCase;
+        Test.stopTest();
+        
+        Case cnsCaseAfter = [Select Id, CNSCase__c from Case where Id =: cnsCase.Id limit 1];
+
+        System.assertEquals(cnsCaseAfter.CNSCase__c, true);
+    }
     
     
     

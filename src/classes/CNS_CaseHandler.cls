@@ -48,8 +48,16 @@ public without sharing class CNS_CaseHandler {
 
       }
       
+      if(c.Origin=='Portal' && c.CaseArea__c=='Accreditation Process' ){
+        //for agencies being identified as a cns agency, and creating an accreditation process case, it will be set up as cns case     
+        if(accountMap.containsKey(c.AccountId) && (accountMap.get(c.AccountId).CNS_Agency__c || accountMap.get(c.AccountId).CNS_Account__c) && 
+          (accountMap.get(c.AccountId).RecordType.DeveloperName == 'IATA_Agency' || accountMap.get(c.AccountId).RecordType.DeveloperName == 'Standard_Account' )){
+            c.CNSCase__c = true;
+            c.Groups__c = 'CNS Team'; // important field to be used on E2C premium 
+          }
       
     }
+    }//end for
     
   }
 
