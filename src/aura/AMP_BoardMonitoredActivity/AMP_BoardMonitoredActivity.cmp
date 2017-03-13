@@ -58,7 +58,7 @@
             
             <aura:set attribute="else">
                 <aura:renderIf isTrue="{!v.displayType=='Division'}">
-                    <td><c:AMP_EditSaveMenu /></td>
+                    <td><c:AMP_EditSaveMenu  canDelete="false"/></td>
                 </aura:renderIf>
                 <td><ui:outputText value="{!v.bma.Name}" class="textwrap"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Account'}">
