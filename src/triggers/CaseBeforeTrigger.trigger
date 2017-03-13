@@ -820,6 +820,19 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }   
         }
         /*trgBeforeInsertUpdate Trigger*/
+
+        /*CNS_CaseHandler - CNS LDiaz -- define when a case created on the portal can be considered as a CNS Case. //Agents with CNSAcount__c = true  or CNS_Agency__c=true cases will be allways CNS cases,
+        //Airlines or other types of accounts will lead to other rule, which is:*/
+        List <Case> portalCases = new List <Case> ();
+        for(Case c: Trigger.new){
+             if(c.Origin=='Portal' && c.AccountId!=null){
+               portalCases.add(c);
+            }
+        }
+        if(!portalCases.isEmpty()){
+            CNS_CaseHandler.ManageCNSCaseOnBeforeInsertUpdate(portalCases);
+        }
+        /*CNS_CaseHandler */
     }
     /*Share trigger code*/
     
