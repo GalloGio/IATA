@@ -336,7 +336,7 @@ public class AMS_OSCARTriggerHandler {
 		//<Account Id, Current Location Type>
 		// Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
 		// )
-		Map<Id, String> locationTypePerAccountID = getAccountsLocationType(accounts);
+		Map<Id, AccountStruct> accountStructPerAcct = getAccountsInfoBeforeChanges(accounts);
 
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
@@ -792,24 +792,45 @@ public class AMS_OSCARTriggerHandler {
 		
 						//******* Add "Custom" changes struct for the Location Type mapping ******** INI
 
-						if(locationTypePerAccountID.containsKey(acc.Id) && acc.Location_Type__c !=  locationTypePerAccountID.get(acc.Id))
-						{
-							system.debug('DDD Old Location_Type__c: '  + locationTypePerAccountID.get(acc.Id));
 
-							system.debug('DDD New Location_Type__c: '  + acc.Location_Type__c);
+						system.debug('DDD1 New Info Acct ID' + acc.id);
+						system.debug('DDD1 New Location_Type__c: '  + acc.Location_Type__c);
+
+						system.debug('DDD1 New acc.parent.IATACode__c: '  + acc.parent.IATACode__c);
+
+						if(accountStructPerAcct.containsKey(acc.Id) && acc.Location_Type__c !=  accountStructPerAcct.get(acc.Id).locationType)
+						{
 							
-							AMS_ChangeCodesHelper.ObjectChange objectChangesLocationType =  new AMS_ChangeCodesHelper.ObjectChange('Account','Location_Type__c',locationTypePerAccountID.get(acc.Id),acc.Location_Type__c);
+							AMS_ChangeCodesHelper.ObjectChange objectChangesLocationType =  new AMS_ChangeCodesHelper.ObjectChange('Account','Location_Type__c',accountStructPerAcct.get(acc.Id).locationType,acc.Location_Type__c);
 
 							if(accountsToUpdate.get(acc.Id) == null)
 							{
 								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesLocationType});
 								objectChanges.add(acctChangesStruct);
-
-								system.debug('DDD accountsToUpdate add Location Type Info:' + accountsToUpdate.get(acc.Id));
-
 							}
 							else
 								accountsToUpdate.get(acc.Id).changes.add(objectChangesLocationType);
+						}
+
+						//******* Add "Custom" changes struct for the Parent Iata Code mapping ******** INI
+
+						//If new location type is HO parent Iata code is null
+						
+						String newParentIATACode = AMS_Utils.LocationTypeAllHOTypes.contains(acc.Location_Type__c) ? null : acc.parent.IATACode__c;
+
+						if(accountStructPerAcct.containsKey(acc.Id) && 
+							  accountStructPerAcct.get(acc.Id).parentIATACode != newParentIATACode)
+						{
+							AMS_ChangeCodesHelper.ObjectChange objectChangesParentIataCode =  new AMS_ChangeCodesHelper.ObjectChange('Account','Parent.IATACode__c',accountStructPerAcct.get(acc.Id).parentIATACode,newParentIATACode);
+
+							if(accountsToUpdate.get(acc.Id) == null)
+							{
+								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesParentIataCode});
+								objectChanges.add(acctChangesStruct);
+
+							}
+							else
+								accountsToUpdate.get(acc.Id).changes.add(objectChangesParentIataCode);
 						}
 
 
@@ -1738,11 +1759,11 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name
+		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,BSP_CASS_Participant__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1768,21 +1789,35 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
-	public static Map<Id,String> getAccountsLocationType(Map<Id,Account> accountsMap) {
+	public static Map<Id,AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
 
-		Map<Id,String> locationTypeAccountID = new Map<Id,String> ();
+		Map<Id,AccountStruct> locationTypeAccountID = new Map<Id,AccountStruct> ();
 
 		for(Id accId : accountsMap.keySet())
 		{
-			String currentLocationType = accountsMap.get(accId).Location_Type__c;
+			locationTypeAccountID.put(accId,new AccountStruct(accountsMap.get(accId).Parent.IATACode__c,accountsMap.get(accId).Location_Type__c));
 
-			locationTypeAccountID.put(accId,currentLocationType);
-		}		
+			system.debug('DDD1 Acct ID: ' + accId);
 
+			system.debug('DDD1 Acct IATA Code: ' + accountsMap.get(accId).Parent.IATACode__c );
 
+			system.debug('DDD1 Acct Location Type: ' + accountsMap.get(accId).Location_Type__c );
+
+		}
 
 		return locationTypeAccountID;
 	}
 
+
+	private Class AccountStruct{
+		
+	    private String parentIATACode;
+	    private String locationType;
+
+	    private AccountStruct(String parentIATACode, String locationType) {
+	        this.parentIATACode = parentIATACode;
+	        this.locationType = locationType;
+	    }
+	}
 }
