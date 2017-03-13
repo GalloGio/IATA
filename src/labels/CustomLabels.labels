@@ -11775,6 +11775,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>IATA Accreditation &amp; Changes</value>
     </labels>
     <labels>
+        <fullName>ISSP_Become_Endorsed_Agent_CNS</fullName>
+        <categories>Portal, S10</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Become_Endorsed_Agent_CNS</shortDescription>
+        <value>CNS Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Branches</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -11805,6 +11813,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_CASSLink_Export</shortDescription>
         <value>CASSLink Export</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CASSLink_Export_CNS</fullName>
+        <categories>S10, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CASSLink_Export_CNS</shortDescription>
+        <value>CNS CASSLink</value>
     </labels>
     <labels>
         <fullName>ISSP_CASSLink_Import</fullName>
