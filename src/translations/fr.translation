@@ -3230,6 +3230,10 @@ and
         <name>ISSP_2_letter_Airline_Designator_Code</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP 3 Digit Code --></label>
+        <name>ISSP_3_Digit_Code</name>
+    </customLabels>
+    <customLabels>
         <label>Votre mot de passe n&apos;a pas été changé au cours des 90 derniers jours. Pour des raisons de sécurité, nous vous prions maintenant de le modifier.</label>
         <name>ISSP_60Day_Password_Reset</name>
     </customLabels>
@@ -6306,6 +6310,14 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Active --></label>
+        <name>ISSP_Active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Active agreements --></label>
+        <name>ISSP_Active_agreements</name>
+    </customLabels>
+    <customLabels>
         <label>Ajouter un utilisateur à ce service</label>
         <name>ISSP_Add_User_to_this_service</name>
     </customLabels>
@@ -6338,12 +6350,24 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Agent_Accredited</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Agreement type --></label>
+        <name>ISSP_Agreement_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agreements available --></label>
+        <name>ISSP_Agreements_available</name>
+    </customLabels>
+    <customLabels>
         <label>Compagnie aérienne</label>
         <name>ISSP_Airline</name>
     </customLabels>
     <customLabels>
         <label>Type de contact</label>
         <name>ISSP_Airline_Contact_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Airline Prefix --></label>
+        <name>ISSP_Airline_Prefix</name>
     </customLabels>
     <customLabels>
         <label>Les compagnies aériennes accueillent 3 milliards de passagers chaque année, que ce soit pour des voyages professionnels ou d&apos;agrément.</label>
@@ -6410,6 +6434,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Available_services</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Available types --></label>
+        <name>ISSP_Available_types</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_BSPLink --></label>
         <name>ISSP_BSPLink</name>
     </customLabels>
@@ -6440,6 +6468,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
     <customLabels>
         <label>Accréditation et changements IATA</label>
         <name>ISSP_Become_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Bilateral, both carriers can issue electronic tickets --></label>
+        <name>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</name>
     </customLabels>
     <customLabels>
         <label>Filiales</label>
@@ -7245,6 +7277,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Existing Agreements --></label>
+        <name>ISSP_Existing_Agreements</name>
+    </customLabels>
+    <customLabels>
         <label>Liens externes</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -7610,6 +7646,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_IATA_Code_Search_Format</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP IATA Designator --></label>
+        <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
         <label>Code IATA inexistant. Veuillez saisir un code IATA correct. Si vous ne disposez pas d&apos;un code IATA, veuillez sélectionner « Autre » pour le « Type de client ».</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
@@ -7780,6 +7820,10 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>IMPORTANT- les personnes suivantes int un abonnement d&apos;un produit toujours en-cours. Leur utilisateur ne peut pas être désactivé. Veuillez contacter IATA si ces contacts ne travaillent plus dans votre compagnie.</label>
         <name>ISSP_InactiveUser_Subscription_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Inactive agreements --></label>
+        <name>ISSP_Inactive_agreements</name>
     </customLabels>
     <customLabels>
         <label>Mot de passe erroné.</label>
@@ -8148,6 +8192,22 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
     <customLabels>
         <label>Nous vous rappelons que vous n&apos;êtes pas autorisé à réutiliser vos 4 derniers mots de passe.</label>
         <name>ISSP_Old_Passwords</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Intermodal Issuing Date --></label>
+        <name>ISSP_One_Way_Intermodal_Issuing_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Intermodal Participating Date --></label>
+        <name>ISSP_One_Way_Intermodal_Participating_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Passenger Issuing Airline --></label>
+        <name>ISSP_One_Way_Passenger_Issuing_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Passenger Participating --></label>
+        <name>ISSP_One_Way_Passenger_Participating</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -8807,6 +8867,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Show all the agreements --></label>
+        <name>ISSP_Show_all_the_agreements</name>
+    </customLabels>
+    <customLabels>
         <label>Page affichée _PAGE_ de_PAGES_</label>
         <name>ISSP_Showing_page</name>
     </customLabels>
@@ -8960,6 +9024,26 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>ISSP_Thanks_for_request</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP The Cargo Interline Agreement --></label>
+        <name>ISSP_The_Cargo_Interline_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The One Way Issuing Airline --></label>
+        <name>ISSP_The_One_Way_Issuing_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The One Way Participating Airline --></label>
+        <name>ISSP_The_One_Way_Participating_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The Passenger Interline Agreement --></label>
+        <name>ISSP_The_Passenger_Interline_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The Passenger and Cargo Interline Traffic Agreement --></label>
+        <name>ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement</name>
+    </customLabels>
+    <customLabels>
         <label>Titre</label>
         <name>ISSP_Title</name>
     </customLabels>
@@ -9038,6 +9122,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label><!-- ISSP_View_GFA_Communication --></label>
         <name>ISSP_View_GFA_Communication</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
+        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
@@ -9162,6 +9250,10 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
     <customLabels>
         <label>Ajouter commentaire</label>
         <name>ISSP_btn_AddComment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP cannot open the selected account --></label>
+        <name>ISSP_cannot_open_the_selected_account</name>
     </customLabels>
     <customLabels>
         <label>8 caractères</label>
@@ -11592,62 +11684,64 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Role</name>
+        <name>EF_Frequency</name>
         <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11679,6 +11773,36 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <picklistValues>
             <masterLabel>Virtual Account Payment</masterLabel>
             <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Invoice_Distribution</name>
+        <picklistValues>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11753,60 +11877,93 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_User_Role</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12078,87 +12235,6 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         <picklistValues>
             <masterLabel>Travel Agency Association</masterLabel>
             <translation><!-- Travel Agency Association --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12877,14 +12953,30 @@ Le tableau de bord de la trésorerie IATA est un plateforme d&apos;information w
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>EF_Payment_Terms</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
