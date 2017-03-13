@@ -458,7 +458,7 @@
                                                     <ul class="nav1">
                                                         <span class="appfocus">
                                                               <li id="Serv3"  class="left-color">
-                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.New_Window__c,'_blank','_self')}" href="{!IF(app.Name == 'Payment Link', con.Credit_Card_Payment_Link__c ,app.Application_URL__c)}">
+                                                                    <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.New_Window__c,'_blank','_self')}" href="{!IF(OR(app.Name == 'Payment Link',app.Name == 'Paypal'), con.Credit_Card_Payment_Link__c ,app.Application_URL__c)}">
                                                                         <h5>{!app.Name}</h5>
                                                                     </a>
                                                               </li>
