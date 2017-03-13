@@ -8419,6 +8419,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Changes can only be made once your agency has been accredited to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</shortDescription>
+        <value>Changes can only be made once your agency has been accredited to CNS</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Multiple_Changes</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
