@@ -11935,7 +11935,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CNS_PaymentLink_ServiceName</shortDescription>
-        <value>Payment Link</value>
+        <value>Paypal</value>
     </labels>
     <labels>
         <fullName>ISSP_CNS_quote</fullName>
@@ -15683,9 +15683,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Payment_Link_Description_CNS</shortDescription>
-        <value>Payment Link can be used to pay CNS invoices by credit card.&lt;br/&gt;
-&lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
-Please note that many CNS invoices for accredited agents are collected through the CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
+        <value>Paypal is used to pay CNS invoices by Credit Card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
