@@ -21,8 +21,10 @@ public class AMS_AgencyAChangeCodeHandler {
             }
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
-		
-		updateAccountReason(setIdAACC);
+		system.debug('SALVES handleAfterInsert -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
++       system.debug('SALVES handleAfterInsert -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
+        if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)
+		  updateAccountReason(setIdAACC);
 		
         //FM 22-09-2016 - Create "Agency Update" records
         AMS_AgencyUpdateHelper.agencyUpdate( (List<SObject>) aacc);
@@ -51,7 +53,9 @@ public class AMS_AgencyAChangeCodeHandler {
         }
         AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed);
         
-        if(!setIdAACC.isEmpty()){
+        system.debug('SALVES handleAfterUpdate -->  processMinorChangesValidationFlag: ' + AMS_AccountTriggerHandler.processMinorChangesValidationFlag);
+        system.debug('SALVES handleAfterUpdate -->  minorChangesComingFromOSCAR: ' + AMS_AccountTriggerHandler.minorChangesComingFromOSCAR);
+        if(!setIdAACC.isEmpty() && (AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR)){
 	        updateAccountReason(setIdAACC);
         }
     }
@@ -64,8 +68,10 @@ public class AMS_AgencyAChangeCodeHandler {
     //DTULLO: marked as future because some change codes are generated from account changes (minor changes)
     //thus, we try to re-update the same account again
     //public static void updateAccountReason(list<Agency_Applied_Change_code__c> lsAACC){
-	@future
+	//@future
+    //SUSANA ALVES: removed @future because we don't need to update account for minor changes 
     public static void updateAccountReason(set<id> setAACC){
+        system.debug('SALVES --> updateAccountReason - setAACC : ' + setAACC);
     	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c, AccountNewStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
     	set<id> setAccntId = new set<id>();
     	map<id, account> mapAccntToUpdate = new map<id, account>();
