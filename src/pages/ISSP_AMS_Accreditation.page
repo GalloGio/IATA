@@ -494,6 +494,11 @@
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
                             <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/ --> 
                         </apex:selectRadio>
+                        <script>
+                        if('{!communityName}' === 'CNS') {
+                            $(":radio[value=Travel_Agent]").parents('td').hide();
+                        }
+                        </script>
                     </div>
                     </div>
 
