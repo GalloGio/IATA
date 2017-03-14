@@ -318,6 +318,7 @@ Name
       &quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
+      &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
       &quot;&quot;
       )</formula>
@@ -422,6 +423,14 @@ Name
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>VisibleCNS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Visible on CNS</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Visible__c</fullName>
