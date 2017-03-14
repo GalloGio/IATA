@@ -13381,7 +13381,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Existing Agreements</shortDescription>
-        <value>Existing Agreements</value>
+        <value>Active Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_External_Links</fullName>
