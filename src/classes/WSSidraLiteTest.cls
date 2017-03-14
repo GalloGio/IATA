@@ -75,6 +75,7 @@ public class WSSidraLiteTest {
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
         ifapCase.FS_Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
         //set account as inactive
         Account acc = [Select Status__c from Account where id = :ifapCase.accountId];
@@ -92,6 +93,7 @@ public class WSSidraLiteTest {
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
 
         Test.startTest();
@@ -105,6 +107,7 @@ public class WSSidraLiteTest {
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
         //set account as inactive
         Account acc = [Select Status__c from Account where id = :ifapCase.accountId];
