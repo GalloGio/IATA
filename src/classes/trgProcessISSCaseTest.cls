@@ -355,6 +355,63 @@ private class trgProcessISSCaseTest {
 		test.StopTest();
 	}
 
+	@isTest static void secondFAnonComplianceDomestic() {
+		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
+		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
+		test.StartTest();
+		try {
+			parentCase.FA_Second_Deadline_Date__c = Date.today();
+			update parentCase;
+			Case saamCase = new Case(
+			    ContactId = parentCase.Contact.id,
+			    AccountId = parentCase.Account.Id,
+			    Subject = 'Test SAAM case',
+			    Description = 'Test SAAM case',
+			    Status = 'Open',
+			    ParentId = parentCase.id,
+			    RecordTypeId = SAAMcaseRecordType.Id,
+			    Reason1__c = 'FA/ FS Non-Compliance',
+			    Origin = 'Internal Case',
+			    CaseArea__c = 'Accreditation Process');
+			insert saamCase;
+			
+		} catch (Exception e) {
+			Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot create a 2nd FA non-compliance case. The 2nd FA Deadline is ') ? true : false;
+			system.assertEquals(expectedExceptionThrown, true);
+		}
+		test.StopTest();
+	}
+
+
+	@isTest static void secondFAnonComplianceCargoCASS() {
+		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
+		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
+		test.StartTest();
+		try {
+			parentCase.FA_Second_Deadline_Date__c = Date.today();
+			update parentCase;
+			Case saamCase = new Case(
+			    ContactId = parentCase.Contact.id,
+			    AccountId = parentCase.Account.Id,
+			    Subject = 'Test SAAM case',
+			    Description = 'Test SAAM case',
+			    Status = 'Open',
+			    ParentId = parentCase.id,
+			    RecordTypeId = SAAMcaseRecordType.Id,
+			    Reason1__c = 'FA/ FS Non-Compliance',
+			    Origin = 'Internal Case',
+			    CaseArea__c = 'Accreditation Process');
+			insert saamCase;
+			
+		} catch (Exception e) {
+			Boolean expectedExceptionThrown =  e.getMessage().contains('The New IFAP Deadline date is mandatory when creating a 1st non-compliance for Cargo or CASS agents.') ? true : false;
+			system.assertEquals(expectedExceptionThrown, true);
+		}
+		test.StopTest();
+	}
+
+
+
 
 
 
