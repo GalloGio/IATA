@@ -9816,6 +9816,84 @@ J-Joint Vent</inlineHelpText>
         <type>Phone</type>
     </fields>
     <fields>
+        <fullName>NG_IEP_Account_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;)), NG_IEP_HE_AccntNum__c, Parent.NG_IEP_HE_AccntNum__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEP Account Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NG_IEP_HE_AccntNum__c</fullName>
+        <description>To store HE EasyPay Account Number</description>
+        <externalId>true</externalId>
+        <inlineHelpText>EasyPay Account Number</inlineHelpText>
+        <label>IEP HE Account Number</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NG_IEP_Status_FF__c</fullName>
+        <description>To show analysts information about Easy Pay’s account status</description>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;)), TEXT(NG_IEP_Status__c), TEXT(Parent.NG_IEP_Status__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEP Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NG_IEP_Status__c</fullName>
+        <description>To store HE easy pay status</description>
+        <externalId>false</externalId>
+        <label>IEP HE Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed – 2-year freeze period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed – 3-month freeze period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>N_Code__c</fullName>
         <externalId>false</externalId>
         <label>N Code</label>
@@ -24647,6 +24725,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -27453,6 +27562,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -30013,6 +30153,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -32564,6 +32735,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35639,6 +35841,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -38654,6 +38887,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Non-IATA member</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -42893,6 +43157,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -45465,6 +45760,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49591,6 +49917,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53787,6 +54144,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -56046,6 +56434,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Cooperative</fullName>
@@ -58236,6 +58655,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60525,6 +60975,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65816,6 +66297,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>-</fullName>
@@ -70925,6 +71437,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Non_Members_Sub_Category__c</picklist>
             <values>
                 <fullName>Air Traffic Management</fullName>
@@ -75205,6 +75748,37 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Membership_status__c</picklist>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
