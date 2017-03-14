@@ -336,7 +336,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         		return IDCardUtil.AWSImageAuthorizationLink(this.photo);
     		} set;}
 
-		public AgencyChangeWrapper(){z
+		public AgencyChangeWrapper(){
 			
 		}
 		
