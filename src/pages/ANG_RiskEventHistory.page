@@ -1,0 +1,15 @@
+<apex:page showHeader="false" sidebar="false" standardController="Account">
+		
+		<head>
+			<!-- workaround so link open in a new page -->
+			<base target="_blank"/>
+		</head>
+
+	    <apex:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
+	    <apex:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" />
+
+	    <script>
+	    	//workaround to hide the new button
+	    	for (let el of document.querySelectorAll('.btn')) el.style.visibility = 'hidden';
+	    </script>
+</apex:page>
