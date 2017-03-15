@@ -126,6 +126,14 @@
                 <behavior>Edit</behavior>
                 <field>Non_Members_Sub_Category__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NG_IEP_Account_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>NG_IEP_Status_FF__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
