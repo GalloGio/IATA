@@ -214,7 +214,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -272,6 +272,7 @@ public with sharing class ISSP_AvailableServices{
     	hasPremiumTD = false;
         List<ServiceWrapper > allServiceList =  new List<ServiceWrapper>();   
         List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
+
         for (Portal_Applications__c thisService : allServices){
             ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService);
             allServiceList.add(thisServiceRecord);
@@ -316,7 +317,8 @@ public with sharing class ISSP_AvailableServices{
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
-                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c
+                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
                     for (Portal_Applications__c thisApp : appList){
@@ -346,9 +348,49 @@ public with sharing class ISSP_AvailableServices{
 	        	allServiceList.remove(j);
 	        }
         }
-        
-        ServiceList = allServiceList;
-        return allServiceList;
+
+        List<ServiceWrapper > allowedServiceList =  new List<ServiceWrapper>();   
+
+        Set<id> serviceIds = new Set<id>();
+        for (ServiceWrapper line : allServiceList) {
+            serviceIds.add(line.recordService.id);
+        }
+
+        Map<id, Set<String>> isoCountriesMap = ANG_ISSP_PortalServiceHelper.getElegibleCountries(serviceIds);
+
+        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c from User where id =: UserInfo.getUserId()];
+
+        boolean flagAdd;
+        noOfRecords = 0;
+        for (ServiceWrapper line : allServiceList) {
+            flagAdd = true;
+            Set<String> isoCodes = isoCountriesMap.get(line.recordService.id);            
+
+            if(currentPortalUser.ANG_Sector__c == 'Travel Agent' || currentPortalUser.ANG_Sector__c == 'Cargo Agent') {            
+                if(line.recordService.ANG_Restrict_by_Agency_Sector__c != currentPortalUser.ANG_Sector__c) {
+                    flagAdd = false;
+                }
+            }
+
+            if(line.recordService.ANG_Accredited_Agents_Only__c && !currentPortalUser.ANG_Is_Accredited_Agent__c) {
+                flagAdd = false;
+            }
+
+            if(isoCodes != null) {
+                if(!isoCodes.contains(currentPortalUser.ANG_Customer_Country_ISO__c)) {
+                    flagAdd = false;
+                }
+            }
+
+            if(flagAdd) {
+                allowedServiceList.add(line);
+                noOfRecords++;
+            }
+        }
+
+        ServiceList = allowedServiceList;
+
+        return allowedServiceList;
     }
      
     public List<Portal_Applications__c > getServices(){

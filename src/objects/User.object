@@ -61,6 +61,46 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>ANG_Customer_Country_ISO__c</fullName>
+        <description>2-letter ISO Code of the IATA ISO Country related to the contact’s Account (Agency)</description>
+        <externalId>false</externalId>
+        <formula>Contact.Account.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Customer Country ISO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Is_Accredited_Agent__c</fullName>
+        <description>Determine if the Agency is accredited</description>
+        <externalId>false</externalId>
+        <formula>AND(
+Contact.Account.RecordType.Name=&apos;Agency&apos;,
+NOT (OR(
+    ISPICKVAL(Contact.Account.Status__c, &apos;Terminated&apos;),
+    ISPICKVAL(Contact.Account.Status__c, &apos;Not accreditated&apos;),
+    ISPICKVAL(Contact.Account.Status__c, &apos;New application pending&apos;),
+    ISPICKVAL(Contact.Account.Status__c, &apos;No longer a customer&apos;)
+    )
+    )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Accredited Agent</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Sector__c</fullName>
+        <description>Sector for the contact’s Agency</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Sector__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sector</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Air_Transport_Expertise__c</fullName>
         <externalId>false</externalId>
         <label>Air Transport Expertise</label>
