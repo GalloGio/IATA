@@ -408,6 +408,7 @@
                 <field>Annual_Renewal_Certificates__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
