@@ -5042,7 +5042,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <picklistValues>
                 <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
-                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
@@ -6027,10 +6026,6 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>Service Providers</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Sales Agent (Generic 2)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -24286,7 +24281,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26994,7 +26989,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29764,7 +29759,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32053,7 +32048,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35402,7 +35397,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42664,7 +42659,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45121,7 +45116,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60168,7 +60163,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63757,7 +63752,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70512,7 +70507,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74625,7 +74620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agent %28Startup%29</fullName>
+                <fullName>Sales Agents %28Gold%29</fullName>
                 <default>false</default>
             </values>
             <values>
