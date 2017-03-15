@@ -36,8 +36,7 @@
         var deadlineField = component.find("deadline");
         var benefitsField = component.find("benefits");
         var accountIssueLookupField = component.find("accountIssueLookup");
-        
-        if(benefitsField.get("v.value") === '' && accountIssueLookupField.get("v.value") === undefined) {
+        if(benefitsField.get("v.value") === '' && activity.Account_Issue_or_Priority__c === undefined) {
             component.set("v.isEditMode", true);
             component.set("v.isError", true);
             component.set("v.errorMessage", 'Error : Activity, Description, Overall Status and Deadline are mandatory fields.<br /> One of these two options is mandatory: “Account Issue or Priority” or “Benefits to the Account”. ');

@@ -574,6 +574,10 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>On track</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>On hold</fullName>
                 <default>false</default>
             </picklistValues>
@@ -599,6 +603,18 @@ Object to store comments related to objectives, or independent comments that we 
             </picklistValues>
             <picklistValues>
                 <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delayed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canceled</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -1381,20 +1397,24 @@ Object to store comments related to objectives, or independent comments that we 
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Completed</fullName>
+                <fullName>Canceled</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>In Progress</fullName>
+                <fullName>Delayed</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Not Started</fullName>
-                <default>true</default>
+                <fullName>Delivered</fullName>
+                <default>false</default>
             </values>
             <values>
                 <fullName>On hold</fullName>
                 <default>false</default>
+            </values>
+            <values>
+                <fullName>On track</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
