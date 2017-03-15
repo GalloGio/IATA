@@ -200,29 +200,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <fields>
-        <fullName>Airline__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Airline</label>
-        <lookupFilter>
-            <active>true</active>
-            <errorMessage>The selected Account must be an Airline Headquarter</errorMessage>
-            <filterItems>
-                <field>Account.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Airline Headquarters, Airline Branch</value>
-            </filterItems>
-            <isOptional>false</isOptional>
-        </lookupFilter>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>Appointments (AMS) (Airline)</relationshipLabel>
-        <relationshipName>Appointments_AMS</relationshipName>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
+    
     <fields>
         <fullName>BSPLink_or_CASSLink_activation__c</fullName>
         <defaultValue>false</defaultValue>
