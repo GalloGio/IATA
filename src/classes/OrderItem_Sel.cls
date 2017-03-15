@@ -288,7 +288,7 @@ public with sharing class OrderItem_Sel  extends Selector
 
 	public Map<Id,OrderItem> getOrderItemsById(set<Id> orderItemIds){
 		String query = String.format(
-            'SELECT {0} , Order.BillToContact.Name, Order.BillToContactId ' + 
+            'SELECT {0} , Order.BillToContact.Name, Order.OrderNumber Order.BillToContactId ' + 
             'FROM {1} ' + 
             'WHERE Id IN :orderItemIds' , 
             new List<String>{
@@ -400,7 +400,8 @@ public with sharing class OrderItem_Sel  extends Selector
 	public static List<OrderItem> getOrderItemCarrierAndOrderId(Id orderId, String carrierNumber){
 		return [select id,Carrier_Tracking_Number__c,Order.ShipToContact_Email__c,Order.BillToContactId,OrderId,
 								Order.BillToContact.Name,Carrier_Name__c,
-								Product_Name__c, Carrier_Tracking_URL__c,Product_Number__c,SAP_Product_Number__c 
+								Product_Name__c, Carrier_Tracking_URL__c,Product_Number__c,SAP_Product_Number__c,
+								Order.OrderNumber 
 									from OrderItem 
 									where Carrier_Tracking_Number__c = :carrierNumber
 									and OrderId = :orderId ];

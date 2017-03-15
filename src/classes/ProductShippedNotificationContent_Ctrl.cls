@@ -5,6 +5,7 @@ public class ProductShippedNotificationContent_Ctrl{
 	public String trackingNumber{get;set;}
 	public String trackingURL{get;set;}
 	public Boolean showUrl{get;set;}
+	public String orderNumber {get;set;}
 
 	//get orderItems for shippment email template contains
 	public List<OrderItem> getOrderItems(){
@@ -20,6 +21,7 @@ public class ProductShippedNotificationContent_Ctrl{
 			trackingNumber = lstOrderItems[0].Carrier_Tracking_Number__c;
 			trackingURL = lstOrderItems[0].Carrier_Tracking_URL__c;
 			contactName = lstOrderItems[0].Order.BillToContact.Name;
+			orderNumber = lstOrderItems[0].Order.OrderNumber;
 			showUrl = false;
 			if(lstOrderItems[0].Carrier_Name__c != null){
 				showUrl = true;
