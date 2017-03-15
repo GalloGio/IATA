@@ -4431,6 +4431,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </fields>
     <label>OSCAR</label>
     <listViews>
+        <fullName>AGM_Non_Compliance_Americas_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - Americas</label>
+        <queue>AGM_Non_Compliance_Americas</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Africa_ME_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Africa &amp; ME [OSCAR]</label>
@@ -4512,6 +4521,69 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>AgencyRiskManagementAP_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - A&amp;P</label>
+        <queue>AgencyRiskManagementAP</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>AgencyRiskManagementheadoffice_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - head office</label>
+        <queue>AgencyRiskManagementheadoffice</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_A_ME_Non_Complianc_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - A&amp;ME</label>
+        <queue>Agency_Management_A_ME_Non_Complianc</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_A_P_non_compliance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - A&amp;P</label>
+        <queue>Agency_Management_A_P_non_compliance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Management_C_NA_non_compliance_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - China &amp; NA</label>
+        <queue>Agency_Management_C_NA_non_compliance</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Risk_Management_Americas_T1_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - Americas</label>
+        <queue>Agency_Risk_Management_Americas_T1</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Agency_Risk_Management_China_NA_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - North Asia</label>
+        <queue>Agency_Risk_Management_China_NA</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Americas_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>Americas [OSCAR]</label>
@@ -4549,6 +4621,33 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <label>Agency Management - Europe</label>
         <language>en_US</language>
         <queue>CasesACCEuropeOffOnshore</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>CasesACCEuropeRisk_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AGM Non Compliance - Europe</label>
+        <queue>CasesACCEuropeRisk</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_ARM_Africa_Middle_East_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - A&amp;ME</label>
+        <queue>Cases_ARM_Africa_Middle_East</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_ARM_Europe_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Agency Risk Management - Europe</label>
+        <queue>Cases_ARM_Europe</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
