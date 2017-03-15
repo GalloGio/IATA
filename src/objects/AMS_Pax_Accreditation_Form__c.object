@@ -3466,6 +3466,16 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>NewGen_Process__c</fullName>
+        <externalId>false</externalId>
+        <formula>Branch_Office_Country__r.New_Accreditation_models_enabled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>NewGen Process</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>New_Head_Office_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <label>New Head Office IATA Code</label>

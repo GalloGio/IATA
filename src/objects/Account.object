@@ -9853,6 +9853,15 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>NewGen_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.New_Accreditation_models_enabled__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>NewGen Agency</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Next_Financial_security_Expiry_date__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Shows the date of the most recent expiry date of financial securities associated to this account</inlineHelpText>
