@@ -2329,10 +2329,17 @@ try{
 		
 	var queryresult = sforce.connection.query(query); 
 	var records = queryresult.getArray(&apos;records&apos;);
+        
+	var queryPAR = &apos;Select Contact__c from Portal_Application_Right__c where contact__r.VER_Number_2__c = \&apos;&apos;+{!ID_Card_Application__c.VER_Number__c}+&apos;\&apos; and ( PortalServiceTranslatedName__c=\&apos;bsplink\&apos; or PortalServiceTranslatedName__c=\&apos;casslink\&apos; or PortalServiceTranslatedName__c=\&apos;ifap\&apos;) and Right__c = \&apos;access granted\&apos; and contact__r.User_Portal_Status__c = \&apos;Approved Admin\&apos;&apos;;
+	var queryPARresult = sforce.connection.query(queryPAR); 
+	var recordsPAR = queryPARresult.getArray(&apos;records&apos;);
+	if(recordsPAR.length &gt; 0 &amp;&amp; &apos;{!ID_Card_Application__c.Type_of_application__c}&apos; == &apos;Replacement&apos; ){
+			alert(&apos;Please report to CS team that the contact is applying for change of agency&apos;);
+	}else{
 	if (records.length &gt; 0) {
 		var record = records[0];
 		var currentUser = &apos;{!User.Id}&apos;;
-		var valid = true;		
+		var valid = true;
 		
 		//Validation to check if contact is not IFAP contact with &apos;Financial Assessment Contact&apos; checked
 		// for Replacement
@@ -2438,6 +2445,7 @@ try{
 	}
 	else{	
 		alert(&quot;No Case is available for this ID Card Application&quot;);
+	}
 	}
 	
 } 
