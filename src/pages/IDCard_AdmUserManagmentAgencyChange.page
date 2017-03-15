@@ -73,7 +73,7 @@
                </apex:form>
                <h1>{!$Label.IDCard_Landing_Title}</h1>
            </div>
-           <div class="background" style="min-height:600px;background-color:#C9E5FF" >
+           <div class="background" style="min-height:600px;background-color:#C9E5FF">
                 <div class="tabs">
                     <ul class="tab-links" style="margin-bottom:0px;">
                         <li class="active"><a href="{! pagesurl['prefix']}/IDCard_AdmUserList" >
