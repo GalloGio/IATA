@@ -715,7 +715,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Address Line 1</shortDescription>
-        <value>Address</value>
+        <value>Street Address</value>
     </labels>
     <labels>
         <fullName>Address_Line_2</fullName>
@@ -5176,7 +5176,7 @@ and
         <shortDescription>Labels &amp; Messages for VF page IEC_UpdateAddress</shortDescription>
         <value>lblSectionBillTo:Billing address
 lblSectionShipTo:Shipping address
-lblStreet:Address
+lblStreet:Street Address
 lblCity:City
 lblState:State / Province
 lblCountry:Country
