@@ -3703,12 +3703,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase2.Reason1__c = 'Cargo';
             testCase2.Region__c = 'Europe';
             testCase2.Customer_recovery__c = false;
-            testCase2.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase2.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase2.BounceEmailCounter__c = 0.0;
             testCase2.Case_Language__c = 'English';
             testCase2.Subject = 'Test 007';
             testCase2.Reopened_case__c = 0.0;
-            testCase2.Continous_Feed_SAF__c = true;
+            //testCase2.Continous_Feed_SAF__c = true;
             testCase2.AccountId = parent.Id;
             testCase2.Account_Concerned__c = parent.Id;
             testCase2.IFAP_Country_ISO__c = 'tq';
