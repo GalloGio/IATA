@@ -1112,7 +1112,7 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
-                <fullName>Infraestructure</fullName>
+                <fullName>Infrastructure</fullName>
                 <default>false</default>
             </values>
             <values>
