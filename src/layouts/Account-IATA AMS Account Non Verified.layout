@@ -61,11 +61,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NG_IEP_Account_Number__c</field>
+                <field>ANG_IEP_Account_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NG_IEP_Status_FF__c</field>
+                <field>ANG_IEP_Status_FF__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
