@@ -28,7 +28,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgProcessISSCase = false;
     boolean trgCase = true;										//33333333333333
-    boolean trgCaseIFAP = false;
+    boolean trgCaseIFAP = true;									//44444444444444
     boolean ISSP_CreateNotificationForCase = true; 				//11111111111111
     boolean trgCase_BeforeDelete = true;  						//11111111111111
     boolean UserInfoUpdate = true;								//22222222222222
