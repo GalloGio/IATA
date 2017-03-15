@@ -1,25 +1,26 @@
 /*BRIEF DOCUMENTATION ON CASE TRIGGER AFTER THE CASE TRIGGER OPTIMIZATION PROGRAM (Each part refers to a detailed document)
-01 - trgProcessISSCase - ALL: isInsert, isUpdate									FILE
-02 - trgCase - All: isInsert, isUpdate 												FILE
-03 - trgCaseIFAP - ALL: Common, isInsert, isUpdate									FILE
-04 - ISSP_CreateNotificationForCase - All: isUpdate									FILE
-05 - trgCase_BeforeDelete - All: isDelete											FILE
-06 - UserInfoUpdate - All: Common, isInsert, isUpdate								FILE
-07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate			FILE
-08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate						FILE
-10 - trgBeforeInsertUpdate - All: Common											FILE
-11 - CalculateBusinessHoursAges - All: isUpdate										FILE
-12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate								FILE
-13 - trgICCSCaseValidation - All: Common											FILE
-14 - trgParentCaseUpdate - All: isUpdate											FILE
-15 - Case_FSM_Handle_NonCompliance_BI_BU - All: Common, isInsert, isUpdate			FILE
-16 - trgIDCard_Case_BeforeUpdate - All: isUpdate									FILE
-17 - trgICCS_ASP_Case_Validation - All: Common										FILE
-18 - trgCreateUpdateServiceRenderedRecord - All: Common								FILE
-19 - updateAccountFieldBasedOnIATAwebCode - All: Common								FILE
-20 - CaseBeforInsert - All: isInsert												FILE
-21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate									FILE
-22 - trgAccelyaRequestSetCountry - All: Common, isInsert							FILE
+01 - trgProcessISSCase - ALL: isInsert, isUpdate									
+02 - trgCase - All: isInsert, isUpdate 												
+03 - trgCaseIFAP - ALL: Common, isInsert, isUpdate									
+04 - ISSP_CreateNotificationForCase - All: isUpdate									
+05 - trgCase_BeforeDelete - All: isDelete											
+06 - UserInfoUpdate - All: Common, isInsert, isUpdate								
+07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate			
+08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate						
+09 - trgCustomerPortalCaseSharing - ALL: isInsert									
+10 - trgBeforeInsertUpdate - All: Common											
+11 - CalculateBusinessHoursAges - All: isUpdate										
+12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate								
+13 - trgICCSCaseValidation - All: Common											
+14 - trgParentCaseUpdate - All: isUpdate											
+15 - Case_FSM_Handle_NonCompliance_BI_BU - All: Common, isInsert, isUpdate			
+16 - trgIDCard_Case_BeforeUpdate - All: isUpdate									
+17 - trgICCS_ASP_Case_Validation - All: Common										
+18 - trgCreateUpdateServiceRenderedRecord - All: Common								
+19 - updateAccountFieldBasedOnIATAwebCode - All: Common								
+20 - CaseBeforInsert - All: isInsert												
+21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate									
+22 - trgAccelyaRequestSetCountry - All: Common, isInsert							
 */
  
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
@@ -41,11 +42,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
+    boolean trgCreateUpdateServiceRenderedRecord = true;		//44444444444444
     boolean updateAccountFieldBasedOnIATAwebCode = true;		//22222222222222
     boolean CaseBeforInsert = true;								//33333333333333
     boolean AMS_OSCARCaseTrigger = false;
     boolean trgAccelyaRequestSetCountry = true;					//33333333333333
+    boolean trgCustomerPortalCaseSharing = true;				//44444444444444
     
     /**********************************************************************************************************************************/
     /*Record type*/
@@ -77,6 +79,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID SEDAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SEDA');
     ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ISS_Portal_New_Case_RT');//TF - SP9-C5
     ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
+    ID PortalRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
     /*Record type*/
     
     /*Variables*/
@@ -128,7 +131,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Share trigger code*/
     if(Trigger.isInsert || Trigger.isUpdate){
         
-        /*trgCaseIFAP Trigger
+        /*trgCaseIFAP Trigger*/
         //////INSERIRE LA CONDIZIONE PER FARLO ESEGUIRE SOLO IN ISINSERT E ISUPDATE
         if(trgCaseIFAP){ //FLAG
         	system.debug('trgCaseIFAP');
@@ -818,6 +821,60 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }   
         }
         /*trgBeforeInsertUpdate Trigger*/
+        
+        /*trgCustomerPortalCaseSharing Trigger*/
+		//Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
+		if(trgCustomerPortalCaseSharing){
+			try{
+				String CPCcaseRecType;
+				BusinessHours bHourObj = new BusinessHours();
+				Set<Id> UserIds = new Set<Id>();
+				list<User> lstUsers = new List<User>();
+				list<QueueSobject> lstQueue = new List<QueueSobject>();
+				//GM - IMPRO - START
+				//the control on record type has been thought for a single insert only
+				for(Case ObjCaseNew : Trigger.New){ 
+					CPCcaseRecType = ObjCaseNew.RecordTypeId;            
+					UserIds.add(ObjCaseNew.OwnerId);                                        
+				}
+				
+				if(CPCcaseRecType == PortalRecordTypeID){ 
+					lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
+					bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
+					for(Case ObjCaseNew : Trigger.New){                	
+						ObjCaseNew.BusinessHoursId = bHourObj.Id;
+					} 
+					if(lstUsers.Size()>0){
+						for(Case ObjCaseNew : Trigger.New){
+							for(Integer i=0;i<lstUsers.Size();i++){
+								if(ObjCaseNew.OwnerId == lstUsers[i].Id){
+									ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
+									System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
+									break;
+								}
+							}           
+						}   
+					}else{        
+						lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
+						if(lstQueue.Size()>0){
+							for(Case ObjCaseNew : Trigger.New){
+								for(Integer i=0;i<lstQueue.Size();i++){
+									if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
+										ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
+										break;
+									}
+								}           
+							}
+						} //lstQueue.Size
+					} //else
+				} //if CPCcaseRecType
+			}//GM - IMPRO - END
+			catch(Exception e){
+				System.debug('Error Message -----: ' + e.getMessage());
+			} 
+		} //if trgCustomerPortalCaseSharing
+		/*trgCustomerPortalCaseSharing Trigger*/
+        
     }
     /*Share trigger code*/
     
@@ -1006,16 +1063,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgProcessISSCase Trigger.isInsert*/
         
-        /*trgCaseIFAP Trigger.isInsert
+        /*trgCaseIFAP Trigger.isInsert*/
         if(trgCaseIFAP){//FLAG
         	system.debug('trgCaseIFAP Trigger.isInsert');
             for (Case newCase : Trigger.New) {
                 // only consider IFAP cases
                 if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
                     // validate the account's country
-                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap))
+                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)){
+                    	system.debug('COUNTRY NOT VALID');
                         newCase.addError('The account\'s country is not valid.');
-                    else
+                    }else
                         IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
                     // validate the Agent Type
                     //if (!IFAP_BusinessRules.isAgentTypeValid(newCase, contactMap))

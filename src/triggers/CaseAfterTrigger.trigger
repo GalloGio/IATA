@@ -8,7 +8,6 @@
 07 - trgCreateUpdateServiceRenderedRecord - ALL: Common
 08 - trgCaseEscalationMailNotificationICH - ALL: Common
 09 - trgCheckSISCaseRecycleBinAfterInsert - ALL: isInsert
-10 - trgCustomerPortalCaseSharing - ALL: isInsert
 11 - CaseBeforInsert - ALL: isInsert
 12 - AMS_OSCARCaseTrigger - ALL: isInsert, isUpdate
 13 - trgAccelyaRequestSetCountry - ALL: isInsert
@@ -19,18 +18,17 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = false;
     boolean trgCaseLastSIDRADate = false;
-	boolean trgCase_ContactLastSurveyUpdate = true;						//4444444444444					
-	boolean trgParentCaseUpdate = true;									//3333333333333
-	boolean trgICCSManageProductAssignment = true;						//3333333333333
+	boolean trgCase_ContactLastSurveyUpdate = true;						//44444444444444
+	boolean trgParentCaseUpdate = true;									//33333333333333
+	boolean trgICCSManageProductAssignment = true;						//33333333333333
 	boolean trgICCS_ASP_CaseClosed = false;
-	boolean trgCreateUpdateServiceRenderedRecord = true;				//4444444444444				
+	boolean trgCreateUpdateServiceRenderedRecord = true;				//44444444444444			
 	boolean trgCaseEscalationMailNotificationICH = false;
-	boolean trgCheckSISCaseRecycleBinAfterInsert = true;				//2222222222222
-	boolean trgCustomerPortalCaseSharing = false;
-	boolean CaseBeforInsert = true;										//3333333333333
+	boolean trgCheckSISCaseRecycleBinAfterInsert = true;				//22222222222222
+	boolean CaseBeforInsert = true;										//33333333333333
 	boolean AMS_OSCARCaseTrigger = false;
-	boolean trgAccelyaRequestSetCountry = true;							//3333333333333
-	boolean trgCase = true;												//3333333333333
+	boolean trgAccelyaRequestSetCountry = true;							//33333333333333
+	boolean trgCase = true;												//33333333333333
     /**********************************************************************************************************************************/
     
     /*Record type*/
@@ -42,18 +40,16 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
     Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
     ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-    ID caseRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
     Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
 	Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
 	Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
 	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
-	ID AccelyacaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
 	ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
     /*Record type*/	
     
     /*Variables*/
     Boolean caseRecType = false;
-    String CPCcaseRecType;
 	Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
     Boolean isIFAPCase = false;
 	Integer futureLimit = Limits.getFutureCalls();
@@ -61,7 +57,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Boolean ThereAreICCSBankAccountManagementCases = false;
 	List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 	boolean hasEmail = false;
-	BusinessHours bHourObj = new BusinessHours();
 	Boolean isAccelya = false;
 	/*Variables*/
      
@@ -69,14 +64,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     set<string> casesIds = new set<string>();
     Set<Id> CaseIdsNew = new Set<Id>();
     Set<Id> accountNotificationIdSet = new Set <Id>(); //TF
-    
-    Set<Id> UserIds = new Set<Id>();
     Set<Id> setASCaseIds = new Set<Id>();
 	Set<Id> setDIPCaseIds = new Set<Id>();
-	list<User> lstUsers = new List<User>();
 	list<Case> cases = new list<Case>();
 	list<Case> ICHcases = new list<Case>();
-	list<QueueSobject> lstQueue = new List<QueueSobject>();
     list<Case> IFAPcases = new list<Case>(); 
 	list<Case> casesToConsider = new list<Case>();
     list<IFAP_Quality_Issue__c> issues = new list<IFAP_Quality_Issue__c>();
@@ -367,10 +358,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/*trgICCSManageProductAssignment Trigger*/
 		
 	/*trgICCS_ASP_CaseClosed Trigger*/
-	/*@author: Constantin BUZDUGA, blue-infinity
-	 * @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
-	 * and Collection Case Indicator at Account level when the case is closed.
-	 //RICORDARSI CHE IL TRIGGER E SOLO ISINSERT E ISUPDATE
+	//@author: Constantin BUZDUGA, blue-infinity
+	// @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
+	// and Collection Case Indicator at Account level when the case is closed.
 	if(trgICCS_ASP_CaseClosed){ 
 		if(trigger.isInsert || trigger.isUpdate){
 			for (Case c : Trigger.new) {
@@ -655,51 +645,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		} //if trgCheckSISCaseRecycleBinAfterInsert
 		/*trgCheckSISCaseRecycleBinAfterInsert Trigger.isInsert*/
 		
-		/*trgCustomerPortalCaseSharing Trigger.isInsert
-		//Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
-		if(trgCustomerPortalCaseSharing){
-			try{  
-				for(Case ObjCaseNew : Trigger.New){ 
-					CPCcaseRecType = ObjCaseNew.RecordTypeId;            
-					UserIds.add(ObjCaseNew.OwnerId);                                        
-				}    
-				if(CPCcaseRecType == caseRecordTypeID){ 
-					lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
-					bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-					for(Case ObjCaseNew : Trigger.New){                	
-						ObjCaseNew.BusinessHoursId = bHourObj.Id;
-					} 
-					if(lstUsers.Size()>0){
-						for(Case ObjCaseNew : Trigger.New){
-							for(Integer i=0;i<lstUsers.Size();i++){
-								if(ObjCaseNew.OwnerId == lstUsers[i].Id){
-									ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
-									System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
-									break;
-								}
-							}           
-						}   
-					}else{        
-						lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
-						if(lstQueue.Size()>0){
-							for(Case ObjCaseNew : Trigger.New){
-								for(Integer i=0;i<lstQueue.Size();i++){
-									if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
-										ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
-										break;
-									}
-								}           
-							}
-						} //lstQueue.Size
-					} //else
-				} //if CPCcaseRecType
-			}
-			catch(Exception e){
-				System.debug('Error Message -----: ' + e.getMessage());
-			} 
-		} //if trgCustomerPortalCaseSharing
-		/*trgCustomerPortalCaseSharing Trigger.isInsert*/
-		
 		/*CaseBeforInsert Trigger.isInsert*/
 		if(CaseBeforInsert){
 			system.debug('CaseBeforInsert Trigger.isInsert');
@@ -747,7 +692,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			list<Case> caseListtoValidate = new List<Case>{};
 			list<Case> caseList = new List<Case>{};
 			for (Case aCase: trigger.New){
-			    if (aCase.RecordTypeId == caseRecordTypeID) {
+			    if (aCase.RecordTypeId == CSRcaseRecordTypeID) {
 			        isAccelya = true;
 			        AccelyacaseIds.add(acase.Id);
 			    }else{
