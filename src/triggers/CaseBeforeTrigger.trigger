@@ -26,7 +26,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgProcessISSCase = false;
-    boolean trgCase = true;										//33333333333333
+    boolean trgCase = false;
     boolean trgCaseIFAP = false;
     boolean ISSP_CreateNotificationForCase = true; 				//11111111111111
     boolean trgCase_BeforeDelete = true;  						//11111111111111
@@ -37,15 +37,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     boolean CalculateBusinessHoursAges = true;					//22222222222222
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
     boolean trgICCSCaseValidation = true;						//22222222222222
-    boolean trgParentCaseUpdate = true;							//33333333333333
+    boolean trgParentCaseUpdate = false;
     boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
+    boolean trgCreateUpdateServiceRenderedRecord = false;
     boolean updateAccountFieldBasedOnIATAwebCode = true;		//22222222222222
-    boolean CaseBeforInsert = true;								//33333333333333
+    boolean CaseBeforInsert = false;
     boolean AMS_OSCARCaseTrigger = false;
-    boolean trgAccelyaRequestSetCountry = true;					//33333333333333
+    boolean trgAccelyaRequestSetCountry = false;
     
     /**********************************************************************************************************************************/
     /*Record type*/
@@ -566,7 +566,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCS_ASP_Case_Validation Trigger*/
         
-        /*trgCreateUpdateServiceRenderedRecord Trigger*/
+        /*trgCreateUpdateServiceRenderedRecord Trigger
         //Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, the case record type is "IDFS Airline Participation Process" and the case is approved
         if(trgCreateUpdateServiceRenderedRecord){
         	system.debug('trgCreateUpdateServiceRenderedRecord');
@@ -768,7 +768,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
     
-        /*trgAccelyaRequestSetCountry Trigger*/
+        /*trgAccelyaRequestSetCountry Trigger
         //GM - IMPRO - START
         //this trigger doesn't work... the for loop below needs a list to be filled, the loop below does really fire on all the cases or just on the Accelya subset?
         if(trgAccelyaRequestSetCountry){
@@ -825,7 +825,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Trigger.isInsert*/
     if (Trigger.isInsert) {
         
-        /*trgCase Trigger.isInsert*/
+        /*trgCase Trigger.isInsert
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isInsert');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
@@ -1284,7 +1284,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         
-        /*CaseBeforInsert Trigger.isInsert*/
+        /*CaseBeforInsert Trigger.isInsert
         if(CaseBeforInsert){
         	system.debug('CaseBeforInsert Trigger.isInsert');
             ISSP_Case.preventTrigger = true;
@@ -1373,7 +1373,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*AMS_OSCARCaseTrigger Trigger.isInsert*/
         
-        /*trgAccelyaRequestSetCountry Trigger.isInsert*/
+        /*trgAccelyaRequestSetCountry Trigger.isInsert
         if(trgAccelyaRequestSetCountry){
         	system.debug('trgAccelyaRequestSetCountry Trigger.isInsert');
         	//GM - IMPRO - START
@@ -1396,7 +1396,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     
     else if (Trigger.isUpdate) {
         
-        /*trgCase Trigger.isUpdate*/
+        /*trgCase Trigger.isUpdate
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isUpdate');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
@@ -1771,7 +1771,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCase_SIS_ICH_AreaVsType Trigger.isUpdate*/
         
-        /*trgParentCaseUpdate Trigger.isUpdate*/
+        /*trgParentCaseUpdate Trigger.isUpdate
         if(trgParentCaseUpdate){//FLAG
         	system.debug('trgParentCaseUpdate Trigger.isUpdate');
             // Created Date - 16-12-2010 
