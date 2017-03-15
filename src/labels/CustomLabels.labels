@@ -15683,7 +15683,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Payment_Link_Description_CNS</shortDescription>
-        <value>Paypal is used to pay CNS invoices by Credit Card.</value>
+        <value>Paypal is used to pay CNS Non-CASS invoices by Credit Card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>

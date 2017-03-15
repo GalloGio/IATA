@@ -321,7 +321,8 @@ Name
       &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description,
       &quot;SIS Help Desk&quot;, $Label.ISSP_SIS_2_Description, 
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
-      &quot;Payment Link&quot;, IF( VisibleCNS__c , $Label.ISSP_Payment_Link_Description_CNS, $Label.ISSP_Payment_Link_Description),
+      &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
+      &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
       &quot;&quot;
       )</formula>
