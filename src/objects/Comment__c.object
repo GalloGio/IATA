@@ -490,6 +490,71 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
                 <controllingFieldValues>MER</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>Finance</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CPS</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAP</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ITS</fullName>
+                <default>false</default>
+                <controllingFieldValues>CS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BIS</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SPP</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Events</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FSS</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>T&amp;T</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <controllingFieldValues>MACS</controllingFieldValues>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -939,7 +1004,23 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -947,11 +1028,27 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -971,11 +1068,31 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1307,7 +1424,23 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>BIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1315,11 +1448,27 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Events</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>External Affairs</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>FSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1339,11 +1488,31 @@ Object to store comments related to objectives, or independent comments that we 
                 <default>false</default>
             </values>
             <values>
+                <fullName>Publishing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SPP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Security %26 Facilitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T%26T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
             <values>

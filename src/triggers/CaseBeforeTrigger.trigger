@@ -7,7 +7,6 @@
 06 - UserInfoUpdate - All: Common, isInsert, isUpdate								FILE
 07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate			FILE
 08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate						FILE
-09 - trgAccountFieldsUpdate - All: isInsert											FILE
 10 - trgBeforeInsertUpdate - All: Common											FILE
 11 - CalculateBusinessHoursAges - All: isUpdate										FILE
 12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate								FILE
@@ -22,32 +21,31 @@
 21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate									FILE
 22 - trgAccelyaRequestSetCountry - All: Common, isInsert							FILE
 */
-
+ 
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
     boolean trgProcessISSCase = false;
-    boolean trgCase = false;
+    boolean trgCase = true;										//33333333333333
     boolean trgCaseIFAP = false;
     boolean ISSP_CreateNotificationForCase = true; 				//11111111111111
     boolean trgCase_BeforeDelete = true;  						//11111111111111
     boolean UserInfoUpdate = true;								//22222222222222
     boolean trgCheckBusinessHoursBeforeInsert = false;
     boolean trgSidraCaseBeforeInsertUpdate = true;				//22222222222222
-    //boolean trgAccountFieldsUpdate = true;
     boolean trgBeforeInsertUpdate = true; 						//11111111111111
     boolean CalculateBusinessHoursAges = true;					//22222222222222
     boolean trgCase_SIS_ICH_AreaVsType = true; 					//11111111111111
     boolean trgICCSCaseValidation = true;						//22222222222222
-    boolean trgParentCaseUpdate = false;
+    boolean trgParentCaseUpdate = true;							//33333333333333
     boolean Case_FSM_Handle_NonCompliance_BI_BU = true;			//22222222222222
     boolean trgIDCard_Case_BeforeUpdate = false;
     boolean trgICCS_ASP_Case_Validation = true; 				//11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = false;
+    boolean trgCreateUpdateServiceRenderedRecord = true;		//33333333333333
     boolean updateAccountFieldBasedOnIATAwebCode = true;		//22222222222222
-    boolean CaseBeforInsert = false;
+    boolean CaseBeforInsert = true;								//33333333333333
     boolean AMS_OSCARCaseTrigger = false;
-    boolean trgAccelyaRequestSetCountry = false;
+    boolean trgAccelyaRequestSetCountry = true;					//33333333333333
     
     /**********************************************************************************************************************************/
     /*Record type*/
@@ -568,7 +566,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCS_ASP_Case_Validation Trigger*/
         
-        /*trgCreateUpdateServiceRenderedRecord Trigger
+        /*trgCreateUpdateServiceRenderedRecord Trigger*/
         //Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, the case record type is "IDFS Airline Participation Process" and the case is approved
         if(trgCreateUpdateServiceRenderedRecord){
         	system.debug('trgCreateUpdateServiceRenderedRecord');
@@ -770,7 +768,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*updateAccountFieldBasedOnIATAwebCode Trigger*/
     
-        /*trgAccelyaRequestSetCountry Trigger
+        /*trgAccelyaRequestSetCountry Trigger*/
         //GM - IMPRO - START
         //this trigger doesn't work... the for loop below needs a list to be filled, the loop below does really fire on all the cases or just on the Accelya subset?
         if(trgAccelyaRequestSetCountry){
@@ -800,7 +798,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
             }
         }   
-        trgAccelyaRequestSetCountry Trigger*/
+        /*trgAccelyaRequestSetCountry Trigger*/
                 
         /*trgBeforeInsertUpdate Trigger*/ /*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
         if(trgBeforeInsertUpdate){//FLAG
@@ -827,7 +825,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Trigger.isInsert*/
     if (Trigger.isInsert) {
         
-        /*trgCase Trigger.isInsert
+        /*trgCase Trigger.isInsert*/
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isInsert');
             SidraLiteManager.insertSidraLiteCases(Trigger.new);
@@ -1180,51 +1178,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*Constantin*/
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         
-        /*trgAccountFieldsUpdate Trigger.isInsert*/ 
-        /*This trigger updates case fields if the user profile is "Overage High Volume Customer Portal User Cloned"*/
-        //self service portal is not used anymore (Skype for Business - conversation with Pedro 13/02/2017 - 15.30)
-        /*if(trgAccountFieldsUpdate){
-        	system.debug('trgAccountFieldsUpdate Trigger.isInsert');
-            profileId = UserInfo.getProfileId();
-            System.debug('Profile ID : '+profileId);
-            //if(UserInfo.getProfileId() != null){      
-            profileList = [SELECT Id,Name FROM Profile WHERE Id =: UserInfo.getProfileId() limit 1];
-            if(profileList.size() > 0){
-                profileName = profileList[0].Name;
-            }
-            //} 
-            if(profileName != null){
-            	system.debug('##ROW##');
-                //profileName = profile.Name;
-                System.debug('Profile Name : ' + profileName);
-                //if(profileName.contains('Customer Portal Manager Standard Cloned'))
-                //if(profileName.contains('Overage High Volume Customer Portal User Cloned'))
-                if('Overage High Volume Customer Portal User Cloned'.equals(profileName)){
-                	system.debug('##ROW##');
-                    for(Case newCase : Trigger.New){
-                        if(newCase.ContactId != null){
-                            ContIds.add(newCase.ContactId);
-                        }                              
-                    }
-                    lstConts = [SELECT Id, AccountId FROM Contact WHERE Id IN: ContIds];
-                    for(Case newCase : Trigger.New){
-                        for(Integer i=0;i<lstConts.Size();i++){
-                            if(newCase.ContactId != null){
-                                if(newCase.ContactId == lstConts[i].Id){
-                                    newCase.AccountId = lstConts[i].AccountId;
-                                    newCase.Power_User_Account__c = lstConts[i].AccountId;
-                                    newCase.IsVisibleInSelfService = True;
-                                    System.debug('Power User Account : ' + newCase.Power_User_Account__c);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }                                
-        }*/
-        /*trgAccountFieldsUpdate Trigger isInsert*/
-        
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         if(Case_FSM_Handle_NonCompliance_BI_BU){
         	system.debug('Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert');
@@ -1331,7 +1284,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
         
-        /*CaseBeforInsert Trigger.isInsert
+        /*CaseBeforInsert Trigger.isInsert*/
         if(CaseBeforInsert){
         	system.debug('CaseBeforInsert Trigger.isInsert');
             ISSP_Case.preventTrigger = true;
@@ -1420,7 +1373,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*AMS_OSCARCaseTrigger Trigger.isInsert*/
         
-        /*trgAccelyaRequestSetCountry Trigger.isInsert
+        /*trgAccelyaRequestSetCountry Trigger.isInsert*/
         if(trgAccelyaRequestSetCountry){
         	system.debug('trgAccelyaRequestSetCountry Trigger.isInsert');
         	//GM - IMPRO - START
@@ -1443,7 +1396,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     
     else if (Trigger.isUpdate) {
         
-        /*trgCase Trigger.isUpdate
+        /*trgCase Trigger.isUpdate*/
         if(trgCase){//FLAG
         	system.debug('trgCase Trigger.isUpdate');
             SidraLiteManager.updateSidraLiteCases(Trigger.new, Trigger.old);
@@ -1818,7 +1771,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCase_SIS_ICH_AreaVsType Trigger.isUpdate*/
         
-        /*trgParentCaseUpdate Trigger.isUpdate
+        /*trgParentCaseUpdate Trigger.isUpdate*/
         if(trgParentCaseUpdate){//FLAG
         	system.debug('trgParentCaseUpdate Trigger.isUpdate');
             // Created Date - 16-12-2010 

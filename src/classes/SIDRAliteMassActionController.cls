@@ -114,10 +114,10 @@ public with sharing class SIDRAliteMassActionController {
         String query = 'Select Id, Status, Financial_Review_Type__c,'
             + ' FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c, Third_FA_non_Compliance_Date__c,'
             + ' FS_Letter_Sent__c, FS_Deadline_Date__c, firstFSnonComplianceDate__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c,'
-            + ' ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,'
+            + ' IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c, BSPCountry__c,'
             + ' RecordtypeId, Reason1__c, Decision__c, Suspension_Date__c, Bank_Guarantee_deadline__c, SAAM_Deadline_Date__c, Key_Customer_Case__c,'
             + ' BSP_CASS__c, Termination_date_manual_entry__c, Termination_date__c, New_IFAP_Deadline_date__c, Documentation_Complete__c, Bank_Guarantee_received__c,Has_the_agent_paid_invoice__c, isClosed,'
-            + ' Account.Id, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c, Comments__c,'
+            + ' Account.Id, Account.Name, Account.Type, Account.Status__c, Account.Accumulated_Irregularities__c, Account.Category__c, Comments__c, OwnerId, Owner.Name, ContactId, Contact.Name,'
             + ' OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step14__c,'
             + ' (Select Id, SIDRA_lite_Reason__c, Status, ParentId, RecordtypeId,'
             + '     FA_Letter_Sent__c, Deadline_Date__c, firstFAnonComplianceDate__c, FA_Second_Deadline_Date__c, FA_Third_Deadline_Date__c, secondFAnonComplianceDate__c,'
@@ -132,6 +132,7 @@ public with sharing class SIDRAliteMassActionController {
             + ' from Case'
             + ' Where RecordtypeId = \'' + recordtypeId + '\''
             + ' AND account.Status__c != \'Terminated\''
+            + ' AND (NOT Owner.Name like \'%recycle%\')'
             + ' AND Region__c = \'' + filter(this.filter.cse.Region__c) +  '\'';
 
         // add filter for selected country
@@ -789,10 +790,10 @@ public with sharing class SIDRAliteMassActionController {
 
         public String getIfapType() {
             if (STATUS_FOR_FS.contains(this.cse.Status) ) {
-                return 'Financial Security';
+                return 'FS';
             }
             if (STATUS_FOR_FA.contains(this.cse.Status) ) {
-                return 'Financial Review';
+                return 'FA';
             }
             return '';
         }
@@ -823,7 +824,7 @@ public with sharing class SIDRAliteMassActionController {
             this.cse.BSPCountry__c = '';
 
             //this.cse.RecordtypeId = RECORDTYPE_SAAM_ID;
-            //this.cse.Region__c = 'Africa & Middle East';
+            //this.cse.Region__c = 'Americas';
             //this.cse.Reason1__c = 'Annual Fees';
         }
 
@@ -919,8 +920,70 @@ public with sharing class SIDRAliteMassActionController {
         }
     }
 
-    //public String getPageInfo() {
-    //    return 'Page size : ' + Limits.getHeapSize() + '/' + Limits.getLimitHeapSize();
-    //}
+    /**
+        Redirect to the Page in csv format
+    **/
+    public PageReference exportCSV() {
+        return Page.SIDRAliteMassActionExport;
+    }
+
+    /**
+        Returns a string with the content of current listWrapper in csv format
+    **/
+    public String getcsvContent() {
+        Map <String, Schema.SObjectField> mapCaseFields = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
+        Map <String, Schema.SObjectField> mapAccountFields = Schema.getGlobalDescribe().get('Account').getDescribe().fields.getMap();
+
+        // create csv header
+        String content = '"Id"';
+        content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Status').getDescribe().getLabel() + '"';
+        if (filter.getIsIFAP())
+            content += ',"' + mapCaseFields.get('Financial_Review_Type__c').getDescribe().getLabel() + '"';
+        if (filter.getIsIFAP())
+            content += ',"FA/FS"';
+        content += ',"Account Id"';
+        content += ',"' + mapAccountFields.get('Name').getDescribe().getLabel() + '"';
+        if (filter.getIsIFAP()) {
+            content += ',"' + mapCaseFields.get('Account_Billing_Country__c').getDescribe().getLabel() + '"';
+        } else {
+            content += ',"' + mapCaseFields.get('BSPCountry__c').getDescribe().getLabel() + '"';
+        }
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapCaseFields.get('ContactId').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('ContactId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapAccountFields.get('Category__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Key_Customer_Case__c').getDescribe().getLabel() + '"';
+        if (!filter.getIsIFAP())
+            content += ',"' + mapCaseFields.get('Reason1__c').getDescribe().getLabel() + '"';
+        content += '\n';
+        // fill each line
+        for (WrapperCase wrapper: this.listWrapperCase) {
+            content += '"' + wrapper.cse.Id + '"';
+            content += ',"' + wrapper.cse.CaseNumber + '"';
+            content += ',"' + wrapper.cse.Subject + '"';
+            content += ',"' + wrapper.cse.Status + '"';
+            if (filter.getIsIFAP()) content += ',"' + wrapper.cse.Financial_Review_Type__c + '"';
+            if (filter.getIsIFAP()) content += ',"' + wrapper.getifapType() + '"';
+            content += ',"' + wrapper.cse.AccountId + '"';
+            content += ',"' + wrapper.cse.Account.Name + '"';
+            if (filter.getIsIFAP()) {
+                content += ',"' + wrapper.cse.Account_Billing_Country__c + '"';
+            } else {
+                content += ',"' + wrapper.cse.BSPCountry__c + '"';
+            }
+            content += ',"' + wrapper.cse.OwnerId + '"';
+            content += ',"' + wrapper.cse.Owner.Name + '"';
+            content += ',"' + wrapper.cse.ContactId + '"';
+            content += ',"' + wrapper.cse.Contact.Name + '"';
+            content += ',"' + wrapper.cse.Account.Category__c + '"';
+            content += ',"' + (wrapper.cse.Key_Customer_Case__c!=null? 'true': 'false') + '"';
+            if (!filter.getIsIFAP()) content += ',"' + wrapper.cse.Reason1__c + '"';
+            content += '\n';
+        }
+        return content;
+    }
 
 }
