@@ -318,11 +318,15 @@ public without sharing class ISSP_AMS_Accreditation {
         lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
         lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
         lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
-        lblStepE = Label.ISSP_AMS_Step5_ProgressBar;
+        if(communityName=='CNS'){lblStepE = Label.ISSP_AMS_Step5_ProgressBar_CNS;}
+            else{ lblStepE = Label.ISSP_AMS_Step5_ProgressBar;}
+       
         lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
         lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
         lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;
-        lblStep1Title = Label.ISSP_AMS_Step1_Title;
+        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;}
+            else{ lblStep1Title = Label.ISSP_AMS_Step1_Title;}
+       
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
         lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
@@ -2205,60 +2209,60 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Pagereference goToStep1() {
         if (isNoticeOfChange)
-            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=1');
-        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1');
+            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=1' +commParam);
+        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam);
     }
 
     public Pagereference goToStep2() {
         if (isNoticeOfChange)
-            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=2');
-        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2');
+            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=2' + commParam);
+        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam);
     }
 
     public Pagereference goToStep3Section1() {
         if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3#nav_one');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_one');
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_one' );
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_one' );
     }
 
     public Pagereference goToStep3Section2() {
         if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3#nav_two');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_two');
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam + '&step=3#nav_two' );
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_two');
     }
 
     public Pagereference goToStep3Section3() {
         if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3#nav_three');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_three');
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_three' );
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id  + commParam +'&step=3#nav_three');
     }
 
     public Pagereference goToStep3Section4() {
         if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3#nav_four');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_four');
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_four' );
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_four' );
     }
 
     public Pagereference goToStep3Section5() {
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_five');
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five' );
     }
 
     public Pagereference goToStep3Section6() {
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_six');
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_six');
     }
 
     public Pagereference goToStep3Section7() {
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_seven');
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_seven');
     }
 
     public Pagereference goToStep3Section8() {
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3#nav_eight');
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&step=3#nav_eight' );
     }
 
     public Pagereference goToStep3() {
         if (isNoticeOfChange)
-            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3');
-        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&step=3');
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=3' );
+        return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3' );
     }
 
     public Pagereference goToStep4() {
@@ -2266,17 +2270,17 @@ public without sharing class ISSP_AMS_Accreditation {
             if(newForm.Is_change_ownership_or_shareholding__c) { //No File Upload for Change of Ownership
                 return goToStep3();
             } else {
-                return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=4');    
+                return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=4' + commParam);    
             }
         }
             
-        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4');
+        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4' + commParam);
     }
 
     public Pagereference goToStep5() {
         if (isNoticeOfChange)
-            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=5');
-        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5');
+            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=5' + commParam);
+        return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam);
     }
 
 
@@ -2603,9 +2607,9 @@ public without sharing class ISSP_AMS_Accreditation {
             sendConfirmationEmail(newCase);
 
             if (isNoticeOfChange)
-                return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final');
+                return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + '&step=Final' + commParam);
 
-            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final');
+            return new Pagereference('/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=Final' + commParam);
         } catch (DmlException ex) {
             newForm.Submitted_to_IATA__c = FALSE;
             ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.Error, 'DML error - '+ex.getMessage()+' / '+ex.getLineNumber()));

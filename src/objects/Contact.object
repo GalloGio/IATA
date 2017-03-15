@@ -3061,15 +3061,6 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>CNS_Contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>[CNS Portal CRM] used to identify the contacts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
-        <externalId>false</externalId>
-        <label>CNS Contact</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Call_Status_Update__c</fullName>
         <externalId>false</externalId>
         <label>Call Status Update</label>
@@ -4385,23 +4376,21 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <externalId>false</externalId>
         <formula>/*PreProd*/
 /* 
-IF( CNS_Contact__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;+SUBSTITUTE(SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;), &apos; &apos;, &apos;%20&apos;)+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
 IF(Account.IATACode__c != &apos;&apos; 
 , 
 &quot;http://www-qa.iata.org/services/finance/pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-))
+)
 */
 
 /*Prod*/ 
-IF( CNS_Contact__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;+SUBSTITUTE(SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;), &apos; &apos;, &apos;%20&apos;)+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
 IF(Account.IATACode__c != &apos;&apos; 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-))</formula>
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Credit Card Payment Link</label>
         <required>false</required>
@@ -9547,12 +9536,13 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <description>Shows an image to represent a valid or invalid domain for current contact email, used for ISSP portal</description>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL(ValidContactDomainName__c, &quot;valid&quot;),
-  IMAGE(&quot;/resource/1475750392000/intellimail__check&quot;, &quot;valid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 16, 106),
 IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
-  IMAGE(&quot;/resource/1488191467000/AccountDomainValidation_Invalid&quot;, &quot;invalid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 16, 147),
   &quot;&quot; )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>if the company has any company domains defined, this field shows information on whether the domain of this contact is among the valid ones or not.</inlineHelpText>
         <label>Email domain validity check</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

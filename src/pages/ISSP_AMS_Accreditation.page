@@ -389,7 +389,7 @@
     }
                  
     function redirectToPDF() {
-         window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf', '_blank');
+         window.open('/ISSP_AMS_PDF_NoC?caseId={!newCase.Id}&isNoticeOfChange=true&mode=pdf{!if(communityName=='CNS', '&CommunityName=CNS', '')}', '_blank');
     }
    
     </script>
@@ -780,7 +780,7 @@
          <apex:pageMessages />
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
-            <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
+            <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
 </a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!newForm.Agent_Type__c} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >

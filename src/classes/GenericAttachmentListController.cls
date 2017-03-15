@@ -44,11 +44,13 @@ global with sharing class GenericAttachmentListController {
     }
 	
 	// assgnTo variable
+	private static Boolean isForPortalStatic = false; // used only for Remote actions
 	public Boolean isForPortal {
 		get;
 		set {
 			if (this.isForPortal == null ) {
 				this.isForPortal = value;
+				isForPortalStatic = value;
 				init();
 			}
 		}
@@ -264,20 +266,25 @@ global with sharing class GenericAttachmentListController {
     }
 
     /**
-        download files from Amazon
+        get a list of files with valid links to download them from Amazon
+        this funcion needs a isportal variable to know what files can retrieve
     **/
     @RemoteAction
-    global static list<FileDef> getFilesFromAmazon(String objectId) {
-
+    global static list<FileDef> getAllExpiringLink(String objectId) {
+        list<WrapperAttach> listAttach = new list<WrapperAttach>();
+        if (isforPortalStatic) {
+            listAttach = WrapperAttach.getListAttachmentsForPortal(objectId);
+        } else {
+            listAttach = WrapperAttach.getListAttachments(objectId);
+        }
         list<FileDef> listFileDef = new list<FileDef>();
-        for (WrapperAttach attach: WrapperAttach.getListAttachments(objectId)) {
+        for (WrapperAttach attach: listAttach) {
             FileDef filedef = new FileDef();
             filedef.name = attach.name;
             filedef.url = getExpiringLink(attach.fullName);
             filedef.data = '';
             listFileDef.add(filedef);
         }
-        system.debug('aqui listFileDef ' + listFileDef);
         return listFileDef;
     }
 

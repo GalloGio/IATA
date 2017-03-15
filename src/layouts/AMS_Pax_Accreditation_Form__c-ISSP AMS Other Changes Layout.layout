@@ -274,6 +274,20 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedGroupsListOnRecord</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedRecordConnectionList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>CreatedBy</fields>
+        <fields>CreatedDate</fields>
+        <fields>ViewCount</fields>
+        <fields>LastViewDate</fields>
+        <relatedList>RelatedContentDistributionList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Email__c</fields>
         <fields>RECORDTYPE</fields>
@@ -284,6 +298,20 @@
         <relatedList>AMS_Accreditation_Contact__c.AMS_Pax_Accreditation_Form__c</relatedList>
         <sortField>RECORDTYPE</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedFileList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ISSP_AMS_Statement_International_Sales__c.AMS_Online_Accreditation__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>AMS_Facility__c.AMS_Online_Accreditation__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

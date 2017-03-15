@@ -887,7 +887,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <defaultValue>false</defaultValue>
         <description>Boolean that indicates whether the information should be synchronized with AIMS.</description>
         <externalId>false</externalId>
-        <label>Must synchronize with AIMS</label>
+        <label>Must Send to Print</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1093,7 +1093,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Received_From_AIMS__c</fullName>
         <description>Time stamp on when the id card was received from AIMS</description>
         <externalId>false</externalId>
-        <label>Received From AIMS</label>
+        <label>Confirmed in Production on</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1134,7 +1134,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Sent_to_AIMS_on__c</fullName>
         <description>Time stamp on when the id card was sent to AIMS</description>
         <externalId>false</externalId>
-        <label>Sent to AIMS on</label>
+        <label>Sent to Print on</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1632,7 +1632,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>Cancel ID CArd</description>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Cancel Card</masterLabel>
+        <masterLabel>Cancel ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
@@ -1690,7 +1690,7 @@ alert(err);
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Reissue IDCard</masterLabel>
+        <masterLabel>Reissue ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
@@ -1744,7 +1744,7 @@ alert(err);
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Renew IDCard</masterLabel>
+        <masterLabel>Renew ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 

@@ -272,10 +272,12 @@
 &quot;SIS Help Desk&quot;, $Label.SIS_Help_Desk,
 &quot;Management Information Report&quot;, $Label.ISSP_MIR,
 &quot;IATA Accreditation &amp; Changes&quot;, $Label.ISSP_Become_Accredited_Agent,
+&quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_Become_Endorsed_Agent_CNS,
 &quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request,
 &quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change,
 &quot;BSPLink&quot;, $Label.ISSP_BSPLink,
 &quot;CassLink&quot;, $Label.ISSP_CassLink,
+&quot;CNS CassLink&quot;, $Label.ISSP_CASSLink_Export_CNS,
 &quot;E-Bulletin&quot;, $Label.ISSP_EBulletin, 
 &quot;IFAP&quot;, $Label.ISSP_IFAP,
 &quot;Resource Center&quot;, $Label.ISSP_Resource_Center,
@@ -291,6 +293,8 @@
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_CNS_Endorsement,
+&quot;CNS Payment Link&quot;, $Label.ISSP_CNS_PaymentLink_ServiceName,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -427,7 +431,9 @@ Name
     <fields>
         <fullName>VisibleCNS__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Defines if the service should be visible on the CNS portal branding.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Defines if the service should be visible on the CNS portal branding.</inlineHelpText>
         <label>Visible on CNS</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -438,7 +444,11 @@ Name
         <formula>OR( 
 AND( 
 Agency__c = true, 
-CONTAINS($User.Customer_type__c,&quot;Agency&quot;) 
+$User.Customer_type__c=&quot;Agency&quot; 
+), 
+AND( 
+VisibleCNS__c= true, 
+$User.Customer_type__c=&quot;CNS Agency&quot; 
 ), 
 AND( 
 Not_ICH_Airline__c = true, 
@@ -462,8 +472,8 @@ AND(
 Name = &quot;Resource Center&quot;, 
 CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
 ), 
-Name = &quot;Payment Link&quot;, 
-Name = &quot;Resource Center&quot; 
+AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
+AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)) 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

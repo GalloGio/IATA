@@ -5134,6 +5134,27 @@ and
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_SAP_Customer_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Address</shortDescription>
+        <value>There is an error with your address.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue</shortDescription>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Shipping Address</shortDescription>
+        <value>There is an error with your shipping address.&lt;br/&gt;Please change shipping address or contact CSR for assistance!</value>
+    </labels>
+    <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5600,6 +5621,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_2-letter Airline Designator Code</shortDescription>
         <value>2-letter Airline Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_3_Digit_Code</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP 3 Digit Code</shortDescription>
+        <value>3 Digit Code</value>
     </labels>
     <labels>
         <fullName>ISSP_60Day_Password_Reset</fullName>
@@ -8419,6 +8448,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Changes can only be made once your agency has been accredited to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</shortDescription>
+        <value>Changes can only be made once your agency has been accredited to CNS</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Multiple_Changes</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8801,6 +8838,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS No Pending</shortDescription>
         <value>You don&apos;t have any pending Agency accreditation applications.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_No_Pending_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS No Pending CNS</shortDescription>
+        <value>You don&apos;t have any pending Agency endorsement applications.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_No_Requirements</fullName>
@@ -9286,6 +9331,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Apply for Agency Accreditation</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Agency_Accreditation_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Agency Accreditation CNS</shortDescription>
+        <value>Apply for Agency Endorsement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Agency_Article</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9342,12 +9394,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro Accred CNS</shortDescription>
+        <value>Please note that online endorsement applications must be submitted by an Authorised Signatory of the Agency.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred Msg</shortDescription>
         <value>If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
+        <value>Welcome to the online CNS Agency Endorsement application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
@@ -9364,6 +9432,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 New Application</shortDescription>
         <value>New Accreditation Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_New_Application_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 New Application CNS</shortDescription>
+        <value>New Endorsement Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Ongoing_Drafts</fullName>
@@ -9420,6 +9496,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 SAA</shortDescription>
         <value>IATA Online Agency Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_SAA_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 SAA</shortDescription>
+        <value>CNS Online Agency Endorsement &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
@@ -9531,6 +9615,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Title</shortDescription>
         <value>Application for Approval as an IATA Passenger / Cargo Sales Agent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Title_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title</shortDescription>
+        <value>Application for Approval as an CNS Passenger / Cargo Sales Agent</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
@@ -10325,6 +10417,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 ProgressBar</shortDescription>
         <value>E. Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step5_ProgressBar_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step5 ProgressBar CNS</shortDescription>
+        <value>E. Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ReviewBeforeSubmit</fullName>
@@ -11435,6 +11535,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Approve</value>
     </labels>
     <labels>
+        <fullName>ISSP_Active</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Active_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active agreements</shortDescription>
+        <value>Active agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -11499,6 +11615,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Agent Accredited</value>
     </labels>
     <labels>
+        <fullName>ISSP_Agreement_type</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreement type</shortDescription>
+        <value>Agreement type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Agreements_available</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreements available</shortDescription>
+        <value>Agreements available</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Airline</fullName>
         <categories>ISSP, FAQ</categories>
         <language>en_US</language>
@@ -11513,6 +11645,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Airline Contact Type</shortDescription>
         <value>Contact Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Airline_Prefix</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Airline Prefix</shortDescription>
+        <value>Airline Prefix</value>
     </labels>
     <labels>
         <fullName>ISSP_Airlines_fly_3_billion</fullName>
@@ -11641,6 +11781,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Available Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_Available_types</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Available types</shortDescription>
+        <value>Available types</value>
+    </labels>
+    <labels>
         <fullName>ISSP_BSPLink</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -11704,6 +11852,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>IATA Accreditation &amp; Changes</value>
     </labels>
     <labels>
+        <fullName>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Bilateral, both carriers can issue electronic tickets</shortDescription>
+        <value>Bilateral, both carriers can issue electronic tickets</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Become_Endorsed_Agent_CNS</fullName>
+        <categories>Portal, S10</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Become_Endorsed_Agent_CNS</shortDescription>
+        <value>CNS Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Branches</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -11736,6 +11900,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Export</value>
     </labels>
     <labels>
+        <fullName>ISSP_CASSLink_Export_CNS</fullName>
+        <categories>S10, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CASSLink_Export_CNS</shortDescription>
+        <value>CNS CASSLink</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CASSLink_Import</fullName>
         <categories>S10, Portal</categories>
         <language>en_US</language>
@@ -11750,6 +11922,20 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_CNS_Documents</shortDescription>
         <value>For CNS documents please click &lt;a href=&quot;http://www.cnsc.net/Pages/default.aspx&quot;&gt;here&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CNS_Endorsement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_Endorsement</shortDescription>
+        <value>CNS Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CNS_PaymentLink_ServiceName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CNS_PaymentLink_ServiceName</shortDescription>
+        <value>Paypal</value>
     </labels>
     <labels>
         <fullName>ISSP_CNS_quote</fullName>
@@ -12661,7 +12847,9 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EMADOMVAL ImportantInformation</shortDescription>
-        <value>By keeping updated the list of email domains of your company, you help us flagging contacts that may be located under your company and don&apos;t have a valid domain, also making it easier for you as an admin to locate them and take corrective actions if needed (deactivate them as contacts in the company). Please add here any valid domain for the company, worldwide (it may be different domains are valid in different locations).</value>
+        <value>By keeping an updated list of valid company email domains, the system will be able to flag any contact under your account with a different domain. 
+With this feature, Portal Administrators will be able to easily identify the non-compliant contacts and take corrective actions if needed such as deactivating them. 
+Please add below all your company valid email domains, including different ones used in different locations.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_RemoveConfirmMsg</fullName>
@@ -13410,6 +13598,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Excess</value>
     </labels>
     <labels>
+        <fullName>ISSP_Existing_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Existing Agreements</shortDescription>
+        <value>Existing Agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_External_Links</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -14136,6 +14332,14 @@ this is the tiess topic help</value>
         <value>.</value>
     </labels>
     <labels>
+        <fullName>ISSP_IATA_Designator</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP IATA Designator</shortDescription>
+        <value>IATA Designator</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -14475,6 +14679,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_InactiveUser_Subscription_Portal</shortDescription>
         <value>IMPORTANT - The following persons have an active product subscription. Their user cannot be deactivated. Please contact IATA if these contacts no longer work for your company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Inactive_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Inactive agreements</shortDescription>
+        <value>Inactive agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_InvalidPassword</fullName>
@@ -15201,6 +15413,38 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Please note that you are not allowed to re-use your last 4 passwords.</value>
     </labels>
     <labels>
+        <fullName>ISSP_One_Way_Intermodal_Issuing_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Issuing Date</shortDescription>
+        <value>One Way Intermodal Issuing Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Intermodal_Participating_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Participating Date</shortDescription>
+        <value>One Way Intermodal Participating Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Issuing Airline</shortDescription>
+        <value>One Way Passenger Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Participating</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Participating</shortDescription>
+        <value>One Way Passenger Participating</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -15432,14 +15676,6 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Payment Link can be used to pay IATA invoices by credit card.&lt;br/&gt;
 &lt;b&gt;Warning!&lt;/b&gt;&lt;br/&gt;
 Please note that many IATA invoices for accredited agents are collected through the BPS/CASS. You should check your invoice details to ensure that it has not been cleared already before you proceed to pay by credit card.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Payment_Link_Description_CNS</fullName>
-        <categories>ISSP_Homepage, s10</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Payment_Link_Description_CNS</shortDescription>
-        <value>Paypal is used to pay CNS Non-CASS invoices by Credit Card.</value>
     </labels>
     <labels>
         <fullName>ISSP_Pending</fullName>
@@ -16507,6 +16743,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Should be mandatory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Show_all_the_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Show all the agreements</shortDescription>
+        <value>Show all the agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Showing_page</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16814,6 +17058,46 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
               IATA Customer Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_The_Cargo_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Cargo Interline Agreement</shortDescription>
+        <value>The Cargo Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Issuing Airline</shortDescription>
+        <value>The One Way Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Participating_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Participating Airline</shortDescription>
+        <value>The One Way Participating Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger Interline Agreement</shortDescription>
+        <value>The Passenger Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger and Cargo Interline Traffic Agreement</shortDescription>
+        <value>The Passenger and Cargo Interline Traffic Agreement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Thanks_for_request_cns</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16976,6 +17260,14 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_View_GFA_Communication</shortDescription>
         <value>GFA Communication queue</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_My_Company_MITA_BIETA_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP View My Company MITA/BIETA Agreements</shortDescription>
+        <value>View My Company MITA/BIETA Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
@@ -17200,6 +17492,14 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_btn_AddComment</shortDescription>
         <value>Add Comment</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_cannot_open_the_selected_account</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP cannot open the selected account</shortDescription>
+        <value>Error in the system: cannot open the selected account</value>
     </labels>
     <labels>
         <fullName>ISSP_characters_new_password</fullName>
@@ -18071,7 +18371,9 @@ lblAttention:Attention</value>
         <value>errMissCompany:Company name cannot be empty
 errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
-errMissState:State/Province cannot be empty</value>
+errMissState:State/Province cannot be empty
+msgAddrExist:Shipping address is already in system.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
