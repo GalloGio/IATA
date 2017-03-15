@@ -11044,6 +11044,13 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Receive E-Bulletin for Time Zone</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Reinstatements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Reinstatements</shortDescription>
+        <value>Reinstatements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Reviews</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11056,7 +11063,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin Reviews HelpText</shortDescription>
-        <value>It includes Notice of Termination</value>
+        <value>All types of Reviews, including Notice of Termination</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_RunReport</fullName>
@@ -11134,7 +11141,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS eBulletin Termination HelpText</shortDescription>
-        <value>It includes Reinstatement after Termination and Voluntary Relinquishment</value>
+        <value>All types of Closures, including Termination and Voluntary Relinquishment</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_TimeZone_Selection</fullName>
