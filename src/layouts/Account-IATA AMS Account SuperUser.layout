@@ -571,6 +571,28 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Issued_Date__c</fields>
+        <fields>ANG_Source__c</fields>
+        <fields>ANG_Expiration_Date__c</fields>
+        <fields>ANG_Expired__c</fields>
+        <relatedList>ANG_Agency_Risk_Event__c.ANG_AccountId__c</relatedList>
+        <sortField>ANG_Issued_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Issued_Date__c</fields>
+        <fields>ANG_Source__c</fields>
+        <fields>ANG_Expiration_Date__c</fields>
+        <fields>ANG_Expired__c</fields>
+        <relatedList>ANG_Agency_Risk_Event__c.ANG_HE_AccountId__c</relatedList>
+        <sortField>ANG_Issued_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Authority__c</fields>
