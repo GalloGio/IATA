@@ -77,6 +77,38 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
+        <fullName>ANG_Accredited_Agents_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Service can only be subscribed by accredited agents.</description>
+        <externalId>false</externalId>
+        <label>Accredited Agents Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
+        <description>Permitted agency sector</description>
+        <externalId>false</externalId>
+        <label>Restrict by Agency Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Travel Agent</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Cargo Agent</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -291,6 +323,9 @@
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -319,6 +354,9 @@ Name
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
+      &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+      &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+      &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

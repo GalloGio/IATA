@@ -159,7 +159,7 @@
            <div class="paginator">
               <span class="left">
                  <span class="selectorTarget" >
-                    {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,setCon.ResultSize)}  {!$Label.ISSP_of} {!setCon.ResultSize }
+                    {!((setCon.PageNumber-1) * setCon.PageSize)+1} - {!IF(setCon.HasNext,((setCon.PageNumber-1) * setCon.PageSize)+11,noOfRecords)}  {!$Label.ISSP_of} {!noOfRecords }
              </span>
           </span>
           <span class="prevNextLinks">
