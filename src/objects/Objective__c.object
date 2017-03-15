@@ -1427,30 +1427,6 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
     </fields>
     <label>Objective</label>
     <listViews>
-        <fullName>AME_regional_objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Current__c</columns>
-        <columns>Target__c</columns>
-        <columns>Target_Progress__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </filters>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Objective__c.Region</value>
-        </filters>
-        <label>AME regional objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Account_Issues_Priorities</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
@@ -1476,104 +1452,68 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <columns>Target_Progress__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Objective__c.Account,Objective__c.Area,Objective__c.Division,Objective__c.Region</value>
+        </filters>
         <label>All objectives</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Incomplete_Objectives</fullName>
+        <fullName>Global_BMAs_2017</fullName>
         <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>is_Incomplete__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Incomplete Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Levant_Area_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
         <columns>Division__c</columns>
-        <columns>Region__c</columns>
+        <columns>Description__c</columns>
+        <columns>Deadline__c</columns>
         <columns>Target__c</columns>
-        <columns>Current__c</columns>
-        <columns>Deadline__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Objective__c.Area</value>
-        </filters>
-        <filters>
-            <field>Area__c</field>
-            <operation>equals</operation>
-            <value>Levant</value>
-        </filters>
-        <label>Levant Area Objectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Objectives_with_missing_Area_Objectives</fullName>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
+        <columns>Forecast__c</columns>
         <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>All_Areas_Created__c</field>
+            <field>Type__c</field>
             <operation>equals</operation>
-            <value>1</value>
+            <value>BMA</value>
         </filters>
-        <label>Objectives with missing Area Objectives</label>
+        <filters>
+            <field>Region__c</field>
+            <operation>notEqual</operation>
+            <value>AME,Americas,ASPAC,Nth. Asia,Europe</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <label>Global BMAs 2017</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Objectives_with_missing_RegionObjectives</fullName>
+        <fullName>Global_BMAs_20171</fullName>
         <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <columns>RECORDTYPE</columns>
         <columns>Division__c</columns>
-        <columns>Region__c</columns>
-        <columns>Area__c</columns>
-        <columns>Deadline__c</columns>
-        <columns>Target_Progress__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>All_Regions_Created__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Objectives with missing RegionObjectives</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>VP_Divisional_Objectives</fullName>
-        <columns>NAME</columns>
         <columns>Description__c</columns>
-        <columns>Type__c</columns>
-        <columns>Cascade_To_Region__c</columns>
+        <columns>Deadline__c</columns>
         <columns>Target__c</columns>
-        <columns>Current__c</columns>
+        <columns>Forecast__c</columns>
+        <columns>Target_Progress__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>RECORDTYPE</field>
+            <field>Type__c</field>
             <operation>equals</operation>
-            <value>Objective__c.Division</value>
+            <value>BMA</value>
         </filters>
         <filters>
-            <field>Division__c</field>
+            <field>Region__c</field>
             <operation>equals</operation>
-            <value>VP</value>
+            <value>AME</value>
         </filters>
-        <label>VP Divisional Objectives</label>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>2017</value>
+        </filters>
+        <label>AME BMAs 2017</label>
         <language>en_US</language>
     </listViews>
     <nameField>
