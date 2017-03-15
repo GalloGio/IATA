@@ -247,14 +247,8 @@ public class ServiceRenderedCaseLogic {
             list<Services_Rendered__c> services = new list<Services_Rendered__c>();
             for (Case c :cases) {
                 
-                Id consumerID = null;
-                if(c.Account_Concerned__c == null){
-                    consumerID = c.accountID;
-                } else {
-                    consumerID = c.Account_Concerned__c;
-                }
                 services.add(new Services_Rendered__c(  Name = 'name shall be copied',
-                                                        Services_Rendered_to_Airline__c = consumerID,
+                                                        Services_Rendered_to_Airline__c = c.AccountId,
                                                         Services_Rendered_By__c = c.Provider__c,
                                                         Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
                                                         Services_Rendered_Status__c ='Active',
@@ -290,14 +284,8 @@ public class ServiceRenderedCaseLogic {
                          activeServices.get(ServicesPerReason.get(c.reason1__c).service__c) <> null &&
                          activeServices.get(ServicesPerReason.get(c.reason1__c).service__c).get(c.AccountId ) <> null  ){
 
-                    Id consumerID = null;
-                    if(c.Account_Concerned__c == null){
-                        consumerID = c.accountID;
-                    } else {
-                        consumerID = c.Account_Concerned__c;
-                    }
                     services.add(new Services_Rendered__c(                  Name = 'name shall be copied', 
-                                                                            Services_Rendered_to_Airline__c = consumerID,
+                                                                            Services_Rendered_to_Airline__c = c.AccountId,
                                                                             Services_Rendered_By__c = c.Provider__c,
                                                                             Services_Rendered_Type__c = ServicesPerReason.get(c.reason1__c).service__c,//c.Service__c,
                                                                             Services_Rendered_Status__c ='Inactive',
