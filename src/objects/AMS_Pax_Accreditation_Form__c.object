@@ -898,6 +898,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_IsNewGenAgency__c</fullName>
+        <description>To show information to analyst. To simplify triggers and classes.</description>
+        <externalId>false</externalId>
+        <formula>Branch_Office_Country__r.ANG_Enable_NewGen__c  &amp;&amp; TEXT(Location_Class__c) = &apos;P&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is New Gen Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>A_Code__c</fullName>
         <externalId>false</externalId>
         <label>A Code</label>
@@ -3464,16 +3475,6 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>NewGen_Process__c</fullName>
-        <externalId>false</externalId>
-        <formula>Branch_Office_Country__r.New_Accreditation_models_enabled__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>NewGen Process</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>New_Head_Office_IATA_Code__c</fullName>

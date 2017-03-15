@@ -229,7 +229,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>New_Accreditation_models_enabled__c</field>
+                <field>ANG_Enable_NewGen__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

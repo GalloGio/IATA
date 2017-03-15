@@ -2540,6 +2540,16 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>ANG_IsNewGenAgency__c</fullName>
+        <description>To show information to analyst. To simplify triggers and classes.</description>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  TEXT(Location_Class__c) = &apos;P&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is New Gen Agency</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>
@@ -9851,15 +9861,6 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>NewGen_Agency__c</fullName>
-        <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.New_Accreditation_models_enabled__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>NewGen Agency</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Next_Financial_security_Expiry_date__c</fullName>

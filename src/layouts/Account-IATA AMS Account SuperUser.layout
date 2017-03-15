@@ -114,7 +114,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>NewGen_Agency__c</field>
+                <field>ANG_IsNewGenAgency__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
