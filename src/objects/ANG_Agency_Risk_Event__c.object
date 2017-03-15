@@ -70,6 +70,17 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_Account_IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.IATACode__c</formula>
+        <label>Account IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_CaseId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -181,7 +192,7 @@
         <fullName>ANG_Risk_ID__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_Risk_Type__r.ANG_Risk_ID__c</formula>
-        <label>ID Type</label>
+        <label>Type ID</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -218,6 +229,11 @@
         <unique>false</unique>
     </fields>
     <label>Agency Risk Event</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
         <label>Name</label>
@@ -251,7 +267,20 @@
         </picklistValues>
     </recordTypes>
     <searchLayouts>
+        <customTabListAdditionalFields>ANG_Account_IATA_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Risk_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Risk_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Issued_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Source__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Expiration_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ANG_Expired__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
         <lookupDialogsAdditionalFields>ANG_AccountId__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Risk_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Issued_Date__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Source__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Expiration_Date__c</lookupDialogsAdditionalFields>
@@ -262,6 +291,12 @@
         <searchFilterFields>ANG_Issued_Date__c</searchFilterFields>
         <searchFilterFields>ANG_Expiration_Date__c</searchFilterFields>
         <searchFilterFields>ANG_Expired__c</searchFilterFields>
+        <searchResultsAdditionalFields>ANG_Risk_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Risk_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Issued_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Source__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Expiration_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Expired__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
