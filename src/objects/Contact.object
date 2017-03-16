@@ -7092,6 +7092,25 @@ TotalRows-Successes-Errors</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>MITA_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>MITA Service</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000Sd6U</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Name</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>MITA_Teletype__c</fullName>
         <externalId>false</externalId>
         <label>Teletype</label>

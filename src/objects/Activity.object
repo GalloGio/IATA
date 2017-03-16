@@ -55,6 +55,13 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Bridge__c</fullName>
+        <externalId>false</externalId>
+        <label>Bridge</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Call_TIme__c</fullName>
         <externalId>false</externalId>
         <label>Call Time (Min)</label>
@@ -119,6 +126,13 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Identifying_Members__c</fullName>
+        <externalId>false</externalId>
+        <label>Identifying Members</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Involved__c</fullName>
         <externalId>false</externalId>
         <label>Involved</label>
@@ -126,9 +140,65 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Issuer__c</fullName>
+        <externalId>false</externalId>
+        <label>Issuer</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Members__c</fullName>
+        <externalId>false</externalId>
+        <label>Members</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Objectives__c</fullName>
+        <externalId>false</externalId>
+        <label>Objectives</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Participants__c</fullName>
+        <externalId>false</externalId>
+        <label>Participants</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Recipient__c</fullName>
+        <externalId>false</externalId>
+        <label>Recipient</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Responses__c</fullName>
+        <externalId>false</externalId>
+        <label>Responses</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Responsible__c</fullName>
         <externalId>false</externalId>
         <label>Responsible</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Result_Summary__c</fullName>
+        <externalId>false</externalId>
+        <label>Result Summary</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sender__c</fullName>
+        <externalId>false</externalId>
+        <label>Sender</label>
         <required>false</required>
         <type>TextArea</type>
     </fields>
@@ -150,6 +220,13 @@
         <scale>2</scale>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Title</label>
+        <required>false</required>
+        <type>TextArea</type>
     </fields>
     <listViews>
         <fullName>AllActivities</fullName>

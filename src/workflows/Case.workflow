@@ -14790,7 +14790,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Maestro</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ISS Portal - Make escalated case visible</fullName>
