@@ -514,11 +514,14 @@ private class AMS_UtilsTest {
         
         Test.startTest();
         
-        AMS_Utils.getRecordType('Account', 'Standard_Account');
+
         
         try{
-            
-          AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
+          
+            RecordType RT = AMS_Utils.getRecordType('Account', 'Standard_Account');            
+            AMS_Utils.getRecordType(RT.Id);
+
+            AMS_Utils.getRecordType('Account', 'Non_Existent_Record_Type');
         
         }
         catch(Exception e)  
@@ -541,11 +544,75 @@ private class AMS_UtilsTest {
             
     }
     
-    
+    static testmethod void testTransformLegalStatus() {
         
-    
-    
-    
+        
+        Test.startTest();
+        
+        AMS_Utils.transformLegalStatus('A');
+        AMS_Utils.transformLegalStatus('C');
+        AMS_Utils.transformLegalStatus('E');
+        AMS_Utils.transformLegalStatus('J');
+        AMS_Utils.transformLegalStatus('L');
+        AMS_Utils.transformLegalStatus('O');
+        AMS_Utils.transformLegalStatus('P');
+        AMS_Utils.transformLegalStatus('R');
+        AMS_Utils.transformLegalStatus('S');
+        AMS_Utils.transformLegalStatus('T');
+        AMS_Utils.transformLegalStatus('V');
+        AMS_Utils.transformLegalStatus('');
+
+        Test.stopTest();    
+            
+    }
+
+    static testmethod void testgetLocationClassDescr() {
+        
+        /*
+            C-Cargo
+            D-Domestic
+            E-External Registrars
+            G-General Sales Agent
+            I = Imports
+            K-CATO
+            M-Members & Airlines Sales Offices
+            N-NISI
+            O-SATO
+            P-Passenger
+            S-SSI
+            R = CassAssociate
+            T-TIDS
+            Q = Courier
+            V-Travel Service Intermediaries-TSI (USA Only) 
+            X-Handling Agents and Shipping Lines
+            J-Joint Vent
+         */
+        
+        Test.startTest();
+        
+        AMS_Utils.getLocationClassDescr('C');
+        AMS_Utils.getLocationClassDescr('D');
+        AMS_Utils.getLocationClassDescr('E');
+        AMS_Utils.getLocationClassDescr('G');
+        AMS_Utils.getLocationClassDescr('I');
+        AMS_Utils.getLocationClassDescr('K');
+        AMS_Utils.getLocationClassDescr('M');
+        AMS_Utils.getLocationClassDescr('N');
+        AMS_Utils.getLocationClassDescr('O');
+        AMS_Utils.getLocationClassDescr('P');
+        AMS_Utils.getLocationClassDescr('S');
+        AMS_Utils.getLocationClassDescr('R');
+        AMS_Utils.getLocationClassDescr('S');
+        AMS_Utils.getLocationClassDescr('T');
+        AMS_Utils.getLocationClassDescr('Q');
+        AMS_Utils.getLocationClassDescr('V');        
+        AMS_Utils.getLocationClassDescr('X');        
+        AMS_Utils.getLocationClassDescr('J');        
+        AMS_Utils.getLocationClassDescr('');
+
+        Test.stopTest();    
+            
+    }
     
     //Test method for createEmployeePersonFromAccountContact
     /*AMSFTS
