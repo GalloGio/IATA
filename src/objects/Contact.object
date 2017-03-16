@@ -4376,7 +4376,7 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <externalId>false</externalId>
         <formula>/*PreProd*/
 /* 
-IF( CNS_Contact__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
+IF( Account.CNS_Account__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
 +SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
 &quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
 SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
@@ -4396,7 +4396,7 @@ IF(Account.IATACode__c != &apos;&apos;
 */
 
 /*Prod*/ 
-IF( CNS_Contact__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
+IF(  Account.CNS_Account__c , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
 +SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
 &quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
 SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
