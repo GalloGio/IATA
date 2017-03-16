@@ -98,7 +98,7 @@ public with sharing class SIDRACaseHelper {
 			SELECT Id, Identify_as_Last_SIDRA_Date__c,
 				(SELECT Id, CaseNumber, CreatedDate, Remittance_Period__c, IRR_Withdrawal_Reason__c, ParentId,
 					IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c, IRR_Type__c, Short_Payment_Amount__c,
-					CurrencyISOCode, Short_Payment_Amount_USD__c, Remittance_Date__c
+					CurrencyISOCode, Currency__c, Short_Payment_Amount_USD__c, Remittance_Date__c
 				FROM Account.Cases
 				WHERE RecordTypeId =:sidraRecordTypeId
 				ORDER BY createdDate DESC)
@@ -170,7 +170,7 @@ public with sharing class SIDRACaseHelper {
 		String comment = Label.SIDRA_Automated_Case_Message;
 		comment = comment.replace('{0}', nvl(relatedCase.CaseNumber));
 		comment = comment.replace('{1}', nvl(relatedCase.Short_Payment_Amount__c));
-		comment = comment.replace('{2}', nvl(relatedCase.CurrencyISOCode));
+		comment = comment.replace('{2}', nvl(relatedCase.Currency__c));
 		comment = comment.replace('{3}', nvl(relatedCase.Short_Payment_Amount_USD__c));
 		comment = comment.replace('{4}', nvl(relatedCase.Remittance_Date__c));
 		return new CaseComment( ParentId = parentCase.Id, CommentBody = comment);
