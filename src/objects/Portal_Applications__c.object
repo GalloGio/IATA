@@ -291,6 +291,7 @@
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics,
 &quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -319,6 +320,7 @@ Name
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
+      &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -453,8 +455,8 @@ AND(
 Name = &quot;Resource Center&quot;, 
 CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
 ), 
-Name = &quot;Payment Link&quot;, 
-Name = &quot;Resource Center&quot; 
+Name = &quot;Payment Link&quot;,
+Name = &quot;Resource Center&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
