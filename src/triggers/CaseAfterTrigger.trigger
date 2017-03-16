@@ -21,7 +21,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean trgCase_ContactLastSurveyUpdate = true;						//44444444444444
 	boolean trgParentCaseUpdate = true;									//33333333333333
 	boolean trgICCSManageProductAssignment = true;						//33333333333333
-	boolean trgICCS_ASP_CaseClosed = false;
+	boolean trgICCS_ASP_CaseClosed = true;								//44444444444444
 	boolean trgCreateUpdateServiceRenderedRecord = true;				//44444444444444			
 	boolean trgCaseEscalationMailNotificationICH = false;
 	boolean trgCheckSISCaseRecycleBinAfterInsert = true;				//22222222222222
@@ -46,6 +46,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
 	ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
 	ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
+	Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
     /*Record type*/	
     
     /*Variables*/
@@ -863,16 +864,15 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgCase_ContactLastSurveyUpdate Trigger.isUpdate*/
 		
-		/*trgICCS_ASP_CaseClosed Trigger.isUpdate
+		/*trgICCS_ASP_CaseClosed Trigger.isUpdate*/
 		if(trgICCS_ASP_CaseClosed){
 			//Hold list of IEC_Subscription_History record to be inserted
 			List<IEC_Subscription_History__c> IEC_SubHistory_Lst_ToInsert = new List<IEC_Subscription_History__c>();
 			//Hold list of Cases record to be Updated
 			List<Case> CaseToUpdate_Lst = new List<Case>();
 			for (Case c : Trigger.new) {
-				Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
 				//If the case is Closed and Matches the following cretiria
-		        if (c.RecordTypeId == CaseSAAMId  && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
+		        if (c.RecordTypeId == CaseSAAMId && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
 						&& c.Reason1__c == 'PAX/CARGO Certificate' && c.Product_Category_ID__c != null && !c.Product_Category_ID__c.contains('Triggered') && Integer.valueOf(c.QuantityProduct__c) > 0){
 					//Creates new IEC_Subscription_History
 					IEC_Subscription_History__c  IEC_SubHistory  = new IEC_Subscription_History__c  () ;

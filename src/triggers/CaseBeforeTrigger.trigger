@@ -897,6 +897,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 // only process case of type SAAM
                 if (newCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
                     // get parent case
+                    //GM - IMPRO - START
+                    //TOGLI QUESTI CAVOLO DI OBBROBRI DA DENTRO IL FOR
                     Case[] parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, 
                     		c.secondFAnonComplianceDate__c, c.Account.Type, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
                     		from Case c where c.Id =: newCase.ParentId];
