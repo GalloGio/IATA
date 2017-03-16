@@ -545,7 +545,7 @@ public without sharing class ISSP_Registration {
         }
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(customerTypeSearch); 
         system.debug('recordTypesSet: ' + recordTypesSet);
-        String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c from Account where '
+        String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
                          + whereStr + ' and RecordType.DeveloperName in :recordTypesSet';
         
         system.debug('customerTypeSearch: ' + customerTypeSearch);                 
@@ -604,7 +604,7 @@ public without sharing class ISSP_Registration {
                     if (searchIATACode != '' && searchIATACode != null){
                         whereStr += ' AND (IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';
                     }
-                    queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
+                    queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
                              + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';
                     system.debug('QUERY: ' + queryStr);
                     try {
@@ -902,6 +902,7 @@ public without sharing class ISSP_Registration {
                 acc.Category__c = hqAccount.Category__c;
                 acc.IATACode__c = hqAccount.IATACode__c;
                 acc.Airline_designator__c = hqAccount.Airline_designator__c;
+                acc.Airline_Prefix__c = hqAccount.Airline_Prefix__c;
             }
             else{
                 acc.Reason_for_creation__c = 'Created by customer';
