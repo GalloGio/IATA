@@ -77,37 +77,6 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
-        <fullName>ANG_Accredited_Agents_Only__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Service can only be subscribed by accredited agents.</description>
-        <externalId>false</externalId>
-        <label>Accredited Agents Only</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
-        <description>Permitted agency sector</description>
-        <externalId>false</externalId>
-        <label>Restrict by Agency Sector</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Travel Agent</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Cargo Agent</fullName>
-                    <default>false</default>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Agency__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -498,6 +467,36 @@ Name = &quot;Resource Center&quot;
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>ANG_Accredited_Agents_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Service can only be subscribed by accredited agents.</description>
+        <externalId>false</externalId>
+        <label>Accredited Agents Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
+        <description>Permitted agency sector</description>
+        <externalId>false</externalId>
+        <label>Restrict by Agency Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <picklist>
+            <picklistValues>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+    </fields>    
     <label>Portal Service</label>
     <listViews>
         <fullName>All</fullName>
@@ -549,7 +548,7 @@ Name = &quot;Resource Center&quot;
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
         <label>ISS Portal Application</label>
-        <picklistValues>
+        <picklistValues>+
             <picklist>TD_Access_Level__c</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -615,6 +614,17 @@ Name = &quot;Resource Center&quot;
             </values>
             <values>
                 <fullName>Settlement Calendars</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
