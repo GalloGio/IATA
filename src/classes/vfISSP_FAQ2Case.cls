@@ -508,7 +508,7 @@ public without sharing class vfISSP_FAQ2Case
         }
 
         Boolean isCNS = ISSP_Utilities.isCNS();
-        if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c)) {
+        if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', '')))) {
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
         }
