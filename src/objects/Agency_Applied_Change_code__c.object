@@ -269,6 +269,14 @@
         <label>Change Code</label>
         <picklist>
             <picklistValues>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DEF</fullName>
                 <default>false</default>
             </picklistValues>
@@ -647,7 +655,7 @@ AND(
         <label>Operation</label>
         <length>5</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1555,6 +1563,14 @@ AND(
         </picklistValues>
         <picklistValues>
             <picklist>Change_Code__c</picklist>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>DEF</fullName>
                 <default>false</default>
