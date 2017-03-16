@@ -2,8 +2,11 @@ trigger ISSP_CreateNotificationForPortal_Application_Right on Portal_Application
 	
      if(PortalServiceAccessTriggerHandler.privetTrigger) return;
      
-     if(trigger.isInsert && trigger.isAfter)
+     if(trigger.isInsert && trigger.isAfter) {
 		PortalServiceAccessTriggerHandler.onAfterInsert(trigger.new, trigger.newMap);
+		
+		PortalServiceAccessTriggerHandler.SubscribeNewUsersToAllCountryProfiles(trigger.newMap);
+	}
 		 
      if(trigger.isUpdate && trigger.isBefore) {
      	if(!ISSP_CreateNotification.privetTrigger)
