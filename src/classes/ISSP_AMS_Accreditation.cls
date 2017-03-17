@@ -329,7 +329,9 @@ public without sharing class ISSP_AMS_Accreditation {
        
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
-        lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
+        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_StepsAll_Cargo_Title_CNS;}
+            else{ lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;}
+        
         lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
         lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
         lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
@@ -426,13 +428,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
                 
                  //AS - NoC V2.0 - ensure that the following var are set for the case with "Open - EDMC" status
-            	if(isBankAccountChange) {
-                	newForm.Is_change_bank_account_details__c = true;
-            	} else {
-                	newForm.Is_change_legal_name__c = true;
-                	newForm.Is_change_location__c = true;
-                	newForm.Is_change_ownership_or_shareholding__c = true;
-            	}
+                if(isBankAccountChange) {
+                    newForm.Is_change_bank_account_details__c = true;
+                } else {
+                    newForm.Is_change_legal_name__c = true;
+                    newForm.Is_change_location__c = true;
+                    newForm.Is_change_ownership_or_shareholding__c = true;
+                }
 
                 createNoCList();
 
@@ -921,7 +923,12 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (isocountry.EACP_Country__c) {
                     options.add(new SelectOption('New HO - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_HO));
                 } else {
-                    options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                    if(communityName=='CNS'){
+                        options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO_CNS));
+                    }else{
+                        options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                    }
+                    
                 }
 
                 if (isCASSCountry && !isocountry.Disable_non_IATA_Cargo_Agents__c) { //Only CASS Countries get CASS Assoc. option
@@ -1024,7 +1031,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 options.add(new SelectOption('New HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
             }
         }
-
+       
         system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);
 
         return options;
@@ -2497,7 +2504,7 @@ public without sharing class ISSP_AMS_Accreditation {
             return goToStep3();
         }
         System.DEBUG('goToFinalStep  - if (!validateCharactersInForm() || !validateForm(true) ) - Pass ');
-		System.DEBUG('goToFinalStep  - newform.Accept_terms_and_conditions__c - '+newform.Accept_terms_and_conditions__c);
+        System.DEBUG('goToFinalStep  - newform.Accept_terms_and_conditions__c - '+newform.Accept_terms_and_conditions__c);
         
         if ( !validateAttachedFiles()) {
             //ApexPages.Message myMsg;

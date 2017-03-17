@@ -9619,6 +9619,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Cargo Agent - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_CGO_HO_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION CGO HO CNS</shortDescription>
+        <value>CNS Endorsed Cargo Agent - New Head Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_COURIER_BRANCH</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -11229,7 +11237,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS StepsAll Cargo Title CNS</shortDescription>
-        <value>Application for approval as an CNS Endorsed Cargo Agent</value>
+        <value>Application for approval as a CNS Endorsed Cargo Agent</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Courier_Title</fullName>
@@ -11273,6 +11281,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Submit IATA</shortDescription>
         <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Submit_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Submit CNS</shortDescription>
+        <value>Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
