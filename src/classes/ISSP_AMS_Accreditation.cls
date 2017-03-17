@@ -329,7 +329,9 @@ public without sharing class ISSP_AMS_Accreditation {
        
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
-        lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;
+        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_StepsAll_Cargo_Title_CNS;}
+            else{ lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;}
+        
         lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
         lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
         lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
