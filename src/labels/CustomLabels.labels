@@ -11225,6 +11225,13 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Application for approval as an IATA Cargo Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepsAll_Cargo_Title_CNS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepsAll Cargo Title CNS</shortDescription>
+        <value>Application for approval as an CNS Endorsed Cargo Agent</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepsAll_Courier_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
