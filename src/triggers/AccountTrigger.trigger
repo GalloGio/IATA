@@ -1,18 +1,17 @@
 trigger AccountTrigger on Account (before insert, after insert, after update, before update, before delete, after delete){
-  //Delete GDS, Account Category & GDP Products When Account is deleted
-   if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
- 
-   if(Trigger.isBefore && Trigger.isDelete) 
-   {
-    system.debug('old..'+Trigger.old);
-    ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
-
+  
   if(!AMS_TriggerExecutionManager.checkExecution(Account.getSObjectType(), 'AccountTrigger')) { return; }
   
   //DTULLO: added to skip trigger execution if aggreagating data for PwC
   if(AMS_Batch_AggregatePwcData.bIsAMS_Batch_AggregatePwcDataRunning){return;}
   
-  
+  //Delete GDS, Account Category & GDP Products When Account is deleted
+   if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccountItems(Trigger.old);
+ 
+   if(Trigger.isBefore && Trigger.isDelete) 
+   {
+    ams2gdp_TriggerHelper.crossDeleteAccountItemsBefore(Trigger.old);}
+
   if(trigger.isBefore && (trigger.isInsert || trigger.isupdate )){
 
     AccountTriggerHelper.copyInfoFromHqToBranchOnInsertAndUpdate(trigger.New, trigger.OldMap);
