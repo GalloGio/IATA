@@ -135,7 +135,8 @@
 
                   <a onclick="doRequest('{!item.recordService.Id}')"   class="pull-right btn_iata_success btn btn-block"  
                   style="display:{!IF(item.Status == null || item.Status =='' , '','none')}">
-                  {!$label.ISSP_New_Service_Request}
+                  <!--{!$label.ISSP_New_Service_Request}-->
+                  {!item.btnLabel}
                   </a>
 
                   <a id="Hiddenbtn" data-toggle="modal" href="#myModal"
