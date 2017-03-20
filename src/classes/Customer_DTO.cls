@@ -112,7 +112,7 @@ public class Customer_DTO
         
         //*** check if account is eligible
         Boolean isAccountEligible = false;
-        if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Others)
+        if (check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_BranchAirline || check.Account.RecordType.DeveloperName == IECConstants.Account_RecordType_Airline )
         {
             if ( check.Account.ParentId != null && check.Account.Parent.ICH_Member__c == true)      
                 return true;
