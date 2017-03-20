@@ -89,7 +89,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
 
             //ON INSERT
-            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA
+            //USED ON: HO,BR,TIDS,GSA,AHA,GSSA,MSO,SA,NEWHELITE
             oscar.Dossier_Reception_Date__c = Date.today();
 
             if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
@@ -102,7 +102,15 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE){
+                oscar.Sanity_check_deadline__c = Date.today() + 15;
+                oscar.OSCAR_Deadline__c = Date.today() + 30;
 
+                if(oscar.Is_using_credit_card__c == true){
+                    oscar.Requested_Bank_Guarantee_amount__c = 5000;
+                    oscar.Requested_Bank_Guarantee_currency__c = 'USD';
+                }
+            }
 
             if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
                 oscar.BSPLink_participation__c = true;
@@ -338,6 +346,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
 
     private static void applyAccreditationProcessLogic(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar) {
+
         //To update with current date 'Checkbox Field' => 'Date Field'
         Map<String,String> oscarDateFieldsMap = new Map <String,String> {
             'Cancel_Inspection_Requests_Disapproval__c' => 'Cancel_Inspection_Req_Disapproval_Date__c',
@@ -396,6 +405,18 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Invoice_deadline__c = Date.today() + 7;
         }
 
+        if (oldOSCAR.Is_using_credit_card__c == true && updatedOscar.Is_using_credit_card__c == false) {
+            updatedOSCAR.STEP34__c = 'Not Applicaple';
+            updatedOSCAR.STEP35__c = 'Not Applicaple';
+            updatedOSCAR.Requested_Bank_Guarantee_amount__c = null;
+            updatedOSCAR.Requested_Bank_Guarantee_currency__c =  '';
+        }
+
+        if (oldOSCAR.Is_using_credit_card__c == false && updatedOscar.Is_using_credit_card__c == true) {
+            updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
+            updatedOSCAR.Requested_Bank_Guarantee_currency__c =  'USD';
+        } 
+
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
             updatedOSCAR.STEP13__c = 'In Progress';
 
@@ -407,21 +428,43 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
+
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
+
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+            
+                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
+
+                    System.debug('Sending the email for the user to anounce approval of the oscar');
+
+                    //using an already existing method to send email aler to user.
+                    AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,true);
+
+                }
             }
             updatedOSCAR.STEP2__c = 'Passed';
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
+
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
+
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
+
+                System.debug('Sending the email for the user to anounce disapproval of the oscar');
+
+                    //using an already existing method to send email aler to user.
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,false);
+
+            }
+
             updatedOSCAR.STEP2__c = 'Failed';
         }
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Reprocess case') {
