@@ -17,6 +17,7 @@ global   class  ArchiveAttachmentListController {
     public boolean hasAttachment{get; set;} 
     public Boolean fullAttachmentAccess {get; set;}
     public List<attachWrapper> sfdcAttachmentList {get; set;} //TF - SP8-US196
+    public list<WrapperAttach> listAmazon {get; set;}
 
     public Boolean hasOscar{
         get{
@@ -31,6 +32,16 @@ global   class  ArchiveAttachmentListController {
         set{
             relatedCase = value;
             hasOscar = String.isNotEmpty(relatedCase.OSCAR__c);
+        }
+    }
+    
+    public Id id {
+        get;
+        set {
+            if (this.Id == null ) {
+                this.Id = value;
+                //loadAttachmentFromCaseId();
+            }
         }
     }
     
@@ -53,6 +64,7 @@ global   class  ArchiveAttachmentListController {
     
     @TestVisible
     private void loadAttachmentFromCaseId(){
+    // this.listAmazon.clear();
             this.relatedCase = [Select  CaseNumber, Id, OSCAR__c from Case where Id = :aCaseId];
              system.debug('loadAttachmentFromCaseId '+aCaseId );
             this.sfdcAttachments = [SELECT IsPrivate, Id, ParentId, OwnerId, Name, CreatedById, CreatedBy.Name, LastModifiedDate, BodyLength, 
@@ -94,6 +106,12 @@ global   class  ArchiveAttachmentListController {
                     }
                 }
             }
+        
+                if(this.listAmazon == null || this.listAmazon.isEmpty()){
+                        this.listAmazon = getAmazonAttachments(aCaseId);
+                        system.debug('FirstList: ' + this.listAmazon);
+                }
+            
             
             //this.sfdcAttachments = getAttachmentByCase(aCaseId, !fullAttachmentAccess);
             this.archivedAttachments  = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, Originally_created_by__c FROM Archived_Attachment__c where Case__c= :aCaseId and ArchivedMessage__c = null order by Original_Creation_Date__c desc];
@@ -104,7 +122,7 @@ global   class  ArchiveAttachmentListController {
                     system.debug('add to map new bucket '+a.Bucket__c);
                }
             }
-            this.hasAttachment = (this.archivedAttachments.size() + this.sfdcAttachments.size())>0;
+            this.hasAttachment = (this.archivedAttachments.size() + this.sfdcAttachments.size() + this.listAmazon.size())>0;
     
     }
     
@@ -153,9 +171,18 @@ global   class  ArchiveAttachmentListController {
         return aCaseId ;
     }
     //AEF:
-    public Pagereference reload() {
+    public Pagereference refreshList() { 
+      //  this.listAmazon.clear();
+        loadAttachmentFromCaseId();
+         //this.listAmazon = getAmazonAttachments(aCaseId);
+        if(!this.listAmazon.isEmpty()){
+            this.listAmazon.clear();
+            this.listAmazon = getAmazonAttachments(aCaseId);
+        }
+         
         return null;
     }
+    
     
     public static Boolean hasUserLimitedPermissions() {
         return
@@ -218,7 +245,34 @@ global   class  ArchiveAttachmentListController {
                 newPerm.ShowToPortalUsers__c = true;
             }
             insert newPerm;
+        } 
+    }
+    
+     public static String getAmazonFolder(Id sobjectId) {
+        String suffix = String.ValueOf(sobjectId).substring(0,3);
+        return '' + suffix + '/' + String.valueOf(sobjectId) + '/';
+    }
+    
+     private static list<WrapperAttach> getAmazonAttachments(Id sobjectId) {
+        list<WrapperAttach> listAmazon = new list<WrapperAttach>();
+        try {        
+            String folder = getAmazonFolder(sobjectId);            
+            list<AmazonRest.S3File> listS3Files = AmazonRest.getListFiles(folder, AmazonCredentials.getCredentials('GenericAttach'));
+            list<AmazonFile> listAmazonfiles = AmazonFile.getFiles( sobjectId, listS3Files);
+            for(AmazonFile file: listAmazonfiles){
+                listAmazon.add(new WrapperAttach(file));
+            }
+        } catch (Exception e) {
+            System.debug(e.getMessage());
         }
+        return listAmazon;
+    }
+    
+    public String getTransferAttachmentsUrl() {
+        PageReference pageref = Page.TransferAttachmentToCase;
+        pageref.getParameters().put('id',this.aCaseId);
+        pageref.setRedirect(true);
+        return pageref.getUrl();
     }
     
     //TF - SP8-US196
@@ -226,4 +280,25 @@ global   class  ArchiveAttachmentListController {
         public Boolean isPrivate {get; set;}
         public Attachment recordAttachment {get; set;}
     }
+    
+    @RemoteAction
+    global static string getExpiringLink(string fileName ) {
+        Integer secondsValid = 300;
+        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+        return link;
+    }
+    
+    @RemoteAction
+    global static boolean deleteAttachmentAmazon(string strId, String fullName) {
+        try {
+            Id sObjectId = Id.ValueOf(strId);
+            WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
+            Boolean result = attach.moveToBucket();
+            return result;
+            
+        } catch (Exception e) {
+            System.debug('GenericAttachmentListController.deleteAmazonAttachment' + e.getMessage());
+            return false;
+        }
  }
+}
