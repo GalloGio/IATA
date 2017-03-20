@@ -77,6 +77,36 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
+        <fullName>ANG_Accredited_Agents_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Service can only be subscribed by accredited agents.</description>
+        <externalId>false</externalId>
+        <label>Accredited Agents Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
+        <description>Permitted agency sector</description>
+        <externalId>false</externalId>
+        <label>Restrict by Agency Sector</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -326,7 +356,7 @@ Name
       &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
-      &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+      &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -461,44 +491,14 @@ AND(
 Name = &quot;Resource Center&quot;, 
 CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
 ), 
-Name = &quot;Payment Link&quot;,
-Name = &quot;Resource Center&quot;
+Name = &quot;Payment Link&quot;, 
+Name = &quot;Resource Center&quot; 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <fields>
-        <fullName>ANG_Accredited_Agents_Only__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Service can only be subscribed by accredited agents.</description>
-        <externalId>false</externalId>
-        <label>Accredited Agents Only</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
-        <description>Permitted agency sector</description>
-        <externalId>false</externalId>
-        <label>Restrict by Agency Sector</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <picklist>
-            <picklistValues>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Cargo Agent</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
-    </fields>    
     <label>Portal Service</label>
     <listViews>
         <fullName>All</fullName>
@@ -550,7 +550,18 @@ Name = &quot;Resource Center&quot;
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
         <label>ISS Portal Application</label>
-        <picklistValues>+
+        <picklistValues>
+            <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>TD_Access_Level__c</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -616,17 +627,6 @@ Name = &quot;Resource Center&quot;
             </values>
             <values>
                 <fullName>Settlement Calendars</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
-            <values>
-                <fullName>Travel Agent</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cargo Agent</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
