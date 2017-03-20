@@ -126,7 +126,7 @@ public without sharing class ISSP_Registration {
     
     public String country {get; set;}
     
-    // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL ‚ÄúFirst_Community‚Äù:
+    // Start MM: "Project Registration Merge" - Define a referrer which will be checked against parameters included in the URL ìFirst_Communityî:
     public string sRefererCommunity {get; set;}
     // EM: New
     public string urlredirect {get; set;}
@@ -500,7 +500,7 @@ public without sharing class ISSP_Registration {
                 whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
             }
             if (searchIATACode != '' && searchIATACode != null){
-                whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+                whereStr += ' AND (IATACode__c=\'' + searchIATACode + '\'OR Airline_Prefix__c=\'' + searchIATACode + '\')';
             }
             if (searchCountry != '' && searchCountry != null){
                 whereStr += ' AND IATA_ISO_Country__c=\'' + searchCountry + '\'';
@@ -519,7 +519,7 @@ public without sharing class ISSP_Registration {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\'';
         }
         else if (isAgency) {
-            whereStr = 'IATACode__c=\'' + searchIATACode + '\'';// and RecordType.DeveloperName = \'IATA_Agency\'';
+            whereStr = '(IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';// and RecordType.DeveloperName = \'IATA_Agency\'';
         }
         else if (isNotIATA || isOther) {
             whereStr = 'Name like \'%' + searchCompanyName + '%\' and IATA_ISO_Country__c=\'' + searchCountry + '\' AND Sector__c != \'General Public\'';
@@ -545,7 +545,7 @@ public without sharing class ISSP_Registration {
         }
         set<string> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(customerTypeSearch); 
         system.debug('recordTypesSet: ' + recordTypesSet);
-        String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c from Account where '
+        String queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
                          + whereStr + ' and RecordType.DeveloperName in :recordTypesSet';
         
         system.debug('customerTypeSearch: ' + customerTypeSearch);                 
@@ -602,9 +602,9 @@ public without sharing class ISSP_Registration {
                         whereStr += ' AND Airline_designator__c=\'' + searchDesignatorCode + '\'';
                     }
                     if (searchIATACode != '' && searchIATACode != null){
-                        whereStr += ' AND IATACode__c=\'' + searchIATACode + '\'';
+                        whereStr += ' AND (IATACode__c=\'' + searchIATACode + '\' OR Airline_Prefix__c=\'' + searchIATACode + '\')';
                     }
-                    queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
+                    queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c, Airline_Prefix__c from Account where '
                              + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';
                     system.debug('QUERY: ' + queryStr);
                     try {
@@ -894,7 +894,7 @@ public without sharing class ISSP_Registration {
             }
             system.debug('RecordTypeId: ' + getRecordTypeCode(customerTypeCreate));
             system.debug('createBranch: ' + createBranch);
-            acc.RecordTypeId = getRecordTypeCode(customerTypeCreate);
+            acc.RecordTypeId = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId();
             acc.OwnerId = ISSP_Constant.newAccountOwnerId;
             if (createBranch){
                 acc.Reason_for_creation__c = 'Branch is missing';
@@ -902,6 +902,7 @@ public without sharing class ISSP_Registration {
                 acc.Category__c = hqAccount.Category__c;
                 acc.IATACode__c = hqAccount.IATACode__c;
                 acc.Airline_designator__c = hqAccount.Airline_designator__c;
+                acc.Airline_Prefix__c = hqAccount.Airline_Prefix__c;
             }
             else{
                 acc.Reason_for_creation__c = 'Created by customer';

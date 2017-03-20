@@ -88,7 +88,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                         //, OwnerId
                         //, Scheduled_Date_Valid_Until__c
                         //, Scheduled_Date__c
-                        //, Status__c
+                        , Status__c
                         //, Subject__c
                         //, Test_Email_Last_Send_Time_Stamp__c
                         //, Test_Email_Total_Sent_On_Stamp_Period__c
@@ -293,6 +293,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
         a.New_Balance__c = newEmailBalance;
         a.Related_Billing_Account__c = billingAccount.Id;
         a.Total_Count__c = -1 * Integer.valueOf(ebcCampaign.Number_of_Recipients__c);
+        a.Name = 'Campaign Send';
         
         insert a;
         

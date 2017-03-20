@@ -7,75 +7,146 @@
 
 @isTest(SeeAllData=true)
 public class trgHndlrIECInvoice_tst {
-	private static zqu__ZProduct__c oProduct;
-	private static zqu__ZProduct__c oProductTax;
-	private static zqu__ZProduct__c oProductShip;
-	private static zqu__ProductRatePlan__c oProductRatePlan;
-	private static zqu__ProductRatePlan__c oProductRatePlanTax;
-	private static zqu__ProductRatePlan__c oProductRatePlanShip;
-	private static Zuora__Subscription__c oSubscription;
-	private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge;
-	private static Zuora__SubscriptionProductCharge__c oSubscriptionChargeTax;
-	private static Zuora__SubscriptionProductCharge__c oSubscriptionChargeShip;
-	private static Zuora__ZInvoice__c oInvoice;
-	private static SAP_Account__c oSAPAccount;
-	private static IEC_Subscription_History__c oSubHistory;
+    private static zqu__ZProduct__c oProduct, oProduct2, oProduct3, oProductTax, oProductShip;
+    private static zqu__ProductRatePlan__c oProductRatePlan, oProductRatePlan2, oProductRatePlan3, oProductRatePlanTax, oProductRatePlanShip;
+    private static zqu__ProductRatePlanCharge__c oProductRatePlanCharge, oProductRatePlanCharge2, oProductRatePlanCharge3;
+    private static Zuora__Subscription__c oSubscription, oSubscription2;
+    private static Zuora__SubscriptionProductCharge__c oSubscriptionCharge, oSubscriptionChargeUnit, oSubscriptionChargeError, oSubscriptionChargeTax, oSubscriptionChargeShip;
+    private static Zuora__ZInvoice__c oInvoice;
+    private static SAP_Account__c oSAPAccount;
+    private static IEC_Subscription_History__c oSubHistory;
     public static boolean stopCallout {get;set;}
 
 
-	public static List<Zuora.zObject> getSampleInvoiceItems() {
-		Zuora.zObject zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
-		zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
-		zInvoiceItem.setValue('ChargeAmount', 100);
-		zInvoiceItem.setValue('ChargeDate', DateTime.now());
-		zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
-		zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
-		zInvoiceItem.setValue('ProductId', oProduct.zqu__ZuoraId__c);
-		zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
-		zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
-		zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionCharge.Zuora__External_Id__c);
-		zInvoiceItem.setValue('Quantity', 22);
-		zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
-		zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
-		zInvoiceItem.setValue('TaxAmount', 13);
-		zInvoiceItem.setValue('UnitPrice', 100);
-		
-		Zuora.zObject zInvoiceItemTax = new Zuora.zObject('InvoiceItem'); 
-		zInvoiceItemTax.setValue('Id', IECUtil.NewGuid().substring(0, 32));
-		zInvoiceItemTax.setValue('ChargeAmount', 10);
-		zInvoiceItemTax.setValue('ChargeDate', DateTime.now());
-		zInvoiceItemTax.setValue('ChargeName', 'CHARGETESTTax');
-		zInvoiceItemTax.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
-		zInvoiceItemTax.setValue('ProductId', oProductTax.zqu__ZuoraId__c);
-		zInvoiceItemTax.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
-		zInvoiceItemTax.setValue('SubscriptionNumber', oSubscription.Name);
-		zInvoiceItemTax.setValue('RatePlanChargeId', oSubscriptionChargeTax.Zuora__External_Id__c);
-		zInvoiceItemTax.setValue('Quantity', 1);
-		zInvoiceItemTax.setValue('ServiceStartDate', DateTime.now());
-		zInvoiceItemTax.setValue('ServiceEndDate', DateTime.now().addYears(1));
-		zInvoiceItemTax.setValue('UnitPrice', 10);
-		
-		Zuora.zObject zInvoiceItemShip = new Zuora.zObject('InvoiceItem'); 
-		zInvoiceItemShip.setValue('Id', IECUtil.NewGuid().substring(0, 32));
-		zInvoiceItemShip.setValue('ChargeAmount', 10);
-		zInvoiceItemShip.setValue('ChargeDate', DateTime.now());
-		zInvoiceItemShip.setValue('ChargeName', 'CHARGETESTShip');
-		zInvoiceItemShip.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
-		zInvoiceItemShip.setValue('ProductId', oProductShip.zqu__ZuoraId__c);
-		zInvoiceItemShip.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
-		zInvoiceItemShip.setValue('SubscriptionNumber', oSubscription.Name);
-		zInvoiceItemShip.setValue('RatePlanChargeId', oSubscriptionChargeShip.Zuora__External_Id__c);
-		zInvoiceItemShip.setValue('Quantity', 1);
-		zInvoiceItemShip.setValue('ServiceStartDate', DateTime.now());
-		zInvoiceItemShip.setValue('ServiceEndDate', DateTime.now().addYears(1));
-		zInvoiceItemShip.setValue('UnitPrice', 10);
-		
-		return new List<Zuora.zObject> {zInvoiceItem, zInvoiceItemTax, zInvoiceItemShip};
-	}
-	
-	static void Init(IECCustomer loggedCustomer) {
+    public static List<Zuora.zObject> getSampleInvoiceItems() {
+        List<Zuora.zObject> lstZInvoiceItem = new List<Zuora.zObject>();
+        Zuora.zObject zInvoiceItem;
+        
+        //*** set up fee
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', 100);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProduct.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionCharge.Zuora__External_Id__c);
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 100);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** unit price
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', 200);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProduct.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionChargeUnit.Zuora__External_Id__c);
+        zInvoiceItem.setValue('Quantity', 10);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 20);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** discount with a product in subscription
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', -15);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProduct.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', 'discount');
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 15);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** discount with a product NOT in subscription
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', -10);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProduct2.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', 'discount 2');
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 10);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** product NOT in subscription to be rejected because is not discount
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', 10);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'CHARGETEST');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProduct3.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription2.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription2.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionChargeError.Zuora__External_Id__c);
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 10);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** tax
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', 10);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'Tax');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProductTax.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionChargeTax.Zuora__External_Id__c);
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 10);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        //*** shipping
+        zInvoiceItem = new Zuora.zObject('InvoiceItem'); 
+        zInvoiceItem.setValue('Id', IECUtil.NewGuid().substring(0, 32));
+        zInvoiceItem.setValue('ChargeAmount', 10);
+        zInvoiceItem.setValue('ChargeDate', DateTime.now());
+        zInvoiceItem.setValue('ChargeName', 'Shipping');
+        zInvoiceItem.setValue('InvoiceId', oInvoice.Zuora__External_Id__c);
+        zInvoiceItem.setValue('ProductId', oProductShip.zqu__ZuoraId__c);
+        zInvoiceItem.setValue('SubscriptionId', oSubscription.Zuora__External_Id__c);
+        zInvoiceItem.setValue('SubscriptionNumber', oSubscription.Name);
+        zInvoiceItem.setValue('RatePlanChargeId', oSubscriptionChargeShip.Zuora__External_Id__c);
+        zInvoiceItem.setValue('Quantity', 1);
+        zInvoiceItem.setValue('ServiceStartDate', DateTime.now());
+        zInvoiceItem.setValue('ServiceEndDate', DateTime.now().addYears(1));
+        zInvoiceItem.setValue('UnitPrice', 10);
+        lstZInvoiceItem.add(zInvoiceItem);
+        
+        return lstZInvoiceItem;
+    }
+    
+    static void Init(IECCustomer loggedCustomer) {
 
-		//-- Generate Zuora related items 
+        //-- Generate Zuora related items 
         try{
             //-- ZProduct 1 for Tax & 1 for Shipping
             List<zqu__ZProduct__c> zProducts = TestDataGenerator.generateZProducts(2, true);
@@ -96,46 +167,69 @@ public class trgHndlrIECInvoice_tst {
         }
         catch(Exception ex){}
             
-
-		
-        // create dummy Zuora product
-    	oProduct = IECTestUtil.CreateSampleProduct('Product1');
-    	oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
-    	oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
-    	insert oProduct;
-    	
-    	// create dummy Zuora rate plan
-    	oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
-    	oProductRatePlan.zqu__Deleted__c = false;
-    	insert oProductRatePlan;
-
-    	oSAPAccount = IECTestUtil.CreateSampleSAPAccount(loggedCustomer.RelatedAccount.Id);
-    	insert oSAPAccount;
-    	
-        // create dummy oSubscription
-        oSubscription = IECTestUtil.createSampleSubscription(loggedCustomer.RelatedAccount.Id, 'Subs 01', Date.today().addMonths(6));
-        oSubscription.Zuora__Version__c = 3;
-        insert oSubscription;
+        List<Product2> lstProduct = TestDataGenerator.generateProducts(3, true);
+        Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+        List<PricebookEntry> lstPBE = new List<PricebookEntry>();
+        for (Integer i1 = 0; i1 < lstProduct.size(); i1++)
+            lstPBE.add(new PricebookEntry( Pricebook2Id = stdPriceBook.Id, Product2Id = lstProduct[i1].Id, UnitPrice = 100, IsActive = true));
+        insert lstPBE;
         
-        // create dummy oSubscription charge
-        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
-        insert oSubscriptionCharge;
-        
-        // Create dummy tax charge
+        // create/get dummy Zuora product
+        oProduct = IECTestUtil.CreateSampleProduct('Product1');
+        oProduct.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
+        oProduct.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
+        oProduct.SAPProductMaterialNo__c = lstProduct[0].SAP_Material_Number__c;
+        oProduct2 = IECTestUtil.CreateSampleProduct('Product2');
+        oProduct2.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
+        oProduct2.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
+        oProduct2.SAPProductMaterialNo__c = lstProduct[1].SAP_Material_Number__c;
+        oProduct3 = IECTestUtil.CreateSampleProduct('Product3');
+        oProduct3.ProductAudience__c = IECConstants.ProductAudience_Zuora_NONMEMBERSINGLE;
+        oProduct3.ProductCategory__c = IECConstants.ProductCategory_SF_TEST;
+        oProduct3.SAPProductMaterialNo__c = lstProduct[2].SAP_Material_Number__c;
+        insert new List<SObject>{oProduct, oProduct2, oProduct3};
+        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__ZProduct__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora shipping Plan id')][0];
+        oProductShip = [SELECT zqu__ZuoraId__c, Name, zqu__SKU__c, zqu__EffectiveEndDate__c FROM zqu__ZProduct__c WHERE Id =:oProductRatePlanShip.zqu__ZProduct__c][0];
         oProductRatePlanTax = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__ZProduct__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora tax Plan id')][0];
         oProductTax = [SELECT zqu__ZuoraId__c, Name, zqu__SKU__c, zqu__EffectiveEndDate__c FROM zqu__ZProduct__c WHERE Id =:oProductRatePlanTax.zqu__ZProduct__c][0];
         
+        // create/get dummy Zuora rate plan
+        oProductRatePlan = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct);
+        oProductRatePlan2 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct2);
+        oProductRatePlan3 = IECTestUtil.CreateSampleProductRatePlan('Rate plan 1', false, oProduct3);
+        insert new List<SObject>{oProductRatePlan, oProductRatePlan2};
+        
+        // create dummy Zuora rate plan charge
+        oProductRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan, 'Rate plan charge 1', 50);
+        oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'Rate plan charge 1', 50);
+        oProductRatePlanCharge3 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan3, 'Rate plan charge 1', 50);
+        insert new List<SObject>{oProductRatePlanCharge, oProductRatePlanCharge2, oProductRatePlanCharge3};
+
+        oSAPAccount = IECTestUtil.CreateSampleSAPAccount(loggedCustomer.RelatedAccount.Id);
+        insert oSAPAccount;
+        
+        // create dummy oSubscription
+        oSubscription = IECTestUtil.createSampleSubscription(loggedCustomer.RelatedAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        oSubscription.Zuora__Version__c = 3;
+        oSubscription2 = IECTestUtil.createSampleSubscription(loggedCustomer.RelatedAccount.Id, 'Subs 01', Date.today().addMonths(6));
+        oSubscription2.Zuora__Version__c = 3;
+        insert new List<SObject>{oSubscription, oSubscription2};
+        
+        // create dummy oSubscription charge
+        oSubscriptionCharge = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        // create dummy oSubscription per unit charge
+        oSubscriptionChargeUnit = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProduct, oProductRatePlan);
+        oSubscriptionChargeUnit.Zuora__Model__c = IECConstants.ChargeModel_Zuora_PerUnitPricing;
+        oSubscriptionChargeUnit.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = oProductRatePlanCharge.zqu__ZuoraId__c);
+        // create dummy oSubscription charge for product to reject
+        oSubscriptionChargeError = IECTestUtil.createSampleSubscriptionCharge(oSubscription2.Id, Date.today().addMonths(-6), oProduct3, oProductRatePlan3);
+        // create dummy tax charge
         oSubscriptionChargeTax = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProductTax, oProductRatePlanTax);
         oSubscriptionChargeTax.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora tax Charge id'));
-        insert oSubscriptionChargeTax;
-        
-		// Create dummy shipping charge
-        oProductRatePlanShip = [SELECT Name, zqu__Description__c, zqu__EffectiveEndDate__c, zqu__ZProduct__c FROM zqu__ProductRatePlan__c WHERE zqu__ZuoraId__c = :Utility.getTextSetting('Zuora shipping Plan id')][0];
-        oProductShip = [SELECT zqu__ZuoraId__c, Name, zqu__SKU__c, zqu__EffectiveEndDate__c FROM zqu__ZProduct__c WHERE Id =:oProductRatePlanTax.zqu__ZProduct__c][0];
-
+        // create dummy shipping charge
         oSubscriptionChargeShip = IECTestUtil.createSampleSubscriptionCharge(oSubscription.Id, Date.today().addMonths(-6), oProductShip, oProductRatePlanShip);
         oSubscriptionChargeShip.Product_Rate_Plan_Charge__r = new zqu__ProductRatePlanCharge__c(zqu__ZuoraId__c = Utility.getTextSetting('Zuora shipping Charge id'));
-        insert oSubscriptionChargeShip;
+        insert new List<SObject>{oSubscriptionCharge, oSubscriptionChargeUnit, oSubscriptionChargeError, oSubscriptionChargeTax, oSubscriptionChargeShip};
         
         // create dummy product category
         Product_Category__c oProductCategory = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_TEST, true);
@@ -154,78 +248,171 @@ public class trgHndlrIECInvoice_tst {
         
         oSubHistory = IECTestUtil.createSampleSubscriptionHistory(loggedCustomer, 'S-9876543210', oProductCategory.Id, oProductInfo.Id, oRatePlanInfo.Id, IECConstants.PaymentType.CREDIT_CARD, null);
         insert oSubHistory;
-	}
-	
+    }
+    
+    //*** cover majority of code in "IEC_Invoice_Item_Svc" with a payment
     static testMethod void TestInvoice() {
         trgHndlrIECInvoice_tst.stopCallout = true;
-    	System.debug('Unit Test: Start: TestInvoice');
-		List<Zuora__CustomerAccount__c> lstBillingAccount;
-		IECCustomer loggedCustomer;
-		
+        List<Zuora__CustomerAccount__c> lstBillingAccount;
+        IECCustomer loggedCustomer;
+        
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
-    	System.runAs(usr) {
-	        loggedCustomer = IECCustomer.getCurrentIECCustomer();
-    	}
+        System.runAs(usr) {
+            loggedCustomer = IECCustomer.getCurrentIECCustomer();
+        }
 
-    	Contact oContact = new Contact_Sel().getContactById(usr.contactId);
-    	Account oAccount = new Account_Sel().getAccountById(oContact.AccountId);
-		//-- Generate locations
-		List<IECAddress__c> addresses = TestDataGenerator.generateAddresses(1, true);
-		Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null);
-		Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId);
-		Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId);
+        Test.startTest();   //*** (Thai) to increase # SOQL and to complete future
 
-		oAccount.SoldTo_Location__c = soldToLocation.Id;
-		update oAccount;
-		
-		oContact.BillTo_Location__c = billToLocation.Id;
-		oContact.ShipTo_Location__c = shipToLocation.Id;
-		update oContact;
+        Contact oContact = new Contact_Sel().getContactById(usr.contactId);
+        Account oAccount = new Account_Sel().getAccountById(oContact.AccountId);
+        //-- Generate locations
+        List<IECAddress__c> addresses = TestDataGenerator.generateAddresses(1, true);
+        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null, 'ST-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'BT-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'SH-' + String.valueOf(addresses[0].Id).right(7));
 
-		Test.startTest();   //*** (Thai) to increase # SOQL and to complete future
+        oAccount.SoldTo_Location__c = soldToLocation.Id;
+        update oAccount;
+        
+        oContact.BillTo_Location__c = billToLocation.Id;
+        oContact.ShipTo_Location__c = shipToLocation.Id;
+        update oContact;
 
-		// Initialize Data    	
-    	Init(loggedCustomer);
-		lstBillingAccount =
-			[SELECT Id, Zuora__Account__c, CRMContactID__c, Contact__c
-			FROM Zuora__CustomerAccount__c
-			WHERE Zuora__Account__c = :loggedCustomer.RelatedAccount.Id
-				AND CRMContactID__c = :loggedCustomer.RelatedContact.Id];
-				
-	    // Create Zuora Paymen Method
-	    Zuora__PaymentMethod__c zPaymentMethod_CC = new Zuora__PaymentMethod__c (
-	    	Zuora__Type__c = 'CreditCard'
-	    	, Zuora__External_Id__c = TestDataGenerator.generateZuoraFakeId()
-	    	, Zuora__BillingAccount__c = lstBillingAccount[0].Id
-	    );
-	    insert zPaymentMethod_CC;
-	    
+        // Initialize Data      
+        Init(loggedCustomer);
+        lstBillingAccount =
+            [SELECT Id, Zuora__Account__c, CRMContactID__c, Contact__c
+            FROM Zuora__CustomerAccount__c
+            WHERE Zuora__Account__c = :loggedCustomer.RelatedAccount.Id
+                AND CRMContactID__c = :loggedCustomer.RelatedContact.Id];
+        
         // Set the default payment on one of the zAccounts to CreditCard
-        lstBillingAccount[0].Zuora__Default_Payment_Method__c = zPaymentMethod_CC.Id;
+        lstBillingAccount[0].Zuora__DefaultPaymentMethod__c = 'BankTransfer';
         lstBillingAccount[0].Zuora__Zuora_Id__c = TestDataGenerator.generateZuoraFakeId();
         update lstBillingAccount[0];
-    	
+        
         IECTestUtil.InvoiceTestOrigin = 'trgHndlrIECInvoice_tst';
         oInvoice = IECTestUtil.createSampleInvoice(lstBillingAccount.get(0), Date.today(), 113.0);
         insert oInvoice;
-
+        
+        Zuora__Payment__c oPayment = new Zuora__Payment__c(Zuora__Account__c=oAccount.Id, Zuora__BillingAccount__c=lstBillingAccount[0].Id, Zuora__Amount__c=500
+                                                         , Zuora__ReferenceId__c='payment number', Zuora__External_Id__c='transaction id', Zuora__EffectiveDate__c=system.today()
+                                                         , Zuora__PaymentMethod__c='Bank Transfer', Zuora__Type__c='Electronic'
+                                                         , Zuora__Invoice__c=oInvoice.Id, Zuora__InvoiceNumber__c=oInvoice.Name);
+        insert oPayment;
+        
         Test.stopTest();   //*** (Thai) stop to complete future method
 
         IECTestUtil.InvoiceTestOrigin = '';
         
+        //*** make sure that the invoice item has been downloaded and linked properly
+        List<Invoice_Item__c> lstInvoiceItem = [SELECT Id, Product__c, Subscription_Zuora_ID__c, Subscription_Product_Charge_Zuora_ID__c FROM Invoice_Item__c WHERE Invoice__c = :oInvoice.Id];
+        Set<Id> setInvoiceItemId = new Set<Id>();
+        for (Invoice_Item__c ii : lstInvoiceItem)
+            setInvoiceItemId.add(ii.Id);
+        system.assert(7 == lstInvoiceItem.size(), 'Wrong number of invoice items: ' + lstInvoiceItem.size());
+        system.assert(1 == [select count() from IEC_SAP_Invoice__c where Zuora_Invoice_Number__c = :oInvoice.Name], 'SAP Invoice should be created');
         
-        // 001: Make sure that the invoice item has been downloaded and linked properly
-        List<Invoice_Item__c> lstInvoiceItem = [SELECT Product__c, Subscription_Zuora_ID__c, Subscription_Product_Charge_Zuora_ID__c FROM Invoice_Item__c WHERE Invoice__c = :oInvoice.Id];
+        //*** create orders
+        IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
+        system.assert(0 < [select count() from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c], 'Order should be created');
         
-      /*  system.assertNotEquals(lstInvoiceItem.size(), 0, trgHndlrIECInvoice_tst.getSampleInvoiceItems());
-        system.assertEquals(lstInvoiceItem.get(0).Product__c, oProduct.Id);
-        system.assertEquals(lstInvoiceItem.get(0).Subscription_Zuora_ID__c, oSubscription.Zuora__External_Id__c);
-        system.assertEquals(lstInvoiceItem.get(0).Subscription_Product_Charge_Zuora_ID__c, oSubscriptionCharge.Zuora__External_Id__c);*/
+        //*** re-trigger order creation to cover code of skipping reprocessing invoice -> no assert because no order created
+        IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
         
-        // 002: Make sure that a Sales Order has been created by the invoice
-       /* List<OrderItem> lstOrderItem = [SELECT Id FROM OrderItem WHERE Zuora_Subscription_Number__c = :oSubscription.Name];
-        system.assertEquals(lstOrderItem.size(), 1);
+        //*** re-trigger order creation to cover code of payment with credit card
+        //*** -> #SOQL error -> don't want to create new method to cover a couple of lines
+        //oPayment.Zuora__PaymentMethod__c = 'Credit Card';
+        //update oPayment;
+        //delete [select Id from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c];
+        //IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
+        //system.assert(0 < [select count() from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c], 'Order should be created');
         
-    	System.debug('Unit Test: Finish: TestInvoice');*/
+        //*** re-trigger order creation to cover code of no subscription
+        delete [select Id from Zuora__Subscription__c where Id in (:oSubscription.Id, :oSubscription2.Id)];
+        IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
+    }
+    
+    //*** cover code in "IEC_Invoice_Item_Svc" default payment type
+    static testMethod void TestInvoice2() {
+        trgHndlrIECInvoice_tst.stopCallout = true;
+        List<Zuora__CustomerAccount__c> lstBillingAccount;
+        IECCustomer loggedCustomer;
+        
+        User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        System.runAs(usr) {
+            loggedCustomer = IECCustomer.getCurrentIECCustomer();
+        }
+
+        Test.startTest();
+
+        Contact oContact = new Contact_Sel().getContactById(usr.contactId);
+        Account oAccount = new Account_Sel().getAccountById(oContact.AccountId);
+        //-- Generate locations
+        List<IECAddress__c> addresses = TestDataGenerator.generateAddresses(1, true);
+        Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, addresses[0].Id, oContact.AccountId, null, 'ST-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c billToLocation = TestDataGenerator.generateLocations(IECConstants.BILLTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'BT-' + String.valueOf(addresses[0].Id).right(7));
+        Location__c shipToLocation = TestDataGenerator.generateLocations(IECConstants.SHIPTO, addresses[0].Id, oContact.AccountId, usr.contactId, 'SH-' + String.valueOf(addresses[0].Id).right(7));
+
+        oAccount.SoldTo_Location__c = soldToLocation.Id;
+        update oAccount;
+        
+        oContact.BillTo_Location__c = billToLocation.Id;
+        oContact.ShipTo_Location__c = shipToLocation.Id;
+        update oContact;
+
+        // Initialize Data      
+        Init(loggedCustomer);
+        lstBillingAccount =
+            [SELECT Id, Zuora__Account__c, CRMContactID__c, Contact__c
+            FROM Zuora__CustomerAccount__c
+            WHERE Zuora__Account__c = :loggedCustomer.RelatedAccount.Id
+                AND CRMContactID__c = :loggedCustomer.RelatedContact.Id];
+        
+        // Create Zuora Payment Method
+        Zuora__PaymentMethod__c zPaymentMethod_CC = new Zuora__PaymentMethod__c (
+            Zuora__Type__c = 'CreditCard'
+            , Zuora__External_Id__c = TestDataGenerator.generateZuoraFakeId()
+            , Zuora__BillingAccount__c = lstBillingAccount[0].Id
+        );
+        insert zPaymentMethod_CC;
+        
+        // Set the default payment on one of the zAccounts to Bank Transfer
+        lstBillingAccount[0].Zuora__DefaultPaymentMethod__c = 'BankTransfer';
+        lstBillingAccount[0].Zuora__Zuora_Id__c = TestDataGenerator.generateZuoraFakeId();
+        update lstBillingAccount[0];
+        
+        IECTestUtil.InvoiceTestOrigin = 'trgHndlrIECInvoice_tst';
+        oInvoice = IECTestUtil.createSampleInvoice(lstBillingAccount.get(0), Date.today(), 113.0);
+        insert oInvoice;
+        
+        Test.stopTest();
+
+        IECTestUtil.InvoiceTestOrigin = '';
+        
+        //*** make sure that the invoice item has been downloaded and linked properly
+        List<Invoice_Item__c> lstInvoiceItem = [SELECT Id, Product__c, Subscription_Zuora_ID__c, Subscription_Product_Charge_Zuora_ID__c FROM Invoice_Item__c WHERE Invoice__c = :oInvoice.Id];
+        Set<Id> setInvoiceItemId = new Set<Id>();
+        for (Invoice_Item__c ii : lstInvoiceItem)
+            setInvoiceItemId.add(ii.Id);
+        system.assert(7 == lstInvoiceItem.size(), 'Wrong number of invoice items: ' + lstInvoiceItem.size());
+        system.assert(1 == [select count() from IEC_SAP_Invoice__c where Zuora_Invoice_Number__c = :oInvoice.Name], 'SAP Invoice should be created');
+        
+        //*** create orders
+        IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
+        system.assert(0 < [select count() from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c], 'Order should be created');
+        
+        //*** re-trigger order creation to cover code of default credit card
+        //*** -> #SOQL error -> don't want to create new method to cover a couple of lines
+        //lstBillingAccount[0].Zuora__DefaultPaymentMethod__c = null;
+        //lstBillingAccount[0].Zuora__Default_Payment_Method__c = zPaymentMethod_CC.Id;
+        //update lstBillingAccount[0];
+        //delete [select Id from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c];
+        //IEC_Invoice_Item_Svc.CreateSalesOrder(setInvoiceItemId);
+        //system.assert(0 < [select count() from OrderItem where Zuora_InvoiceId__c = :oInvoice.Zuora__External_Id__c], 'Order should be created');
+        
+        //*** cover methods in class "IEC_ZSubscriptionProductCharge_Sel" because not used in real script anymore
+        IEC_ZSubscriptionProductCharge_Sel cls = new IEC_ZSubscriptionProductCharge_Sel();
+        system.assertNotEquals(cls.getZSubscriptionProductChargeByProdRatePlanChargeZId(new Set<String>{oSubscription.Zuora__External_Id__c}, new Set<String>{'xyz'}, false, null).size(), 0);
     }
 }

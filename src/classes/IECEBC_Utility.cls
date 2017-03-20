@@ -42,6 +42,7 @@ public class IECEBC_Utility {
 		a.Activity_Type__c = 'Send';
 		a.Name = 'Cancel campaign: ' + c.Name;
 		a.Activity_Date_Time__c  = Datetime.now();
+		a.Reason__c='Cancelled by the customer';
 		insert a;
 	}
 	
@@ -218,7 +219,7 @@ public class IECEBC_Utility {
 	public class Attachment_Size_Exceeds_Capacity_Exception extends Exception{}
 
 	public static void createResourceForAttachment(Attachment a, Zuora__CustomerAccount__c billingAccount) {
-		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('The file name exceeds the maximum characters allowed (max. 80 characters)');
+		if (String.isBlank(a.name) || a.body == null)  throw new Resource_Invalid_Attachment_Exception('No image selected');
 		if (a.name.length()>80) throw new Resource_Invalid_Attachment_Exception('Attachment name must have be less 80 characters long.');
 		String types = a.Name.right(3).toLowerCase();
 		String typel = a.Name.right(4).toLowerCase();

@@ -35,29 +35,32 @@ public class Product_Svc
         List<Product2> products2Create = new List<Product2>();
         List<Product2> products2Update = new List<Product2>();        
         List<Product2> productsWithoutCode = new List<Product2>();
+        
+        String excludeRecordType = Utility.getTextSetting('Zuora Exclude Product Record Type');
 
         //-- Validate products to be sent: Product must have SAP_Material_Number__c & Effective Dates
         for(Product2 p : products)
-        {
-            if(String.isNotBlank(p.SAP_Material_Number__c))
+            if (p.RecordType.DeveloperName != null && !excludeRecordType.containsIgnoreCase(p.RecordType.DeveloperName))
             {
-                //-- If invalid Effective Dates then Set default
-                if(p.Effective_From__c == null || p.Effective_To__c == null || p.Effective_To__c < p.Effective_From__c )
+                if(String.isNotBlank(p.SAP_Material_Number__c))
                 {
-                    p.Effective_From__c = Date.today();
-                    p.Effective_To__c = Date.today().addYears(1);
-                }
+                    //-- If invalid Effective Dates then Set default
+                    if(p.Effective_From__c == null || p.Effective_To__c == null || p.Effective_To__c < p.Effective_From__c )
+                    {
+                        p.Effective_From__c = Date.today();
+                        p.Effective_To__c = Date.today().addYears(1);
+                    }
 
-                //-- If product already has a ZuoraId then sent it to Zuora for Update 
-                if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
-                else products2Create.add(p);  
+                    //-- If product already has a ZuoraId then sent it to Zuora for Update 
+                    if(p.Zuora_Id__c != null || p.ZProduct__c != null) products2Update.add(p);
+                    else products2Create.add(p);  
+                }
+                else
+                {
+                    //-- Product Has no Material Number 
+                    productsWithoutCode.add(p);
+                }
             }
-            else
-            {
-                //-- Product Has no Material Number 
-                productsWithoutCode.add(p);
-            }
-        }
 
         //-- callouts Requests 
         if(products2Create.size() > 0  || products2Update.size() > 0)
@@ -95,26 +98,26 @@ public class Product_Svc
         }
 
         //-- If there are Invalid Product: Send Notification to Support
-        if(!productsWithoutCode.isEmpty())
-        {
-            List<String> errorsList = new List<String>();
-            for(Product2 p : productsWithoutCode)
-            {
-                String productURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' + p.Id;
-                String err = String.format('<a href="{0}">{1}</a>', new List<String>{
-                    productURL,
-                    p.Name
-                });
-                errorsList.add(err);
-            }
+        //if(!productsWithoutCode.isEmpty())
+        //{
+        //    List<String> errorsList = new List<String>();
+        //    for(Product2 p : productsWithoutCode)
+        //    {
+        //        String productURL = URL.getSalesforceBaseUrl().toExternalForm() + '/' + p.Id;
+        //        String err = String.format('<a href="{0}">{1}</a>', new List<String>{
+        //            productURL,
+        //            p.Name
+        //        });
+        //        errorsList.add(err);
+        //    }
 
-            String errorsString = String.join(errorsList, '<br />') ;
+        //    String errorsString = String.join(errorsList, '<br />') ;
 
-            String msg = Label.Error_Invalid_Product_Number + '<br />' + errorsString;            
-            ret = msg; 
+        //    String msg = Label.Error_Invalid_Product_Number + '<br />' + errorsString;            
+        //    ret = msg; 
 
-            errorLogs.add(IECErrorLogger.createErrorLog('Product_Svc/saveZProducts', msg, 'Product cannot be created in Zuora', null));      
-        }
+        //    errorLogs.add(IECErrorLogger.createErrorLog('Product_Svc/saveZProducts', msg, 'Product cannot be created in Zuora', null));      
+        //}
 
         if(errorLogs.size() > 0) IECErrorLogger.logErrors(errorLogs);
 
@@ -265,7 +268,7 @@ public class Product_Svc
                 for(Product2 p : productsByActivityCode.get(ac))
                 {
                     oldVersionProducts.addAll(existingProductsByActivityCode.get(ac));
-                    p.IsNewVersion__c = true;
+                    p.IsNewVersion__c = true;   
                 }
             }
         }
@@ -279,7 +282,7 @@ public class Product_Svc
             update oldVersionProducts;
         }
     }
-  
+
     /********************************************************************************************
         Created by CGI - Kevin ky 2015-08-19
             Send an Email to product manager, the Alternate Product Manager and administrator 
@@ -308,10 +311,10 @@ public class Product_Svc
         String body = '';
         String bodyChanged = '';
         list<EmailTemplate> lstEmailTemplate = new list<EmailTemplate>();
-        if(!Test.isRunningTest()){
+        //if(!Test.isRunningTest()){
             //Get the email template to add on the body of the task for manager and alternate manager
             lstEmailTemplate = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product Effective to template Id'));
-        }
+        //}
 
         //Get all the product api name that we handle the change event
         map<String,String> apiName_Label = productApiNames();
@@ -413,9 +416,9 @@ public class Product_Svc
         List<Mail_DTO> lstMailDto = new List<Mail_DTO>();
         //get the email template
         List<EmailTemplate> fieldModifiedTemp = new List<EmailTemplate>();
-        if(!Test.isRunningTest()){
+        //if(!Test.isRunningTest()){
             fieldModifiedTemp = Utility.getEmailTemplatebyTemplateId(Utility.getTextSetting('Product field changed template Id')); 
-        }
+        //}
         for(Id producId : productId_FieldsTable.keySet()){
             //get the product
             Product2 prd = productsMap.get(producId);
@@ -451,7 +454,7 @@ public class Product_Svc
                 }
             }
         }
-        
+
         //create all the tasks for PM
         if(taskToInsert.size() > 0){
             insert taskToInsert;
@@ -599,8 +602,8 @@ public class Product_Svc
             if((toInsert && product.IEC_Product_Rate_Plan_Information__c != null) || 
                 (!toInsert && product.IEC_Product_Rate_Plan_Information__c != null && product.IEC_Product_Rate_Plan_Information__c != oldMap.get(product.Id).IEC_Product_Rate_Plan_Information__c)){
                 productRatePlanInfoIds.add(product.IEC_Product_Rate_Plan_Information__c);
-                productIds.add(product.Id);
             }
+            productIds.add(product.Id);
         }
 
         //Verified if the product already have a priceBook

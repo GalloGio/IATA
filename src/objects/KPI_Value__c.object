@@ -650,8 +650,8 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>NAME</field>
-            <operation>contains</operation>
-            <value>actions from kc,actions from sop</value>
+            <operation>startsWith</operation>
+            <value>SOP Live Test,Compliance to records,Compliance to KC,Compliance to EXE</value>
         </filters>
         <filters>
             <field>Deadline__c</field>
@@ -672,6 +672,7 @@
         <columns>Year__c</columns>
         <columns>Region__c</columns>
         <columns>Value_Percentage__c</columns>
+        <columns>KPI_Value__c</columns>
         <columns>Not_Available__c</columns>
         <columns>Deadline__c</columns>
         <columns>Responsible__c</columns>
@@ -679,7 +680,7 @@
         <filters>
             <field>NAME</field>
             <operation>contains</operation>
-            <value>1 improvement initiative,% of resulting actions</value>
+            <value>Number of initiatives log,% of Initiatives (OIs) managed within overall deadline</value>
         </filters>
         <filters>
             <field>Deadline__c</field>

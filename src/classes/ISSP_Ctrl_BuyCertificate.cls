@@ -227,7 +227,8 @@ public class ISSP_Ctrl_BuyCertificate {
         List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
                                       FROM Account
                                      WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-                                     ORDER BY IATACode__c
+									AND IATACode__c != null
+                                      ORDER BY IATACode__c
                                      ];
         for(Account thisAccount : accountList){
              String theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
@@ -317,14 +318,21 @@ public class ISSP_Ctrl_BuyCertificate {
         {      
             //Assign RecordType
             Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
-            newCase.RecordTypeId = CaseSAAMId ;
-
+            Id CaseOSCARid = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+            
             //Assign Account_Concerned__c
-            List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
+            List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name,IATA_ISO_Country__r.OSCAR_enabled__c, Site, Sector__c, IATACode__c, Field_Head_Office__c ,Region_formula__c
                                      FROM Account
                                      WHERE IATACode__c =: newCase.IATACodeProduct__c
                                      ORDER BY IATACode__c
                                      ];
+
+            if(accountList[0].IATA_ISO_Country__r.OSCAR_enabled__c){
+                newCase.RecordTypeId = CaseOSCARid ;
+            }else{
+                newCase.RecordTypeId = CaseSAAMId ;
+            }
+
 
             system.debug('XXX accountList: ' +accountList);
             newCase.Account_Concerned__c    = accountList[0].Id ;
@@ -351,11 +359,19 @@ public class ISSP_Ctrl_BuyCertificate {
             system.debug('XXX ProductCategorytList: ' +ProductCategorytList);
             newCase.Product_Category_ID__c  = ProductCategorytList != null ? ProductCategorytList[0].Id : '' ;
             
+            newCase.ownerid = getRegionalQueue();
+
             //Assign Category and Subcategory      
             //newCase.ProductCategory__c        = Category ;
             //newCase.ProductSubcategory__c = SubCategory ;
             system.debug('XXX newCase: ' + newCase);
             insert newCase ;
+            
+            //Call OSCAR integration WS
+            if(accountList[0].IATA_ISO_Country__r.OSCAR_enabled__c){
+                AMS_RecordCreatorWebservice.createAccreditation(con.AccountId, AMS_RecordCreatorWebservice.EMPTYACCREDITATIONID, 'CER.1.0', newCase.Id);
+            }
+            
             PageReference p = new PageReference('/ISSP_Case?caseId='+newCase.Id);
             p.setRedirect(true);
             return p;
@@ -369,5 +385,45 @@ public class ISSP_Ctrl_BuyCertificate {
 
     private void AddError(string msg) {
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, msg));
+    }
+
+    public Id getRegionalQueue() {
+        //Available queue names
+        Id qId;
+
+        Set<String> queueNames = new Set<String> {'AgencyManagementAP', 'AgencyManagementAfricaME', 'AgencyManagementAmericas', 'AgencyManagementChinaNAsia', 'CasesACCEuropeOffOnshore'};
+        Map<String, QueueSobject> mapRegionalQueue = new Map<String, QueueSobject>();
+        //Build map queue.name -> queue
+        for (QueueSobject queue : [Select Queue.Id, Queue.DeveloperName From QueueSobject Where Queue.DeveloperName in: queueNames]) {
+            mapRegionalQueue.put(queue.Queue.DeveloperName, queue);
+        }
+
+        //Assigns queue according to region
+        if (newCase.Region__c == 'Africa & Middle East') {
+            if (mapRegionalQueue.get('AgencyManagementAfricaME') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAfricaME').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Americas') {
+            if (mapRegionalQueue.get('AgencyManagementAmericas') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAmericas').Queue.Id;
+            }
+
+        } else if (newCase.Region__c == 'Asia & Pacific') {
+            if (mapRegionalQueue.get('AgencyManagementAP') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementAP').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'China & North Asia') {
+            if (mapRegionalQueue.get('AgencyManagementChinaNAsia') != null) {
+                qId = mapRegionalQueue.get('AgencyManagementChinaNAsia').Queue.Id;
+            }
+        } else if (newCase.Region__c == 'Europe') {
+            if (mapRegionalQueue.get('CasesACCEuropeOffOnshore') != null) {
+                qId = mapRegionalQueue.get('CasesACCEuropeOffOnshore').Queue.Id;
+            }
+        }
+        System.DEBUG('Case region: ' + newCase.Region__c);
+        System.DEBUG('AM Queue returned: ' + qId);
+        return qId;
     }
 }

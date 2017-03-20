@@ -93,7 +93,7 @@
     </layoutSections>
     <relatedLists>
         <fields>Participant_Type__c</fields>
-        <fields>Head_Quartier__c</fields>
+        <fields>Main_Account__c</fields>
         <fields>Representing__c</fields>
         <fields>Contact.ISSP_Contact_Name__c</fields>
         <fields>Title__c</fields>

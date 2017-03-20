@@ -22,6 +22,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_Due_Diligence_Lock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS Due Diligence Lock</shortDescription>
+        <value>Only available after Due Diligence is completed</value>
+    </labels>
+    <labels>
         <fullName>AMS_Duplicate_Username</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -42,7 +49,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_ANTIMONEYLAUNDERING</shortDescription>
-        <value>Anti Money Laundering</value>
+        <value>Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_APPLICATIONPROCESSING</fullName>
@@ -129,6 +136,13 @@
         <value>Generate Certificates</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action13</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action13</shortDescription>
+        <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -147,7 +161,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action4</shortDescription>
-        <value>Perform AML</value>
+        <value>Perform Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action5</fullName>
@@ -223,6 +237,14 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_CHANGE_RECONSIDERATION</shortDescription>
         <value>Change Reconsideration</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <categories>LeftSidePanel, Headers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</shortDescription>
+        <value>Change Rejection</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_CHANGE_WITHDRAWAL</fullName>
@@ -399,7 +421,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP17</shortDescription>
-        <value>Anti Money Laundering</value>
+        <value>Due Diligence</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP18</fullName>
@@ -585,6 +607,13 @@
         <value>There are still no Appointments created for this OSCAR Process</value>
     </labels>
     <labels>
+        <fullName>AMS_PERFORM_CORRECTION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
+        <value>Perform Correction</value>
+    </labels>
+    <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -686,7 +715,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Address Line 1</shortDescription>
-        <value>Address</value>
+        <value>Street Address</value>
     </labels>
     <labels>
         <fullName>Address_Line_2</fullName>
@@ -723,14 +752,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailCC</shortDescription>
-        <value>airline-mgmt@iata.org, agbisitj@iata.org,alcocerm@iata.org,alvarengam@iata.org,arcel@iata.org,boulaghmena@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,haywards@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kaluschkem@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,oleksikr@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,stifaniy@iata.org,torneroc@iata.org,vitel@iata.org,voevodam@iata.org,vonglasowv@iata.org,weblinkcs@iata.org,windmullet@iata.org,airlinecoding@iata.org,petterssonl@iata.org,valenciad@iata.org,hattinghc@iata.org</value>
+        <value>agbisitj@iata.org,alvarengam@iata.org,arcel@iata.org,bestr@iata.org,boulaghmena@iata.org,careenn@iata.org,chanc@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,farrella@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,hattinghc@iata.org,haywards@iata.org,hughesg@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kalajil@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,McbrideG@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,MomchilovM@iata.org,OueidatG@iata.org,petterssonl@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,reckmannr@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,rossje@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,szajkod@iata.org,TruchetP@iata.org,torneroc@iata.org,vitel@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailGDS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com, gregory.tarrusson@amadeus.com, rsamson@amadeus.com, palexandre@amadeus.com, ncedmsgcd@amadeus.com, system.support@sabre.com, tim.powell@sabre.com, gabriel.licio@sabre.com, admbsp@kiusys.com, producto@kiusys.com, customer.support@der.de, christian.pohlig@der.net, HelpDesk@farelogix.com, pricing@farelogix.com, nmoore@farelogix.com, iata@ml.axess.co.jp, axset@ml.axess.co.jp, travelportairlinesupport@travelport.com, mike.walker@travelport.com, emyoon@topas.net, byyeom@topas.net,  e-tkt@topas.net, cscall@topas.net, accreditation@ttinteractive.com, Hanao@elal.co.il, Shmuelp@elal.co.il, zpyu@travelsky.com, net_ncc@travelsky.com, net_mor@travelsky.com, jiajia@travelsky.com, iReq@abacus.com.sg,  support@abacus.com.sg, sowfung_leong@abacus.com.sg, julio.delarosa@e-sav.net, iataprocesosaerolineas@e-sav.net, pasajetkt@iberia.es, resiberteam@iberia.es , pk@infini-trvl.co.jp, eisen@infini-trvl.co.jp</value>
+        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -1204,7 +1233,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -1343,6 +1372,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Confirm purchase</value>
     </labels>
     <labels>
+        <fullName>Confirmation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
         <fullName>ContactDirectSalesMessage</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -1430,6 +1467,683 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Credit card validation</shortDescription>
         <value>Please select a credit card.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Action_Summary</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Action_Summary</shortDescription>
+        <value>ACTION SUMMARY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Actual_Amount_Blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Actual_Amount_Blocked</shortDescription>
+        <value>Actual Amount Blocked</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Airlines_Charges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Airlines_Charges</shortDescription>
+        <value>AIRLINES CHARGES</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_All_Other_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_All_Other_Countries</shortDescription>
+        <value>All Other Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_All_Others</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_All_Others</shortDescription>
+        <value>All Other Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_All_Others_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_All_Others_Country</shortDescription>
+        <value>All Others Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Attachments_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Attachments_Description</shortDescription>
+        <value>Description</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Attachments_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Attachments_Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Attachments_Section</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Attachments_Section</shortDescription>
+        <value>Attachments</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_BSP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP</shortDescription>
+        <value>BSP</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_BSP_CASS_Proffile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_CASS_Proffile</shortDescription>
+        <value>BSP &amp; CASS PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_BSP_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_BSP_Profile</shortDescription>
+        <value>BSP PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Back_Home</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Back_Home</shortDescription>
+        <value>Go back to currency center home</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Blocked_Funds</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Blocked_Funds</shortDescription>
+        <value>Blocked Funds Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Blocked_Funds_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Blocked_Funds_Countries</shortDescription>
+        <value>Blocked Funds Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Blocked_Funds_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Blocked_Funds_Country</shortDescription>
+        <value>Blocked Funds Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Bloomberg_Feeds</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Bloomberg_Feeds</shortDescription>
+        <value>News Feeds</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_CASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS</shortDescription>
+        <value>CASS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_CASS_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_CASS_Profile</shortDescription>
+        <value>CASS PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Countries</shortDescription>
+        <value>Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Countries_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Countries_Map</shortDescription>
+        <value>Countries Map</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Country_Profiles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Country_Profiles</shortDescription>
+        <value>Country Profiles</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Currency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Currency</shortDescription>
+        <value>CURRENCY</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Download_Pdf</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Download_Pdf</shortDescription>
+        <value>Download as PDF.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Due_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Due_Date</shortDescription>
+        <value>Due Date</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Economic_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Economic_Profile</shortDescription>
+        <value>ECONOMIC PROFILE</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Exchange_Rates_Directory</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Exchange_Rates_Directory</shortDescription>
+        <value>Exchange Rates Directory</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Exchange_Rates_Directory_Subtitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Exchange_Rates_Directory_Subtitle</shortDescription>
+        <value>Currency is a key dimension that can be found in most of IATA processes and services; it is also a key factor for airline business.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Exchange_Rates_Directory_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Exchange_Rates_Directory_Text</shortDescription>
+        <value>Currency is a key dimension that can be found in most of IATA processes and services; it is also a key factor for airline business. Click here to see the exchange rate directory chart.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Exchange_Rates_Directory_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Exchange_Rates_Directory_Title</shortDescription>
+        <value>Exchange Rates Directory</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Fares_And_Ticketing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Fares_And_Ticketing</shortDescription>
+        <value>Fares &amp; Ticketing</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Follow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Follow</shortDescription>
+        <value>Follow</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Follow_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Follow_Country</shortDescription>
+        <value>Follow this country profile</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_General_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_General_Information</shortDescription>
+        <value>GENERAL INFORMATION</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Heat_Map</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Heat_Map</shortDescription>
+        <value>Heat Map</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_ICCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_ICCS</shortDescription>
+        <value>ICCS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Important_Contacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Important_Contacts</shortDescription>
+        <value>IMPORTANT CONTACTS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Issue_Started</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Issue_Started</shortDescription>
+        <value>Issue Started</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Manage_Notifications</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Manage_Notifications</shortDescription>
+        <value>Manage Notification Subscriptions</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Manage_Notifications_Button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Manage_Notifications_Button</shortDescription>
+        <value>Manage Notifications</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Manage_Notifications_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Manage_Notifications_Info</shortDescription>
+        <value>You will receive a notification every time an update feed is posted for the countries checked in the list below.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Next_Action</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Next_Action</shortDescription>
+        <value>NEXT ACTION</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Number_of_Airlines_Reporting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Number_of_Airlines_Reporting</shortDescription>
+        <value># of Airlines Reporting the Issue</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Preferences_Save_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Preferences_Save_Error</shortDescription>
+        <value>An error was encountered. Your preferences have not been updated.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Preferences_Updated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Preferences_Updated</shortDescription>
+        <value>Your notification preferences have been updated</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Print</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Print</shortDescription>
+        <value>Print this page.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Regional_Outlook_News</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Regional_Outlook_News</shortDescription>
+        <value>Regional Outlook &amp; News</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Repatriation_Process</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Repatriation_Process</shortDescription>
+        <value>REPATRIATION PROCESS</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Save_Preferences</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Save_Preferences</shortDescription>
+        <value>Save Preferences</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Search</shortDescription>
+        <value>Search by country or region name</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Search_Additional_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Search_Additional_Information</shortDescription>
+        <value>by Country Name or Region</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Select_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Select_Country</shortDescription>
+        <value>Select Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Subject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Subject</shortDescription>
+        <value>Subject</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Treasury_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Treasury_Dashboard</shortDescription>
+        <value>The IATA Treasury Dashboard is a tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Unfollow</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Unfollow</shortDescription>
+        <value>Unfollow</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Update_Feeds</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Update_Feeds</shortDescription>
+        <value>Update Feeds</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Watch_List</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Watch_List</shortDescription>
+        <value>Watch List Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Watch_List_Countries</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
+        <value>Watch List Countries</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Watch_List_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Watch_List_Country</shortDescription>
+        <value>Watch List Country</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ACD_CCD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ACD_CCD</shortDescription>
+        <value>The Airline Coding Directory (ACD)  is the official industry source for airline designators, three-digit airline numeric codes and location identifiers. It  also includes ISO currency, country codes, lists contacts for Minimum Connecting Time (MCT), coordinators and airlines applying reconfirmation procedures, as well as the Numeric Location Type Code.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/publications/store/Pages/airline-coding-directory.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;
+IATA&apos;s City Code Directory (CCD) is a complete worldwide list of city, airport, country, province, state and territory names. It contains numerical and alphabetical codes, currencies, and IATA Tariff Conference areas.
+The CCD is updated several times a year and is available in printed and electronic versions.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/publications/store/Pages/city-code-directory.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_BSP_CASS_ICH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_BSP_CASS_ICH</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;Billing and Settlement Plan (BSP)&lt;/b&gt; is a system designed to facilitate and simplify the selling, reporting and remitting procedures of IATA Accredited Passenger Sales Agents, as well as improve financial control and cash flow for BSP Airlines.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Cargo Account Settlement Systems (CASS)&lt;/b&gt; is designed to simplify the billing and settling of accounts between airlines and freight forwarders. It operates through &lt;a href=&quot;http://www.iata.org/services/finance/Pages/casslink.aspx&quot; target=&quot;_blank&quot;&gt;CASSlink&lt;/a&gt;, an advanced, global, web-enabled e-billing solution.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;IATA Clearing House (ICH)&lt;/b&gt; provides a competitive, seamless and secure service providing &lt;b&gt;efficient, on-time settling of accounts&lt;/b&gt; between the world&apos;s airlines, airline-associated companies and Travel Partners.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_CTC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_CTC</shortDescription>
+        <value>Cargo Tariff Coordinating Conferences Resolutions which include common currency standards such as currency codes and rounding rules to facilitate cargo rate application and interlining.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Credit_Spread</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Credit_Spread</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;CDS 5Y Spread or Country Credit Rating&lt;/b&gt;
+&lt;ul&gt;
+&lt;li&gt;Measuring markets perception on country’s default risk&lt;/li&gt;
+&lt;li&gt;High risk of default discourages foreign investment and demand for local currency&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;b&gt;Threshold&lt;/b&gt; 500 Bps  ( 5 % )</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Currency_Exchange_Rate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Currency_Exchange_Rate</shortDescription>
+        <value>The value of one currency ( USD ) for the purpose of conversion to another (LCY) .</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Current_Account_part1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Current_Account_part1</shortDescription>
+        <value>&lt;p&gt;The current account forms part of a country’s Balance of Payments. It is defined as the sum of the balance of trade (goods and services exports less imports), net income from abroad (eg interest and dividends) and net current transfers (such as foreign aid). The two latter components are typically much smaller than exports and imports. The current account balance is typically expressed as a percentage of nominal GDP.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Current_Account_part2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Current_Account_part2</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+A current account deficit (ie more goods, services and capital is imported than exported) implies that a country is ‘living beyond its means’. Although this makes a country more vulnerable to adverse economic developments or shifts in investor sentiment, of itself a CAD is neither inherently ‘good’ nor ‘bad’. If a country uses external debt to finance investments that have a higher return than the interest rate on the debt, it can remain solvent while running a current account deficit. If a country is unlikely to cover current debt levels with future revenue streams, it may become insolvent.&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt;
+&lt;b&gt;Source?&lt;/b&gt; IMF</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Devaluation_Risk</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Devaluation_Risk</shortDescription>
+        <value>Potential risk of devaluation against the reference currency of 25% or more in nominal terms over the next 12-month period. The devaluation risk is mainly monitored in countries where the exchange rate is fixed or pegged and with the presence of a black market rate. This indicator can be difficult to predict.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1</shortDescription>
+        <value>&lt;p&gt;Foreign exchange (FX) reserves are a store of foreign currency, held in ‘reserve’ (at the Central Bank or other monetary authority) which can be drawn upon to back the country’s liabilities. The first FX reserves indicator relates to the level, specifically the level of reserves compared with imports. Imports represent a fundamental foreign currency obligation which must be financed. Most analysts accept that a buffer of reserves equivalent to at least three month’s worth of imports is an appropriate benchmark.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+A country seeking to defend the value of its domestic currency will begin to sell its reserves of foreign currency and buy domestic currency. This may be particularly relevant for a country with a fixed exchange rate, for example. However, although such buying activity will support the value of the domestic currency, it cannot be sustained indefinitely. The reduction in reserves may therefore be an indicator of currency pressure.&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Monthly or Quarterly or Annual&lt;br/&gt;
+&lt;b&gt;Source? IMF&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Foreign_Exchange_Reserves_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Foreign_Exchange_Reserves_2</shortDescription>
+        <value>&lt;p&gt;The second FX reserves indicator relates to the rate of change in the level of reserves.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+If a government is selling down its reserves at a rapid rate, the sooner it will reach the critical level of reserves (noted above). The ‘speed of reduction’ measure should therefore complement the ‘level’ measure by providing more of a leading indicator of potential future currency concerns.&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Monthly or Quarterly or Annual&lt;br/&gt;
+&lt;b&gt;Source?&lt;/b&gt; IMF</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Forward_NDF</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Forward_NDF</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;Forward / NDF implied hedging cost ( 1 yr),   change MoM, YoY,   where available&lt;/b&gt;
+&lt;ul&gt;
+&lt;li&gt;Captures Central Bank actions defending the currency  by raising interest rates&lt;/li&gt;
+&lt;li&gt;Shows also market willingness pay for hedging the FX risk&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;b&gt;Thresholds&lt;/b&gt; being tested</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_GDP_Growth</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_GDP_Growth</shortDescription>
+        <value>&lt;p&gt;Gross Domestic Product (GDP) measures the change in a nation’s output (capturing both goods and services). The indicator chosen is the difference between the current rate of real GDP growth and a three-year historical average rate. The use of an average helps to limit the impact of any one-off events or developments on GDP. &lt;/p&gt; 
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
+A widening gap between the current rate of growth and that of the recent past – in either a positive or negative direction – gives an indication of investor attractiveness and expected returns. Such changes in expectations are often associated with capital flows into or out of the country which, in turn, has implications for shifts in the currency. 
+&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt; 
+&lt;b&gt;Source?&lt;/b&gt; IMF</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ICCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ICCS</shortDescription>
+        <value>The general approach taken by IATA in converting ICCS Member Airlines’ funds is one of using pre-determined foreign exchange (FX) policies negotiated in advance with its banking partners and based on neutral market sources (i.e. benchmark rates, Reuters, Central Bank official rates etc.). Contracts are, in general, 2-day spot contracts, but can be different based on market standards.&lt;br/&gt;
+In this regard, ICCS has two main FX Conversion Policies: (1) Central Policy and (2) Local policies. The Central FX Conversion Policy is the main policy as it covers the majority of the volume ICCS handles and covers all currencies that are freely tradable.&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;1. Central Policy for Currency Conversion Rates&lt;/b&gt;&lt;br/&gt;
+Currently agreed by IATA with the present ICCS Service Bank (Citibank N.A. London). 
+IATA is currently using the CitiFX Benchmark product for conversion of all currencies that are freely convertible with Citibank London Treasury. CitiFX Benchmark automatically extracts</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ICCS_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ICCS_2</shortDescription>
+        <value>mid-market rates direct from the interbank electronic dealing platforms. These rates are publicly available on Reuters and Bloomberg pages ‘FXBENCH’, as well as, on the CitiFX Interactive website. IATA-ICCS trades are dealt against either of the fixings between 11:00 and 13:00 GMT. Pre-negotiated market spreads are then applied to the mid-market rates produced by the FX Benchmark to arrive at the deal rates.  Based on the above, the FX conversions will be carried out at the FXBENCH fixing rate plus (+) or minus (-) the agreed spread, as applicable based on each airline participant’s net position on the currency.&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;2. Local FX Conversion Policies&lt;/b&gt;&lt;br/&gt;
+IATA has negotiated separate FX conversion policies for each currency that is not freely convertible and therefore requires local conversion.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; target=&quot;_blank&quot;&gt;ICCS FX Policy is available on the IATA Customer Portal&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ICER</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ICER</shortDescription>
+        <value>ICER provides daily updates of exchange rates (sometimes referred to as BSR) to be used when converting fares, taxes, and fees to alternate currencies of payment. ICER is the official source for international payment currency conversions used by the industry for pricing and ticketing. The ICER file is offered in an Electronic Data File version available daily. &lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/publications/store/Pages/iata-consolidated-exchange-rates.aspx&quot; target=&quot;_blank&quot;&gt;http://www.iata.org/publications/store/Pages/iata-consolidated-exchange-rates.aspx&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ICH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ICH</shortDescription>
+        <value>&lt;b&gt;FDR - Five Day Rates&lt;/b&gt;&lt;br/&gt;
+They represent the average of the exchange rates for the five banking days ending on the 25th of each month. This calculation is based on the average between the buying and selling rates and the rates are expressed in USD, EUR, and GBP. FDR&apos;s are used by ICH members to convert interline billing into the billing currency. The previous month&apos;s FDR&apos;s are used for the current month&apos;s interline billing. The process developed to calculate the FDR&apos;s also contains a function to identify differentials of over 10% between one month and the next.&lt;br/&gt;&lt;br/&gt;
+
+&lt;b&gt;MMR - Monthly Mean Rates&lt;/b&gt;&lt;br/&gt;
+If the calculation of a Five Day Rate (FDR) demonstrates a differential of over 10%, the ICH also produces an alternative rate by calculating the average of that currency&apos;s exchange rate for the entire month. This alternative rate is called the Monthly Mean Rate and is used by ICH members to adjust their cargo and passenger invoices.&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_ICH_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_ICH_2</shortDescription>
+        <value>&lt;b&gt;Call Day Rates&lt;/b&gt;&lt;br/&gt;
+Rates for one day each period, seven days after the &quot;advice day&quot; that the IATA Clearing House accepts or makes payments. CDR&apos;s are calculated by taking an average of the buying and selling rates on the day of payment. These rates are used to ensure that ICH customers are not exposed to any currency exchange risk on miscellaneous interline billings that may occur between the time an invoice is billed through the ICH and the time that it is settled.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/publications/store/Pages/iata-exchange-rates.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_IROE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_IROE</shortDescription>
+        <value>IATA Rates of Exchange provides monthly updates of IATA currency rates of exchange used by the industry for fare/rate construction. They are built based on the average of the five banking days ending on the 10th of each month. The IROE is available for purchase in two formats: a PDF document issued quarterly with monthly e-mail updates of significant changes and an Electronic Data File version delivered monthly.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/publications/store/Pages/iata-rates-of-exchange.aspx&quot; target=&quot;_blank&quot;&gt;http://www.iata.org/publications/store/Pages/iata-rates-of-exchange.aspx&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Inflation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Inflation</shortDescription>
+        <value>&lt;p&gt;Inflation measures changes in the general level of prices paid by consumers within an economy. It is generally expressed as the rate of change (in the consumer price index) over a 12 month period.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
+Inflation – depending on its underlying cause – can be an indicator of emerging problems within an economy. The relationship between economic activity, inflation, interest rates, and exchange rates is not a linear one, however, in the long run, changes in relative inflation should lead to changes in exchange rates. While a lower rate of inflation is generally preferred to a higher rate, deflation (negative inflation or falling prices) can also be a cause for concern – for both economic activity and currency movements.&lt;/p&gt;
+&lt;b&gt;Frequency?&lt;/b&gt; Monthly (typically) or Quarterly or Annual&lt;br/&gt;
+&lt;b&gt;Source?&lt;/b&gt; IMF</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_MITA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_MITA</shortDescription>
+        <value>The IATA Multilateral Interline Traffic Agreements (MITA)  is an agreement whereby passengers and cargo use a standard traffic document (i.e. passenger ticket or air waybill) to travel on various modes of transport involved in a routing in order to reach a final destination.&lt;br/&gt;&lt;br/&gt;
+One Multilateral Agreement concluded with another airline through IATA results in joining a partnership of the growing network of over 350 participating worldwide domestic and international airlines.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/whatwedo/workgroups/Pages/mita.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Non_Performing_Loans</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Non_Performing_Loans</shortDescription>
+        <value>&lt;p&gt;A non-performing loan (NPL) is one where the debtor has fallen behind with their payments of interest and/or principal. Although definitions vary, one often accepted benchmark is when the loan repayments are in arrears by more than 90 days. The chosen indicator is the share of NPL to total loans.&lt;/p&gt; 
+&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
+Other things equal, the higher the share of NPL, the more widespread the degree of financial stress in the country and, consequently, the greater the risk of adverse currency developments – for example as investors seek to repatriate capital.&lt;/p&gt; 
+&lt;b&gt;Frequency?&lt;/b&gt; Annual&lt;br/&gt; 
+&lt;b&gt;Source?&lt;/b&gt; IMF</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_PSC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_PSC</shortDescription>
+        <value>The Passenger Services Conference (PSC) agrees standards and procedures for passenger and baggage handling, passenger reservations and passenger ticketing matters among others.&lt;br/&gt;&lt;br/&gt;
+Agreements reached at the Passenger Services Conference take the form of resolutions or recommended practices published in the Passenger Services Conference Resolutions Manual. These resolutions are implemented on an industry-wide basis.&lt;br/&gt;&lt;br/&gt;
+PSC also provides a forum for the discussion of new developments in the airline industry and the development of policies and procedures to meet these changes. The PSC can meet jointly with its counterpart, the Airlines for America (A4A) group, where appropriate.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_PTC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_PTC</shortDescription>
+        <value>Passenger Tariff Coordinating Conferences Resolutions which include common currency standards such as currency codes and rounding rules to facilitate fare construction application and interlining.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Sovereign_Credit_Rating</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Sovereign_Credit_Rating</shortDescription>
+        <value>Is the credit rating of a country or sovereign entity. Sovereign credit ratings give investors insight into the level of risk associated with investing in a particular country and also include political risks. First source of preference is Standard &amp; Poor’s and when not available Fitch Ratings or Moody’s will be the reference.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_Spot_Change</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_Spot_Change</shortDescription>
+        <value>&lt;p&gt;&lt;b&gt;SPOT  change MoM, YoY (against ref base currency , mostly USD)&lt;/b&gt;
+&lt;ul&gt;
+&lt;li&gt;Display Information for Airlines to evaluate currency risk impact&lt;/li&gt;
+&lt;li&gt;In case of sudden large CCy weakening,  Central Bank may want defend local currency by intervention using its FCY reserves, increasing  regulation &amp;  restrictions for foreign currencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;b&gt;Threshold&lt;/b&gt; change  MoM  5 % - YoY 30 %</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_def_TTBS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_def_TTBS</shortDescription>
+        <value>The TTBS is mandated to be an industry reference of taxes, fees and charges. It offers a complete suite of applications to help airlines, GDS sytems, fare search engines and service/solutions provides to:&lt;ul&gt;&lt;li&gt;Identify taxes, fees and charges&lt;/li&gt;&lt;li&gt;Price and ticket complex itineraries and process&lt;/li&gt;&lt;li&gt;Bill, audit and settle taxes, fees, and charges, with speed and efficiency &lt;/li&gt;&lt;/ul&gt;
+The databases, posted on a secure web-based platform, offer user-friendly interfaces with expanded search capabilities. The format additionally allows system integration.&lt;br/&gt;&lt;br/&gt;
+&lt;a href=&quot;http://www.iata.org/services/finance/Pages/ttbs.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>Current_password</fullName>
@@ -3386,7 +4100,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <protected>false</protected>
         <shortDescription>IDCard_PaymentByChequeP2</shortDescription>
         <value>We will verify the proof of payment in your application and proceed with issuance of the ID Card upon the approval of application and payment. 
-Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/ContactUs.aspx&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
+Should you have any question about payment by bank transfer, please visit &lt;a href=&quot;http://www.iata.org/services/accreditation-travel/idcard/Pages/apply.aspx&quot; target=&quot;_blank&quot;&gt;How to Apply&lt;/a&gt; or contact our &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx?&quot; target=&quot;_blank&quot;&gt;customer service&lt;/a&gt; team.</value>
     </labels>
     <labels>
         <fullName>IDCard_PaymentByCreditP1</fullName>
@@ -3694,7 +4408,7 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ReportAgencyIncorrectInfo</shortDescription>
-        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
+        <value>&lt;a href=&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_ReportAgencyIncorrectInfo2</fullName>
@@ -4580,7 +5294,7 @@ Your ID Card application manager has been informed of your request.</value>
         <value>I have read and accept the 
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
+&lt;a href=&quot;JavaScript:newPopup(&apos; http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Terms_ConditionCA</fullName>
@@ -5097,6 +5811,27 @@ and
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_SAP_Customer_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Address</shortDescription>
+        <value>There is an error with your address.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue</shortDescription>
+        <value>There is an error with your customer account.&lt;br/&gt;Please contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_SAP_Customer_Shipping_Address_Issue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SAP Customer Issue on Shipping Address</shortDescription>
+        <value>There is an error with your shipping address.&lt;br/&gt;Please change shipping address or contact CSR for assistance!</value>
+    </labels>
+    <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5118,7 +5853,7 @@ and
         <shortDescription>Labels &amp; Messages for VF page IEC_UpdateAddress</shortDescription>
         <value>lblSectionBillTo:Billing address
 lblSectionShipTo:Shipping address
-lblStreet:Address
+lblStreet:Street Address
 lblCity:City
 lblState:State / Province
 lblCountry:Country
@@ -5563,6 +6298,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_2-letter Airline Designator Code</shortDescription>
         <value>2-letter Airline Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_3_Digit_Code</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP 3 Digit Code</shortDescription>
+        <value>3 Digit Code</value>
     </labels>
     <labels>
         <fullName>ISSP_60Day_Password_Reset</fullName>
@@ -6603,7 +7346,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case PDF Download</shortDescription>
-        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Submit &amp; Add Attachment&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
+        <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Attach File&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
@@ -9144,6 +9887,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Roles &amp; Responsibilities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_SA_Office_Select</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS SA Office Select</shortDescription>
+        <value>Select the office under which this new SA is to come under:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_Branch_Title</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10670,11 +11421,40 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Agency Changes</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyChanges_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin AgencyChanges HelpText</shortDescription>
+        <value>Agency changes help text to go here...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyInformation</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation</shortDescription>
         <value>Agency Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:…</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</shortDescription>
+        <value>Pilot phase: please note that the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</shortDescription>
+        <value>Pilot phase: please note that only &quot;Changes&quot; and &quot;New Processes&quot; related information are available worldwide. The rest of the Agency Information is only available for the following Pilot Countries: Brazil, Chile, Colombia, Hong Kong, Kenya, Indonesia, Malaysia, Philippines, Romania, Turkey, Ukraine and Saudi Arabia</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Area1</fullName>
@@ -10744,7 +11524,23 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_DAILY_Bulletin</shortDescription>
+        <value>DAILY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</shortDescription>
         <value>Enable DAILY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_DAILY_Setup</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin DAILY Setup</shortDescription>
+        <value>Save &amp; Setup DAILY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_DailyFrequency</fullName>
@@ -10759,6 +11555,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Defaults</shortDescription>
         <value>Defaults</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Defaults_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Defaults HelpText</shortDescription>
+        <value>Default Information, including Reinstatement after Default</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Description</fullName>
@@ -10787,6 +11591,20 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Enabled</shortDescription>
         <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_ErrorMsg_00</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_00</shortDescription>
+        <value>An error occurred! Please try again later.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_ErrorMsg_01</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_ErrorMsg_01</shortDescription>
+        <value>No occurrences were found, based on your criteria, for the specific period!</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_FilterOptionsDaily</fullName>
@@ -10831,11 +11649,27 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Irregularities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Irregularities_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Irregularities HelpText</shortDescription>
+        <value>Irregularities info to go here...</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_NewApplicationProcesses</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_NewApplicationProcesses</shortDescription>
         <value>New Application Processes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_NewApplications_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin NewApplications HelpText</shortDescription>
+        <value>New applications help text to go here...</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</fullName>
@@ -10887,11 +11721,26 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Receive E-Bulletin for Time Zone</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Reinstatements</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_Reinstatements</shortDescription>
+        <value>Reinstatements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Reviews</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Reviews</shortDescription>
         <value>Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_Reviews_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Reviews HelpText</shortDescription>
+        <value>All types of Reviews, including Notice of Termination</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_RunReport</fullName>
@@ -10964,6 +11813,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Termination &amp; Closures</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Termination_HelpText</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Termination HelpText</shortDescription>
+        <value>All types of Closures, including Termination and Voluntary Relinquishment</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_TimeZone_Selection</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10978,11 +11835,35 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>AIRS / CAIRS Online Bulletin</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_Unavailable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin Unavailable</shortDescription>
+        <value>The AIRS / CAIRS Online bulletin is not yet available in your country. Please check back later.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_WEEKLY_Bulletin</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_WEEKLY_Bulletin</shortDescription>
+        <value>WEEKLY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_WEEKLY_Bulletin Enable</shortDescription>
         <value>Enable WEEKLY eBulletin</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_eBulletin_WEEKLY_Setup</fullName>
+        <categories>ISSP, Portal, AMS, E-Bulletin</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS eBulletin WEEKLY Setup</shortDescription>
+        <value>Save &amp; Setup WEEKLY</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_btn_DownloadDailyReport</fullName>
@@ -11267,6 +12148,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Approve</value>
     </labels>
     <labels>
+        <fullName>ISSP_Active</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Active_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Active agreements</shortDescription>
+        <value>Active agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -11331,6 +12228,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Agent Accredited</value>
     </labels>
     <labels>
+        <fullName>ISSP_Agreement_type</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreement type</shortDescription>
+        <value>Agreement type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Agreements_available</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Agreements available</shortDescription>
+        <value>Agreements available</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Airline</fullName>
         <categories>ISSP, FAQ</categories>
         <language>en_US</language>
@@ -11345,6 +12258,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Airline Contact Type</shortDescription>
         <value>Contact Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Airline_Prefix</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Airline Prefix</shortDescription>
+        <value>Airline Prefix</value>
     </labels>
     <labels>
         <fullName>ISSP_Airlines_fly_3_billion</fullName>
@@ -11473,6 +12394,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Available Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_Available_types</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Available types</shortDescription>
+        <value>Available types</value>
+    </labels>
+    <labels>
         <fullName>ISSP_BSPLink</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
@@ -11534,6 +12463,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_Become_Accredited_Agent</shortDescription>
         <value>IATA Accreditation &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Bilateral, both carriers can issue electronic tickets</shortDescription>
+        <value>Bilateral, both carriers can issue electronic tickets</value>
     </labels>
     <labels>
         <fullName>ISSP_Branches</fullName>
@@ -11867,6 +12804,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Company Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_CompanyInformation_EMADOMVAL_AddBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CompanyInformation EMADOMVAL AddBtn</shortDescription>
+        <value>Manage Company email domains</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CompanyInformation_EMADOMVAL_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CompanyInformation EMADOMVAL Title</shortDescription>
+        <value>Company valid email domains</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CompanyLocation</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12007,6 +12960,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Contact</shortDescription>
         <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ContactList_HoverPopup_Text</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ContactList HoverPopup Text</shortDescription>
+        <value>This contact appears to have an email with a domain different from the validated ones from this company</value>
     </labels>
     <labels>
         <fullName>ISSP_ContactName</fullName>
@@ -12239,6 +13200,20 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Currency</value>
     </labels>
     <labels>
+        <fullName>ISSP_CurrencyCenter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CurrencyCenter</shortDescription>
+        <value>Currency Center</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CurrencyCenter_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CurrencyCenter_Description</shortDescription>
+        <value>The IATA Currency Center is a new, dynamic, web based information tool that provides currency information from an economic, financial markets and IATA perspective for different set of countries. In this first version you will find information related to blocked funds countries and watch list  countries. The onboarding of all other countries will follow!</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Currency_Filter</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12412,7 +13387,72 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.&lt;br/&gt;&lt;b&gt;The service is under a Pilot Phase:&lt;/b&gt; please note that Agency Information is not currently available worldwide.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL AddBtn</shortDescription>
+        <value>Add new domain</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_BackBtn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL BackBtn</shortDescription>
+        <value>Back to My company information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_ImportantInformation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL ImportantInformation</shortDescription>
+        <value>By keeping an updated list of valid company email domains, the system will be able to flag any contact under your account with a different domain. 
+With this feature, Portal Administrators will be able to easily identify the non-compliant contacts and take corrective actions if needed such as deactivating them. 
+Please add below all your company valid email domains, including different ones used in different locations.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_RemoveConfirmMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL RemoveConfirmMsg</shortDescription>
+        <value>Are you sure that you want to delete this entry ? All linked contacts will be impacted !</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_Action</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle Action</shortDescription>
+        <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_AddedOn</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle AddedOn</shortDescription>
+        <value>Added on</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_TableTitle_EmailDomain</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL TableTitle EmailDomain</shortDescription>
+        <value>Email domain (without @)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_EMADOMVAL_Title</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP EMADOMVAL Title</shortDescription>
+        <value>Manage my company Email domains</value>
     </labels>
     <labels>
         <fullName>ISSP_Edit</fullName>
@@ -13032,6 +14072,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_Excess</shortDescription>
         <value>Excess</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Existing_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Existing Agreements</shortDescription>
+        <value>Active Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_External_Links</fullName>
@@ -13760,6 +14808,14 @@ this is the tiess topic help</value>
         <value>.</value>
     </labels>
     <labels>
+        <fullName>ISSP_IATA_Designator</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP IATA Designator</shortDescription>
+        <value>IATA Designator</value>
+    </labels>
+    <labels>
         <fullName>ISSP_IATA_NOT_Found</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13773,7 +14829,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Non-existing IATA code in {!Country}. Please, select the correct Country. If the same error repeats, please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_IATAcertificate</fullName>
@@ -14101,6 +15157,14 @@ this is the tiess topic help</value>
         <value>IMPORTANT - The following persons have an active product subscription. Their user cannot be deactivated. Please contact IATA if these contacts no longer work for your company.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Inactive_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Inactive agreements</shortDescription>
+        <value>Inactive agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_InvalidPassword</fullName>
         <categories>ISSP_ChangePassword</categories>
         <language>en_US</language>
@@ -14311,6 +15375,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP MIR Rates Link</shortDescription>
         <value>The exchange rate used to convert local currencies to US dollars for the Management Information Report is derived from the Five Day Rates (FDR) product. The FDR service is available for purchase and can be requested using this &lt;a href=&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=7031%2D01&amp;cs_catalog=Publications&quot; target=&quot;_blank&quot;&gt;&lt;font color=&quot;0000EE&quot;&gt;link&lt;/font&gt;&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_MITA_Agreements_Service_Name</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP MITA Agreements Service Name</shortDescription>
+        <value>MITA Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_MakeAdmin</fullName>
@@ -14817,6 +15889,38 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Please note that you are not allowed to re-use your last 4 passwords.</value>
     </labels>
     <labels>
+        <fullName>ISSP_One_Way_Intermodal_Issuing_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Issuing Date</shortDescription>
+        <value>One Way Intermodal Issuing Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Intermodal_Participating_Date</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Intermodal Participating Date</shortDescription>
+        <value>One Way Intermodal Participating Date</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Issuing Airline</shortDescription>
+        <value>One Way Passenger Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_One_Way_Passenger_Participating</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP One Way Passenger Participating</shortDescription>
+        <value>One Way Passenger Participating</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Opt_In</fullName>
         <categories>ISSP, DDS</categories>
         <language>en_US</language>
@@ -15112,7 +16216,7 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PortalUserStatusChange</shortDescription>
-        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/contactus.aspx</value>
+        <value>Please contact IATA Customer Portal support by completing the query form available at http://www.iata.org/customer-portal/Pages/index.aspx?</value>
     </labels>
     <labels>
         <fullName>ISSP_PortalUserStatusChange_ActiveProcessedError</fullName>
@@ -15923,6 +17027,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Satisfactory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
         <fullName>ISSP_SaveNew</fullName>
         <categories>ISSP, Contacts</categories>
         <language>en_US</language>
@@ -16092,6 +17203,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP Should be mandatory</shortDescription>
         <value>Should be mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Show_all_the_agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Show all the agreements</shortDescription>
+        <value>Show all the agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_Showing_page</fullName>
@@ -16401,6 +17520,46 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
               IATA Customer Services</value>
     </labels>
     <labels>
+        <fullName>ISSP_The_Cargo_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Cargo Interline Agreement</shortDescription>
+        <value>The Cargo Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Issuing_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Issuing Airline</shortDescription>
+        <value>The One Way Issuing Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_One_Way_Participating_Airline</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The One Way Participating Airline</shortDescription>
+        <value>The One Way Participating Airline</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_Interline_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger Interline Agreement</shortDescription>
+        <value>The Passenger Interline Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP The Passenger and Cargo Interline Traffic Agreement</shortDescription>
+        <value>The Passenger and Cargo Interline Traffic Agreement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Title</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -16554,6 +17713,175 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>GFA Communication queue</value>
     </labels>
     <labels>
+        <fullName>ISSP_View_My_Company_MITA_BIETA_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP View My Company MITA/BIETA Agreements</shortDescription>
+        <value>View My Company MITA/BIETA Agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PWC_Lithuania_DC</shortDescription>
+        <value>PwC Lithuania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Argentina_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Argentina_DC</shortDescription>
+        <value>PwC Argentina DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Azerbaijan_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Azerbaijan_DC</shortDescription>
+        <value>PwC Azerbaijan DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Central</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Central</shortDescription>
+        <value>PwC Central</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Change_Requests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Change_Requests</shortDescription>
+        <value>PwC Change Requests</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_China_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_China_DC</shortDescription>
+        <value>PwC China DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_DIP_Reviews</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_DIP_Reviews</shortDescription>
+        <value>PwC DIP Reviews</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Egypt_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Egypt_DC</shortDescription>
+        <value>PwC Egypt DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Estonia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Estonia_DC</shortDescription>
+        <value>PwC Estonia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Greece_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Greece_DC</shortDescription>
+        <value>PwC Greece DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_India_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_India_DC</shortDescription>
+        <value>PwC India DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Indonesia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Indonesia_DC</shortDescription>
+        <value>PwC Indonesia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Israel_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Israel_DC</shortDescription>
+        <value>PwC Israel DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Malaysia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Malaysia_DC</shortDescription>
+        <value>PwC Malaysia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Mongolia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Mongolia_DC</shortDescription>
+        <value>PwC Mongolia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Philippines_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Philippines_DC</shortDescription>
+        <value>PwC Philippines DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Poland_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Poland_DC</shortDescription>
+        <value>PwC Poland DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Romania_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Romania_DC</shortDescription>
+        <value>PwC Romania DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Slovenia_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Slovenia_DC</shortDescription>
+        <value>PwC Slovenia DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Spain_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Spain_DC</shortDescription>
+        <value>PwC Spain DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Sweden_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Sweden_DC</shortDescription>
+        <value>PwC Sweden DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Thailand_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Thailand_DC</shortDescription>
+        <value>PwC Thailand DC</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_View_PwC_Vietnam_DC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_View_PwC_Vietnam_DC</shortDescription>
+        <value>PwC Vietnam DC</value>
+    </labels>
+    <labels>
         <fullName>ISSP_WaitChangeMessage</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16617,6 +17945,22 @@ This Dashboard allows each airline Treasury Team to gain full visibility of thei
         <value>Add Comment</value>
     </labels>
     <labels>
+        <fullName>ISSP_cannot_open_the_selected_account</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP cannot open the selected account</shortDescription>
+        <value>Error in the system: cannot open the selected account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_characters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP characters new password</shortDescription>
+        <value>8 characters</value>
+    </labels>
+    <labels>
         <fullName>ISSP_consult_FAQ</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -16673,6 +18017,30 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_Portal_Application_Right_Trigger</shortDescription>
         <value>The Invoice Type {!invoiceType} is not available for your company. Please contact customer service</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_letters_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP letters new password</shortDescription>
+        <value>1 letter</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_new_password_must_have</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP new password must have</shortDescription>
+        <value>Your password must have at least:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_number_new_password</fullName>
+        <categories>ISSP_ChangePassword</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP number new password</shortDescription>
+        <value>1 number</value>
     </labels>
     <labels>
         <fullName>ISSP_of</fullName>
@@ -17447,6 +18815,18 @@ lblCompany:Company name
 lblAttention:Attention</value>
     </labels>
     <labels>
+        <fullName>LabelsVF_Order3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Labels for VF page Order 3</shortDescription>
+        <value>errMissCompany:Company name cannot be empty
+errMissAttn:Attention cannot be empty
+errMissPhone:Phone cannot be empty
+errMissState:State/Province cannot be empty
+msgAddrExist:Shipping address is already in system.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product</value>
+    </labels>
+    <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17580,6 +18960,154 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Last name</shortDescription>
         <value>Last name</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentButtonLanguage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentButtonLanguage</shortDescription>
+        <value>Chat with us!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentCheckingAvailableAgents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentCheckingAvailableAgents</shortDescription>
+        <value>Chat Support - checking for available agents:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentCustomSettingNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentCustomSettingNotFound</shortDescription>
+        <value>Please review the custom setting LiveAgentButtonSettings - No Value Found:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentFootNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentFootNote</shortDescription>
+        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentNEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentNEW</shortDescription>
+        <value>NEW!&amp;nbsp
+&lt;!--&lt;span&gt;&lt;/span&gt;--&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentOfflineButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentOfflineButton</shortDescription>
+        <value>Sorry - No agents available</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPlaceHolder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPlaceHolder</shortDescription>
+        <value>Type in your message here</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatChannelQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatChannelQuestion</shortDescription>
+        <value>Based on your experience today, which channel of communication will you select in the future?</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatComments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatComments</shortDescription>
+        <value>Any additional comments:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatExperienceAnswer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatExperienceAnswer</shortDescription>
+        <value>How would you rate your chat with</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatFieldsRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatFieldsRequired</shortDescription>
+        <value>These fields are required</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatPlaceHolder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatPlaceHolder</shortDescription>
+        <value>Type in your comment here</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatProfessionalismQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatProfessionalismQuestion</shortDescription>
+        <value>How would you rate your chat with</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatResubmission</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatResubmission</shortDescription>
+        <value>You already gave us your feedback, Thank you!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatSubmitButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatSubmitButton</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatThankContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatThankContact</shortDescription>
+        <value>We weren&apos;t able to successfully answer your chat request. Please try again in a few moments or create a case instead. Thank you!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatThankFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatThankFeedback</shortDescription>
+        <value>Thank you for your feedback!</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatTitle</shortDescription>
+        <value>Please give us your feedback on this chat</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentPostChatresolutionQuestion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentPostChatComments</shortDescription>
+        <value>Any additional comments:</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentWaitingMessageChat</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentWaitingMessageChat</shortDescription>
+        <value>One of our agents will be with you shortly. You are number &lt;queuenumber&gt; in the queue. Your wait time will be approximately &lt;queueminutes&gt; minute(s). Thank you for your patience.</value>
+    </labels>
+    <labels>
+        <fullName>LiveAgentWaitingMessageReady</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LiveAgentWaitingMessageReady</shortDescription>
+        <value>The chat is ready to start.&lt;br/&gt;Wait for the agent.</value>
     </labels>
     <labels>
         <fullName>Location</fullName>
@@ -17910,6 +19438,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Orders</shortDescription>
         <value>Orders</value>
+    </labels>
+    <labels>
+        <fullName>Oscar_Attachments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oscar Attachments</shortDescription>
+        <value>Oscar Attachments</value>
     </labels>
     <labels>
         <fullName>Overall_maximum_size</fullName>
@@ -20156,6 +21691,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Web</shortDescription>
         <value>Web</value>
+    </labels>
+    <labels>
+        <fullName>Web_Site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Web Site</shortDescription>
+        <value>Web Site</value>
     </labels>
     <labels>
         <fullName>Welcome_Message</fullName>

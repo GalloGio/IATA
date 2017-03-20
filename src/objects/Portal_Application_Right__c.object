@@ -311,6 +311,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ICCS_Currency_Center_Current_Visit__c</fullName>
+        <description>Technical field for ICCS Currency Center (Portal Service) to store current visit date.</description>
+        <externalId>false</externalId>
+        <label>ICCS Currency Center Current Visit</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ICCS_Currency_Center_Previous_Visit__c</fullName>
+        <description>Technical field for ICCS Currency Center (Portal Service) to store previous visit date.</description>
+        <externalId>false</externalId>
+        <label>ICCS Currency Center Previous Visit</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Invoice_Type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Please choose at least one invoice type to give rights</inlineHelpText>
@@ -406,9 +426,14 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;CASSLink Export&quot;, $Label.ISSP_CASSLink_Export, 
 &quot;CASSLink Import&quot;, $Label.ISSP_CASSLink_Import, 
 &quot;CASSLink Analytics&quot;, $Label.ISSP_CASSLink_Analytics, 
-&quot;ASD&quot;, $Label.ISSP_ASD, 
+&quot;ICE – IATA Customer E-Statement&quot;, $Label.ISSP_Account_Statements,
+&quot;ASD&quot;, $Label.ISSP_ASD,
+&quot;RHC&quot;, &quot;RHC&quot;,
+&quot;E-Bulletin&quot;, $Label.ISSP_EBulletin,
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
+&quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>

@@ -211,7 +211,7 @@ public with sharing class ISSP_ContactList {
         system.debug('contactListViewMap >>> ' + contactListViewMap);
         //String queryConditions =  String.isBlank(selectedList) ? '' : contactListViewMap.get(selectedList).SOQL_Filter__c;
         //if (selectedList == null) selectedList = '';
-        if(contactListViewMap.isEmpty())
+        if(contactListViewMap == null || contactListViewMap.isEmpty())
         	return 'WHERE ID = NULL';
         
         system.debug('selectedList: ' + selectedList);
@@ -240,7 +240,7 @@ public with sharing class ISSP_ContactList {
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate , Name , Account.Name ';
+                String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }

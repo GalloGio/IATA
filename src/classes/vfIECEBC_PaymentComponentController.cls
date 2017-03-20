@@ -11,6 +11,7 @@
   * History: 
   *  - 20160920-sl: initial version, covering payment for Campaign, Account Manage, Renewal
   *  - 20160926-ab: initial integration with credit card functionality
+  *  - 20161130-ab: Is Location Valid to proceed Tax Cal and on Cancel to retrieve old info
   *
   */
 
@@ -36,9 +37,13 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         }
         set;
     }
+  public Boolean isEnhancedReporting {get;set;}
+  public Boolean isRenewal {get;set;}
+  public Boolean isSubscriptionDescriptionVisible{get;set;}
+    
   
   // input passed from the caller using billingAccount fields
-  private String paymentTarget {get;set;}
+  public String paymentTarget {get;set;}
   private String campaignPaymentOption {get;set;}
   private String selectedRatePlanId {get;set;}
   private String selectedEbcSubscriptionId {get;private set;}
@@ -100,7 +105,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
             if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c==null) editMode=true;
         }
     
-    paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
+    //paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
     campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
     paymentTarget = billingAccountOrder.eBroadcast_Payment_Target__c;
     campaignPaymentOption = billingAccountOrder.eBroadcast_Payment_Campaign_Option__c;
@@ -111,6 +116,17 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     selectedEbcSubscriptionId = billingAccountOrder.eBroadcast_Payment_Subscription__c;
     emailCreditPurchased = Integer.valueOf(billingAccountOrder.eBroadcast_Payment_Email_Credit_Amount__c);
     ebcCampaignId = billingAccountOrder.eBroadcast_Payment_Campaign__c;
+      
+       
+   isEnhancedReporting = (paymentTarget == EBC_PAYMENT_TARGET_ACCOUNT_ADD_ON_REPORT);       
+   isRenewal = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
+   isSubscriptionDescriptionVisible = (isRenewal || payNewRatePlan);
+   String TransactionCategory='EBC';
+   if (paymentTarget.equals('addon storage')) TransactionCategory='EBCSLAO';  
+   if (paymentTarget.equals('email')) TransactionCategory='Credit Package';
+   if (paymentTarget.equals('addon reporting')) TransactionCategory='EBCALAO';
+   TermsAndConditions = getCurrentTermsAndConditionForProduct(TransactionCategory, selectedRatePlanId);   
+  
   } // end of initialization
     public  EBC_Order__c billingAccountOrder {
         get {
@@ -218,6 +234,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   
   public void clickEditButton()
   {
+    
     editMode = true;
   } // clickEditButton
   
@@ -226,25 +243,47 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   public void LoadPaymentBillingContact(Id UserId){
      doupdatecontact=false;
   }
+    
+   private boolean IsLocationValid(){
+    boolean mustreturntopreviouspage=false;
+    if (String.isBlank(oBillingAddress.City__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.Street__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.ISO_Country__c)) mustreturntopreviouspage=true;
+    if (String.isBlank(oBillingAddress.ISO_State__c) && bStateAvailable) mustreturntopreviouspage=true;  
+    return !mustreturntopreviouspage; 
+    }  
   // ========================================================================
   // save billing detail: contact and address
   public void clickSaveBillingDetailButton()
   {
+   String Step='';
+   try {
+    Step='Updating Billing Account...';
     if(doupdatecontact) update oPaymentBillingContact;
+   
     //Update SoldToContact
     //update oPaymentSoldToContact;
+     Step='Updating Address Details...';
     updateAddressDetail(); // update oBillingAddress, oOriginalBillingAddress, oBillingLocation
     
     // this is to reset the source, and make it reread
+    // 
+    Step='Reading Billing Account Details...';
     rereadBillingAccount();  
-    oPaymentBillingContact = null;
+    Step='Intializing Billing Account...';
+    //oPaymentBillingContact = null;
     //oBillingAddress = null;
     
     editMode = false;
     showTaxButtons=true;
-    if (oBillingAddress.ISO_Country__c!=null) {
-        if (lstStateProvince.Size()>1  && oBillingAddress.ISO_State__c!=null) CalculateTaxNow();
-        }
+    Step='Tax Calculation...';
+    //if (IsLocationValid()) CalculateTaxNow();
+    }
+    catch (Exception ex) {
+      ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()+' During '+Step));
+      return;
+    } 
+    //
   } // clickUpdateBillingContactButton
     
   public void clickCancelBillingDetailButton()
@@ -252,6 +291,8 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
     // this is to reset the source, and make it reread
     rereadBillingAccount();  
+    getAddressDetail();
+    if (!IsLocationValid()) return;
     oPaymentBillingContact = null;
         
     editMode = false;
@@ -523,19 +564,9 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     }
   }
     
-  public Boolean isRenewal{
-    get{
-      Boolean result = (paymentTarget == EBC_PAYMENT_TARGET_RENEWAL);
-      return result;
-    }
-  }
+   
+    
   
-  public Boolean isSubscriptionDescriptionVisible{
-    get{
-      Boolean result = (isRenewal || payNewRatePlan);
-      return result;
-    }
-  }
   
   
   // ========================================================================
@@ -1079,24 +1110,32 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
        //3:Renewal
        //4:Prepaid
        //5:Tax Calculation
-       
-     Decimal savedTaxAmount=TaxAmount;
-     Decimal savedsubTotalAmount=subTotalAmount;
+   Decimal savedTaxAmount=TaxAmount;
+   Decimal savedsubTotalAmount=subTotalAmount;
+   IECConstants.PaymentType PaymentMethodType = IECConstants.PaymentType.CREDIT_CARD;
+   String Step='';
+   try {
+     
      //Decimal savedtotalAmountDue=totalAmountDue;
-       
-        
+      
+     Step='System Debug';   
      System.debug('UseCasePricing >>>'+UseCasePricing);
      System.debug('paymentTarget >>>'+paymentTarget);
      System.debug('campaignPaymentOption >>>'+campaignPaymentOption);
+     Step='Setup Payment Method';
      if (UseCasePricing==-1) return false;
-     IECConstants.PaymentType PaymentMethodType = IECConstants.PaymentType.CREDIT_CARD;
-     if (selectedPaymentMethodType.equals('BANK_TRANSFER'))  PaymentMethodType = IECConstants.PaymentType.BANK_TRANSFER;
+     if (selectedPaymentMethodType==null) selectedPaymentMethodType='';
+     if (selectedPaymentMethodType.equals('BANK_TRANSFER') )  PaymentMethodType = IECConstants.PaymentType.BANK_TRANSFER;
      if (selectedPaymentMethodType.equals('ICH')) PaymentMethodType = IECConstants.PaymentType.ICH;
-    
+    }catch (Exception ex) {
+      
+      ErrorMessage=ex.getMessage() +' During '+Step;
+      return false;
+    }
      // selectedCreditCardPaymentId = '2c92c0f8574b2b8101574df5ec7a6009';
     try {
             //We need to perform an Add product to existing Subscription
-            
+            Step='Performing Add product...';
             if (UseCasePricing==2 || UseCasePricing==3){
                /////////////////////////////////////////////// 
                 // create second amendment to add a new product
@@ -1128,6 +1167,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                     // set the RatePlanData of the product being added
                     if (UseCasePricing==2) 
                     {
+                        Step='Setting Rate Plan Data...';
                         Zuora.zObject addRatePlan = new Zuora.zObject('RatePlan');
                         addRatePlan.setValue('ProductRatePlanId', CartItem.prpcId);
                         Zuora.zObject addRatePlanData = new Zuora.zObject('RatePlanData');
@@ -1139,6 +1179,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 
                 
                  // create amendment request
+                Step='Setting the Zuora request...';
                 Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
                 
                 // Specify amendment options for generating invoice to determine total amount and taxes
@@ -1149,6 +1190,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     
                 if (isPreview) {
                     // Specify preview options for to simulate the amendment without actually submitting it
+                    Step='Previewing the end result...';
                     Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
                     previewOpt.EnablePreviewMode = true;
                     previewOpt.NumberOfPeriods = 1;
@@ -1164,7 +1206,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                 
                 amendRequest.Amendments = lstAmendments;
                                                 
-                  
+                Step='Zuora returning result...';
                 Zuora.zApi.AmendResult oresult =
                     (!Test.isRunningTest()
                         ? IECZuoraHelper.amendApiCall(amendRequest)
@@ -1186,6 +1228,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                             // TODO:
                             List<Zuora.SyncResult> lstSyncResults = OnDemandSyncAccounts(new Set<String> {(String) loggedCustomer.RelatedZuoraAccount.getValue('Id')});
                         }
+                        Step='Processing Zuora result...';
                               //Handle with the invoice data returned by previewing subscriptions
                         if (oresult.InvoiceDatas != null && isPreview){ 
                                     TaxAmount=0;
@@ -1214,7 +1257,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
                     }
                     else
                     {
-                        ErrorMessage=ErrorMessage+'Error Processing your request';
+                        ErrorMessage=ErrorMessage+'Error Processing your request'+' During '+Step;
                     }
                    
                 
@@ -1223,6 +1266,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
 
             }
             //We need a New Subscription
+        Step='Adding Subscription...';
         if (UseCasePricing==0 || UseCasePricing==1 || UseCasePricing==4){
         List<Zuora.zApi.SubscribeRequest> listSubscribeRequests = new List<Zuora.zApi.SubscribeRequest>();
         List<Zuora.zApi.SubscribeResult> listSubscribeResults = null;
@@ -1247,7 +1291,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         oSubsRequest.SubscribeOptions.GenerateInvoice = false;
         oSubsRequest.SubscribeOptions.ProcessPayments = false;
         }*/
-        
+        Step='Adding Subscription details...';
         // No Preview Options (preview is used for previewing the price)
         oSubsRequest.PreviewOptions = null;
         
@@ -1291,6 +1335,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         //TODO:Abdellah Bring up here code of the subroutine
         // oSubsRequest.SubscriptionData.RatePlanData = IECShoppingCartHelper.createRatePlanDataObjectFromCartItem(cartItem);
         //
+        Step='Adding product and rate to subscription...';
         Boolean FirstPass=false;
         List<Zuora.zObject> listRatePlanData = new List<Zuora.zObject>();
         for (ProductRatePlanChargeWrapper cartItem : selectedProductRatePlanChargeWrapperList) {
@@ -1354,7 +1399,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   
         ////////////
         // Account
-  
+        Step='Checking Account existence in Zuora...';
         // if account already exists in Zuora, only specify the ID
         if (loggedCustomer.AccountExistsInZuora) {
           oSubsRequest.ZAccount = new Zuora.zObject('Account');
@@ -1366,7 +1411,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
           if (((String)loggedCustomer.RelatedZuoraAccount.getValue('DefaultPaymentMethodId')) != ((String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId')) && !Test.isRunningTest() && !IsPreview) {
             Zuora.zApi.SaveResult result = IECZuoraHelper.updateDefaultPaymentMethod((String)loggedCustomer.RelatedZuoraAccount.getValue('Id'), (String)oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
             if (!result.Success)
-                ErrorMessage=Label.IEC_Error_Cannot_update_default_payment_method;
+                ErrorMessage=Label.IEC_Error_Cannot_update_default_payment_method+' During '+Step;
             else
                 loggedCustomer.RelatedZuoraAccount.setValue('DefaultPaymentMethodId', oSubsRequest.ZAccount.getValue('DefaultPaymentMethodId'));
           }
@@ -1390,9 +1435,10 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
           if (String.isNotBlank(selectedCreditCardPaymentId))
              oSubsRequest.PaymentMethod.setValue('Id', selectedCreditCardPaymentId);
           else 
-             ErrorMessage='paymentMethodZId was not provided';
+             ErrorMessage='paymentMethodZId was not provided'+' During '+Step;
         }
         if (isPreview){ 
+          Step='Previewing add subscription...';
           Zuora.zApi.PreviewOptions previewOpt = new Zuora.zApi.PreviewOptions();
             previewOpt.EnablePreviewMode = true;
             previewOpt.NumberOfPeriods = 1;
@@ -1413,7 +1459,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
               TaxAmount=savedTaxAmount;
               subTotalAmount=savedsubTotalAmount;
               //totalAmountDue=savedtotalAmountDue;
-              
+              Step='Processing Zuora Subscription result...';
               for (Zuora.zApi.SubscribeResult result : listSubscribeResults) {
                 if (!result.Success) {ErrorMessage='Tax Calculation Failed, Try again!';return false;}
                 if (result.Success) {
@@ -1456,6 +1502,7 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
          */
   
         if (listSubscribeResults[0].Success && !isPreview){
+            Step='Sync Zuora and Salesforce....';
           OnDemandSyncAccounts(new Set<String> {listSubscribeResults[0].AccountId});
           
         }
@@ -1466,14 +1513,14 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
       return true;
     }
     catch (IECApplicationException ex) {
-      ErrorMessage='Could not subscribe: ' + ex.getMessage();
+      ErrorMessage='Could not subscribe: ' + ex.getMessage()+' During '+Step;
     }
     catch (Exception ex) {
       if (Zuora.zApi.currentLogger != null) {
         system.debug('SOAP Request >>> ' + Zuora.zApi.currentLogger.request );
         system.debug('SOAP Response >>> ' + Zuora.zApi.currentLogger.response );
       }
-      ErrorMessage='Could not subscribe: ' + ex.getMessage();
+      ErrorMessage='Could not subscribe: ' + ex.getMessage()+' During '+Step;
     }
     return false;
   } 
@@ -1501,14 +1548,21 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     //Tax calculation from SAP
     //And Error Message
     public PageReference CalculateTaxNow(){
+        
         ErrorMessage='';
-        boolean result=EBCSubscribe(true);
+        boolean result=false;
+        if (!IsLocationValid()){
+            ErrorMessage='Some of the Billing information is missing to calculate Taxes.';
+        }
+        else
+         result=EBCSubscribe(true);
         
         //TaxAmount=getSAP_Freight_Tax();
         showTaxButtons=false;
         //return null;
         ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
         if (!result) {showTaxButtons=true; TaxAmount=0;ApexPages.addMessage(myMsg);}
+        
         return null;
     }
     /*
@@ -1644,39 +1698,76 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
     update billingAccountOrder;
     rereadBillingAccount();
   } // end of purchaseFulfillment
-  
-  
-  
-  // ========================================================================
-  // create a new EBC_Activity for this newly paid Product Rate Plan
-  //   productRatePlanEmailCredit  = paidProductRatePlan.EBC_Email_Credit_Current_Offering__c or  paidProductRatePlan.EBC_Prepaid_Email__c
-  // the following variables should be provided by the class
-  //   billingAccount.eBroadcast_Email_Balance__c
-  //   subscription.Name
-  /*
-  private EBC_Activity__c newEbcActivity( String productRatePlanEmailCredit)
-  {
-    //Integer emailCredits = (paidProductRatePlan.EBC_Email_Credit_Current_Offering__c == null ) ? 0 : Integer.valueOf(paidProductRatePlan.EBC_Email_Credit_Current_Offering__c);
-    Integer emailCredits = (productRatePlanEmailCredit == null ) ? 0 : Integer.valueOf(productRatePlanEmailCredit);
-    Integer newBalance = (billingAccount.eBroadcast_Email_Balance__c == null) ? 0 : Integer.valueOf(billingAccount.eBroadcast_Email_Balance__c);
-    newBalance += emailCredits;
     
-    String actName =  subscription.Name + ' - ' + paidProductRatePlan.Name;
-    actName = actName.substring(0, Math.min(actName.length(),80));
-    EBC_Activity__c ebcAct = new EBC_Activity__c(
-      Related_Billing_Account__c = billingAccount.Id
-      , Name = actName
-      //,EBC_Campaign__c = null
-      , Total_Count__c = emailCredits
-      , New_Balance__c = newBalance
-      , Activity_Type__c = 'Credit'
-      , Activity_Date_Time__c  = DateTime.now()
-      );
-      
-    return ebcAct; 
-  } // addEbcActivity
+
+/**
+* Returns the currently active Terms & Conditions of a Product
+* @param oProductInfo The related Product Information object
+* @return A Terms_and_Conditions__c object
+*/
+public List<Terms_and_Conditions__c> TermsAndConditions { get; private set; }
     
-  */
+public static List<Terms_and_Conditions__c> getCurrentTermsAndConditionForProduct(String sCategory, String sProductInfoId) {
+  List<Terms_and_Conditions__c> listTC = new List<Terms_and_Conditions__c>();
+  List<Product_Rate_Plan_Information__c> listPI = new List<Product_Rate_Plan_Information__c>();
   
+  ListPI = [Select Related_Product_Information__c
+             From Product_Rate_Plan_Information__c
+           Where Product_Rate_Plan__c=:sProductInfoId
+           Limit 10];
+   
+    
+  Set<Id> ListId = new Set<Id>();
+  for(Product_Rate_Plan_Information__c item:ListPI){
+        ListId.add(item.Related_Product_Information__c);
+    }
+  listTC = getCurrentTermsAndCondition(sCategory);
   
+  if (listTC.Size()==0) {listTC = getCurrentTermsAndCondition('EBC');}
+  if (ListId.Size()==0)  return listTC;
+    
+  listTC = [SELECT Effective_Start_Date__c
+              ,Is_Current__c
+                ,Product_Information__c
+                ,Name
+                ,Product_Information__r.Related_Product_Category__r.Display_Name__c
+                ,(SELECT Id
+                      ,ContentType
+                      ,BodyLength 
+                    FROM Attachments 
+                    WHERE IsDeleted = false ORDER BY CreatedDate desc) 
+             FROM Terms_and_Conditions__c
+             WHERE Product_Information__r.Related_Product_Category__r.Name=:sCategory
+               AND Id=:ListId
+               AND Effective_Start_Date__c <= :Datetime.now()
+             ORDER BY Effective_Start_Date__c DESC
+            Limit 1];
+        
+  if (listTC.Size()==0) {listTC = getCurrentTermsAndCondition('EBC');}
+  return listTC;
+    //Product_Information__c = :sProductInfoId
+}
+
+private static List<Terms_and_Conditions__c> getCurrentTermsAndCondition(String sCategory)
+{
+    List<Terms_and_Conditions__c> listTC = new List<Terms_and_Conditions__c>();
+    listTC = [SELECT Effective_Start_Date__c
+              ,Is_Current__c
+                ,Product_Information__c
+                ,Name
+                ,Product_Information__r.Related_Product_Category__r.Display_Name__c
+                ,(SELECT Id
+                      ,ContentType
+                      ,BodyLength 
+                    FROM Attachments 
+                    WHERE IsDeleted = false ORDER BY CreatedDate desc) 
+             FROM Terms_and_Conditions__c
+             WHERE Product_Information__r.Related_Product_Category__r.Name=:sCategory
+               AND Effective_Start_Date__c <= :Datetime.now()
+             ORDER BY Effective_Start_Date__c DESC
+            Limit 1];
+        
+    return listTC; 
+    
+}
 } // end of class vfIECEBC_PaymentComponentController

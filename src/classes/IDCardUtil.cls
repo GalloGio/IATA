@@ -122,7 +122,11 @@ global with sharing class IDCardUtil {
 @RemoteAction
     public Static final string CASESTATUS_INPROGRESS = 'In progress';
 @RemoteAction
-    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';  
+    public static final string CASESTATUS_READYFORPRODUCTION= 'Ready for production';
+
+@RemoteAction
+    public static final string CASESTATUS_PENDING_TO_BE_APPROVED = 'To be Approved';
+
     
             
 @RemoteAction
@@ -1772,7 +1776,7 @@ global with sharing class IDCardUtil {
                         if (idCards != null && idCards.size() > 0) {
                             idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
                             idCards[0].Cancellation_Date__c = Date.Today(); 
-                            idCards[0].MustSyncWithAIMS__c = true;                            
+                            //fidCards[0].MustSyncWithAIMS__c = true;                            
                             update idcards[0];
                         }
                     } 
@@ -2063,5 +2067,18 @@ global with sharing class IDCardUtil {
         }
 
         return authorizationLink;
+    }
+
+     //INC291433
+    @RemoteAction 
+     WebService static String setTobeapproved(String applicationIdParam) {
+        List<Case> c = [select id, ID_Card_Status__c from Case c where  c.Related_ID_Card_Application__c =: applicationIdParam and c.RecordTypeId =: IDCardcaseRecordTypeID  limit 1];
+        
+        if(!c.isEmpty() && c.size() > 0) {
+            c[0].Status = IDCardUtil.CASESTATUS_PENDING_TO_BE_APPROVED;
+            update c[0];            
+            return c[0].id;
+        }        
+        return '';
     }
 }

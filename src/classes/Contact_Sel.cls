@@ -39,13 +39,15 @@ public without sharing class Contact_Sel extends Selector {
         return (contacts != null && contacts.size() > 0)  ? contacts[0]  : null; */
 
         String query = String.format(
-            'SELECT {0} ' +
-            '   ,BillTo_Location__r.Address__c, BillTo_Location__r.Street__c, BillTo_Location__r.City__c, BillTo_Location__r.ZipCode__c' + 
-            '       ,BillTo_Location__r.ISO_Country_Name__c, BillTo_Location__r.ISO_State_Name__c, BillTo_Location__r.ISO_Country_Code__c'+
-            '   ,ShipTo_Location__r.Address__c, ShipTo_Location__r.Street__c, ShipTo_Location__r.City__c, ShipTo_Location__r.ZipCode__c' + 
-            '       ,ShipTo_Location__r.ISO_Country_Name__c, ShipTo_Location__r.ISO_State_Name__c, ShipTo_Location__r.ISO_Country_Code__c '+
-            'FROM {1} ' + 
-            'WHERE Id = :contactId ' , 
+            'SELECT {0}, Account.Name, Account.CurrencyIsoCode ' +
+            '   ,BillTo_Location__r.Address__c, BillTo_Location__r.Street__c, BillTo_Location__r.City__c, BillTo_Location__r.ZipCode__c' +
+            '   ,BillTo_Location__r.ISO_Country_Name__c, BillTo_Location__r.ISO_Country_Code__c' +
+            '   ,BillTo_Location__r.ISO_State_Name__c, BillTo_Location__r.ISO_State_Code_SAP__c' +
+            '   ,ShipTo_Location__r.Address__c, ShipTo_Location__r.Street__c, ShipTo_Location__r.City__c, ShipTo_Location__r.ZipCode__c' +
+            '   ,ShipTo_Location__r.ISO_Country_Name__c, ShipTo_Location__r.ISO_Country_Code__c' +
+            '   ,ShipTo_Location__r.ISO_State_Name__c, ShipTo_Location__r.ISO_State_Code_SAP__c' +
+            ' FROM {1} ' + 
+            ' WHERE Id = :contactId ' , 
             new List<String>{
                 String.join(getDefaultFields(), ', '),
                 getSObjectType().getDescribe().getName()
@@ -81,7 +83,7 @@ public without sharing class Contact_Sel extends Selector {
         return new map<Id,Contact>([
                                     SELECT 
                                         Id,FirstName,LastName,Email,Phone,Tax_1_ID__c,Tax_2_ID__c,Title,Name,Salutation,
-                                        MailingStreet,MailingCity,MailingPostalCode,MailingState,MailingCountry, IsDeleted,
+                                        MailingStreet,MailingCity,MailingPostalCode,MailingState,MailingCountry, IsDeleted, Account.CurrencyIsoCode, Account.Parent.CurrencyIsoCode,
                                         Account.BillingStreet,Account.BillingCity,Account.BillingPostalCode,Account.BillingState,Account.BillingCountry,
                                         Account.ShippingStreet,Account.ShippingCity,Account.ShippingPostalCode,Account.ShippingState,Account.ShippingCountry,
                                         Account.Sector__c, Account.Name, Account.Parent.Name, Account.Parent.Sector__c, Account.Parent.BillingStreet, 

@@ -420,7 +420,7 @@ public with sharing class IFAP_BusinessRules {
         if (!currentUserProfile.Name.toLowerCase().contains('system administrator')) {
 
             if (  (UpdatedCase.Agent_Name_chkbx__c && UpdatedCase.Financial_Security_Amount_chkbx__c && UpdatedCase.Financial_Security_Currency_chkbx__c && UpdatedCase.Financial_Security_Type_chkbx__c && UpdatedCase.Financial_Security_Template_chkbx__c && UpdatedCase.Financial_Security_Provider_chkbx__c && UpdatedCase.Expiry_Date_chkbx__c )
-                    && ((UpdatedCase.Status == 'Financial Security Requested' && UpdatedCase.FS_Submitted_Date__c != null) || (UpdatedCase.Status == 'Financial Security Provided' && UpdatedCase.FS_Submitted_Date__c != null)  || UpdatedCase.Status  == 'Closed' || UpdatedCase.Status == 'Assessment Performed' || UpdatedCase.Status == 'Assessment Cancelled')) {
+                    && ((UpdatedCase.Status == 'Financial Security Requested' && UpdatedCase.FS_Submitted_Date__c != null) || (UpdatedCase.Status == 'Financial Security Provided' && UpdatedCase.FS_Submitted_Date__c != null)  || UpdatedCase.Status  == 'Closed' || UpdatedCase.Status == 'Assessment Performed' || UpdatedCase.Status == 'Assessment Cancelled' || UpdatedCase.Status == 'Quality Issue Request Pending Approval' || UpdatedCase.Status == 'Quality Issue Request Approved' || UpdatedCase.Status == 'Quality Issue Rejected')) {
                 return false;
             }
         }

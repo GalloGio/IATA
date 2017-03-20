@@ -238,6 +238,19 @@
                                                             </apex:outputText>
                                                         </td>
                                                     </tr>
+                                                    <apex:outputPanel rendered="{!item.Setup_Fee__c != null && item.Setup_Fee__c > 0}">
+                                                    <tr class="promotion">
+                                                        <td class="product-name"><i>Flat fee</i></td>
+                                                        <td class="product-number"></td>
+                                                        <td class="quantity"></td>
+                                                        <td class="price item-price"></td>
+                                                        <td class="price total-price">
+                                                            <apex:outputText value="{0, Number, Currency}" >
+                                                                <apex:param value="{!item.Setup_Fee__c}" />
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                    </apex:outputPanel>
                                                     <apex:outputPanel rendered="{!item.Discount__c != null && item.Discount__c > 0}">
                                                     <tr class="promotion">
                                                         <td class="product-name">
@@ -353,16 +366,19 @@
                                 </apex:outputPanel>
                                
                                 <apex:form id="frmShipToAddress" rendered="{!AND(vfOrder.orderItems != null, vfOrder.orderItems.size > 0)}">
+                                    
+                                    <apex:outputPanel id="hiddenFields">
+                                        <apex:inputHidden value="{!orderPaymentType}" id="orderPaymentType" />             
+                                        <apex:inputHidden id="shipToSameAsBilTo" value="{!vfOrder.shipToSameAsBilTo}" />
+                                        <apex:inputHidden value="{!newCreditCardPaymentId}" id="hiddenNewCreditCardPaymentId" />
+                                        <apex:inputHidden value="{!defaultPaymentMethodId}" id="hiddenDefaultPaymentMethodId" />
 
-                                    <apex:inputHidden value="{!orderPaymentType}" id="orderPaymentType" />              
-                                    <apex:inputHidden id="shipToSameAsBilTo" value="{!vfOrder.shipToSameAsBilTo}" />
-                                    <apex:inputHidden value="{!newCreditCardPaymentId}" id="hiddenNewCreditCardPaymentId" />
-                                    <apex:inputHidden value="{!defaultPaymentMethodId}" id="hiddenDefaultPaymentMethodId" />
+                                        <input type="hidden" id="total_items" value="{!vfOrder.orderItems.size}" />
+                                    </apex:outputPanel>
 
-                                    <input type="hidden" id="total_items" value="{!vfOrder.orderItems.size}" />
-
-                                    <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" oncomplete="sendShipToCustomerToSAP();" reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" />
-                                    <apex:actionFunction name="sendShipToCustomerToSAP" action="{!sendShipToCustomerToSAP}" oncomplete="calculateTax();" status="runningShipToStatus" />
+                                    <!-- <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" oncomplete="sendShipToCustomerToSAP();" reRender="shipToLocation,shippingInstructionSection" status="runningShipToStatus" /> -->
+                                    <apex:actionFunction name="changeShipToAddressOption" action="{!changeShipToAddressOption}" reRender="shipToLocation,shippingInstructionSection,errorBloc,shippingFormValidationError" status="runningShipToStatus" />
+                                    <!-- <apex:actionFunction name="sendShipToCustomerToSAP" action="{!sendShipToCustomerToSAP}" oncomplete="calculateTax();" status="runningShipToStatus" /> -->
                                     <apex:actionFunction name="calculateTax" action="{!calculateFreightTaxDTO}" status="runningShipToStatus" reRender="orderTotalTaxes,orderTotalFreight,orderTotalHandling,orderTotalAmount" />
 
                                     <apex:actionFunction name="generateQuote" action="{!generateQuote}" status="quoteStatus" oncomplete="javascript:closeModal('#quote-modal')" reRender="inner_wrapper" />
@@ -504,7 +520,7 @@
                                                                     <i class="icon chevron-down"></i>
                                                                     <apex:selectList value="{!sfOrder.ShipTo_Location__c}" id="shipToLocation" multiselect="false" size="1" styleClass="user-input select validate[required]">
                                                                         <apex:selectOptions value="{!shippingAddresses}"/>
-                                                                        <apex:actionSupport event="onchange" action="{!changeShipToAddress}" reRender="errorBloc,displayButton,shipToLocation,shippingInstructionSection,orderTotalTaxes,orderTotalFreight,orderTotalHandling,orderTotalAmount" status="runningShipToStatus" />
+                                                                        <apex:actionSupport event="onchange" action="{!changeShipToAddress}" reRender="errorBloc,displayButton,shipToLocation,shippingInstructionSection,shippingFormValidationError,orderTotalTaxes,orderTotalFreight,orderTotalHandling,orderTotalAmount," status="runningShipToStatus" />
                                                                     </apex:selectList>
                                                                 </div>
                                                             </div>
@@ -517,7 +533,10 @@
                                                             <apex:outputPanel styleClass="alert error" rendered="{!hasError}" layout="block">
                                                                 <apex:pageMessages escape="false"/>
                                                                 <script type="text/javascript">
-                                                                    showNewAddressForm();
+                                                                    if ({!showNewAddress} == true)
+                                                                       showNewAddressForm();
+                                                                    else
+                                                                       hideNewAddressForm();
                                                                 </script>
                                                             </apex:outputPanel>
                                                         </apex:outputPanel>
@@ -600,7 +619,8 @@
                                                             <div class="action text-right">
                                                                 <ul class="list actions">
                                                                     <li><apex:commandLink styleClass="text-link" value="Cancel" onclick="javascript:hideNewAddressForm();" /></li>
-                                                                    <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); sendShipToCustomerToSAP();" /></li>
+                                                                    <!-- <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); sendShipToCustomerToSAP();" /></li> -->
+                                                                    <li><apex:commandLink styleClass="button secondary" status="saveAdrStatus" action="{!saveNewAddress}" reRender="shippingFormValidationError, shipToAddressBloc" value="Save address" oncomplete="selectDefaultShipToRadio(); calculateTax();" /></li>
                                                                 </ul>
                                                                 <apex:actionStatus id="saveAdrStatus">
                                                                     <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
@@ -613,32 +633,32 @@
                                                     <!-- Shipping Instructions -->
                                                     <!-- <div class="group-container shipping-instructions"> -->
                                                     <apex:outputPanel layout="block" styleClass="group-container shipping-instructions" id="shippingInstructionSection">
-                                                        <h3 class="group-title">Shipping instructions <span class="optional">(optional)</span></h3>
+                                                        <h3 class="group-title">Shipping instructions</h3>
                                                         <div class="field-group text inline">
                                                             <label>
-                                                                <span class="input-label">{!$Label.Company_name}</span>
-                                                                <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToContact.accountName}" />
+                                                                <span class="input-label">{!$Label.Company_name} <span class="required">*</span></span>
+                                                                <apex:inputText id="shipInstAccountName" styleClass="user-input text validate[required]" value="{!vfOrder.shipToContact.accountName}" />
                                                             </label>
                                                         </div>
                                                         <div class="field-group text inline">
                                                             <label>
-                                                                <span class="input-label">Attention</span>
+                                                                <span class="input-label">Attention <span class="required">*</span></span>
                                                                 <!-- <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToInstructionAttention}" /> -->
-                                                                <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToContact.contactName}" />
+                                                                <apex:inputText id="shipInstAttention" styleClass="user-input text validate[required]" value="{!vfOrder.shipToContact.contactName}" />
                                                             </label>
                                                         </div>
                                                         <div class="field-group text inline">
                                                             <label>
-                                                                <span class="input-label">Phone</span>
+                                                                <span class="input-label">Phone <span class="required">*</span></span>
                                                                 <!-- <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToInstructionPhone}" /> -->
-                                                                <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToContact.phone}" />
+                                                                <apex:inputText id="shipInstPhone" styleClass="user-input text validate[required]" value="{!vfOrder.shipToContact.phone}" />
                                                             </label>
                                                         </div>
                                                         <div class="field-group text inline">
                                                             <label>
-                                                                <span class="input-label">Email</span>
+                                                                <span class="input-label">Email <span class="required">*</span></span>
                                                                 <!-- <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToInstructionEmail}" /> -->
-                                                                <apex:inputText styleClass="user-input text" value="{!vfOrder.shipToContact.email}" />
+                                                                <apex:inputText id="shipInstEmail" styleClass="user-input text validate[required]" value="{!vfOrder.shipToContact.email}" />
                                                             </label>
                                                         </div>
                                                         <div class="field-group textarea inline">
@@ -706,7 +726,7 @@
 
                                                                     <!-- Terms & Conditions -->
                                                                     <apex:outputPanel layout="block" styleClass="checkbox-box" rendered="{!item.acceptedTnC != null}">
-                                                                        <div class="custom-user-input checkbox">
+                                                                        <div class="custom-user-input checkbox termsConditions">
                                                                             <!-- <input class="user-input checkbox validate[required]" onclick="javascript:viewTnC({!itemCount},'{!item.acceptedTnC.attachmentURL}')" type="checkbox" id="accept-terms-{!itemCount}" />
                                                                             <apex:inputHidden value="{!item.acceptedTnC.accepted}" /> -->   
                                                                             <apex:inputCheckbox value="{!item.acceptedTnC.accepted}" id="tnc" styleClass="user-input checkbox validate[required] accept-terms-{!itemCount}" />
@@ -770,10 +790,22 @@
                                                             </td>
                                                             <td class="price total-price">
                                                                 <apex:outputText value="{0, number, currency}">
-                                                                    <apex:param value="{!item.subTotal}"/>
+                                                                    <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
                                                                 </apex:outputText>
                                                             </td>
                                                         </tr>
+                                                        <apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+                                                        <tr class="promotion">
+                                                            <td class="product-name" colspan="3"><i>Flat fee</i></td>
+                                                            <td class="quantity"></td>
+                                                            <td class="price item-price"></td>
+                                                            <td class="price total-price">
+                                                                <apex:outputText value="{0, number, currency}">
+                                                                    <apex:param value="{!item.setupFee}" />
+                                                                </apex:outputText>
+                                                            </td>
+                                                        </tr>
+                                                        </apex:variable>
                                                         <apex:variable value="1" var="hasDiscounts" rendered="{!AND(item.charges!=null, item.charges.size>0)}">
                                                             <tr class="promotion">
                                                                 <td class="product-name">
@@ -982,7 +1014,8 @@
 
                                     <div class="footer-actions text-right">
                                         <apex:outputPanel id="displayButton">
-                                            <apex:outputPanel rendered="{!!hasError}">
+                                            
+                                            <apex:outputPanel rendered="{!!hasError && !taxFreightCalculateWithError && !stopProcess && !isShipToError}">
                                                 <ul class="list actions">
                                                     <apex:variable value="1" var="notQuote" rendered="{!vfOrder.orderPreviousType != 'Quote'}">
                                                     <li>
@@ -991,13 +1024,16 @@
                                                     </apex:variable>
         
                                                     <li>
-                                                        <apex:actionFunction name="processPayment" reRender="errorBloc" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
-                                                        <button class="button wide" type="button" onclick="processPayment();">
+                                                        <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
+
+                                                        <apex:outputPanel id="buttonJs">
+                                                        <button class="button wide" type="button" onclick="jsProcessPayment();">
                                                             {!$Label.IDCard_Continue_Button}
                                                             <apex:actionStatus id="payStatus"> 
                                                                 <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
                                                             </apex:actionStatus>
                                                         </button>
+                                                        </apex:outputPanel>
                                                         <!-- <apex:commandButton action="{!processPayment}" status="payStatus" styleClass="button wide" value="Continue" reRender="errorBloc" oncomplete="$(window).scrollTop(0);" /> -->
                                                     </li>
                                                 </ul>
@@ -1008,10 +1044,14 @@
                                             <apex:facet name="start">&nbsp;<img src="{!$Resource.IEC_progress}" alt="x" /></apex:facet>
                                         </apex:actionStatus> -->
                                     </div>
+                                    
+                                    <!-- Refresh the error and Continue box -->
+                                    <apex:actionFunction name="activeButton" reRender="errorBloc, displayButton" action="{!activeButton}" status="payStatus" />
+
                                 </apex:form>
 
                                 <!-- Cart Empty -->
-                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0)}">
+                                <apex:variable var="cartEmpty" value="0" rendered="{!OR(vfOrder.orderItems == null, vfOrder.orderItems.size == 0) && stopProcess != true}">
                                     <div class="footer-actions text-right">
                                         <a href="{!$Site.BaseUrl}/IEC_ProductList" class="button wide">{!$Label.Button_Continue_Shopping}</a>
                                     </div>
@@ -1185,6 +1225,14 @@
                 }
             </style>
 
+            <apex:outputPanel id="paymentProcessJs">
+                <script type="text/javascript">
+                    var jsProcessPayment = function(){
+                        processPayment($('input[id$=orderPaymentType]').val());
+                    }
+                </script>
+            </apex:outputPanel>
+
             <script type="text/javascript">
 
                 var setLabelFor = function(){
@@ -1324,7 +1372,7 @@
                     proceedToAddNewBackend();
                 }
                 
-                function callbackfailure( paramString ) {
+                function callbackfailure( paramString ) { 
                     $("#loader").addClass(className.hidden);  
                     displayCallBackfailureJS(paramString);
                 }
@@ -1408,7 +1456,7 @@
                     });
 
                     $('.js-payment-method').on('change', '.user-input:checked', function() {
-                        //console.log($(this).val());
+
                         $('input[id$=orderPaymentType]').val($(this).val());
 
                         if ($(this).val() === 'Credit Card') {
@@ -1416,6 +1464,7 @@
                             {
                                 // Use default cc if no other selected
                                 var defaultCreditCard = $("input[id$=defaultCreditCard]").val();
+
                                 //console.log(defaultCreditCard);
                                 $('input[id$=ccId]').val(defaultCreditCard);
                             }
@@ -1424,14 +1473,26 @@
                         }else{
                             $('.payment-method-container').addClass(className.hidden);
                         }
+
+                        activeButton();
+
                     });
 
                     $('.js-card-data-table').on('change', '.user-input:checked', function() {
                         $('input[id$=ccId]').val($(this).val());
                     });
                     
+                    $(".termsConditions").on('change', function(){
+                        activeButton();
+                    });
+
+                    $("input[id*='shipInst']").on('focus', function(){
+                        activeButton();
+                    });
 
                 });
+
+                
             </script>
         </body>
 

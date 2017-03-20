@@ -59,28 +59,39 @@ public class vfIECEBC_OptOut {
         
         ee.Type__c = 'OPTOUT';
         if (sender != 'all') {
-	        ee.Unsubscribe_From__c = billingAccountId;
+            ee.Unsubscribe_From__c = billingAccountId;
         }
         
         insert ee;
         
         PageReference pr = Page.IECEBC_PublicConfirmation;
         pr.setRedirect(true);
-        //pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
+        pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }
-    
+    public string getemailurl(){
+        return ApexPages.currentPage().getParameters().get('e');
+    }
     public Map<String, Boolean> reasons {
         get {
             if (reasons == null) {
-                reasons = new Map<String, Boolean>{
-                    'The content is not relevant to me' => false,
-                    'This email address is not meant for such content' => false,
-                    'You send too many emails' => false,
-                    'I get too many emails in general' => false
-                };
+                reasons = new Map<String, Boolean>();
+                for (String st:reasonslist) reasons.put(st,false);  
             }
             return reasons;
+        }
+        set;
+    }
+    public List<String> reasonslist {
+        get {
+            if (reasonslist ==null){
+                reasonslist = new List<String>{
+                'The content is not relevant for me' ,
+                'I receive too many emails in general',
+                'I receive too many emails from this service',
+                'This email address is not meant for such content'};
+            }      
+            return reasonslist;
         }
         set;
     }
