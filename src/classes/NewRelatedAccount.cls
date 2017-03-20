@@ -13,7 +13,7 @@ public class NewRelatedAccount {
                list<Account> accts =[select id,name,iatacode__c,Airline_designator__c, sector__c
                                        ,industry,type,TradeName__c,Legal_name__c,category__c,
                                        IATA_ISO_Country__c,Reason_for_creation__c,
-                                       Comments_Reason_for_creation__c 
+                                       Comments_Reason_for_creation__c, Airline_Prefix__c 
                                         from account 
                                     where id =:parentAccountId];
                                     
