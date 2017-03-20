@@ -1,11 +1,11 @@
 public with sharing class ISSP_Homepage {
-    
+
     public Account acct {get;private set;}
     public Contact con {get;private set;}
     public boolean isPartner {get;private set;}
     public boolean isDPCUser {get;set;}
     public boolean isAdmin{set;get;}
-    public boolean showIrregularities {get;private set;}    
+    public boolean showIrregularities {get;private set;}
     public list<Case> caseList {get;private set;}
     public list<Case> caseList_CompanyOpenCases {get;private set;}
     public list<Case> caseList_ReqMyInput {get;private set;}
@@ -22,8 +22,8 @@ public with sharing class ISSP_Homepage {
     public String  SurveyName {get; set;}
     public Boolean ShowModal {get; set;}
     public Decimal SurveyDelayTime {get; set;}
-  
-    
+
+
     public string Cases_ListView {get {return ISSP_Constant.customSetingMap.get('Cases_ListView');}private set;}
     public string Pending_approvals_ListView {get {return ISSP_Constant.customSetingMap.get('Pending_approvals_ListView');}private set;}
     public string Portal_Admins_ListView {get {return ISSP_Constant.customSetingMap.get('Portal_Admins_ListView');}private set;}
@@ -32,14 +32,14 @@ public with sharing class ISSP_Homepage {
     public string CompanyCases_ListView {get {return ISSP_Constant.customSetingMap.get('CompanyCases_ListView');} private set;}
     public string Pending_approvals_app_ListView {get {return ISSP_Constant.customSetingMap.get('Pending_approvals_app_ListView');} private set;}
     public string noirr {get;private set;}
-//  public string maxirr {get;private set;} 
+//  public string maxirr {get;private set;}
 
     public string UserLanguage {get; set;}
     public boolean iataCertificatesVisible {get; set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-         
+
     public ISSP_Homepage(){
         if(!Userinfo.getUserType().contains('Guest')){
             populateVariables();
@@ -48,7 +48,7 @@ public with sharing class ISSP_Homepage {
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         isDPCUser = (profileName.startsWith('ISS Portal DPC'));
         isAdmin =(profileName.containsIgnoreCase('admin'));
-         
+
         //Survey init
         ShowModal = true ;
         SurveyDelayTime = 0 ;
@@ -56,7 +56,7 @@ public with sharing class ISSP_Homepage {
 
         UserLanguage = UserLanguage();
     }
-    
+
     public void populateVariables(){
         User user = [select Id,languagelocalekey,ContactId,ProfileId from User where Id =:Userinfo.getUserId()];
         system.debug('\n\n\n user:'+user+'\n\n\n');
@@ -75,7 +75,7 @@ public with sharing class ISSP_Homepage {
 /* OLD IRREGULARITIES DISPLAY
         Irregularities_by_Agent_Type__c MaxCargo =  Irregularities_by_Agent_Type__c.getValues('Cargo');
         Irregularities_by_Agent_Type__c MaxTravel =  Irregularities_by_Agent_Type__c.getValues('Travel');
-        
+
         if (con.Account.Industry=='Cargo Agent') {
                 isAgency = true;
                 maxirr = string.valueof(MaxCargo.max_irregularities__c.intValue());
@@ -88,14 +88,14 @@ public with sharing class ISSP_Homepage {
                 isAgency = false;
                 maxirr = '?';
         }
-*/  
+*/
         if ( (con.Account.Industry=='Cargo Agent' || con.Account.Industry=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c)) {
                 showIrregularities = True;
         }
         else {
                 showIrregularities = False;
         }
-        
+
         // MY OPEN CASES
         caseList = [select Id from Case
                     WHERE is_Portal_user_equal_case_contact__c = 'true'
@@ -112,7 +112,7 @@ public with sharing class ISSP_Homepage {
                             and CreatedDate >:date.newInstance(2014, 1, 13)
                             AND RecordType.Name != 'IATA Financial Review'];
         system.debug('INPUT OPEN: ' + caseList_ReqMyInput.size());
-             
+
         if(ISSP_Constant.adminIdSet.contains(user.ProfileId)){
             system.debug('IS PARTNER');
             system.debug('TOP PARENT: ' + topParentId);
@@ -152,9 +152,9 @@ public with sharing class ISSP_Homepage {
 
         }
         myNotificationsList = [Select Notificatin_color__c,n.Type__c, n.Subject__c, n.Message__c, n.Id, n.Due_date__c, n.CreatedDate,Critical_notification__c, Number_of_views__c From Notification__c n where Contact__c=:con.Id and Archive__c=false order by Critical_notification__c DESC, CreatedDate  DESC];
-        appsGrantedList = [Select p.Application_Name__c, p.PortalServiceTranslatedName__c, p.Portal_Application__r.Description__c,p.Portal_Application__r.Service_Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__c =: user.ContactId and p.My_Apps__c = true and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name];   
+        appsGrantedList = [Select p.Application_Name__c, p.PortalServiceTranslatedName__c, p.Portal_Application__r.Description__c,p.Portal_Application__r.Service_Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__c =: user.ContactId and p.My_Apps__c = true and (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested') and p.Portal_Application__r.Hide_on_Homepage__c = false ORDER BY p.Right__c DESC,p.Portal_Application__r.Name];
         externalLinksList = [Select  p.Name,p.Description__c,p.Service_Description__c, p.Visible__c, p.Requestable__c, p.Application_icon__c, p.Application_URL__c,New_Window__c, p.VisibleCNS__c From Portal_Applications__c p where p.Visible__c = true and p.Requestable__c = false];
-        appsPendingApprovalsList = [Select p.Application_icon_del__c, p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__r.New_Window__c, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__r.AccountId =: topParentId  and p.Right__c = 'Access Requested'];   
+        appsPendingApprovalsList = [Select p.Application_icon_del__c, p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__r.New_Window__c, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c From Portal_Application_Right__c p where p.Contact__r.AccountId =: topParentId  and p.Right__c = 'Access Requested'];
         set<Id> appIdSet = new set<Id>();
         for(Portal_Application_Right__c par:appsGrantedList){
             appIdSet.add(par.Portal_Application__c);
@@ -165,29 +165,14 @@ public with sharing class ISSP_Homepage {
                         where p.Visible__c = true and p.Requestable__c = true
                         and p.Hide_on_Homepage__c = false and id not in:appIdSet];
         //populateKBlist(user.languagelocalekey);
-        
+
     }
-    
+
     public Pagereference isLogined (){
         System.debug('isLogined:');
         String kaviURL = ApexPages.currentPage().getParameters().get('kaviURL');
         if(kaviURL!=null)
             return new Pagereference('https://' +  kaviURL);
-        if(Userinfo.getUserType().contains('Guest') || system.Test.isRunningTest()){
-            string host = ISSP_Constant.customSetingMap.get('Host');
-            if(host==null || host==''){
-                host =  ApexPages.currentPage().getHeaders().get('Host');
-            }
-            return new Pagereference('https://' + host+ '/ISSP_Login'); 
-        }
-        else{
-            //TF - force logout for TD
-            PageReference newPR = ISSP_TD.toLogout_TD();
-            if (newPR != null){
-                newPR.setRedirect(true);
-                return newPR;
-            }
-        }
         Boolean isCNS = ISSP_Utilities.isCNS();
         User u = [
             SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
@@ -200,21 +185,36 @@ public with sharing class ISSP_Homepage {
             ApexPages.currentPage().getParameters().put('communityName','ISS');
 
         }
+        if(Userinfo.getUserType().contains('Guest') || system.Test.isRunningTest()){
+            string host = ISSP_Constant.customSetingMap.get('Host');
+            if(host==null || host==''){
+                host =  ApexPages.currentPage().getHeaders().get('Host');
+            }
+            return new Pagereference('https://' + host+ '/ISSP_Login');
+        }
+        else{
+            //TF - force logout for TD
+            PageReference newPR = ISSP_TD.toLogout_TD();
+            if (newPR != null){
+                newPR.setRedirect(true);
+                return newPR;
+            }
+        }
         return null;
     }
-    
+
     @RemoteAction
     public static string newAppsRequest (string applicationId, string contactId){
         insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = 'Access Requested');
         return 'ok';
     }
-    
+
     @RemoteAction
     public static string archiveNotification (string notificationId){
         upsert new Notification__c(Id = notificationId,Archive__c=true);
         return 'ok';
     }
-    
+
      @RemoteAction
     public static string addNumberOfViews(string notificationId){
         try{
@@ -228,7 +228,7 @@ public with sharing class ISSP_Homepage {
             return 'ko';
         }
     }
-    
+
     @RemoteAction
     public static String gUserId() { return Userinfo.getUserId(); }
 
@@ -258,26 +258,26 @@ public with sharing class ISSP_Homepage {
         kbList = tkbwList;
     }
     */
-    
+
     public class KnowledgeArticleVersionWrapper implements Comparable {
 
         public sObject kb {get;set;}
-        
+
         // Constructor
         public KnowledgeArticleVersionWrapper(KnowledgeArticleVersion kb) {
             this.kb = kb;
         }
-        
+
         // Constructor
         public KnowledgeArticleVersionWrapper(FAQ__kav kb) {
             this.kb = kb;
         }
-        
+
         // Constructor
         public KnowledgeArticleVersionWrapper(Portal_news__kav kb) {
             this.kb = kb;
         }
-        
+
         // Constructor
         public KnowledgeArticleVersionWrapper(Content__kav kb) {
             this.kb = kb;
@@ -287,13 +287,13 @@ public with sharing class ISSP_Homepage {
         public KnowledgeArticleVersionWrapper(How_To__kav kb) {
             this.kb = kb;
         }
-        
-        
+
+
         // Compare opportunities based on the opportunity amount.
         public Integer compareTo(Object compareTo) {
             // Cast argument to OpportunityWrapper
             KnowledgeArticleVersionWrapper compareToKB = (KnowledgeArticleVersionWrapper)compareTo;
-            
+
             // The return value of 0 indicates that both elements are equal.
             Integer returnValue = 0;
             if (Datetime.valueOf(kb.get('LastPublishedDate')) > Datetime.valueOf(compareToKB.kb.get('LastPublishedDate'))) {
@@ -303,11 +303,11 @@ public with sharing class ISSP_Homepage {
                 // Set return value to a negative value.
                 returnValue = 1;
             }
-            
-            return returnValue;       
+
+            return returnValue;
         }
     }
-    
+
     public string UserLanguage() {
         return UserInfo.getLanguage();
     }
@@ -327,20 +327,20 @@ public with sharing class ISSP_Homepage {
             SurveyName = LoginSurvey_rec.Name ;
             SurveyDelayTime = LoginSurvey_rec.PopupDelayTime__c * 1000;
             System.debug('SFI LoginSurvey_rec'+LoginSurvey_rec);
-            
+
             //Get the Survey ID
             String SurveyID = (LoginSurvey_rec.Survey_Link__c).substringAfterLast('iv=');
-            
+
             //Retrieve the current looged in useriv=
             User userRec = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()][0];
             System.debug('SFI userList'+userRec);
-            
+
             //prepare the full survey URL
             String fullSurveyURL = LoginSurvey_rec.Survey_Link__c.removeStart('http:')+'&q3='+userRec.ContactId+'&q4='+userRec.ID+'&q5='+SurveyID;
 
             //Get Survey Instant according to UserId and Survey ID
             List<Instant_Surveys__c>  InstantSurvey_List = new List<Instant_Surveys__c>([select Id ,SurveyUserID__c , SurveyURL__c
-                                                                                          From Instant_Surveys__c 
+                                                                                          From Instant_Surveys__c
                                                                                           Where SurveyUserID__c =: userRec.Id
                                                                                           AND SurveyURL__c =: SurveyID ]);
 
@@ -357,7 +357,7 @@ public with sharing class ISSP_Homepage {
         }
     return null;
     }
-    
+
     //browser detection ed dec15
    public string isIE {get
     {
@@ -366,7 +366,7 @@ public with sharing class ISSP_Homepage {
           String browser = ApexPages.currentPage().getHeaders().get('USER-AGENT');
           if (browser != null && browser != ''){
           if (browser.contains('MSIE') || browser.contains('rv:11.0'))
-            //IE 
+            //IE
             {
                 if (browser.contains('Trident/4.0') && browser.contains('MSIE 7.0') ){
                     b = 'IE8 '+ Label.ISSP_In_compatibility_mode ;
@@ -379,12 +379,12 @@ public with sharing class ISSP_Homepage {
                     (browser.contains('Trident/6.0') && browser.contains('MSIE 7.0')){
                     b = 'IE10 '+ Label.ISSP_In_compatibility_mode ;
                 }
-                
+
                 else if
                    (browser.contains('Trident/7.0') && browser.contains('MSIE 7.0')){
                     b = 'IE11 '+ Label.ISSP_In_compatibility_mode ;
                 }
-             
+
           }
           else
             //not IE
@@ -392,9 +392,9 @@ public with sharing class ISSP_Homepage {
             b  = 'notIE';
             }
           }
-          
+
         //return browser;
         return b;
     }set;}
-    
+
 }
