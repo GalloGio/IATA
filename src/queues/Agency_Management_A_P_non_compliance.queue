@@ -4,6 +4,9 @@
     <email>wongsf@iata.org</email>
     <name>AGM Non Compliance - A&amp;P</name>
     <queueSobject>
+        <sobjectType>AMS_OSCAR__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
