@@ -235,6 +235,7 @@ public with sharing class ISSP_AvailableServices{
         public string Status {get; set;}
         public Boolean selected {get; set;}
         public Portal_Applications__c recordService {get; set;}
+        public String btnLabel {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord){
             this.Status = getServiceStatus(inRecord);
@@ -279,7 +280,7 @@ public with sharing class ISSP_AvailableServices{
         }
         
         //TF
-        system.debug('CON ID: ' + conId);
+        //system.debug(LoggingLevel.ERROR, '--CON ID: ' + conId);
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
@@ -287,6 +288,8 @@ public with sharing class ISSP_AvailableServices{
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
                                                         AND Right__c = 'Access Granted'];
+
+
         if (!appRightList.isEmpty()){
             Set<Id> appIds = new Set<Id>();
             Set<Id> newAppIds = new Set<Id>();
@@ -358,34 +361,50 @@ public with sharing class ISSP_AvailableServices{
 
         Map<id, Set<String>> isoCountriesMap = ANG_ISSP_PortalServiceHelper.getElegibleCountries(serviceIds);
 
-        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c from User where id =: UserInfo.getUserId()];
+        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
 
         boolean flagAdd;
+        boolean flagIsIepPortalService;
         noOfRecords = 0;
         for (ServiceWrapper line : allServiceList) {
             flagAdd = true;
-            Set<String> isoCodes = isoCountriesMap.get(line.recordService.id);            
+            flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(line.recordService.name);
 
-            if(currentPortalUser.ANG_Sector__c == 'Travel Agent' || currentPortalUser.ANG_Sector__c == 'Cargo Agent') {            
-                if(line.recordService.ANG_Restrict_by_Agency_Sector__c != currentPortalUser.ANG_Sector__c) {
+            //if (flagIsIepPortalService) {
+                Set<String> isoCodes = isoCountriesMap.get(line.recordService.id);   
+
+                if (currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT || currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.CARGO_AGENT) {            
+                    if(line.recordService.ANG_Restrict_by_Agency_Sector__c != currentPortalUser.ANG_Sector__c) {
+                        flagAdd = false;
+                    }
+                }
+
+                if (line.recordService.ANG_Accredited_Agents_Only__c && !currentPortalUser.ANG_Is_Accredited_Agent__c) {
                     flagAdd = false;
                 }
-            }
 
-            if(line.recordService.ANG_Accredited_Agents_Only__c && !currentPortalUser.ANG_Is_Accredited_Agent__c) {
-                flagAdd = false;
-            }
-
-            if(isoCodes != null) {
-                if(!isoCodes.contains(currentPortalUser.ANG_Customer_Country_ISO__c)) {
-                    flagAdd = false;
+                if (isoCodes != null) {
+                    if (!isoCodes.contains(currentPortalUser.ANG_Customer_Country_ISO__c)) {
+                        flagAdd = false;
+                    }
                 }
-            }
+            //}
 
             if(flagAdd) {
                 allowedServiceList.add(line);
                 noOfRecords++;
+            }        
+
+            if (flagIsIepPortalService && currentPortalUser.contact.account.ANG_IEP_Status__c == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+                line.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
+            } else {
+                if (flagIsIepPortalService && currentPortalUser.contact.account.ANG_IEP_Status__c == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
+                    line.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                } else {
+                    line.btnLabel = System.Label.ISSP_New_Service_Request;
+                }
             }
+
         }
 
         ServiceList = allowedServiceList;
