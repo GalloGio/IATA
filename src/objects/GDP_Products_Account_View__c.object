@@ -74,17 +74,6 @@
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>AMS_GDP_Key__c</fullName>
-        <externalId>true</externalId>
-        <label>AMS GDP Key</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Accreditation_Class__c</fullName>
         <externalId>false</externalId>
         <formula>Related_Accreditation_Class__r.Class__r.Name</formula>
@@ -134,18 +123,6 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Agency_Code_Uniqueness_Validation__c</fullName>
-        <caseSensitive>true</caseSensitive>
-        <externalId>false</externalId>
-        <label>Agency Code Uniqueness Validation</label>
-        <length>41</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>true</unique>
     </fields>
     <fields>
         <fullName>Agency_Code__c</fullName>
@@ -304,18 +281,6 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <externalId>false</externalId>
         <formula>Related_GDP_Address__r.Address_Country_Name__c</formula>
         <label>Country Name</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Country_Short_Name__c</fullName>
-        <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_Country_Short_Name__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Country Short Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -895,6 +860,41 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <externalId>false</externalId>
         <label>Website</label>
         <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Code_Uniqueness_Validation__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <externalId>false</externalId>
+        <label>Agency Code Uniqueness Validation</label>
+        <length>41</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_GDP_Address__r.Address_Country_Short_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country Short Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
