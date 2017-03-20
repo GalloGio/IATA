@@ -288,7 +288,7 @@ public with sharing class OrderItem_Sel  extends Selector
 
 	public Map<Id,OrderItem> getOrderItemsById(set<Id> orderItemIds){
 		String query = String.format(
-            'SELECT {0} , Order.BillToContact.Name, Order.OrderNumber Order.BillToContactId ' + 
+            'SELECT {0} , Order.BillToContact.Name, Order.OrderNumber, Order.BillToContactId ' + 
             'FROM {1} ' + 
             'WHERE Id IN :orderItemIds' , 
             new List<String>{
