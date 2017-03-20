@@ -15,15 +15,16 @@ public class AMS_AccountOscarWizardController {
 
     public AMS_AccountOscarWizardController(ApexPages.StandardController stdController) {
 
-        this.controller  = stdController;
-        
+        this.controller = stdController;
+       
     }
 
     public Account getAccount() {
-        return [select ANG_IsNewGenAgency__c from Account
-                where id = :ApexPages.currentPage().getParameters().get('accountId')];
+        if(ApexPages.currentPage().getParameters().get('accountId') != null)
+            return [select ANG_IsNewGenAgency__c from Account
+                    where id = :ApexPages.currentPage().getParameters().get('accountId')];
+        return null;
     }
-
 
     public String getoscarId(){
         if (myFlow==null && myFlowNG==null) 
