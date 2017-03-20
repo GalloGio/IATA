@@ -9638,6 +9638,10 @@ J-Joint Vent</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>HO</fullName>
                 <default>false</default>
             </picklistValues>
@@ -24785,6 +24789,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -27645,6 +27653,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -30255,6 +30267,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -32861,6 +32877,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39045,6 +39065,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -43347,6 +43371,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -45970,6 +45998,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -50157,6 +50189,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54413,6 +54449,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -56733,6 +56773,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -58985,6 +59029,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61332,6 +61380,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66641,6 +66693,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -71835,6 +71891,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HO</fullName>
                 <default>false</default>
             </values>
@@ -76170,6 +76230,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
