@@ -1202,6 +1202,10 @@ Object used to store objectives that can be independent, related to other object
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Out of scope</fullName>
                 <default>false</default>
             </picklistValues>
@@ -3001,19 +3005,15 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Closed without intervention</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Out of scope</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resolved</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

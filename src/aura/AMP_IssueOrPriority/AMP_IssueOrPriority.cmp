@@ -83,8 +83,7 @@
         <td>
             <ui:inputSelect aura:id="status" class="slds-select required">
                 <ui:inputSelectOption label="Open" text="Open" value="{!v.issue.Status__c == 'Open'}" />
-                <ui:inputSelectOption label="Resolved" text="Resolved" value="{!v.issue.Status__c == 'Resolved'}" />
-                <ui:inputSelectOption label="Closed without Intervention" text="Closed without Intervention" value="{!v.issue.Status__c == 'Closed without Intervention'}" />
+                <ui:inputSelectOption label="Closed" text="Closed" value="{!v.issue.Status__c == 'Closed'}" />
                 <ui:inputSelectOption label="Out of Scope" text="Out of Scope" value="{!v.issue.Status__c == 'Out of Scope'}" />
             </ui:inputSelect>
 
