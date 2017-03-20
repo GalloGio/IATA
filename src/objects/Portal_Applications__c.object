@@ -294,6 +294,7 @@
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -322,9 +323,13 @@ Name
       &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
+<<<<<<< HEAD
       &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+=======
+      &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+>>>>>>> 29a1e1c2e10524287c6fdd45c5f7a03daa54115d
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -459,8 +464,8 @@ AND(
 Name = &quot;Resource Center&quot;, 
 CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
 ), 
-Name = &quot;Payment Link&quot;, 
-Name = &quot;Resource Center&quot; 
+Name = &quot;Payment Link&quot;,
+Name = &quot;Resource Center&quot;
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

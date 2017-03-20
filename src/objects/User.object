@@ -857,6 +857,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>License_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Profile.UserLicense.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>License name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Link_to_Business_unit__c</fullName>
         <externalId>false</externalId>
         <formula>HYPERLINK(&quot;https://emea.salesforce.com/a07?fcf=00B20000005GDh6&quot;, &quot;Link to business unit&quot;)</formula>
