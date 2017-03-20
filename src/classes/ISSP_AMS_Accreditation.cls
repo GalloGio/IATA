@@ -1089,6 +1089,8 @@ public without sharing class ISSP_AMS_Accreditation {
             else if (con.Account.Category__c == 'IATA Passenger Sales Agent')
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
+
+            if(ISSP_Utilities.isCNS()){ newCase.CNSCase__c=true;}
             
             agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
 
@@ -6471,7 +6473,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         System.debug('Kerensen2 ISSP_CreateButtonURL_Lst ==>' + ISSP_CreateButtonURL_Lst);
         if (ISSP_CreateButtonURL_Lst != null && ISSP_CreateButtonURL_Lst.size() > 0) {
-            return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c + '&topic=' + ISSP_CreateButtonURL_Lst[0].Topic__c);
+            return new Pagereference(ISSP_CreateButtonURL_Lst[0].URL__c + '&topic=' + ISSP_CreateButtonURL_Lst[0].Topic__c + commParam);
         } else {
             return null;
         }
