@@ -15,6 +15,7 @@ trigger trgIDCard_Card_AfterUpdate on ID_Card__c (after insert, after update) {
 		Map<String, List<ID_Card_Application__c>> allSingleAppPerMassId  = new Map<String, List<ID_Card_Application__c>>();
 		Map<String,String> massAppIdFromSingleAppid  = new Map<String,String>();
 		Map<String,Boolean> massAppStatus = new Map<String, Boolean>();
+		List<ID_Card_Application__c> idcardAppToUpdate = new List<ID_Card_Application__c>();
 		
 		
 		String massAppRT = IDCardWebService.getIdCardAppRT('Mass_Order_Application');
@@ -28,13 +29,15 @@ trigger trgIDCard_Card_AfterUpdate on ID_Card__c (after insert, after update) {
 				singleApplicationIds.add(card.ID_Card_Application__c);
 		}
 		system.debug('[ID CARD TRIGGER]  [UP]Should consider '+singleApplicationIds.size()+' ID CARD for update ');
-		List<ID_Card_Application__c> singlesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where recordTypeID = :singleAppRT and Id in :singleApplicationIds ];
+		List<ID_Card_Application__c> singlesApplication = [select Id , Application_Status__c, Mass_order_Application__c from ID_Card_Application__c where recordTypeID = :singleAppRT and Id in :singleApplicationIds ];
 		
 		//Get Mass application from single App
 		
 		for(ID_Card_Application__c singleApp :singlesApplication){
 			massApplicationIds.add(singleApp.Mass_order_Application__c);
 			massAppStatus.put(singleApp.Mass_order_Application__c, true);
+			idcardAppToUpdate.add(singleApp);
+
 		}
 		system.debug('[ID CARD TRIGGER] [UP] Should consider '+singlesApplication.size()+' Single APp for '+massAppStatus.size()+' mass appli');
 		
@@ -81,6 +84,14 @@ trigger trgIDCard_Card_AfterUpdate on ID_Card__c (after insert, after update) {
 			for(Case acase:cases2update)
 				acase.Status = 'Closed';
 			update cases2update;
+		}
+
+		//INC293102
+		if(idcardAppToUpdate.size() > 0){
+			for(ID_Card_Application__c idapp : idcardAppToUpdate)
+				idapp.Application_Status__c = 'Completed';
+			update idcardAppToUpdate;
+
 		}
 	} // Trigger after update
 
