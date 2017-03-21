@@ -1510,134 +1510,113 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgProcessISSCase Trigger.isUpdate*/
         
-        /*trgCaseIFAP Trigger.isUpdate
+        /*trgCaseIFAP Trigger.isUpdate*/
         if(trgCaseIFAP){//FLAG
         	system.debug('trgCaseIFAP Trigger.isUpdate');
-            for (Case updatedCase : Trigger.New) {
+            for (Case IFAPupdatedCase : Trigger.New) {
                 // ** May 2014 modif: Forbid change of recordtype FROM or TO IFAP case
-                if (updatedCase.RecordTypeId == IFAPcaseRecordTypeID && Trigger.oldMap.get(updatedCase.ID).RecordTypeId != IFAPcaseRecordTypeID) 
-                	updatedCase.addError('You cannot create an IFAP case by changing the case record type. If you want to create an IFAP case, create the IFAP case as a child case.');
-                if (updatedCase.RecordTypeId != IFAPcaseRecordTypeID && Trigger.oldMap.get(updatedCase.ID).RecordTypeId == IFAPcaseRecordTypeID) 
-                	updatedCase.addError('You cannot change the record type of an IFAP case.');
+                if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID && Trigger.oldMap.get(IFAPupdatedCase.ID).RecordTypeId != IFAPcaseRecordTypeID) 
+                	IFAPupdatedCase.addError('You cannot create an IFAP case by changing the case record type. If you want to create an IFAP case, create the IFAP case as a child case.');
+                if (IFAPupdatedCase.RecordTypeId != IFAPcaseRecordTypeID && Trigger.oldMap.get(IFAPupdatedCase.ID).RecordTypeId == IFAPcaseRecordTypeID) 
+                	IFAPupdatedCase.addError('You cannot change the record type of an IFAP case.');
                 // ** End May 2014 modif
                 // only consider IFAP cases
-                if (updatedCase.RecordTypeId == IFAPcaseRecordTypeID) {
+                if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID) {
                 	system.debug('##ROW##');
-                    Case oldCase = Trigger.oldMap.get(updatedCase.ID);
-                    //if(updatedCase.AccountId <> oldCase.AccountId){
-                    if (updatedCase.Country__c <> oldCase.Country__c) {
+                    Case IFAPoldCase = Trigger.oldMap.get(IFAPupdatedCase.ID);
+                    //if(IFAPupdatedCase.AccountId <> IFAPoldCase.AccountId){
+                    if (IFAPupdatedCase.Country__c <> IFAPoldCase.Country__c) {
                         // validate the account's country
-                        if (!IFAP_BusinessRules.isCountryValid(updatedCase, accountMap))
-                            updatedCase.addError('The account\'s country is not valid.');
+                        if (!IFAP_BusinessRules.isCountryValid(IFAPupdatedCase, accountMap))
+                            IFAPupdatedCase.addError('The account\'s country is not valid.');
                     }
-                    if (updatedCase.IFAP_Agent_Type__c <> oldCase.IFAP_Agent_Type__c) {
+                    if (IFAPupdatedCase.IFAP_Agent_Type__c <> IFAPoldCase.IFAP_Agent_Type__c) {
                         // validate the Agent Type
-                        if (!IFAP_BusinessRules.isAgentTypeValid(updatedCase, contactMap))
-                            updatedCase.addError('The contact\'s Agent Type is not valid.');
+                        if (!IFAP_BusinessRules.isAgentTypeValid(IFAPupdatedCase, contactMap))
+                            IFAPupdatedCase.addError('The contact\'s Agent Type is not valid.');
                     }
                     // validate the Agent Code if the financial review type is not 'New'
-                    if (updatedCase.Financial_Review_Type__c != 'New applications') {
-                        if (updatedCase.IFAP_Agent_Code__c <> oldCase.IFAP_Agent_Code__c) {
-                            if (!IFAP_BusinessRules.isAgentCodeValid(updatedCase, accountMap))
-                                updatedCase.addError('The contact\'s Agent Code is not valid.');
+                    if (IFAPupdatedCase.Financial_Review_Type__c != 'New applications') {
+                        if (IFAPupdatedCase.IFAP_Agent_Code__c <> IFAPoldCase.IFAP_Agent_Code__c) {
+                            if (!IFAP_BusinessRules.isAgentCodeValid(IFAPupdatedCase, accountMap))
+                                IFAPupdatedCase.addError('The contact\'s Agent Code is not valid.');
                         }
                     }
-                    if (UpdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
-                        if (UpdatedCase.status <> oldCase.status) {
-                            if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCase, oldCase , IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
+                    if (IFAPupdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
+                        if (IFAPupdatedCase.status <> IFAPoldCase.status) {
+                            if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, IFAPupdatedCase, IFAPoldCase , IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
                                 System.debug('IFAP_BusinessRules.IsStatusCanBeSelected............trg');
-                                updatedCase.addError('The following case status cannot be selected: ' + updatedCase.status);
-                            }else if (IFAP_BusinessRules.FSValidationCheckBox(updatedCase, oldCase , IFAPcurrentUserProfile)) {
+                                IFAPupdatedCase.addError('The following case status cannot be selected: ' + IFAPupdatedCase.status);
+                            }else if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, IFAPoldCase , IFAPcurrentUserProfile)) {
                                 System.debug('IFAP_BusinessRules.FSValidationCheckBox..........');
-                                updatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
+                                IFAPupdatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
                             }
                         }
                     }
-                    /*
                     // check if the FA template's country matches the case country
-                    EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected Initial Request Email Template does not match the case country.');
-                    }
-                    // check if the FA reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.Reminder_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected Reminder Email Template does not match the case country.');
-                    }
-                    // check if the FS template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.FS_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected FS Email Template does not match the case country.');
-                    }
-                    // check if the FS reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.FS_Reminder_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
-                    }*//*
-                    // check if the FA template's country matches the case country
-                    if (UpdatedCase.EmailTemplate__c != null && (UpdatedCase.EmailTemplate__c <> oldCase.EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected Initial Request Email Template does not match the case country.');
+                    if (IFAPupdatedCase.EmailTemplate__c != null && (IFAPupdatedCase.EmailTemplate__c <> IFAPoldCase.EmailTemplate__c)) {
+                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                            IFAPupdatedCase.addError('The selected Initial Request Email Template does not match the case country.');
                         }
                     }
                     // check if the FA reminder template's country matches the case country
-                    if (UpdatedCase.Reminder_EmailTemplate__c != null && (UpdatedCase.Reminder_EmailTemplate__c <> oldCase.Reminder_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected Reminder Email Template does not match the case country.');
+                    if (IFAPupdatedCase.Reminder_EmailTemplate__c != null && (IFAPupdatedCase.Reminder_EmailTemplate__c <> IFAPoldCase.Reminder_EmailTemplate__c)) {
+                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                            IFAPupdatedCase.addError('The selected Reminder Email Template does not match the case country.');
                         }
                     }
                     // check if the FS template's country matches the case country
-                    if (UpdatedCase.FS_EmailTemplate__c != null && (UpdatedCase.FS_EmailTemplate__c <> oldCase.FS_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected FS Email Template does not match the case country.');
+                    if (IFAPupdatedCase.FS_EmailTemplate__c != null && (IFAPupdatedCase.FS_EmailTemplate__c <> IFAPoldCase.FS_EmailTemplate__c)) {
+                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                            IFAPupdatedCase.addError('The selected FS Email Template does not match the case country.');
                         }
                     }
                     // check if the FS reminder template's country matches the case country
-                    if (UpdatedCase.FS_Reminder_EmailTemplate__c != null && (UpdatedCase.FS_Reminder_EmailTemplate__c <> oldcase.FS_Reminder_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                    if (IFAPupdatedCase.FS_Reminder_EmailTemplate__c != null && (IFAPupdatedCase.FS_Reminder_EmailTemplate__c <> IFAPoldCase.FS_Reminder_EmailTemplate__c)) {
+                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                            IFAPupdatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
                         }
                     }
                     // check if the account country was changed
-                    if (IFAP_BusinessRules.AccountCountryHasChanged(oldCase, UpdatedCase)) {
+                    if (IFAP_BusinessRules.AccountCountryHasChanged(IFAPoldCase, IFAPupdatedCase)) {
                         // validate the account's country
-                        if (!IFAP_BusinessRules.isCountryValid(UpdatedCase, accountMap))
-                            UpdatedCase.addError('The account\'s country is not valid.');
+                        if (!IFAP_BusinessRules.isCountryValid(IFAPupdatedCase, accountMap))
+                            IFAPupdatedCase.addError('The account\'s country is not valid.');
                         else
-                            IFAP_BusinessRules.setCountryAreaAndISOCode(UpdatedCase, accountMap);
+                            IFAP_BusinessRules.setCountryAreaAndISOCode(IFAPupdatedCase, accountMap);
                     }
                     //check if region is missing
-                    if (UpdatedCase.Region__c == '' || UpdatedCase.Region__c == null) {
-                        IFAP_BusinessRules.setCountryAreaAndISOCode(UpdatedCase, accountMap);
+                    if (IFAPupdatedCase.Region__c == '' || IFAPupdatedCase.Region__c == null) {
+                        IFAP_BusinessRules.setCountryAreaAndISOCode(IFAPupdatedCase, accountMap);
                     }
-                    //updatedCase.IsComplaint__c = false;
+                    //IFAPupdatedCase.IsComplaint__c = false;
                     // Phase 4
                     // check if Parent case is a SAAM case
-                    if (String.valueOf(updatedCase.ParentId) != '' && IFAP_BusinessRules.isSAAMCase(updatedCase.ParentId)) {
-                        Case theParentCase = [Select c.Id, c.CaseNumber from Case c where c.Id = :updatedCase.ParentId limit 1];
+                    if (String.valueOf(IFAPupdatedCase.ParentId) != '' && IFAP_BusinessRules.isSAAMCase(IFAPupdatedCase.ParentId)) {
+                        Case theParentCase = [Select c.Id, c.CaseNumber from Case c where c.Id = :IFAPupdatedCase.ParentId limit 1];
                         // check if a new parent SAAM case has been assigned
-                        if (oldCase.ParentId <> updatedCase.ParentId) {
+                        if (IFAPoldCase.ParentId <> IFAPupdatedCase.ParentId) {
                             //INC158616 - changed to list and check if size > 0
                             Case childCaseOfParent;
-                            List<Case> listChildCaseOfParent = [Select c.Id, c.CaseNumber, c.RecordTypeId FROM Case c WHERE c.ParentId = :updatedCase.ParentId AND c.Id <> :updatedCase.Id AND c.RecordTypeId = : IFAPcaseRecordTypeID LIMIT 1];
+                            List<Case> listChildCaseOfParent = [Select c.Id, c.CaseNumber, c.RecordTypeId FROM Case c WHERE c.ParentId = :IFAPupdatedCase.ParentId AND c.Id <> :IFAPupdatedCase.Id AND c.RecordTypeId = : IFAPcaseRecordTypeID LIMIT 1];
                             if (listChildCaseOfParent <> null && listChildCaseOfParent.size() > 0) {
-                                updatedCase.addError('The selected parent SAAM case already has a child IFAP case.');
+                                IFAPupdatedCase.addError('The selected parent SAAM case already has a child IFAP case.');
                             }
                         }
                         // update some fields in the parent SAAM case
-                        IFAP_BusinessRules.updateParentSAAMCase(oldCase, updatedCase);
+                        IFAP_BusinessRules.updateParentSAAMCase(IFAPoldCase, IFAPupdatedCase);
                     }
                     //don not allow change of Financial Review Result for unauthorized users
-                    if (updatedCase.Financial_Review_Result__c <> oldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
-                        updatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
+                    if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
+                        IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                     }
                     //when case has an OSCAR attached must synchronize fields
-                    if(updatedCase.Oscar__c != null)
-                        AMS_Utils.syncOSCARwithIFAP(oldCase, updatedCase);
+                    if(IFAPupdatedCase.Oscar__c != null)
+                        AMS_Utils.syncOSCARwithIFAP(IFAPoldCase, IFAPupdatedCase);
                 }
             }
         }
@@ -1646,28 +1625,28 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*UserInfoUpdate Trigger.isUpdate*/
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isUpdate');
-            for (Case updatedCase: Trigger.New){
-                if ((updatedCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updatedCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
+            for (Case updateCase: Trigger.New){
+                if ((updateCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updateCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
                     //User currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
                     //compare with old values       
-                    Case oldCase = Trigger.oldMap.get(updatedCase.ID);
+                    Case UIUoldCase = Trigger.oldMap.get(updateCase.ID);
                     if (isCurrentUserInit == false){
                         currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
                         isCurrentUserInit = true;
                     }if (currentUser.size() > 0){                      
                         //update name field if values changed
-                        if (updatedCase.CS_Contact_Result__c != oldCase.CS_Contact_Result__c)
-                            updatedCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
-                        if (updatedCase.Update_AIMS_IRR__c != oldCase.Update_AIMS_IRR__c)
-                            updatedCase.CS_Rep_Acc_IRR_DEF__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_DEF__c != oldCase.Update_AIMS_DEF__c)
-                            updatedCase.CS_Rep_Acc_DEF__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_IRRWITH__c != oldCase.Update_AIMS_IRRWITH__c)
-                            updatedCase.CS_Rep_ACC_IRR_Withdrawal__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_REI_DEFWITH__c != oldCase.Update_AIMS_REI_DEFWITH__c)
-                            updatedCase.CS_Rep_Acc_REI__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_TER__c != oldCase.Update_AIMS_TER__c)
-                            updatedCase.CS_Rep_ACC_TER__c = currentUser[0].Id ; 
+                        if (updateCase.CS_Contact_Result__c != UIUoldCase.CS_Contact_Result__c)
+                            updateCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
+                        if (updateCase.Update_AIMS_IRR__c != UIUoldCase.Update_AIMS_IRR__c)
+                            updateCase.CS_Rep_Acc_IRR_DEF__c = currentUser[0].Id ; 
+                        if (updateCase.Update_AIMS_DEF__c != UIUoldCase.Update_AIMS_DEF__c)
+                            updateCase.CS_Rep_Acc_DEF__c = currentUser[0].Id ; 
+                        if (updateCase.Update_AIMS_IRRWITH__c != UIUoldCase.Update_AIMS_IRRWITH__c)
+                            updateCase.CS_Rep_ACC_IRR_Withdrawal__c = currentUser[0].Id ; 
+                        if (updateCase.Update_AIMS_REI_DEFWITH__c != UIUoldCase.Update_AIMS_REI_DEFWITH__c)
+                            updateCase.CS_Rep_Acc_REI__c = currentUser[0].Id ; 
+                        if (updateCase.Update_AIMS_TER__c != UIUoldCase.Update_AIMS_TER__c)
+                            updateCase.CS_Rep_ACC_TER__c = currentUser[0].Id ; 
                     }                    
                 }
             }
