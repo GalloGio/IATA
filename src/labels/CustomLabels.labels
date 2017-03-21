@@ -8744,6 +8744,14 @@ For each section below either:&lt;br/&gt;
         <value>D. Submit to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_StepD_ProgressBar_CNS</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC StepD ProgressBar CNS</shortDescription>
+        <value>D. Submit to CNS</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Updated_Companies</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
