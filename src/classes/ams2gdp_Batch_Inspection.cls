@@ -31,8 +31,11 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			,	'Accreditation_Endorsement_organisation__r.Air_Code__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 			,	'Account__r.CNS_Agency__c = false'
 		}; 
-
+		
 		if(extraIds!=null && extraIds.size() > 0) {
+			 if(extraIds[0]=='none'){	
+			 conditions.add('Id=null');}
+			 else{
 			//Run batch on specific Ids 
 			List<String> specificIds = new List<String>(); 
 			for(String s: extraIds)
@@ -40,7 +43,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 				if(s.length() >= 15) specificIds.add(s.left(15));
 			}
 
-			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');
+			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
 		}else{
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
 			if(batchInfo != null)

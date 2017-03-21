@@ -84,7 +84,7 @@ public class Test_Batch_LocationCounter
         GDP_Products_Account_View__c sampleGDPProductAccountB = EBC_TestUtility.createSampleGDPAccount('ProductB','AO');
         sampleGDPProductAccountB.Related_Accreditation_Class__c = accrediationB.Id;
         sampleGDPProductAccountB.AIMS_ID__c = '5678';
-        sampleGDPProductAccountB.WebStar_ID__c = '1289'
+        sampleGDPProductAccountB.WebStar_ID__c = '1289';
         sampleGDPProductAccountB.IATA_Code__c='1234568';
         GDP_Products_Account_View__c sampleGDPProductAccountC = EBC_TestUtility.createSampleGDPAccount('ProductC','AO');
         sampleGDPProductAccountC.Related_Accreditation_Class__c = accrediationC.Id;

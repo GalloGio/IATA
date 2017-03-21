@@ -82,10 +82,12 @@ public with sharing class ams2gdp_SchedulerPageController
 
 	            //Start Job 2
 	            List<String> ids2 = ams2gdp_Selector.getAMS_InspectionIdsByAccountIds(specificRecordIds);
+	            if(ids2.isEmpty()) ids2.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Inspection(false,ids2)));
 
 	            //Start Job 3
 	            List<String> ids3 = ams2gdp_Selector.getAMS_TerritoryIdsByAccountIds(specificRecordIds);
+	            if(ids3.isEmpty()) ids3.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Territory(false,ids3)));
 
 	            //Start Job 4
@@ -93,23 +95,28 @@ public with sharing class ams2gdp_SchedulerPageController
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account2(false,ids4)));
 
 	            //Start Job 5
-	            List<String> ids5 = ams2gdp_Selector.getAMS_AddressIdsByAccountIds(specificRecordIds);
+	           // List<String> ids5 = ams2gdp_Selector.getAMS_AddressIdsByAccountIds(specificRecordIds);
+	            List<String> ids5 =specificRecordIds;
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Address(false,ids5)));
 
 	            //Start Job 6
 	            List<String> ids6 = ams2gdp_Selector.getAMS_Agency_AffiliationIdsByAccountIds(specificRecordIds);
+	            if(ids6.isEmpty()) ids6.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(false,ids6)));
 
 	            //Start Job 7
 	            List<String> ids7 = ams2gdp_Selector.getAMS_Account_RoleIdsByAccountIds(specificRecordIds);
+	            if(ids7.isEmpty()) ids7.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Account_Role(false,ids7)));
 
 	            //Start Job 8
 	            List<String> ids8 = ams2gdp_Selector.getAMS_Agency_AirportIdsByAccountIds(specificRecordIds);
+	            if(ids8.isEmpty()) ids8.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Airport(false,ids8)));
 
 	            //Start Job 9
 	            List<String> ids9 = ams2gdp_Selector.getAMS_Agency_ProfileIdsByAccountIds(specificRecordIds);
+	            if(ids9.isEmpty()) ids9.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9)));
             	
             }

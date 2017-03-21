@@ -4,6 +4,8 @@
 
 trigger AMS_AddressTrigger on AMS_Address__c (after insert,   after update, after delete) {
 
+  if(!AMS_TriggerExecutionManager.checkExecution(AMS_Address__c.getSObjectType(), 'AMS_AddressTrigger')) { return; }
+
   //Clear the Account Address If the AMS_Address is deleted 
   if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.clearAccountAddresses(Trigger.old);
 
