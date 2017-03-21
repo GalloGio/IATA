@@ -28,9 +28,8 @@ trigger trgIDCard_Case_BeforeUpdate on Case (before update) {
         if (isCurrentUserProfileInit && aCase.RecordTypeId == caseRecordType)
         {
             Case oldCase = Trigger.oldMap.get(aCase.ID);
-        
             if ((!isAdmin && !isSiteGuestUser) || Test.isRunningTest() )
-            { 
+            {
                 if (oldCase.ID_Card_Status__c == aCase.ID_Card_Status__c) {
                     continue;
                 }                   
