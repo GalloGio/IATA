@@ -781,7 +781,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!newForm.Agent_Type__c} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , newForm.Agent_Type__c)} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
