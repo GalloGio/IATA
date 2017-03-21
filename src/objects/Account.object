@@ -8210,6 +8210,7 @@ WSPN-Worldspan</inlineHelpText>
         <defaultValue>false</defaultValue>
         <description>Search in all related contacts and if any of them is an Admin User portal this value is checked</description>
         <externalId>false</externalId>
+        <inlineHelpText>Has an admin contact under this account</inlineHelpText>
         <label>Has an Admin Portal User (This account)</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
