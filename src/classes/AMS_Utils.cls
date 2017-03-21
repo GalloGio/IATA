@@ -1092,7 +1092,7 @@ public without sharing class AMS_Utils {
                 acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
                 
-                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(acc.ANG_Accreditation_Model__c,oscar.Process__c);
+                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
