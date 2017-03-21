@@ -888,6 +888,16 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Decreasing_Target__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Decreasing Target</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <description>Not visible for the end user, but a temp field needed by the Objective naming convention</description>
         <externalId>false</externalId>
