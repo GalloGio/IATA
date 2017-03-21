@@ -12909,7 +12909,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
              <picklistValues>
-                <fullName>ARC Registered</fullName>
+                <fullName>ARC registered</fullName>
                 <default>false</default>
             </picklistValues>
              <picklistValues>
