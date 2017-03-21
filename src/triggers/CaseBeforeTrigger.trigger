@@ -1074,7 +1074,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 // only consider IFAP cases
                 if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
                     // validate the account's country
-                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)){
+                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)){ //if false
                     	system.debug('COUNTRY NOT VALID');
                         newCase.addError('The account\'s country is not valid.');
                     }else
