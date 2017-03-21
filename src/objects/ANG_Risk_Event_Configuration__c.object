@@ -269,27 +269,15 @@
     </fields>
     <fields>
         <fullName>ANG_Object_Type__c</fullName>
+        <description>Use the API name of the object that will generate the change code. (i.e: AMS_OSCAR__c) This information will be stored on the Created From field on the Risk Event</description>
         <externalId>false</externalId>
         <label>Object Type</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Case</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>OSCAR</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Change Code</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
+        <length>80</length>
         <required>true</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ANG_Risk_Event_Type__c</fullName>
@@ -323,21 +311,6 @@
         <fullName>RISK_EVENT_CONFIG</fullName>
         <active>true</active>
         <label>Risk Event Configuration</label>
-        <picklistValues>
-            <picklist>ANG_Object_Type__c</picklist>
-            <values>
-                <fullName>Case</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Change Code</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OSCAR</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Event_Conditions</picklist>
             <values>
