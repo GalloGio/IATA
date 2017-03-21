@@ -1,5 +1,7 @@
 <apex:page showHeader="false" sidebar="false" standardController="Account">
 		
+		<apex:includeScript value="/support/console/30.0/integration.js"/>
+
 		<head>
 			<!-- workaround so link open in a new page -->
 			<base target="_blank"/>
@@ -16,6 +18,19 @@
 	    	var links = [].slice.call(document.querySelectorAll("a"));
 	    	links.forEach(function(el){
 	    		if(el.innerHTML == 'Del') el.target = "_self";
+	    		else if (sforce.console.isInConsole()){
+	    			var linkURL = el.getAttribute("href");
+	    			el.href = '';
+	    			console.warn(linkURL);
+	    			el.addEventListener('click', function(e){
+	    				e.preventDefault();
+	    				e.stopPropagation();
+	    				sforce.console.getEnclosingPrimaryTabId(function (result) {
+	    					sforce.console.openSubtab(result.id , linkURL, true, el.innerText, null);
+	    				});
+	    				return false;
+	    			}, false);
+	    		} 
 	    	});
 	    </script>
 </apex:page>
