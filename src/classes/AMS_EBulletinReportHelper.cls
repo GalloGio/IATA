@@ -29,15 +29,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	
 	public static final String HIERARCHY	= 	'7-Hierarchy';
 
-
-	public static final String STATUS			= 	'17-Status';
-	public static final String REASON			= 	'21-Reason';
-
 	public static final String STATE  	        = 	'10-Country or State';
 	public static final String COUNTRY  	    =	'11-Country or State';
+
+	public static final String STATUS			= 	'19-Status';
+	public static final String REASON			= 	'23-Reason';
+
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'24-Owner1';
+	public static final String OWNERS 	   	 	   =	'26-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,14 +45,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWHIERARCHY	= 	'43-New Hierarchy';
+	public static final String NEWLEGALSTATUS	= 	'45-New Legal Status';
+	public static final String NEWHIERARCHY	= 	'46-New Hierarchy';
 	
-	public static final String NEWSTATE 	    =	'46-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'47-New Country or State';
+	public static final String NEWSTATE 	    =	'49-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'50-New Country or State';
 
-	public static final String IRRREASON 		=	'71-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'72-IRR: Period';
-	public static final String IRRPERIODED		= 	'73-IRR: Period';
+	public static final String IRRREASON 		=	'76-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'77-IRR: Period';
+	public static final String IRRPERIODED		= 	'78-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
@@ -646,7 +647,9 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		Integer customFieldsCounter = 0, positionMax = headersList.size();
 		
+		system.debug('DDD CC: ' + cc.change_Code__c);
 		
+		system.debug('DDD ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
 
 
 		for (Integer position = 0 ; position < positionMax ; position++)
@@ -760,14 +763,16 @@ public without sharing class AMS_EBulletinReportHelper {
 					recordValue = processOwners(headerVal , oldOwners , OWNERPOS);
 
 				
-				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME,null);				
-
 			}
 			else if(apiNameUpper == OWNERSTOTALAPINAME)
 			{
 				recordValue = String.valueOf(ownersTotalPercentage);
 				ownersTotalPercentage = 0;
 			
+			}
+			else if (headerVal.Name == NEWLEGALSTATUS)
+			{
+				recordValue = AMS_Utils.transformLegalStatus(objVal.newValue);
 			}
 			else
 			{
@@ -873,22 +878,18 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processCustomHeader(AMSEBulletinSettings__c headerVal,Agency_Applied_Change_code__c cc)
 	{
-		if(oldOwners.isempty() && !headerVal.is_Field_New__c)
-		{	
-			if(headerVal.Api_Name__c == OWNERAPINAME ) 
-			{	
-				return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
-			}
-			else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
-				
-				if(ownersTotalPercentage == 0) return '';
+		
+		if(headerVal.Api_Name__c == OWNERAPINAME ) 
+			return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),(headerVal.is_Field_New__c ? NEWOWNERPOS:OWNERPOS));
+		else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
+			
+			if(ownersTotalPercentage == 0) return '';
 
-				String recordValue = String.valueOf(ownersTotalPercentage);
-				
-				ownersTotalPercentage = 0;
+			String recordValue = String.valueOf(ownersTotalPercentage);
+			
+			ownersTotalPercentage = 0;
 
-				return	recordValue;
-			}
+			return	recordValue;
 		}
 		if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
