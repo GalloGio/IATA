@@ -82,14 +82,15 @@
     </fields>
     <fields>
         <fullName>ANG_Risk_ID__c</fullName>
-        <externalId>false</externalId>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
         <label>Risk ID</label>
         <length>10</length>
         <required>true</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
+        <unique>true</unique>
     </fields>
     <label>Risk Event Type</label>
     <listViews>
