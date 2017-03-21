@@ -180,6 +180,7 @@ public class ANG_RiskEventGenerator {
 	public void loadInitialInformations(){
 		Set<Id> riskTypes = new Set<Id>();
 		Set<Id> accountIds = new Set<Id>();
+
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
 			riskTypes.add(re.ANG_Risk_Type__c);
 			accountIds.add(re.ANG_AccountId__c);
@@ -191,6 +192,8 @@ public class ANG_RiskEventGenerator {
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]);
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
+			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
+
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
 			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
 
@@ -219,23 +222,10 @@ public class ANG_RiskEventGenerator {
 			if(fieldName == null) continue; //no condition was set
 
 			Object fieldValue	= getValue(newObject, fieldName);
-
-			//check to see if field was updated (for relationship fields we check if the relationship has changed)
-			if(fieldName.contains('.')){
-				String relField = fieldName.substringBefore('.');
-				if(relField.endsWith('__r')) relField = relField.replace('__r', '__c');
-				else relField += 'Id';
-
-				if(oldObject != null && newObject.get(relField) == oldObject.get(relField)) continue;
-			}
-			else if(oldObject != null && fieldValue == oldObject.get(fieldName)) continue;
-
-			// only need to set a false response if there was no skip
-			// (if all fields are skipped, return will be false)
-			Boolean configResult = false;
-
 			String condition 	= (String)config.get(f.conditionField);
 			String checkValue	= (String)config.get(f.valueField);
+
+			Boolean configResult = false;
 
 			//check if values match conditions
 			if(condition.equalsIgnoreCase('Equal to') && new Set<String>(checkValue.split(';')).contains(String.valueOf(fieldValue))) 			configResult = true;
@@ -254,22 +244,30 @@ public class ANG_RiskEventGenerator {
 				Date d = Date.valueOf(fieldValue);
 				Date dateToCheck = Date.newInstance(d.year(), d.month(), d.day());
 
-				System.debug(loggingLevel.Error, '____ [cls ANG_RiskEventGenerator - checkRequisites] dateToCheck - ' + dateToCheck);
-				System.debug(loggingLevel.Error, '____ [cls ANG_RiskEventGenerator - checkRequisites] today - ' + system.today());
-
 				if(condition.equalsIgnoreCase('Equal to today') && dateToCheck == System.today())		configResult = true;
 				if(condition.equalsIgnoreCase('Greater than today') && dateToCheck > System.today())	configResult = true;
 				if(condition.equalsIgnoreCase('Less than today') && dateToCheck < System.today())		configResult = true;
 			}
 
+			if(!configResult) return false; //means that the conditions didn't match, no need to check others
+
+			//check to see if field was updated (for relationship fields we check if the relationship has changed)
+			if(fieldName.contains('.')){
+				String relField = fieldName.substringBefore('.');
+				if(relField.endsWith('__r')) relField = relField.replace('__r', '__c');
+				else relField += 'Id';
+
+				if(oldObject != null && newObject.get(relField) == oldObject.get(relField)) configResult = false;
+			}
+			else if(oldObject != null && fieldValue == oldObject.get(fieldName)) configResult = false;
+
+			//only increment counter if conditions match AND the field is updated
 			if(configResult) conditionsChecked++;
-			else return false; //means that the conditions didn't match, no need to check others
 		}
 
-		// if counter = 0, all conditions were skipped, meaning fields didn't change or no conditions were set
-		if(conditionsChecked > 0) return true;
+		if(conditionsChecked == 0) return false;
 
-		return false;
+		return true;
 	}
 
 	private Object getValue(SObject obj, String fieldName) {
