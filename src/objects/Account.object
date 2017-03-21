@@ -11284,7 +11284,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CÃ´te d&apos;Ivoire</fullName>
+                <fullName>Côte d&apos;Ivoire</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -11296,7 +11296,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12124,7 +12124,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CÃ´te d&apos;Ivoire</fullName>
+                <fullName>Côte d&apos;Ivoire</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12136,7 +12136,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12815,7 +12815,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <fields>
         <fullName>SoldTo_Location__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
-        <description>IEC - Reference to â€œLocationsâ€ object to facilitate code manipulation</description>
+        <description>IEC - Reference to “Locations” object to facilitate code manipulation</description>
         <externalId>false</externalId>
         <label>SoldTo Location</label>
         <referenceTo>Location__c</referenceTo>
@@ -32930,7 +32930,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32942,7 +32942,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39401,7 +39401,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39413,7 +39413,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40228,7 +40228,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -40240,7 +40240,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45891,7 +45891,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45903,7 +45903,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46722,7 +46722,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46734,7 +46734,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49953,7 +49953,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49965,7 +49965,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -50784,7 +50784,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -50796,7 +50796,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66556,7 +66556,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66568,7 +66568,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67387,7 +67387,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -67399,7 +67399,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71606,7 +71606,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71618,7 +71618,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -75894,7 +75894,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CuraÃ§ao</fullName>
+                <fullName>Curaçao</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -75906,7 +75906,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CÃ´te d%27Ivoire</fullName>
+                <fullName>Côte d%27Ivoire</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -77490,7 +77490,7 @@ OR( LEN(ParentId)=0, LEN(Airline_designator__c)=0),
 PRIORVALUE( Value_Opportunities__c ) = Value_Opportunities__c,
 PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__c 
 )</errorConditionFormula>
-        <errorMessage>If Industry = Airline, and Field Head Office not = Headquarter, then ïƒ–Parent Account must be filled and Airline Designator must be filled</errorMessage>
+        <errorMessage>If Industry = Airline, and Field Head Office not = Headquarter, then Parent Account must be filled and Airline Designator must be filled</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Parent_account_is_Airline</fullName>
@@ -77981,7 +77981,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Account Plan</masterLabel>
+        <masterLabel>Key Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
