@@ -13210,7 +13210,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     </fields>
     <fields>
         <fullName>Temp_Key__c</fullName>
-        <description>Temporary key (Admin use only) â€“ used to identify target dupe records while de-duplication.</description>
+        <description>Temporary key (Admin use only) – used to identify target dupe records while de-duplication.</description>
         <externalId>false</externalId>
         <label>Temp Key</label>
         <length>20</length>
