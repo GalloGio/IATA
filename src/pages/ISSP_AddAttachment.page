@@ -305,7 +305,7 @@ margin-top:50px;
        </apex:outputPanel>
       <br/>
       <div style="float:right;">
-			<apex:commandButton action="{!submitToIATA}" value="{!IF(tmpCase.Status='Draft', $Label.ISSP_AMS_Submit_IATA, $Label.ISSP_Return_to_Case)}" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"/>
+			<apex:commandButton action="{!submitToIATA}" value="{!IF(tmpCase.Status='Draft', IF(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA), $Label.ISSP_Return_to_Case)}" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"/>
        </div>
   </apex:form>
     <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Rejected_File}" rendered="{!isOnlineOSCARCase}"/><br/><br/>

@@ -29,7 +29,7 @@ CASE(relatedTo.Reason1__c, 'New HO', $Label.ISSP_AMS_Email_HO_Subject, 'New BR /
 <p/>
 {!$Label.ISSP_Email_ThankYouInAdvance}<br/>
 <BR/>
-{!if(relatedTo.CNSCase__c, &Label.ISSP_Email_CNS_Service, $Label.ISSP_Email_IataService)}<BR/>
+{!if(relatedTo.CNSCase__c, $Label.ISSP_Email_CNS_Service, $Label.ISSP_Email_IataService)}<BR/>
 
 <p>
 <!--The URL of the following image is the one of PROD-->
