@@ -13,7 +13,7 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
-            </layoutItems>
+            </layoutItems>            
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
@@ -95,6 +95,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Target__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Decreasing_Target__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
