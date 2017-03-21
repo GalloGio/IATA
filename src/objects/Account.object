@@ -8196,11 +8196,12 @@ WSPN-Worldspan</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Has_an_Administrator_User_Portal_Sum__c</fullName>
-        <defaultValue>false</defaultValue>
+        <fullName>Has_an_Administrator_User_Portal_Formula__c</fullName>
         <externalId>false</externalId>
-        <label>Has an Admin User Portal under hierarchy</label>
-        <trackFeedHistory>false</trackFeedHistory>
+        <formula>OR( Has_an_Administrator_User_Portal__c, Has_an_Administrator_User_Portal_Sum__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Has an admin user under this account or any from the same hierarchy</inlineHelpText>
+        <label>Has an Admin Portal User</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
