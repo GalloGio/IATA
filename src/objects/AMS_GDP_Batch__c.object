@@ -47,108 +47,98 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>true</enableActivities>
+    <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Address_1__c</fullName>
-        <externalId>false</externalId>
-        <label>Address 1</label>
-        <length>80</length>
-        <required>false</required>
+        <fullName>Batch_Name__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Batch Name</label>
+        <length>100</length>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Failed_Records__c</fullName>
+        <externalId>false</externalId>
+        <label>Failed Records</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Sync_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Sync Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Total_Failed_Records__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Failed Records</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Address_2__c</fullName>
+        <fullName>Total_Records_Processed__c</fullName>
         <externalId>false</externalId>
-        <label>Address 2</label>
-        <length>80</length>
+        <label>Total Records Processed</label>
+        <precision>18</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
+        <type>Number</type>
         <unique>false</unique>
     </fields>
-    <fields>
-        <fullName>Address_3__c</fullName>
-        <externalId>false</externalId>
-        <label>Address 3</label>
-        <length>80</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Air_Code__c</fullName>
-        <externalId>false</externalId>
-        <label>Air Code</label>
-        <length>8</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>City__c</fullName>
-        <externalId>false</externalId>
-        <label>City</label>
-        <length>80</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Country__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Country</label>
-        <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipName>AMS_Acreditation_Organizations</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>State__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>State</label>
-        <referenceTo>IATA_ISO_State__c</referenceTo>
-        <relationshipLabel>AMS Accreditation Organizations</relationshipLabel>
-        <relationshipName>AMS_Accreditation_Organizations</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Valid_Code_For_GDP_Replication__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(LEN(Air_Code__c) &gt; 3
-	, False
-	, IF(AND(LEN(Air_Code__c) = 3, RIGHT(Air_Code__c,1)!=&apos;*&apos;)
-		,	False
-		,	True
-	)
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Valid Code For GDP Replication</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <label>AMS Accreditation Organization</label>
+    <label>AMS =&gt; GDP Batch</label>
+    <listViews>
+        <fullName>All_Batches_with_Details</fullName>
+        <columns>NAME</columns>
+        <columns>Batch_Name__c</columns>
+        <columns>Total_Records_Processed__c</columns>
+        <columns>Total_Failed_Records__c</columns>
+        <columns>Last_Sync_Start_Date__c</columns>
+        <columns>Last_Sync_End_Date__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Batches with Details</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
-        <label>Accreditation Organization Name</label>
-        <type>Text</type>
+        <displayFormat>BATCH-{0000}</displayFormat>
+        <label>AMS =&gt; GDP Batch Name</label>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>AMS Accreditation Organizations</pluralLabel>
-    <searchLayouts/>
+    <pluralLabel>AMS =&gt; GDP Batches</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Batch_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Sync_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Sync_End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Records_Processed__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Failed_Records__c</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
