@@ -2561,7 +2561,6 @@
                 <fullName>Multicountry</fullName>
                 <default>false</default>
             </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -9623,6 +9622,10 @@ J-Joint Vent</inlineHelpText>
         <externalId>false</externalId>
         <label>Location Type</label>
         <picklist>
+            <picklistValues>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </picklistValues>
             <picklistValues>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -24791,6 +24794,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
@@ -27655,6 +27662,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
@@ -30252,6 +30263,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -32865,6 +32880,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -39051,6 +39070,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -43373,6 +43396,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
@@ -45986,6 +46013,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -50177,6 +50208,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -54435,6 +54470,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -56759,6 +56798,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -59017,6 +59060,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -61384,6 +61431,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>BR</fullName>
                 <default>false</default>
@@ -66679,6 +66730,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -71877,6 +71932,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -76218,6 +76277,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
