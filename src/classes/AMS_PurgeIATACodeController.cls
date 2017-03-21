@@ -1,20 +1,20 @@
 public with sharing class AMS_PurgeIATACodeController {
 
-    public Id aMS_PurgeAccountBatchId{get;set;}
+	public Id aMS_PurgeAccountBatchId{get;set;}
 
-    public boolean batchStatusBool{get;set;}
+	public boolean batchStatusBool{get;set;}
 
-    public boolean pollerBool{get;set;}
+	public boolean pollerBool{get;set;}
 
-    public boolean canExecutePurge{get;set;}
+	public boolean canExecutePurge{get;set;}
 
-    public String purgeStatus{get;set;}
+	public String purgeStatus{get;set;}
 
-    public String selectedTab{get;set;}
+	public String selectedTab{get;set;}
 
-    public Id fullPurgeId{get;set;}
+	public Id fullPurgeId{get;set;}
 
-    public Id litePurgeId{get;set;}
+	public Id litePurgeId{get;set;}
 
     public Set<String> notesFullPurge{
         get{
@@ -29,7 +29,7 @@ public with sharing class AMS_PurgeIATACodeController {
                 return notesFullPurge;
         }
         set;
-    }
+	}
 
     public List<String> noteListFullPurge{
             get{
@@ -42,7 +42,7 @@ public with sharing class AMS_PurgeIATACodeController {
         get{
                         
                         notesLitePurge = new Set<String>();
-                        notesLitePurge.add('This section is a searchable area. Please search for Terminated agencies to purge.');
+						notesLitePurge.add('This section is a searchable area. Please search for Terminated agencies to purge.');
                         notesLitePurge.add('Lite purge will search for all agencies with status “Not accreditated” (field: Account.Status__c) and with a change code “DIS” created before today minus 6 months.Also it will not search for Agencies with no IATA Code.');
                         notesLitePurge.add('After searching for the Agencies, a CSV with Agency Information will be available.');
                         notesFullPurge.add('To use this information, please add two aditional columns at the end of the sheet: To NOT Purge SFDC(ToNOTPurgeSFDC) and To NOT Purge External (ToNOTPurgeExternal).');
@@ -51,7 +51,7 @@ public with sharing class AMS_PurgeIATACodeController {
                 return notesLitePurge;
         }
         set;
-    }
+	}
 
     public List<String> noteListLitePurge{
             get{
@@ -66,7 +66,7 @@ public with sharing class AMS_PurgeIATACodeController {
         get{
                         
                         notesUpload = new Set<String>();
-                        notesUpload.add('This section is used to perform the IATA Code Purge.');
+						notesUpload.add('This section is used to perform the IATA Code Purge.');
                         notesUpload.add('Please upload the csv file as per instructed. The contents must be the same as the ones extracted with 2 more columns : Not to Purge SFDC and Not to Purge External System');
                         notesFullPurge.add('To use this information, please add two aditional columns at the end of the sheet: To NOT Purge SFDC(ToNOTPurgeSFDC) and To NOT Purge External (ToNOTPurgeExternal).');                        
                         notesUpload.add('All the agencies and GDP Productus matching Id of the Agencies will be updated, exeption made for the ones marked as X in the last 2 columns.');
@@ -74,7 +74,7 @@ public with sharing class AMS_PurgeIATACodeController {
                 return notesUpload;
         }
         set;
-    }
+	}
 
     public List<String> noteListUpload{
             get{
@@ -96,65 +96,65 @@ public with sharing class AMS_PurgeIATACodeController {
     
     public List<AMS_PurgeIATACodeController.PurgeFileContent> purgeFileContentList{get;set;}
 
-    public AMS_PurgeIATACodeController() {
-        
-        selectedTab = 'tab1';
+	public AMS_PurgeIATACodeController() {
+		
+		selectedTab = 'tab1';
 
-        canExecutePurge = false;
+		canExecutePurge = false;
 
-        batchStatusBool = false;
+		batchStatusBool = false;
 
-        pollerBool = false;
+		pollerBool = false;
 
         purgeStatus = 'Processing...';
 
-        fetchSOQLObjects();
+		fetchSOQLObjects();
 
         purgeFileContentList = new List<AMS_PurgeIATACodeController.PurgeFileContent>();
 
-    }
+	}
 
-    public void checkBatchStatus(){
+	public void checkBatchStatus(){
 
-        
+		
 
-        List<AsyncApexJob> runningJob =  [Select Id, Status, ApexClass.Name From AsyncApexJob where id =: aMS_PurgeAccountBatchId order by CreatedDate DESC limit 1];
+		List<AsyncApexJob> runningJob =  [Select Id, Status, ApexClass.Name From AsyncApexJob where id =: aMS_PurgeAccountBatchId order by CreatedDate DESC limit 1];
 
-        System.debug('Job List is:'+ runningJob);
+		System.debug('Job List is:'+ runningJob);
 
-        if(!runningJob.isEmpty()) {
+		if(!runningJob.isEmpty()) {
 
-            AsyncApexJob job = runningJob.get(0);
+			AsyncApexJob job = runningJob.get(0);
 
-            if(job.Status == 'Completed') {
-                purgeStatus = job.Status;
-                pollerBool = false;
+			if(job.Status == 'Completed') {
+        		purgeStatus = job.Status;
+            	pollerBool = false;
             } else {
 
-                purgeStatus = job.Status;
+            	purgeStatus = job.Status;
 
-                pollerBool = true;
+				pollerBool = true;
             }
-        }else
-            pollerBool = true;
-    }
+		}else
+			pollerBool = true;
+	}
 
-    public void fetchSOQLObjects(){
+	public void fetchSOQLObjects(){
 
-        List<AMS_SOQL_Query_Export__c> result = new List<AMS_SOQL_Query_Export__c>();
+		List<AMS_SOQL_Query_Export__c> result = new List<AMS_SOQL_Query_Export__c>();
 
-        result = [SELECT Id from AMS_SOQL_Query_Export__c where Name = 'Full Purge IATA Code' LIMIT 1];
+		result = [SELECT Id from AMS_SOQL_Query_Export__c where Name = 'Full Purge IATA Code' LIMIT 1];
 
-        if(!result.isEmpty())
-            fullPurgeId = result.get(0).Id;
+		if(!result.isEmpty())
+			fullPurgeId = result.get(0).Id;
 
-        result = [SELECT Id from AMS_SOQL_Query_Export__c where Name = 'Lite Purge IATA Code' LIMIT 1];
+		result = [SELECT Id from AMS_SOQL_Query_Export__c where Name = 'Lite Purge IATA Code' LIMIT 1];
 
-        if(!result.isEmpty())
-            litePurgeId = result.get(0).Id;
-    }
+		if(!result.isEmpty())
+		 	litePurgeId = result.get(0).Id;
+	}
 
-        /***This function reads the CSV file and inserts records into the Account object. ***/
+	    /***This function reads the CSV file and inserts records into the Account object. ***/
     public Pagereference ReadFile()
     {
         try{
@@ -183,13 +183,13 @@ public with sharing class AMS_PurgeIATACodeController {
                     pfc.A_Code = inputvalues[3];
                     pfc.N_Code = inputvalues[4];
                     pfc.Site = inputvalues[5];
-                    pfc.Name = inputvalues[6];
-                    pfc.LocationType = inputvalues[7];
-                    pfc.LocationClass = inputvalues[8];
-                    pfc.ExpiryDate = inputvalues[9];
-                    pfc.AccreditationDate = inputvalues[10];
-                    pfc.ToNOTPurgeSFDC = inputvalues[11];
-                    pfc.ToNOTPurgeExternal = inputvalues[12];
+        			pfc.Name = inputvalues[6];
+        			pfc.LocationType = inputvalues[7];
+        			pfc.LocationClass = inputvalues[8];
+        			pfc.ExpiryDate = inputvalues[9];
+        			pfc.AccreditationDate = inputvalues[10];
+        			pfc.ToNOTPurgeSFDC = inputvalues[11];
+        			pfc.ToNOTPurgeExternal = inputvalues[12];
 
                     purgeFileContentList.add(pfc);
                 }
@@ -198,16 +198,16 @@ public with sharing class AMS_PurgeIATACodeController {
                  ApexPages.Message errormsg = new ApexPages.Message(ApexPages.severity.ERROR,'An error has occured reading the CSV file'+e.getMessage());
                 ApexPages.addMessage(errormsg);
          }       
-        
-        selectedTab = 'tab3';
+  		
+  		selectedTab = 'tab3';
 
-        canExecutePurge = true;
+  		canExecutePurge = true;
 
         return null;
     }
 
 
-    /**
+	/**
          This function convers the input CSV file in BLOB format into a string
         @param input    Blob data representing correct string in @inCharset encoding
         @param inCharset    encoding of the Blob data (for example 'ISO 8859-1')
@@ -224,67 +224,67 @@ public with sharing class AMS_PurgeIATACodeController {
 
     public void runPurgeProcess(){
 
-        batchStatusBool = true;
+    	batchStatusBool = true;
 
-        canExecutePurge = false;
+    	canExecutePurge = false;
 
-        pollerBool = false;
+    	pollerBool = false;
 
-        Set<Id> accountsToPurge = new Set<Id>();
+    	Set<Id> accountsToPurge = new Set<Id>();
 
-        if(purgeFileContentList.isEmpty())
-            return; // nothing to do
+    	if(purgeFileContentList.isEmpty())
+    		return; // nothing to do
 
-        for(PurgeFileContent pfc : purgeFileContentList){
+    	for(PurgeFileContent pfc : purgeFileContentList){
 
-            if(isFieldXorNull(pfc.ToNOTPurgeSFDC) || isFieldXorNull(pfc.ToNOTPurgeExternal) || pfc.Identifier == null || pfc.Identifier == '' ){
-                continue;
-            }
+    		if(isFieldXorNull(pfc.ToNOTPurgeSFDC) || isFieldXorNull(pfc.ToNOTPurgeExternal) || pfc.Identifier == null || pfc.Identifier == '' ){
+    			continue;
+			}
 
-            accountsToPurge.add(pfc.Identifier);
+			accountsToPurge.add(pfc.Identifier);
 
-        }
+    	}
 
-        System.debug('Accounts to purge list is:' + accountsToPurge);
+    	System.debug('Accounts to purge list is:' + accountsToPurge);
 
 
-        if(!accountsToPurge.isEmpty()){
+    	if(!accountsToPurge.isEmpty()){
 
-            AMS_PurgeAccountBatch pab = new AMS_PurgeAccountBatch(accountsToPurge);
+    		AMS_PurgeAccountBatch pab = new AMS_PurgeAccountBatch(accountsToPurge);
 
-            aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
+    		aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
 
-        }
+    	}
 
-        checkBatchStatus();
+    	checkBatchStatus();
 
     }
 
     public boolean isFieldXorNull(String field){
 
-        return field == 'X' || field == 'x';
+    	return field == 'X' || field == 'x';
     }
 
     public class PurgeFileContent{
 
-        public String Identifier{get;set;}
-        public String IATACode{get;set;}
-        public String C_Code{get;set;}
-        public String A_Code{get;set;}
-        public String N_Code{get;set;}
-        public String Site{get;set;}
-        public String Name{get;set;}
-        public String LocationType{get;set;}
-        public String LocationClass{get;set;}
-        public String ExpiryDate{get;set;}
-        public String AccreditationDate{get;set;}
-        public String ToNOTPurgeSFDC{get;set;}
-        public String ToNOTPurgeExternal{get;set;}
+    	public String Identifier{get;set;}
+		public String IATACode{get;set;}
+		public String C_Code{get;set;}
+		public String A_Code{get;set;}
+		public String N_Code{get;set;}
+		public String Site{get;set;}
+		public String Name{get;set;}
+		public String LocationType{get;set;}
+		public String LocationClass{get;set;}
+		public String ExpiryDate{get;set;}
+		public String AccreditationDate{get;set;}
+		public String ToNOTPurgeSFDC{get;set;}
+		public String ToNOTPurgeExternal{get;set;}
 
 
-        public PurgeFileContent(){
+    	public PurgeFileContent(){
 
-        }
+    	}
 
 
     }
