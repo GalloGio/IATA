@@ -5325,7 +5325,7 @@ and
         <value>I have read and accept the 
 &lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-canada.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
+&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-EN.pdf&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ID_Card_Terms_Condition_Label</fullName>

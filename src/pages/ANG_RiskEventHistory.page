@@ -1,0 +1,36 @@
+<apex:page showHeader="false" sidebar="false" standardController="Account">
+		
+		<apex:includeScript value="/support/console/30.0/integration.js"/>
+
+		<head>
+			<!-- workaround so link open in a new page -->
+			<base target="_blank"/>
+		</head>
+
+	    <apex:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
+	    <apex:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" />
+
+	    <script>
+	    	//workaround to hide the new button
+	    	for (let el of document.querySelectorAll('.btn')) el.style.visibility = 'hidden';
+
+	    	//delete links can be opened in the same page
+	    	var links = [].slice.call(document.querySelectorAll("a"));
+	    	links.forEach(function(el){
+	    		if(el.innerHTML == 'Del') el.target = "_self";
+	    		else if (sforce.console.isInConsole()){
+	    			var linkURL = el.getAttribute("href");
+	    			el.href = '';
+	    			console.warn(linkURL);
+	    			el.addEventListener('click', function(e){
+	    				e.preventDefault();
+	    				e.stopPropagation();
+	    				sforce.console.getEnclosingPrimaryTabId(function (result) {
+	    					sforce.console.openSubtab(result.id , linkURL, true, el.innerText, null);
+	    				});
+	    				return false;
+	    			}, false);
+	    		} 
+	    	});
+	    </script>
+</apex:page>

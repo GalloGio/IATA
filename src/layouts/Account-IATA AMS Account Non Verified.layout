@@ -71,6 +71,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IsNewGenAgency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -467,6 +471,7 @@
         <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Contact__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Person__c</fields>
         <fields>Owner_Name__c</fields>
         <fields>Owner_Account__c</fields>
