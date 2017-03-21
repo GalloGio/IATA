@@ -28,7 +28,7 @@ public class BatchCreateCasesFromPWCTest {
     }
     
     private static void insertDefaultTemplate() {
-        String language = 'English';
+    	String language = 'English';
         String country = 'WW';
         String aimsid = '12345678';
 
@@ -41,12 +41,12 @@ public class BatchCreateCasesFromPWCTest {
         EmailTemplate__c template = new EmailTemplate__c( RecordtypeId = recordtypeFSM.Id, Template_Language__c = language, IATA_ISO_Country__c = isoCountry.Id, Agent_Type__c='All');
         insert template;
 
-        EmailTemplateCustomHandler templateHandler = new EmailTemplateCustomHandler();
-        template = templateHandler.DEFAULT_FSM_TEMPLATE;
+    	EmailTemplateCustomHandler templateHandler = new EmailTemplateCustomHandler();
+		template = templateHandler.DEFAULT_FSM_TEMPLATE;
     }
 
     static testmethod void testBatch() {
-        insertDefaultTemplate();
+    	insertDefaultTemplate();
         Integer numberOfTestCases = 1;
         list<WSCreateCasesFromPWC.securityCase> listCases = createListClases(numberOfTestCases);
         String response = WSCreateCasesFromPWC.doPost( listCases );
@@ -121,8 +121,8 @@ public class BatchCreateCasesFromPWCTest {
     }
 
     static testmethod void testCreateCaseWithEmailTemplate() {
-        insertDefaultTemplate();
-        
+    	insertDefaultTemplate();
+    	
         String language = 'English';
         String country = 'FR';
         String aimsid = '123456';
