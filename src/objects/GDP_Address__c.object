@@ -68,6 +68,17 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Address_City__c</fullName>
         <externalId>false</externalId>
         <label>Address City</label>
@@ -132,6 +143,18 @@
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Name</formula>
         <label>Address Country Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Country_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ISO_Country_Short_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address Country Short Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -267,6 +290,19 @@ The source of information is taken from IATA_ISO_State.</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Address_Type_Uniqueness_Validation__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>GDP Product Id + Address Type</description>
+        <externalId>false</externalId>
+        <label>Address Type Uniqueness Validation</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>Address_Type__c</fullName>
