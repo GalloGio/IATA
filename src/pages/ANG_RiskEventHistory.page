@@ -11,5 +11,11 @@
 	    <script>
 	    	//workaround to hide the new button
 	    	for (let el of document.querySelectorAll('.btn')) el.style.visibility = 'hidden';
+
+	    	//delete links can be opened in the same page
+	    	var links = [].slice.call(document.querySelectorAll("a"));
+	    	links.forEach(function(el){
+	    		if(el.innerHTML == 'Del') el.target = "_self";
+	    	});
 	    </script>
 </apex:page>
