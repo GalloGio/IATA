@@ -29,6 +29,10 @@
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CNS_Agency__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
