@@ -888,16 +888,6 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Decreasing_Target__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Decreasing Target</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Description__c</fullName>
         <description>Not visible for the end user, but a temp field needed by the Objective naming convention</description>
         <externalId>false</externalId>
@@ -990,8 +980,7 @@ Object used to store objectives that can be independent, related to other object
     <fields>
         <fullName>Forecast_Progress__c</fullName>
         <externalId>false</externalId>
-        <formula>if(Decreasing_Target__c=false,(Target__c- Forecast__c) / (Target__c-Initial__c), 
-(Forecast__c-Target__c) / (Initial__c - Target__c))</formula>
+        <formula>if ( Target__c == 0, 0, (Forecast__c) / Target__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Forecast Progress</label>
         <precision>18</precision>
@@ -1339,8 +1328,7 @@ Object used to store objectives that can be independent, related to other object
         <fullName>Target_Progress__c</fullName>
         <description>Percentage of progress</description>
         <externalId>false</externalId>
-        <formula>if(Decreasing_Target__c=false,(Target__c- Current__c) / (Target__c-Initial__c), 
-(Current__c-Target__c) / (Initial__c - Target__c))</formula>  
+        <formula>if ( Target__c == 0, 0, (Current__c) / Target__c )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Percentage of progress. Relationship between the target and the current value.</inlineHelpText>
         <label>Target Progress</label>

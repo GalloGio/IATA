@@ -88,10 +88,6 @@
                 <field>Target__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Decreasing_Target__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Target_Progress__c</field>
             </layoutItems>
