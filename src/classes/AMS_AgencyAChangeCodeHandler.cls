@@ -81,7 +81,6 @@ public class AMS_AgencyAChangeCodeHandler {
     	//}
     	
         //[select id, reason__c, Previous_Reason__c, Status__c, PreviousStatus__c from account where id in:setAccntId]
-    	map<id, account> mapAccnt = new Map<ID, Account>();
     	
     	for(Agency_Applied_Change_code__c aacc:lsAACC){
     		string sReason = (aacc.Reason_Code__c==null?'':aacc.Reason_Code__c)+ '-' + (aacc.Reason_Description__c==null?'':aacc.Reason_Description__c);
@@ -90,8 +89,8 @@ public class AMS_AgencyAChangeCodeHandler {
     		Account acc = new Account(id = aacc.Account__c);
     		
     		if(sReason != '-'){
-    			if(mapAccnt.containsKey(aacc.Account__c)){
-	    			string sAccntReason = mapAccnt.get(aacc.Account__c).reason__c;
+    			if(aacc.Account__c != null){
+	    			string sAccntReason = aacc.Account__r.reason__c;
 	    			if(sReason != sAccntReason){
 	    				acc.reason__c = sReason;
 	    				acc.Previous_Reason__c = sAccntReason;
@@ -102,8 +101,8 @@ public class AMS_AgencyAChangeCodeHandler {
     		
     		//Update Account Status, but only if it's blank and different from the previous one
     		if(sStatus != ''){
-    			if(mapAccnt.containsKey(aacc.Account__c)){
-	    			string sAccntStatus = mapAccnt.get(aacc.Account__c).status__c;
+    			if(aacc.Account__c != null){
+	    			string sAccntStatus = aacc.Account__r.status__c;
 	    			if(sAccntStatus != aacc.AccountNewStatus__c){
 	    				acc.status__c = sStatus;
 	    				acc.PreviousStatus__c = acc.Status__c;
