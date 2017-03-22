@@ -413,7 +413,10 @@ public with sharing class AMS_AccountRoleCreator
                 
                 //does is have a link to an AMS_Account_role and is a correction or is
                 // second time this process runs for an Accreditation Contact ? let's mark for update.
-                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+                //if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+                //INC304974: verifies if the record type of AMS Accreditation Contact is not a Company (another account)
+                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess && !recordTypesCompany.contains(aContact.RecordTypeId)){  
+                    system.debug('## SU runRoleCreatorForOnlineAccreditations : ' + aContact.AMS_Ownership_Role__c + ' ; '  +isCorrectionProcess+ ' ; ' + aContact.RecordTypeId);   
                     accreditationContactsToUpdate.add(aContact);
                     continue;
                 }
@@ -422,7 +425,7 @@ public with sharing class AMS_AccountRoleCreator
                 if(aContact.AMS_Ownership_Role__c == null && aContact.Agency_owner__c){
                     accreditationContactsToInsert.add(aContact);
                     continue;
-                }else{
+                }else if(!recordTypesCompany.contains(aContact.RecordTypeId)){
                     accreditationContactsToInsertOnlyContacts.add(aContact);
                     continue;
                 }
