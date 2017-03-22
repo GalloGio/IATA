@@ -717,6 +717,7 @@ public without sharing class ISSP_Case {
         // CNS
         if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
             newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team';
         }
 
         //TF - SP9-C5

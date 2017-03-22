@@ -1307,9 +1307,11 @@ public without sharing class ISSP_AMS_Accreditation {
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
             newCase.Type_of_customer__c = con.Account.Category__c;
+
             // CNS
             if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
                 newCase.CNSCase__c = true;
+                newCase.Groups__c = 'CNS Team';
             }
 
             upsert newCase;
