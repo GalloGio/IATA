@@ -143,11 +143,13 @@ private class BtchGDPReplicate_tst {
 		GDP_Address__c oGDP_Address1 = IECTestUtil.CreateSampleGDPAddress(oAccount1);
 		oGDP_Address1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOC';
 		oGDP_Address1.WebStar_ID__c = null;
+		oGDP_Address1.Address_Type__c = 'Location';
 		sObjList.add(oGDP_Address1);
 
 		GDP_Address__c oGDP_Address2 = IECTestUtil.CreateSampleGDPAddress(oAccount2);
-		oGDP_Address2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'LOC';
+		oGDP_Address2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAI';
 		oGDP_Address2.AIMS_ID__c = null;
+		oGDP_Address2.Address_Type__c = 'Mailing';
 		sObjList.add(oGDP_Address2);
 
 		GDP_Agency_Profile_Specialization__c oGDP_Agency_Profile_Specialization1 = IECTestUtil.CreateSampleGDPAgencyProfileSpecialization(oAccount1);
@@ -191,6 +193,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount1.WebStar_ID__c = null;
 //		oGDPAccount1.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount1.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount1.IATA_Code__c = '1234561';
 		sObjList.add(oGDPAccount1);
 		
 		GDP_Products_Account_View__c oGDPAccount2 = IECTestUtil.createSampleGDPAccount('Account 1', '87654321');
@@ -198,6 +201,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount2.AIMS_ID__c = null;
 //		oGDPAccount2.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount2.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
+		oGDPAccount2.IATA_Code__c = '1234562';
 		sObjList.add(oGDPAccount2);
 
 		GDP_Products_Account_View__c oGDPAccount3 = IECTestUtil.createSampleGDPAccount('Account 1', '45698723');
@@ -206,6 +210,7 @@ private class BtchGDPReplicate_tst {
 //		oGDPAccount3.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount3.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
 		oGDPAccount3.Parent_Account_AIMS_ID__c = oAccount1.AIMS_ID__c;
+		oGDPAccount3.IATA_Code__c = '1234563';
 		sObjList.add(oGDPAccount3);
 		
 		GDP_Products_Account_View__c oGDPAccount4 = IECTestUtil.createSampleGDPAccount('Account 1', '32178945');
@@ -214,6 +219,7 @@ private class BtchGDPReplicate_tst {
 //		oGDPAccount4.RecordTypeId = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount4.RecordTypeId = RecTypeMap.get('GDP_Products_Account_View__c.GDP');
 		oGDPAccount4.Parent_Account_WebStar_ID__c = oAccount2.WebStar_ID__c;
+		oGDPAccount4.IATA_Code__c = '1234564';
 		sObjList.add(oGDPAccount4);
 
 		Accreditation__c oAccreditation1_GDP = IECTestUtil.CreateSampleAccreditation(oAccount1, oGDPAccount1, 'GDP');
@@ -229,11 +235,13 @@ private class BtchGDPReplicate_tst {
 		GDP_Address__c oGDP_Address1_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount1, oGDPAccount1, 'GDP');
 		oGDP_Address1_GDP.AIMS_ID__c = oAccount1.AIMS_ID__c + 'LOCGDP';
 		oGDP_Address1_GDP.WebStar_ID__c = null;
+		oGDP_Address1_GDP.Address_Type__c = 'Location';
 		sObjList.add(oGDP_Address1_GDP);
 
 		GDP_Address__c oGDP_Address2_GDP = IECTestUtil.CreateSampleGDPAddress(oAccount2, oGDPAccount2, 'GDP');
-		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'LOCGDP';
+		oGDP_Address2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'MAIGDP';
 		oGDP_Address2_GDP.AIMS_ID__c = null;
+		oGDP_Address2_GDP.Address_Type__c = 'Mailing';
 		sObjList.add(oGDP_Address2_GDP);
 
 		GDP_Phone__c oGDP_Phone1_GDP = IECTestUtil.CreateSampleGDPPhone(oAccount1, oGDPAccount1, 'GDP');
@@ -248,6 +256,7 @@ private class BtchGDPReplicate_tst {
 		
 		
 		sObjList.sort();
+		SYstem.debug('sObjList::'+sObjList);
 		insert sObjList;
 		
 		// set static variable for testing the territory

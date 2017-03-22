@@ -369,7 +369,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
             (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
             (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
-            (c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon') ||
             (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon') ||
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado') ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk') ||
@@ -377,6 +376,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
             (c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
             (c.Owner.FirstName == 'Taynara'&& c.Owner.LastName == 'Lorentz') ||
+            (c.Owner.FirstName == 'Marina'&& c.Owner.LastName == 'de Paula Loures') ||
             (c.Owner.FirstName == 'José' && c.Owner.LastName == 'González-Cela de Cominges')) { //INC267186
           IATAcases ++;
           IATAcaseslog += c.id + ', ';
