@@ -140,16 +140,16 @@ public class vfIECEBC_TestSuite {
         insert accr;
             
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111111'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111112'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111113'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111114'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111115'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111116'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='1111117'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='1111118'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111119'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111120')
             };
         insert gpavs;
         return gpavs;
