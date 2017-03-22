@@ -86,6 +86,80 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Country_Coverage__c</fullName>
+        <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
+        <externalId>false</externalId>
+        <label>Country Coverage</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Country_Coverage__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR (
+  AND(
+    CONTAINS(Name, &quot;IATA EasyPay&quot;),
+    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)
+  ),
+  AND(
+    NOT(CONTAINS(Name, &quot;IATA EasyPay&quot;))
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Country Coverage</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Restrict_Accredited_Agent__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  (
+    AND (
+      CONTAINS($User.Customer_type__c,&quot;Agency&quot;),
+      $User.ANG_Is_Accredited_Agent__c,
+      ANG_Accredited_Agents_Only__c
+    )
+  ),
+  (
+    AND (
+      CONTAINS($User.Customer_type__c,&quot;Agency&quot;),
+      ANG_Accredited_Agents_Only__c = false
+    )
+  ),
+  (
+    NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))  
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Restrict Accredited Agent</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Restrict_Sector__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  (
+    AND($User.ANG_Sector__c != &quot;Travel Agent&quot;, $User.ANG_Sector__c != &quot;Cargo Agent&quot;)
+  ),
+  (
+    AND (OR($User.ANG_Sector__c = &quot;Travel Agent&quot;, $User.ANG_Sector__c = &quot;Cargo Agent&quot;),
+           $User.ANG_Sector__c = TEXT(ANG_Restrict_by_Agency_Sector__c))  
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Restrict Sector</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
         <description>Permitted agency sector</description>
         <externalId>false</externalId>
