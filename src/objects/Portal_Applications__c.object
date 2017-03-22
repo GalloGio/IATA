@@ -152,6 +152,9 @@
   (
     AND (OR($User.ANG_Sector__c = &quot;Travel Agent&quot;, $User.ANG_Sector__c = &quot;Cargo Agent&quot;),
            $User.ANG_Sector__c = TEXT(ANG_Restrict_by_Agency_Sector__c))  
+  ),
+  (
+    TEXT(ANG_Restrict_by_Agency_Sector__c) = &quot;&quot;
   )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
