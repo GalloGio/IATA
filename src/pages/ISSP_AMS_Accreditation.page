@@ -781,7 +781,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!newForm.Agent_Type__c} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , newForm.Agent_Type__c)} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
@@ -976,7 +976,7 @@
             <br/><br/>
                 <a href="/ISSP_Case?caseId={!newCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_Access_Direct}</a>&nbsp;{!$Label.ISSP_AMS_StepFinal_Access_Direct2}
             <br/><br/>
-           {!$Label.ISSP_AMS_StepFinal_In_Addition} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
+           {!IF(communityName=='CNS', $Label.ISSP_AMS_StepFinal_In_Addition_CNS, $Label.ISSP_AMS_StepFinal_In_Addition)} <a href="/ISSP_CaseList{!if(communityName=='CNS','?CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_AMS_StepFinal_In_Addition2}</a>.
             <br/><br/><br/><br/>
             <!---
             <a href="/ISSP_APCases?retURL=/ISSP_Homepage"><apex:image value="https://iata--preprod--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000UHn7&oid=00D1100000Bzzsg&lastMod=1425387500000" width="60" height="60" style="vertical-align: middle;"/></a>&nbsp;<b>Create new BSP / CASS Joining application.</b>

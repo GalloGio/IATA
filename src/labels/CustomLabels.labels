@@ -11168,6 +11168,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>In addition you can follow all your cases with IATA in the</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_In_Addition_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal In Addition CNS</shortDescription>
+        <value>In addition you can follow all your cases with CNS in the</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_In_Addition2</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>

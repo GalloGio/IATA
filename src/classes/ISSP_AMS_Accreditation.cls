@@ -324,7 +324,7 @@ public without sharing class ISSP_AMS_Accreditation {
         lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
         lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
         if(communityName=='CNS'){lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS;}
-            else{ lblNoCStepD = Label.Label.ISSP_AMS_NOC_StepD_ProgressBar;}
+            else{ lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;}
         if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;}
             else{ lblStep1Title = Label.ISSP_AMS_Step1_Title;}
        
