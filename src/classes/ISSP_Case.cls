@@ -713,6 +713,13 @@ public without sharing class ISSP_Case {
     public Pagereference saveAttach() {
 
         system.debug('saveAttach AccountId: ' + accountId);
+
+        // CNS
+        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+            newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team';
+        }
+
         //TF - SP9-C5
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, System.Label.ISSP_Select_Airline);
