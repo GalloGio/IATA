@@ -25,7 +25,8 @@
         <apex:repeat value="{!orderItems}" var="oi">
         <tr>
             <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.Product_Name__c}</td>
-            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>              
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!oi.SAP_Product_Number__c}</td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">{!orderNumber}</td>              
         </tr>
         </apex:repeat>        
     </table>
