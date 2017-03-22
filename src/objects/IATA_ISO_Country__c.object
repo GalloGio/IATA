@@ -173,7 +173,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EasyPay portal service that can be subscribed in the country.</description>
         <externalId>false</externalId>
-        <label>Portal Service</label>
+        <label>IATA EasyPay Portal Service</label>
         <referenceTo>Portal_Applications__c</referenceTo>
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
         <relationshipName>IATA_ISO_Countries</relationshipName>

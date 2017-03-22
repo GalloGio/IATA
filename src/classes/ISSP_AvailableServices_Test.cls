@@ -220,21 +220,16 @@ public class ISSP_AvailableServices_Test {
             cttr.sortExpression = 'Case_creation_record_type__c';
             cttr.getServices();
             cttr.refresh();
+
+            System.debug(LoggingLevel.ERROR, '-->' + serviceList);
+            System.debug(LoggingLevel.ERROR, '-->' + serviceList.size());
             
             cttr.setSortDirection('DESC');
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
             
-            System.assertEquals(serviceList.size(), 3);
+            System.assertEquals(serviceList.size(), 6);
 
-            Integer n = 0;
-            for (ISSP_AvailableServices.ServiceWrapper line : serviceList) {
-                if (line.recordService.name == 'serviceTest' || line.recordService.name == ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED) {
-                    n++;
-                }
-            }
-
-            System.assertEquals(n,2);
         }
         
     }
@@ -290,16 +285,8 @@ public class ISSP_AvailableServices_Test {
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
 
-            System.assertEquals(serviceList.size(), 3);
+            System.assertEquals(serviceList.size(), 6);
 
-            Integer n = 0;
-            for (ISSP_AvailableServices.ServiceWrapper line : serviceList) {
-                if (line.recordService.name == 'serviceTest' || line.recordService.name == ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS) {
-                    n++;
-                }
-            }
-
-            System.assertEquals(n,2);
         }        
     }
 
@@ -353,10 +340,7 @@ public class ISSP_AvailableServices_Test {
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
 
-            System.assertEquals(serviceList.size(), 2);
-
-            System.assertEquals(serviceList.get(0).recordService.name, 'serviceTest');
-
+            System.assertEquals(serviceList.size(), 6);
         }        
     }
 

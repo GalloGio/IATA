@@ -214,13 +214,15 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c  ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
                 string queryString = '';
-                
+
                 queryString = 'select '+query+' from Portal_Applications__c '+getQueryConditions()+' order by '+ sortFullExp;
+
+                System.debug(LoggingLevel.ERROR, 'SQL ----->' + queryString);
                 
                 ISSP_Utilities.log('SQL String: ' + queryString);
                 setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
@@ -320,8 +322,7 @@ public with sharing class ISSP_AvailableServices{
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
-                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c,
-                                                        ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
+                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
                     for (Portal_Applications__c thisApp : appList){
@@ -335,7 +336,7 @@ public with sharing class ISSP_AvailableServices{
                 }
             }
         }
-        
+
         system.debug('hasPremiumTD: ' + hasPremiumTD);
         if (hasPremiumTD){
 	        integer i = 0;
@@ -352,48 +353,13 @@ public with sharing class ISSP_AvailableServices{
 	        }
         }
 
-        List<ServiceWrapper > allowedServiceList =  new List<ServiceWrapper>();   
+        User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
 
-        Set<id> serviceIds = new Set<id>();
-        for (ServiceWrapper line : allServiceList) {
-            serviceIds.add(line.recordService.id);
-        }
-
-        Map<id, Set<String>> isoCountriesMap = ANG_ISSP_PortalServiceHelper.getElegibleCountries(serviceIds);
-
-        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
-
-        boolean flagAdd;
         boolean flagIsIepPortalService;
-        noOfRecords = 0;
+
         for (ServiceWrapper line : allServiceList) {
-            flagAdd = true;
+
             flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(line.recordService.name);
-
-            //if (flagIsIepPortalService) {
-                Set<String> isoCodes = isoCountriesMap.get(line.recordService.id);   
-
-                if (currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT || currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.CARGO_AGENT) {            
-                    if(line.recordService.ANG_Restrict_by_Agency_Sector__c != currentPortalUser.ANG_Sector__c) {
-                        flagAdd = false;
-                    }
-                }
-
-                if (line.recordService.ANG_Accredited_Agents_Only__c && !currentPortalUser.ANG_Is_Accredited_Agent__c) {
-                    flagAdd = false;
-                }
-
-                if (isoCodes != null) {
-                    if (!isoCodes.contains(currentPortalUser.ANG_Customer_Country_ISO__c)) {
-                        flagAdd = false;
-                    }
-                }
-            //}
-
-            if(flagAdd) {
-                allowedServiceList.add(line);
-                noOfRecords++;
-            }        
 
             if (flagIsIepPortalService && currentPortalUser.contact.account.ANG_IEP_Status__c == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
                 line.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
@@ -407,9 +373,9 @@ public with sharing class ISSP_AvailableServices{
 
         }
 
-        ServiceList = allowedServiceList;
+        noOfRecords = allServiceList.size();
 
-        return allowedServiceList;
+        return allServiceList;
     }
      
     public List<Portal_Applications__c > getServices(){
