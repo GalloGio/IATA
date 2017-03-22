@@ -2057,7 +2057,7 @@ void buildPaymentTypePicklist() {
                         if(iecCustomer != null)
                             customerDto = Customer_DTO.getCustomerByUser(iecCustomer.Id);
 
-                        //if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
+                        if (customerDto != null && customerDto.canPayByICH())   //*** (Thai) relax this rule in production in waiting of final rule
                         if (customerDto != null)
                         {
                             if (IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, TotalAmount))

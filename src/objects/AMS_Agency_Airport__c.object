@@ -103,7 +103,7 @@
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
-    <fields>
+	<fields>
         <fullName>Last_synchronization__c</fullName>
         <externalId>false</externalId>
         <label>Last synchronization</label>

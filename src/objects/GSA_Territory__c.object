@@ -66,6 +66,21 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+	<fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <description>AMS =&gt; GDP Synchronization key
+AMS_GDP_Key = AIMS ID + Airline Code</description>
+        <externalId>true</externalId>
+        <inlineHelpText>AMS =&gt; GDP Synchronization key
+AMS_GDP_Key = AIMS ID + Airline Code</inlineHelpText>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>AIMS_ID__c</fullName>
         <description>Note that this field is not unique, and it does not have to be external id.</description>
