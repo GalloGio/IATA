@@ -72,15 +72,16 @@ public class AMS_AgencyAChangeCodeHandler {
     //SUSANA ALVES: removed @future because we don't need to update account for minor changes 
     public static void updateAccountReason(set<id> setAACC){
         system.debug('SALVES --> updateAccountReason - setAACC : ' + setAACC);
-    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c, AccountNewStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
+    	list<Agency_Applied_Change_code__c> lsAACC = [select id, Reason_Code__c, Reason_Description__c, Account__c, AccountNewStatus__c, Account__r.Reason__c, Account__r.Previous_Reason__c, Account__r.Status__c, Account__r.PreviousStatus__c  from Agency_Applied_Change_code__c where id in:setAACC];
     	set<id> setAccntId = new set<id>();
     	map<id, account> mapAccntToUpdate = new map<id, account>();
     	
-    	for(Agency_Applied_Change_code__c aacc:lsAACC){
-    		setAccntId.add(aacc.Account__c);
-    	}
+    	//for(Agency_Applied_Change_code__c aacc:lsAACC){
+    	//	setAccntId.add(aacc.Account__c);
+    	//}
     	
-    	map<id, account> mapAccnt = new Map<ID, Account>([select id, reason__c, Previous_Reason__c, Status__c, PreviousStatus__c from account where id in:setAccntId]);
+        //[select id, reason__c, Previous_Reason__c, Status__c, PreviousStatus__c from account where id in:setAccntId]
+    	map<id, account> mapAccnt = new Map<ID, Account>();
     	
     	for(Agency_Applied_Change_code__c aacc:lsAACC){
     		string sReason = (aacc.Reason_Code__c==null?'':aacc.Reason_Code__c)+ '-' + (aacc.Reason_Description__c==null?'':aacc.Reason_Description__c);
