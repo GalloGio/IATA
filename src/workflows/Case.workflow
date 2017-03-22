@@ -14947,7 +14947,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>ISIS Multicarta</value>
+            <value>Multicarta</value>
         </criteriaItems>
         <description>Notify HP when a case  (DPC Service Request) is made visible on the portal with DPC System = CASSLink</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
