@@ -197,6 +197,7 @@
         <columns>Source_Campaign__c</columns>
         <columns>Other_Reason__c</columns>
         <columns>Event_Date__c</columns>
+        <columns>OBJECT_ID</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
