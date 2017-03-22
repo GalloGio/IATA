@@ -5,7 +5,7 @@
 <style>
 body, div, h4, span, p {
   font-family: Helvetica, sans-serif !important;
-  font-size: 13px;
+  font-size: 11px;
 }
 .header-logo {
     width: 100%;
@@ -37,17 +37,24 @@ table, th, td {
     border: 1px solid black;
 }
 
+th, td {
+  padding: 5px;
+}
+
 body {
   font-family: Arial Unicode MS;
 }
 .th-style {
-    font-size: 13px;
+    font-size: 10px;
     text-transform: uppercase;
     vertical-align: top;
     text-align: center;
+    background-color: #F5F5F5;
 }
 .td-style {
     width: 12%;
+    background-color: #F5F5F5;
+    vertical-align: middle;
 }
 .definitions {
   font-weight: normal;
@@ -92,7 +99,7 @@ body {
       <tbody>
         <apex:repeat value="{!cList}" var="c">
         <tr>
-          <td class="td-style"><!--{!c.Name}-->{!c.Country_Name__r.Name}</td>
+          <td class="td-style">{!c.Country_Name__r.Name}</td>
           <td class="heat-map-cell-{!c.HM_Spot_1m_ch__c}"></td>
           <td class="heat-map-cell-{!c.HM_Spot_12m_ch__c}"></td>
           <td class="heat-map-cell-{!c.HM_Fwd_NDF__c}"></td>
