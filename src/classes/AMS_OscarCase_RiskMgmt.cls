@@ -749,6 +749,18 @@ public class AMS_OscarCase_RiskMgmt {
 			else return false;
 		}
 		
+		if(condition.equalsIgnoreCase('GREATER THAN TODAY OR EQUAL TO TODAY')){
+			//if((date)NewCaseValues.get(sFieldToCheck)>system.today())
+			date d = date.valueOf(NewCaseValues.get(sFieldToCheck));
+			if(d==null)	return false;
+			date dToCheck = date.newinstance(d.year(), d.Month(), d.day());
+
+			//if(date.valueOf(NewCaseValues.get(sFieldToCheck))>system.today() || date.valueOf(NewCaseValues.get(sFieldToCheck))==system.today())
+			if(dToCheck>system.today() || dToCheck==system.today())
+				return true;
+			else return false;
+		}
+
 		if(condition.equalsIgnoreCase('EQUAL TO TODAY')){
 			//if((date)NewCaseValues.get(sFieldToCheck)==system.today())
 			//if(date.valueOf(NewCaseValues.get(sFieldToCheck))==system.today())
