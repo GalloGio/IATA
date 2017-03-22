@@ -173,6 +173,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <deleteConstraint>SetNull</deleteConstraint>
         <description>EasyPay portal service that can be subscribed in the country.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Enable this country for IATA EasyPay by selecting the EasyPay Portal Service corresponding to the Vendor that covers this country.</inlineHelpText>
         <label>IATA EasyPay Portal Service</label>
         <referenceTo>Portal_Applications__c</referenceTo>
         <relationshipLabel>IATA ISO Countries</relationshipLabel>
@@ -1920,6 +1921,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ISO_Country_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Value based on ISO 3166 Standard | Used for GDP Products</inlineHelpText>
+        <label>ISO Country Short Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ISS_Office_Location__c</fullName>

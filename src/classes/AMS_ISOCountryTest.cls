@@ -115,6 +115,40 @@ public class AMS_ISOCountryTest {
 
         System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c + ',' + isoc2.ISO_Code__c);
 
+        isoc2.ANG_Portal_Service__c = null;
+        isoc2.ISO_Code__c = 'ZZ';
+
+        update isoc2;
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c);
+
+        isoc2.ANG_Portal_Service__c = null;
+
+        update isoc2;
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c);
+
+        isoc2.ANG_Portal_Service__c = easyPay1.id;
+        isoc2.ISO_Code__c = 'XX';
+
+        update isoc2;
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage, isoc.ISO_Code__c + ',' + isoc2.ISO_Code__c);
+
+        isoc.ANG_Portal_Service__c = null;
+
+        update isoc;
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage, isoc2.ISO_Code__c);
+
         Test.stopTest();
     }
 }

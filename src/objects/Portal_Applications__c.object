@@ -81,6 +81,7 @@
         <defaultValue>false</defaultValue>
         <description>Service can only be subscribed by accredited agents.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Active OR Changes processed.</inlineHelpText>
         <label>Accredited Agents Only</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -103,7 +104,8 @@
         <formula>OR (
   AND(
     CONTAINS(Name, &quot;IATA EasyPay&quot;),
-    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)
+    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c),
+    TRIM(ANG_Country_Coverage__c) != &quot;&quot;
   ),
   AND(
     NOT(CONTAINS(Name, &quot;IATA EasyPay&quot;))
@@ -166,6 +168,7 @@
         <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
         <description>Permitted agency sector</description>
         <externalId>false</externalId>
+        <inlineHelpText>Restrict portal visibility to either Travel or Cargo Agents. Will be visible to Agents in both sectors if left empty.</inlineHelpText>
         <label>Restrict by Agency Sector</label>
         <picklist>
             <picklistValues>
