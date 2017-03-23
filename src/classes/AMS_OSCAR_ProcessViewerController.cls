@@ -31,6 +31,16 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public Boolean isNotNewGenProcess{
+        get{
+            return (
+                oscar != null
+                && oscar.Process__c != AMS_Utils.NEWHELITE
+                && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
     private Boolean dueDiligenceBlocked {
         get{
             return (

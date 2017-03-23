@@ -491,7 +491,6 @@ var dyn_functions = {
            },
 
            createFSObject:function (arg) {
-            alert('Prepare to open tab with FS');
                 var result = this.createFSObjectAux(arg);
            },
            createFSObjectAux:function (arg) {

@@ -283,7 +283,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
                         changeCode.memoText = 'Correction';
-                    }
+                        }
                     // If the picklist is set create a CAD change code.
 	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         changeCode.name = 'CAD';
@@ -417,6 +417,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.Is_using_credit_card__c == false && updatedOscar.Is_using_credit_card__c == true) {
             updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
             updatedOSCAR.Requested_Bank_Guarantee_currency__c =  'USD';
+            updatedOSCAR.STEP34__c = 'In Progress';
+            updatedOSCAR.STEP35__c = 'In Progress';
         } 
 
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
