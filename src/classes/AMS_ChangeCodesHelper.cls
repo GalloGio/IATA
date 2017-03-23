@@ -1,7 +1,7 @@
 public class AMS_ChangeCodesHelper {
 
         //Account ID => Change Code Struct
-        public static Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
+        public static Map<ID,ChangeCodeStruct> aaccHistoryPerAcct = new Map <ID,ChangeCodeStruct> ();
 
 
     /** 
@@ -145,7 +145,8 @@ public class AMS_ChangeCodesHelper {
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
-
+        //Account ID => Change Code Struct
+        Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
 
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
@@ -163,7 +164,10 @@ public class AMS_ChangeCodesHelper {
 
             aaccToInsert.add(changeCodeResult.changeCode);
             
+        
             aaccHistoryToProcess.put(oscarAgencies.get(index).Id, changeCodeResult);
+            aaccHistoryPerAcct.put(oscarAgencies.get(index).Id, changeCodeResult);
+
             
             System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
             

@@ -883,9 +883,13 @@ public class AMS_OSCARTriggerHandler {
 
 				List<AMS_Agency_A_Change_code_History__c> extraCCHistory = new List <AMS_Agency_A_Change_code_History__c>();
 
+				system.debug('DDD11 aaccHistoryPerAcct: ' + AMS_ChangeCodesHelper.aaccHistoryPerAcct);
+
 				for(Account acc : AMS_AgencyRelationshipTriggerHandler.accsToUpdate)
 				{
-					if(AMS_ChangeCodesHelper.aaccHistoryToProcess.containsKey(acc.Id))
+					system.debug('DDD11 acc.Id: ' + acc.Id);
+
+					if(AMS_ChangeCodesHelper.aaccHistoryPerAcct.containsKey(acc.Id))
 					{
 						system.debug('DDD11 New Info Acct ID: ' + acc.id);
 						system.debug('DDD11 New Location_Type__c: '  + acc.Location_Type__c);
@@ -898,7 +902,7 @@ public class AMS_OSCARTriggerHandler {
 						{
 							
 							extraCCHistory.add( new AMS_Agency_A_Change_code_History__c(
-		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryToProcess.get(acc.Id).changeCode.Id,
+		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryPerAcct.get(acc.Id).changeCode.Id,
 		                                                        Object_API_Name__c            = 'Account',
 		                                                        Field_API_Name__c             = 'Location_Type__c',
 			                                                    Field_Old_Value__c            = accountStructPerAcct.get(acc.Id).locationType,
@@ -927,7 +931,7 @@ public class AMS_OSCARTriggerHandler {
 						{
 							
 							extraCCHistory.add( new AMS_Agency_A_Change_code_History__c(
-		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryToProcess.get(acc.Id).changeCode.Id,
+		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryPerAcct.get(acc.Id).changeCode.Id,
 		                                                        Object_API_Name__c            = 'Account',
 		                                                        Field_API_Name__c             = 'Parent.IATACode__c',
 			                                                    Field_Old_Value__c            = accountStructPerAcct.get(acc.Id).parentIATACode,
@@ -947,7 +951,7 @@ public class AMS_OSCARTriggerHandler {
 
 					        insert extraCCHistory;
 				}
-				AMS_ChangeCodesHelper.aaccHistoryToProcess.clear();
+				AMS_ChangeCodesHelper.aaccHistoryPerAcct.clear();
 			}
 
 		} catch (Exception ex) {
