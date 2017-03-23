@@ -845,6 +845,7 @@ public class AMS_OSCARTriggerHandler {
 				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 			}
+			system.debug('DDD11 hierarchyChanges.size(): ' + hierarchyChanges.size());
 
 			if (hierarchyChanges.size() > 0) {
 				List<AMS_Agencies_Hierarchy__c> allHierarchiesToInsert = new List<AMS_Agencies_Hierarchy__c>();
@@ -884,6 +885,13 @@ public class AMS_OSCARTriggerHandler {
 				List<AMS_Agency_A_Change_code_History__c> extraCCHistory = new List <AMS_Agency_A_Change_code_History__c>();
 
 				system.debug('DDD11 aaccHistoryPerAcct: ' + AMS_ChangeCodesHelper.aaccHistoryPerAcct);
+
+
+				for(Account acc : accsToUpdateFromCC)
+				{
+					if(! new Set <Account> (AMS_AgencyRelationshipTriggerHandler.accsToUpdate).contains(acc))
+						AMS_AgencyRelationshipTriggerHandler.accsToUpdate.add(acc);						
+				}
 
 				for(Account acc : AMS_AgencyRelationshipTriggerHandler.accsToUpdate)
 				{
