@@ -12857,7 +12857,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Status</label>
         <picklist>
             <picklistValues>
+                <fullName>Applicant</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ARC registered</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12870,6 +12878,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <picklistValues>
                 <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endorsed</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12893,11 +12905,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Terminated</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unregisterable STP</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
