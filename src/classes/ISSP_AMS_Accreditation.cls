@@ -952,7 +952,9 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isocountry.EACP_Country__c) {
                         options.add(new SelectOption('New BR / IP - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_BRANCH));
                     } else {
-                        options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH));
+                        if(communityName=='CNS'){ options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH_CNS));
+                        }else{options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH));}
+                        
                     }
                     if (isUKTerritory && !isocountry.Disable_non_IATA_Cargo_Agents__c) { //UK also has courier HO option
                         options.add(new SelectOption('New HO - Courier', Label.ISSP_AMS_OPTION_COURIER_HO));
