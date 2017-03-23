@@ -77420,7 +77420,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
