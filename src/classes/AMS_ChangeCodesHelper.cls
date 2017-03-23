@@ -1,5 +1,8 @@
 public class AMS_ChangeCodesHelper {
 
+        //Account ID => Change Code Struct
+        public static Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
+
 
     /** 
      Wrapper Object for Change Codes
@@ -142,9 +145,6 @@ public class AMS_ChangeCodesHelper {
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
-
-        //Account ID => Change Code Struct
-        Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
 
 
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {

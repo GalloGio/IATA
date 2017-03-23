@@ -947,6 +947,7 @@ public class AMS_OSCARTriggerHandler {
 
 					        insert extraCCHistory;
 				}
+				AMS_ChangeCodesHelper.aaccHistoryToProcess.clear();
 			}
 
 		} catch (Exception ex) {
