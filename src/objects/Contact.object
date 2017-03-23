@@ -8972,7 +8972,9 @@ IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&
 &amp;&quot; &quot;&amp; 
 IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

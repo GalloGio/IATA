@@ -116,7 +116,13 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
         }
 
     public  List<Objective__c> getIssuesAndPriorities() {
-        List<Objective__c> lsIssuesAndPriorities = getIssuesAndPriorities(this.myAccount.Id);
+        List<Objective__c> tmpList = getIssuesAndPriorities(this.myAccount.Id);
+        List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
+        for(Objective__c i : tmpList) {
+            if(i.Status__c == 'Open' || showAllItems) {
+                lsIssuesAndPriorities.add(i);
+            }
+        }
         return lsIssuesAndPriorities;
     }
 
