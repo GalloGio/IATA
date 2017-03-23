@@ -11,6 +11,10 @@ public with sharing class ISSP_AvailableServices{
     public Boolean isAdmin {get;set;} 
      
     public String conId {get; set;}
+    public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
+    public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    
     public ServiceWrapper Serv {get; set;}
     public String ServId {get; set;}
     
@@ -75,11 +79,55 @@ public with sharing class ISSP_AvailableServices{
                 else
                     isAdmin = false;
 
-                conId = [select Id,ContactId from User where Id =:Userinfo.getUserId()].ContactId;
+                System.debug('[FM] initialization Userinfo.getUserId() - '+ Userinfo.getUserId());
+
+                if(!Test.isRunningTest()) {
+                    conId = [select Id,ContactId from User where Id =:Userinfo.getUserId()].ContactId;
+                }else{
+                    conId = [select Id from Contact limit 1].Id;
+                }
+
+                //FM 17-03-2017 - Logic for Authorised Signatory 
+                //NOTE - Base any logic on the Portal Admin for now (User Portal Status=Approved Admin) since Authorised Signatories are not yet identified in SFDC
+                //TODO - Remove above note once  Authorised Signatory code implemented
+                System.debug('[FM] initialization conId - '+ conId);
+
+                List<Contact> lcont = [SELECT User_Portal_Status__c,
+                                        Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
+                                        Account.ANG_IEP_Status__c, Account.Top_Parent__r.ANG_IEP_Status__c
+                                        FROM Contact];
+
+                System.debug('[FM] initialization lcont - '+ lcont);
+
+
+                Contact contAcc = [SELECT User_Portal_Status__c,
+                                        Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
+                                        Account.ANG_IEP_Status__c, Account.Top_Parent__r.ANG_IEP_Status__c
+                                        FROM Contact WHERE Id = :conId limit 1];
+                
+                System.debug('[FM] initialization contAcc - '+ contAcc);
+
+                conHOAccountLocType = '';
+                isIEPAccountEnable = false;
+
+                //Validates if user have access to request IEP account
+                if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE') ){
+                    isIEPAccountEnable = true;
+                }else if(isAdmin && contAcc.Account.Top_Parent__r.ANG_IEP_Status__c == 'Open'
+                    && (contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE') ){
+                    isIEPAccountEnable = true;
+                }
+
+                if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
+                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
+                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                }
             }
             else
                 isAdmin = false;
         } catch(Exception exp) {
+            System.debug('[FM] initialization Exception - '+ exp);
             ISSP_Utilities.exceptionDump(exp);
         }
         return null;
@@ -214,7 +262,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -235,6 +283,7 @@ public with sharing class ISSP_AvailableServices{
         public string Status {get; set;}
         public Boolean selected {get; set;}
         public Portal_Applications__c recordService {get; set;}
+        public String btnLabel {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord){
             this.Status = getServiceStatus(inRecord);
@@ -272,13 +321,14 @@ public with sharing class ISSP_AvailableServices{
     	hasPremiumTD = false;
         List<ServiceWrapper > allServiceList =  new List<ServiceWrapper>();   
         List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
+
         for (Portal_Applications__c thisService : allServices){
             ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService);
             allServiceList.add(thisServiceRecord);
         }
         
         //TF
-        system.debug('CON ID: ' + conId);
+        //system.debug(LoggingLevel.ERROR, '--CON ID: ' + conId);
         List <Portal_Application_Right__c> appRightList = [SELECT Id, Portal_Application__c,
                                                         Portal_Application__r.Name,
                                                         Portal_Application__r.ServiceName__c,   
@@ -286,6 +336,8 @@ public with sharing class ISSP_AvailableServices{
                                                         FROM Portal_Application_Right__c
                                                         WHERE Contact__c = :conId
                                                         AND Right__c = 'Access Granted'];
+
+
         if (!appRightList.isEmpty()){
             Set<Id> appIds = new Set<Id>();
             Set<Id> newAppIds = new Set<Id>();
@@ -316,7 +368,8 @@ public with sharing class ISSP_AvailableServices{
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
-                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c
+                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
                     for (Portal_Applications__c thisApp : appList){
@@ -346,9 +399,65 @@ public with sharing class ISSP_AvailableServices{
 	        	allServiceList.remove(j);
 	        }
         }
-        
-        ServiceList = allServiceList;
-        return allServiceList;
+
+        List<ServiceWrapper > allowedServiceList =  new List<ServiceWrapper>();   
+
+        Set<id> serviceIds = new Set<id>();
+        for (ServiceWrapper line : allServiceList) {
+            serviceIds.add(line.recordService.id);
+        }
+
+        Map<id, Set<String>> isoCountriesMap = ANG_ISSP_PortalServiceHelper.getElegibleCountries(serviceIds);
+
+        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
+
+        boolean flagAdd;
+        boolean flagIsIepPortalService;
+        noOfRecords = 0;
+        for (ServiceWrapper line : allServiceList) {
+            flagAdd = true;
+            flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(line.recordService.name);
+
+            //if (flagIsIepPortalService) {
+                Set<String> isoCodes = isoCountriesMap.get(line.recordService.id);   
+
+                if (currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT || currentPortalUser.ANG_Sector__c == ANG_ISSP_PortalServiceHelper.CARGO_AGENT) {            
+                    if(line.recordService.ANG_Restrict_by_Agency_Sector__c != currentPortalUser.ANG_Sector__c) {
+                        flagAdd = false;
+                    }
+                }
+
+                if (line.recordService.ANG_Accredited_Agents_Only__c && !currentPortalUser.ANG_Is_Accredited_Agent__c) {
+                    flagAdd = false;
+                }
+
+                if (isoCodes != null) {
+                    if (!isoCodes.contains(currentPortalUser.ANG_Customer_Country_ISO__c)) {
+                        flagAdd = false;
+                    }
+                }
+            //}
+
+            if(flagAdd) {
+                allowedServiceList.add(line);
+                noOfRecords++;
+            }        
+
+            if (flagIsIepPortalService && currentPortalUser.contact.account.ANG_IEP_Status__c == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+                line.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
+            } else {
+                if (flagIsIepPortalService && currentPortalUser.contact.account.ANG_IEP_Status__c == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) {
+                    line.btnLabel = System.Label.ANG_ISSP_Request_Access_IATA_EasyPay;
+                } else {
+                    line.btnLabel = System.Label.ISSP_New_Service_Request;
+                }
+            }
+
+        }
+
+        ServiceList = allowedServiceList;
+
+        return allowedServiceList;
     }
      
     public List<Portal_Applications__c > getServices(){
