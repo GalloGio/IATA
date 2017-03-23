@@ -268,11 +268,8 @@ public class AMS_ChangeCodesHelper {
             , Reason_Description__c = changeCode.reasonDesc
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
-            , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
         );
 
-        System.debug( '[FM] changeCode.publishedOnEBulletin: '+changeCode.publishedOnEBulletin );
-        System.debug( '[FM] aacNEW: '+aacNEW );
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
