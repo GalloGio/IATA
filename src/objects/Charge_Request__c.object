@@ -1352,7 +1352,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <default>false</default>
                 <controllingFieldValues>AGTCOD_GSA</controllingFieldValues>
                 <controllingFieldValues>AGTCOD_MSO</controllingFieldValues>
-                <controllingFieldValues>AIRERU_CASS</controllingFieldValues>
                 <controllingFieldValues>AIRSBL_CAIR</controllingFieldValues>
                 <controllingFieldValues>AIRSBL_PAIR</controllingFieldValues>
                 <controllingFieldValues>BSPFEE_ADELW</controllingFieldValues>
@@ -1407,6 +1406,7 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <picklistValues>
                 <fullName>200.00</fullName>
                 <default>false</default>
+                <controllingFieldValues>AIRERU_CASS</controllingFieldValues>
                 <controllingFieldValues>CASFEE_DGRVA</controllingFieldValues>
                 <controllingFieldValues>GSSA_APPL</controllingFieldValues>
                 <controllingFieldValues>IBCS_JOINE</controllingFieldValues>
