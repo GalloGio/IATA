@@ -2154,4 +2154,50 @@ public static String fetchTypeOfCustomer (String locationType , String category)
           return this;   
        }
     }
+
+    // compares two values in diff rates
+    // if firstValue < secondValue , returns 1
+    // if firstValue = secondValue , returns 0
+    // if secondvalue < firstValuue , returns 2
+    // if there is a rate problem, return -1
+    // if there is a amount problem, return -2
+    public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
+
+        if(firstValue == null || secondValue == null){
+            System.debug('Returning -2');
+            return -2;
+        }
+
+        Set<String> currencies = new Set<String>{firstCurrencyISOCode, secondCurrencyISOCode};
+
+        List<CurrencyType> types = [SELECT Id, ConversionRate, DecimalPlaces, IsoCode FROM  CurrencyType where IsoCode in :currencies and IsActive = true];
+
+        if(types.size() != currencies.size()){
+            System.debug('Returning -1');
+            return -1;
+        }
+
+        Map<String,Double> rates = new Map<String,Double>();
+
+        rates.put(types.get(0).IsoCode, types.get(0).ConversionRate);
+        
+        if(types.size() > 1)
+            rates.put(types.get(1).IsoCode, types.get(1).ConversionRate);
+
+        if(firstValue * rates.get(firstCurrencyISOCode) < secondvalue * rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 1');
+            return 1;
+        }
+
+        if(firstValue * rates.get(firstCurrencyISOCode) > secondvalue * rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 2');
+            return 2;
+        }
+
+        System.debug('Returning 0');
+        return 0;
+    
+    }
+
+
 }
