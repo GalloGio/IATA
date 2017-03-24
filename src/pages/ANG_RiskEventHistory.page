@@ -6,9 +6,13 @@
 			<!-- workaround so link open in a new page -->
 			<base target="_blank"/>
 		</head>
+		
+		<apex:form>
+			<c:relatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" hideButtons="true" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
+		</apex:form>
 
-	    <apex:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
-	    <apex:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" />
+	    <!-- <c:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
+	    <c:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" /> -->
 
 	    <script>
 	    	//workaround to hide the new button
@@ -18,7 +22,7 @@
 	    	var links = [].slice.call(document.querySelectorAll("a"));
 	    	links.forEach(function(el){
 	    		if(el.innerHTML == 'Del') el.target = "_self";
-	    		else if (sforce.console.isInConsole()){
+	    		/*else if (sforce.console.isInConsole()){
 	    			var linkURL = el.getAttribute("href");
 	    			el.href = '';
 	    			console.warn(linkURL);
@@ -30,7 +34,7 @@
 	    				});
 	    				return false;
 	    			}, false);
-	    		} 
+	    		}*/
 	    	});
 	    </script>
 </apex:page>
