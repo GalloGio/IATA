@@ -2549,6 +2549,7 @@
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
+    <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>
