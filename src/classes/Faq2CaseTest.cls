@@ -2,6 +2,20 @@
 private class Faq2CaseTest {
 	 
 
+    static testMethod void testArticleViewLine() {
+        FAQ__kav article = new FAQ__kav();
+        FAQ__VoteStat voteStat = new FAQ__VoteStat();
+        
+        Test.startTest();
+        vfISSP_FAQ2Case.ArticleViewLine articleVL1 = new vfISSP_FAQ2Case.ArticleViewLine(article);
+        articleVL1.getHasVoteStat();
+        articleVL1.getPath();
+        vfISSP_FAQ2Case.ArticleViewLine articleVL2 = new vfISSP_FAQ2Case.ArticleViewLine(article,voteStat);
+        articleVL2.getHasVoteStat();
+        articleVL2.getPath();
+        Test.stopTest();
+    }
+
 	static testMethod void testFaq2Case_Cases_a()
 	{
 		Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -58,12 +72,22 @@ private class Faq2CaseTest {
 			ctrl.accountId = acc.Id;
 			ctrl.isGSAOnly = true;
 			ctrl.save();
+			ctrl.copyCountryISO();
+			ctrl.GeneratesubTopicHelpText();
+			ctrl.GenerateTopicHelpText();
+			ctrl.AssignNewCaseRecordType();
+			ctrl.getCaseRecordTypeIdByName('IATA_Airline');
+			ctrl.CheckCountryMatch('ES','ES');
 		}
 		Test.stopTest();
 	}
 
 	static testMethod void testFaq2Case_Cases_b()
 	{
+        PageReference pageref = Page.ISSP_FAQ2Case;
+        pageref.getParameters().put('myRecordType','Cases_SIS_Help_Desk');
+        Test.setCurrentPage(pageref);
+        
 		Account parent = ISSP_ObjectFactory.createNewAccount();
         parent.BillingCity = 'test';
         parent.Name = 'test';
@@ -179,6 +203,7 @@ private class Faq2CaseTest {
 		{
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.getGsaCountryList_2();
+			controller.refreshAirlineList();
 		}
 
     }
@@ -245,7 +270,7 @@ private class Faq2CaseTest {
      * Nurit and Niv
      * Testing the 'calculateViewAndSatisfied' methode
      */
-   /* Static testMethod void testCalc(){
+   /* static testMethod void testCalc(){
 		List<User> newUser_List = new List<User>([select Id ,Name From User where Email = 'Test@test11.com' ]);
 		User newUser = newUser_List[0];
         Test.startTest();
@@ -679,6 +704,7 @@ private class Faq2CaseTest {
 		  controller.refreshSubTopicPickList();
 		  controller.createSatisfiedRecord();
 		  controller.GeneralQueueMethod();
+          controller.ComplimentGeneralQueueMethod();
 		  controller.CheckNewCaseRecordType();
 		  //controller.GenerateTopicHelpText();
 		  //controller.GeneratesubTopicHelpText();
