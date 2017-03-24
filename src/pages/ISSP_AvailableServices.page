@@ -10,10 +10,37 @@
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
+       
+    function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
+        var doInsert;
+        if (isEasyPayService == 'false') {
+          doInsert = 2;
+        } else {
+          if (appPortalRole == '' && flagUseDefaultRole == "true") {
+            doInsert = 1;  
+          } else {
+            if (appPortalRole == '' && flagUseDefaultRole == "false") {
+              doInsert = 0;  
+            } else {
+              doInsert = 1;  
+            }
+          }
+        }
 
-    function newAppReq(appId,appName){
-        $('#ModalNewServiceRequest').modal('toggle');
-        ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}',newAppReqCallback);
+        if (doInsert == 0) {
+            document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
+        } else {
+            if (appPortalRole != 'SKIP') {
+                closeDialog();
+            }
+            $('#ModalNewServiceRequest').modal('toggle');
+            if (doInsert == 1) {
+              ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
+            } else {
+              ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
+            }            
+        }
+
         //closeDialog();
         //location.reload(true);
         //refresh(); 
@@ -25,6 +52,7 @@
     
 
     function doRequest(servId) {
+
          paraFunction(servId);
     }
     
@@ -77,7 +105,7 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Services" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
-    <apex:actionFunction name="paraFunction" action="{!doRequest}"  reRender="contactListForm,Services,myModal,ModalNewServiceRequest" oncomplete="javascript:dopopup();">      
+    <apex:actionFunction name="paraFunction" action="{!doRequest}"  reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
 
@@ -206,7 +234,7 @@
     <!---------------------------------------------------------------------->
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog"> 
+      <apex:outputPanel layout="block" styleClass="modal-dialog" id="myModalContent"> 
         <div class="modal-content"> 
           <div class="modal-header"> 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -220,7 +248,12 @@
                   <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
                       <p><apex:outputText value="{!er}" escape="false" /></p>
                   </apex:repeat>
-                </div>  
+                </div>
+                
+                <div class="alert alert-danger" id="portalRoleErrorMessage" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_PortalRoleErrorMessage} </strong>
+                </div>
+                
               </apex:outputPanel>
             <ul class="external_links clearfix nav">
 
@@ -230,10 +263,31 @@
                       <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" />
                     </a>
                   </span>
-                  <span>
+                  <!--span>
                       <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!Serv.recordService.Name}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                  </span-->
+
+                  <apex:outputPanel>
+                      <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
+                      <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
+                  </apex:outputPanel>
+                
+                </li>
+
+                <li> 
+                  <span class="appfocus" rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole)}">
+                    <a  id="appReq{!Serv.recordService.Id}"  title="">
+                      <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" style="visibility: hidden"/>
+                    </a>
                   </span>
+                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole)}">
+                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " /> 
+                    <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
+                      <apex:selectOptions value="{!availablePortalServiceRoles}"/>
+                      <apex:actionSupport event="onchange" rerender="serviceSubmitButton"/>
+                    </apex:selectList>                  
+                  </apex:outputPanel>
                 </li>
 
                 <script> 
@@ -242,9 +296,8 @@
                     $('#appReq{!Serv.recordService.Id}').popover({trigger:'hover' ,html:true,content:htmlCont});
                   }
                 </script>
-
             </ul>
-
+            
               <apex:outputPanel rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}"> 
                 <div class="checkbox">
                   <label class="tos_label">
@@ -273,10 +326,10 @@
                   
               <div class="col-md-6">
             
-              <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');}" rerender="display_messages"/>
+              <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" rerender="display_messages"/>
 
-              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace'}"> 
-                <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}');"    class="btn_iata_success btn-block btn">
+              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace'}" id="serviceSubmitButton"> 
+                <a onclick=" newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}','{!Serv.portalServiceRole}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
                    {!$Label.ISSP_Confirm}
                 </a>
               </apex:outputPanel> 
@@ -291,7 +344,7 @@
           </div>
         </div>
         <!-- /.modal-content -->
-      </div>
+      </apex:outputPanel>
       <!-- /.modal-dialog -->
     </div>
 
