@@ -300,7 +300,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         if(accountActiveChangeCode.size() > 0){
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
                             changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
-                            changeCode.status = accountActiveChangeCode[0].Account__r.Status__c;
+                            changeCode.status = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
                         }
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
