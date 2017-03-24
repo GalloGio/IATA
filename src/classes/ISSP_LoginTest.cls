@@ -86,14 +86,21 @@ private class ISSP_LoginTest {
 	                            CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
 	                            ProfileId = profileId,
 	                            Portal_User_Frozen_Checkbox__c = true,
-	                            IsActive = false);
+	                            IsActive = true);
     	insert newUser;
+		AccountTeamMember am = new AccountTeamMember();
+		am.AccountId = acc.Id;
+		am.UserId = newUser.Id;
+		am.TeamMemberRole = 'Portal Administrator';
+
+		insert am;
 
     	Contact contact2 = ISSP_ObjectFactory.createNewContact();
         contact2.AccountId = acc.Id;
         contact2.User_Portal_Status__c = 'Pending Approval';
         contact2.Portal_User_Frozen__c = true;
         contact2.email = 'ISSP_test2@test.test';
+		contact2.Community__c = 'CNS Portal User';
         insert contact2;
         User newUser2 = new User(alias = 'dsfsdfds',
 	                            email = '1issp_login_test_class@testclass.testclass',
