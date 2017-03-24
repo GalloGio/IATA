@@ -417,7 +417,28 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.Is_using_credit_card__c == false && updatedOscar.Is_using_credit_card__c == true) {
             updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
             updatedOSCAR.Requested_Bank_Guarantee_currency__c =  'USD';
-        } 
+            updatedOSCAR.STEP34__c = 'In Progress';
+            updatedOSCAR.STEP35__c = 'In Progress';
+        }
+
+        if(updatedOscar.Is_using_credit_card__c == true && oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
+
+            Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
+        
+            if(resultComparisson == -1){
+                updatedOSCAR.addError('There was a problem using the rates for the Requestest Bank Garantee Amount and Received Bank Garantee Amount. Please check the values.');
+            }
+
+            if(resultComparisson == -2){
+                updatedOSCAR.addError('There was a problem with the amounts. Please check the values.');
+            }
+
+            if(resultComparisson == 2){
+                updatedOSCAR.addError('You cannot proceed because the amount of bank guarantee requested is minor than the amount of bank guarantee provided.');
+            }
+
+
+        }
 
         if (oldOSCAR.Send_inspection_request__c == false && updatedOscar.Send_inspection_request__c == true)
             updatedOSCAR.STEP13__c = 'In Progress';
