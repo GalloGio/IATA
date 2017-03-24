@@ -9546,6 +9546,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>You will now be taken to the IATA web site where you can continue with the accreditation process for your Cargo Agency. Do you wish to go there now?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_GoTo_Cargo_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_GoTo_Cargo_CNS</shortDescription>
+        <value>You will now be taken to the CNS web site where you can continue with the accreditation process for your Cargo Agency. Do you wish to go there now?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_GoTo_Pax</fullName>
         <language>en_US</language>
         <protected>false</protected>

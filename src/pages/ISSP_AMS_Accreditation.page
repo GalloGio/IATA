@@ -301,6 +301,22 @@
                         }
                 } else {
                     if(isAllowedCountry=='f' || isChinaDomestic()) {
+                        // temporary for CNS
+                        console.log('{!communityName}');
+                        if('{!communityName}'==='CNS') {
+                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)})", function(result) {
+                                if(result) {
+                                    window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
+                                    if(isChinaDomestic()) {
+                                        window.open('https://www.iata-asd.com', '_blank');
+                                    } else {
+                                        window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                    }
+                                }
+                            });
+
+                        } else {
+
                         bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo)})", function(result) {
                                     if(result) {
                                         window.open('/ISSP_AMSCases{!if(communityName=='CNS','?CommunityName='+communityName,'')}', '_self');
@@ -311,6 +327,7 @@
                                         }
                                     }
                                 });
+                            }
                         hasPermission = false;
                         }
                         
