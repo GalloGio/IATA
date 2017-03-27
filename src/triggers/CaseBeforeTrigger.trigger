@@ -1072,12 +1072,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCaseIFAP Trigger.isInsert*/
         if(trgCaseIFAP){//FLAG
         	system.debug('trgCaseIFAP Trigger.isInsert');
+            EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
             for (Case newCase : Trigger.New) {
                 // only consider IFAP cases
                 if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
                     // validate the account's country
                     if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)){ //if false
-                    	system.debug('COUNTRY NOT VALID');
                         newCase.addError('The account\'s country is not valid.');
                     }else
                         IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
@@ -1094,25 +1094,43 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     if (!IFAP_BusinessRules.IsStatusCanBeSelected(true, newCase, null, IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
                         newCase.addError('This following case status cannot be selected: ' + newCase.status);
                     }
+                    //GM - IMPRO - START
+                    //query inside FOR, query inside FOR 
                     // check if the FA template's country matches the case country
-                    EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected Initial Request Email Template does not match the case country.');
+                    if(newCase.EmailTemplate__c!=null){
+                        //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c EmTe : et){
+                            if(EmTe.Id == newCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Initial Request Email Template does not match the case country.');
+                            }
+                        }
                     }
                     // check if the FA reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected Reminder Email Template does not match the case country.');
+                    if(newCase.Reminder_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c REmTe : et){
+                            if (REmTe.Id == newCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Reminder Email Template does not match the case country.');
+                            }
+                        }
                     }
                     // check if the FS template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected FS Email Template does not match the case country.');
+                    if(newCase.FS_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSEmTe : et){
+                            if (FSEmTe.Id == newCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Email Template does not match the case country.');
+                            }
+                        }
                     }
                     // check if the FS reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                    if(newCase.FS_Reminder_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSREmTe : et){
+                            if (FSREmTe.Id == newCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                            }
+                        }
                     }
                     // Phase 4
                     // check if the agent already has closed case for the same financial year and if the checkbox has been checked
