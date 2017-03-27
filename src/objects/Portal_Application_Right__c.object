@@ -378,6 +378,7 @@
     </fields>
     <fields>
         <fullName>Last_modified_by_internal_user__c</fullName>
+        <description>This is a helper field used by the Process Builder</description>
         <externalId>false</externalId>
         <formula>NOT(CONTAINS(LastModifiedBy.Profile.Name  , &apos;ISS&apos;) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
