@@ -192,10 +192,13 @@
     <label>EBC Email Exclusion</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Unsubscribe_From__c</columns>
         <columns>Email__c</columns>
         <columns>Type__c</columns>
-        <columns>Source_Campaign__c</columns>
         <columns>Other_Reason__c</columns>
+        <columns>Is_Relation_Created__c</columns>
         <columns>Event_Date__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
