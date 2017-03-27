@@ -1,6 +1,8 @@
 public class AMS_AgencyRelationshipTriggerHandler {
 
     public static boolean AMS_HierarchyProcess = false;
+    public static List<Account> accsToUpdate = new List<Account>();
+
 
     public static void handleAfterInsert(List<AMS_Agencies_relationhip__c> rels) {
 
@@ -205,7 +207,6 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         }
 
-        List<Account> accsToUpdate = new List<Account>();
 
         for (Account acc : accounts.values()) {
             //if (acc.ParentId == null) {
