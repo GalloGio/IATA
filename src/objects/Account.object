@@ -2561,7 +2561,6 @@
                 <fullName>Multicountry</fullName>
                 <default>false</default>
             </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -2646,6 +2645,16 @@
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_IsNewGenAgency__c</fullName>
+        <description>To show information to analyst. To simplify triggers and classes.</description>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  TEXT(Location_Class__c) = &apos;P&apos;</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is New Gen Agency</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
@@ -9614,6 +9623,10 @@ J-Joint Vent</inlineHelpText>
         <label>Location Type</label>
         <picklist>
             <picklistValues>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>AO</fullName>
                 <default>false</default>
             </picklistValues>
@@ -9635,6 +9648,10 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HE</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -24801,11 +24818,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27661,11 +27686,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30255,6 +30288,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -30276,6 +30313,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32864,6 +32905,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -32885,6 +32930,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -39045,6 +39094,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -39066,6 +39119,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43363,11 +43420,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45973,6 +46038,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -45994,6 +46063,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -50160,6 +50233,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -50181,6 +50258,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54413,6 +54494,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -54434,6 +54519,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -56733,6 +56822,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -56754,6 +56847,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58988,6 +59085,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -59009,6 +59110,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61351,11 +61456,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66641,6 +66754,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -66662,6 +66779,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71835,6 +71956,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -71856,6 +71981,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76173,6 +76302,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -76194,6 +76327,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -78328,7 +78465,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )

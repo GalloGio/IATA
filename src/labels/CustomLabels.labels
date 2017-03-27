@@ -143,6 +143,13 @@
         <value>Undo Deactivation of agency in BSPLink</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action14</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action14</shortDescription>
+        <value>New Financial Security</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -548,6 +555,20 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP33</shortDescription>
         <value>Certificate</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP34</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP34</shortDescription>
+        <value>Request financial security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP35</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP35</shortDescription>
+        <value>Confirm financial security  received</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
