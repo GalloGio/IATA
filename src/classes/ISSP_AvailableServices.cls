@@ -24,6 +24,18 @@ public with sharing class ISSP_AvailableServices{
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
 
+    public static User currentPortalUser {
+        get {
+            if(currentPortalUser == null){
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
+                                    contact.account.ANG_IEP_Status__c,ContactId,
+                                    languagelocalekey,ProfileId  
+                                    from User where id =: UserInfo.getUserId()];
+            }
+            return currentPortalUser;
+        } 
+        set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {
@@ -67,6 +79,7 @@ public with sharing class ISSP_AvailableServices{
             initServiceListViewMap();
             String currentUserProfileId = UserInfo.getProfileId();
             List <Profile> profileList = [SELECT Name FROM Profile WHERE Id = :currentUserProfileId];
+
             errorMessage = new list<string>();
             accept = false;
             //if(!Test.isRunningTest())
@@ -79,10 +92,8 @@ public with sharing class ISSP_AvailableServices{
                 else
                     isAdmin = false;
 
-                System.debug('[FM] initialization Userinfo.getUserId() - '+ Userinfo.getUserId());
-
                 if(!Test.isRunningTest()) {
-                    conId = [select Id,ContactId from User where Id =:Userinfo.getUserId()].ContactId;
+                    conId = currentPortalUser.ContactId;
                 }else{
                     conId = [select Id from Contact limit 1].Id;
                 }
@@ -91,14 +102,6 @@ public with sharing class ISSP_AvailableServices{
                 //NOTE - Base any logic on the Portal Admin for now (User Portal Status=Approved Admin) since Authorised Signatories are not yet identified in SFDC
                 //TODO - Remove above note once  Authorised Signatory code implemented
                 System.debug('[FM] initialization conId - '+ conId);
-
-                List<Contact> lcont = [SELECT User_Portal_Status__c,
-                                        Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
-                                        Account.ANG_IEP_Status__c, Account.Top_Parent__r.ANG_IEP_Status__c
-                                        FROM Contact];
-
-                System.debug('[FM] initialization lcont - '+ lcont);
-
 
                 Contact contAcc = [SELECT User_Portal_Status__c,
                                         Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
@@ -293,8 +296,6 @@ public with sharing class ISSP_AvailableServices{
 
 
         public string getServiceStatus(Portal_Applications__c inService){
-            User user = [select Id,languagelocalekey,ContactId,ProfileId from User where Id =:Userinfo.getUserId()];
-            
             List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
                                                                                                     p.Portal_Application__r.Requestable__c,
                                                                                                     p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
@@ -303,7 +304,7 @@ public with sharing class ISSP_AvailableServices{
                                                                                                     p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,
                                                                                                     p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
                                                                                                    From Portal_Application_Right__c p 
-                                                                                                   where p.Contact__c =: user.ContactId and 
+                                                                                                   where p.Contact__c =: currentPortalUser.ContactId and 
                                                                                                          p.Portal_Application__c =: inService.Id and
                                                                                                         (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested' or p.Right__c =: 'Access denied') and
                                                                                                          p.Portal_Application__r.Hide_on_Homepage__c = false ]);   
@@ -408,8 +409,6 @@ public with sharing class ISSP_AvailableServices{
         }
 
         Map<id, Set<String>> isoCountriesMap = ANG_ISSP_PortalServiceHelper.getElegibleCountries(serviceIds);
-
-        User currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
 
         boolean flagAdd;
         boolean flagIsIepPortalService;
