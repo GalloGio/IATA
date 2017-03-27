@@ -888,6 +888,16 @@ Object used to store objectives that can be independent, related to other object
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Decreasing_Target__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Decreasing Target</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <description>Not visible for the end user, but a temp field needed by the Objective naming convention</description>
         <externalId>false</externalId>
@@ -1264,6 +1274,10 @@ Object used to store objectives that can be independent, related to other object
             </picklistValues>
             <picklistValues>
                 <fullName>Closed without intervention</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3054,19 +3068,15 @@ AND(RecordType.DeveloperName == &quot;Account&quot;, Account__c == &quot;&quot;)
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
-                <fullName>Closed without intervention</fullName>
+                <fullName>Closed</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Open</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Out of scope</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resolved</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

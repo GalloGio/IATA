@@ -7089,13 +7089,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fields>Case_Language__c</fields>
         <fields>Case_Queue_ID__c</fields>
         <fields>Case_Type__c</fields>
-        <fields>Classification_SFDC__c</fields>
         <fields>Classification_SIS__c</fields>
         <fields>Classification__c</fields>
         <fields>Comments__c</fields>
         <fields>Complaint_Description__c</fields>
         <fields>Complaint_Reason__c</fields>
-        <fields>Conclusion__c</fields>
         <fields>ContactId</fields>
         <fields>Country__c</fields>
         <fields>CreatedById</fields>
@@ -14924,7 +14922,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>ISIS Multicarta</value>
+            <value>Multicarta</value>
         </criteriaItems>
         <description>Notify HP when a case  (DPC Service Request) is made visible on the portal with DPC System = CASSLink</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
