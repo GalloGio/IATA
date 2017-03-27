@@ -32,7 +32,7 @@
                         bootbox.alert("{!if(communityName=='CNS', $Label.ISSP_AMS_NoC_Message_Accredited_Agent_CNS, $Label.ISSP_AMS_NoC_Message_Accredited_Agent)}");
                     }
                     else
-                        navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange+'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                        navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' +'&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
             
                 function proceedToVMFR() {
@@ -110,7 +110,7 @@
                     <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Request_Voluntary_Reliquishment}" id="VRCommandLink" rendered="{!isUserAccAccredited}">
                         <apex:param assignTo="{!agentCaseType}" value="VR" />
                     </apex:commandLink>
-                    <apex:outputText escape="false" rendered="{!isUserAccAccredited}"><br/>
+                    <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
                     	<a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
                     </apex:outputText>
                 </td>
