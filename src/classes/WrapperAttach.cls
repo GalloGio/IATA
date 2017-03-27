@@ -54,7 +54,7 @@ global class WrapperAttach implements Comparable {
         this.contentType = file.contentType;
         this.size = file.BodyLength * 0.000001;
         this.lastModified = file.LastModifiedDate;
-        this.createdDate = file.createdDate;
+        this.createdDate = Datetime.parse(file.createdDate.format());
         this.createdBy = file.createdById;
         this.fileIdentifier = '';
         this.createdByName = file.createdBy.Name;
