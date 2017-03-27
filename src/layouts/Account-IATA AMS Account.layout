@@ -129,6 +129,10 @@
                 <behavior>Readonly</behavior>
                 <field>Has_a_Financial_Assessment_Contact_Formu__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Accreditation_Model__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -170,6 +174,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_IsNewGenAgency__c</field>
+			</layoutItems>
+			<layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IEP_Account_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_IEP_Status_FF__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
