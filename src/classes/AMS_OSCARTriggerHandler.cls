@@ -889,11 +889,11 @@ public class AMS_OSCARTriggerHandler {
 
 				for(Account acc : accsToUpdateFromCC)
 				{
-					if(! new Set <Account> (AMS_AgencyRelationshipTriggerHandler.accsToUpdate).contains(acc))
-						AMS_AgencyRelationshipTriggerHandler.accsToUpdate.add(acc);						
+					if(! AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet.contains(acc))
+						AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet.add(acc);						
 				}
 
-				for(Account acc : AMS_AgencyRelationshipTriggerHandler.accsToUpdate)
+				for(Account acc : AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet)
 				{
 					system.debug('DDD11 acc.Id: ' + acc.Id);
 
