@@ -1,7 +1,7 @@
 public class AMS_AgencyRelationshipTriggerHandler {
 
     public static boolean AMS_HierarchyProcess = false;
-    public static List<Account> accsToUpdate = new List<Account>();
+    public static Set<Account> accsToUpdateSet = new Set<Account>();
 
 
     public static void handleAfterInsert(List<AMS_Agencies_relationhip__c> rels) {
@@ -207,6 +207,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
         }
 
+        List<Account> accsToUpdate = new List<Account>();
 
         for (Account acc : accounts.values()) {
             //if (acc.ParentId == null) {
@@ -216,6 +217,9 @@ public class AMS_AgencyRelationshipTriggerHandler {
                 system.debug(LoggingLevel.ERROR, 'CHECK setStandardHierarchyRelationship() --> account ' + acc.Name + ' with id ' + acc.id + ', parent id = ' + acc.ParentId + ' and Top parent = ' + acc.Top_Parent__c);
             }
         }
+        
+        accsToUpdateSet.addAll(accsToUpdate);
+
         system.debug(LoggingLevel.ERROR, 'setStandardHierarchyRelationship() --> FIRST UPDATE');
         update accsToUpdate;
         /*accsToUpdate = new List<Account>();
