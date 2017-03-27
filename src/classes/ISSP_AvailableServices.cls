@@ -19,6 +19,18 @@ public with sharing class ISSP_AvailableServices{
     public String TOCdocumentId {get; set;}
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
+
+     public static User currentPortalUser {
+        get {
+            if(currentPortalUser == null){
+                currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
+                                    contact.account.ANG_IEP_Status__c,ContactId,
+                                    languagelocalekey,ProfileId  
+                                    from User where id =: UserInfo.getUserId()];
+            }
+            return currentPortalUser;
+        } 
+        set;}
     
     public String defaultPortalUserRole {get; set;}    
 
@@ -61,7 +73,7 @@ public with sharing class ISSP_AvailableServices{
     
     public ISSP_AvailableServices(){
 
-        User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
+        //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
 
         IepStatus = currentPortalUser.contact.account.ANG_IEP_Status__c;        
 
@@ -73,8 +85,6 @@ public with sharing class ISSP_AvailableServices{
         
         for (Connected_App_Roles__c role : roles) {
             availablePortalServiceRoles.add(new SelectOption(role.Role__c, role.Role__c));
-
-            System.debug(LoggingLevel.ERROR, 'FODA-SE->' + role.Default_User_Role__c + ' --->' + role.Role__c);
 
             if (role.Default_User_Role__c) {
                 this.defaultPortalUserRole = role.Role__c;
@@ -288,8 +298,6 @@ public with sharing class ISSP_AvailableServices{
 
 
         public string getServiceStatus(Portal_Applications__c inService){
-            User user = [select Id,languagelocalekey,ContactId,ProfileId from User where Id =:Userinfo.getUserId()];
-            
             List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
                                                                                                     p.Portal_Application__r.Requestable__c,
                                                                                                     p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
@@ -298,7 +306,7 @@ public with sharing class ISSP_AvailableServices{
                                                                                                     p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,
                                                                                                     p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
                                                                                                    From Portal_Application_Right__c p 
-                                                                                                   where p.Contact__c =: user.ContactId and 
+                                                                                                   where p.Contact__c =: currentPortalUser.ContactId and 
                                                                                                          p.Portal_Application__c =: inService.Id and
                                                                                                         (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested' or p.Right__c =: 'Access denied') and
                                                                                                          p.Portal_Application__r.Hide_on_Homepage__c = false ]);   
