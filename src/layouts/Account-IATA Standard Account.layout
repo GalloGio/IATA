@@ -508,16 +508,6 @@
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>CASES.CASE_NUMBER</fields>
-        <fields>Status_SIDRA__c</fields>
-        <fields>Remittance_Period__c</fields>
-        <fields>Short_Payment_Date__c</fields>
-        <fields>Outstanding_Amount__c</fields>
-        <fields>CASES.STATUS</fields>
-        <fields>OWNER_NAME</fields>
-        <relatedList>Case.HO_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
