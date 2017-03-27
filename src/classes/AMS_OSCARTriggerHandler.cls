@@ -1789,6 +1789,66 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
+
+	public static void sendEmailAlert(Id oscarId, String oscarCommCaseId, boolean wasApproved) {
+
+		if(oscarCommCaseId != null){
+
+	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
+			AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchContactInfoFromCase(oscarCommCaseId), oscarId, ANGemailTemplates(wasApproved), oscarCommCaseId, owea[0], false);
+
+		}else{
+
+			System.debug('Could not find the case Id to send the email.');
+		
+		}
+
+	}
+
+
+	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+	
+	private static Map<String, Id> ANGemailTemplates(boolean wasApproved){
+
+        Map<String, Id> multilangTemplates = new Map<String, Id>();
+
+        String templateId = 'ANG_New_HE_Accreditation_Decision';
+
+        String auxStrDecision = wasApproved ? templateId+'_APP' : templateId+'_DIS';
+
+        //Get the templates for NG accreditation outcoume
+        List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + auxStrDecision + '%\'' );
+
+        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+        for(EmailTemplate et: etNG){
+            if(!countryTemplates.containsKey(et.DeveloperName))
+                countryTemplates.put(et.DeveloperName, et);
+        }
+
+        //map template Ids with their respective language
+        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+        
+        for(Schema.Picklistentry pe: prefLanguages){
+            EmailTemplate langTemplate = countryTemplates.get(auxStrDecision+ '_' + pe.getValue());
+            if(langTemplate == null) //English is default and must exist in the system
+                countryTemplates.get(auxStrDecision+'_English');
+                if(langTemplate != null)
+		            multilangTemplates.put(pe.getValue(), langTemplate.Id);
+        }
+
+        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+        if(multilangTemplates.isEmpty())
+            multilangTemplates.put('English', countryTemplates.get(auxStrDecision + '_English').Id);
+
+        return multilangTemplates;
+
+    }
+ 
 	public static Map<Id,AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
 
