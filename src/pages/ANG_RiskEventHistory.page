@@ -1,11 +1,6 @@
 <apex:page showHeader="false" sidebar="false" standardController="Account">
 		
 		<apex:includeScript value="/support/console/30.0/integration.js"/>
-
-		<head>
-			<!-- workaround so link open in a new page -->
-			<base target="_blank"/>
-		</head>
 		
 		<apex:form>
 			<c:relatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" hideButtons="true" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
@@ -18,11 +13,11 @@
 	    	//workaround to hide the new button
 	    	for (let el of document.querySelectorAll('.btn')) el.style.visibility = 'hidden';
 
-	    	//delete links can be opened in the same page
-	    	var links = [].slice.call(document.querySelectorAll("a"));
+	    	//Record links on the table should open on a new page/tab (except for deleted ones)
+	    	var links = [].slice.call(document.querySelectorAll(".targetTable a"));
 	    	links.forEach(function(el){
 	    		if(el.innerHTML == 'Del') el.target = "_self";
-	    		/*else if (sforce.console.isInConsole()){
+	    		else if (sforce.console.isInConsole()){
 	    			var linkURL = el.getAttribute("href");
 	    			el.href = '';
 	    			console.warn(linkURL);
@@ -34,7 +29,9 @@
 	    				});
 	    				return false;
 	    			}, false);
-	    		}*/
+	    		}else{
+	    			el.target = "_blank";
+	    		}
 	    	});
 	    </script>
 </apex:page>
