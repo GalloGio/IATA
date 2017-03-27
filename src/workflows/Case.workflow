@@ -6377,15 +6377,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_TER_MANUAL_ENTRY_TOTAL_OUTS_AMO</fullName>
-        <description>Total outs. amount field is cleared once the TER manual entry is filled</description>
-        <field>Total_Outstanding_Amounts_Default__c</field>
-        <name>SIDRA TER MANUAL ENTRY - TOTAL OUTS. AMO</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_TER_MANUAL_ENTRY_calc_all_outs</fullName>
         <description>When the TER manual entry date is updated, the field Calc ALL Outstanding amount (ter. date) field is cleared</description>
         <field>Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -7037,16 +7028,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>Update Previous Case Owner</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_to_IDFS_Confidential_Record_Type</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IDFS_Confidential</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Update to IDFS Confidential Record Type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -17761,20 +17742,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Partner</value>
         </criteriaItems>
         <description>Send email notification on all Cases when is added a new comment by a portal user</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Set a case to Confidential mode</fullName>
-        <actions>
-            <name>Update_to_IDFS_Confidential_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.Set_CONFIDENTIAL__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
