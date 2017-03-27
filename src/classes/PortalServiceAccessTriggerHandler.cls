@@ -55,7 +55,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 if(null == portalAdminUserIDs) continue;
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
-                    if(par.Conctact_is_CNS__c){
+                    if(par.Conctact_is_CNS__c!=null && par.Conctact_is_CNS__c){
                         emailMsg.setTemplateId(templateId_CNS);
                     }else{
                     emailMsg.setTemplateId(templateId);
@@ -63,7 +63,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
                     emailMsg.setTargetObjectId(userId);
                     emailMsg.saveAsActivity = false;
                     
-                    if(!par.Conctact_is_CNS__c){
+                    if(!par.Conctact_is_CNS__c && par.Conctact_is_CNS__c!=null){
                         if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
                     else {
                         emailMsg.setReplyTo(ENV.Reply_Email);
