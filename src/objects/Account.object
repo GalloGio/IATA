@@ -2333,6 +2333,11 @@
         </displayedFields>
         <label>ISSP Notification Trigger Field Set</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>TrackingHistory</fullName>
+        <description>The fields in this list will be tracked on the Account Tracking History object</description>
+        <label>TrackingHistory</label>
+    </fieldSets>
     <fields>
         <fullName>ACH_Member__c</fullName>
         <defaultValue>false</defaultValue>
