@@ -1713,7 +1713,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 system.debug(LoggingLevel.Error,'============== UPDATE analyze '+aCase.Subject+' which has IRR_Withdrawal_Reason__c = '+aCase.IRR_Withdrawal_Reason__c+'================');
                 if (aCase.RecordTypeId == caseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null){
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
-                    system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee');
                     accountIds.add(aCase.AccountId);
                 }     
             }
@@ -1742,7 +1741,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                               AND AccountId IN: accountIds 
                               GROUP BY AccountId ];
             		if (!REIDates.isEmpty()) {
-            			system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee REIDates '+REIDates);
             			for (AggregateResult ar : REIDates) {
                 			mapReiDatesPerAccountiId.put((Id)ar.get('AccountId'), (Datetime)ar.get('reinstatement_date'));
               			}
@@ -1751,17 +1749,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				for (Case mCase : Trigger.new){
                   // only act on cases that were created within the last 24 hours
                   if (mCase.CreatedDate >= Last24Hours) {
-                  	  system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee '+mCase.casenumber);
                       integer nbCasesSA = 0;
                       for (Case testCase : casesUpd ){
                           if (testCase.AccountId == mCase.AccountId && testCase.Id != mCase.Id && 
                             	(mapReiDatesPerAccountiId.get(testCase.AccountId) == null || testCase.CreatedDate > mapReiDatesPerAccountiId.get(testCase.AccountId)) ){ 
                             nbCasesSA ++; 
-                            system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee nbCasesSA '+nbCasesSA);
                      	}
                       }
                       if (nbCasesSA >=3){ 
-                      	system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee');
                           mCase.Action_needed_Small_Amount__c = true; 
                           mCase.IRR_Withdrawal_Reason__c = null;
                           mCase.Propose_Irregularity__c = Datetime.now();
