@@ -11,6 +11,10 @@ public with sharing class ISSP_AvailableServices{
     public Boolean isAdmin {get;set;} 
      
     public String conId {get; set;}
+    public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
+    public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    
     public ServiceWrapper Serv {get; set;}
     public String ServId {get; set;}
     
@@ -110,7 +114,40 @@ public with sharing class ISSP_AvailableServices{
                 else
                     isAdmin = false;
 
-                conId = [select Id,ContactId from User where Id =:Userinfo.getUserId()].ContactId;
+                if(!Test.isRunningTest()) {
+                    conId = currentPortalUser.ContactId;
+                }else{
+                    conId = [select Id from Contact limit 1].Id;
+                }
+
+                //FM 17-03-2017 - Logic for Authorised Signatory 
+                //NOTE - Base any logic on the Portal Admin for now (User Portal Status=Approved Admin) since Authorised Signatories are not yet identified in SFDC
+                //TODO - Remove above note once  Authorised Signatory code implemented
+                System.debug('[FM] initialization conId - '+ conId);
+
+                Contact contAcc = [SELECT User_Portal_Status__c,
+                                        Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
+                                        Account.ANG_IEP_Status__c, Account.Top_Parent__r.ANG_IEP_Status__c
+                                        FROM Contact WHERE Id = :conId limit 1];
+                
+                System.debug('[FM] initialization contAcc - '+ contAcc);
+
+                conHOAccountLocType = '';
+                isIEPAccountEnable = false;
+
+                //Validates if user have access to request IEP account
+                if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE') ){
+                    isIEPAccountEnable = true;
+                }else if(isAdmin && contAcc.Account.Top_Parent__r.ANG_IEP_Status__c == 'Open'
+                    && (contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE') ){
+                    isIEPAccountEnable = true;
+                }
+
+                if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
+                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
+                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                }
             }
             else
                 isAdmin = false;
