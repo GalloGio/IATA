@@ -339,7 +339,7 @@
             
               <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" rerender="display_messages"/>
 
-              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))} id="serviceSubmitButton"> 
+              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}" id="serviceSubmitButton"> 
                 <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"    class="btn_iata_success btn-block btn">
                    {!$Label.ISSP_Confirm}
                 </a>
