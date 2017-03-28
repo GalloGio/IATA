@@ -8,7 +8,7 @@ public class clsCaseCommentManager {
             
             caseCommentIds.add(caseComment.Id);
         }
-        Map<Id, CaseComment> caseCommentsMap = new Map<Id, CaseComment>([Select Id, parentId, Parent.Subject, Parent.CaseNumber, Parent.Product_Manager__c, 
+        Map<Id, CaseComment> caseCommentsMap = new Map<Id, CaseComment>([Select Id, parentId, Parent.Subject, Parent.CaseNumber, /*Parent.Product_Manager__c,*/
                 Parent.RecordType.Name, Parent.Product_Manager_ACR__r.Email, CreatedBy.Profile.Name, IsPublished, Parent.ACCA_Owner__r.Email,
                 parent.ContactId, parent.Contact.Email, parent.Owner.email, parent.owner.Name, CommentBody from CaseComment where Id IN :caseCommentIds AND parentId != null]);
         
@@ -17,13 +17,14 @@ public class clsCaseCommentManager {
         List<EmailTemplate> ets = [Select Name, Id From EmailTemplate where Name = :emailTemplateName]; 
         
         //Code added on 10-Nov-2011 by Jonas Biebuyck
-        List<String> ProductManagers=new List<String>();
+        //[CASE CLEANUP 2017]
+        /*List<String> ProductManagers=new List<String>();
         Schema.DescribeFieldResult fieldResult=Case.Product_Manager__c.getDescribe();
         List<Schema.PicklistEntry> ple=fieldResult.getPicklistValues();
         for( Schema.PicklistEntry f : ple){
             ProductManagers.add(f.getValue());
         }       
-        List<User> pmUsers=[Select Id, Name, Email From User Where Name IN:ProductManagers];
+        List<User> pmUsers=[Select Id, Name, Email From User Where Name IN:ProductManagers];*/
         //End Code added on 10-Nov-2011 by Jonas Biebuyck
         
         if(ets.size() > 0){
@@ -52,13 +53,14 @@ public class clsCaseCommentManager {
                     mail.setTargetObjectId(cm.parent.contactId);
                     //Code added on 10-Nov-2011 by Jonas Biebuyck
                     String[] ccaddress = new List<String>();
-                    if(cm.parent.Product_Manager__c != null && cm.parent.Product_Manager__c != 'Ron Cole'){
+                    //[CASE CLEANUP 2017]
+                    /*if(cm.parent.Product_Manager__c != null && cm.parent.Product_Manager__c != 'Ron Cole'){
                         for(User pmUser:pmUsers){
                             if(pmUser.Name==cm.parent.Product_Manager__c && pmUser.Email!=Null){
                                 ccaddress.add(pmUser.Email);
                             }
                         }
-                    }
+                    }*/
                     
                     // ********* ACR &  DPC SR cases Notifications **************
                     // Added by shai Fisher in 31/07/14

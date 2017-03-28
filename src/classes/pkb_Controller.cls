@@ -427,7 +427,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildOrQuery  \n=========\n'+keywords);
         //if we are here means l parameter was not found on controller constructor
        String aux_lang = ApexPages.currentPage().getParameters().get('lang');
 
-    system.debug('\n\n[resolveSelectedLanguage] selectedLanguage :'+selectedLanguage+
+ 		system.debug('\n\n[resolveSelectedLanguage] selectedLanguage :'+selectedLanguage+
               '\n l :'+ApexPages.currentPage().getParameters().get('l')+
               '\n aux_lang :'+aux_lang);
 
@@ -651,7 +651,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildFeaturedKads \n===='+anums+'=====\
     if (caseOrigins.containsKey('Web')) theCase.Origin = 'Web';
     theCase.Description = d;
     /** fields for the mobile app **/
-    theCase.Customer_emoticon_value__c = theCud.User_Experience;
+    //theCase.Customer_emoticon_value__c = theCud.User_Experience;
     theCase.pkbgeolocalization__Latitude__s = theCud.location_Latitude;
     theCase.pkbgeolocalization__Longitude__s = theCud.location_Longitude;
 
@@ -1041,8 +1041,8 @@ system.debug('\n\n===== sessionId :'+sessionId+'  contactId :'+contactId);
 
     // ctore that takes the ID of a KnowledgeArticle record and queries the KAV record from it
     public KnowledgeArticleData(Id i, String lang) {
-      system.debug('article id: ' + i);
-      
+   	  system.debug('article id: ' + i);
+   	  
       String q = '';
       String pub = pkb_Controller.DEFAULT_PUBLISH_STATUS;
       q += 'select ' +join(kavFields, ',')+ ' from KnowledgeArticleVersion';
