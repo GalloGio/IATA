@@ -21,10 +21,12 @@ private  class ISSP_UtilitiesTest {
 
 	static testMethod void ISSP_UtilitiesTest2() {
 		Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+		Id standardRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='Standard_Account'].Id;
 		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC' LIMIT 1].Id;
 		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.Name = 'test Account';
 		acc.CNS_Account__c = true;
-		acc.RecordTypeId = agencyRecordTypeId;
+		acc.RecordTypeId = standardRecordTypeId;
 		insert acc;
 		//Contact con = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -53,6 +55,29 @@ private  class ISSP_UtilitiesTest {
 	    	ISSP_Utilities.sendEmailToAdmins(Con.Id);
 	    	ISSP_Utilities.DMLOpt(new set<string>{testCase.Id});
 			ISSP_Utilities.isCNS();
+
+
 		}
+		}
+
+	static testMethod void ISSP_UtilitiesTest3() {
+
+		try {
+			List<Account> a = new List<Account>();
+			a.add(new Account());
+			Boolean b = ISSP_Utilities.isEmpty(a);
+			Boolean b2 = ISSP_Utilities.isNotEmpty(a);
+			Boolean b3 = ISSP_Utilities.isNumeric('1');
+			Contact c = new Contact();
+			ISSP_Utilities.log(c);
+			update a;
+		} catch (Exception e) {
+
+			ISSP_Utilities.exceptionTrace(e);
+			ISSP_Utilities.exceptionDump(e);
+			ISSP_Utilities.addErrorMessage(e);
+		}
+
+
 	    }
 }
