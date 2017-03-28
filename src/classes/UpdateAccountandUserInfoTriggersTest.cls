@@ -51,11 +51,11 @@ public class UpdateAccountandUserInfoTriggersTest {
      //add some values
 
    obCase.CS_Contact_Result__c = 'Agent closed';
-   obCase.Update_AIMS_IRR__c = date.today()+1;
-   obCase.Update_AIMS_DEF__c = date.today()+1;
-   obCase.Update_AIMS_IRRWITH__c = date.today()+1;
-   obCase.Update_AIMS_REI_DEFWITH__c =date.today()+1;
-   obCase.Update_AIMS_TER__c = date.today()+1;
+   obCase.Update_AIMS_IRR__c = date.today();
+   obCase.Update_AIMS_DEF__c = date.today();
+   obCase.Update_AIMS_IRRWITH__c = date.today();
+   obCase.Update_AIMS_REI_DEFWITH__c =date.today();
+   obCase.Update_AIMS_TER__c = date.today();
    obCase.DEF_Approval_Rejection__c = 'Approved';
    obCase.IRR_Approval_Rejection__c = 'Approved';
    obCase.TER_Approval_Rejection__c = 'Approved';
