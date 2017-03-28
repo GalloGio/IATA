@@ -635,6 +635,41 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IATA_EasyPay</shortDescription>
+        <value>IATA EasyPay</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Entity&apos;s Portal Administrator in order to request them to open the IATA EasyPay for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator in order to request them to open the IATA EasyPay for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Open_IATA_EasyPay_Account</shortDescription>
+        <value>Open IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Request_Access_IATA_EasyPay</shortDescription>
+        <value>Request access to IATA EasyPay</value>
+    </labels>
+    <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13422,7 +13457,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP EBulletin Description</shortDescription>
-        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.&lt;br/&gt;&lt;b&gt;The service is under a Pilot Phase:&lt;/b&gt; please note that Agency Information is not currently available worldwide.</value>
+        <value>Allows the generation of DAILY &amp; WEEKLy Reports for Agency related changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_EMADOMVAL_AddBtn</fullName>
