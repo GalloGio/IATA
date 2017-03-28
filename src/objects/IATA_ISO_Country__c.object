@@ -173,7 +173,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <description>To enable the agency’s country to use the new accreditations model used in NewGen and Risk Event</description>
         <externalId>false</externalId>
-        <label>Enable New Gen</label>
+        <label>New Accr. Model &amp; Risk Events enabled</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
