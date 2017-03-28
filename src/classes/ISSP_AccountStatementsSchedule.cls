@@ -34,6 +34,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         // date to filter the remmitance date
         // by default is today + 1 day (so TOMORROW) but it can be changed
         DateTime remittanceDate = Date.today().addDays(this.daysToRemittance);
+        String remittanceDateStr = remittanceDate.formatGMT('yyyy-MM-dd');
 
         /**
             Find all contacts related to accounts
@@ -47,7 +48,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         + ' AND AccountId in ('
         + '   Select Account__c'
         + '   From Account_Statement__c'
-        + '   where Remittance_Date__c = ' + remittanceDate.format('yyyy-MM-dd')  + ')'
+        + '   where Remittance_Date__c = ' + remittanceDateStr + ')'
         + ' And id in ('
         + '   Select contact__c'
         + '   From Portal_Application_Right__c'
