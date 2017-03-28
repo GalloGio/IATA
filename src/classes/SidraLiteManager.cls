@@ -530,9 +530,16 @@ public with sharing class SidraLiteManager {
         }
         // ACTIONS for FA
         else {
-            if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
-                cse.SIDRA_Lite_Reason__c.addError('Set right value here');
-                throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
+            if (parentCase.Status == 'Sanity Check Failure') {
+                if ( cse.SIDRA_Lite_Reason__c != 'Sanity Check failure of financial statement' ) {
+                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
+                    throw new SidraLiteException('The SIDRA lite reason must be "Sanity Check failure of financial statement" for this scenario');
+                }
+            } else {
+                if ( cse.SIDRA_Lite_Reason__c != 'Financial Review Non-compliance' ) {
+                    cse.SIDRA_Lite_Reason__c.addError('Set right value here');
+                    throw new SidraLiteException('The SIDRA lite reason must be "Financial Review Non-compliance" for this scenario');
+                }
             }
             // finally update SIDRA lite case
             parentCase.FirstFAnonComplianceDate__c = Date.today();
@@ -570,9 +577,15 @@ public with sharing class SidraLiteManager {
         and return a sidra lite case with same type: FS or FA, if it exists
     **/
     public static Case getRelatedCaseForIFAP(Case parentCase) {
-        String validReason = SidraLiteHelperForIFAP.isFS(parentCase)? 'Financial Security Non-compliance': 'Financial Review Non-compliance';
+        set<String> validReason = new set<String>();
+        if (SidraLiteHelperForIFAP.isFS(parentCase)) {
+            validReason.add('Financial Security Non-compliance');
+        } else {
+            validReason.add('Financial Review Non-compliance');
+            validReason.add('Sanity Check failure of financial statement');
+        }
         for (Case relatedCase: parentCase.Cases) {
-            if (relatedCase.SIDRA_lite_Reason__c == validReason) {
+            if (validReason.contains(relatedCase.SIDRA_lite_Reason__c)) {
                 // case found
                 return relatedCase;
             }
