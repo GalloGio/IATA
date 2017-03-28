@@ -12600,6 +12600,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>ISSP_Case_Status_Resolved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Status Resolved</shortDescription>
+        <value>Resolved</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Cases</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
