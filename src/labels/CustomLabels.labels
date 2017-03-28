@@ -1647,6 +1647,13 @@ Case description: {!Case.Description}
         <value>Direct Sales</value>
     </labels>
     <labels>
+        <fullName>Discounted_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Discounted Amount</shortDescription>
+        <value>Discounted Amount</value>
+    </labels>
+    <labels>
         <fullName>Download_Invoice</fullName>
         <language>en_US</language>
         <protected>false</protected>
