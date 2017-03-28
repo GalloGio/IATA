@@ -13,7 +13,7 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
-            </layoutItems>
+            </layoutItems>            
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
