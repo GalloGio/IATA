@@ -704,14 +704,6 @@ private class Faq2CaseTest {
 		Test.stopTest();
     }
 
-
-
-
-
-
-
-
-
     private static Integer getIndex(clsDataCategoryContainer cont) {
     	//controller.DataCategoryContainer.lst_DataCategories[index]
     	return 0;
