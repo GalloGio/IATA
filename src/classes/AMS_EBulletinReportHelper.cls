@@ -696,7 +696,7 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + AMS_Utils.overrideEBulletinStatusDescr(strVal);
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
 

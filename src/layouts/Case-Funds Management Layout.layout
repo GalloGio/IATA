@@ -123,10 +123,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Thread_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Case_Thread_ID__c</field>
             </layoutItems>
             <layoutItems>
