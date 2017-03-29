@@ -39,6 +39,7 @@ public class AMS_OSCARTriggerHandler {
         copyDataFromTargetAgency();
 		updateOSCARAppointments();
 		handleVRProcess();
+		checkOwnershipOnProcess(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 	}
 
 	public static void handleBeforeInsert() {
@@ -1835,40 +1836,8 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
-	public static Map<Id,AMS_HierarchyHelper.AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
-
-		Map<Id,AMS_HierarchyHelper.AccountStruct> locationTypeAccountID = new Map<Id,AMS_HierarchyHelper.AccountStruct> ();
-
-		for(Id accId : accountsMap.keySet())
-		{
-			locationTypeAccountID.put(accId,new AMS_HierarchyHelper.AccountStruct(accountsMap.get(accId).Parent.IATACode__c,accountsMap.get(accId).Location_Type__c));
-
-			system.debug('DDD1 Acct ID: ' + accId);
-
-			system.debug('DDD1 Acct Old Location Type: ' + accountsMap.get(accId).Location_Type__c );
-
-			system.debug('DDD1 Acct Old Parent IATA Code: ' + accountsMap.get(accId).Parent.IATACode__c );
-
-
-		}
-
-		return locationTypeAccountID;
-	}
-
-
-	private Class AccountStruct{
-		
-	    private String parentIATACode;
-	    private String locationType;
-
-	    private AccountStruct(String parentIATACode, String locationType) {
-	        this.parentIATACode = parentIATACode;
-	        this.locationType = locationType;
-	    }
-	}
-	
-		public static void sendEmailAlert(Id oscarId, String oscarCommCaseId, boolean wasApproved) {
+	public static void sendEmailAlert(Id oscarId, String oscarCommCaseId, boolean wasApproved) {
 
 		if(oscarCommCaseId != null){
 
@@ -1926,5 +1895,94 @@ public class AMS_OSCARTriggerHandler {
         return multilangTemplates;
 
     }
-	
+ 
+	public static Map<Id,AMS_HierarchyHelper.AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
+
+
+		Map<Id,AMS_HierarchyHelper.AccountStruct> locationTypeAccountID = new Map<Id,AMS_HierarchyHelper.AccountStruct> ();
+
+		for(Id accId : accountsMap.keySet())
+		{
+			locationTypeAccountID.put(accId,new AMS_HierarchyHelper.AccountStruct(accountsMap.get(accId).Parent.IATACode__c,accountsMap.get(accId).Location_Type__c));
+
+			system.debug('DDD1 Acct ID: ' + accId);
+
+			system.debug('DDD1 Acct Old Location Type: ' + accountsMap.get(accId).Location_Type__c );
+
+			system.debug('DDD1 Acct Old Parent IATA Code: ' + accountsMap.get(accId).Parent.IATACode__c );
+
+
+		}
+
+		return locationTypeAccountID;
+	}
+
+
+	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+
+		Map<Id, Integer> contacts = getAccreditationContacts(oscars);
+
+		ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		
+		Map<Id, Integer> allPercentages = getAllOWnersPercentage(oscars);
+
+		For(AMS_OSCAR__c oscar: oscars){
+
+			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && oscar.RecordTypeId == newNGRT){
+
+				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
+					continue;
+				else	
+					if(!validate100Ownership(oscar,allPercentages))
+						oscar.addError('Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.');
+
+			}
+		}
+
+	}
+
+	public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
+
+		Set<Id> onlineForms = new Set<Id>();
+
+		For(AMS_OSCAR__c oscar : oscars)
+			onlineForms.add(oscar.AMS_Online_Accreditation__c);
+
+		List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+
+		Set<Id> accounts = new Set<Id>();
+
+		For(AMS_OSCAR__c oscar : oscars)
+			accounts.add(oscar.Account__c);
+
+		List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
+
+		return percentages.get(oscar.Account__c) == 100;
+
+	}
+
 }

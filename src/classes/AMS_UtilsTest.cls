@@ -417,7 +417,7 @@ private class AMS_UtilsTest {
         
         createCaseAndOSCAR(A1,C1);
 
-        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c,AMS_Online_Accreditation__c from AMS_OSCAR__c];
+        List<AMS_OSCAR__c> oscarLst = [SELECT ID, Account__c,AMS_Online_Accreditation__c, Process__c from AMS_OSCAR__c];
 
         Test.startTest();
         
