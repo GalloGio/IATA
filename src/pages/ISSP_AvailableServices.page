@@ -269,7 +269,7 @@
                   </span-->
 
                   <apex:outputPanel>
-                      <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
+                      <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                   </apex:outputPanel>
                 
