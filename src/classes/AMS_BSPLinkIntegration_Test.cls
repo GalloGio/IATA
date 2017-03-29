@@ -165,7 +165,7 @@ private class AMS_BSPLinkIntegration_Test {
     	AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-1);
+		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
 				
 		test.startTest();
@@ -183,35 +183,11 @@ private class AMS_BSPLinkIntegration_Test {
 		test.StopTest();
     }
     
-    static testMethod void DeactivationUndoSingleAgencyErrormore10Days() {
-    	
-    	AMS_BSPLinkIntegration_Test.CreateConfiguration();
-		
-		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-15);
-		update cases;
-				
-		test.startTest();
-		
-		Test.setMock(HttpCalloutMock.class, new AMS_BSPLinkIntegration_Test.AMS_BSPLinkIntegration_Test_MockWS('ErrorDeactivationUndo'));
-		
-		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();
-		list<id> lsId = new list<id>();
-		lsId.add([select Id from account where Name='Accnt1'].get(0).Id);
-		lsResp = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('DeactivationUndo', lsId, 'Hierarchy', cases.get(0).Id);
-		
-		system.assertEquals('Error', lsResp.get(0).result);
-		system.assertEquals('Cannot undo deactivation if more than 10 days passed since deactivation', lsResp.get(0).description);
-		
-		test.StopTest();
-    } 
-    
-    
     static testMethod void DeactivationUndoSingleAgencySuccess() {
     	AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-1);
+		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
 		
 		test.startTest();

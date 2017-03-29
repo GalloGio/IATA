@@ -83,9 +83,13 @@ public with sharing class SidraLiteHelperForIFAP {
         }
 
         // for FA
-        if ( !isFS(parentCase) ) {
-            returnCase.Subject = 'SIDRA Lite - Financial Review Non-compliance';
-            returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
+        if ( !isFS(parentCase) || parentCase.Status == 'Sanity Check Failure') {
+            if (parentCase.Status == 'Sanity Check Failure') {
+                returnCase.SIDRA_Lite_Reason__c = 'Sanity Check failure of financial statement';
+            } else {
+                returnCase.SIDRA_Lite_Reason__c = 'Financial Review Non-compliance';
+            }
+            returnCase.Subject = 'SIDRA Lite - ' + returnCase.SIDRA_Lite_Reason__c;
             if ( SidraLiteUtil.isPassenger(parentCase.account) ) {
                 if (SidraLiteUtil.isAccountActive(parentCase.account)) {
                     returnCase.IRR_Approval_Rejection__c = 'Approved';
