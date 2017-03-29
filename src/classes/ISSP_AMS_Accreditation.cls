@@ -1020,11 +1020,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     options.add(new SelectOption('New BR Abroad - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD));
             } else { //Not an Accredited PAX Agent, or any type of Cargo Agent                
                     if(isocountry.New_Accreditation_Models_enabled__c == true){
-                        options.add(new SelectOption('New HE standard - Standard Accreditation with Cash', Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
-                        options.add(new SelectOption('New HE lite - Standard Accreditation with no Cash', Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
+                        options.add(new SelectOption('New HE standard - Standard with Cash', Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
+                        options.add(new SelectOption('New HE lite - Standard no Cash', Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
                     }else{            
                         
-                        options.add(new SelectOption('New HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
+                        options.add(new SelectOption('New HO - Legacy Accreditation', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
                         }
             }
         }        
@@ -1086,15 +1086,15 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = 'New HO - IATA Cargo Agent';
             else if (con.Account.Category__c == 'IATA Passenger Sales Agent')
                 amsLocationType = 'New HO - IATA Passenger Sales Agent';                
-            else if (con.Account.Category__c == 'Non-IATA Travel Agent')
-                amsLocationType = 'New HE - Non IATA Travel Agent';
+            //else if (con.Account.Category__c == 'Non-IATA Travel Agent')
+            //amsLocationType = 'New HE - Non IATA Travel Agent';
             }
             
-            agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
-
+            agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();            
             newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
             system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
             system.debug('agentType ' + agentType);
+
 
             if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith('Travel_Agent')) {
                 if (newCase.Reason1__c == 'New HO') {
@@ -1143,6 +1143,7 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Type_of_customer__c = con.Account.Category__c;
             
             if(amsLocationType.contains('Standard Accreditation')){
+            if(amsLocationType.contains('Standard')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
             }
             else{
@@ -3074,7 +3075,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_OPTION_COURIER_HO;
         } else if (amsLocationType == 'New BR / IP - Courier') {
             return Label.ISSP_AMS_OPTION_COURIER_BRANCH;
-        } else if (amsLocationType == 'New HO - IATA Passenger Sales Agent') {
+        } else if (amsLocationType == 'New HO - Legacy Accreditation') {
             return Label.ISSP_AMS_OPTION_PAX_HO;
         } else if (amsLocationType == 'New BR Abroad - IATA Passenger Sales Agent') {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD;
@@ -3117,9 +3118,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             } else {
                 selectedLang = 'English';
             }
-            System.debug('SFSF newCase.IFAP_Country_ISO__c' + newCase.IFAP_Country_ISO__c);
-            System.debug('SFSF sector' + sector);
-            System.debug('SFSF amsOfficeType' + amsOfficeType);
+            System.debug('SFSF newCase.IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
+            System.debug('SFSF sector ' + sector);
+            System.debug('SFSF amsOfficeType ' + amsOfficeType);
+            System.debug('SFSF newForm.Agent_Type__c ' + newForm.Agent_Type__c);
+            System.debug('SFSF selectedLang ' + selectedLang); 
+            
             //Get distinct set of Languages for this country / operation requirements
             distinctReqmentLangs = [
                                        SELECT Language__c
