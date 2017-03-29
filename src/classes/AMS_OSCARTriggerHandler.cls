@@ -1917,16 +1917,6 @@ public class AMS_OSCARTriggerHandler {
 		return locationTypeAccountID;
 	}
 
-	private Class AccountStruct{
-		
-	    private String parentIATACode;
-	    private String locationType;
-
-	    private AccountStruct(String parentIATACode, String locationType) {
-	        this.parentIATACode = parentIATACode;
-	        this.locationType = locationType;
-	    }
-	}
 
 	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
 
