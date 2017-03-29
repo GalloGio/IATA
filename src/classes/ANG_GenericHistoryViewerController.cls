@@ -78,16 +78,15 @@ public with sharing class ANG_GenericHistoryViewerController {
             String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
             String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
 
-            String trackedFieldApiName = (String)history.get('Field');
+            String trackedFieldApiName = (String)history.get('Field'); String trackedFieldLabel = trackedFieldApiName;
             System.debug('trackedFieldApiName ' + trackedFieldApiName);
-
-            String trackedFieldLabel = trackedFieldApiName;//'Created.';
 
             if(trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType') trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
 
             //for some reason record type changes generate 2 records in history table???!!! one has the values with Ids of the record types
             //and the other has the value with the label of the record type. we just want to keep the one with the names
-            if(trackedFieldLabel == 'RecordType' && !tmpOld.startsWith('012')) mergedHistoric.add(new GenericHistoryWrapper(history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false));
+            if(trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012')) continue;
+            else mergedHistoric.add(new GenericHistoryWrapper(history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false));
         }
 
         //sort by createddate (comparable interface methods implemented in wrapper class)
@@ -124,7 +123,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             GenericHistoryWrapper compareToDate = (GenericHistoryWrapper)compareTo;
             
             Integer returnValue = 0;
-            if (this.createdDate < compareToDate.createdDate || this.fieldName == 'Created.') {
+            if (this.createdDate < compareToDate.createdDate || this.fieldName == 'created') {
                 returnValue = 1;
             } else if (this.createdDate > compareToDate.createdDate) {
                 returnValue = -1;

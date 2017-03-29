@@ -37,10 +37,10 @@
 
 			<apex:column >
 				<apex:facet name="header">Action</apex:facet>
-					<apex:outputPanel rendered="{!row.fieldName <> 'Created.'}">
+					<apex:outputPanel rendered="{!row.fieldName <> 'created'}">
 						<b>{!row.fieldName}</b> changed from <b>{!row.oldValue}</b> to <b>{!row.newValue}</b>
 					</apex:outputPanel>
-					<apex:outputPanel rendered="{!row.fieldName == 'Created.'}">
+					<apex:outputPanel rendered="{!row.fieldName == 'created'}">
 						{!row.fieldName}
 					</apex:outputPanel>
 			</apex:column>
