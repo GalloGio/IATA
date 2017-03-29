@@ -623,7 +623,7 @@ system.debug('\n\n[DEBUG-PKB CONTROLLER] buildFeaturedKads \n===='+anums+'=====\
     if (caseOrigins.containsKey('Web')) theCase.Origin = 'Web';
     theCase.Description = d;
     /** fields for the mobile app **/
-    theCase.Customer_emoticon_value__c = theCud.User_Experience;
+    //theCase.Customer_emoticon_value__c = theCud.User_Experience;
     theCase.pkbgeolocalization__Latitude__s = theCud.location_Latitude;
     theCase.pkbgeolocalization__Longitude__s = theCud.location_Longitude;
 
