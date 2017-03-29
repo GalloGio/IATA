@@ -635,6 +635,13 @@
         <value>Perform Correction</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IATA_EasyPay</shortDescription>
+        <value>IATA EasyPay</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -647,6 +654,20 @@
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
         <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator in order to request them to open the IATA EasyPay for your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Open_IATA_EasyPay_Account</shortDescription>
+        <value>Open IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Request_Access_IATA_EasyPay</shortDescription>
+        <value>Request access to IATA EasyPay</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -8067,20 +8088,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Gross Amnt Second year</shortDescription>
         <value>Gross Amnt Second year</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Head_Entity_Cash</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
-        <value>New Head Entity - Standard Accreditation with Cash</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
-        <value>New Head Entity lite - Standard Accreditation with no Cash</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
@@ -18116,41 +18123,6 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_IATA_EasyPay</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_IATA_EasyPay</shortDescription>
-        <value>IATA EasyPay</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_Open_IATA_EasyPay_Account</shortDescription>
-        <value>Open IATA EasyPay Account</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_Request_Access_IATA_EasyPay</shortDescription>
-        <value>Request access to IATA EasyPay </value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_PORTAL_SERVICE_ROLE</shortDescription>
-        <value>Portal Service Role</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_PortalRoleErrorMessage</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_PortalRoleErrorMessage</shortDescription>
-        <value>The portal role is required</value>
-    </labels>
-    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21600,13 +21572,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Trust Weaver</shortDescription>
         <value>Trust Weaver</value>
-    </labels>
-    <labels>
-        <fullName>Type_of_Accreditation</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Type of Accreditation</shortDescription>
-        <value>* Type of Accreditation</value>
     </labels>
     <labels>
         <fullName>Until</fullName>
