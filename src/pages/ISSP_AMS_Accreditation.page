@@ -264,7 +264,7 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
                     
-                    if( (vOfficeType.substring(idx + 3).trim() == 'IATA Passenger Sales Agent') || (vOfficeType.includes('Standard Accreditation')) ) {
+                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) ) {
                         operationType = 'Travel_Agent';
                     } else {
                         operationType = 'Cargo_Agent';
