@@ -275,7 +275,7 @@ public with sharing class ISSP_AvailableServices{
         public String portalServiceRole {get; set;} 
         public boolean useDefaultRole {get; set;}
 
-        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus){
+        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
             this.Status = getServiceStatus(inRecord);
             this.selected = false;
             this.recordService = inRecord;   
@@ -283,7 +283,7 @@ public with sharing class ISSP_AvailableServices{
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
-            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
                 this.useDefaultRole = true;
             } else {
@@ -326,7 +326,7 @@ public with sharing class ISSP_AvailableServices{
         List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
 
         for (Portal_Applications__c thisService : allServices){
-            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus);
+            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin);
             allServiceList.add(thisServiceRecord);
         }
         
@@ -378,7 +378,7 @@ public with sharing class ISSP_AvailableServices{
                         system.debug('FOUND: ' + thisApp.Name);
                         if (!appIds.contains(thisApp.Id)){
                             system.debug('ADDING FINAL: ' + thisApp.Name);
-                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus);
+                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus, isAdmin);
                             allServiceList.add(thisServiceRecord);
                         }
                     }
@@ -499,7 +499,7 @@ public with sharing class ISSP_AvailableServices{
          system.debug('XXX Servid : '+Servid);
         List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
-        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus);
+        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
         system.debug('XXX Serv : '+Serv);
         return null ;
     }
