@@ -7,46 +7,6 @@
         <recipients>
             <type>owner</type>
         </recipients>
-        <recipients>
-            <field>Action_10_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_1_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_2_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_3_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_4_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_5_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_6_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_7_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_8_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Action_9_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>Quality/OI_Creation_Notification</template>
     </alerts>
@@ -111,39 +71,6 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>OI Action Plan 1</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Action_1_Due_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Action_1_Owner__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Closed effective,Closed error,Closed effectiveness pending,Closed not effective</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Action_1_Closure_Date__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>Inform AP 1 Owner</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <offsetFromField>Operational_Improvements__c.Action_1_Due_Date__c</offsetFromField>
-            <timeLength>-5</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <offsetFromField>Operational_Improvements__c.Action_1_Due_Date__c</offsetFromField>
-            <timeLength>-15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Update Date%2FTime Closed</fullName>
