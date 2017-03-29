@@ -309,14 +309,24 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
+
+
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
                     Database.rollback(sp);
                     throw ex;
                 }
 
-            }
+            //updatedOscar.Sanity_Check_Passed__c = true;
 
+            system.debug('updatedOscar.Sanity_Check_Passed__c: ' + updatedOscar.Sanity_Check_Passed__c);
+
+            if(updatedOscar.Sanity_Check_Passed__c = true) {
+                throw new AMS_ApplicationException('Change code already generated for this OSCAR! Please perform a withdraw in order to pass Sanity Check.');
+            }
+            
+            updatedOscar.Sanity_Check_Passed__c = true;
+        }
         }
     }
 
