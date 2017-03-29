@@ -2540,6 +2540,17 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Models__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <label>Accreditation Models</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>
@@ -23045,6 +23056,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -25321,6 +25351,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28239,6 +28288,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -30444,6 +30512,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34036,6 +34123,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -36055,6 +36161,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -41271,6 +41396,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -43603,6 +43747,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47765,6 +47928,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -51834,6 +52016,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -54352,6 +54553,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -56553,6 +56773,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -58750,6 +58989,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61325,6 +61583,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68766,6 +69043,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -72844,6 +73140,25 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

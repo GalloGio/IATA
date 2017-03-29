@@ -69,6 +69,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Models__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <label>Accreditation Models</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>File_Identifier2__c</fullName>
         <externalId>false</externalId>
         <label>File Identifier</label>
@@ -473,6 +483,25 @@
         <active>true</active>
         <label>Cargo Agent</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -784,6 +813,25 @@
         <active>true</active>
         <label>Change</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
                 <fullName>ACC_GRMNY</fullName>
@@ -1082,6 +1130,25 @@
         <fullName>Travel_Agent</fullName>
         <active>true</active>
         <label>Travel Agent</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Legacy Accreditation</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard no Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard with Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>File_Identifier2__c</picklist>
             <values>
