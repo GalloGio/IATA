@@ -1,5 +1,6 @@
 public with sharing class SIDRAliteMassApprovalController{
 
+    public static final Integer MAX_SEARCH_ELEMENTS = 900;
     public static final Id SIDRA_LITE_RECORDTYPE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordtypeId();
     public static final String APPROVED = 'Approved';
     public static final String REJECTED = 'Rejected';
@@ -31,13 +32,17 @@ public with sharing class SIDRAliteMassApprovalController{
     **/
     public SIDRAliteMassApprovalController() {
         reset();
-        search();
     }
 
     /**
         Search all cases based on the filters selected by the user
     **/
     public void search() {
+        if (this.filter.selectedActionType==null || this.filter.selectedActionType=='') {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select an Action Type'));
+            return;
+        }
+        
         String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, ';
         query += ' DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, ';
         query += ' TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, ';
@@ -110,20 +115,29 @@ public with sharing class SIDRAliteMassApprovalController{
         }
 
         query += ' order by CaseNumber desc';
-        query += ' limit 1000';
+        query += ' limit ' + (MAX_SEARCH_ELEMENTS + 1);
+        initListWrapperCase(query);
 
-        System.debug('*** QUERY: ' + query);
-
-        if (this.listWrapperCase.size() >= 1000) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Your search criteria result exceeds the limit of number of records (1,000). Try to apply more filters to reduce the number of records or process your request in multiple sessions'));
-        }
-
-        this.listWrapperCase = new list<WrapperCase>();
-        for (Case cse: Database.query(query)) {
-            this.listWrapperCase.add(new WrapperCase(cse));
-        }
         // hide processed section to show result section
         this.showProcessedSection = false;
+    }
+    
+    /**
+        Creates a list of wrappers with the input query and checks if the maximum lilmit is exceeded
+    **/
+    private void initListWrapperCase(String query) {
+        System.debug('*** QUERY: ' + query);
+        this.listWrapperCase = new list<WrapperCase>();
+        for (Case cse: Database.query(query)) {
+            if (this.listWrapperCase.size() < MAX_SEARCH_ELEMENTS) {
+                this.listWrapperCase.add(new WrapperCase(cse));
+            } else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,
+                    'Your search criteria result exceeds the limit of number of records (' + MAX_SEARCH_ELEMENTS + ').'
+                    + 'Try to apply more filters to reduce the number of records or process your request in multiple sessions'));
+                return;
+            }
+        }
     }
 
     /**

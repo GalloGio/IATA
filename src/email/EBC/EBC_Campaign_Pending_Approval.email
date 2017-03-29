@@ -9,4 +9,4 @@ Number of recipients: {!EBC_Campaign__c.Number_of_Recipients__c}
 
 Subject: {!EBC_Campaign__c.Subject__c}
 
-Review this campaign at https://iata--preprod.cs86.my.salesforce.com/apex/EBC_CampaignApproval?id={!EBC_Campaign__c.Id}
+Review this campaign at https://iata.my.salesforce.com/apex/EBC_CampaignApproval?id={!EBC_Campaign__c.Id}
