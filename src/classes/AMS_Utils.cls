@@ -879,6 +879,17 @@ public without sharing class AMS_Utils {
         return null;
     }
 
+
+    public static String overrideEBulletinStatusDescr(String statusDesc) {
+
+        if (statusDesc == ACC_S5_CASHNOCOMMISSION)
+            return 'DEFAULT/SUSPENSION';
+        else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
+            return 'REVIEW/STDS REMOVAL/NOTICE OF TERMINATION';
+        
+        return statusDesc;
+    }
+
     public static String getIATANReadableStatus(String endorsmentCode) {
 
         if (endorsmentCode == '0') {

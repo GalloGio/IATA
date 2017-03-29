@@ -18,7 +18,7 @@ global without sharing class FSM_Webservice {
     WebService static String sendFSRequestedLetter(String caseId) {
         //INC193737 10-08-2015 - select the attachments related list
         list<Case> listCase = [
-            Select Id, Account.Id, FS_Letter_Sent__c, Reminder_EmailTemplate__c, FS_Deadline_Date__c, Account.RecordtypeId, Account.Industry, Account.Name, Contact.Id, Contact.Email, ThreadID__c, Account.AIMS_ID__c, (select Id from Attachments)
+            Select Id, Account.Id, FS_Letter_Sent__c, Reminder_EmailTemplate__c, FS_Deadline_Date__c, Account.RecordtypeId, Account.Industry, Account.Name, Contact.Id, Contact.Email, /*ThreadID__c,*/ Account.AIMS_ID__c, (select Id from Attachments)
             from Case where Id = :caseId 
         ];
 
