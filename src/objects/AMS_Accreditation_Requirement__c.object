@@ -493,11 +493,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard</fullName>
+                <fullName>Standard no Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -823,11 +823,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard</fullName>
+                <fullName>Standard no Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1141,11 +1141,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard</fullName>
+                <fullName>Standard no Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard with Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1439,17 +1439,6 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
-    <validationRules>
-        <fullName>Accreditation_Model_Required</fullName>
-        <active>true</active>
-        <description>for travel agents</description>
-        <errorConditionFormula>AND( 
-ISBLANK(ANG_Accreditation_Model__c),
-RecordType.DeveloperName &lt;&gt; &apos;Travel_Agent&apos; 
-)</errorConditionFormula>
-        <errorDisplayField>ANG_Accreditation_Model__c</errorDisplayField>
-        <errorMessage>Travel agent requirements must contain an Accreditation Model</errorMessage>
-    </validationRules>
     <validationRules>
         <fullName>Location_Type_Required</fullName>
         <active>true</active>
