@@ -808,7 +808,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailCC</shortDescription>
-        <value>agbisitj@iata.org,alvarengam@iata.org,arcel@iata.org,bestr@iata.org,boulaghmena@iata.org,careenn@iata.org,chanc@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,farrella@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,hattinghc@iata.org,haywards@iata.org,hughesg@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kalajil@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,McbrideG@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,MomchilovM@iata.org,OueidatG@iata.org,petterssonl@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,reckmannr@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,rossje@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,szajkod@iata.org,TruchetP@iata.org,torneroc@iata.org,vitel@iata.org</value>
+        <value>asacp@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailGDS</fullName>
@@ -822,35 +822,35 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAfricaMiddleEast</shortDescription>
-        <value>cliffordc@iata.org,kuuchir@iata.org,kosticd@iata.org,grobotekt@iata.org,StancuA@iata.org,mirb@iata.org,isicheic@iata.org,sadiqs@iata.org,yousefr@iata.org,rajputf@iata.org,suwal@iata.org,sorokink@iata.org,tadrosc@iata.org,salaha@iata.org,almuhaisem@iata.org,amulelea@iata.org</value>
+        <value>asamm@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAmericas</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAmericas</shortDescription>
-        <value>cerdap@iata.org, odelej@iata.org, ciriloc@iata.org, hanonl@iata.org, linesa@iata.org, pughr@iata.org, reisf@iata.org, hanonl@iata.org, fondacarop@iata.org, corvoj@iata.org, molinac@iata.org, salaar@iata.org, solorzanoj@iata.org, medeirosk@iata.org, montielk@iata.org, lopezr@iata.org, smojet@iata.org, kinoshitan@iata.org, larranagad@iata.org, orebc@iata.org, americasopsmanagement@iata.org</value>
+        <value>asmia@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAsiaPacific</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAsiaPacific</shortDescription>
-        <value>cliffordc@iata.org, yeohhc@iata.org, cowlesb@iata.org, azaharia@iata.org, hoj@iata.org, goelv@iata.org, choudhuryr@iata.org, kwongr@iata.org, kotharik@iata.org, chewj@iata.org, chowdhurym@iata.org, kwongr@iata.org, leet@iata.org, nguyenth@iata.org, nalawadem@iata.org, mohananb@iata.org, shahb@iata.org, rodrigos@iata.org, vitharanai@iata.org, reyesr@iata.org, ohv@iata.org, pekm@iata.org, praban@iata.org, shaikhn@iata.org</value>
+        <value>assin@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsChinaNorthAsia</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsChinaNorthAsia</shortDescription>
-        <value>zhangbj@iata.org, liyp@iata.org, liwx@iata.org, wangls@iata.org, pengs@iata.org, houk@iata.org, lusm@iata.org, zhaor@iata.org, mayh@iata.org, sundy@iata.org, gaom@iata.org, wangyy@iata.org, zhangxl@iata.org, zhangy@iata.org, niuy@iata.org, juyi@iata.org, guoy@iata.org, xuj@iata.org</value>
+        <value>asbjs@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsEurope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsEurope</shortDescription>
-        <value>schvartzmanr@iata.org, moralesa@iata.org, buonog@iata.org, giannisj@iata.org, escalantej@iata.org, girondoe@iata.org, wallacee@iata.org, castrom@iata.org, ivanovam@iata.org, perezp@iata.org, pascualr@iata.org, paredesv@iata.org, blazqueza@iata.org, diasdasalj@iata.org, ingladas@iata.org, martinezm@iata.org, batagliaf@iata.org, baissonm@iata.org, paredesc@iata.org, saremyt@iata.org, nolls@iata.org, peinadol@iata.org, martinyuks@iata.org, garciate@iata.org, amorl@iata.org, abbadid@iata.org</value>
+        <value>asmad@iata.org</value>
     </labels>
     <labels>
         <fullName>Ask_Delete_Attachment</fullName>
