@@ -559,7 +559,7 @@ public with sharing class ISSP_AvailableServices{
         System.debug(LoggingLevel.ERROR, '-->' + portalServiceRole + '--' + flagUseDefaultRole + '--' + defaultPortalUserRole);
 
         if (portalServiceRole != '' || flagUseDefaultRole) {
-            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId];
+            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId AND  Contact__c =: contactId];
 
             if (flagUseDefaultRole) {
                 app.ANG_Portal_Service_Role__c = defaultPortalUserRole;                    
