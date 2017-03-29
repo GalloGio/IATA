@@ -28,7 +28,7 @@ public with sharing class ISSP_AvailableServices{
         get {
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
-                                    contact.account.ANG_IEP_Status__c,ContactId,
+                                    contact.account.ANG_IEP_Status_FF__c,ContactId,
                                     languagelocalekey,ProfileId  
                                     from User where id =: UserInfo.getUserId()];
             }
@@ -77,9 +77,9 @@ public with sharing class ISSP_AvailableServices{
     
     public ISSP_AvailableServices(){
 
-        //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status__c from User where id =: UserInfo.getUserId()];
+        //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c from User where id =: UserInfo.getUserId()];
 
-        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status__c;        
+        IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;        
 
         availablePortalServiceRoles = new List<SelectOption>();
 
@@ -127,7 +127,7 @@ public with sharing class ISSP_AvailableServices{
 
                 Contact contAcc = [SELECT User_Portal_Status__c,
                                         Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
-                                        Account.ANG_IEP_Status__c, Account.Top_Parent__r.ANG_IEP_Status__c
+                                        Account.ANG_IEP_Status_FF__c
                                         FROM Contact WHERE Id = :conId limit 1];
                 
                 System.debug('[FM] initialization contAcc - '+ contAcc);
@@ -138,7 +138,8 @@ public with sharing class ISSP_AvailableServices{
                 //Validates if user have access to request IEP account
                 if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE') ){
                     isIEPAccountEnable = true;
-                }else if(isAdmin && contAcc.Account.Top_Parent__r.ANG_IEP_Status__c == 'Open'
+                //}else if(isAdmin && contAcc.Account.ANG_IEP_Status_FF__c == 'Open'
+                }else if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open'
                     && (contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE') ){
                     isIEPAccountEnable = true;
                 }
