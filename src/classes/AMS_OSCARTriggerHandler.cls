@@ -1870,6 +1870,17 @@ public class AMS_OSCARTriggerHandler {
 		return locationTypeAccountID;
 	}
 
+	private Class AccountStruct{
+		
+	    private String parentIATACode;
+	    private String locationType;
+
+	    private AccountStruct(String parentIATACode, String locationType) {
+	        this.parentIATACode = parentIATACode;
+	        this.locationType = locationType;
+	    }
+	}
+
 	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
 
 		Map<Id, Integer> contacts = getAccreditationContacts(oscars);
@@ -1908,8 +1919,6 @@ public class AMS_OSCARTriggerHandler {
 			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
 		}
 
-		System.debug('Contacts list is: ' + toReturn);
-
 		return toReturn;
 
 	}
@@ -1929,8 +1938,6 @@ public class AMS_OSCARTriggerHandler {
 			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
 		}
 
-		System.debug('sumPercentageAR is ' + sumPercentageAR);
-
 		return toReturn;
 
 	}
@@ -1941,15 +1948,4 @@ public class AMS_OSCARTriggerHandler {
 
 	}
 
-
-	private Class AccountStruct{
-		
-	    private String parentIATACode;
-	    private String locationType;
-
-	    private AccountStruct(String parentIATACode, String locationType) {
-	        this.parentIATACode = parentIATACode;
-	        this.locationType = locationType;
-	    }
-	}
 }
