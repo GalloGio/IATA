@@ -84,7 +84,7 @@ public  class CSEnquiry{
             acase.Type_of_customer__c = enquiry.CustomerType;
             acase.IATAcode__c = enquiry.IATACode;
             acase.contactId = enquiry.ContactID;
-            acase.Web_to_Case_IP_Tracking__c = enquiry.IPAddress;
+            //acase.Web_to_Case_IP_Tracking__c = enquiry.IPAddress;
             acase.Region__c = enquiry.region;
 
 

@@ -40,6 +40,10 @@
     $(".result-table").DataTable( {
       "lengthMenu": [ 10, 25, 50, 100, 200, 500, 1000 ]
     });
+    $( ".requiredBox" ).each(function() {
+      $(this).wrap( '<div class="requiredInput"></div>');
+      $(this).before('<div class="requiredBlock"></div>');
+    });
   });
 
   function selectCheckboxes(value) {
@@ -112,7 +116,7 @@
           <apex:inputField value="{!filter.cse.Region__c}" styleclass="filterBox regionPicklist" required="true" onchange="search();"/>
           <apex:inputField value="{!filter.cse.BSPCountry__c}" styleclass="filterBox" onchange="search();"/>
           <!--  Filter for Action Type  -->
-          <apex:selectList value="{!filter.selectedActionType}" label="Action Type" multiselect="false" size="1" styleclass="filterBox" onchange="search();">
+          <apex:selectList value="{!filter.selectedActionType}" label="Action Type" multiselect="false" size="1" required="true" styleclass="filterBox requiredBox" onchange="search();">
               <apex:selectOption itemValue="" itemLabel="-- None --" />
               <apex:selectOption itemValue="DEF" itemLabel="DEF Approval" />
               <apex:selectOption itemValue="DEF Withdrawal" itemLabel="DEF Withdrawal Approval" />

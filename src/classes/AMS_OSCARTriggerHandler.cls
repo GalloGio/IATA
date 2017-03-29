@@ -336,7 +336,7 @@ public class AMS_OSCARTriggerHandler {
 		//<Account Id, Current Location Type>
 		// Get the Accounts location type in the beggining before its changed (as in the case of a change of Ownership to non IATA
 		// )
-		Map<Id, AccountStruct> accountStructPerAcct = getAccountsInfoBeforeChanges(accounts);
+		Map<Id, AMS_HierarchyHelper.AccountStruct> accountStructPerAcct = getAccountsInfoBeforeChanges(accounts);
 
 		Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = getAccreditations(oscarOnlineAccredIds);
 
@@ -518,11 +518,11 @@ public class AMS_OSCARTriggerHandler {
 						// in case of location (for the moment is 100% but only God knows what will happen in the future)
 						// I'll apply the change and generate a CHL also to the SAs
 						if(changeContainsLocation  && agencyToSAs.get(oscar.Account__c)!=null){
-							//We'll apply CHL to all dependent SAs either involved or not involved
-							allSAs.addAll(SAsInvolved);
-							allSAs.addAll(SAsNotInvolved);
-							changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, allSAs));
-							accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
+								//We'll apply CHL to all dependent SAs either involved or not involved
+								allSAs.addAll(SAsInvolved);
+								allSAs.addAll(SAsNotInvolved);
+								changesContainer.add(AMS_ChangeCodesHelper.generateChangeCodes(oscar, config, accounts, accountsChangeCode, AMS_Utils.SANITYCHECK, allSAs));
+								accountsToUpdate.putAll(AMS_Utils.copyDataToAccountForAgencyChanges(oscar, allSAs, changeOfLocation, accounts, oscarOnlineAccreditation));
 						}
 
 					} else if (nonCascadingTOCs.length() == 0 && cascadingTOCs.length() > 0) {
@@ -790,49 +790,7 @@ public class AMS_OSCARTriggerHandler {
 					for(Account acc : c.accts)
 					{
 		
-						//******* Add "Custom" changes struct for the Location Type mapping ******** INI
-
-
-						system.debug('DDD1 New Info Acct ID' + acc.id);
-						system.debug('DDD1 New Location_Type__c: '  + acc.Location_Type__c);
-
-						system.debug('DDD1 New acc.parent.IATACode__c: '  + acc.parent.IATACode__c);
-
-						if(accountStructPerAcct.containsKey(acc.Id) && acc.Location_Type__c !=  accountStructPerAcct.get(acc.Id).locationType)
-						{
-							
-							AMS_ChangeCodesHelper.ObjectChange objectChangesLocationType =  new AMS_ChangeCodesHelper.ObjectChange('Account','Location_Type__c',accountStructPerAcct.get(acc.Id).locationType,acc.Location_Type__c);
-
-							if(accountsToUpdate.get(acc.Id) == null)
-							{
-								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesLocationType});
-								objectChanges.add(acctChangesStruct);
-							}
-							else
-								accountsToUpdate.get(acc.Id).changes.add(objectChangesLocationType);
-						}
-
-						//******* Add "Custom" changes struct for the Parent Iata Code mapping ******** INI
-
-						//If new location type is HO parent Iata code is null
-						
-						String newParentIATACode = AMS_Utils.LocationTypeAllHOTypes.contains(acc.Location_Type__c) ? null : acc.parent.IATACode__c;
-
-						if(accountStructPerAcct.containsKey(acc.Id) && 
-							  accountStructPerAcct.get(acc.Id).parentIATACode != newParentIATACode)
-						{
-							AMS_ChangeCodesHelper.ObjectChange objectChangesParentIataCode =  new AMS_ChangeCodesHelper.ObjectChange('Account','Parent.IATACode__c',accountStructPerAcct.get(acc.Id).parentIATACode,newParentIATACode);
-
-							if(accountsToUpdate.get(acc.Id) == null)
-							{
-								AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange> {objectChangesParentIataCode});
-								objectChanges.add(acctChangesStruct);
-
-							}
-							else
-								accountsToUpdate.get(acc.Id).changes.add(objectChangesParentIataCode);
-						}
-
+					
 
 						//******* Add "Custom" changes struct for the Ownership mapping ******** INI
 
@@ -887,6 +845,7 @@ public class AMS_OSCARTriggerHandler {
 				AMS_AccountTriggerHandler.processMinorChangesValidationFlag = false;
 
 			}
+			system.debug('DDD11 hierarchyChanges.size(): ' + hierarchyChanges.size());
 
 			if (hierarchyChanges.size() > 0) {
 				List<AMS_Agencies_Hierarchy__c> allHierarchiesToInsert = new List<AMS_Agencies_Hierarchy__c>();
@@ -919,6 +878,88 @@ public class AMS_OSCARTriggerHandler {
 						delete hierarchiesDel;
 				}
 
+
+				//**** Generate Change Code History for Location Type and IATA Code
+
+
+				List<AMS_Agency_A_Change_code_History__c> extraCCHistory = new List <AMS_Agency_A_Change_code_History__c>();
+
+				system.debug('DDD11 aaccHistoryPerAcct: ' + AMS_ChangeCodesHelper.aaccHistoryPerAcct);
+
+
+				for(Account acc : accsToUpdateFromCC)
+				{
+					if(! AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet.contains(acc))
+						AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet.add(acc);						
+				}
+
+				for(Account acc : AMS_AgencyRelationshipTriggerHandler.accsToUpdateSet)
+				{
+					system.debug('DDD11 acc.Id: ' + acc.Id);
+
+					if(AMS_ChangeCodesHelper.aaccHistoryPerAcct.containsKey(acc.Id))
+					{
+						system.debug('DDD11 New Info Acct ID: ' + acc.id);
+						system.debug('DDD11 New Location_Type__c: '  + acc.Location_Type__c);
+						//system.debug('DDD11 New acc.parent.IATACode__c: '  + accounts.get(acc.ParentId).IATACode__c);
+					
+
+						//******* Add "Custom" changes struct for the Location Type mapping ******** INI
+						
+						if(accountStructPerAcct.containsKey(acc.Id) && acc.Location_Type__c !=  accountStructPerAcct.get(acc.Id).locationType)
+						{
+							
+							extraCCHistory.add( new AMS_Agency_A_Change_code_History__c(
+		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryPerAcct.get(acc.Id).changeCode.Id,
+		                                                        Object_API_Name__c            = 'Account',
+		                                                        Field_API_Name__c             = 'Location_Type__c',
+			                                                    Field_Old_Value__c            = accountStructPerAcct.get(acc.Id).locationType,
+			                                                    Field_New_Value__c            = acc.Location_Type__c
+		                                                        )
+												);
+
+						}
+
+
+						//******* Add "Custom" changes struct for the Parent Iata Code mapping ******** INI
+
+						//If new location type is HO parent Iata code is null
+						
+						String newParentIATACode = null;
+
+						if(accounts.containsKey(acc.ParentId)) 
+						{
+							system.debug('DDD11 New acc.parentId: '  + accounts.get(acc.ParentId).IATACode__c);
+							newParentIATACode = accounts.get(acc.ParentId).IATACode__c;
+							
+						}
+						
+						
+						if(accountStructPerAcct.containsKey(acc.Id) && accountStructPerAcct.get(acc.Id).parentIATACode != newParentIATACode)
+						{
+							
+							extraCCHistory.add( new AMS_Agency_A_Change_code_History__c(
+		                                                        Agency_Applied_Change_Code__c = AMS_ChangeCodesHelper.aaccHistoryPerAcct.get(acc.Id).changeCode.Id,
+		                                                        Object_API_Name__c            = 'Account',
+		                                                        Field_API_Name__c             = 'Parent.IATACode__c',
+			                                                    Field_Old_Value__c            = accountStructPerAcct.get(acc.Id).parentIATACode,
+			                                                    Field_New_Value__c            = newParentIATACode
+		                                                        )
+												);
+						}
+
+					}
+
+				}
+
+				if (!extraCCHistory.isEmpty()) 
+				{
+
+					        System.debug('The list of Change Codes History to add is (EXTRA) ' + extraCCHistory.size());
+
+					        insert extraCCHistory;
+				}
+				AMS_ChangeCodesHelper.aaccHistoryPerAcct.clear();
 			}
 
 		} catch (Exception ex) {
@@ -931,6 +972,7 @@ public class AMS_OSCARTriggerHandler {
 
 	public static AMS_HierarchyHelper.HierarchyStruct processHierarchyChanges(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies, Set<Id> agenciesAffected) {
 
+		system.debug( 'DDD2 processHierarchyChanges ');
 		keepSALocationTypeFlag = false;
 
 		//this container will store all database operations that need to be performed
@@ -957,11 +999,15 @@ public class AMS_OSCARTriggerHandler {
 			hierarchyChanges = processSAChangeOfLocation(oscar, accounts, hierarchies);
 		}
 
+		system.debug( 'DDD2 AMS_HierarchyHelper.hierarchyChanges: ' + hierarchyChanges);
+
 		return hierarchyChanges;
 	}
 
 	public static AMS_HierarchyHelper.HierarchyStruct processChangeOfLocationType(AMS_OSCAR__c oscar, Map<Id, Account> accounts, Map<Id, List<AMS_Agencies_relationhip__c>> hierarchies) {
 
+
+		system.debug( 'DDD2 processChangeOfLocationType ');
 
 		Id oscarAccountId = oscar.Account__c;
 
@@ -1849,35 +1895,25 @@ public class AMS_OSCARTriggerHandler {
 
     }
  
-	public static Map<Id,AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
+	public static Map<Id,AMS_HierarchyHelper.AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
 
-		Map<Id,AccountStruct> locationTypeAccountID = new Map<Id,AccountStruct> ();
+		Map<Id,AMS_HierarchyHelper.AccountStruct> locationTypeAccountID = new Map<Id,AMS_HierarchyHelper.AccountStruct> ();
 
 		for(Id accId : accountsMap.keySet())
 		{
-			locationTypeAccountID.put(accId,new AccountStruct(accountsMap.get(accId).Parent.IATACode__c,accountsMap.get(accId).Location_Type__c));
+			locationTypeAccountID.put(accId,new AMS_HierarchyHelper.AccountStruct(accountsMap.get(accId).Parent.IATACode__c,accountsMap.get(accId).Location_Type__c));
 
 			system.debug('DDD1 Acct ID: ' + accId);
 
-			system.debug('DDD1 Acct IATA Code: ' + accountsMap.get(accId).Parent.IATACode__c );
+			system.debug('DDD1 Acct Old Location Type: ' + accountsMap.get(accId).Location_Type__c );
 
-			system.debug('DDD1 Acct Location Type: ' + accountsMap.get(accId).Location_Type__c );
+			system.debug('DDD1 Acct Old Parent IATA Code: ' + accountsMap.get(accId).Parent.IATACode__c );
+
 
 		}
 
 		return locationTypeAccountID;
 	}
 
-
-	private Class AccountStruct{
-		
-	    private String parentIATACode;
-	    private String locationType;
-
-	    private AccountStruct(String parentIATACode, String locationType) {
-	        this.parentIATACode = parentIATACode;
-	        this.locationType = locationType;
-	    }
-	}
 }
