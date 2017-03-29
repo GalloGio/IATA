@@ -19,10 +19,6 @@ public with sharing class ANG_GenericHistoryViewerController {
         this.trackedObj = (sObject)stdController.getRecord();
     }
 
-    public String getRecordName() {
-        return 'Hello ' + (String)trackedObj.get('name') + ' (' + (Id)trackedObj.get('Id') + ')';
-    }
-
     public List<GenericHistoryWrapper> getHistoryRecords(){
 
         String theCustomQuery = 'SELECT CreatedDate, CreatedById, CreatedBy.Name, What__c, New_Value__c, Old_Value__c FROM ' + trackerObjApiName + ' WHERE ' + trackedObjApiName + '__c = \'' + trackedObj.Id + '\' ORDER BY CreatedDate DESC';
@@ -58,24 +54,8 @@ public with sharing class ANG_GenericHistoryViewerController {
         //add custom history to the list
         for(SObject history : customHistoryRecords){
 
-            String tmpOld = '';
-            String tmpNew = '';
-
-            if( history.get('Old_Value__c') != null && (String.valueOf(history.get('Old_Value__c'))).endswith('00:00:00'))
-                tmpOld = Date.valueOf(history.get('Old_Value__c')).format();
-            else
-                tmpOld = String.valueOf(history.get('Old_Value__c'));
-
-            if( history.get('New_Value__c') != null && (String.valueOf(history.get('New_Value__c'))).endswith('00:00:00'))
-                tmpNew = Date.valueOf(history.get('New_Value__c')).format();
-            else
-                tmpNew = String.valueOf(history.get('New_Value__c'));
-
-            //if empty value - set to 'blank' string
-            if(tmpOld == null)
-                tmpOld = '<blank>';
-            if(tmpNew == null)
-                tmpNew = '<blank>';
+            String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
+            String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
 
             mergedHistoric.add(new GenericHistoryWrapper(
                                 history.get('CreatedById'),
@@ -89,43 +69,25 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Map<String, Schema.SObjectField> objFieldsMap = Schema.getGlobalDescribe().get(trackedObjApiName).getDescribe().fields.getMap();
 
-        //add the standard history
+
+        //add the standard history 
+        //(2017/03/29 note: test classes do not create history record in the standard history table and
+        //we cannot insert records in these tables, this is why this code is not covered)
         for(Sobject history : standardHistoryRecords){
-            String tmpOld = '';
-            String tmpNew = '';
 
-            if( history.get('OldValue') != null && (String.valueOf(history.get('Oldvalue'))).endswith('00:00:00'))
-                tmpOld = Date.valueOf(history.get('OldValue')).format();
-            else
-                tmpOld = String.valueOf(history.get('OldValue'));
-
-            if( history.get('NewValue') != null && (String.valueOf(history.get('NewValue'))).endswith('00:00:00'))
-                tmpNew = Date.valueOf(history.get('NewValue')).format();
-            else
-                tmpNew = String.valueOf(history.get('NewValue'));
-
-            //if empty value - set to 'blank' string
-            if(tmpOld == null)
-                tmpOld = '<blank>';
-            if(tmpNew == null)
-                tmpNew = '<blank>';
+            String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
+            String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
 
             String trackedFieldApiName = (String)history.get('Field');
             System.debug('trackedFieldApiName ' + trackedFieldApiName);
 
-            String trackedFieldLabel = 'Created.';
+            String trackedFieldLabel = trackedFieldApiName;//'Created.';
 
-            if(trackedFieldApiName != 'created')
-                trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
+            if(trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType') trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
 
-            mergedHistoric.add(new GenericHistoryWrapper(
-                                history.get('CreatedById'),
-                                mapUserNamesPerId.get((Id)history.get('CreatedById')),
-                                String.valueOf(history.get('CreatedDate')),
-                                tmpOld,
-                                tmpNew,
-                                trackedFieldLabel,
-                                false));
+            //for some reason record type changes generate 2 records in history table???!!! one has the values with Ids of the record types
+            //and the other has the value with the label of the record type. we just want to keep the one with the names
+            if(trackedFieldLabel == 'RecordType' && !tmpOld.startsWith('012')) mergedHistoric.add(new GenericHistoryWrapper(history.get('CreatedById'),mapUserNamesPerId.get((Id)history.get('CreatedById')),String.valueOf(history.get('CreatedDate')),tmpOld,tmpNew,trackedFieldLabel,false));
         }
 
         //sort by createddate (comparable interface methods implemented in wrapper class)
