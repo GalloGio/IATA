@@ -391,7 +391,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
-                if ( newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New HE standard' || newCase.Reason1__c == 'New HE lite') {
+                if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad') {
                     amsOfficeType = 'HO'; //Branches Abroad have same country requirements as HO in that country
                 } else if (newCase.Reason1__c == 'New BR / IP') {
                     amsOfficeType = 'Branch';
@@ -1142,7 +1142,6 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Country_concerned_by_the_query__c = isocountry.Name;
             newCase.Type_of_customer__c = con.Account.Category__c;
             
-            if(amsLocationType.contains('Standard Accreditation')){
             if(amsLocationType.contains('Standard')){
                 newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
             }
@@ -1165,7 +1164,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     newCase.Country_concerned_by_the_query__c = isocountry.Name;
                     newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType);
 
-                    if(amsLocationType.contains('Standard Accreditation')){
+                    if(amsLocationType.contains('Standard')){
                         newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + newCase.Country_concerned_by_the_query__c;        
                     }else{
                         newCase.Subject = getCaseReason(newCase.Reason1__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;        
@@ -1274,10 +1273,10 @@ public without sharing class ISSP_AMS_Accreditation {
                                WHERE IATACode__c = :agencyCodesConcerned[0].getValue()
                                           LIMIT 1
                            ];
-                 //If BR Only selection has changed then need to retrieve BR details again
-                if(newCase.Account_Concerned__c != branchAccount.Id)
-                    changeOfAccountConcerned = true;
-                    
+                     //If BR Only selection has changed then need to retrieve BR details again
+                    if(newCase.Account_Concerned__c != branchAccount.Id)
+                        changeOfAccountConcerned = true;
+                        
                     newCase.Account_Concerned__c = branchAccount.Id;
                 } else { //HO with selected Branches
                     if(newCase.Account_Concerned__c != null)
