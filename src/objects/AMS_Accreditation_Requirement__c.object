@@ -493,11 +493,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -823,11 +823,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1141,11 +1141,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -3118,8 +3118,18 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             System.debug('SFSF sector ' + sector);
             System.debug('SFSF amsOfficeType ' + amsOfficeType);
             System.debug('SFSF newForm.Agent_Type__c ' + newForm.Agent_Type__c);
-            System.debug('SFSF selectedLang ' + selectedLang); 
+            System.debug('SFSF selectedLang ' + selectedLang);
+
+
+            if(newForm.Agent_Type__c.contains('no Cash')){
+                accredModel = 'Standard without Cash';
+            } else if(newForm.Agent_Type__c.contains('with Cash')){
+                accredModel = 'Standard';
+            } else {
+                accredModel = newForm.Agent_Type__c;
+            }
             
+            System.debug('SFSF accredModel ' + accredModel);
             //Get distinct set of Languages for this country / operation requirements
             distinctReqmentLangs = [
                                        SELECT Language__c
@@ -3135,7 +3145,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                        SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
                                        FROM AMS_Accreditation_Requirement__c
                                        WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
-                                               AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:newForm.Agent_Type__c) AND Language__c = :selectedLang AND RecordTypeId = :TravelReqRecType.Id
+                                               AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = :selectedLang AND RecordTypeId = :TravelReqRecType.Id
                                                        ORDER BY Sort_Order__c ASC
                                    ];
             system.debug('c req size: ' + List_CountryReqments.size());
@@ -3145,7 +3155,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                            SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
                                            FROM AMS_Accreditation_Requirement__c
                                            WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
-                                                   AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:newForm.Agent_Type__c) AND Language__c = 'English' AND RecordTypeId = :TravelReqRecType.Id
+                                                   AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = 'English' AND RecordTypeId = :TravelReqRecType.Id
                                                            ORDER BY Sort_Order__c ASC
                                        ];
                 system.debug('req 2 size: ' + List_CountryReqments.size());
@@ -3160,7 +3170,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                                SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
                                                FROM AMS_Accreditation_Requirement__c
                                                WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
-                                                       AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:newForm.Agent_Type__c) AND Language__c = :finalLang AND RecordTypeId = :TravelReqRecType.Id
+                                                       AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = :finalLang AND RecordTypeId = :TravelReqRecType.Id
                                                                ORDER BY Sort_Order__c ASC
                                            ];
                     system.debug('countryReq size: ' + List_CountryReqments.size());
@@ -3250,7 +3260,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                              IATA_Contry_KR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Tax_Number_label__c, Tax_number_format__c, Branches_abroad_not_allowed__c,
                                              Tax_number_help_text__c, Hide_Tax_Number_VAT__c, ISO_Code__c, EACP_Country__c, OSCAR_enabled__c, CASS_Import__c, CASS_Country_free_text__c, Region__c, Disable_non_IATA_Cargo_Agents__c,
                                              original_bank_details_not_required__c, Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c, Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                             Enable_Minor_Changes_from_Portal__c,New_Accreditation_Models_enabled__c
+                                             Enable_Minor_Changes_from_Portal__c,ANG_Enable_NewGen__c
                                              FROM IATA_ISO_Country__c
                                              WHERE ISO_Code__c = :isocode
                                          ];
