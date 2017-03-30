@@ -139,17 +139,10 @@ public with sharing class ISSP_AvailableServices{
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
-                // If the IEP status is not open and is not an admin and the account is not HO or HE and the parent account is HO or HE
                 if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open')
                     isIEPAccountEnable = true;
                 else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
                     isIEPAccountEnable = true;
-                else if( contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE')
-                    isIEPAccountEnable = true;
-
-                System.debug(LoggingLevel.ERROR, 'contAcc.Account.Top_Parent__r.Location_Type__c-->' + contAcc.Account.Top_Parent__r.Location_Type__c);
-                System.debug(LoggingLevel.ERROR, 'contAcc.Account.ANG_IEP_Status_FF__c-->' + contAcc.Account.ANG_IEP_Status_FF__c);
-                System.debug(LoggingLevel.ERROR, '-->' + isIEPAccountEnable);
 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
@@ -320,7 +313,7 @@ public with sharing class ISSP_AvailableServices{
         public String portalServiceRole {get; set;} 
         public boolean useDefaultRole {get; set;}
 
-        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus){
+        public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
             this.Status = getServiceStatus(inRecord);
             this.selected = false;
             this.recordService = inRecord;   
@@ -328,7 +321,7 @@ public with sharing class ISSP_AvailableServices{
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
-            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT) {
+            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
                 this.useDefaultRole = true;
             } else {
@@ -371,7 +364,7 @@ public with sharing class ISSP_AvailableServices{
         List<Portal_Applications__c > allServices = (List<Portal_Applications__c >)setCon.getRecords();
 
         for (Portal_Applications__c thisService : allServices){
-            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus);
+            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisService, IepStatus, isAdmin);
             allServiceList.add(thisServiceRecord);
         }
         
@@ -424,7 +417,7 @@ public with sharing class ISSP_AvailableServices{
                         system.debug('FOUND: ' + thisApp.Name);
                         if (!appIds.contains(thisApp.Id)){
                             system.debug('ADDING FINAL: ' + thisApp.Name);
-                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus);
+                            ServiceWrapper thisServiceRecord = new ServiceWrapper (thisApp, IepStatus, isAdmin);
                             allServiceList.add(thisServiceRecord);
                         }
                     }
@@ -545,7 +538,7 @@ public with sharing class ISSP_AvailableServices{
          system.debug('XXX Servid : '+Servid);
         List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
-        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus);
+        Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
         system.debug('XXX Serv : '+Serv);
         return null ;
     }
@@ -558,36 +551,9 @@ public with sharing class ISSP_AvailableServices{
         }
        
     }
-/*
-    public List<SelectOption> getAvailablePortalServiceRoles() {
-        List<SelectOption> options = new List<SelectOption>();
-        
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)'];
-        
-        options.add(new SelectOption('NONE', ''));
-        
-        for (Connected_App_Roles__c role : roles) {
-            //options.add(new SelectOption(role.Role__c, role.Role__c));
 
-            String theString = (role.Default_User_Role__c) ? 'true' : 'false';
-
-            options.add(new SelectOption(role.Role__c, theString));
-
-            System.debug(LoggingLevel.ERROR, 'FODA-SE->' + role.Default_User_Role__c + ' --->' + role.Role__c);
-
-            if (role.Default_User_Role__c) {
-                this.defaultPortalUserRole = role.Role__c;
-            }
-        }
-
-        return options;
-    }
-  */ 
     @RemoteAction
     public static string newAppsRequest (string applicationId, string applicationName, string contactId){
-
-        System.debug(LoggingLevel.ERROR, 'BOSTA');
-
         String appRight = 'Access Requested';
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
@@ -602,10 +568,8 @@ public with sharing class ISSP_AvailableServices{
             appRight = 'Access Granted';
         insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
 
-        System.debug(LoggingLevel.ERROR, '-->' + portalServiceRole + '--' + flagUseDefaultRole + '--' + defaultPortalUserRole);
-
         if (portalServiceRole != '' || flagUseDefaultRole) {
-            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId];
+            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId AND contact__c =: contactId];
 
             if (flagUseDefaultRole) {
                 app.ANG_Portal_Service_Role__c = defaultPortalUserRole;                    
