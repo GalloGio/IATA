@@ -86,6 +86,7 @@ public with sharing class RelatedListController {
                 /*If field CSV was defined use this and also add fields to the fieldNames
                 List so they can be used with Visualforce dynamic binding to define coloumns*/
                 if(csvFields != null){
+                    csvFields = csvFields.removeStart('[').removeEnd(']').replaceAll(' ', ''); //accepts json lists
                     queryString += csvFields;
                     fieldNames = csvFields.split(',');
                 }else{

@@ -55,6 +55,41 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>RelatedList</fullName>
+        <description>This is used on the Risk Event HIstory related list on the account layout</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Account_IATA_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Risk_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Issued_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Source__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_Expiration_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>RelatedList</label>
+    </fieldSets>
     <fields>
         <fullName>ANG_AccountId__c</fullName>
         <externalId>false</externalId>
@@ -73,7 +108,7 @@
         <fullName>ANG_Account_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_AccountId__r.IATACode__c</formula>
-        <label>Account IATA Code</label>
+        <label>IATA Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -231,13 +266,6 @@
         <label>Risk Event</label>
     </recordTypes>
     <searchLayouts>
-        <customTabListAdditionalFields>ANG_Account_IATA_Code__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Risk_Type__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Risk_ID__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Issued_Date__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Source__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Expiration_Date__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>ANG_Expired__c</customTabListAdditionalFields>
         <excludedStandardButtons>New</excludedStandardButtons>
         <excludedStandardButtons>Forward</excludedStandardButtons>
         <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
@@ -255,12 +283,6 @@
         <searchFilterFields>ANG_Issued_Date__c</searchFilterFields>
         <searchFilterFields>ANG_Expiration_Date__c</searchFilterFields>
         <searchFilterFields>ANG_Expired__c</searchFilterFields>
-        <searchResultsAdditionalFields>ANG_Risk_ID__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ANG_Risk_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ANG_Issued_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ANG_Source__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ANG_Expiration_Date__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ANG_Expired__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
