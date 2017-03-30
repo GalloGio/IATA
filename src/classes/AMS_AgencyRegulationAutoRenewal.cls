@@ -143,8 +143,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 				system.debug('creating renewal for CATA ' + numberOfRemainingCATAInAccountToExpire);
 
-				AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
-
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingCATAInAccountToExpire, 0, 0,agReg.Type_Of_Certificate__c)){
 					
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
