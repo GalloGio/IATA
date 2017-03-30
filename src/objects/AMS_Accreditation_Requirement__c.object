@@ -483,7 +483,7 @@
         <active>true</active>
         <label>Cargo Agent</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Model</picklist>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
@@ -813,7 +813,7 @@
         <active>true</active>
         <label>Change</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Model</picklist>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
@@ -1131,7 +1131,7 @@
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Model</picklist>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
