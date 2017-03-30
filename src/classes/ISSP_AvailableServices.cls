@@ -139,17 +139,10 @@ public with sharing class ISSP_AvailableServices{
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
-                // If the IEP status is not open and is not an admin and the account is not HO or HE and the parent account is HO or HE
                 if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open')
                     isIEPAccountEnable = true;
                 else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
                     isIEPAccountEnable = true;
-                else if( contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE')
-                    isIEPAccountEnable = true;
-
-                System.debug(LoggingLevel.ERROR, 'contAcc.Account.Top_Parent__r.Location_Type__c-->' + contAcc.Account.Top_Parent__r.Location_Type__c);
-                System.debug(LoggingLevel.ERROR, 'contAcc.Account.ANG_IEP_Status_FF__c-->' + contAcc.Account.ANG_IEP_Status_FF__c);
-                System.debug(LoggingLevel.ERROR, '-->' + isIEPAccountEnable);
 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
@@ -294,7 +287,7 @@ public with sharing class ISSP_AvailableServices{
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c  ';
+                String query = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -416,7 +409,8 @@ public with sharing class ISSP_AvailableServices{
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
-                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c
+                                                        Service_Description__c, Cannot_be_managed_by_portal_admin__c,
+                                                        ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c                                                
                                                         FROM Portal_Applications__c WHERE Id IN :newAppIds];
                 if (!appList.isEmpty()){
                     for (Portal_Applications__c thisApp : appList){
@@ -557,36 +551,9 @@ public with sharing class ISSP_AvailableServices{
         }
        
     }
-/*
-    public List<SelectOption> getAvailablePortalServiceRoles() {
-        List<SelectOption> options = new List<SelectOption>();
-        
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)'];
-        
-        options.add(new SelectOption('NONE', ''));
-        
-        for (Connected_App_Roles__c role : roles) {
-            //options.add(new SelectOption(role.Role__c, role.Role__c));
 
-            String theString = (role.Default_User_Role__c) ? 'true' : 'false';
-
-            options.add(new SelectOption(role.Role__c, theString));
-
-            System.debug(LoggingLevel.ERROR, 'FODA-SE->' + role.Default_User_Role__c + ' --->' + role.Role__c);
-
-            if (role.Default_User_Role__c) {
-                this.defaultPortalUserRole = role.Role__c;
-            }
-        }
-
-        return options;
-    }
-  */ 
     @RemoteAction
     public static string newAppsRequest (string applicationId, string applicationName, string contactId){
-
-        System.debug(LoggingLevel.ERROR, 'BOSTA');
-
         String appRight = 'Access Requested';
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
@@ -601,10 +568,8 @@ public with sharing class ISSP_AvailableServices{
             appRight = 'Access Granted';
         insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
 
-        System.debug(LoggingLevel.ERROR, '-->' + portalServiceRole + '--' + flagUseDefaultRole + '--' + defaultPortalUserRole);
-
         if (portalServiceRole != '' || flagUseDefaultRole) {
-            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId AND  Contact__c =: contactId];
+            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId AND contact__c =: contactId];
 
             if (flagUseDefaultRole) {
                 app.ANG_Portal_Service_Role__c = defaultPortalUserRole;                    
