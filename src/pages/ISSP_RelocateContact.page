@@ -73,7 +73,7 @@
                     <apex:outputPanel rendered="{!NOT(IsMapAccountsEmpty)}">
                         <div class="col-md-6">
                             <div class="row h4 text-center">
-                                <apex:selectList value="{!selectedAccountId}" multiselect="false" size="1">
+                                <apex:selectList styleclass="form-control rec text-center" style="width:80%;" value="{!selectedAccountId}" multiselect="false" size="1">
                                     <apex:selectOptions value="{!listOptionAccount}"/>
                                     <apex:actionSupport event="onchange" action="{!selectAccount}" rerender="mainForm"/>
                                 </apex:selectList>
