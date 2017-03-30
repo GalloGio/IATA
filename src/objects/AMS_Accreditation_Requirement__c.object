@@ -1440,6 +1440,17 @@
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Accreditation_Model_Required</fullName>
+        <active>true</active>
+        <description>for travel agents</description>
+        <errorConditionFormula>AND( 
+ISBLANK(ANG_Accreditation_Model__c),
+RecordType.DeveloperName &lt;&gt; &apos;Travel_Agent&apos; 
+)</errorConditionFormula>
+        <errorDisplayField>ANG_Accreditation_Model__c</errorDisplayField>
+        <errorMessage>Travel agent requirements must contain an Accreditation Model</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Location_Type_Required</fullName>
         <active>true</active>
         <description>Location type is required when creating an Accreditation Requirement.</description>
