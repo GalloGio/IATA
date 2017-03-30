@@ -69,10 +69,10 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>ANG_Accreditation_Models__c</fullName>
+        <fullName>ANG_Accreditation_Model__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
-        <label>Accreditation Models</label>
+        <label>Accreditation Model</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
