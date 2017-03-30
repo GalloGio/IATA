@@ -285,8 +285,7 @@
                                             
                                          
                                         <td class=" dataCell " scope="row">
-                                            <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                                                 <apex:param value="{!sfAttachment.recordAttachment.CreatedDate}" />
+                                            <apex:outputText value=" {!sfAttachment.recordAttachment.CreatedDate}">                                                
                                              </apex:outputText>
                                         </td>
                                         <td class=" dataCell " scope="row">
@@ -356,8 +355,7 @@
                                             </apex:outputText>
                                         </td>
                                         <td class=" dataCell " scope="row">
-                                            <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                                                 <apex:param value="{!attach.createdDate}" />
+                                            <apex:outputText value=" {!attach.createdDate}">
                                              </apex:outputText></td>
                                         <td class=" dataCell " scope="row">
                                             <apex:outputLink value="/{!attach.createdBy}" target="_top">
