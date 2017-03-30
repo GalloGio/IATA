@@ -862,8 +862,13 @@ public without sharing class ISSP_Registration {
             return Page.ISSP_Registration;
         } else {
             log('failed to create Portal User');
+            if(communityName == 'CNS') {
+                errorMessage.add(label.ISSP_generalError_CNS);
+                ISSP_Utilities.SendErrorNotificationEMail('LOG:'+log+'\n ErrorMessage: '+label.ISSP_generalError_CNS);
+            } else {
             errorMessage.add(label.ISSP_generalError);
             ISSP_Utilities.SendErrorNotificationEMail('LOG:'+log+'\n ErrorMessage: '+label.ISSP_generalError);
+            }
             displayNewCaseForm = true;
             return null;
         }
