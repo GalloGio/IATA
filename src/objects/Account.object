@@ -2541,7 +2541,7 @@
     </fields>
     <fields>
         <fullName>ANG_Accreditation_Model__c</fullName>
-		<description>To store Accreditation Model selected by the agency.</description>
+        <description>To store Accreditation Model selected by the agency.</description>
         <externalId>false</externalId>
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation Model</label>

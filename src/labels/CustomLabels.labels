@@ -143,6 +143,13 @@
         <value>Undo Deactivation of agency in BSPLink</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action14</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action14</shortDescription>
+        <value>New Financial Security</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -550,6 +557,20 @@
         <value>Certificate</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP34</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP34</shortDescription>
+        <value>Request financial security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP35</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP35</shortDescription>
+        <value>Confirm financial security  received</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -752,49 +773,49 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailCC</shortDescription>
-        <value>agbisitj@iata.org,alvarengam@iata.org,arcel@iata.org,bestr@iata.org,boulaghmena@iata.org,careenn@iata.org,chanc@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,farrella@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,hattinghc@iata.org,haywards@iata.org,hughesg@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kalajil@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,McbrideG@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,MomchilovM@iata.org,OueidatG@iata.org,petterssonl@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,reckmannr@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,rossje@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,szajkod@iata.org,TruchetP@iata.org,torneroc@iata.org,vitel@iata.org</value>
+        <value>asacp@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailGDS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
+        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAfricaMiddleEast</shortDescription>
-        <value>cliffordc@iata.org,kuuchir@iata.org,kosticd@iata.org,grobotekt@iata.org,StancuA@iata.org,mirb@iata.org,isicheic@iata.org,sadiqs@iata.org,yousefr@iata.org,rajputf@iata.org,suwal@iata.org,sorokink@iata.org,tadrosc@iata.org,salaha@iata.org,almuhaisem@iata.org,amulelea@iata.org</value>
+        <value>asamm@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAmericas</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAmericas</shortDescription>
-        <value>cerdap@iata.org, odelej@iata.org, ciriloc@iata.org, hanonl@iata.org, linesa@iata.org, pughr@iata.org, reisf@iata.org, hanonl@iata.org, fondacarop@iata.org, corvoj@iata.org, molinac@iata.org, salaar@iata.org, solorzanoj@iata.org, medeirosk@iata.org, montielk@iata.org, lopezr@iata.org, smojet@iata.org, kinoshitan@iata.org, larranagad@iata.org, orebc@iata.org, americasopsmanagement@iata.org</value>
+        <value>asmia@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAsiaPacific</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAsiaPacific</shortDescription>
-        <value>cliffordc@iata.org, yeohhc@iata.org, cowlesb@iata.org, azaharia@iata.org, hoj@iata.org, goelv@iata.org, choudhuryr@iata.org, kwongr@iata.org, kotharik@iata.org, chewj@iata.org, chowdhurym@iata.org, kwongr@iata.org, leet@iata.org, nguyenth@iata.org, nalawadem@iata.org, mohananb@iata.org, shahb@iata.org, rodrigos@iata.org, vitharanai@iata.org, reyesr@iata.org, ohv@iata.org, pekm@iata.org, praban@iata.org, shaikhn@iata.org</value>
+        <value>assin@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsChinaNorthAsia</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsChinaNorthAsia</shortDescription>
-        <value>zhangbj@iata.org, liyp@iata.org, liwx@iata.org, wangls@iata.org, pengs@iata.org, houk@iata.org, lusm@iata.org, zhaor@iata.org, mayh@iata.org, sundy@iata.org, gaom@iata.org, wangyy@iata.org, zhangxl@iata.org, zhangy@iata.org, niuy@iata.org, juyi@iata.org, guoy@iata.org, xuj@iata.org</value>
+        <value>asbjs@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsEurope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsEurope</shortDescription>
-        <value>schvartzmanr@iata.org, moralesa@iata.org, buonog@iata.org, giannisj@iata.org, escalantej@iata.org, girondoe@iata.org, wallacee@iata.org, castrom@iata.org, ivanovam@iata.org, perezp@iata.org, pascualr@iata.org, paredesv@iata.org, blazqueza@iata.org, diasdasalj@iata.org, ingladas@iata.org, martinezm@iata.org, batagliaf@iata.org, baissonm@iata.org, paredesc@iata.org, saremyt@iata.org, nolls@iata.org, peinadol@iata.org, martinyuks@iata.org, garciate@iata.org, amorl@iata.org, abbadid@iata.org</value>
+        <value>asmad@iata.org</value>
     </labels>
     <labels>
         <fullName>Ask_Delete_Attachment</fullName>
@@ -8032,6 +8053,20 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Gross Amnt Second year</shortDescription>
         <value>Gross Amnt Second year</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Head_Entity_Cash</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
+        <value>New Head Entity - Standard Accreditation with Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
+        <value>New Head Entity lite - Standard Accreditation with no Cash</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
@@ -21537,6 +21572,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Trust Weaver</shortDescription>
         <value>Trust Weaver</value>
+    </labels>
+    <labels>
+        <fullName>Type_of_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Type of Accreditation</shortDescription>
+        <value>* Type of Accreditation</value>
     </labels>
     <labels>
         <fullName>Until</fullName>
