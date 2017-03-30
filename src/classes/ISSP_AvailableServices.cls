@@ -135,14 +135,21 @@ public with sharing class ISSP_AvailableServices{
                 conHOAccountLocType = '';
                 isIEPAccountEnable = false;
 
-                //Validates if user have access to request IEP account
-                if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE') ){
+
+                // A user has accecss to easypay when:
+                // If the IEP status is open
+                // If the IEP status is not open and is an admin and the account is HO or HE 
+                // If the IEP status is not open and is not an admin and the account is not HO or HE and the parent account is HO or HE
+                if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open')
                     isIEPAccountEnable = true;
-                //}else if(isAdmin && contAcc.Account.ANG_IEP_Status_FF__c == 'Open'
-                }else if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open'
-                    && (contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE') ){
+                else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
                     isIEPAccountEnable = true;
-                }
+                else if( contAcc.Account.Top_Parent__r.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE')
+                    isIEPAccountEnable = true;
+
+                System.debug(LoggingLevel.ERROR, 'contAcc.Account.Top_Parent__r.Location_Type__c-->' + contAcc.Account.Top_Parent__r.Location_Type__c);
+                System.debug(LoggingLevel.ERROR, 'contAcc.Account.ANG_IEP_Status_FF__c-->' + contAcc.Account.ANG_IEP_Status_FF__c);
+                System.debug(LoggingLevel.ERROR, '-->' + isIEPAccountEnable);
 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;

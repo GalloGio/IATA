@@ -290,6 +290,7 @@
                       <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" style="visibility: hidden"/>
                     </a>
                   </span>
+
                   <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && isIEPAccountEnable)}">
                     <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " /> 
                     <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
@@ -333,30 +334,38 @@
           </div>
 
           <div class="modal-footer">
-              <div class="row">
+            <div class="row">
                   
               <div class="col-md-6">
+
+                <apex:commandButton 
+                  rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
+                  value="{!$Label.ISSP_Confirm}" 
+                  styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" 
+                  oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" 
+                  rerender="display_messages"/>
             
-              <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" value="{!$Label.ISSP_Confirm}" styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" rerender="display_messages"/>
+                <apex:outputPanel 
+                  rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}"
+                  id="serviceSubmitButton">
+                  <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"
+                     class="btn_iata_success btn-block btn">
+                     {!$Label.ISSP_Confirm}
+                  </a>
+                </apex:outputPanel> 
 
-              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}" id="serviceSubmitButton"> 
-                <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}, 'SKIP', '', 'false'');"    class="btn_iata_success btn-block btn">
-                   {!$Label.ISSP_Confirm}
-                </a>
-              </apex:outputPanel> 
+                <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
+                  <a onclick=" newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}','{!Serv.portalServiceRole}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');" class="btn_iata_success btn-block btn">
+                     {!$Label.ISSP_Confirm}
+                  </a>
+                </apex:outputPanel> 
 
-              <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
-                <a onclick=" newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}','{!Serv.portalServiceRole}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
-                   {!$Label.ISSP_Confirm}
-                </a>
-              </apex:outputPanel> 
-
- </div>
-                  <div class="col-md-6">
-              <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">
+              </div>
+              <div class="col-md-6">
+                <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">
                   {!$label.ISSP_Cancel}
-              </a>
-                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>
