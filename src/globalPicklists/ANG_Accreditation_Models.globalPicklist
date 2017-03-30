@@ -5,11 +5,11 @@
         <default>true</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Standard with Cash</fullName>
+        <fullName>Standard without Cash</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Standard no Cash</fullName>
+        <fullName>Standard</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
