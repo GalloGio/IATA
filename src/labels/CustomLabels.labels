@@ -16805,6 +16805,54 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Related contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_Relocate_Contact</fullName>
+        <categories>ISSP, IFAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Contact</shortDescription>
+        <value>Relocate under another account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Current_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Current Account</shortDescription>
+        <value>Current Account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Description</shortDescription>
+        <value>Move contact under another account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Failed</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Failed</shortDescription>
+        <value>Relocation failed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_No_Accounts</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate No Accounts</shortDescription>
+        <value>There is no other account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Select_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Select Account</shortDescription>
+        <value>Select Account</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Reopen</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
