@@ -71,7 +71,7 @@
     <fields>
         <fullName>ANG_Accreditation_Model__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <globalPicklist>ANG_Accreditation_Model</globalPicklist>
         <label>Accreditation Model</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
@@ -483,7 +483,7 @@
         <active>true</active>
         <label>Cargo Agent</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
@@ -493,11 +493,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -813,7 +813,7 @@
         <active>true</active>
         <label>Change</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
@@ -823,11 +823,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1131,7 +1131,7 @@
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
+            <picklist>ANG_Accreditation_Model</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
                 <default>true</default>
@@ -1141,11 +1141,11 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard no Cash</fullName>
+                <fullName>Standard</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard with Cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
