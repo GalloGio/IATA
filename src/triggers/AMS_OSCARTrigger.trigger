@@ -317,12 +317,11 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     throw ex;
                 }
 
-            //updatedOscar.Sanity_Check_Passed__c = true;
 
-            system.debug('updatedOscar.Sanity_Check_Passed__c: ' + updatedOscar.Sanity_Check_Passed__c);
+            system.debug('RB - Sanity check already passed: ' + updatedOscar.Sanity_Check_Passed__c);
 
-            if(updatedOscar.Sanity_Check_Passed__c = true) {
-                throw new AMS_ApplicationException('Change code already generated for this OSCAR! Please perform a withdraw in order to pass Sanity Check.');
+            if(updatedOscar.Sanity_Check_Passed__c == true) {
+                updatedOscar.addError('Change code already generated for this OSCAR! Please perform a withdraw in order to pass Sanity Check.');                
             }
             
             updatedOscar.Sanity_Check_Passed__c = true;
