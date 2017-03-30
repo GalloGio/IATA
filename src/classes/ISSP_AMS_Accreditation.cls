@@ -391,7 +391,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
-                if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad') {
+                if ( newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New HE standard' || newCase.Reason1__c == 'New HE lite') {
                     amsOfficeType = 'HO'; //Branches Abroad have same country requirements as HO in that country
                 } else if (newCase.Reason1__c == 'New BR / IP') {
                     amsOfficeType = 'Branch';
@@ -561,7 +561,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
         }
 
-        if(isocountry.New_Accreditation_Models_enabled__c == true)
+        if(isocountry.ANG_Enable_NewGen__c == true)
             newAccreditationModels = true;
 
         system.debug('sector value ' + sectorValue);
@@ -1018,17 +1018,15 @@ public without sharing class ISSP_AMS_Accreditation {
                 options.add(new SelectOption('New BR / IP - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH));
                 if (isocountry.Region__c != 'Americas')
                     options.add(new SelectOption('New BR Abroad - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD));
-            } else { //Not an Accredited PAX Agent, or any type of Cargo Agent                
-                    if(isocountry.New_Accreditation_Models_enabled__c == true){
+            } else {
+                    if(isocountry.ANG_Enable_NewGen__c == true){
                         options.add(new SelectOption('New HE standard - Standard with Cash', Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
                         options.add(new SelectOption('New HE lite - Standard no Cash', Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
-                    }else{            
-                        
-                        options.add(new SelectOption('New HO - Legacy Accreditation', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
-                        }
+                    }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
+                         options.add(new SelectOption('New HO - Legacy Accreditation', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
+                    }
             }
-        }        
-        
+        }
 
         system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);
 
@@ -1085,16 +1083,14 @@ public without sharing class ISSP_AMS_Accreditation {
             if (con.Account.Category__c == 'IATA Cargo Agent')
                 amsLocationType = 'New HO - IATA Cargo Agent';
             else if (con.Account.Category__c == 'IATA Passenger Sales Agent')
-                amsLocationType = 'New HO - IATA Passenger Sales Agent';                
-            //else if (con.Account.Category__c == 'Non-IATA Travel Agent')
-            //amsLocationType = 'New HE - Non IATA Travel Agent';
+                amsLocationType = 'New HO - IATA Passenger Sales Agent';
             }
             
-            agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();            
+            agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
+
             newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
             system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
             system.debug('agentType ' + agentType);
-
 
             if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith('Travel_Agent')) {
                 if (newCase.Reason1__c == 'New HO') {
@@ -3104,6 +3100,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         SYSTEM.DEBUG('Fetching Country REQS -  SectorValue: ' + sectorValue);
         if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange == false) {
             String selectedLang;
+            String accredModel;
             RecordType TravelReqRecType = [Select Id From RecordType  Where SobjectType = 'AMS_Accreditation_Requirement__c' and DeveloperName = 'Travel_Agent'];
             
             SYSTEM.DEBUG('Travel Agent ReqID:' + TravelReqRecType.Id);
