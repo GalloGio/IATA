@@ -427,7 +427,7 @@
                 <height>200</height>
                 <page>ANG_AccountTrackingHistory</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
