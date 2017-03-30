@@ -46,6 +46,8 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         //ApexPages.StandardController sc = new ApexPages.StandardController(oscar);
         AMS_OSCAR_ProcessViewerController controller = new AMS_OSCAR_ProcessViewerController();
         
+        Boolean isNotNewGenProcessValue = controller.isNotNewGenProcess;
+
         Test.stopTest();
     }
 
