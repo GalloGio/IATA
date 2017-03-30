@@ -18319,7 +18319,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>ISSP_generalError_CNS</shortDescription>
         <value>It is not possible to finalize your registration process. 
-
+&lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the CNS Customer Portal please contact us at Tel: 786-413-1000</value>
     </labels>
     <labels>
