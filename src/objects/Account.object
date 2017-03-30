@@ -2542,13 +2542,12 @@
     <fields>
         <fullName>ANG_Accreditation_Model__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Accreditation_Model</globalPicklist>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation Model</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <visibleLines>4</visibleLines>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
