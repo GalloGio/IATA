@@ -1030,7 +1030,12 @@ public without sharing class ISSP_Registration {
 
                 ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
                 if (serviceIdInstance != null){
-                    if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
+                    if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null && serviceIdInstance.AgencyAccreditationCNS__c != '') {
+                        system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
+                        String appId = serviceIdInstance.AgencyAccreditationCNS__c;
+                        appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
+                    }
+                    else if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
                         system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditation__c);
                         String appId = serviceIdInstance.AgencyAccreditation__c;
                         appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];

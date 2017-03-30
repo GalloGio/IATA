@@ -501,16 +501,33 @@
                                               <div id="my_Content" style="height: auto !important;">
                                                    <table class="table table-striped">
                                                         <tbody>
+
+                                                    <apex:outputPanel rendered="{!CommunityName=='CNS'}">
                                                     <knowledge:articleList articleVar="a"
                                                         language="{!UserLanguage}"
                                                         articleTypes="FAQ__kav"
                                                         sortBy="mostViewed"
                                                         pageSize="5"
                                                         pageNumber="1"
+                                                          categories="FAQs:CNS_Portal"
                                                        >
                                                         <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
 
                                                       </knowledge:articleList>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!CommunityName!='CNS'}">
+                                                      <knowledge:articleList articleVar="a"
+                                                          language="{!UserLanguage}"
+                                                          articleTypes="FAQ__kav"
+                                                          sortBy="mostViewed"
+                                                          pageSize="5"
+                                                          pageNumber="1"
+                                                          categories="FAQs:Customer_Portal"
+                                                         >
+                                                          <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
+
+                                                        </knowledge:articleList>
+                                                    </apex:outputPanel>
                                                    </tbody>
                                                 </table>
                                              </div>
