@@ -5180,10 +5180,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
             </picklistValues>
             <picklistValues>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
                 <controllingFieldValues>Association</controllingFieldValues>
@@ -12997,7 +12993,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Status</label>
         <picklist>
             <picklistValues>
+                <fullName>Applicant</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ARC registered</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -13010,6 +13014,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <picklistValues>
                 <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endorsed</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -13033,11 +13041,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Terminated</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unregisterable STP</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -13543,7 +13563,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS Associates</fullName>
+                <fullName>CASS Associate</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -25329,10 +25349,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -28212,10 +28228,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -33926,10 +33938,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Couriers</fullName>
                 <default>false</default>
             </values>
@@ -36065,10 +36073,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -43596,10 +43600,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -54348,10 +54348,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -56554,10 +56550,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -58756,10 +58748,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61339,10 +61327,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -63180,10 +63164,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68484,10 +68464,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Car Rental</fullName>
                 <default>false</default>
             </values>
@@ -70625,10 +70601,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74702,10 +74674,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -76978,10 +76946,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Car Rental</fullName>
                 <default>false</default>
             </values>
@@ -77536,7 +77500,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
