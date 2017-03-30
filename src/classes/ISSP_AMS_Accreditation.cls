@@ -388,7 +388,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
-                if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad') {
+                if ( newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New HE standard' || newCase.Reason1__c == 'New HE lite') {
                     amsOfficeType = 'HO'; //Branches Abroad have same country requirements as HO in that country
                 } else if (newCase.Reason1__c == 'New BR / IP') {
                     amsOfficeType = 'Branch';
