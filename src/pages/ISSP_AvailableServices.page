@@ -292,7 +292,7 @@
                   </span>
 
                   <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && isIEPAccountEnable)}">
-                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " /> 
+                    <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
                     <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
                       <apex:selectOptions value="{!availablePortalServiceRoles}"/>
                       <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
