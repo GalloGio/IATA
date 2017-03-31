@@ -335,10 +335,20 @@ public class AMS_AccountRoleTest {
         system.assertEquals(2,theStagingConts.size(), 'testOwnersRTCompany(S1) -> the method should have inserted 3 owners for the second branch');
 
 
-
+        ID PersonRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
         // I WILL CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts[0].Financial_interest__c = 50;
         theStagingConts[1].Financial_interest__c = 50;
+        theStagingConts[0].RecordTypeId = PersonRT;
+        theStagingConts[1].RecordTypeId = PersonRT;
+        theStagingConts[0].Last_name__c = 'LN 0';
+        theStagingConts[1].Last_name__c = 'LN 1';
+        theStagingConts[0].First_name__c = 'FN 0';
+        theStagingConts[1].First_name__c = 'FN 1';
+        theStagingConts[0].Phone__c = '+2435234';
+        theStagingConts[1].Phone__c = '+56547653';
+        theStagingConts[0].Email__c = 'ac0@mail.com';
+        theStagingConts[1].Email__c = 'ac1@mail.com';
         update theStagingConts;
 
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
@@ -363,8 +373,13 @@ public class AMS_AccountRoleTest {
 
         theStagingConts[0].Financial_interest__c = 90;
         theStagingConts[1].Financial_interest__c = 10;
+
+        theStagingConts[0].Agency_owner__c = true;
+        theStagingConts[1].Agency_owner__c = true;
+
         update theStagingConts;
 
+        system.debug('#### su ' + parameter);
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
 
         
