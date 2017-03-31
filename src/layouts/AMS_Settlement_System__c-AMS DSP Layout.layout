@@ -113,6 +113,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Operation_Period_code__c</fields>
         <fields>Operation_Type__c</fields>
         <fields>First_Day__c</fields>
         <fields>Last_Day__c</fields>
