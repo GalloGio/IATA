@@ -154,6 +154,27 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Hidden_Account_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.AccountId,
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;,Contact__r.Account.Parent.Id,
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+
+Contact__r.Account.Parent.Id,
+Contact__r.AccountId),
+
+Contact__r.AccountId
+)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hidden Account Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_Governance__c</fullName>
         <externalId>false</externalId>
         <label>Local Governance</label>
