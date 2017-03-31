@@ -571,6 +571,20 @@ public without sharing class vfISSP_FAQ2Case
         addDecsription();
         setRecordType(); //TF - SP11
 
+        //Query for custom setting holding the topics and subtopics considered to be cns.
+        Map <Id, ISSP_CNS_Topics_Subtopics__c> cnsTopics = new Map <Id, ISSP_CNS_Topics_Subtopics__c> ([select Id, Topic__c, Subtopics__c, Subtopics2__c from ISSP_CNS_Topics_Subtopics__c]);
+
+        Map <String, ISSP_CNS_Topics_Subtopics__c> cnsTopicMap = new Map <String, ISSP_CNS_Topics_Subtopics__c> ();
+        for(ISSP_CNS_Topics_Subtopics__c ct: cnsTopics.values()){
+            cnsTopicMap.put(ct.Topic__c, ct);
+        }
+
+        Boolean isCNS = ISSP_Utilities.isCNS();
+        if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', ''))) {
+            newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
+        }
+
         //ASsign new CAse Record Type
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
