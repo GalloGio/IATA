@@ -24,10 +24,10 @@ trigger trgAccountFieldsUpdate on Case (before insert) {
         		profileName = profileList[0].Name;
         	}
     	//}	
-        if(profileName != null){
+        //[CASE CLEANUP 2017] - No such profile "Overage High Volume Customer Portal User Cloned"
+        /*if(profileName != null){
         	
             //profileName = profile.Name;
-            /*Debug Logs 15June2011*/
             System.debug('Profile Name : ' + profileName);
             //if(profileName.contains('Customer Portal Manager Standard Cloned')){
             //if(profileName.contains('Overage High Volume Customer Portal User Cloned')){
@@ -43,17 +43,16 @@ trigger trgAccountFieldsUpdate on Case (before insert) {
                         if(newCase.ContactId != null){
                             if(newCase.ContactId == lstConts[i].Id){
                                 newCase.AccountId = lstConts[i].AccountId;
-                                newCase.Power_User_Account__c = lstConts[i].AccountId;
+                                //newCase.Power_User_Account__c = lstConts[i].AccountId;
                                 newCase.IsVisibleInSelfService = True;
-                                /*Debug Logs 15June2011*/
-                                System.debug('Power User Account : ' + newCase.Power_User_Account__c);
+                                //System.debug('Power User Account : ' + newCase.Power_User_Account__c);
                                 break;
                             }
                         }
                     }
                 }
             }
-        }                                
+        }*/                                
     }
     
 }

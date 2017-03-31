@@ -1,0 +1,96 @@
+<apex:page controller="ISSP_CurrencyCenterHeatMapCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" renderAs="pdf">
+
+<head>
+
+<style>
+.header-logo {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+.heat-map-cell-0{
+  background-color: #F5F5F5;
+  width: 8%;
+}
+.heat-map-cell-1{
+  background-color: #E5166E;
+  width: 8%;
+}
+.heat-map-cell-2{
+  background-color: #6ABAEB;
+  width: 8%;
+}
+.heat-map-cell-3{
+  background-color: #F19200;
+  width: 8%;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+body {
+  font-family: Arial Unicode MS;
+}
+.th-style {
+    font-size: 13px;
+    text-transform: uppercase;
+    vertical-align: top;
+    text-align: center;
+}
+.td-style {
+    width: 12%;
+}
+
+</style>
+
+</head>
+
+<body>
+<div class="header-logo"><img  class="header-logo" src="{!URLFOR($Resource.CurrencyCenter_Style, '/IATA_CurrencyCenter_logo_RGB_Larger.png')}"/></div>
+  <apex:outputLabel for="lastUpdateDate" value="{!$ObjectType.Country_Profile__c.fields.HM_Last_Indicators_Update_Date__c.Label}:" />
+  <apex:outputText id="lastUpdateDate" value="{0,date,dd MMM yyyy}"><apex:param value="{!lastUpdateDate}"/></apex:outputText>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="th-style"></th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}</th>
+        <th class="th-style">{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <apex:repeat value="{!cList}" var="c">
+      <tr>
+        <td class="td-style"><!--{!c.Name}-->{!c.Country_Name__r.Name}</td>
+        <td class="heat-map-cell-{!c.HM_Spot_1m_ch__c}"></td>
+        <td class="heat-map-cell-{!c.HM_Spot_12m_ch__c}"></td>
+        <td class="heat-map-cell-{!c.HM_Fwd_NDF__c}"></td>
+        <td class="heat-map-cell-{!c.HM_Credit_spread__c}"></td>
+        <td class="heat-map-cell-{!c.HM_Cr_Rating__c}"></td>
+        <td class="heat-map-cell-{!c.HM_GDP__c}"></td>
+        <td class="heat-map-cell-{!c.HM_CPI__c}"></td>
+        <td class="heat-map-cell-{!c.HM_CA__c}"></td>
+        <td class="heat-map-cell-{!c.HM_NPL__c}"></td>
+        <td class="heat-map-cell-{!c.HM_FX_Res__c}"></td>
+        <td class="heat-map-cell-{!c.HM_FX_Res_percent__c}"></td>
+      </tr>
+      </apex:repeat>
+    </tbody>
+  </table>
+</body>
+
+</apex:page>

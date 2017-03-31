@@ -113,6 +113,19 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Operation_Period_code__c</fields>
+        <fields>Operation_Type__c</fields>
+        <fields>First_Day__c</fields>
+        <fields>Last_Day__c</fields>
+        <fields>Operation_Currency__c</fields>
+        <fields>Period_Code__c</fields>
+        <fields>Remittance_Day__c</fields>
+        <relatedList>operational_Calendar__c.ISS_operation__c</relatedList>
+        <sortField>Remittance_Day__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.AMS_Settlement_System_CASS__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -121,7 +134,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hg0000000TaG1</masterLabel>
+        <masterLabel>00hw000000dO5nt</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

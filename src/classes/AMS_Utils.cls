@@ -219,10 +219,7 @@ public without sharing class AMS_Utils {
     @future
     public static void sendEmailAmsSupport( string subject, string message) {
 
-        if (Test.isRunningTest() ) {
-            System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-            return;
-        }
+        
 
         //List<ID> userIDs = getUserIds(getSupportEmails());
         List<ID> userIDs = new List<ID>();
@@ -249,8 +246,13 @@ public without sharing class AMS_Utils {
                 emailsToSend.add(mail);
 
             }
-
-            Messaging.sendEmail(emailsToSend);
+            
+            if (Test.isRunningTest() ) {
+                Messaging.sendEmail(emailsToSend);
+                System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
+                return;
+            }
+                
 
         } catch (Exception  e1) {
             system.debug('Failed to send email to users:' + e1.getMessage());
@@ -877,6 +879,17 @@ public without sharing class AMS_Utils {
         return null;
     }
 
+
+    public static String overrideEBulletinStatusDescr(String statusDesc) {
+
+        if (statusDesc == ACC_S5_CASHNOCOMMISSION)
+            return 'DEFAULT/SUSPENSION';
+        else if (statusDesc == ACC_S6_CASHWITHCOMMISSION)
+            return 'REVIEW/STDS REMOVAL/NOTICE OF TERMINATION';
+        
+        return statusDesc;
+    }
+
     public static String getIATANReadableStatus(String endorsmentCode) {
 
         if (endorsmentCode == '0') {
@@ -1147,7 +1160,7 @@ public without sharing class AMS_Utils {
     }
 
     //Map data from staging area (AMS Online Accreditation) to account
-    public static Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
+    public static Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> copyDataToAccountForAgencyChanges(AMS_OSCAR__c oscar, Set<Id> accountsAffected, String typesOfChange, Map<Id, Account> accounts, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation) {
 
         System.debug('AGENCY CHANGES: Types of Change (' + typesOfChange + ') ');
 
@@ -1155,7 +1168,7 @@ public without sharing class AMS_Utils {
 
         System.debug('AGENCY CHANGES: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<Account,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+        Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
         Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
         
@@ -1240,8 +1253,8 @@ public without sharing class AMS_Utils {
                         Schema.SObjectField field = acctFieldsMap.get(accFieldApiName);
                         Schema.DisplayType fldType = field.getDescribe().getType();
                         
-                        system.debug('Field value to migrate to account: ' + accFieldApiName);
-                        system.debug('Field Type to migrate to account: ' + fldType);
+                        system.debug('DDD Field value to migrate to account: ' + accFieldApiName);
+                        system.debug('DDD Field Type to migrate to account: ' + fldType);
 
                         //Add Account Changes to be used when generating the Change Codes History Entities
                         
@@ -1260,6 +1273,9 @@ public without sharing class AMS_Utils {
                             newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
                        }
                         
+                        system.debug('DDD oldValue:' + oldValue);
+                        system.debug('DDD newValue:' + newValue);
+                        
                         if (oldValue != newValue)
                             objectChangesList.add(new AMS_ChangeCodesHelper.ObjectChange('Account',accFieldApiName,oldValue,newValue,oldValueLookupID,newValueLookupID));
                             
@@ -1269,7 +1285,7 @@ public without sharing class AMS_Utils {
 
                     AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(objectChangesList);
 
-                    accountsToUpdate.put(acc,acctChangesStruct);
+                    accountsToUpdate.put(acc.Id,acctChangesStruct);
                 }
 
         }
@@ -1442,7 +1458,7 @@ public static String transformLegalStatus(String companyType) {
     if (companyType.equalsIgnoreCase('V'))
         return 'Co-operative';
 
-    return '';
+    return companyType;
 
 }
 
@@ -1675,22 +1691,6 @@ public static Map<String, Schema.SObjectField> getObjectFields(String objectApiN
     Schema.SObjectType leadSchema = schemaMap.get(objectApiName);
 
     return leadSchema.getDescribe().fields.getMap();
-
-}
-
-
-
-public class ChangeCodeStruct {
-
-    private Agency_Applied_Change_code__c changeCode {get; set;}
-    private Account acct {get; set;}
-
-    public ChangeCodeStruct(Agency_Applied_Change_code__c changeCode, Account acct) {
-
-        this.changeCode = changeCode;
-        this.acct = acct;
-
-    }
 
 }
 
