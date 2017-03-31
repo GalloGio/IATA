@@ -1527,7 +1527,8 @@ public class AMS_OSCARTriggerHandler {
 					
 					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
 
-					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
+					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {
+						system.debug('DDD trainedStaffToRemove:'  + trainedStaffToRemove);				
 						if( (trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_DGR || trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)  && trainedStaffToRemove.Valid_until__c != null){
 							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
 							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
@@ -1562,11 +1563,12 @@ public class AMS_OSCARTriggerHandler {
 
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGR ' + numberDGR);
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
+		System.debug('OSCARTriggerHandler -> checkCertifications: number of CATA ' + numberDGA);
 
 		System.debug('CHECK VALUES countryCode' + countryCode + ' locationClass ' + locationClass + ' accountLocationType ' + accountLocationType + ' cassNumber ' + cassNumber);
 
 		if(handling){
-			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3 && numberCATA < 1){
+			if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
 				throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.##');
 
 			}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
