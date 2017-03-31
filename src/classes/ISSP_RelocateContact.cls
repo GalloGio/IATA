@@ -100,6 +100,7 @@ public class ISSP_RelocateContact {
                 BillingCity, BillingPostalCode, BillingState, BillingCountry, IATA_ISO_Country__r.Name
             FROM Account
             WHERE RecordTypeId IN :VALID_ACCOUNT_RT
+            AND Status__c != 'Terminated'
             AND Id != :accountId
             AND ( Id = :parentId
             OR ParentId = :parentId
