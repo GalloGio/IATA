@@ -16015,6 +16015,16 @@ If you continue to experience issues registering for the IATA Customer Portal th
 &lt;br/&gt;&lt;br/&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoRecordsFoundCreateAgency_CNS</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundCreateAgency_CNS</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+&lt;br/&gt;&lt;br/&gt; 
+If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoRecordsFoundCreateStandardAirline</fullName>
         <categories>ISSP_Registration, s10</categories>
         <language>en_US</language>
@@ -16023,6 +16033,16 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoRecordsFoundCreateStandardAirline_CNS</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+&lt;br/&gt;&lt;br/&gt;
+If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundGP</fullName>
@@ -16035,6 +16055,16 @@ If you continue to experience issues registering for the IATA Customer Portal th
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoRecordsFoundGP_CNS</fullName>
+        <categories>ISSP, Registration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundGP_CNS</shortDescription>
+        <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as General Public or modify your search criteria and try again.
+&lt;br/&gt;&lt;br/&gt;
+If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoRecordsFoundGSA</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
@@ -16043,6 +16073,16 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
 &lt;br/&gt;&lt;br/&gt; 
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoRecordsFoundGSA_CNS</fullName>
+        <categories>ISSP, Registration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundGSA_CNS</shortDescription>
+        <value>No Company found for your combination of GSA code and country. Please ensure you have entered the correct information.
+&lt;br/&gt;&lt;br/&gt; 
+If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundNext</fullName>
@@ -17039,6 +17079,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt; in order to assist with any registration issues.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_generalError_CNS</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_generalError_CNS</shortDescription>
+        <value>Please contact us at Tel: 786-413-1000 in order to assist you.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_inactiveUserExist</fullName>

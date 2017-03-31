@@ -646,7 +646,8 @@ public without sharing class ISSP_Registration {
                     }
                 }
                 else{
-                    infoMessage.add(Label.ISSP_NoRecordsFoundCreateStandardAirline);
+                    if(CommunityName == 'CNS' ) { infoMessage.add(Label.ISSP_NoRecordsFoundCreateStandardAirline_CNS); }
+                    else { infoMessage.add(Label.ISSP_NoRecordsFoundCreateStandardAirline); }
                     showCreateAccount = true;
                     acc.Name = searchCompanyName;
                 }
@@ -655,7 +656,8 @@ public without sharing class ISSP_Registration {
         else if (isOther){
             if (!accountFound){
                 acc.Name = searchCompanyName;
-                infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency);
+                if(CommunityName=='CNS') { infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency_CNS); }
+                else { infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency); }
                 showCreateAccount = true;
             }
         }
@@ -670,14 +672,16 @@ public without sharing class ISSP_Registration {
                     acc.Sector__c = 'Travel Agent';
                     acc.Category__c = 'Non-IATA Travel Agent';
                 }
-                infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency);
+                if(CommunityName=='CNS') { infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency_CNS); }
+                else { infoMessage.add(Label.ISSP_NoRecordsFoundCreateAgency); }
                 showCreateAccount = true;
                 createAgency = true;
             }
         }
         else if (isTIESS){
             if (!accountFound){
-                errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                if(CommunityName=='CNS') { errorMessage.add(Label.ISSP_NoRecordsFoundGP_CNS); }
+                else { errorMessage.add(Label.ISSP_NoRecordsFoundGP); }
             }
         }
         else if (isAgency){
@@ -687,7 +691,8 @@ public without sharing class ISSP_Registration {
         }
         else if (isGSA){
             if (!accountFound){
-                errorMessage.add(Label.ISSP_NoRecordsFoundGSA);
+                if(CommunityName=='CNS') { errorMessage.add(Label.ISSP_NoRecordsFoundGSA_CNS); }
+                else { errorMessage.add(Label.ISSP_NoRecordsFoundGSA); }
             }
         }
         else if (isGeneral){
