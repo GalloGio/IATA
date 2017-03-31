@@ -1153,6 +1153,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*UserInfoUpdate Trigger.isInsert*/
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isInsert');
+            currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             for (Case aCase: Trigger.New){                
                 if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
                 	system.debug('##ROW##');                
@@ -1163,10 +1164,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     /// Update_AIMS_IRRWITH__c        updates   CS_Rep_ACC_IRR_Withdrawal__c
                     // Update_AIMS_REI_DEFWITH__c    updates    CS_Rep_Acc_REI__c            
                     //  Update_AIMS_TER__c            updates    CS_Rep_ACC_TER__c
-                    if (isCurrentUserInit == false){
-                        currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                        isCurrentUserInit = true;
-                    }if (currentUser.size() > 0){                      
+                    if (currentUser.size() > 0){                      
                         if (aCase.CS_Contact_Result__c != null)
                             aCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
                         if (aCase.Update_AIMS_IRR__c != null)
@@ -1376,6 +1374,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             set<string> CountryNameSet = new set<string>();
             map<string,IATA_ISO_Country__c> IATAISOCountryMap = new map<string,IATA_ISO_Country__c>();
             List<Mapping_for_CSR_Cases__c> CSRCasesMapping = Mapping_for_CSR_Cases__c.getAll().values();
+
             List<Case> parentAccount;
             List<Contact> accountFromRelatedContact;
             for(Case newCase : trigger.new){
@@ -1387,6 +1386,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if(iso.Case_BSP_Country__c != null) 
                     IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
             }
+
             for(Case newCase : trigger.new){
                 Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
                 Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
