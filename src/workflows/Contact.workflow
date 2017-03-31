@@ -411,7 +411,7 @@
             <name>New_user_portal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
