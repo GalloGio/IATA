@@ -1919,6 +1919,18 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>ISO_Country_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Value based on ISO 3166 Standard | Used for GDP Products</inlineHelpText>
+        <label>ISO Country Short Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ISS_Office_Location__c</fullName>
         <externalId>false</externalId>
         <label>ISS Office Location</label>

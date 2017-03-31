@@ -297,176 +297,151 @@
         Javascript for DatePicker week selector
     **/    
     (function($){
-    var $calroot;
+        var $calroot;
 
-    function selectCurrentWeek() {
-        window.setTimeout(function () {
-            var t = $calroot.find('.ui-datepicker-current-day a');//.addClass('ui-state-active');
-            t= t.closest('tr');
-            t.find('td>a').addClass('ui-state-active');//.parent().addClass('ui-state-active');
-        }, 1);
-        
-    }
-    function onSelect(dateText, inst) { 
-        var date = $(this).datepicker('getDate');
-
-        //when user clicks on friday or saturday we need to advance for the next week in order to get the correct results
-        if(date.getDay() >= 5){
-            date.setDate(date.getDate() + 2);
+        function selectCurrentWeek() {
+            window.setTimeout(function () {
+                var t = $calroot.find('.ui-datepicker-current-day a');//.addClass('ui-state-active');
+                t= t.closest('tr');
+                t.find('td>a').addClass('ui-state-active');//.parent().addClass('ui-state-active');
+            }, 1);
+            
         }
-
-        startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
-        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
-        var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-
-        //alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
-
-        startDate.setDate(startDate.getDate() - 2);
-        endDate.setDate(endDate.getDate() -2);
-
-        //alert('2 - startDate: '+startDate + ' || endDate: '+endDate);
-
-        jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
-        jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
-        
-        // alert( jQuery('[id$=pWeekStart]').val());
-        // alert( jQuery('[id$=pWeekEnd]').val());
-                
-        $calroot.trigger('weekselected',{
-            start:startDate,
-            end:endDate,
-            weekOf:startDate
-        });
-        selectCurrentWeek();
-    }
-
-    function onSelectDaily(dateText, inst) { 
-        var date = $(this).datepicker('getDate');
-        jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
-
-        var sDate = $.datepicker.formatDate('dd/mm/yy', date) ;
-        var sMaxDate = $.datepicker.formatDate('dd/mm/yy', $( this ).datepicker( "option", "maxDate" )) ;
-
-        if(sDate == sMaxDate){
-            jQuery('[id$=period1]').show();
-        }else{
-            jQuery('[id$=period1]').hide();
-        }
-    }
-    
-
-    var weekInitialStartDate;
-    var weekInitialEndDate;
-
-    function getWeeklyMaxDay(){
-        dayOfWeek = new Date().getDay();
-        dayOfMonth = new Date().getDate();
-        maxDay = dayOfMonth;
-        testDay = 0;
-
-
-        if(dayOfWeek == 5){
-            maxDay = maxDay-1;
-        }else if(dayOfWeek > 5){
-            maxDay = maxDay-2;
-        }else if(dayOfWeek < 5){
-            while(testDay != 5){
-                dayOfMonth = dayOfMonth - 1;
-                testDate = new Date(new Date().getFullYear(), new Date().getMonth(), dayOfMonth );
-                testDay = testDate.getDay();
-            }
-            maxDay = dayOfMonth-1;
-        } 
-        
-        //Initial values for the selected week
-        weekInitialStartDate=maxDay-6;
-        weekInitialEndDate=maxDay;
-        
-        return maxDay;
-    }
-
-    var reqOpt = {
-        onSelect:onSelect,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        firstDay: 5,
-        minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}-1, {!eBulletin_StartDate_day}),
-        //maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay() - 3)
-        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), getWeeklyMaxDay() )
-    };
-
-    // alert('new Date().getDate(): ' + new Date().getDate());
-    // alert('new Date().getDay(): ' + new Date().getDay());
-    // alert('new Date().getDate(): ' + (new Date().getDate()- new Date().getDay() - 3));
-
-    var reqOptDaily = {
-        onSelect:onSelectDaily,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        minDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  - 6),
-        maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  )
-    };
-
-    $.fn.weekpicker = function(options){
-        
-        var $this = this;
-        $calroot = $this;
-        
-        $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
-        $this.datepicker(reqOpt);
-
-        //events
-        $dprow = $this.find('.ui-datepicker');
-        
-        $dprow.on('mousemove','tr', function() { 
-            $(this).find('td a').addClass('ui-state-hover'); 
-        });
-        $dprow.on('mouseleave','tr', function() { 
-            $(this).find('td a').removeClass('ui-state-hover'); 
-        });
-
-        // var bIsStep3 = {!isStep3};
-        // if(bIsStep3){
-            //Ser current week as selected
+        function onSelect(dateText, inst) { 
             var date = $(this).datepicker('getDate');
 
-            // alert('0 - date: '+date + ' || date.getDay(): '+date.getDay());
+            //when user clicks on friday or saturday we need to advance for the next week in order to get the correct results
+            if(date.getDay() >= 6){
+                date.setDate(date.getDate() + 1);
+            }
+
+            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+
+            startDate.setDate(startDate.getDate() - 1);
+            endDate.setDate(endDate.getDate() - 1);
+
+            jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
+            jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
+                    
+            $calroot.trigger('weekselected',{
+                start:startDate,
+                end:endDate,
+                weekOf:startDate
+            });
+            selectCurrentWeek();
+        }
+
+        function onSelectDaily(dateText, inst) { 
+            var date = $(this).datepicker('getDate');
+            jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
+
+            var sDate = $.datepicker.formatDate('dd/mm/yy', date) ;
+            var sMaxDate = $.datepicker.formatDate('dd/mm/yy', $( this ).datepicker( "option", "maxDate" )) ;
+
+            if(sDate == sMaxDate){
+                jQuery('[id$=period1]').show();
+            }else{
+                jQuery('[id$=period1]').hide();
+            }
+        }
+        
+
+        var weekInitialStartDate;
+        var weekInitialEndDate;
+
+        function getWeeklyMaxDay(){
+            dayOfWeek = new Date().getDay();
+            dayOfMonth = new Date().getDate();
+            maxDay = dayOfMonth;
+            testDay = 0;
+
+            if(dayOfWeek == 6){
+                maxDay = maxDay-1;
+            }else if(dayOfWeek > 6){
+                maxDay = maxDay-1;
+            }else if(dayOfWeek < 6){
+                while(testDay != 5){
+                    dayOfMonth = dayOfMonth -1;
+                    testDate = new Date(new Date().getFullYear(), new Date().getMonth(), dayOfMonth );
+                    testDay = testDate.getDay();
+                }
+                maxDay = dayOfMonth;
+            } 
+            
+            //Initial values for the selected week
+            weekInitialStartDate=maxDay-5;
+            weekInitialEndDate=maxDay;
+      
+            return maxDay;
+        }
+
+        var reqOpt = {
+            onSelect:onSelect,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            firstDay: 6,
+            minDate: new Date({!eBulletin_StartDate_year}, {!eBulletin_StartDate_month}, {!eBulletin_StartDate_day}),
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), getWeeklyMaxDay() )
+        };
+
+        var reqOptDaily = {
+            onSelect:onSelectDaily,
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            minDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  - 6),
+            maxDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()  )
+        };
+
+        $.fn.weekpicker = function(options){
+            
+            var $this = this;
+            $calroot = $this;
+            
+            $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
+            $this.datepicker(reqOpt);
+
+            //events
+            $dprow = $this.find('.ui-datepicker');
+            
+            $dprow.on('mousemove','tr', function() { 
+                $(this).find('td a').addClass('ui-state-hover'); 
+            });
+            $dprow.on('mouseleave','tr', function() { 
+                $(this).find('td a').removeClass('ui-state-hover'); 
+            });
+
+            //Set current week as selected
+            var date = $(this).datepicker('getDate');
 
             startDate = new Date(date.getFullYear(), date.getMonth(), weekInitialStartDate);
             endDate = new Date(date.getFullYear(), date.getMonth(), weekInitialEndDate);
             
-            // alert('1 - startDate: '+startDate + ' || endDate: '+endDate);
-
             var dateFormat = $.datepicker._defaults.dateFormat;
-
-            // startDate.setDate(startDate.getDate() - 2);
-            // endDate.setDate(endDate.getDate() -2);
 
             jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
             jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
-        // }
-        // alert( jQuery('[id$=pWeekStart]').val());
-        // alert( jQuery('[id$=pWeekEnd]').val());
-                
-        $calroot.trigger('weekselected',{
-            start:startDate,
-            end:endDate,
-            weekOf:startDate
-        });
-        selectCurrentWeek();
-    };
+                    
+            $calroot.trigger('weekselected',{
+                start:startDate,
+                end:endDate,
+                weekOf:startDate
+            });
+            selectCurrentWeek();
+        };
 
-    $.fn.datepickerDaily = function(options){
-        var $this = this;
-        $calroot = $this;
-        $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
-        $this.datepicker(reqOptDaily);
+        $.fn.datepickerDaily = function(options){
+            var $this = this;
+            $calroot = $this;
+            $.datepicker.setDefaults($.datepicker.regional['{!displayLanguageDatePicker}']);
+            $this.datepicker(reqOptDaily);
 
-        var date = $(this).datepicker('getDate');
-        jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
-        
-    }
-})(jQuery);
+            var date = $(this).datepicker('getDate');
+            jQuery('[id$=pDateStart]').val($.datepicker.formatDate('dd/mm/yy', date));
+            
+        }
+    })(jQuery);
     
         
 
@@ -781,9 +756,9 @@
                                                 
                                             </apex:facet>
                                             
-                                            <div class="alert alert-warning"  role="alert">
+                                            <!--div class="alert alert-warning"  role="alert">
                                                 {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily}
-                                            </div>
+                                            </div-->
 
 
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
@@ -802,7 +777,7 @@
                                                     <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Defaults__c}" id="DailyDefaults"/>
                                                     <apex:outputPanel >
                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}" for="DailyDefaults"/>
-                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="false" />
                                                   	</apex:outputPanel>
                                                 </apex:pageBlockSectionItem>
                                             </apex:pageBlockSection>    
@@ -829,6 +804,18 @@
                                                 </apex:pageBlockSectionItem>
                                              </apex:pageBlockSection>    
                                             <apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Reinstatements__c}" id="DailyReinstatements"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reinstatements}" for="DailyReinstatements"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                             </apex:pageBlockSection>    
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Reinstatements__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
+
                                         </apex:pageBlockSection>
                                     
 
@@ -1049,9 +1036,9 @@
                                                 </apex:outputpanel>
                                             </apex:facet>
                                             
-                                            <div class="alert alert-warning"  role="alert">
+                                            <!--div class="alert alert-warning"  role="alert" >
                                                 {!$Label.ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly}
-                                            </div>
+                                            </div-->
 
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
                                                 <apex:pageBlockSectionItem labelStyle="width:5%">
@@ -1069,7 +1056,7 @@
                                                     <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Defaults__c}" id="WeeklyDefaults"/>
                                                     <apex:outputPanel >
                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}" for="WeeklyDefaults"/>
-                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
                                                     </apex:outputPanel>
                                                 </apex:pageBlockSectionItem>
                                             </apex:pageBlockSection>
@@ -1096,6 +1083,17 @@
                                                 </apex:pageBlockSectionItem>
                                             </apex:pageBlockSection>
                                             <apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reviews}"/>
+
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormWeekly.Agency_Info_Reinstatements__c}" id="WeeklyReinstatements"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reinstatements}" for="WeeklyReinstatements"/>
+                                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False" />
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormWeekly.Agency_Info_Reinstatements__c}" rendered="{!IF(newFormWeekly.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
                                       
                                             <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormWeekly.Opt_in__c) ,'false','true')}">
                                                 <apex:pageBlockSectionItem labelStyle="width:5%">
@@ -1325,7 +1323,7 @@
                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
                                                     <apex:outputPanel >
                                                     <apex:outputField value="{!newFormDaily.Agency_Info_Defaults__c}"/>
-                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
                                                     </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                </td>
@@ -1348,6 +1346,17 @@
                                                     <apex:outputPanel >
                                                     <apex:outputField value="{!newFormDaily.Agency_Info_Reviews__c}"/>
                                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Reinstatements__c}"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
                                                     </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                </td>
@@ -1613,7 +1622,7 @@
                                                     <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Defaults}"/>
                                                     <apex:outputPanel >
                                                     <apex:outputField value="{!newFormWeekly.Agency_Info_Defaults__c}" />
-                                                   <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                   <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Defaults_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
                                                     </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                </td>
@@ -1636,6 +1645,17 @@
                                                     <apex:outputPanel >
                                                     <apex:outputField value="{!newFormWeekly.Agency_Info_Reviews__c}" />
                                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                                    </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputField value="{!newFormWeekly.Agency_Info_Reinstatements__c}" />
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
                                                     </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                </td>
