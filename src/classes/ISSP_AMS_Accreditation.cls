@@ -194,6 +194,12 @@ public without sharing class ISSP_AMS_Accreditation {
     public Id trainedStaffId {get; set;}
 
     public String agencyCodesConcernedForPDF {get; set;}
+    
+     public Boolean getnewlabels() {
+        if (isocountry==null) return false;
+        return isocountry.AMS_Accreditation_New_Labels__c;
+    }
+
 
     public boolean newAccreditationModels {get; set;}
 
