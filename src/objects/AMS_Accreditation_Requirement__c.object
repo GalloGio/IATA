@@ -497,7 +497,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -827,7 +827,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1145,7 +1145,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

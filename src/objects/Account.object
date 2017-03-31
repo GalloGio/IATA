@@ -23310,7 +23310,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25648,7 +25648,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28620,7 +28620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30958,7 +30958,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34675,7 +34675,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36748,7 +36748,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42089,7 +42089,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -44554,7 +44554,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -48841,7 +48841,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53039,7 +53039,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55615,7 +55615,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57874,7 +57874,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60133,7 +60133,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62766,7 +62766,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -70261,7 +70261,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74401,7 +74401,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Standard without cash</fullName>
+                <fullName>Standard without Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

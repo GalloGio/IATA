@@ -264,16 +264,20 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
                     
-                    if(vOfficeType.substring(idx + 3).trim() == 'IATA Passenger Sales Agent') {
+                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) ) {
                         operationType = 'Travel_Agent';
                     } else {
                         operationType = 'Cargo_Agent';
                     }
 
-                   
-                    var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];     
-                    var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    // NHO - 
+                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
                     
+                    var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
+                    
+                    console.log('countryList ' + countryList);     
+                    var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    console.log('isAllowedCountry ' + isAllowedCountry);
                     ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
@@ -498,9 +502,9 @@
                     </div>
 
                     <div class="form-group"> 
-                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</label>
+                    <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label> 
                         <div class="col-lg-9">
-                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
+                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
                             </apex:selectList>                           
                         </div>

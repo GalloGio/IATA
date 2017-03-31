@@ -548,7 +548,7 @@
         <fields>Application_Name__c</fields>
         <fields>Application_icon_del__c</fields>
         <fields>Right__c</fields>
-        <fields>Application_Start_Icon__c</fields>
+        <fields>ANG_Portal_Service_Role__c</fields>
         <relatedList>Portal_Application_Right__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
