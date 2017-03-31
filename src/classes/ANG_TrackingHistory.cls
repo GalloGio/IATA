@@ -37,8 +37,8 @@ public class ANG_TrackingHistory {
 						SObject newHistRecord = trackingSObjType.newSObject();
 
 						newHistRecord.put(masterDetailFieldName, newMap.get(sobjId).get('Id'));
-						newHistRecord.put('New_Value__c', newValue);
-						newHistRecord.put('Old_Value__c', oldValue);
+						newHistRecord.put('New_Value__c', newValue != null ? String.valueOf(newValue) : '');
+						newHistRecord.put('Old_Value__c', oldValue != null ? String.valueOf(oldValue) : '');
 						newHistRecord.put('What__c', mapFields.get(field_set_member.getFieldPath()).getDescribe().getLabel());
 
 						recordsToInsert.add(newHistRecord);
