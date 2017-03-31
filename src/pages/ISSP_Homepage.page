@@ -509,7 +509,7 @@
                                                         sortBy="mostViewed"
                                                         pageSize="5"
                                                         pageNumber="1"
-                                                          categories="FAQs:CNS_Portal"
+                                                          categories="FAQs:CNS_CASS_Operations_Cargo"
                                                        >
                                                         <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
 
@@ -522,7 +522,6 @@
                                                           sortBy="mostViewed"
                                                           pageSize="5"
                                                           pageNumber="1"
-                                                          categories="FAQs:Customer_Portal"
                                                          >
                                                           <tr><td><a href="{!URLFOR($Action.KnowledgeArticle.View, a.id)}&CommunityName={!communityName}">{!a.title}</a></td></tr>
 
