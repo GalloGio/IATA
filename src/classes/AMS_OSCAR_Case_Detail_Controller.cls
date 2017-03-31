@@ -52,6 +52,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.VAT_Number_2__c 
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
+                , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
             };
         }
     }
