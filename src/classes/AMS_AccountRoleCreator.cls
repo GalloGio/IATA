@@ -661,7 +661,10 @@ public with sharing class AMS_AccountRoleCreator
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
 
+                accreditationsAndContacts.put(ac,ac.Contact__c);
+
                 personsToDelete.add(ac.Person_AMS__c);
+
                 personsAndContacts.put(ac.Person_AMS__r.Id,ac.Contact__c);
 
                 continue;
@@ -680,6 +683,8 @@ public with sharing class AMS_AccountRoleCreator
             }
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
+
+                accreditationsAndContacts.put(ac,ac.Contact__c);
 
                 personsToDelete.add(ac.Person_AMS__c);
 
