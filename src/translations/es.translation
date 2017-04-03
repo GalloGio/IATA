@@ -2521,8 +2521,8 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Si la dirección anterior es incorrecta, por favor, póngase en contacto con la agencia para facilitar la informacion correcta (&lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) y no continúe hasta que la dirección en la agencia se haya actualizado. &lt;br/&gt; 
-Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coordinarse con sus compañeros en la dirección mencionada arriba para recibir la tarjeta de identificación en su dirección personal. Para continuar, por favor haga clic en el botón de abajo.&quot;</label>
+        <label>Si la dirección anterior es incorrecta, por favor, póngase en contacto con la agencia para facilitar la informacion correcta (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) y no continúe hasta que la dirección en la agencia se haya actualizado. &lt;br/&gt; 
+Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coordinarse con sus compañeros en la dirección mencionada arriba para recibir la tarjeta de identificación en su dirección personal. Para continuar, por favor haga clic en el botón de abajo.</label>
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
