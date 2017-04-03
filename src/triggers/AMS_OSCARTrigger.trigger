@@ -309,8 +309,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
 
-
-
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
                     Database.rollback(sp);
