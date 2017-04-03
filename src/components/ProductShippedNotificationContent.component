@@ -4,7 +4,7 @@
 
     <p>Dear {!contactName},</p>
     
-    <p>Your item(s) has been shipped.</p>
+   <!--<p>Your item(s) has been shipped.</p>-->
     <p>
         Here is the tracking Number: 
         <apex:outputPanel rendered="{!showUrl}">

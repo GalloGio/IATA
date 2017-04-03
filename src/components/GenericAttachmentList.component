@@ -169,8 +169,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.Created_Date}" >
-                    <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                        <apex:param value="{!attach.createdDate}" />
+                    <apex:outputText value=" {!attach.createdDate}">                  
                     </apex:outputText>
                 </apex:column>
 
