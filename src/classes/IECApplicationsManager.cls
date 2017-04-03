@@ -233,6 +233,7 @@ public without sharing class IECApplicationsManager {
     
     
         String sQueryWhere = '';
+        String [] splittedStateCode;
         List<String> sQueryWhereClauses = new List<String>();
         if (cachedAgencyIds == null) {
             // if GAD, filter out the Cargo agencies
@@ -268,7 +269,9 @@ public without sharing class IECApplicationsManager {
             
             // state/province
             if (String.isNotblank(oAdvancedFilters.State__c) && !oAdvancedFilters.State__c.startsWith('--') && oAdvancedFilters.State__c != '(All)' && oAdvancedFilters.State__c != 'All' && oAdvancedFilters.State__c != 'None' && oAdvancedFilters.State__c != 'null') {
-                sQueryWhereClauses.add('State_Province_Code__c IN ' + addSingleQuotesToListedValues(oAdvancedFilters.State__c));
+                splittedStateCode = oAdvancedFilters.State__c.split('-');
+                system.debug('###########################  oAdvancedFilters.State__c : ' + oAdvancedFilters.State__c);
+                sQueryWhereClauses.add('State_Province_Code__c IN ' + addSingleQuotesToListedValues(splittedStateCode[1])); 
             }
             
             // City
