@@ -963,6 +963,11 @@ p {
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-xs-12">
+            <apex:outputText escape="false" value="{!$Label.CurrencyCenter_Disclaimer_1}{!$Label.CurrencyCenter_Disclaimer_2}{!$Label.CurrencyCenter_Disclaimer_3}"/>
+          </div>
+        </div>
      </div>
  </body>
  </html>
