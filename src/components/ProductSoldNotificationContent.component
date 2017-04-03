@@ -58,8 +58,6 @@
                     <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Flat Fee</th>
                 </apex:variable>
                 <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">{!$Label.Total_Price}</th>
-                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Discounted Amount</th>
-                <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Total Amount</th>
             </tr>
             <apex:repeat value="{!orderItems}" var="oi">
                 <tr>
