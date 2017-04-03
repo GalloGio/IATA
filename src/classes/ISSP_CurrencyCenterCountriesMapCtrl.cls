@@ -58,12 +58,7 @@ public with sharing class ISSP_CurrencyCenterCountriesMapCtrl {
     }
 
     public PageReference checkAccess(){
-        //if user has service assigned, continue
-        if(ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService())
-            return null;
-        //else redirect to portal home page
-        else
-            return new PageReference('/ISSP_Homepage');
+        return ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
     }
 
 
