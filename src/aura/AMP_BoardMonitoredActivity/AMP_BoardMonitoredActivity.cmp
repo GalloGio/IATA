@@ -48,17 +48,18 @@
             <td><ui:outputText value="{!v.bma.Type__c}"/></td>
             <td>
                 <ui:inputSelect aura:id="accountStatus" class="slds-select">
-                    <ui:inputSelectOption label="Not Started" text="Not Started" value="{!v.bma.Comments__r[0].Status__c == 'Not Started'}"/>
-                    <ui:inputSelectOption label="In Progress" text="In Progress" value="{!v.bma.Comments__r[0].Status__c == 'In Progress'}"/>
-                    <ui:inputSelectOption label="Completed" text="Completed" value="{!v.bma.Comments__r[0].Status__c == 'Completed'}"/>
+                    <ui:inputSelectOption label="On track" text="On track" value="{!v.bma.Comments__r[0].Status__c == 'On track'}"/>
                     <ui:inputSelectOption label="On hold" text="On hold" value="{!v.bma.Comments__r[0].Status__c == 'On hold'}"/>
+                    <ui:inputSelectOption label="Delayed" text="Delayed" value="{!v.bma.Comments__r[0].Status__c == 'Delayed'}"/>
+                    <ui:inputSelectOption label="Delivered" text="Delivered" value="{!v.bma.Comments__r[0].Status__c == 'Delivered'}"/>
+                    <ui:inputSelectOption label="Canceled" text="Canceled" value="{!v.bma.Comments__r[0].Status__c == 'Canceled'}"/>
                 </ui:inputSelect>
             </td>
             <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}" class="slds-textarea" rows="5"/></td>
             
             <aura:set attribute="else">
                 <aura:renderIf isTrue="{!v.displayType=='Division'}">
-                    <td><c:AMP_EditSaveMenu /></td>
+                    <td><c:AMP_EditSaveMenu  canDelete="false"/></td>
                 </aura:renderIf>
                 <td><ui:outputText value="{!v.bma.Name}" class="textwrap"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Account'}">
