@@ -137,7 +137,7 @@ public without sharing class pkb_Controller {
         if (categorySplit.size() == 2){
             selectedCategoryTranslated = categorySplit[1]; 
         }
-    }
+    } else if(communityName=='CNS' && selectedCategory == null) selectedCategory = 'FAQs:CNS_CASS_Operations_Cargo';
     if (!isBlank(fs)) feedbackSource = fs; // need to validate this value is in the picklist when inserting
 
     Cookie sessionCookie = ApexPages.currentPage().getCookies().get('PKB2SessionId');
