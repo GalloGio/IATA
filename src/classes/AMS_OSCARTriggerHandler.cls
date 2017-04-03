@@ -573,7 +573,7 @@ public class AMS_OSCARTriggerHandler {
 					system.debug('RB - Sanity check already passed: ' + oscar.Sanity_Check_Passed__c);
 
             		if(oscar.Sanity_Check_Passed__c == true) {
-                	updatedOscar.addError('Change code already generated for this OSCAR! Please perform a withdraw in order to pass Sanity Check.');                
+                	oscar.addError('Change code already generated for this OSCAR! Please perform a withdrawn in order to pass Sanity Check.');                
             		}
             
             		oscar.Sanity_Check_Passed__c = true;					
