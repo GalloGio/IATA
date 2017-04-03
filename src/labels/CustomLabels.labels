@@ -752,7 +752,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailCC</shortDescription>
-        <value>agbisitj@iata.org,alvarengam@iata.org,arcel@iata.org,bestr@iata.org,boulaghmena@iata.org,careenn@iata.org,chanc@iata.org,chretienc@iata.org,concila@iata.org,cooten@iata.org,dulaja@iata.org,farrella@iata.org,ferratec@iata.org,georgen@iata.org,gonzalezce@iata.org,hattinghc@iata.org,haywards@iata.org,hughesg@iata.org,corpcomms@iata.org,iccso@iata.org,iinetcare@iata.org,sissrsglobal@iata.org,jainc@iata.org,kalajil@iata.org,khattabil@iata.org,knoorsw@iata.org,lavind@iata.org,lugol@iata.org,macneillb@iata.org,marcona@iata.org,marquesc@iata.org,martinsp@iata.org,McbrideG@iata.org,menons@iata.org,middletonj@iata.org,minculesca@iata.org,MomchilovM@iata.org,OueidatG@iata.org,petterssonl@iata.org,ponsa@iata.org,popovicha@iata.org,quillets@iata.org,ralphc@iata.org,reckmannr@iata.org,revayv@iata.org,rigbyr@iata.org,rodriguezja@iata.org,rossje@iata.org,saenzm@iata.org,saxtonu@iata.org,shanej@iata.org,shishanis@iata.org,szajkod@iata.org,TruchetP@iata.org,torneroc@iata.org,vitel@iata.org</value>
+        <value>asacp@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailGDS</fullName>
@@ -766,35 +766,35 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAfricaMiddleEast</shortDescription>
-        <value>cliffordc@iata.org,kuuchir@iata.org,kosticd@iata.org,grobotekt@iata.org,StancuA@iata.org,mirb@iata.org,isicheic@iata.org,sadiqs@iata.org,yousefr@iata.org,rajputf@iata.org,suwal@iata.org,sorokink@iata.org,tadrosc@iata.org,salaha@iata.org,almuhaisem@iata.org,amulelea@iata.org</value>
+        <value>asamm@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAmericas</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAmericas</shortDescription>
-        <value>cerdap@iata.org, odelej@iata.org, ciriloc@iata.org, hanonl@iata.org, linesa@iata.org, pughr@iata.org, reisf@iata.org, hanonl@iata.org, fondacarop@iata.org, corvoj@iata.org, molinac@iata.org, salaar@iata.org, solorzanoj@iata.org, medeirosk@iata.org, montielk@iata.org, lopezr@iata.org, smojet@iata.org, kinoshitan@iata.org, larranagad@iata.org, orebc@iata.org, americasopsmanagement@iata.org</value>
+        <value>asmia@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAsiaPacific</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsAsiaPacific</shortDescription>
-        <value>cliffordc@iata.org, yeohhc@iata.org, cowlesb@iata.org, azaharia@iata.org, hoj@iata.org, goelv@iata.org, choudhuryr@iata.org, kwongr@iata.org, kotharik@iata.org, chewj@iata.org, chowdhurym@iata.org, kwongr@iata.org, leet@iata.org, nguyenth@iata.org, nalawadem@iata.org, mohananb@iata.org, shahb@iata.org, rodrigos@iata.org, vitharanai@iata.org, reyesr@iata.org, ohv@iata.org, pekm@iata.org, praban@iata.org, shaikhn@iata.org</value>
+        <value>assin@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsChinaNorthAsia</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsChinaNorthAsia</shortDescription>
-        <value>zhangbj@iata.org, liyp@iata.org, liwx@iata.org, wangls@iata.org, pengs@iata.org, houk@iata.org, lusm@iata.org, zhaor@iata.org, mayh@iata.org, sundy@iata.org, gaom@iata.org, wangyy@iata.org, zhangxl@iata.org, zhangy@iata.org, niuy@iata.org, juyi@iata.org, guoy@iata.org, xuj@iata.org</value>
+        <value>asbjs@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsEurope</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailRecipientsEurope</shortDescription>
-        <value>schvartzmanr@iata.org, moralesa@iata.org, buonog@iata.org, giannisj@iata.org, escalantej@iata.org, girondoe@iata.org, wallacee@iata.org, castrom@iata.org, ivanovam@iata.org, perezp@iata.org, pascualr@iata.org, paredesv@iata.org, blazqueza@iata.org, diasdasalj@iata.org, ingladas@iata.org, martinezm@iata.org, batagliaf@iata.org, baissonm@iata.org, paredesc@iata.org, saremyt@iata.org, nolls@iata.org, peinadol@iata.org, martinyuks@iata.org, garciate@iata.org, amorl@iata.org, abbadid@iata.org</value>
+        <value>asmad@iata.org</value>
     </labels>
     <labels>
         <fullName>Ask_Delete_Attachment</fullName>
@@ -1637,6 +1637,31 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Details</value>
     </labels>
     <labels>
+        <fullName>CurrencyCenter_Disclaimer_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Disclaimer_1</shortDescription>
+        <value>&lt;b&gt;NO WARRANTY&lt;/b&gt;
+&lt;p&gt;Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the Portal, the Portal and all components thereof are provided “as is” and “as available”, without any warranty, representation or condition whatsoever, express or implied.&lt;/p&gt;
+&lt;p&gt;To the maximum extent allowed under applicable legislation, IATA disclaims any warranty, representation or condition, express or implied, in respect of the Portal and its components, including, without limitation, any warranties, representations, conditions and warranties of quality, merchantability, fitness for a particular purpose and non infringement.&lt;/p&gt;
+&lt;p&gt;Without limiting the generality of the foregoing, IATA does not represent, nor warrant, that the Portal will be uninterrupted or error free, that any deficiencies will be corrected, or that the server, the systems or the network underlying same are, or will be, free from viruses or other harmful components.</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Disclaimer_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Disclaimer_2</shortDescription>
+        <value>IATA does not make any warranty or representation concerning the use of information, data, portal or other items offered by way of the Portal with respect to their correctness, accuracy, compliance, usefulness, reliability or any other quality. IATA undertakes no obligation to continue to maintain the Portal in operation or to produce new versions of or improvements to the Portal.&lt;/p&gt;
+&lt;p&gt;The User expressly acknowledges that its use of the Portal is at its own risk and that IATA shall not be liable for deficiencies or omissions in connection with the use of the Portal. In particular, the User has sole responsibility for adequate protection and backup of data and equipment used in connection with the Portal and will not make a claim against IATA for lost data, re-run time, inaccurate output, work delays or lost profits resulting from the use of the Portal.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CurrencyCenter_Disclaimer_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CurrencyCenter_Disclaimer_3</shortDescription>
+        <value>&lt;p&gt;Any material downloaded or otherwise obtained through the use of the Portal is done at the User’s own discretion and risk and the User is solely responsible for any damage to its computer system or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the Portal will create any warranty not expressly stated in the terms. IATA&apos;s employees are not authorized to vary these terms. &lt;/p&gt;</value>
+    </labels>
+    <labels>
         <fullName>CurrencyCenter_Download_Pdf</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2121,7 +2146,7 @@ PSC also provides a forum for the discussion of new developments in the airline 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Sovereign_Credit_Rating</shortDescription>
-        <value>Is the credit rating of a country or sovereign entity. Sovereign credit ratings give investors insight into the level of risk associated with investing in a particular country and also include political risks. First source of preference is Standard &amp; Poor’s and when not available Fitch Ratings or Moody’s will be the reference.</value>
+        <value>&lt;p&gt;Is the credit rating of a country or sovereign entity. Sovereign credit ratings give investors insight into the level of risk associated with investing in a particular country and also include political risks. First source of preference is Standard &amp; Poor’s and when not available Fitch Ratings or Moody’s will be the reference.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_Spot_Change</fullName>
@@ -2322,6 +2347,13 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>Direct_Sales</shortDescription>
         <value>Direct Sales</value>
+    </labels>
+    <labels>
+        <fullName>Discounted_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Discounted Amount</shortDescription>
+        <value>Discounted Amount</value>
     </labels>
     <labels>
         <fullName>Download_Invoice</fullName>
