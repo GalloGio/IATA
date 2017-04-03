@@ -761,7 +761,7 @@
 
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
         <p class="LOB">
-			{!$Label.ISSP_Cargo_Agent}
+			{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}
         </p>
          <div style="border-top: 1px #fff dotted; padding-bottom: 3px;">
             <p>{!$Label.ISSP_AMS_Jump_To}</p>
@@ -848,7 +848,7 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                         </apex:outputpanel>
                         </apex:facet>
                     <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought} {!CASE(amsOfficeType, 'HO', $Label.ISSP_AMS_Step3_HO_Location, $Label.ISSP_AMS_Step3_Branch_Location)}"/>
@@ -951,7 +951,7 @@
                 <span id="nav_two"></span>
                  <apex:pageBlockSection columns="2" collapsible="false" id="sect2">
                     <apex:facet name="header">
-                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_STEP_3_2_Title,
+                            {!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title),
                                  $Label.ISSP_AMS_CGO_ReadOnly_SECTION2)}
                     </apex:facet>
                   </apex:pageBlockSection>
@@ -998,7 +998,7 @@
                     <apex:inputfield value="{!newForm.Trade_Name__c}" rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"/>
                     <apex:pageBlockSectionItem >
                        
-                        <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label,
+                        <apex:outputLabel value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
                                                         $Label.ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label)}"/>
                         <apex:inputField showDatePicker="true" onclick="showPastDates()" id="dateOpenedAsTravelAgency" value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
                     </apex:pageBlockSectionItem>

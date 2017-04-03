@@ -14,7 +14,7 @@
           <apex:pageBlockSection columns="1" collapsible="false">
               <apex:facet name="header">
                         <apex:outputpanel >
-                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
                         </apex:outputpanel>                       
                     </apex:facet>
@@ -93,7 +93,7 @@
                 <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
                  <apex:outputfield value="{!hqAccount.Fax}" />
                 
-                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label}" />           
+                <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label)}" />
                 <apex:outputText value="{0,date, MMMM d,  yyyy}">
                     <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
                 </apex:outputText>

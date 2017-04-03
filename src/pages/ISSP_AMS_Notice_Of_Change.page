@@ -607,7 +607,7 @@
 			<p><a href="#nav_true">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
-		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding, $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
+		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
 		</apex:outputText>
 		
 	</div>
@@ -705,7 +705,7 @@
 
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}
+								{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Legal_details}</apex:outputPanel>
@@ -925,7 +925,7 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							{!$Label.ISSP_AMS_NoC_Change_Ownership_Shareholding}
+							{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
 						</apex:outputpanel>
 					</apex:facet>
                     

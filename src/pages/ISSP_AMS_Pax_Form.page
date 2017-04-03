@@ -637,7 +637,7 @@
         </div>
         <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
         <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1}</a></p>
-        <p><a href="#nav_two">{!$Label.ISSP_AMS_LeftNav_Section2}</a></p>
+        <p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_LeftNav_Section2_New, $Label.ISSP_AMS_LeftNav_Section2)}</a></p>
         <p><a href="#nav_three">{!$Label.ISSP_AMS_LeftNav_Section3}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_LeftNav_Section4}</a></p>
         <p><a href="#nav_five">{!$Label.ISSP_AMS_LeftNav_Section5}</a></p>
@@ -708,7 +708,7 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!IF(AND(amsOfficeType == 'HO', newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            {!IF(AND(amsOfficeType == 'HO', newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                         </apex:outputpanel>
                         </apex:facet>
                     <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(amsOfficeType=='HO',IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_Step3_HO_Location, $Label.ISSP_AMS_Step3_Branch_Abroad), $Label.ISSP_AMS_Step3_Branch_Location)}"/>
@@ -782,7 +782,7 @@
                  <apex:pageBlockSection columns="2" collapsible="false">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+                            {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
                         </apex:outputpanel>
                     </apex:facet>
                   </apex:pageBlockSection>
@@ -1060,7 +1060,7 @@
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Step3_4_People_SubTitle}</strong></div>
                       
-                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),$Label.ISSP_AMS_Step3_4_People,IF(newlabels, $Label.ISSP_AMS_Step3_4_Branch_People_New, $Label.ISSP_AMS_Step3_4_Branch_People))}" styleClass="col-md-12" escape="false"/>
+                       <apex:outputText value="{!IF(AND(amsOfficeType=='HO',newCase.Reason1__c!='New BR Abroad'),IF(newlabels,$Label.ISSP_AMS_Step3_4_People_New,$Label.ISSP_AMS_Step3_4_People),IF(newlabels, $Label.ISSP_AMS_Step3_4_Branch_People_New, $Label.ISSP_AMS_Step3_4_Branch_People))}" styleClass="col-md-12" escape="false"/>
                        
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                            {!$Label.ISSP_AMS_Not_Listed_Msg}

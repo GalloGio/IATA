@@ -6561,6 +6561,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>SECTION 3 - Agency Contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION3 New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7390,6 +7397,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label</shortDescription>
         <value>Date office opened as an Intermediary</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Cargo_Office_Open_Date_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS Cargo Office Open Date New</shortDescription>
+        <value>Date office opened as a Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Case_Attach</fullName>
@@ -8372,6 +8387,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section2</shortDescription>
         <value>2. Agency Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav_Section2 New</shortDescription>
+        <value>2. Company Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section2_Cargo_Agency</fullName>
@@ -9774,6 +9797,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Cargo Agent - Branch Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_CGO_BRANCH_NEW</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION CGO BRANCH NEW</shortDescription>
+        <value>IATA Cargo Agent / IFACP Forwarder - Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_CGO_HO</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10088,6 +10119,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_1 Branch Title</shortDescription>
         <value>SECTION 1 - IATA Accredited Head Office Details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS STEP 3_1 Branch Title New</shortDescription>
+        <value>SECTION 1 - IFACP Endorsed Head Office Details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_HO_Title</fullName>
@@ -12916,8 +12955,8 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP Cargo Agent / IFACP Forwarder New</shortDescription>
-        <value>Cargo Agent</value>
+        <shortDescription>ISSP Cargo Agent New</shortDescription>
+        <value>Cargo Agent / IFACP Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>

@@ -385,7 +385,7 @@
         </div>
         <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
         <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1}</a></p>
-        <p><a href="#nav_two">{!$Label.ISSP_AMS_LeftNav_Section2}</a></p>
+        <p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_LeftNav_Section2_New, $Label.ISSP_AMS_LeftNav_Section2)}</a></p>
         <p><a href="#nav_three">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV3}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV4}</a></p>
         <p><a href="#nav_five">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV5}
@@ -447,7 +447,7 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_STEP_3_1_Branch_Title}
+                            {!IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)}
                         </apex:outputpanel>
                         </apex:facet>
                     <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!$Label.ISSP_AMS_Step3_Branch_Location}"/>
@@ -487,7 +487,7 @@
                  <apex:pageBlockSection columns="2">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+                            {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
                         </apex:outputpanel>
                     </apex:facet>
                   </apex:pageBlockSection>
