@@ -35,10 +35,13 @@ public class IECVATUtil {
 	{
 	    VATWebService ws = new VATWebService();
 	    String sErrorMessage = '';
+
+	    //susana alves 2017-03-20 INC282964
+	    // add an exception for Greece which has the discrepancy between its ISO code GR and its VAT prefix EL
 	    
 	    try
 	    {
-	        VATResponse res = ws.ValidateVAT(sCountryCode, ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
+	        VATResponse res = ws.ValidateVAT((sCountryCode.contains('GR') ? 'EL' : sCountryCode), ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
 	        if (!res.valid) 
 	            sErrorMessage = String.format(Label.IEC_Invalid_VAT, new List<String>{sVATNumber});
 	    }
