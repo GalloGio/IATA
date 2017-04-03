@@ -1,6 +1,6 @@
 @isTest
 public class AMS_AccountRoleTest {
-	
+    
     public static Account HO;
     public static List<Account> secondLevel;
     public static List<AMS_Account_Role__c> firstOwners;
@@ -16,7 +16,7 @@ public class AMS_AccountRoleTest {
     //public static AMS_Accreditation_Contact__c theStagingCont;
 
 
-	// This method will create a 3 level hierarchy. NOTE: this is working correctly if howMany3rdLevelAgencies <= howManyBranches
+    // This method will create a 3 level hierarchy. NOTE: this is working correctly if howMany3rdLevelAgencies <= howManyBranches
     public static void initHOandBRs(Integer howManyBranches, Integer howManyOwners){
 
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
@@ -108,8 +108,8 @@ public class AMS_AccountRoleTest {
             AMS_Pax_Accreditation_Form__c = theStagingAcc.Id,  Financial_interest__c = 20, RecordTypeId=rtPerson));
         
         insert theStagingConts;
-		
-		system.debug('DTULLO 112 -> ' + [select Id, AMS_Pax_Accreditation_Form__c, First_name__c, Last_Name__c, Email__c, Financial_interest__c from AMS_Accreditation_Contact__c]);
+        
+        system.debug('DTULLO 112 -> ' + [select Id, AMS_Pax_Accreditation_Form__c, First_name__c, Last_Name__c, Email__c, Financial_interest__c from AMS_Accreditation_Contact__c]);
 
         Test.startTest();
 
@@ -119,7 +119,7 @@ public class AMS_AccountRoleTest {
         system.debug('DTULLO 119 --> ' + parameter);
         
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
-		
+        
         // CHECK THE RESULTS
         List<Contact> newContacts = [SELECT FirstName, LastName, Email FROM Contact ORDER BY Email];
         system.assertEquals(3,newContacts.size(), 'testNewContactOwners(S1) -> Now I should have 3 contacts in the system');
@@ -351,6 +351,7 @@ public class AMS_AccountRoleTest {
         theStagingConts[1].Email__c = 'ac1@mail.com';
         update theStagingConts;
 
+        system.debug('#### su parameter: ' + parameter);
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter, true);
 
         owners = [SELECT Owner_Account__r.Name,  Percentage__c, Termination_Date__c
@@ -365,7 +366,7 @@ public class AMS_AccountRoleTest {
                     ORDER BY Owner_Account__r.Name];
         system.assertEquals(0, owners.size(), 'testOwnersRTCompany(S2) -> the method should not have deactivated any owner');
 
-
+        ID CompanyRT = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
         // I WILL RESET THE LOOKUP AMS_OWNERSHIP_ROLE__c TO SIMULATE A NEW OSCAR, AND CHANGE THE PERCENTAGES IN THE OWNERSHIPS
         theStagingConts = [SELECT Id FROM AMS_Accreditation_Contact__c ORDER BY Email__c];
         theStagingConts[0].AMS_Ownership_Role__c = NULL;
@@ -377,15 +378,19 @@ public class AMS_AccountRoleTest {
         theStagingConts[0].Agency_owner__c = true;
         theStagingConts[1].Agency_owner__c = true;
 
-        update theStagingConts;
+        theStagingConts[0].RecordTypeId = CompanyRT;
+        theStagingConts[1].RecordTypeId = CompanyRT;
 
-        system.debug('#### su ' + parameter);
+        update theStagingConts;
+        system.debug('#### Start...... ');
+        system.debug('#### su theStagingConts : ' + theStagingConts);
+        system.debug('#### su parameter: ' + parameter);
         AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(parameter);
 
-        
+        system.debug('#### End...... ');
         owners = [SELECT Owner_Account__r.Name, Percentage__c, Termination_Date__c
                     FROM AMS_Account_Role__c 
-                    WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' AND Termination_Date__c = NULL 
+                    WHERE Owner_Account__c <> NULL AND RecordType.Name = 'Ownership' /*AND Termination_Date__c = NULL */
                     ORDER BY Owner_Account__r.Name];
         system.assertEquals(6,owners.size(), 'testOwnersRTCompany(S3) -> the method should have inserted 6 new roles with the new percentage');
 
