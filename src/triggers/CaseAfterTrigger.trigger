@@ -23,7 +23,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean trgICCSManageProductAssignment = GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;					//33333333333333
 	boolean trgICCS_ASP_CaseClosed = GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;									//44444444444444
 	boolean trgCreateUpdateServiceRenderedRecord = GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;			//44444444444444			
-	boolean trgCaseEscalationMailNotificationICH = GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;
+	boolean trgCaseEscalationMailNotificationICH = GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;					//44444444444444
 	boolean trgCheckSISCaseRecycleBinAfterInsert = GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;				//22222222222222
 	boolean CaseBeforInsert = GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;												//33333333333333
 	boolean AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
@@ -151,7 +151,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}	
 	}
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
-		
+	
+	if(trigger.isInsert || trigger.isUpdate){	
 	/*trgICCSManageProductAssignment Trigger*/
 	/*@author: Constantin BUZDUGA, blue-infinity
 	* @description: This trigger only handles ICCS Cases with the "FDS ICCS Product Management" or "FDS ICCS Bank Account Management" record types
@@ -161,8 +162,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	*    "ICCS – Update Payment Instructions", the ICCS Bank Account field at PA level is updated with the info entered in the same field
 	*    at Case level. If the case area is "ICCS – Delete Bank Account", the Bank Account record's status is set to "Inactive". For the "ICCS – Update Bank Account"
 	*    Case Area, the Bank Account currency is updated.*/
-	if(trgICCSManageProductAssignment){	
-		if(trigger.isInsert || trigger.isUpdate){
+		if(trgICCSManageProductAssignment){	
 			for (Case c : Trigger.new) {
 			    // only interested in cases being closed
 			    if ( c.Status == 'Closed' && (Trigger.isInsert || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed') ) ) {
@@ -354,16 +354,14 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			} // if there are iccs cases
 			// Send the custom email notifications if the case is (re)assigned to a queue which has custom notifications configured
 			CustomQueueNotifications.SendEmailNotifications (trigger.new, trigger.OldMap, trigger.isInsert, trigger.isUpdate);
-		}	
-	}
-	/*trgICCSManageProductAssignment Trigger*/
+		}
+		/*trgICCSManageProductAssignment Trigger*/
 		
-	/*trgICCS_ASP_CaseClosed Trigger*/
-	//@author: Constantin BUZDUGA, blue-infinity
-	// @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
-	// and Collection Case Indicator at Account level when the case is closed.
-	if(trgICCS_ASP_CaseClosed){ 
-		if(trigger.isInsert || trigger.isUpdate){
+		/*trgICCS_ASP_CaseClosed Trigger*/
+		//@author: Constantin BUZDUGA, blue-infinity
+		// @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
+		// and Collection Case Indicator at Account level when the case is closed.
+		if(trgICCS_ASP_CaseClosed){ 
 			for (Case c : Trigger.new) {
 		    	if (c.AccountId != null){
 			        // If the Case has just been closed
@@ -431,14 +429,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		        }//---TF
 		    }
 		}
-	}
-	/*trgICCS_ASP_CaseClosed Trigger*/
+		/*trgICCS_ASP_CaseClosed Trigger*/
 	
-	/*trgCreateUpdateServiceRenderedRecord Trigger*/
-	/*Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, 
-	 *the case record type is "IDFS Airline Participation Process" and the case is approved*/
-	if(trgCreateUpdateServiceRenderedRecord){ 
-		if(trigger.isInsert || trigger.isUpdate){
+		/*trgCreateUpdateServiceRenderedRecord Trigger*/
+		/*Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, 
+		 *the case record type is "IDFS Airline Participation Process" and the case is approved*/
+		if(trgCreateUpdateServiceRenderedRecord){ 
 			system.debug('trgCreateUpdateServiceRenderedRecord');
 			string airlineLeaving = 'Airline Leaving';
 			string airlineJoining = 'Airline Joining';
@@ -502,13 +498,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		            }
 				} 
 			}
-		} //trigger.isinsert trigger.isupdate
-	} //if trgCreateUpdateServiceRenderedRecord
-	/*trgCreateUpdateServiceRenderedRecord Trigger*/ 
+		} //if trgCreateUpdateServiceRenderedRecord
+		/*trgCreateUpdateServiceRenderedRecord Trigger*/ 
 	
-	/*trgCaseEscalationMailNotificationICH Trigger
-	if(trgCaseEscalationMailNotificationICH){
-		if(trigger.isInsert || trigger.isUpdate){
+		/*trgCaseEscalationMailNotificationICH Trigger*/
+		if(trgCaseEscalationMailNotificationICH){
 			for (Case c : trigger.new){
 				if(c.recordtypeId == RecId)
 			    	ICHcases.add(c);
@@ -527,7 +521,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			            CaseNotificationmail.setTemplateId(et.id);
 			            CaseNotificationmail.setWhatId(c.Id);
 			            if(Trigger.isInsert){
-			                if (c.CaseArea__c == 'ICH' && (  c.priority == 'Priority 1 (Showstopper)'  )){
+			                if (c.CaseArea__c == 'ICH' && c.priority == 'Priority 1 (Showstopper)'){
 			                    mails.add(CaseNotificationmail);
 			                    hasEmail = true;            
 			                }
@@ -535,7 +529,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			                String oldStatus = trigger.oldMap.get(c.id).status;
 			                String oldPriority = trigger.oldMap.get(c.id).priority;
 			                String oldTeam = trigger.oldMap.get(c.id).assigned_to__c;        
-			                if (c.CaseArea__c == 'ICH'&&(((c.status != oldStatus||c.assigned_to__c!=oldTeam) && c.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' 
+			                if (c.CaseArea__c == 'ICH' &&(((c.status != oldStatus||c.assigned_to__c!=oldTeam) && c.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' 
 			                		&& c.assigned_to__c == 'ICH Application Support')||(  oldPriority != c.priority && c.priority == 'Priority 1 (Showstopper)' 
 			                		&& !(oldStatus == 'Escalated' && c.assigned_to__c == 'ICH Application Support' )))){
 			                    mails.add(CaseNotificationmail);
@@ -547,9 +541,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			 	}
 			}
 		}
+		/*trgCaseEscalationMailNotificationICH Trigger*/
 	}
-	/*trgCaseEscalationMailNotificationICH Trigger*/
-	
 	/*Share trigger code*/
 	
 	/****************************************************************************************************************************************************/
