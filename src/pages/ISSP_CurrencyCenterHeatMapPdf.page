@@ -52,15 +52,15 @@ b {
   background-color: #F5F5F5;
   width: 7%;
 }
-.heat-map-cell-1{
+.heat-map-cell-3{
   background-color: #E5166E;
   width: 7%;
 }
-.heat-map-cell-2{
+.heat-map-cell-1{
   background-color: #6ABAEB;
   width: 7%;
 }
-.heat-map-cell-3{
+.heat-map-cell-2{
   background-color: #F19200;
   width: 7%;
 }
