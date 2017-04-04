@@ -57,7 +57,7 @@
             <name>ISS_send_email_from_notification</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Notification__c.Alert_Contact_By_Email__c</field>
             <operation>equals</operation>
