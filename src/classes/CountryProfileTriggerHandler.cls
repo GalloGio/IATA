@@ -169,8 +169,18 @@ public class CountryProfileTriggerHandler{
         list<EntitySubscription> lstUserSubscriptions = new list<EntitySubscription>();
         set<Id> setRelatedContactIds = new set<Id>();
 
+        Portal_Applications__c pa;
+
+        // Get application ID --- cannot get it directly in the Portal_application_right query below because it makes the query non-selective
+        try {
+            pa = [SELECT Id FROM Portal_Applications__c WHERE Application_URL__c = :CURRENCYCENTERAPPURL LIMIT 1];
+        } catch (Exception e) {
+            system.debug('Error getting the Currency Center service Id - not found !');
+            return;
+        }
+
         // Get contacts that can access the service
-        for (Portal_Application_Right__c par : [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE Application_Start_URL__c = :CURRENCYCENTERAPPURL AND Right__c = 'Access Granted']) {
+        for (Portal_Application_Right__c par : [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE Portal_Application__c = :pa.Id AND Right__c = 'Access Granted']) {
             setRelatedContactIds.add(par.Contact__c);
         }
 
