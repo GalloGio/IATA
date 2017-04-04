@@ -118,16 +118,18 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 		changeSubject = true;
 
 		System.debug('Migration completed.');
-
-        // CB - AMS enhancements / AMSU-3
-        // add scope of change and concerned branches to AMS Online Accreditation record
-        updateAccreditationForm(container.oscarCaseId, scopeOfChange, concernedAgencyCodes);    
-
-        //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
+        
         String childCasesErrors;
 
-        if (scopeOfChange == 'HO - Selected Branches' || scopeOfChange == 'Selected Branches Only'){
-            childCasesErrors = createChildCases(concernedAgencyCodes, container.c, container.oscarCreated);
+        // CB - AMS enhancements / AMSU-3
+        if (processType == 'BANK.ACCOUNT.CHANGES') {
+            // add scope of change and concerned branches to AMS Online Accreditation record
+            updateAccreditationForm(container.oscarCaseId, scopeOfChange, concernedAgencyCodes);    
+
+            //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
+            if (scopeOfChange == 'HO - Selected Branches' || scopeOfChange == 'Selected Branches Only'){
+                childCasesErrors = createChildCases(concernedAgencyCodes, container.c, container.oscarCreated);
+            }
         }
         ////
 
