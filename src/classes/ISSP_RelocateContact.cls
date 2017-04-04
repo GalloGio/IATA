@@ -19,7 +19,7 @@ public class ISSP_RelocateContact {
             this.contact = [
             SELECT Id, Salutation, Name, AccountId, ISO_Country__c,
             Account.Name, Account.Site, Account.IATA_ISO_Country__c, Account.Location_Type__c, Account.BillingStreet,
-            Account.BillingCity, Account.BillingPostalCode, Account.BillingState, Account.BillingCountry,
+            Account.BillingCity, Account.BillingPostalCode, Account.BillingState, Account.BillingCountry, Account.IsPartner,
             Account.IATA_ISO_Country__r.Name
             FROM Contact
             WHERE Id = :this.contact.Id];
@@ -96,7 +96,7 @@ public class ISSP_RelocateContact {
 
         // Get all account in the hierarchy
         return new map<Id,Account>([
-            SELECT Id,Name, Site, IATA_ISO_Country__c, Location_Type__c, BillingStreet,
+            SELECT Id,Name, Site, IATA_ISO_Country__c, Location_Type__c, BillingStreet, IsPartner,
                 BillingCity, BillingPostalCode, BillingState, BillingCountry, IATA_ISO_Country__r.Name
             FROM Account
             WHERE RecordTypeId IN :VALID_ACCOUNT_RT
@@ -134,6 +134,12 @@ public class ISSP_RelocateContact {
     public PageReference RelocateContact() {
         try {
             this.errorMessage = new list<String>();
+            // set  parent account as partner user 
+            if (!this.selectedAccount.IsPartner) {
+                this.selectedAccount.IsPartner = true;
+                update this.selectedAccount;
+            } 
+            // relocate contact
             this.contact.AccountId = this.selectedAccountId;
             update this.contact;
             return getReturnPage();
@@ -144,6 +150,7 @@ public class ISSP_RelocateContact {
             }
         } catch (Exception e) {
             this.errorMessage.add(Label.ISSP_Relocate_Failed);
+            System.debug('ERROR RelocateContact ' + e.getMessage());
         }
         return null;
     }
