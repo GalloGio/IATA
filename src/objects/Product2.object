@@ -4994,9 +4994,9 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Product_Manager_lookup__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>PRODUCT2.FAMILY</field>
+            <field>Product_Section__c</field>
             <operation>equals</operation>
-            <value>GDP</value>
+            <value>DBP001</value>
         </filters>
         <filters>
             <field>IEC_Parent_Product__c</field>
