@@ -20,10 +20,10 @@ Please ensure you refer to this Case Number in any further contact with us about
 Case Number:
 <a href="{!$Label.ISSP_Email_PortalUrl_CNS}{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
 </apex:outputPanel>
-<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+<!--<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
 {!relatedTo.CaseNumber}.<BR/>
 </apex:outputPanel>
-<BR/>
+<BR/>-->
 <BR/>
 Subject:
 {!relatedTo.Subject}.<BR/>
