@@ -16095,6 +16095,16 @@ If you continue to experience issues registering for the CNS Customer Portal the
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoRecordsFoundNext_CNS</fullName>
+        <categories>ISSP, Registration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again.
+&lt;br/&gt;&lt;br/&gt; 
+If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+    </labels>
+    <labels>
         <fullName>ISSP_No_application_available</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
