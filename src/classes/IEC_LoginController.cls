@@ -57,7 +57,6 @@ public without sharing class IEC_LoginController extends IEC_PageController {
      * Handles the login
      */
     public Pagereference login() {
-        
         try {
            // throw new transformationException('  isUserLoggedIn ' +  isUserLoggedIn +  '     retUrl  ' +  retURL + '     IECUserManager.login(username, password, retURL'+ IECUserManager.login(username, password, retURL)  );
             if (username == null || username == '')
@@ -90,7 +89,12 @@ public without sharing class IEC_LoginController extends IEC_PageController {
 
                     hasError = true;
                 }
-
+                if(( ApexPages.currentPage().getUrl().contains('iecWebDownload'))){ //start RN-INC309648
+                    String numb = System.currentPageReference().getParameters().get('itemNumber');
+                    retUrl = '/iecWebDownload?itemNumber=' + numb;
+                    pr  = IECUserManager.login(username, password, retURL);
+                    return pr;
+                }//end
                 return pr ;
             }
                 
