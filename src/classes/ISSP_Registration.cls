@@ -686,7 +686,8 @@ public without sharing class ISSP_Registration {
         }
         else if (isAgency){
             if (!accountFound){
-                errorMessage.add(Label.ISSP_NoRecordsFoundNext);
+                if(CommunityName=='CNS') { errorMessage.add(Label.ISSP_NoRecordsFoundNext_CNS); }
+                else { errorMessage.add(Label.ISSP_NoRecordsFoundNext); }
             }
         }
         else if (isGSA){
