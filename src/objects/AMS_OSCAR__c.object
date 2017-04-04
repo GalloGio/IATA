@@ -6007,6 +6007,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Cases_CNS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - CNS</label>
+        <queue>Cases_CNS</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>China_N_Asia_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>China &amp; N. Asia [OSCAR]</label>
