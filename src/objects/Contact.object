@@ -3061,6 +3061,15 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>CNS_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the contacts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Call_Status_Update__c</fullName>
         <externalId>false</externalId>
         <label>Call Status Update</label>
