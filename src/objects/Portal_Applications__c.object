@@ -444,38 +444,39 @@ Name
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
         <formula>OR( 
-AND( 
-Agency__c = true, 
-$User.Customer_type__c=&quot;Agency&quot; 
-), 
-AND( 
-VisibleCNS__c= true, 
-$User.Customer_type__c=&quot;CNS Agency&quot; 
-), 
-AND( 
-Not_ICH_Airline__c = true, 
-CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;)) 
-), 
-AND( 
-ICH_Airline__c = true, 
-CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
-CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
-), 
-AND( 
-GSA__c = true, 
-CONTAINS($User.Customer_type__c,&quot;GSA&quot;) 
-), 
-AND( 
-GSSA__c = true, 
-CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
-), 
-AND( 
-Name = &quot;Resource Center&quot;, 
-CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
-), 
-AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
-AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)) 
+    AND( 
+    Agency__c = true, 
+    $User.Customer_type__c=&quot;Agency&quot; 
+    ), 
+    AND( 
+    VisibleCNS__c= true, 
+    $User.Customer_type__c=&quot;CNS Agency&quot; 
+    ), 
+    AND( 
+    Not_ICH_Airline__c = true, 
+    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+    NOT(CONTAINS($User.Customer_type__c,&quot;ICH&quot;)) 
+    ), 
+    AND( 
+    ICH_Airline__c = true, 
+    CONTAINS($User.Customer_type__c,&quot;Airline&quot;), 
+    CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
+    ), 
+    AND( 
+    GSA__c = true, 
+    CONTAINS($User.Customer_type__c,&quot;GSA&quot;) 
+    ), 
+    AND( 
+    GSSA__c = true, 
+    CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
+    ), 
+    AND( 
+    Name = &quot;Resource Center&quot;, 
+    CONTAINS($UserRole.Name ,&quot;General Public&quot;) 
+    ), 
+    AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
+    AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
+    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)) 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>

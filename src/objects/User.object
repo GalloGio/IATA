@@ -288,6 +288,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account_or_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND (
+  OR( Contact.Account.CNS_Account__c , Contact.Account.CNS_Agency__c),
+  OR( Contact.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;, Contact.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Account or Agency</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>For admin use. Reason for deactivation or reactivation between other comments another admin may need to know before doing any modification.</description>
         <externalId>false</externalId>
