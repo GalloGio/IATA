@@ -15047,7 +15047,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     </rules>
     <rules>
         <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
         <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
