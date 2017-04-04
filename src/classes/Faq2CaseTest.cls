@@ -734,4 +734,34 @@ private class Faq2CaseTest {
 
     	return 0;
     }
+    
+    static testMethod void testinitIATACodeList() {
+        Account account1 = new Account(Name='test1', IATAcode__c = '1');
+        insert account1;
+        
+        Contact contact = new Contact(
+            Salutation = 'Mr.',
+            FirstName= 'first',
+            LastName= 'last',
+            AccountId = account1.id);
+        insert contact;
+
+        vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+        
+        Test.StartTest();
+        ctrl.initIATACodeList(account1.id);
+        Account account2 = new Account(Name='test2', IATAcode__c = '2', ParentId=account1.Id);
+        insert account2;
+        ctrl.initIATACodeList(account2.id);
+        Account account3 = new Account(Name='test3', IATAcode__c = '3', ParentId=account2.Id);
+        insert account3;
+        ctrl.initIATACodeList(account3.id);
+        Account account4 = new Account(Name='test4', IATAcode__c = '4', ParentId=account3.Id);
+        insert account4;
+        ctrl.initIATACodeList(account4.id);
+        Account account5 = new Account(Name='test5', IATAcode__c = '5', ParentId=account4.Id);
+        insert account5;
+        ctrl.initIATACodeList(account5.id);
+        Test.StopTest();
+    }
 }

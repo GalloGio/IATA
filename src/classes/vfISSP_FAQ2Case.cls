@@ -22,6 +22,7 @@ public without sharing class vfISSP_FAQ2Case
     public list<ArticleViewLine> articleViewLines { get; set; }
     //public FAQ__kav selectedArtical { get; set; }
     public ArticleModalView SelectedArticleModalView {get; set;}
+    public Id parentAccountId {get;set;} //TF - SP9-C5
 
     public boolean isAgencyUser {get;set;} //TF - SP9-C5
     public boolean isGSAUser {get;set;} //TF - SP9-C5
@@ -102,9 +103,6 @@ public without sharing class vfISSP_FAQ2Case
         //Call the new method that decides what Links the user allowed to see according to his case record type
         setCaseRecordTypeAccess();
 
-        //Call for the new method that arrange the fields according to the Custom settings
-        GenerateFieldsBySettings();
-        
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
         if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
@@ -128,7 +126,10 @@ public without sharing class vfISSP_FAQ2Case
         User user   = DAL_ISSP.getUser(Userinfo.getUserId());
         Contact con = DAL_ISSP.getContact(user.ContactId);
         Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
-
+        this.parentAccountId = con.AccountId;
+        
+        //Call for the new method that arrange the fields according to the Custom settings
+        GenerateFieldsBySettings();
 
         myTopic = ApexPages.currentPage().getParameters().get('topic');
         this.currentButtonsToShow = OnlyCancel;
@@ -986,6 +987,60 @@ public without sharing class vfISSP_FAQ2Case
                 LIMIT 10000 ];
     }
     
+    /**
+        Return a SelectOption List with all IATA codes in the account hierarchy
+    **/
+    @TestVisible
+    private list<SelectOption> initIATACodeList(Id accountId) {
+        list<SelectOption> IATACodeList = new list<SelectOption>();
+        try {
+            // find all parents for current account
+            Account currentAccount = [
+                Select id, Name,
+                    ParentId,
+                    Parent.ParentId,
+                    Parent.Parent.ParentId,
+                    Parent.Parent.Parent.ParentId,
+                    Parent.Parent.Parent.Parent.ParentId
+                From Account
+                Where id = :accountId ];
+
+            // find the top parent
+            Id parentId = null;
+            if (currentAccount.ParentId == null ) {
+                parentId = currentAccount.Id;
+            } else if (currentAccount.Parent.ParentId == null ) {
+                parentId = currentAccount.ParentId;
+            } else if (currentAccount.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.ParentId;
+            } else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.Parent.ParentId;
+            } else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
+                parentId = currentAccount.Parent.Parent.Parent.ParentId;
+            } else {
+                parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
+            }
+
+            // Get all account in the hierarchy
+            for (Account acc: [
+                SELECT Id, IATAcode__c
+                FROM Account
+                WHERE Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId
+                ORDER BY IATAcode__c ASC]) {
+                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c));
+            }
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        }
+        return IATACodeList;
+        
+    }
+    
     // Get all catagory's articles in the english language 
     public static list<FAQ__kav> getArticalsByCat(String cat, list<String> subCatList) 
     {
@@ -1360,6 +1415,11 @@ public without sharing class vfISSP_FAQ2Case
                 )
             {
                 fieldRecordWrapper newField = new fieldRecordWrapper(thisField);
+                // adding exception to a field
+                if (newField.fieldName=='ISSP_MyProfile_IATACODE') {
+                    newField.fieldType = 'bootstrap-select';
+                    newField.listOptions = initIATACodeList(this.parentAccountId);
+                }
 
                 if (thisField.Profile_Id_List__c != '' && thisField.Profile_Id_List__c != null && clickedService == false)
                 {
@@ -1380,6 +1440,7 @@ public without sharing class vfISSP_FAQ2Case
                 {
                     newField.rendered = true;
                 }
+
                 newSection.fieldList.add(newField);
             }
         }
@@ -1417,6 +1478,7 @@ public without sharing class vfISSP_FAQ2Case
         public Boolean AP_CASE      {get; set;}
         //public Boolean Complaint    {get; set;}
         public Decimal orderNumber  {get; set;} 
+        public list<SelectOption> listOptions {get; set;} 
 
         public fieldRecordWrapper(ISSP_Case_Fields__c CS){
               this.fieldName    = CS.Label__c ;
@@ -1429,6 +1491,7 @@ public without sharing class vfISSP_FAQ2Case
               this.NOT_FDS      = CS.NOT_FDS__c ;
               this.AP_CASE      = CS.AP_Case__c ;
               //this.Complaint    = CS.Complaint__c ;
+              this.listOptions  = new list<SelectOption>();
         } 
     }
 
@@ -1690,6 +1753,4 @@ public without sharing class vfISSP_FAQ2Case
 
         }
     }
-
-
 }
