@@ -618,6 +618,7 @@
     <relatedLists>
         <fields>Contact.NAME</fields>
         <fields>Contact.VER_Number_2__c</fields>
+        <fields>NAME</fields>
         <fields>Delegate__c</fields>
         <relatedList>Managed_agency__c.Account__c</relatedList>
     </relatedLists>
