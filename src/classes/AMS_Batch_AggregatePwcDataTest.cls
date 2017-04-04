@@ -289,7 +289,7 @@ private class AMS_Batch_AggregatePwcDataTest {
         // Check that our data are correct - IRRS
         System.assertEquals(12, resultAccount1.AMS_PWC_INT_IRRS__c);
         System.assertEquals(5, resultAccount2.AMS_PWC_INT_IRRS__c);
-        System.assertEquals(5, resultAccount4.AMS_PWC_INT_IRRS__c);
+        System.assertEquals(-5, resultAccount4.AMS_PWC_INT_IRRS__c);
 
         // Check that our data are correct - Own/share change
         System.assertEquals('Y', resultAccount1.AMS_PWC_INT_OWNSHA_CHANGE__c);

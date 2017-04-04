@@ -237,8 +237,6 @@
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_gi__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_gi__c'),'fieldChanged','')}"/></div>
                             <div class="col-sm-12 customValueStyle">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'Update_gi__c'),'fieldChanged','')}"/>
                               <!-- actual value for update (general information) -->
                               <apex:outputField value="{!Country_Profile__c.Update_gi__c}"/>
                             </div>
@@ -466,8 +464,6 @@
                               <p>
                               <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.BSP_General_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'BSP_General_Update__c'),'fieldChanged','')}"/></div>
                               <div class="col-sm-12 customValueStyle">
-                                <!-- just a change marker - red dot -->
-                                <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'BSP_General_Update__c'),'fieldChanged','')}"/>
                                 <!-- actual value for general update (BSP) -->
                                 <apex:outputField value="{!Country_Profile__c.BSP_General_Update__c}"/>
                               </div>
@@ -565,8 +561,6 @@
                               <p>
                               <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.CASS_General_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'CASS_General_Update__c'),'fieldChanged','')}"/></div>
                               <div class="col-sm-12 customValueStyle">
-                                <!-- just a change marker - red dot -->
-                                <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'CASS_General_Update__c'),'fieldChanged','')}"/>
                                 <!-- actual value for general update (CASS) -->
                                 <apex:outputField value="{!Country_Profile__c.CASS_General_Update__c}"/>
                               </div>
@@ -677,8 +671,6 @@
                           <p>
                           <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.AC_Update__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'AC_Update__c'),'fieldChanged','')}"/></div>
                           <div class="col-sm-12 customValueStyle">
-                            <!-- just a change marker - red dot -->
-                            <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'AC_Update__c'),'fieldChanged','')}"/>
                             <!-- actual value for general update (CASS) -->
                             <apex:outputField value="{!Country_Profile__c.AC_Update__c}"/>
                           </div>
@@ -772,8 +764,6 @@
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.General_profile_e__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'General_profile_e__c'),'fieldChanged','')}"/></div>
                             <div class="col-sm-12 customValueStyle">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'General_profile_e__c'),'fieldChanged','')}"/>
                               <!-- actual value for general profile (summary) -->
                               <apex:outputField value="{!Country_Profile__c.General_profile_e__c}"/>
                             </div>
@@ -784,8 +774,6 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'Update_e__c'),'fieldChanged','')}"/>
                               <!-- actual value for update -->
                               <apex:outputField value="{!Country_Profile__c.Update_e__c}"/>
                             </div>
@@ -907,8 +895,6 @@
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_c__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_c__c'),'fieldChanged','')}"/></div>
                             <div class="col-sm-12 customValueStyle">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'Update_c__c'),'fieldChanged','')}"/>
                               <!-- actual value for update -->
                               <apex:outputField value="{!Country_Profile__c.Update_c__c}"/>
                             </div>
@@ -918,8 +904,6 @@
                         <div class="row">
                           <p>
                             <div class="col-sm-12">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'General_profile_c__c'),'fieldChanged','')}"/>
                               <!-- actual value for general profile (summary) -->
                               <apex:outputField value="{!Country_Profile__c.General_Profile_c__c}"/>
                             </div>
@@ -1046,8 +1030,6 @@
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_rp__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_rp__c'),'fieldChanged','')}"/></div>
                             <div class="col-sm-12 customValueStyle">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'Update_rp__c'),'fieldChanged','')}"/>
                               <!-- actual value for update (repatriation process) -->
                               <apex:outputField value="{!Country_Profile__c.Update_rp__c}"/>
                             </div>
@@ -1122,8 +1104,6 @@
                           <p>
                             <div class="col-sm-12 customLabelStyle"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.Update_ic__c.Label}" styleClass="{!IF(CONTAINS(isChangedString,'Update_ic__c'),'fieldChanged','')}"/></div>
                             <div class="col-sm-12 customValueStyle">
-                              <!-- just a change marker - red dot -->
-                              <apex:outputText value="" styleClass="{!IF(CONTAINS(isChangedString,'Update_ic__c'),'fieldChanged','')}"/>
                               <!-- actual value for update (important contacts) -->
                               <apex:outputField value="{!Country_Profile__c.Update_ic__c}"/>
                             </div>

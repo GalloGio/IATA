@@ -768,7 +768,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     </validationRules>
     <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND( 
 OR (ISCHANGED(Right__c) , ISNEW() ), 
 Application_Name__c = &apos;Management Information Report&apos;, 
