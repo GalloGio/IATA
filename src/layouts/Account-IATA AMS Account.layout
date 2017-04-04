@@ -804,6 +804,18 @@
         <fields>NAME</fields>
         <relatedList>Accreditation__c.Related_Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Change_Code__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>Update_Type__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
