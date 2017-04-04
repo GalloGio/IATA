@@ -47,7 +47,7 @@
     <div class="container">   
         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     <div>
-        <!-- <img src="{!if(communityName=='CNS', URLFOR($Resource.CNS_Logo_Large), URLFOR($Resource.IATA_Logo_Large))}" width="138" height="102" style="float:left"/> -->
+        <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
     </div>
     <div style="padding-top:16px;padding-left:44px">
         <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, $Label.ISSP_AMS_Step0_SAA)}</h3>
