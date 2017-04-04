@@ -81,8 +81,70 @@
                             <apex:param value="{!oi.quantity * oi.UnitPrice + IF(oi.Setup_Fee__c == null, 0, oi.Setup_Fee__c)}" />
                         </apex:outputText>
                     </td>
+                       <!-- <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                            <apex:outputText value="{0, Number, Currency}" >
+                                <apex:param value="{!discountedAmount}" />
+                            </apex:outputText>
+                        </td>
+                        <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                             <apex:outputText value="{0, Number, Currency}" >
+                                <apex:param value="{!totalAmount}" />
+                            </apex:outputText>
+                        </td>-->
                 </tr>
-            </apex:repeat>        
+            </apex:repeat>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Discounted_Amount}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!discountedAmount}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 8)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Subtotal}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.SubTotal_Amount__c - ord.Discount_Amount__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Taxes}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Taxes__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Shipping}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_Freight_Charge__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.Handling}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+                <apex:outputText value="{0, Number, Currency}" >
+                    <apex:param value="{!ord.Total_handling_charges__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="{! IF(hasSetupFee == false, 4, 7)}" style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;"><strong>{!$Label.IDCard_Total}</strong></td>
+            <td style="font-size:12px;border-width: 1px;padding: 8px;border-style: solid;border-color:#394a58;">
+               <strong>
+                     <apex:outputText value="{0, Number, Currency}" >
+                        <apex:param value="{!ord.Total_Amount__c}" />
+                    </apex:outputText>
+               </strong>
+            </td>
+        </tr>
         </table>
         
         <p>
