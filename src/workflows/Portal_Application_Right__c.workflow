@@ -575,7 +575,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <name>Notify_Access_denied_by_PortalAdmin</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
             <operation>equals</operation>
@@ -594,7 +594,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <name>Notify_Access_denied_by_internal_user</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
             <operation>equals</operation>
@@ -680,7 +680,7 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <name>Notify_Application_access_granted</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <formula>AND( ISPICKVAL (Right__c , &apos;Access Granted&apos;), NOT ( OR(CONTAINS(Application_Name__c, &apos;Treasury Dashboard&apos;), CONTAINS(Application_Name__c, &apos;Standards Setting Workspace&apos;) )))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
