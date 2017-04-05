@@ -772,11 +772,11 @@ public class SurveyBatchTest {
             List<Contact> cont = new List<Contact>();
 
             Contact con =new contact(lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et', HasOptedOutOfEmail = false);
-            Contact con2 =new contact(lastname = 'pluto', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et', HasOptedOutOfEmail = false);
-            Contact con3 =new contact(lastname = 'pluto', phone = '123', accountid = a3.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et', HasOptedOutOfEmail = false);
-            Contact con4 =new contact(lastname = 'pluto',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et',HasOptedOutOfEmail = false);
-            Contact con5 =new contact(lastname = 'pluto', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et', HasOptedOutOfEmail = false);
-            Contact con6 =new contact(lastname = 'pluto', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg@wewt.et', HasOptedOutOfEmail = false);
+            Contact con2 =new contact(lastname = 'pluto2', phone = '123', accountid = a2.id, Financial_Assessment_Contact__c = true, email = 'asd.arg2@wewt.et', HasOptedOutOfEmail = false);
+            Contact con3 =new contact(lastname = 'pluto3', phone = '123', accountid = a3.id, Financial_Assessment_Contact__c = true, email = 'asd.arg3@wewt.et', HasOptedOutOfEmail = false);
+            Contact con4 =new contact(lastname = 'pluto4',phone = '123', accountid = a4.id, Financial_Assessment_Contact__c = true, email = 'asd.arg4@wewt.et',HasOptedOutOfEmail = false);
+            Contact con5 =new contact(lastname = 'pluto5', phone = '123', accountid = a5.id, Financial_Assessment_Contact__c = true, email = 'asd.arg5@wewt.et', HasOptedOutOfEmail = false);
+            Contact con6 =new contact(lastname = 'pluto6', phone = '123', accountid = a6.id, Financial_Assessment_Contact__c = true, email = 'asd.arg6@wewt.et', HasOptedOutOfEmail = false);
 
             cont.add(con);
             cont.add(con2);
