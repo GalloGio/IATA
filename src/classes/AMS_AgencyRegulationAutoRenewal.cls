@@ -128,7 +128,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					system.debug('creating renewal for DGR');
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
 
-					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 				}
 			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
@@ -155,7 +155,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					system.debug('creating renewal for DGR');
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
 
-					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 				}
 			}
 		}
@@ -293,7 +293,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
     }
 
-    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea) {
+    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
         
         Id templateId;
 
@@ -307,7 +307,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             for(Contact recipient: recipents){
 
-                if(recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c){
+                if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c){
 
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.saveAsActivity = true;

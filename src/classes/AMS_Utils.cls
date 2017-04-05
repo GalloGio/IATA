@@ -102,6 +102,7 @@ public without sharing class AMS_Utils {
     public static final String HO = 'HO';
     public static final String AO = 'AO';
     public static final String SA = 'SA';
+    public static final String HE = 'HE';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -123,6 +124,9 @@ public without sharing class AMS_Utils {
     public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
+
+    //Process of type NewGen
+    public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -1039,7 +1043,7 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c
+                Link_agent_name__c, ANG_Accreditation_Model__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1100,6 +1104,9 @@ public without sharing class AMS_Utils {
                 acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
                 acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
+                
+                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
+
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
@@ -1131,6 +1138,18 @@ public without sharing class AMS_Utils {
         
         return null;
         
+    }
+
+    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+
+        if(oscarProcess == NEWHELITE){
+
+            return 'Standard without cash';
+        
+        }
+
+        return oldAccountValue;
+
     }
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
@@ -2135,4 +2154,50 @@ public static String fetchTypeOfCustomer (String locationType , String category)
           return this;   
        }
     }
+
+    // compares two values in diff rates
+    // if firstValue < secondValue , returns 1
+    // if firstValue = secondValue , returns 0
+    // if secondvalue < firstValuue , returns 2
+    // if there is a rate problem, return -1
+    // if there is a amount problem, return -2
+    public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
+
+        if(firstValue == null || secondValue == null){
+            System.debug('Returning -2');
+            return -2;
+        }
+
+        Set<String> currencies = new Set<String>{firstCurrencyISOCode, secondCurrencyISOCode};
+
+        List<CurrencyType> types = [SELECT Id, ConversionRate, DecimalPlaces, IsoCode FROM  CurrencyType where IsoCode in :currencies and IsActive = true];
+
+        if(types.size() != currencies.size()){
+            System.debug('Returning -1');
+            return -1;
+        }
+
+        Map<String,Double> rates = new Map<String,Double>();
+
+        rates.put(types.get(0).IsoCode, types.get(0).ConversionRate);
+        
+        if(types.size() > 1)
+            rates.put(types.get(1).IsoCode, types.get(1).ConversionRate);
+
+        if(firstValue * rates.get(firstCurrencyISOCode) < secondvalue * rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 1');
+            return 1;
+        }
+
+        if(firstValue * rates.get(firstCurrencyISOCode) > secondvalue * rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 2');
+            return 2;
+        }
+
+        System.debug('Returning 0');
+        return 0;
+    
+    }
+
+
 }
