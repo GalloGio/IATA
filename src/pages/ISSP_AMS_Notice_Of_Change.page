@@ -783,7 +783,7 @@
 					<apex:pageBlockSection columns="2" id="locationSection" collapsible="false">
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!$Label.ISSP_AMS_NoC_Change_of_Location}
+								{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_of_Location_New,$Label.ISSP_AMS_NoC_Change_of_Location)}
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NOC_Current_Location_New, $Label.ISSP_AMS_NOC_Current_Location)}</apex:outputPanel>

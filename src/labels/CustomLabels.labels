@@ -7122,6 +7122,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>SECTION 3 - Agency Contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10763,7 +10770,9 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
-        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;
+Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
+Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_People_SubTitle</fullName>
@@ -11527,7 +11536,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS StepsAll Cargo Title New</shortDescription>
-        <value>Application for approval as an IFACP Forwarder</value>
+        <value>Application for Approval as an IATA Passenger / Cargo Sales Agent / IFACP Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Courier_Title</fullName>

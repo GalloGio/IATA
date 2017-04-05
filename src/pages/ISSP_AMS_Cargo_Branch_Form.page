@@ -625,7 +625,7 @@
                    <apex:pageBlockSection id="sectionThree" columns="1">
                     <apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3}   
+                            {!IF(newlabels,$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_New,$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3)}
                         </apex:outputpanel>
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_1}</strong></div>
