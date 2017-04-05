@@ -1025,12 +1025,13 @@ public without sharing class vfISSP_FAQ2Case
             for (Account acc: [
                 SELECT Id, IATAcode__c
                 FROM Account
-                WHERE Id = :parentId
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
                 OR ParentId = :parentId
                 OR Parent.ParentId = :parentId
                 OR Parent.Parent.ParentId = :parentId
                 OR Parent.Parent.Parent.ParentId = :parentId
-                OR Parent.Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
                 ORDER BY IATAcode__c ASC]) {
                     IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c));
             }
