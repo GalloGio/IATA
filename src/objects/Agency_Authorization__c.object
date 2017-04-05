@@ -57,51 +57,7 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Account__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Agency</label>
-        <referenceTo>Account</referenceTo>
-        <relationshipLabel>Agency Authorizations</relationshipLabel>
-        <relationshipName>Agency_Authorizations</relationshipName>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Authority__c</fullName>
-        <description>Use this field to get the type of authority. Currently used for BSPLink only. FIeld is for future implementation</description>
-        <externalId>false</externalId>
-        <formula>CASE( RecordType.DeveloperName , 
-&quot;BSPLink&quot;, 
-&quot;BSPLink&quot;, 
-&quot;Form_of_Payment&quot;,
-   CASE(Form_of_Payment_ID__c, 
-   &quot;CC&quot;, &quot;Card Payment Method&quot;,
-   &quot;CA&quot;, &quot;Cash Payment Method&quot;,
-   &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
-&quot;&quot;
-)</formula>
-        <label>Authorization</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Email_Used_for_BSP_Creation__c</fullName>
-        <externalId>false</externalId>
-        <label>Email (Used for BSP Creation)</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Email</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Form_of_Payment_ID__c</fullName>
+        <fullName>ANG_Form_of_Payment_ID__c</fullName>
         <externalId>false</externalId>
         <label>Form of Payment ID</label>
         <picklist>
@@ -124,6 +80,50 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Agency Authorizations</relationshipLabel>
+        <relationshipName>Agency_Authorizations</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Authority__c</fullName>
+        <description>Use this field to get the type of authority. Currently used for BSPLink only. FIeld is for future implementation</description>
+        <externalId>false</externalId>
+        <formula>CASE( RecordType.DeveloperName , 
+&quot;BSPLink&quot;, 
+&quot;BSPLink&quot;, 
+&quot;Form_of_Payment&quot;,
+   CASE(ANG_Form_of_Payment_ID__c, 
+   &quot;CC&quot;, &quot;Card Payment Method&quot;,
+   &quot;CA&quot;, &quot;Cash Payment Method&quot;,
+   &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
+&quot;&quot;
+)</formula>
+        <label>Authorization</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Used_for_BSP_Creation__c</fullName>
+        <externalId>false</externalId>
+        <label>Email (Used for BSP Creation)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IATACode__c</fullName>
@@ -216,6 +216,21 @@
         <active>true</active>
         <label>BSPLink</label>
         <picklistValues>
+            <picklist>ANG_Form_of_Payment_ID__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
@@ -240,7 +255,7 @@
         <active>true</active>
         <label>Form of Payment</label>
         <picklistValues>
-            <picklist>Form_of_Payment_ID__c</picklist>
+            <picklist>ANG_Form_of_Payment_ID__c</picklist>
             <values>
                 <fullName>CA</fullName>
                 <default>false</default>
