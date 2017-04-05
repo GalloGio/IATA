@@ -73,8 +73,17 @@
         <fullName>Authority__c</fullName>
         <description>Use this field to get the type of authority. Currently used for BSPLink only. FIeld is for future implementation</description>
         <externalId>false</externalId>
-        <formula>CASE( RecordType.DeveloperName , &quot;BSPLink&quot;, &quot;BSPLink&quot;, &quot;&quot;)</formula>
-        <label>Authority</label>
+        <formula>CASE( RecordType.DeveloperName , 
+&quot;BSPLink&quot;, 
+&quot;BSPLink&quot;, 
+&quot;Form_of_Payment&quot;,
+   CASE(Form_of_Payment_ID__c, 
+   &quot;CC&quot;, &quot;Card Payment Method&quot;,
+   &quot;CA&quot;, &quot;Cash Payment Method&quot;,
+   &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
+&quot;&quot;
+)</formula>
+        <label>Authorization</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -90,6 +99,31 @@
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Form_of_Payment_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>Form of Payment ID</label>
+        <picklist>
+            <picklistValues>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>IATACode__c</fullName>
@@ -181,6 +215,45 @@
         <fullName>BSPLink</fullName>
         <active>true</active>
         <label>BSPLink</label>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deactivation in process</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Non-Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not set</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Form_of_Payment</fullName>
+        <active>true</active>
+        <label>Form of Payment</label>
+        <picklistValues>
+            <picklist>Form_of_Payment_ID__c</picklist>
+            <values>
+                <fullName>CA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>

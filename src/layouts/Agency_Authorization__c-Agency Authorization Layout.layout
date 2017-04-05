@@ -35,6 +35,10 @@
                 <behavior>Readonly</behavior>
                 <field>IATACode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Form_of_Payment_ID__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
