@@ -8,6 +8,8 @@ public with sharing class ISSP_SearchResultCO {
 	private static List<String> sortedObjNameList; 
     private static Map<String, List<Schema.FieldSetMember>> objName2tableColumnMap;  
 	private static Map<String, List<Schema.FieldSetMember>> object2SearchFieldMap; 
+	 //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
 
 	static {
         try {

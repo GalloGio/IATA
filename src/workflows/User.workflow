@@ -13,6 +13,18 @@
         <template>ISS_Portal/ISSP_Change_Email_Address</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Change_email_address_cns</fullName>
+        <description>ISSP - Change email address - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_Change_Email_Address_cns</template>
+    </alerts>
+    <alerts>
         <fullName>Notify_if_new_admins_are_granted</fullName>
         <description>Notify if new admins are granted</description>
         <protected>false</protected>
