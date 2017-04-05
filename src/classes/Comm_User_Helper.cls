@@ -294,7 +294,7 @@ global without sharing class Comm_User_Helper {
 
         EmailMessageWrapper ew;
         String noreplyemail= 'noreply@iata.org';
-        if(commName != null && commName.contains('CNS') ){ noreplyemail ='cns_noreply@cnsc.us'; }
+        if(commName.contains('CNS') ){ noreplyemail ='cns_noreply@cnsc.us'; }
 
         if (bccCS){
             String bccEmail = UserInfo.getUserEmail();
