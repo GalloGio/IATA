@@ -725,8 +725,8 @@ Name = &quot;Resource Center&quot;
         <active>true</active>
         <description>Only allow to save when Restrict by Agency Sector is not empty IF Agency checkbox = TRUE</description>
         <errorConditionFormula>AND(
- Agency__c,
- TEXT(ANG_Restrict_by_Agency_Sector__c) == &quot;&quot;
+ NOT(Agency__c),
+ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
 )</errorConditionFormula>
         <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Sector.</errorMessage>
     </validationRules>
