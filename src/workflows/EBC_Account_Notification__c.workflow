@@ -10,7 +10,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>globaldata@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Account_Notification_For_Renewal</template>
     </alerts>
     <alerts>
@@ -23,7 +23,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>globaldata@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Account_Notification_Status</template>
     </alerts>
     <rules>

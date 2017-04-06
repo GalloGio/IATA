@@ -2657,9 +2657,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.DIVISION</columns>
         <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.PROFILE.NAME</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CREATED_BY_NAME</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.NAME</columns>
@@ -2676,13 +2676,12 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </filters>
         <filters>
             <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
+            <operation>notContain</operation>
             <value>Portal</value>
         </filters>
         <filters>
-            <field>LANGUAGE</field>
+            <field>CORE.USERS.LAST_LOGIN</field>
             <operation>notEqual</operation>
-            <value>1</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>
