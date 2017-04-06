@@ -52,7 +52,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -266,6 +265,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Abbreviated_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -517,11 +520,11 @@
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
         <fields>Services__c</fields>
+        <fields>Status__c</fields>
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
-        <fields>VER_Number_2__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
