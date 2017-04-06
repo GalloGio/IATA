@@ -122,9 +122,14 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         String childCasesErrors;
 
         // CB - AMS enhancements / AMSU-3
-        if (processType == 'BANK.ACCOUNT.CHANGES') {
+        if (processType == AMS_Utils.BANKACCCHANGES && scopeOfChange != null) {
             // add scope of change and concerned branches to AMS Online Accreditation record
-            updateAccreditationForm(container.oscarCaseId, scopeOfChange, concernedAgencyCodes);    
+            updateAccreditationForm(container.oscarCaseId, scopeOfChange, concernedAgencyCodes);
+
+            // set the Case Area & Reason values for correct KPI calculation
+            container.c.CaseArea__c = 'Accreditation Process';
+            container.c.Reason1__c = 'IRIS Bank Detail Update';
+            update container.c;
 
             //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
             if (scopeOfChange == 'HO - Selected Branches' || scopeOfChange == 'Selected Branches Only'){
@@ -161,7 +166,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
     static void updateAccreditationForm(String caseId, String scopeOfChange, String concernedAgencyCodes) {
         RecordType rt = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Pax_Accreditation_Form__c' AND DeveloperName = 'Change_of_Bank_Account_Details'];
 
-        list<AMS_Pax_Accreditation_Form__c> accreditationFormsList = [SELECT Id, SAAM_Case__c, Scope_of_Change__c,Agency_Codes_Concerned__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId];
+        list<AMS_Pax_Accreditation_Form__c> accreditationFormsList = [SELECT Id, SAAM_Case__c, Scope_of_Change__c,Agency_Codes_Concerned__c, Is_change_bank_account_details__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId];
         if (accreditationFormsList.isEmpty()) {
             system.debug('Accreditation Form for case ' + caseId + ' not found.');
             return;
@@ -170,12 +175,14 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         AMS_Pax_Accreditation_Form__c accreditationForm = accreditationFormsList[0];
         accreditationForm.Scope_of_Change__c = scopeOfChange;
         accreditationForm.Agency_Codes_Concerned__c = concernedAgencyCodes;
+        accreditationForm.Is_change_bank_account_details__c = true;
         accreditationForm.RecordTypeId = rt.Id;
 
         update accreditationForm;
         system.debug('accreditation form updated with scope of change "' + scopeOfChange + '" and concerned agency codes "' + concernedAgencyCodes + '" and record type id ' + rt.Id);
     }
 
+    // Used for processType == AMS_Utils.BANKACCCHANGES
     private String createChildCases(String concernedAgencyCodes, Case parentCase, AMS_OSCAR__c hoOscar) {
         
         if(parentCase == null) return 'Invalid parent case: null';
@@ -199,14 +206,6 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         }
 
         if(agencies.isEmpty()) return 'Could not find any branches for the selected account.';
-
-        //Create an OSCAR for every child case and link it to the account concerned; clone from the HO Oscar; no staging area        
-        /*List<AMS_OSCAR__c> hoOscars = [SELECT Id, Status__c, Account__c, Process__c, RecordTypeId, OwnerId, AMS_Online_Accreditation__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id = :oscarId LIMIT 1];
-        if(hoOscars == null || hoOscars.size() == 0 ){
-            system.debug('No OSCAR record found on parent case ' + parentCase.Id);
-            return 'No OSCAR record found on parent case';
-        }
-        AMS_OSCAR__c hoOscar = hoOscars[0];*/
 
         Id auxId = null;
         map<Id, Case> mapChildCasesPerAccountConcernedId = new map<Id, Case>();
@@ -232,6 +231,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
                 mapChildCasesPerAccountConcernedId.put(accConcerned.Id, child);
 
                 AMS_OSCAR__c childOscar = hoOscar.clone(false, true);
+                childOscar.Process__c = AMS_Utils.BANKACCCHANGES; 
                 childOscar.AMS_Online_Accreditation__c = null;
                 childOscar.Account__c = accConcerned.Id;
 
