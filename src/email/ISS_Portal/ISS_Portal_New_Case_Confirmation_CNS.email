@@ -1,0 +1,56 @@
+<messaging:emailTemplate replyTo="cns_noreply@cnsc.us"  
+            subject="Case {!relatedTo.CaseNumber} - {!relatedTo.Subject}" 
+            recipientType="User" relatedToType="Case"  language="EN">
+<messaging:emailHeader name="CaseId">
+    {!relatedTo.Id}
+ </messaging:emailHeader>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF&lastMod=1428578119000"/>
+<BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+{!$Label.ISSP_Email_Dear_Pre}  {!relatedTo.Contact.FirstName} {!relatedTo.Contact.LastName}{!$Label.ISSP_Email_Dear_Post}<BR/>
+<BR/>
+Thank you for your recent enquiry. Case #{!relatedTo.CaseNumber}: "{!relatedTo.Subject}" has now been created and a Customer Service Representative will contact you shortly. <BR/>
+Please ensure you refer to this Case Number in any further contact with us about this enquiry. 
+<BR/>
+
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+Case Number:
+<a href="{!$Label.ISSP_Email_PortalUrl_CNS}{!relatedTo.id}{!IF(relatedTo.CNSCase__c, '&CommunityName=CNS','')}">{!relatedTo.CaseNumber}</a>.<BR/>
+</apex:outputPanel>
+<!--<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+{!relatedTo.CaseNumber}.<BR/>
+</apex:outputPanel>
+<BR/>-->
+<BR/>
+Subject:
+{!relatedTo.Subject}.<BR/>
+<BR/>
+<BR/>
+{!$Label.Country_concerned_by_the_query}: {!relatedTo.Country_concerned_by_the_query__c}
+<BR/>
+<BR/>
+<apex:outputPanel rendered="{!relatedTo.Visible_on_ISS_Portal__c}">
+please access it on your:
+<center><br />
+<a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+href="{!$Label.ISSP_Email_PortalUrl_CNS}ISSP_Login?retURL=/ISSP_Case?caseId={!relatedTo.id}&CommunityName=CNS">{!$Label.ISSP_Email_CNS_Portal}</a>
+  </center>
+</apex:outputPanel>
+<BR/>
+{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+<BR/>
+{!$Label.ISSP_Email_CNS_Service}<BR/>
+
+
+
+<apex:image value="{!IF(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF','https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lJ0P&oid=00D2000000008TF&lastMod=1392385307000')}"/>
+
+<BR/>
+</span>
+</div>
+{!relatedTo.Case_Thread_ID__c}
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
