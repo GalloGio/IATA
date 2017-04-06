@@ -1,5 +1,5 @@
 global with sharing class GenericAttachmentListController {
-	
+
     public String uploader {get;set;}
     public String source {get;set;}
     public Boolean scroll {get;set;}
@@ -12,7 +12,13 @@ global with sharing class GenericAttachmentListController {
 	public String amazonPath  {
 		get { return WrapperAttach.getAmazonFolder(this.Id); }
 	}
-	
+
+	//new CNS
+	public String communityName{
+	  get{
+		return ApexPages.currentPage().getParameters().get('CommunityName');
+	  }set;}
+
 	public list<WrapperAttach> listAttachments {get; set;}
 	public Id editAttachmentId {get; set;}
 	public WrapperAttach editAttachment {get; set;}
@@ -59,14 +65,14 @@ global with sharing class GenericAttachmentListController {
 			}
 		}
 	}
-	
+
 	/**
 		check all assignTo calls have been done and execute initial methods
 	**/
 	private void init() {
 		if (this.isForPortal == null ) return;
 		if (this.id == null ) return;
-		
+
 		// check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
@@ -81,7 +87,7 @@ global with sharing class GenericAttachmentListController {
             set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
             this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
         }
-		
+
 		refreshList();
 	}
 
@@ -131,7 +137,7 @@ global with sharing class GenericAttachmentListController {
 		//System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
 		return result;
 	}
-	
+
 	/**
 		Delete a standard attachment in Salesforce
 	**/
@@ -144,7 +150,7 @@ global with sharing class GenericAttachmentListController {
 			return false;
 		}
 	}
-	
+
 	/**
 		Delete an archived attachment object
 	**/
@@ -157,7 +163,7 @@ global with sharing class GenericAttachmentListController {
 			return false;
 		}
 	}
-	
+
 	/**
 		Delete a file in Amazon Bucket, including AmazonFile object in Amazon
 	**/
@@ -167,27 +173,27 @@ global with sharing class GenericAttachmentListController {
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			Boolean result = attach.moveToBucket();
 			return result;
-			
+
 		} catch (Exception e) {
 			System.debug('GenericAttachmentListController.deleteAmazonAttachment' + e.getMessage());
 			return false;
 		}
 	}
-	
+
 	/**
 		Change all Attachments to public
 	**/
 	public void makeAllPublic() {
 		changePermissionToAll(true);
 	}
-	
+
 	/**
 		Change all Attachments to private
 	**/
 	public void makeAllPrivate() {
 		changePermissionToAll(false);
 	}
-	
+
 	/**
 		Set the same permission to all attachments
 	**/
@@ -196,7 +202,7 @@ global with sharing class GenericAttachmentListController {
 			attachment.changePermission(value);
 		}
 	}
-	
+
 	/**
 		redirect to the Trasnfer Attachments page
 	**/
@@ -206,7 +212,7 @@ global with sharing class GenericAttachmentListController {
 		pageref.setRedirect(true);
 		return pageref.getUrl();
 	}
-	
+
 		public PageReference callEditAttachment() {
 		for ( WrapperAttach attach: listAttachments ) {
 			if (attach.id == this.editAttachmentId) {
@@ -225,7 +231,7 @@ global with sharing class GenericAttachmentListController {
 		this.editAttachmentId = null;
 		return null;
 	}
-	
+
 	/**
 		Close the edit attachment popup saving changes
 	**/
@@ -237,8 +243,8 @@ global with sharing class GenericAttachmentListController {
 		}
 		return cancelPopupAttach();
 	}
-	
-	
+
+
 	public Boolean getCanAttachFilesToCase() {
         if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
             return true;
@@ -256,7 +262,7 @@ global with sharing class GenericAttachmentListController {
     }
     
     public PageReference goToAttachmentPage() {
-        return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&retURL=%2F' + id);
+        return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
     }
 
     /**
