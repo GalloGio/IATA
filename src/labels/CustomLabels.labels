@@ -9138,7 +9138,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</shortDescription>
-        <value>Changes can only be made once your agency has been accredited to CNS</value>
+        <value>Changes can only be made once your agency has been endorsed with CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Multiple_Changes</fullName>
