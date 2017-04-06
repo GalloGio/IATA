@@ -60,6 +60,7 @@ private class ISSP_ContentPage_Test {
 			Apexpages.currentPage().getParameters().put('title','lemon');
             ISSP_ctrl_ContentPage controller = new ISSP_ctrl_ContentPage();
           	controller.Init();
+			String s = controller.communityName;
          	//controller.runQuery();
          	//String mySoql = controller.debugSoql;
          	//controller.toggleSort();
