@@ -115,7 +115,7 @@ public class AMS_OscarCaseTriggerHelper {
         List<Case> oscarCases = new List<Case>();
 
          for(Case c : triggerNew){
-            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){
+            if(c.OSCAR__c != null && c.RecordTypeID == OSCARCaseRecordTypeID) { // &&  (c.ParentId == null || (c.ParentId != null && c.Reason1__c == 'CLO - Closure')) ){ --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
                 //need to verify just for the first case on the trigger, since the second one will throw an error
                 if(oscarIds.add(c.Oscar__c)) oscarCases.add(c);
             }
