@@ -7101,6 +7101,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>3. Agency Contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_NAV3_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_NAV3_New</shortDescription>
+        <value>3. Company Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_NAV4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8118,6 +8125,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Agency Type &amp; Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_First_Page_Summary_Header_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS First Page Summary Header_New</shortDescription>
+        <value>Company Type &amp; Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Form</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8438,6 +8453,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section3_Cargo_Agency</shortDescription>
         <value>3. Agency Owners</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Agency_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav_Section3_Cargo_Agency_New</shortDescription>
+        <value>3. Company Owners</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Cass_Ass</fullName>
@@ -9052,6 +9074,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_Type_and_Location</shortDescription>
         <value>Agency Type of Change &amp; Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Type_and_Location_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Type_and_Location_New</shortDescription>
+        <value>Company Type of Change &amp; Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_for</fullName>
@@ -10715,6 +10745,14 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies</shortDescription>
         <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Companies_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 Companies New</shortDescription>
+        <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies_SubTitle</fullName>

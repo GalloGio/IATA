@@ -769,7 +769,7 @@
         <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
         <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1}</a></p>
         <p><a href="#nav_two">{!IF(newForm.Agent_Type__c!='EACP Intermediary', $Label.ISSP_AMS_LeftNav_Section2_Cargo_Agency, $Label.ISSP_AMS_LeftNav_Section2_Cargo_Intermediary)}</a></p>
-        <p><a href="#nav_three">{!IF(newForm.Agent_Type__c!='EACP Intermediary', $Label.ISSP_AMS_LeftNav_Section3_Cargo_Agency, $Label.ISSP_AMS_LeftNav_Section3_Cargo_Intermediary)}</a></p>
+        <p><a href="#nav_three">{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels,$Label.ISSP_AMS_LeftNav_Section3_Cargo_Agency_New,$Label.ISSP_AMS_LeftNav_Section3_Cargo_Agency), $Label.ISSP_AMS_LeftNav_Section3_Cargo_Intermediary)}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_LeftNav_Section4_Cargo}</a></p>
         <p><a href="#nav_five">{!$Label.ISSP_AMS_LeftNav_Section5_Cargo}</a></p>
         <p><a href="#nav_six">{!$Label.ISSP_AMS_LeftNav_Section6_Cargo}</a></p>
@@ -1239,7 +1239,7 @@
                  <apex:pageBlockSection columns="1">
                      <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Step3_3_2_Title}</strong></div>
                      <div class="col-md-12">
-                           <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
+                           <apex:outputText value="{!IF(newlabels,$Label.ISSP_AMS_Step3_4_Companies_New,$Label.ISSP_AMS_Step3_4_Companies)}" escape="false"/>
                        </div>
                         <apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
                      <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive">

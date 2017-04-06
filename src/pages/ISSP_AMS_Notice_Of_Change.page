@@ -1116,7 +1116,7 @@
 							<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NOC_Updated_Companies}</strong></div>
 							
 							<div class="col-md-12" style="padding-bottom:12px">
-								<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
+								<apex:outputText value="{!IF(newlabels,$Label.ISSP_AMS_Step3_4_Companies_New,$Label.ISSP_AMS_Step3_4_Companies)}" escape="false"/>
 							</div>
                             
 							<apex:commandLink id="addcompany" style="margin-left:20px;display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}" onfocus="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" ><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>

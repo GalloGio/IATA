@@ -10,7 +10,7 @@
     
     <apex:form >
     	<apex:pageBlock >
-    	<apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
+    	<apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_First_Page_Summary_Header_New,$Label.ISSP_AMS_First_Page_Summary_Header)}" collapsible="false">
     			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
                         <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>

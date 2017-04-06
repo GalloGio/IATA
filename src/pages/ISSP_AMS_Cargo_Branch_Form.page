@@ -386,7 +386,7 @@
         <p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
         <p><a href="#nav_one">{!$Label.ISSP_AMS_LeftNav_Section1}</a></p>
         <p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_LeftNav_Section2_New, $Label.ISSP_AMS_LeftNav_Section2)}</a></p>
-        <p><a href="#nav_three">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV3}</a></p>
+        <p><a href="#nav_three">{!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_NAV3_New, $Label.ISSP_AMS_Cargo_Branch_Form_NAV3)}</a></p>
         <p><a href="#nav_four">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV4}</a></p>
         <p><a href="#nav_five">{!$Label.ISSP_AMS_Cargo_Branch_Form_NAV5}
 </a></p>
@@ -694,7 +694,7 @@
                  <apex:pageBlockSection columns="1">
                      <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_2}</strong></div>
                      <div class="col-md-12">
-                           <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
+                           <apex:outputText value="{!IF(newlabels,$Label.ISSP_AMS_Step3_4_Companies_New,$Label.ISSP_AMS_Step3_4_Companies)}" escape="false"/>
                        </div>
                      <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" styleClass="alert alert-info" rendered="{!List_AgencyCompanies.size==0}"/>
                      <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon"  id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_AgencyCompanies.size>0}">

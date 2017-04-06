@@ -56,7 +56,7 @@
                 <table class="aptable">
                     <tr>
                         <td colspan="3" class="bluebg">
-                           	<p class="whitetext">{!$Label.ISSP_AMS_First_Page_Summary_Header}</p>
+                           	<p class="whitetext">{!IF(newlabels,$Label.ISSP_AMS_First_Page_Summary_Header_New,$Label.ISSP_AMS_First_Page_Summary_Header)}</p>
                         </td>
                     </tr>
                     <tr>
