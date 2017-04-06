@@ -19,6 +19,10 @@
                 <behavior>Edit</behavior>
                 <field>Critical_Service__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>VisibleCNS__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
