@@ -71,7 +71,7 @@
             <name>ISSP_Change_email_address</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( ISCHANGED(Email), CONTAINS( Profile.Name , &apos;ISS&apos; ),Community__c &lt;&gt;&apos;IEC&apos;,Community__c &lt;&gt;&apos;E-commerce&apos;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>

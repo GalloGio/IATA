@@ -485,7 +485,7 @@
             <name>ISS_Send_Change_Of_Portal_User_Status_Notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal Status. New users get the Welcome email message so we don&apos;t want to send this out to them, nor to Rejected or Inactivated users.</description>
         <formula>ISCHANGED( User_Portal_Status__c ) &amp;&amp;  (PRIORVALUE(User_Portal_Status__c)  &lt;&gt;  &quot;&quot;) &amp;&amp;  ( NOT(ISPICKVAL(User_Portal_Status__c, &apos;Rejected&apos;))  || NOT(ISPICKVAL(User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL(User_Portal_Status__c, &apos;Approved User&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Approved Admin&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Regional Administrator&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
@@ -496,7 +496,7 @@
             <name>ISSP_Notify_Portal_User_Status_Change_UnknownContact</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal User, when Status = Rejected AND Reason for Inactivation = Unknown Contact</description>
         <formula>ISCHANGED(Portal_Inactivation_Reason__c)</formula>
         <triggerType>onAllChanges</triggerType>
@@ -521,7 +521,7 @@
             <name>Alert_admins_that_a_contact_has_registered</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.User_Portal_Status__c</field>
             <operation>equals</operation>
