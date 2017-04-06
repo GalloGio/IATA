@@ -9,7 +9,7 @@
     >
    <html>
     
-    	<c:ISSP_Header ></c:ISSP_Header>    
+    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  	<body>
  	<c:pkb_css />
     <style type="text/css">
@@ -83,7 +83,7 @@
  
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
       <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <h3 class="panel-title">{!$Label.ISSP_Resources}</h3>
@@ -107,7 +107,7 @@
 		        <apex:variable var="params" value="{!IF(ISBLANK(allSearchParams), feedback, allSearchParams+ '&' +feedback)}" />
 		        <apex:variable var="articleURL" value="{!$Site.CurrentSiteUrl}articles{!selectedLanguageURL}{!typeName}/{!a.urlName}" />
 		        <apex:outputPanel layout="block" rendered="{!(LEFT(theKad.id, 15) != LEFT(a.Id, 15))}" style="margin-bottom: 10px;">		           
-		           <a class="relatedLink" href="{!articleURL}/?{!params}">{!a.Title}</a>
+		           <a class="relatedLink" href="{!articleURL}/?{!params}{!IF(communityName='CNS','&communityName=CNS','')}">{!a.Title}</a>
 		        </apex:outputPanel>
 		        
        </knowledge:articleList>
@@ -122,7 +122,7 @@
             
         	<div id="right_content" style="margin:40px 20px">
                 <apex:outputPanel layout="block" id="backbutton" style="margin-bottom: 50px;">
-            	<a class="relatedLink" href="{!$Site.BaseUrl}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1">&lt; {!$Label.PKB2_Back_To_Results}</a>
+            	<a class="relatedLink" href="{!$Site.BaseUrl}{!faqHome}?{!allSearchParams}&MainNav=resources&subNav=faq&mid=M2S1{!IF(communityName=='CNS','&communityName=CNS','')}">&lt; {!$Label.PKB2_Back_To_Results}</a>
           <!--  <a class="relatedLink" style="float:right" href="{!$Site.CurrentSiteUrl}?{!pkbCon.languageParam}={!pkbCon.selectedLanguage}">{!$Label.PKB2_Back_To_Search_Page}</a> -->
           
       		</apex:outputPanel>
@@ -204,7 +204,7 @@
     </div>
         </div><!-- end row -->
        </div>
-        <c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
         </div><!-- end container-->
     
    

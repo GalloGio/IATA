@@ -3,6 +3,10 @@ public  class ISSP_Ctrl_AccountStatements_Accept {
     public Portal_Application_Right__c appRight {get;set;}
     public list<String> errorMessage {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
     public ISSP_Ctrl_AccountStatements_Accept() {
         this.errorMessage = new list<String>();
         try {
@@ -32,13 +36,13 @@ public  class ISSP_Ctrl_AccountStatements_Accept {
         this.appRight.Terms_Acceptance_Date__c = DateTime.now();
         update this.appRight;
 
-        PageReference pageref = new PageReference('/ISSP_AccountStatements');
+        PageReference pageref = new PageReference('/ISSP_AccountStatements' + commParam);
         pageref.setRedirect(true);
         return pageref;
     }
 
     public PageReference rejectTerms() {
-        PageReference pageref = new PageReference('/ISSP_Homepage');
+        PageReference pageref = new PageReference('/ISSP_Homepage' + commParam);
         pageref.setRedirect(true);
         return pageref;
     }

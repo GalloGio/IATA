@@ -3,6 +3,9 @@ public class ISSP_ctrl_ContentDisplay{
     public List<ContentVersion> ContentVersion_Lst {get;set;}
     public ContentVersion ConVer{get;set;}
     public String csHost {get;set;}
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
     public ISSP_ctrl_ContentDisplay(){
     
         string ContentVersionId= Apexpages.currentPage().getParameters().get('id');

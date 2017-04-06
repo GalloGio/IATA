@@ -1,5 +1,6 @@
 <apex:component allowDML="true">
 <apex:attribute name="pkbCon" type="pkb_Controller" required="true" description="handle to the pkb controller" />
+<apex:attribute name="communityName" type="String" description="set the portal styling"/>
 
 <apex:variable var="category" value="{!pkbCon.selectedCategory}" />
 
@@ -42,6 +43,7 @@ CATEGORY USED: {!category}<br/>
           lastModifiedDate="{!a.lastModifiedDate}"
           firstPublishedDate="{!a.firstPublishedDate}"
           lastPublishedDate="{!a.lastPublishedDate}"
+          communityName="{!communityName}"
         />
           <script type="text/javascript">moreResults = {!more};</script>
       </knowledge:articleList>
