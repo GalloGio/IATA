@@ -811,7 +811,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (code != null) {
                 	system.debug('##ROW##');
                     cse.Groups__c = code.Group__c;
-                }else {
+                }else if(cse.CNSCase__c == false){
                 	system.debug('##ROW##');
                     cse.Groups__c = 'Default';
                 }
