@@ -11216,6 +11216,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>In addition you can follow all your cases with IATA in the</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_In_Addition_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal In Addition CNS</shortDescription>
+        <value>In addition you can follow all your cases with CNS in the</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_In_Addition2</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -11353,6 +11361,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Submit IATA</shortDescription>
         <value>Submit to IATA</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Submit_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Submit CNS</shortDescription>
+        <value>Submit to CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
@@ -12637,6 +12653,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Bilateral, both carriers can issue electronic tickets</shortDescription>
         <value>Bilateral, both carriers can issue electronic tickets</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Become_Endorsed_Agent_CNS</fullName>
+        <categories>Portal, S10</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Become_Endorsed_Agent_CNS</shortDescription>
+        <value>CNS Endorsement &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Branches</fullName>
@@ -17958,6 +17982,17 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP The Passenger and Cargo Interline Traffic Agreement</shortDescription>
         <value>The Passenger and Cargo Interline Traffic Agreement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Thanks_for_request_cns</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Thanks_for_request_cns</shortDescription>
+        <value>Thanks for you request. 
+You have just received an email confirming your request.
+Regards,
+CNS Customer Services</value>
     </labels>
     <labels>
         <fullName>ISSP_Title</fullName>
