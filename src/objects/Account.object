@@ -23299,7 +23299,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -25637,7 +25637,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -28609,7 +28609,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -30947,7 +30947,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -34811,7 +34811,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -36884,7 +36884,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -42225,7 +42225,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -44690,7 +44690,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -48977,7 +48977,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -53175,7 +53175,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -55751,7 +55751,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -58010,7 +58010,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -60269,7 +60269,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -62902,7 +62902,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -70397,7 +70397,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -74537,7 +74537,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy Accreditation</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
