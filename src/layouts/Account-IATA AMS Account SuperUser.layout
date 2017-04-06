@@ -52,7 +52,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -266,6 +265,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Abbreviated_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
