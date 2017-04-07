@@ -3,7 +3,9 @@ public without sharing class ENV {
   public static final String Identity = 'Identity';
   public static final String Partner_Community = 'Partner Community';
   public static final String Reply_Email = Label.ISSP_Sender_Email;//noreply@iata.org
+  public static final String Reply_Email_CNS = Label.ISSP_Sender_Email_CNS; //noreply@cnsc.us
   public static final String AccessToApplicationServiceRequested_Email_Subject = 'IATA Noreply'; 
+  public static final String AccessToApplicationServiceRequested_Email_Subject_CNS = 'CNS'; 
   
   public static ENV.AccessStatusClass AccessStatusPL {
     get{ 
@@ -50,6 +52,7 @@ public without sharing class ENV {
   */
   public class EmailTemplateClass {
     public final string NotifyAdminOfAppRequestVF = 'Notify_Admin_of_app_requestVF';
+    public final string NotifyAdminOfAppRequestVF_CNS = 'Notify_Admin_of_app_requestVF_CNS';
     public final string ChangeEmailAddress       = 'ISSP_Change_Email_Verification';
     public final string NotifyAdminNewContact      = 'Notify_Admin_of_user_creationVF';
   }

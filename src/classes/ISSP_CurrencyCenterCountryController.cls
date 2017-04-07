@@ -26,7 +26,11 @@ public with sharing class ISSP_CurrencyCenterCountryController {
     public Set<String> isChangedSet {get;set;}
 
     public String isChangedString {get{
-        return String.valueOf(isChangedSet);
+        String tmpString = '';
+        for(String s : isChangedSet) {
+           tmpString += (tmpString == '' ? '' : ',') + s;
+        }
+        return tmpString;
     }set;}
 
     public Boolean isGeneralInformationChanged{get{

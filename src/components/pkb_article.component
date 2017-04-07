@@ -12,6 +12,7 @@
 <apex:attribute name="firstPublishedDate" type="Date" required="true" description="First Published Date of the article" />
 <apex:attribute name="lastPublishedDate" type="Date" required="true" description="Last Published Date of the article" />
 <apex:attribute name="articleNumber" type="String" required="false" description="for articles retrieved via soql or sosl, this might be passed" />
+<apex:attribute name="communityName" type="String" description="set the portal styling"/>
 
 <apex:variable var="typeName" value="{!SUBSTITUTE(articleTypeName, pkbCon.kavExtension, '')}" />
 <apex:variable var="feedback" value="{!pkbCon.feedbackSourceParam}={!IF(pkbCon.displayContactUs, pkbCon.feedbackContactUs, pkbCon.feedbackSearch)}" />
@@ -20,6 +21,7 @@
 <apex:variable var="siteArticleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!urlName}/?" />
 <apex:variable var="nonSiteArticleURL" value="{!$Page.pkb_Home}?id={!aid}&" />
 <apex:variable var="articleURL" value="{!IF( pkbCon.isSite, siteArticleURL, nonSiteArticleURL )}" />
+<apex:variable var="communityParameter" value="{!IF(communityName=='CNS','&communityName=CNS','')}"/>
 
 <!-- 
   IS SITE: {!pkbCon.isSite}<br/>
@@ -29,7 +31,7 @@
 
 	<div class="article {!IF(pkbCon.displayContactUs && LEFT(aid,15) == LEFT(pkbCon.theKad.id,15), 'selectedArticle', '')}">
     <apex:outputText escape="false"> 
-      <a href="{!articleURL}{!params}">{!title}</a>
+      <a href="{!articleURL}{!params}{!communityParameter}">{!title}</a>
     </apex:outputText>
 
 	  <div class="data">

@@ -23,6 +23,8 @@
         <p>Email: {!sEmail}</p>
         
         <p>Order Number: {!sOrderNumber}</p>
+        
+        <p>Please log in to your account before clicking on the download link below to be able to download your products.</p>
     
         <table style="font-size:12px;color:#333333;width:100%;border-width: 1px;border-color: #729ea5;border-collapse: collapse;">
             <tr>
