@@ -6,6 +6,10 @@ public class ISSP_AddComment {
   public Case CaseNumber {get; set;}
   public string inputComment {get; set;}
 
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+  public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
 
   public ISSP_AddComment() {
     CaseId  = ApexPages.currentPage().getParameters().get('Caseid');
@@ -47,7 +51,7 @@ public class ISSP_AddComment {
     }
 
     ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Added Comment successfully'));
-    PageReference p = new PageReference('/apex/ISSP_Case?caseId=' + CaseId);
+    PageReference p = new PageReference('/apex/ISSP_Case?caseId=' + CaseId + commParam);
     p.setRedirect(true);
     return p;
     return null;

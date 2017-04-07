@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_Contact" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
     <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
  
      <style>
@@ -10,7 +10,7 @@
      </style>
      
   <div class="container">
-      <c:ISSP_CustomNavigation />
+      <c:ISSP_CustomNavigation communityName="{!communityName}"/>
           <div class="panel panel-primary">
               <div class="panel-heading head_panel_green">
                   <h3 class="panel-title">{!$Label.ISSP_Contact_Information}</h3>
@@ -95,7 +95,7 @@
                             <div class="col-md-5">  <!-- START COL 2 -->
                                 <div class="row">
                                     <apex:outputLabel styleClass="lbl col-lg-5" value="{!$ObjectType.Account.fields.Name.Label}" />
-                                    <div class="col-lg-7"><apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}">{!Contact.Account.Name}</apex:outputLink></div>
+                                    <div class="col-lg-7"><apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!Contact.Account.Name}</apex:outputLink></div>
                                 </div>
                                 
                                  <apex:outputText rendered="{!NOT(isIATAAgencyAcct)}">
@@ -150,14 +150,14 @@
                     <div style="margin-top:10px"/>
                    <apex:pageBlockTable value="{!appsGrantedList}" var="o" styleClass="table table-hover">
                         <apex:column style="text-align: center;" headerClass="ct" >
-                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_Contact?Id={!o.Contact__c}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                            <apex:outputLink value="/ISSP_EditPortalServiceAccess?Id={!o.Id}&op=Edit&retURL=ISSP_Contact?Id={!o.Contact__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Portal_Application__r.Application_icon__c}" style="text-align: center;" headerClass="ct" />
                         <apex:column style="text-align: center;" headerClass="ct" >
                             <apex:facet name="header">
                                 {!$ObjectType.Portal_Applications__c.fields.Name.label}                          
                             </apex:facet>
-                            <apex:outputLink value="/apex/ISSP_PortalService?id={!o.Portal_Application__r.Id}">{!o.Portal_Application__r.ServiceName__c}</apex:outputLink>
+                            <apex:outputLink value="/apex/ISSP_PortalService?id={!o.Portal_Application__r.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!o.Portal_Application__r.ServiceName__c}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Right__c}" style="text-align: center;" headerClass="ct" />
                       
@@ -186,7 +186,7 @@
                         <thead>
                                 <div class="form-group">
                                     <apex:outputLabel styleClass="lbl col-md-2" value="{!$ObjectType.Account.fields.Name.Label}" />
-                                    <div class="col-md-4"> <apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}">{!Contact.Account.Name}</apex:outputLink> </div>
+                                    <div class="col-md-4"> <apex:outputLink value="/apex/ISSP_Account?id={!Contact.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!Contact.Account.Name}</apex:outputLink> </div>
                                 </div>
                      
                                  <div class="form-group">
@@ -249,7 +249,7 @@
        <!-- ********** End of Edit Mode ******** -->    
      
           </div><!-- end  div class="panel panel-primary"-->
-      <c:ISSP_CustomFooter />
+      <c:ISSP_CustomFooter communityName="{!communityName}"/>
   </div><!-- end container-->  
         </body>
     </html>

@@ -115,6 +115,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(20, roleList.get(0).Percentage__c);
         
         companyOwnershipAC.Financial_Interest__c = 100;
+        companyOwnershipAC.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         update companyOwnershipAC;
         
         
