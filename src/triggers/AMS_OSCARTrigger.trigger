@@ -408,8 +408,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (oldOSCAR.Is_using_credit_card__c == true && updatedOscar.Is_using_credit_card__c == false) {
-            updatedOSCAR.STEP34__c = 'Not Applicaple';
-            updatedOSCAR.STEP35__c = 'Not Applicaple';
+            updatedOSCAR.STEP34__c = 'Not Applicable';
+            updatedOSCAR.STEP35__c = 'Not Applicable';
             updatedOSCAR.Requested_Bank_Guarantee_amount__c = null;
             updatedOSCAR.Requested_Bank_Guarantee_currency__c =  '';
         }
@@ -513,7 +513,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 if (currentApprovals.size() > 0) {
                     AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
                 }
-            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicaple') {
+            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicable') {
                 // Reject the approval process
                 if (currentApprovals.size() > 0)
                     AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
