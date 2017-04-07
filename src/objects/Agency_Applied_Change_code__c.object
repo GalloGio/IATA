@@ -1604,10 +1604,6 @@ AND(
                 <default>false</default>
             </values>
             <values>
-                <fullName>RCM</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>RCR</fullName>
                 <default>false</default>
             </values>

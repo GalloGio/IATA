@@ -24,7 +24,10 @@ public with sharing class ISSP_AvailableServices{
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
 
-     public static User currentPortalUser {
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
+	public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 

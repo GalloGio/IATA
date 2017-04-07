@@ -380,6 +380,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Listed_In__c</fields>
+        <fields>Market_Size__c</fields>
+        <relatedList>Country_Profile__c.Country_Name__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Price_Table__c.ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>
