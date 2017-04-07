@@ -319,7 +319,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             system.debug('RB - Sanity check already passed: ' + updatedOscar.Sanity_Check_Passed__c);
 
             if(updatedOscar.Sanity_Check_Passed__c == true) {
-                updatedOscar.addError('Change code already generated for this OSCAR! Please perform a withdrawn in order to pass Sanity Check.');                
+                updatedOscar.addError('Change code already generated for this OSCAR! Rollback data through a new OSCAR Correction and Set this OSCAR Status to Closed_Withdrawn');                
             }
             
             updatedOscar.Sanity_Check_Passed__c = true;
