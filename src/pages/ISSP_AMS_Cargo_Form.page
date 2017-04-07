@@ -7,7 +7,7 @@
     language="{!displayLanguage}"
     action="{!securityCheck}">
     <html> 
-        <c:ISSP_Header ></c:ISSP_Header>
+        <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <c:iss_ap_css />
         <c:ISSP_WaitingStatus />    
         <body>
@@ -757,7 +757,7 @@
 
     <div class="container">
        <div id="contentWrapper">
-           <c:ISSP_CustomNavigation />
+           <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
         <p class="LOB">
@@ -781,9 +781,10 @@
         <div class="panel-heading head_panel_green">
             <h3 class="panel-title">
                 <!-- IMPORTANT - If new Agent_Type__c are created we need to add here the new Label-->
-                {!IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), $Label.ISSP_AMS_StepsAll_Cargo_Title,
+                {!IF(BEGINS(newForm.Agent_Type__c,'IATA Cargo Agent'), IF(communityName=='CNS', $Label.ISSP_AMS_StepsAll_Cargo_Title_CNS, $Label.ISSP_AMS_StepsAll_Cargo_Title),
                     IF(BEGINS(newForm.Agent_Type__c,'EACP Intermediary'), $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                         $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title))}
+               
             </h3>
         </div>
     <div class="panel-body" id="body-enquiries">
@@ -803,7 +804,7 @@
                 <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoForward}" value="{!$Label.ISSP_AMS_Step4_ProgressBar}" id="Next4"/>
             </div>
             <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 15%">
-                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep5}" value="{!$Label.ISSP_AMS_Step5_ProgressBar}" id="Next5"/>
+                <apex:commandLink styleclass="btn btn-default" action="{!saveAMSFormAndGoToStep5}" value="{!IF(CommunityName=='CNS', $Label.ISSP_AMS_Step5_ProgressBar_CNS, $Label.ISSP_AMS_Step5_ProgressBar)}" id="Next5"/>
             </div>
         </div>
         
@@ -2698,7 +2699,7 @@
     </div>
 
     </div>
-         <c:ISSP_CustomFooter />
+         <c:ISSP_CustomFooter communityName="{!communityName}"/>
          </div>
        
     </body>  

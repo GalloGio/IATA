@@ -2,6 +2,7 @@
 
 <apex:attribute name="pkbCon" type="pkb_Controller" required="true" description="handle to the pkb controller" />
 <apex:attribute name="showHeaderInfo" type="Boolean" required="true" description="flag to indicate whether to show results header and empty results message" />
+<apex:attribute name="communityName" type="String" description="set the portal styling"/>
 
 <!-- note that noResultsFound is actually a string, not a boolean, due to the inability to 
      explicitly declare types in VF apex:variable tags, so must pass the strings 'true' and 'false' instead of using an expression that returns true or false -->      
@@ -42,6 +43,7 @@
               lastModifiedDate="{!a.lastModifiedDate}"
               firstPublishedDate="{!a.firstPublishedDate}"
               lastPublishedDate="{!a.lastPublishedDate}"
+              communityName="{!communityName}"
             />
           <apex:variable var="noResultsFound" value="false" />
         </apex:repeat>

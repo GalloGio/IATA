@@ -24,7 +24,10 @@ public with sharing class ISSP_AvailableServices{
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
 
-     public static User currentPortalUser {
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+	
+	public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
@@ -336,6 +339,7 @@ public with sharing class ISSP_AvailableServices{
 
 
         public string getServiceStatus(Portal_Applications__c inService){
+            
             List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
                                                                                                     p.Portal_Application__r.Requestable__c,
                                                                                                     p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
