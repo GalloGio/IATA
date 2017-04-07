@@ -1,6 +1,9 @@
 public class vfExceptionPage{
     public Case c {get;private set;}
     public String ContactName {get;private set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
     public vfExceptionPage(){
         this.c = new Case();
