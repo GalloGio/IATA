@@ -1499,7 +1499,7 @@ public class AMS_OSCARTriggerHandler {
         system.debug('validateCertificates -> minimumBRDgrRequirements ' + minimumBRDgrRequirements);
 
 		for(AMS_OSCAR__c oscar: oscarsList){
-			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW){
+			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE){
 				String locationClass = oscar.AMS_Online_Accreditation__r.Location_Class__c;
 				String locationType = oscar.AMS_Online_Accreditation__r.Location_Type__c;
 				System.debug('OSCARTriggerHandler -> validateCertificates: all trained staff ' + trainedStaffPerAccount.get(oscar.Account__c));
