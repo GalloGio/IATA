@@ -153,6 +153,37 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Event_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Event Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Inactive_Withdrawn</fullName>
+                    <default>false</default>
+                </value>
+                <value>
+                    <fullName>Inactive_Revoked</fullName>
+                    <default>false</default>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <label>Expiration Date</label>
@@ -264,6 +295,25 @@
         <fullName>RISK_EVENT</fullName>
         <active>true</active>
         <label>Risk Event</label>
+        <picklistValues>
+            <picklist>ANG_Event_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Revoked</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive_Withdrawn</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>New</excludedStandardButtons>
@@ -286,4 +336,19 @@
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Prevent_users_from_changing_issued_date</fullName>
+        <active>true</active>
+        <description>Prevent users from changing RE&apos;s issue date if the event status is &quot;Active&quot; or &quot;Inactive_Withdrawn&quot; or &quot;Inactive_Revoked&quot; or if RE is &quot;Inactive&quot; and has Expired= true</description>
+        <errorConditionFormula>IF(
+!ISNEW() &amp;&amp;
+ISCHANGED( ANG_Issued_Date__c )&amp;&amp;(
+ISPICKVAL(ANG_Event_Status__c,&apos;Active&apos; )||
+ISPICKVAL(ANG_Event_Status__c,&apos;Inactive_Withdrawn&apos;)||
+ISPICKVAL(ANG_Event_Status__c,&apos;Inactive_Revoked&apos;)||
+(ISPICKVAL(ANG_Event_Status__c,&apos;Inactive&apos;)&amp;&amp;
+ ANG_Expired__c )) ,True,False)</errorConditionFormula>
+        <errorDisplayField>ANG_Issued_Date__c</errorDisplayField>
+        <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
+    </validationRules>
 </CustomObject>
