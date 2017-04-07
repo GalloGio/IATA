@@ -6,14 +6,14 @@
   <link>https://portal.iata.org/ISSP_CurrencyCenterHome</link>
   <description>IATA Currency Center News Feed</description>
   <item>
-    <title>Overland Airways</title>
-    <link></link>
-    <description>Overland Airways, registered in Nigeria, became an IATA member on 13 September 2016</description>
+    <title>IATA Stakeholders Forum – Blocked Funds in Africa</title>
+    <link>http://www.iata.org/events/Pages/stakeholder-forum.aspx</link>
+    <description>IATA will be holding the 2nd edition of its Stakeholders Forum  on Currency Repatriation Issues in Africa. The meeting will be held in Nairobi, Kenya on April 4th 2017 and is hosted and supported by the African Airlines Association (“AFRAA”) at their Head Office.</description>
   </item>
   <item>
-    <title>Repatriation of Airlines’ overseas Funds</title>
-    <link>http://www.iata.org/about/worldwide/ame/industry-gazette-fall-2016/Pages/aeropolitical-news.aspx</link>
-    <description>Due to a drop in oil and other commodity prices, and a general slowdown in the global economy, some governments around the world are experiencing a reduction in foreign exchange inflows.</description>
+    <title>World Financial Symposium</title>
+    <link>http://www.iata.org/events/wfs/Pages/index.aspx</link>
+    <description>The World Financial Symposium brings over 750 financial executives and specialists together to share insights, discuss industry challenges and best practices for Aviation financial management.</description>
   </item>
   
 </channel>
