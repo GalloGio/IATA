@@ -128,7 +128,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
             // set the Case Area & Reason values for correct KPI calculation
             container.c.CaseArea__c = 'Accreditation Process';
-            container.c.Reason1__c = 'IRIS Bank Detail Update';
+            container.c.Reason1__c = 'Bank Detail Update';
             update container.c;
 
             //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
