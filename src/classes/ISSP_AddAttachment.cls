@@ -13,6 +13,10 @@ public class ISSP_AddAttachment {
   public Contact con {get; set;}
   Account hqAccount;
 
+  //CNS
+  public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+  public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
   public ISSP_AddAttachment() {
     isCase = false;
     isClaim = false;
@@ -112,7 +116,7 @@ public class ISSP_AddAttachment {
     ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Attachment uploaded successfully'));
     PageReference p;
     if (isCase) {
-      p = new PageReference('/ISSP_Case?caseId=' + CaseId);
+      p = new PageReference('/ISSP_Case?caseId=' + CaseId + commParam);
     } else if (isClaim) {
       p = new PageReference('/ISSP_Baggage_Proration_Claim?id=' + claimId);
     }
@@ -187,7 +191,7 @@ public class ISSP_AddAttachment {
                     }
                 }
                 
-                 return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id);   
+                 return new Pagereference('/ISSP_Case?caseId=' + tmpCase.Id + commParam);   
                 }
 
     

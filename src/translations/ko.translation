@@ -4878,6 +4878,10 @@ and
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar CNS --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Updated Companies --></label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
@@ -5068,6 +5072,10 @@ and
     <customLabels>
         <label>귀사가 IATA 인가 대리점으로 승인된 이후에, 귀사의 법인격 변경 또는 기타 변경을 신청하실 수 있습니다.</label>
         <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Message_Accredited_Agent_CNS --></label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
         <label>2개 이상의 법인격 &amp; 기타 변경 신청하기</label>
@@ -5262,6 +5270,10 @@ and
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS No Pending CNS --></label>
+        <name>ISSP_AMS_No_Pending_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -5306,8 +5318,16 @@ and
         <name>ISSP_AMS_OPTION_CGO_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION CGO BRANCH CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_BRANCH_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>IATA 화물 운송 대리점 - 새 본사</label>
         <name>ISSP_AMS_OPTION_CGO_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION CGO HO CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_HO_CNS</name>
     </customLabels>
     <customLabels>
         <label>특송회사 - 지사</label>
@@ -5514,6 +5534,10 @@ and
         <name>ISSP_AMS_Step0_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Agency Accreditation CNS --></label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>만약 귀사가 신청접수의 종류에 대한 상담이 필요하실 경우, &lt;br/&gt; 다음과 같은 내용의 글을 참고하시기 바랍니다.</label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
@@ -5542,8 +5566,16 @@ and
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Intro Accred CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>대리점을 대신해서 법률 문서에 서명할 권한이 없는 경우 지정된 법정 대리인에게 이 신청서를 포털에 등록 및 제출해줄 것을 요청하십시오.</label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Intro CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Minor Changes --></label>
@@ -5552,6 +5584,10 @@ and
     <customLabels>
         <label>신규 인가 신청</label>
         <name>ISSP_AMS_Step0_New_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 New Application CNS --></label>
+        <name>ISSP_AMS_Step0_New_Application_CNS</name>
     </customLabels>
     <customLabels>
         <label>작성중인 신규&amp;법인격 변경 신청서</label>
@@ -5582,6 +5618,10 @@ and
         <name>ISSP_AMS_Step0_SAA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 SAA --></label>
+        <name>ISSP_AMS_Step0_SAA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>새로운 IATA 코드로 특정한 판매를 구별/분리 - SA Code (Specific Sales Activity)</label>
         <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
     </customLabels>
@@ -5600,6 +5640,10 @@ and
     <customLabels>
         <label>특정 국가에서는 새 화물 운송 대리점에 대한 온라인 IATA 승인 신청서를 아직 이용하실 수 없습니다.. 이제 화물 운송 대리점에 대한 승인 프로세스를 계속할 수 있는 IATA 웹 사이트로 이동합니다. 지금 이동하시겠습니까?</label>
         <name>ISSP_AMS_Step1_GoTo_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step1_GoTo_Cargo_CNS --></label>
+        <name>ISSP_AMS_Step1_GoTo_Cargo_CNS</name>
     </customLabels>
     <customLabels>
         <label>특정 국가에서는 새 여행 대리점에 대한 온라인 IATA 승인 신청서를 아직 이용하실 수 없습니다. 이제 여행 대리점에 대한 승인 프로세스를 계속할 수 있는 IATA 웹 사이트로 이동합니다. 지금 이동하시겠습니까?</label>
@@ -5636,6 +5680,10 @@ and
     <customLabels>
         <label>IATA 탑승객/화물 판매 대리점으로 승인을 받기 위한 신청서</label>
         <name>ISSP_AMS_Step1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title --></label>
+        <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
         <label>초안 신청서는 2주 이내에 제출해야 합니다. 그렇지 않으면 승인 프로세스를 다시 시작해야 합니다.</label>
@@ -6046,6 +6094,10 @@ and
         <name>ISSP_AMS_Step5_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
         <name>ISSP_AMS_Step5_ReviewBeforeSubmit</name>
     </customLabels>
@@ -6072,6 +6124,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS StepFinal In Addition2 --></label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal In Addition CNS --></label>
+        <name>ISSP_AMS_StepFinal_In_Addition_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
@@ -6110,6 +6166,10 @@ and
         <name>ISSP_AMS_StepsAll_Cargo_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo Title CNS --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Courier_Title --></label>
         <name>ISSP_AMS_StepsAll_Courier_Title</name>
     </customLabels>
@@ -6128,6 +6188,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Street --></label>
         <name>ISSP_AMS_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Submit CNS --></label>
+        <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Submit IATA --></label>
@@ -6806,6 +6870,10 @@ and
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Become_Endorsed_Agent_CNS --></label>
+        <name>ISSP_Become_Endorsed_Agent_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Bilateral, both carriers can issue electronic tickets --></label>
         <name>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</name>
     </customLabels>
@@ -6826,8 +6894,32 @@ and
         <name>ISSP_CASSLink_Export</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CASSLink_Export_CNS --></label>
+        <name>ISSP_CASSLink_Export_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CASSLink_Import --></label>
         <name>ISSP_CASSLink_Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Documents --></label>
+        <name>ISSP_CNS_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Endorsement --></label>
+        <name>ISSP_CNS_Endorsement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_PaymentLink_ServiceName --></label>
+        <name>ISSP_CNS_PaymentLink_ServiceName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote --></label>
+        <name>ISSP_CNS_quote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote2 --></label>
+        <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -6866,6 +6958,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>IATA에 컨택하신 경험에 대해, 피드백을 제공해 주십시오. 문의를 담당한 IATA 직원에 해당 내용을 전달하시려면 담당자의 이름을 기재 해 주시면 전달되도록 하겠습니다.</label>
         <name>ISSP_CaseComplimentMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CaseComplimentMessage_CNS --></label>
+        <name>ISSP_CaseComplimentMessage_CNS</name>
     </customLabels>
     <customLabels>
         <label>케이스 정보</label>
@@ -7348,6 +7444,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
+        <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>[placeholder]서비스 접속이</label>
         <name>ISSP_Email_AccessRejected_subject1</name>
     </customLabels>
@@ -7424,12 +7524,28 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact2_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>만약, 상기 연락처로&lt;b&gt; 이러한 정보를 수신을 원하지 않을 시, &lt;/b&gt; 즉시 IATA 커스터머 포털 홈페이즈를 통하여, IATA에 알려주시기 바랍니다.</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact3_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact3_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>새로운 BSP/CASS 입금 담당자</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Portal --></label>
+        <name>ISSP_Email_CNS_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Service --></label>
+        <name>ISSP_Email_CNS_Service</name>
     </customLabels>
     <customLabels>
         <label>새로운 답변 - 케이스 번호 :</label>
@@ -7504,6 +7620,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Log_Case_CNS --></label>
+        <name>ISSP_Email_Log_Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 사용자 정보로 로그인하십시오.</label>
         <name>ISSP_Email_LoginInformation</name>
     </customLabels>
@@ -7540,12 +7660,24 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_PortalStatusChange_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalStatusChange_Subject_CNS --></label>
+        <name>ISSP_Email_PortalStatusChange_Subject_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email_PortalUrl --></label>
         <name>ISSP_Email_PortalUrl</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalUrl_CNS --></label>
+        <name>ISSP_Email_PortalUrl_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>[placeholder](이)가 귀하의 IATA 고객 포털 사용자 상태를 [placeholder](으)로 변경하였습니다.</label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_PortalUser_StatusChange_CNS --></label>
+        <name>ISSP_Email_PortalUser_StatusChange_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_Rejected_Reason --></label>
@@ -7564,6 +7696,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Email_ThankYouContacting</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_ThankYouContacting_cns --></label>
+        <name>ISSP_Email_ThankYouContacting_cns</name>
+    </customLabels>
+    <customLabels>
         <label>미리 감사드립니다.</label>
         <name>ISSP_Email_ThankYouInAdvance</name>
     </customLabels>
@@ -7578,6 +7714,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>환영:</label>
         <name>ISSP_Email_WelcomeTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Welcome_CNS --></label>
+        <name>ISSP_Email_Welcome_CNS</name>
     </customLabels>
     <customLabels>
         <label>IATA Customer Portal에서 접속할 수 있습니다.</label>
@@ -8460,8 +8600,16 @@ IATA 커스터머 포털 이용에 문제가 지속되는 경우 IATA (blank?) �
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>검색조건에 맞는 단체가 없습니다. 조건을 변경하시어 다시 한 번 검색 해 주시기 바랍니다. 또는 Create New 버튼을 클릭하시어 새로운 회사기록을 생성 해 주시기 바랍니다.</label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateStandardAirline_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateStandardAirline_CNS</name>
     </customLabels>
     <customLabels>
         <label>귀하의 검색 기준에 일치하는 기록이 존재하지 않습니다. “뒤로가기(Back)”를 눌러 제너럴 퍼블릭(General Public)으로 등록 과정을 계속 진행하시거나, 검색 기준을 변경하여 다시 시도해 주시기 바랍니다.
@@ -8470,14 +8618,26 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGP_CNS --></label>
+        <name>ISSP_NoRecordsFoundGP_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>입력하신 GSA 코드와 국가로는 관련있는 회사를 찾을 수 없습니다. 입력하신 정보를 다시 한 번 확인 바랍니다.
 &lt;br/&gt;&lt;br/&gt; 
 문제가 지속된다면, IATA 커스터머 포털을 통해 질의 남겨주시기 바랍니다. 조속히 도움드리도록 하겠습니다.&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;문제 해결 가이드&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundGSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGSA_CNS --></label>
+        <name>ISSP_NoRecordsFoundGSA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>이 검색 기준에 해당하는 기관이 없습니다. 검색어를 변경하여 다시 시도하십시오.</label>
         <name>ISSP_NoRecordsFoundNext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundNext_CNS --></label>
+        <name>ISSP_NoRecordsFoundNext_CNS</name>
     </customLabels>
     <customLabels>
         <label>신청 가능한 서비스 없음</label>
@@ -8644,6 +8804,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_PageDescription_ISSP_FAQ2Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PageDescription_ISSP_FAQ2Case_CNS --></label>
+        <name>ISSP_PageDescription_ISSP_FAQ2Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>IATA 관련 읽을거리 찾기</label>
         <name>ISSP_PageDescription_ISSP_faq_template</name>
     </customLabels>
@@ -8668,6 +8832,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
 &lt;b&gt;경고&lt;/b&gt;&lt;br/&gt;
 대부분의 IATA에서 발행하는 인보이스는 BSP/CASS 빌링을 통하여 청구됩니다. 신용카드로 결제하시기 전에 반드시. 해당 인보이스가 귀사의 빌링에 반영되지 않았는지 확인하신 후에 결제를 진행하여 주시기 바랍니다.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Payment_Link_Description_CNS --></label>
+        <name>ISSP_Payment_Link_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Pending --></label>
@@ -8977,6 +9145,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Registration_generalError_CNS --></label>
+        <name>ISSP_Registration_generalError_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>해당 이메일 주소를 사용하는 포털 서비스 이용자가 존재하지만 현재 비활성화 되어 있는 상태입니다.</label>
         <name>ISSP_Registration_inactiveUserExist</name>
     </customLabels>
@@ -9177,6 +9349,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Sender_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Sender Email CNS --></label>
+        <name>ISSP_Sender_Email_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>서비스</label>
         <name>ISSP_Service</name>
     </customLabels>
@@ -9362,6 +9538,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
               안녕히 계십시오.
               IATA Customer Services</label>
         <name>ISSP_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Thanks_for_request_cns --></label>
+        <name>ISSP_Thanks_for_request_cns</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP The Cargo Interline Agreement --></label>
@@ -9618,6 +9798,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>귀하의 등록 처리를 완료할 수 없습니다. 다음 주소에서 찾을 수 있는 문의 양식을 작성하여 IATA Customer Portal 지원 센터에 연락해주십시오. http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_generalError_CNS --></label>
+        <name>ISSP_generalError_CNS</name>
     </customLabels>
     <customLabels>
         <label>송장 유형 {!invoiceType} 검색에서 오류가 발생했습니다. 고객 서비스에 연락해주십시오</label>
@@ -12028,270 +12212,93 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>Category</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>ANSP</masterLabel>
-            <translation><!-- ANSP --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
-            <translation><!-- Academic/Research Body --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Agency Holding Company</masterLabel>
-            <translation><!-- Agency Holding Company --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Aircraft Manufacturer</masterLabel>
-            <translation><!-- Aircraft Manufacturer --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Global Card Acquirer</masterLabel>
-            <translation><!-- Airline Global Card Acquirer --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Holding Company</masterLabel>
-            <translation><!-- Airline Holding Company --></translation>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Point of Sale</masterLabel>
-            <translation><!-- Airline Point of Sale --></translation>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airport Authority</masterLabel>
-            <translation><!-- Airport Authority --></translation>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airport Concessionaire</masterLabel>
-            <translation><!-- Airport Concessionaire --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
-            <translation><!-- Apartment &amp; Villa Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Banking Service</masterLabel>
-            <translation><!-- Banking Service --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Bus Line</masterLabel>
-            <translation><!-- Bus Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CASS Associate</masterLabel>
-            <translation><!-- CASS Associate --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Car Rental</masterLabel>
-            <translation><!-- Car Rental --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Card Brand</masterLabel>
-            <translation><!-- Card Brand --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agency Association</masterLabel>
-            <translation><!-- Cargo Agency Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo only</masterLabel>
-            <translation><!-- Cargo only --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Casino</masterLabel>
-            <translation><!-- Casino --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Caterer</masterLabel>
-            <translation><!-- Caterer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Consultancy Firm</masterLabel>
-            <translation><!-- Consultancy Firm --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Courier</masterLabel>
-            <translation><!-- Courier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cruise Line</masterLabel>
-            <translation><!-- Cruise Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Domestic Agent</masterLabel>
-            <translation><!-- Domestic Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ERSP Agent</masterLabel>
-            <translation><!-- ERSP Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Engine Manufacturer</masterLabel>
-            <translation><!-- Engine Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fuel Supplier</masterLabel>
-            <translation><!-- Fuel Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSA General Sales Agent</masterLabel>
-            <translation><!-- GSA General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GSSA Cargo</masterLabel>
-            <translation><!-- GSSA Cargo --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Global Distribution System</masterLabel>
-            <translation><!-- Global Distribution System --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Ground Handler</masterLabel>
-            <translation><!-- Ground Handler --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Handling Agent</masterLabel>
-            <translation><!-- Handling Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Hotel</masterLabel>
-            <translation><!-- Hotel --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Cargo Agent</masterLabel>
-            <translation><!-- IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Passenger Sales Agent</masterLabel>
-            <translation><!-- IATA Passenger Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IBCS consolidator</masterLabel>
-            <translation><!-- IBCS consolidator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Import Agent</masterLabel>
-            <translation><!-- Import Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Individual Government</masterLabel>
-            <translation><!-- Individual Government --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inter-Governmental Body</masterLabel>
-            <translation><!-- Inter-Governmental Body --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Landmark</masterLabel>
-            <translation><!-- Landmark --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Large Component OEM</masterLabel>
-            <translation><!-- Large Component OEM --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Lessor</masterLabel>
-            <translation><!-- Lessor --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MSO Member Sales Office</masterLabel>
-            <translation><!-- MSO Member Sales Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation><!-- Maintenance, Repair, Overhaul --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Museum</masterLabel>
-            <translation><!-- Museum --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non Governmental Organization</masterLabel>
-            <translation><!-- Non Governmental Organization --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Cargo Agent</masterLabel>
-            <translation><!-- Non-IATA Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Passenger Agent</masterLabel>
-            <translation><!-- Non-IATA Passenger Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Travel Agent</masterLabel>
-            <translation><!-- Non-IATA Travel Agent --></translation>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Other</masterLabel>
             <translation><!-- Other --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Other Private Sector Association</masterLabel>
-            <translation><!-- Other Private Sector Association --></translation>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Park</masterLabel>
-            <translation><!-- Park --></translation>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Passenger and Cargo</masterLabel>
-            <translation><!-- Passenger and Cargo --></translation>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Passenger only</masterLabel>
-            <translation><!-- Passenger only --></translation>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Processor</masterLabel>
-            <translation><!-- Processor --></translation>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Publishing</masterLabel>
-            <translation><!-- Publishing --></translation>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Railway Line</masterLabel>
-            <translation><!-- Railway Line --></translation>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Resort</masterLabel>
-            <translation><!-- Resort --></translation>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Security</masterLabel>
-            <translation><!-- Security --></translation>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>System Solutions Provider</masterLabel>
-            <translation><!-- System Solutions Provider --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TIDS Agent</masterLabel>
-            <translation><!-- TIDS Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Tour Operator</masterLabel>
-            <translation><!-- Tour Operator --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Training Centre</masterLabel>
-            <translation><!-- Training Centre --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agency Association</masterLabel>
-            <translation><!-- Travel Agency Association --></translation>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12899,6 +12906,17 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <picklistValues>
             <masterLabel>ZWD</masterLabel>
             <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13617,226 +13635,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Sector</name>
         <picklistValues>
             <masterLabel>Accommodation</masterLabel>
@@ -13908,6 +13706,29 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Invoice_Distribution</name>
         <picklistValues>
             <masterLabel>Electronic Via Email</masterLabel>
@@ -13924,6 +13745,369 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <picklistValues>
             <masterLabel>Paper</masterLabel>
             <translation><!-- Paper --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Category</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation><!-- ANSP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Academic/Research Body</masterLabel>
+            <translation><!-- Academic/Research Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Agency Holding Company</masterLabel>
+            <translation><!-- Agency Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aircraft Manufacturer</masterLabel>
+            <translation><!-- Aircraft Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Global Card Acquirer</masterLabel>
+            <translation><!-- Airline Global Card Acquirer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Holding Company</masterLabel>
+            <translation><!-- Airline Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Point of Sale</masterLabel>
+            <translation><!-- Airline Point of Sale --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Authority</masterLabel>
+            <translation><!-- Airport Authority --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airport Concessionaire</masterLabel>
+            <translation><!-- Airport Concessionaire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apartment &amp; Villa Rental</masterLabel>
+            <translation><!-- Apartment &amp; Villa Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banking Service</masterLabel>
+            <translation><!-- Banking Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bus Line</masterLabel>
+            <translation><!-- Bus Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CASS Associate</masterLabel>
+            <translation><!-- CASS Associate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Car Rental</masterLabel>
+            <translation><!-- Car Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Card Brand</masterLabel>
+            <translation><!-- Card Brand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agency Association</masterLabel>
+            <translation><!-- Cargo Agency Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo only</masterLabel>
+            <translation><!-- Cargo only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Casino</masterLabel>
+            <translation><!-- Casino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caterer</masterLabel>
+            <translation><!-- Caterer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultancy Firm</masterLabel>
+            <translation><!-- Consultancy Firm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Courier</masterLabel>
+            <translation><!-- Courier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cruise Line</masterLabel>
+            <translation><!-- Cruise Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic Agent</masterLabel>
+            <translation><!-- Domestic Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERSP Agent</masterLabel>
+            <translation><!-- ERSP Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Engine Manufacturer</masterLabel>
+            <translation><!-- Engine Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuel Supplier</masterLabel>
+            <translation><!-- Fuel Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSA General Sales Agent</masterLabel>
+            <translation><!-- GSA General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GSSA Cargo</masterLabel>
+            <translation><!-- GSSA Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global Distribution System</masterLabel>
+            <translation><!-- Global Distribution System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ground Handler</masterLabel>
+            <translation><!-- Ground Handler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Handling Agent</masterLabel>
+            <translation><!-- Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hotel</masterLabel>
+            <translation><!-- Hotel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Cargo Agent</masterLabel>
+            <translation><!-- IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Head Office</masterLabel>
+            <translation><!-- IATA Head Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Local office</masterLabel>
+            <translation><!-- IATA Local office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Passenger Sales Agent</masterLabel>
+            <translation><!-- IATA Passenger Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA Regional Office</masterLabel>
+            <translation><!-- IATA Regional Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IBCS consolidator</masterLabel>
+            <translation><!-- IBCS consolidator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Import Agent</masterLabel>
+            <translation><!-- Import Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Individual Government</masterLabel>
+            <translation><!-- Individual Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inter-Governmental Body</masterLabel>
+            <translation><!-- Inter-Governmental Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation><!-- Landmark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Large Component OEM</masterLabel>
+            <translation><!-- Large Component OEM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lessor</masterLabel>
+            <translation><!-- Lessor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation><!-- MSO Member Sales Office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
+            <translation><!-- Maintenance, Repair, Overhaul --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Museum</masterLabel>
+            <translation><!-- Museum --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non Governmental Organization</masterLabel>
+            <translation><!-- Non Governmental Organization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Cargo Agent</masterLabel>
+            <translation><!-- Non-IATA Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Passenger Agent</masterLabel>
+            <translation><!-- Non-IATA Passenger Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-IATA Travel Agent</masterLabel>
+            <translation><!-- Non-IATA Travel Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other Private Sector Association</masterLabel>
+            <translation><!-- Other Private Sector Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park</masterLabel>
+            <translation><!-- Park --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger and Cargo</masterLabel>
+            <translation><!-- Passenger and Cargo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Passenger only</masterLabel>
+            <translation><!-- Passenger only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processor</masterLabel>
+            <translation><!-- Processor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publishing</masterLabel>
+            <translation><!-- Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Railway Line</masterLabel>
+            <translation><!-- Railway Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resort</masterLabel>
+            <translation><!-- Resort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>System Solutions Provider</masterLabel>
+            <translation><!-- System Solutions Provider --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TIDS Agent</masterLabel>
+            <translation><!-- TIDS Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tour Operator</masterLabel>
+            <translation><!-- Tour Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Centre</masterLabel>
+            <translation><!-- Training Centre --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agency Association</masterLabel>
+            <translation><!-- Travel Agency Association --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

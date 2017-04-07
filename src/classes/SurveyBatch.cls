@@ -64,10 +64,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     // Looking for cases closed yesterday in order to send the survey email
     ContactIds = new Set<Id>();
     templates = new Map<String, Id>();
-    
+
     Date startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
     Date endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
-  
+
     /*For testing:
     Date startd =  Date.today();
     Date endd =  Date.today().addDays(1);
@@ -118,7 +118,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-                               WhoClosedCase__r.Profile.Name
+                               WhoClosedCase__r.Profile.Name, CNSCase__c
                                FROM Case
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
@@ -141,8 +141,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     startd = Test.isRunningTest() ? Date.today() : Date.today().addDays(-1);
     endd = Test.isRunningTest() ? Date.today().addDays(1) : Date.today();
-  
-    /*For testing:   
+
+    /*For testing:
      startd =  Date.today();
      endd = Date.today().addDays(1);
      */
@@ -271,7 +271,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
     if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
     email.setBccAddresses(new list<string> {'guerreirom@iata.org', 'rovedaa@iata.org'});
-    email.setPlainTextBody(log);  
+    email.setPlainTextBody(log);
     email.setSubject('Instant survey email batch');
     Messaging.sendEmail(new list<Messaging.SingleEmailMessage> {email});
     system.debug(LoggingLevel.error, '################### MANDO ' + (errors + success) + ' email');
@@ -364,7 +364,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
             (c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
             (c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
             (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) || 
+            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
             (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
@@ -384,7 +384,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         }
 
     //system.debug(LoggingLevel.ERROR,'AccountCountry is... ' + AccountCountry);
-    
+
     /*String myvariable;
     myvariable = AccountCountry;
     throw new transformationException( 'Messsage for Susanna ' + myvariable);*/
@@ -654,15 +654,18 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
     system.debug('RoleName ------>> ' + RoleName);
     system.debug('ProfileName ------>> ' + ProfileName);
-    
+
         if(RoleName.contains('Distribution - Airline Coding & MITA')){
-          template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');            
-        } 
-        
+          template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
+        }
+        else if (c.CNSCase__c == true) {
+            template = templates.get('Clicktools_Contact_Email_EN_CNS');
+        }
+
         else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
-          template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');   
-        } 
-    
+          template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');
+        }
+
         else if (
           RoleName.contains('China & N. Asia Customer Service') &&
           c.Region__c == 'China & North Asia' &&
@@ -695,7 +698,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           )
         )
           template = templates.get('Clicktools_Contact_Email_CX_FR');
-    
+
         /*
         else if(
         RoleName.contains('MAD Hub CS') &&
@@ -720,7 +723,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         )
           template = templates.get('Clicktools_Contact_Email_CX_ID');
 
-      
+
         else if (
           RoleName.contains('MAD Hub CS') &&
           c.Region__c == 'Europe' &&
@@ -865,7 +868,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        c.Status == 'Closed' &&
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
-        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');    
+        template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
       } //end INC292755
 
       /****** Preparing the email *****/
@@ -915,10 +918,16 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
     */
     // Sends the email
     UtilityCS__c sender = UtilityCS__c.getInstance('SurveyEmailSender');
+    UtilityCS__c senderCNS = UtilityCS__c.getInstance('SurveyEmailSenderCNS');
     List<Messaging.Singleemailmessage> emailToBeSent = new List<Messaging.SingleemailMessage>();
     for (Email em : MyEmailToBeSent) {
       Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-      if (!Test.isRunningTest() && sender != null)  email.setOrgWideEmailAddressId(sender.value__c);
+      if (!Test.isRunningTest() && sender != null)  {
+          email.setOrgWideEmailAddressId(sender.value__c);
+          if(em.cas.CNSCase__c) {
+              email.setOrgWideEmailAddressId(senderCNS.value__c);
+          }
+      }
 
       //id userid = ContactIdToUserId.get(em.cas.ContactId);
       //if(userid!=null){
@@ -984,7 +993,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
               //**INC301099** Delete this rule
         /*if(RoleName.contains('Distribution - Airline Coding & MITA'))
             c.OwnerId = Label.SurveyCustomerRecoveriesAnnFARRELL;
-        else*/ 
+        else*/
             c.OwnerId = mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c));
 
         lstCasesToUpdate.add(c);
