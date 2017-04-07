@@ -17925,7 +17925,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>((1 OR 2 OR 3 OR 4) AND 5 AND 6) OR 7</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18055,7 +18055,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18100,7 +18100,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAsiaPacific</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>((1 OR 2) AND 3 AND 5) OR ((4 OR 6) AND 5)</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18141,7 +18141,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>((1 OR 2 OR 3 OR ((1 OR 2) AND 5)) AND 4) or (5 and 6)</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18186,7 +18186,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_Europe</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>((1 OR 2) AND 3 AND 4) AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
