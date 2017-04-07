@@ -6,7 +6,7 @@ private class ISSP_WS_Test {
         myInput.inputMessage = 'test';
         ISSP_WS_NewUser.simpleMethod1(myInput);
     }
-    
+       
     static testMethod void NewUser_2() {
     	List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
     	insert errorList;
@@ -169,7 +169,7 @@ private class ISSP_WS_Test {
         update con;
         ISSP_WS_NewUser.createUser(myInput);
     }
-    
+
     static testMethod void NewUser_4() {
     	List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
     	insert errorList;
@@ -1358,5 +1358,24 @@ private class ISSP_WS_Test {
     	
     	return errorList;
 	}
+
+	static testMethod void newCNSContact() {
+
+		String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+    	
+    	Account acc = ISSP_ObjectFactory.createNewAccount();
+    	acc.IATACode__c = '100';
+    	acc.RecordTypeId = recordTypeId;
+		insert acc;
+
+		Test.startTest();
+
+			ISSP_WS_Utilities.createContact('LauraCNS', 'testLaura', 'test.cn.sla.ura@test.com', String.valueOf(acc.Id), true);
+
+		Test.stopTest();
+		
+    }
+       
+    
 	
 }
