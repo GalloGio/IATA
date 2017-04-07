@@ -32,6 +32,11 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
     private Id vHQAccountId;
+
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     
 	//Global Variables
 	public String UserPortalStatus {get;set;}
@@ -294,7 +299,7 @@ public with sharing class ISSP_PersonalInformation {
     }
     
     public Pagereference AssignIFAPContact(){
-        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+ con.AccountId + '&MainNav=Services&subNav=Access&mid=M4S2');
+        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+ con.AccountId + '&MainNav=Services&subNav=Access&mid=M4S2' + commParam);
         p.setredirect(true);
         return p;
       return null;
