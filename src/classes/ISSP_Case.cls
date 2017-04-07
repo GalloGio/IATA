@@ -91,12 +91,17 @@ public without sharing class ISSP_Case {
     public Decimal CaseStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Internal.get(newCase.Status);}    }
     public Decimal CaseDPCStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Portal.get(newCase.Escalated_Status_ACCA__c);}   }
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
             if (!newCase.Visible_on_ISS_Portal__c) {
-                PageReference pr = new PageReference('/ISSP_Homepage');
+                PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
             }
             
@@ -105,7 +110,7 @@ public without sharing class ISSP_Case {
                 Set<String> openIFAPStatuses = new Set<String>
                     {'action needed', 'agent notified (email)', 'agent notified (mail)', 'sanity check failure'};
                 if(openIFAPStatuses.contains(newCase.Status.toLowerCase()) && con.Financial_Assessment_Contact__c) {
-                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId);
+                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                 		return pr;
                     }
             }
@@ -654,7 +659,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             try {
                 //get parameters
@@ -697,7 +702,7 @@ public without sharing class ISSP_Case {
                 //PageReference pr = new Pagereference('/ISSP_Case?caseId='+newCase.Id);
                 //pr.setRedirect(true);
                 //return pr;
-                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
@@ -708,6 +713,13 @@ public without sharing class ISSP_Case {
     public Pagereference saveAttach() {
 
         system.debug('saveAttach AccountId: ' + accountId);
+
+        // CNS
+        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+            newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team';
+        }
+
         //TF - SP9-C5
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, System.Label.ISSP_Select_Airline);
@@ -716,7 +728,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             //get parameters
             String paramTopic = ApexPages.currentPage().getParameters().get('topic');
@@ -757,11 +769,11 @@ public without sharing class ISSP_Case {
 				**/
 
                 //return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
-            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
     }
 
@@ -772,10 +784,10 @@ public without sharing class ISSP_Case {
             return new Pagereference(retURL);
         else if (caseId != null) {
             isEditMode = false;
-            return new Pagereference('/ISSP_Case?caseId=' + caseId);
+            return new Pagereference('/ISSP_Case?caseId=' + caseId + commParam);
         } else {
             isEditMode = false;
-            return new Pagereference('/ISSP_Homepage?mid=M0S1');
+            return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
             //return null;
         }
     }
@@ -789,7 +801,7 @@ public without sharing class ISSP_Case {
         upsert closeCase ;
         //string retURL = ApexPages.currentPage().getParameters().get('retURL');
         PageReference pageRef = ApexPages.currentPage();
-        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id); //ApexPages.currentPage();
+        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id + commParam); //ApexPages.currentPage();
     }
 
     public Pagereference DPCAccept() {
@@ -894,7 +906,7 @@ public without sharing class ISSP_Case {
         }
         update newCase;
         //return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
-        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true');
+        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true' + commParam);
     }
 
     @TestVisible
@@ -1019,7 +1031,7 @@ public without sharing class ISSP_Case {
     }
 
     public Pagereference AddComment() {
-        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId'));
+        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId') + commParam);
         p.setRedirect(true);
         return p;
     }

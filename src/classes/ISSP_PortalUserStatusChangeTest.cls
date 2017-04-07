@@ -35,7 +35,7 @@ private class ISSP_PortalUserStatusChangeTest {
         ISSP_PortalUserStatusChange.preformAction(actionName,controler.con.Id,controler.con.User_Portal_Status__c);
         controler.save();
 
-        ISSP_PortalUserStatusChange.createEmail(null,null);
+        ISSP_PortalUserStatusChange.createEmail(null,null, null);
         //controler.disabelUser();
 
  //       ISSP_PortalUserStatusChange.maasUserCreation(con);
@@ -151,7 +151,7 @@ private class ISSP_PortalUserStatusChangeTest {
         contactListId.add(con2.Id);
 
         ISSP_PortalUserStatusChange.removeInactiveEmail(con2.Email);
-        ISSP_PortalUserStatusChange.maasUserCreation(contactList);
+        ISSP_PortalUserStatusChange.maasUserCreation(contactList, 'CNS');
         ISSP_PortalUserStatusChange.futureUpdateUsers(contactListId);
         ISSP_PortalUserStatusChange.futureDeactivateUsers(contactListId);
 

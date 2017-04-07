@@ -1,12 +1,12 @@
 <apex:page controller="ISSP_PortalServiceAccess" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>  
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="ptBreadcrumb">&nbsp;&#171;&nbsp;
             
-            <a href="/apex/ISSP_AccessToService">xxBack to List: Portal Service Access</a>
+            <a href="/apex/ISSP_AccessToService{!if(communityName=='CNS','?CommunityName='+communityName,'')}">xxBack to List: Portal Service Access</a>
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
@@ -21,13 +21,13 @@
                             <tr>
                                 <th data-field="name">Contact:</th>
                                 <th data-field="name">
-                                    <apex:outputLink value="/apex/ISSP_Contact?Id={!PortalServiceAccess.Contact__c}" target="_self">{!PortalServiceAccess.Contact__r.Name}</apex:outputLink>
+                                    <apex:outputLink value="/apex/ISSP_Contact?Id={!PortalServiceAccess.Contact__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!PortalServiceAccess.Contact__r.Name}</apex:outputLink>
                                 </th>
                             </tr>
                             <tr>
                                 <th data-field="name">Portal Service:</th>
                                 <th data-field="name">
-                                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!PortalServiceAccess.Portal_Application__c}" target="_self">{!PortalServiceAccess.Portal_Application__r.Name}</apex:outputLink>
+                                    <apex:outputLink value="/apex/ISSP_PortalService?Id={!PortalServiceAccess.Portal_Application__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!PortalServiceAccess.Portal_Application__r.Name}</apex:outputLink>
                                 </th>
                             </tr>
                             <tr>
@@ -44,12 +44,12 @@
                             </tr>
                         </thead>
                     </table>
-                    <a href="/ISSP_EditPortalServiceAccess?id={!PortalServiceAccess.Id}&op=Edit"  class="pull-right btn_iata btn-sm  btn-primary"  >xxEdit </a>
+                    <a href="/ISSP_EditPortalServiceAccess?id={!PortalServiceAccess.Id}&op=Edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}"  class="pull-right btn_iata btn-sm  btn-primary"  >xxEdit </a>
                 </div>
             </apex:define>
         </div>
         <!-- end  div class="panel panel-primary"-->
-        <c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
     <!-- end container-->
      </body>
