@@ -203,6 +203,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Phone_Redirected_to_Web__c</field>
             </layoutItems>
             <layoutItems>

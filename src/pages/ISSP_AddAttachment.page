@@ -6,13 +6,13 @@
            applyBodyTag="false"
            applyHtmlTag="false" >
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>        
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.iframe-transport.js')}" />
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
  
     <div class="container">
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     
 <script type="text/javascript">
     function showArticle() {
@@ -286,7 +286,7 @@ margin-top:50px;
             <apex:commandButton action="{!upload}" value="{!$Label.IFAP_Save}" StyleClass="btn_iata btn-sm btn-block btn-success" rendered="{!NOT(isOSCARCase)}"/>
             </div>
           <div class="col-md-3">
-           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!NOT(isOSCARCase)}" />
+           <apex:commandButton action="/ISSP_Case?Caseid={!tmpCase.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!NOT(isOSCARCase)}" />
          <!--
            <apex:commandButton action="/ISSP_Baggage_Proration_Claim?id={!tmpClaim.Id}" value="{!$Label.ISSP_Cancel}" StyleClass="btn_iata btn-sm btn-block btn-danger" rendered="{!isClaim}" /> 
           -->   
@@ -305,7 +305,7 @@ margin-top:50px;
        </apex:outputPanel>
       <br/>
       <div style="float:right;">
-			<apex:commandButton action="{!submitToIATA}" value="{!IF(tmpCase.Status='Draft', $Label.ISSP_AMS_Submit_IATA, $Label.ISSP_Return_to_Case)}" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"/>
+			<apex:commandButton action="{!submitToIATA}" value="{!IF(tmpCase.Status='Draft', IF(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA), $Label.ISSP_Return_to_Case)}" rendered="{!AND(IsOSCARCase, OR(tmpCase.CaseArea__c == 'Accreditation Process',tmpCase.CaseArea__c == 'Accreditation Products',tmpCase.CaseArea__c == 'Remittance & Settlement Process'))}"/>
        </div>
   </apex:form>
     <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Rejected_File}" rendered="{!isOnlineOSCARCase}"/><br/><br/>
@@ -336,7 +336,7 @@ margin-top:50px;
     <!-- EO PORTAL_DIRECT Upload -->
     </div><!-- end panel body -->
             </div><!-- end  div class="panel panel-primary"-->
-       <c:ISSP_CustomFooter />
+       <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div><!-- end container-->  
     </body>
     </html>

@@ -253,7 +253,7 @@ global class AMS_Batch_AggregatePwcData implements Database.Batchable<Account> {
                             for(AMS_Country_Specific_Attribute__c irregularityTypeException : irregularityTypeExceptions) {
 
                                 // Check matching on location class & irregularity type
-                                if(irregularityTypeException.Location_Class__c == agencyAppliedChangeCode.Account__r.Location_Class__c && irregularityTypeException.Irregularity_Type__c == agencyAppliedChangeCode.Irregularity_Type__c) {
+                                if(irregularityTypeException.Location_Class__c != agencyAppliedChangeCode.Account__r.Location_Class__c || irregularityTypeException.Irregularity_Type__c != agencyAppliedChangeCode.Irregularity_Type__c) {
 
                                     // Update linked variable
                                     validAgencyAppliedChangeCode = false;
