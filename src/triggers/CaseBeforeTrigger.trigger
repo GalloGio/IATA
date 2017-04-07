@@ -26,8 +26,6 @@
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
-    //GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;
-
     boolean trgProcessISSCase = GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;
     boolean trgCase = GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
     boolean trgCaseIFAP = GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;                                                   //44444444444444
@@ -58,7 +56,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID SIDRAcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
     ID SIDRABRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA BR');
     ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
-    ID caseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+    //ID caseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
     ID caseSEDARecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');//INC200638
     Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
     Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
@@ -117,10 +115,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     Map < string, Case > KaleCases = new Map < string, Case > ();
     
     /*CONTROLLARE IL POPOLAMENTO DELLE SEGUENTI MAPPE QUANDO VIENE CHIAMATA CheckBusinessHoursHelperClass*/
-    Map < string, Contact > CBHContactMap = new Map < string, Contact > ();
-    Map < string, Account > CBHAccountMap = new Map < string, Account > ();
-    
-    List<User> currentUser;   
+    Map <string, Contact> CBHContactMap = new Map <string, Contact> ();
+    Map <string, Account> CBHAccountMap = new Map <string, Account> ();
+    map <ID, Case> mapFSMCases;
+
+    List<User> currentUser;
+    List<EmailTemplate__c> IFAPemailtemplate = new List<EmailTemplate__c>();
     List<Contact> lstConts = new List<Contact>();
     List<Profile> profileList = new List<Profile>();
     List<Profile> currentUserProfile; 
@@ -131,12 +131,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
-    //devo aggiungere la casistica isdelete e isundelete
+    //devo aggiungere la casistica isdelete
     //devo aggiungere isundelete nel trigger principale e poi nella sezione
     if(Trigger.isInsert || Trigger.isUpdate){
         
         /*trgCaseIFAP Trigger*/
-        //////INSERIRE LA CONDIZIONE PER FARLO ESEGUIRE SOLO IN ISINSERT E ISUPDATE
         if(trgCaseIFAP){ //FLAG
         	system.debug('trgCaseIFAP');
             if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
@@ -159,12 +158,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 if (isIFAp) {
                 	system.debug('##ROW##');
-                    //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                    //IFAPcurrentUserProfile = [SELECT ID, Name FROM Profile WHERE id =: currentUser.ProfileId limit 1];
                     IFAPcurrentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
                     List<Contact> contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
                     List<Account> accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
+                    //GM - IMPRO - START
+                    //emailtemplate query from isinsert and isupdate to the share code
+                    IFAPemailtemplate = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
+                    //GM - IMPRO - END
                     //Ifap Authorized users have a specific permission set
                     List<PermissionSet> PSet = [SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users'];
                     if(PSet <> null && PSet.size()>0){
@@ -200,6 +201,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*UserInfoUpdate Trigger*/
         if(UserInfoUpdate){//FLAG 
         	system.debug('UserInfoUpdate');
+            currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
             for(Case c : Trigger.new){
                 if((Trigger.isInsert && c.Status == 'Closed') || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
@@ -479,6 +481,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     setFSMCaseId.add(NCCase.ParentId);
                 }
             }
+            mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed
+                                                        , FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c
+                                                        , firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c
+                                                        from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger*/
         
@@ -1072,7 +1078,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCaseIFAP Trigger.isInsert*/
         if(trgCaseIFAP){//FLAG
         	system.debug('trgCaseIFAP Trigger.isInsert');
-            EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
             for (Case newCase : Trigger.New) {
                 // only consider IFAP cases
                 if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
@@ -1097,7 +1102,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FA template's country matches the case country
                     if(newCase.EmailTemplate__c!=null){
                         //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c EmTe : et){
+                        for (EmailTemplate__c EmTe : IFAPemailtemplate){
                             if (EmTe.Id == newCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, newCase.IFAP_Country_ISO__c)) {
                                 newCase.addError('The selected Initial Request Email Template does not match the case country.');
                                 break;
@@ -1107,7 +1112,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FA reminder template's country matches the case country
                     if(newCase.Reminder_EmailTemplate__c!=null){
                         //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c REmTe : et){
+                        for (EmailTemplate__c REmTe : IFAPemailtemplate){
                             if (REmTe.Id == newCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, newCase.IFAP_Country_ISO__c)) {
                                 newCase.addError('The selected Reminder Email Template does not match the case country.');
                                 break;
@@ -1117,7 +1122,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FS template's country matches the case country
                     if(newCase.FS_EmailTemplate__c!=null){
                         //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c FSEmTe : et){
+                        for (EmailTemplate__c FSEmTe : IFAPemailtemplate){
                             if (FSEmTe.Id == newCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, newCase.IFAP_Country_ISO__c)) {
                                 newCase.addError('The selected FS Email Template does not match the case country.');
                                 break;
@@ -1127,7 +1132,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FS reminder template's country matches the case country
                     if(newCase.FS_Reminder_EmailTemplate__c!=null){
                         //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c FSREmTe : et){
+                        for (EmailTemplate__c FSREmTe : IFAPemailtemplate){
                             if (FSREmTe.Id == newCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, newCase.IFAP_Country_ISO__c)) {
                                 newCase.addError('The selected FS Reminder Email Template does not match the case country.');
                                 break;
@@ -1153,7 +1158,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*UserInfoUpdate Trigger.isInsert*/
         if(UserInfoUpdate){//FLAG
         	system.debug('UserInfoUpdate Trigger.isInsert');
-            currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
             for (Case aCase: Trigger.New){                
                 if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
                 	system.debug('##ROW##');                
@@ -1195,11 +1199,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         //Constantin
         if(trgSidraCaseBeforeInsertUpdate){
-        	system.debug('trgSidraCaseBeforeInsertUpdate rigger.isInsert');
+        	system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isInsert');
             // automatically fill in the exchange rate using the rate stored in the system for the SIDRA cases
             set<String> setCurrencies = new set<String>();
             for (Case c: trigger.new){
-                if ((c.RecordTypeId == caseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
+                if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
                 }
             }
@@ -1219,46 +1223,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
             }
         }
-        //COMMENTED CODE IN THE INITIAL TRIGGER
-        /*if (trigger.isInsert){
-        for (Case aCase: trigger.new){ // Fill a set of Account Ids for the cases select statement
-            // Only for Sidra small amount cases
-            system.debug(LoggingLevel.Error,'============== INSERT analyze '+aCase.Subject+' which has IRR_Withdrawal_Reason__c = '+aCase.IRR_Withdrawal_Reason__c+'================');
-            
-            if (aCase.RecordTypeId == caseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY))
-            {
-                // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
-                accountIds.add(aCase.AccountId);
-                system.debug(LoggingLevel.Error,'============== SMALL AMOUNT: '+aCase.Subject+' ================');
-            }     
-        }
-
-        if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
-            // Get a list of all related cases
-            List<Case> casesIns = [SELECT AccountId, Action_needed_Small_Amount__c FROM Case 
-                                    WHERE RecordTypeId =: caseRecordTypeID 
-                                    AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
-                                        OR IRR_Withdrawal_Reason__c = :MINORPOLICY 
-                                        OR Action_needed_Small_Amount__c=true) 
-                                    AND CreatedDate >=: OneYearAgo 
-                                    AND AccountId IN: accountIds];
-            
-            for (Case mCase : Trigger.new){
-                integer nbCasesSA = 0;
-                for (Case testCase : casesIns){
-                    if (testCase.AccountId == mCase.AccountId){ nbCasesSA ++; }
-                } 
-                
-                if (nbCasesSA >= 3){ 
-                    mCase.Action_needed_Small_Amount__c = true;
-                    mCase.IRR_Withdrawal_Reason__c = null; 
-                }
-                else { mCase.Action_needed_Small_Amount__c = false; }
-            }
-        }
-        }
-        else{*/
-        /*Constantin*/
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
@@ -1268,8 +1232,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(!setFSMCaseId.isEmpty()){
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                map<ID, Case> mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, 
-                                                                firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
                 for(Case NCCase:trigger.new){
                 	system.debug('##ROW##');
                     if(NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)){
@@ -1374,7 +1336,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             set<string> CountryNameSet = new set<string>();
             map<string,IATA_ISO_Country__c> IATAISOCountryMap = new map<string,IATA_ISO_Country__c>();
             List<Mapping_for_CSR_Cases__c> CSRCasesMapping = Mapping_for_CSR_Cases__c.getAll().values();
-
+            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
+            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
             List<Case> parentAccount;
             List<Contact> accountFromRelatedContact;
             for(Case newCase : trigger.new){
@@ -1386,10 +1349,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if(iso.Case_BSP_Country__c != null) 
                     IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
             }
-
             for(Case newCase : trigger.new){
-                Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
-                Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
                 if(IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c)!=null){
                     system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
                     IATA_ISO_Country__c iso = IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c);
@@ -1539,7 +1499,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCaseIFAP Trigger.isUpdate*/
         if(trgCaseIFAP){//FLAG
         	system.debug('trgCaseIFAP Trigger.isUpdate');
-            EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
+            //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
             for (Case IFAPupdatedCase : Trigger.New) {
                 // ** May 2014 modif: Forbid change of recordtype FROM or TO IFAP case
                 if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID && Trigger.oldMap.get(IFAPupdatedCase.ID).RecordTypeId != IFAPcaseRecordTypeID) 
@@ -1551,7 +1511,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID) {
                 	system.debug('##ROW##');
                     Case IFAPoldCase = Trigger.oldMap.get(IFAPupdatedCase.ID);
-                    //if(IFAPupdatedCase.AccountId <> IFAPoldCase.AccountId){
+                    //if(IFAPupdatedCase.AccountId <> IFAPoldCase.AccountId)
                     if (IFAPupdatedCase.Country__c <> IFAPoldCase.Country__c) {
                         // validate the account's country
                         if (!IFAP_BusinessRules.isCountryValid(IFAPupdatedCase, accountMap))
@@ -1583,7 +1543,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     //GM - IMPRO - START - queries inside FOR (Shame on whoever has done this!)
                     // check if the FA template's country matches the case country
                     if (IFAPupdatedCase.EmailTemplate__c != null && (IFAPupdatedCase.EmailTemplate__c <> IFAPoldCase.EmailTemplate__c)) {
-                        for (EmailTemplate__c EmTe : et){
+                        for (EmailTemplate__c EmTe : IFAPemailtemplate){
                             if (EmTe.Id == IFAPupdatedCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
                                 IFAPupdatedCase.addError('The selected Initial Request Email Template does not match the case country.');
                                 break;
@@ -1593,7 +1553,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FA reminder template's country matches the case country
                     if (IFAPupdatedCase.Reminder_EmailTemplate__c != null && (IFAPupdatedCase.Reminder_EmailTemplate__c <> IFAPoldCase.Reminder_EmailTemplate__c)) {
                         //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c REmTe : et){
+                        for (EmailTemplate__c REmTe : IFAPemailtemplate){
                             if (REmTe.Id == IFAPupdatedCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
                                 IFAPupdatedCase.addError('The selected Reminder Email Template does not match the case country.');
                                 break;
@@ -1603,7 +1563,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FS template's country matches the case country
                     if (IFAPupdatedCase.FS_EmailTemplate__c != null && (IFAPupdatedCase.FS_EmailTemplate__c <> IFAPoldCase.FS_EmailTemplate__c)) {
                         //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c FSEmTe : et){
+                        for (EmailTemplate__c FSEmTe : IFAPemailtemplate){
                             if (FSEmTe.Id == IFAPupdatedCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
                                 IFAPupdatedCase.addError('The selected FS Email Template does not match the case country.');
                                 break;
@@ -1613,7 +1573,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     // check if the FS reminder template's country matches the case country
                     if (IFAPupdatedCase.FS_Reminder_EmailTemplate__c != null && (IFAPupdatedCase.FS_Reminder_EmailTemplate__c <> IFAPoldCase.FS_Reminder_EmailTemplate__c)) {
                         //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        for (EmailTemplate__c FSREmTe : et){
+                        for (EmailTemplate__c FSREmTe : IFAPemailtemplate){
                             if (FSREmTe.Id == IFAPupdatedCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
                                 IFAPupdatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
                                 break;
@@ -1669,13 +1629,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         	system.debug('UserInfoUpdate Trigger.isUpdate');
             for (Case updateCase: Trigger.New){
                 if ((updateCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updateCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
-                    //User currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
                     //compare with old values       
                     Case UIUoldCase = Trigger.oldMap.get(updateCase.ID);
-                    if (isCurrentUserInit == false){
-                        currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                        isCurrentUserInit = true;
-                    }if (currentUser.size() > 0){                      
+                    if (currentUser.size() > 0){                      
                         //update name field if values changed
                         if (updateCase.CS_Contact_Result__c != UIUoldCase.CS_Contact_Result__c)
                             updateCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
@@ -1705,13 +1661,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
         
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
-        if(trgSidraCaseBeforeInsertUpdate){//FLAG
+        if(trgSidraCaseBeforeInsertUpdate){ //FLAG
         	Set<Id> accountIds = new Set<Id>();
         	system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
            	for (Case aCase: trigger.new){ // Fill a set of Account Ids for the cases select statement
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 system.debug(LoggingLevel.Error,'============== UPDATE analyze '+aCase.Subject+' which has IRR_Withdrawal_Reason__c = '+aCase.IRR_Withdrawal_Reason__c+'================');
-                if (aCase.RecordTypeId == caseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null){
+                if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null){
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
                     accountIds.add(aCase.AccountId);
                 }     
@@ -1720,15 +1676,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
                 system.debug('##ROW##');
                 // Get a list of all related cases
-                List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c FROM Case 
-                                        WHERE RecordTypeId =: caseRecordTypeID 
-                                        AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
-                                            OR IRR_Withdrawal_Reason__c = :MINORPOLICY 
-                                            OR Action_needed_Small_Amount__c=true) 
-                                        AND CreatedDate >=: OneYearAgo
-                                        AND AccountId <> null 
-                                        AND AccountId IN: accountIds];
-                
+                List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c 
+                                            FROM Case WHERE RecordTypeId =: SIDRAcaseRecordTypeID 
+                                            AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
+                                            OR IRR_Withdrawal_Reason__c = :MINORPOLICY OR Action_needed_Small_Amount__c=true) 
+                                            AND CreatedDate >=: OneYearAgo AND AccountId <> null AND AccountId IN: accountIds];
                 // If there are minor error policy cases, make a list of the latest reinstatement date per Account Id
                 map<Id, Datetime> mapReiDatesPerAccountiId = new map<Id, Datetime>();
                 if (!casesUpd.isEmpty()) { 
@@ -1900,8 +1852,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             	system.debug('##ROW##');
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                map<ID, Case> mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, 
-                                                                firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
                 for(Case NCCase:trigger.new){
                     if(NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)){
                         Case FSMCase;
