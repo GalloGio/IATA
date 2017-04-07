@@ -22,7 +22,7 @@ public class ANG_RiskEventTriggerHandler {
     // ************************************************************
 	
 	private void loadInformationsInsert() {
-        new ANG_RiskEventGenerator(triggerNew).loadInitialInformations();
+        new ANG_RiskEventGenerator(triggerNew, newMap).loadInitialInformations();
 	}
 	
 	private void loadInformationsUpdate() {
@@ -30,13 +30,18 @@ public class ANG_RiskEventTriggerHandler {
 
 		for(ANG_Agency_Risk_Event__c re : triggerNew){
 			ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
-			if(re.ANG_AccountId__c != oldRe.ANG_AccountId__c || re.ANG_Issued_Date__c != oldRe.ANG_Issued_Date__c || re.ANG_Risk_Type__c != oldRe.ANG_Risk_Type__c){
+			if(
+                re.ANG_AccountId__c != oldRe.ANG_AccountId__c
+                || re.ANG_Issued_Date__c != oldRe.ANG_Issued_Date__c
+                || re.ANG_Risk_Type__c != oldRe.ANG_Risk_Type__c
+                || re.ANG_Source_Id__c != oldRe.ANG_Source_Id__c
+            ){
 				changedRisks.add(re);
 			}
 		}
 
 		if(changedRisks.isEmpty()) return;
 
-        new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
+        new ANG_RiskEventGenerator(changedRisks, newMap).loadInitialInformations();
 	}
 }

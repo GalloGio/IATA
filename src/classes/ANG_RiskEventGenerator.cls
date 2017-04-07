@@ -17,7 +17,7 @@ public class ANG_RiskEventGenerator {
 	private final String objectName;
 
 	private final List<SObject> newObjects;
-	private final Map<Id, SObject> oldMap;
+	private final Map<Id, SObject> objMap;
 
 	public static Boolean skip{
 		get{
@@ -61,11 +61,10 @@ public class ANG_RiskEventGenerator {
 	// ************ constructor **************
 	// ***************************************
 
-	public ANG_RiskEventGenerator(List<SObject> newObjects, Map<Id, SObject> oldMap){
+	public ANG_RiskEventGenerator(List<SObject> newObjects, Map<Id, SObject> objMap){
 		this.newObjects = newObjects;
-		this.oldMap = oldMap;
+		this.objMap = objMap;
 
-		// fetching configurations for the current object
 		objectName = newObjects.getSObjectType().getDescribe().getName();
 	}
 
@@ -146,15 +145,16 @@ public class ANG_RiskEventGenerator {
 				else {
 					String friendlyMessage = 'Please review the #configurations# for #objects#. Some of the fields mentioned were not found';
 					friendlyMessage = friendlyMessage.replace('#configurations#', Schema.SObjectType.ANG_Risk_Event_Configuration__c.getLabelPlural());
-					friendlyMessage = friendlyMessage.replace('#configurations#', Schema.getGlobalDescribe().get(objectName).getDescribe().getLabelPlural());
+					friendlyMessage = friendlyMessage.replace('#objects#', Schema.getGlobalDescribe().get(objectName).getDescribe().getLabelPlural());
 					throw new RiskEventGeneratorException(friendlyMessage);
 				}
 			}
 		}		
 
 
-		// for each object on the list, verify that it matches a config and create a riskevent
+		// for each object on the list, verify that it matches a config and create a risk event
 		List<ANG_Agency_Risk_Event__c> riskEvents = new List<ANG_Agency_Risk_Event__c>();
+		Set<Id> typeIds = new Set<Id>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if(checkRequisites(o, config)){
@@ -166,12 +166,37 @@ public class ANG_RiskEventGenerator {
 					risk.ANG_Issued_Date__c = System.today();
 					risk.put(sourceFields.get(objectName), o.Id);
 
+					typeIds.add(risk.ANG_Risk_Type__c);
 					riskEvents.add(risk);
 				}
 			}
 		}
 
-		if(!riskEvents.isEmpty()) insert riskEvents;
+		if(!riskEvents.isEmpty()){
+
+			//fetch Risk Event Type information (to create the unique key)
+			Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Risk_ID__c FROM ANG_Risk_Event_Type__c WHERE Id IN :typeIds]);
+
+			for(ANG_Agency_Risk_Event__c re : riskEvents){
+				re.ANG_UniqueKey__c = re.get(sourceFields.get(objectName))+types.get(re.ANG_Risk_Type__c).ANG_Risk_ID__c;
+			}
+
+			List<Database.UpsertResult> results = Database.upsert(riskEvents, ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c, false);
+
+			// If we are generating a duplicate error (meaning we already have a Risk Event of 
+			// the same type for this object), we do nothing (risk event is not created), for 
+			// other errors, throw the message to the interface 
+
+			for(Database.UpsertResult r : results){
+				if(!r.isSuccess()){
+					for(Database.Error e : r.getErrors()){
+						Boolean isDuplicateError = e instanceOf Database.DuplicateError;
+						System.debug(loggingLevel.ERROR, '____ [cls ANG_RiskEventGenerator - generate] Error found. Is duplicate? - ' + (isDuplicateError ? 'Yes' : 'No'));
+						if(!isDuplicateError) throw new RiskEventGeneratorException(e.getMessage());
+					}
+				}
+			}
+		}
 
 		//prevent recursion
 		skip = true;
@@ -182,21 +207,26 @@ public class ANG_RiskEventGenerator {
 		Set<Id> accountIds = new Set<Id>();
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
+			//check list of objects to query
 			riskTypes.add(re.ANG_Risk_Type__c);
 			accountIds.add(re.ANG_AccountId__c);
-		}
 
-		if(riskTypes.isEmpty() && accountIds.isEmpty()) return;
+			//needed for manual creation or changes
+			re.ANG_UniqueKey__c = re.ANG_Source_Id__c+re.ANG_Risk_ID__c;
+
+			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
+		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]);
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
-			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
 
+			//fetch HE account
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
 			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
 
+			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
 		}
 
@@ -214,7 +244,7 @@ public class ANG_RiskEventGenerator {
 		//counter that checks if conditions were skipped
 		Integer conditionsChecked = 0;
 
-		SObject oldObject = oldMap == null ? null : oldMap.get(newObject.Id);
+		SObject oldObject = objMap == null ? null : objMap.get(newObject.Id);
 
 		//make checks against configs
 		for(ANG_RiskEventConfigurationFields f : ANG_RiskEventConfigurationFields.getList()){
