@@ -12,6 +12,11 @@
        <script type="text/javascript">
        
     function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
+
+        if (appPortalRole == '' || appPortalRole == null || appPortalRole == undefined) {
+          appPortalRole = $('[id$="portalRoles"]').val();
+        }
+
         var doInsert;
         if (isEasyPayService == 'false') {
           doInsert = 2;
