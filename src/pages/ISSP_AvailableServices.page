@@ -6,7 +6,7 @@
      <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
     <!-- end elliot 19 juin -->
  <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
@@ -155,7 +155,7 @@
          
                    <apex:outputpanel rendered="{!IF(f.label=='Service'||f.label=='Servicio'||f.label=='???' ||f.label=='??' ||f.label=='Servi�o' ||f.label=='????' ||f.label=='Servizio' ||f.label=='??????' ||f.label=='Layanan' ||f.label=='D?ch v?' ||f.label=='??????',true,false)}"> 
                         
-                     <apex:outputLink value="{!item.recordService.Application_URL__c}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
+                     <apex:outputLink value="{!item.recordService.Application_URL__c}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="{!IF(item.recordService.New_Window__c,'_blank','_self')}" rendered="{!IF(item.Status=='Access Granted',true,false)}" >{!item.recordService.ServiceName__c}</apex:outputLink>
                      <apex:outputText value="{!item.recordService.ServiceName__c}" rendered="{!IF(item.Status=='Access Granted',false,true)}" />
                     </apex:outputpanel>
                     
@@ -181,7 +181,7 @@
                 <apex:outputPanel rendered="{!!item.recordService.Cannot_be_managed_by_portal_admin__c}">
                 
                 
-                <apex:outputLink styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
+                <apex:outputLink styleClass="btn btn_iata_primary" value="/ISSP_EditPortalServiceAccess?Id={!item.recordService.Id}&op=Edit&PSId={!item.recordService.Id}&PSname={!item.recordService.name}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Add_User_to_this_service}</apex:outputLink>
            
                     </apex:outputPanel>
                 </apex:column>
@@ -389,14 +389,14 @@
           </div>
           <div class="modal-body">
             <p>
-              {!$Label.ISSP_Thanks_for_request}
+              <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_Thanks_for_request_cns,$Label.ISSP_Thanks_for_request)}"/>
             </p>
           </div>
         </div>
       </div>
     </div>
 </apex:form>
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->
     </body>
     </html>

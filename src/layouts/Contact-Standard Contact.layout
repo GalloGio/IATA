@@ -240,6 +240,10 @@
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
