@@ -24,7 +24,11 @@ public Map<String, String>ParameterBodyMap    {get;set;}
  }
  
  public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String community) {
- 	sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null);
+    if(community == null) {
+        sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, null);
+    } else {
+        sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, community);
+    }
  }
  
  public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId, String community) {
