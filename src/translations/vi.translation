@@ -4875,6 +4875,10 @@ and
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar CNS --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Updated Companies --></label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
@@ -5065,6 +5069,10 @@ and
     <customLabels>
         <label>Các thay đổi chỉ có thể được thực hiện một khi đại lý trở thành thành viên</label>
         <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Message_Accredited_Agent_CNS --></label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
         <label>Nhiều thay đổi khác nhau</label>
@@ -5259,6 +5267,10 @@ and
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS No Pending CNS --></label>
+        <name>ISSP_AMS_No_Pending_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -5303,8 +5315,16 @@ and
         <name>ISSP_AMS_OPTION_CGO_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION CGO BRANCH CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_BRANCH_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Đại lý Hàng hóa IATA - Trụ sở Mới</label>
         <name>ISSP_AMS_OPTION_CGO_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION CGO HO CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_HO_CNS</name>
     </customLabels>
     <customLabels>
         <label>Hãng vận tải - Văn phòng Chi nhánh</label>
@@ -5511,6 +5531,10 @@ and
         <name>ISSP_AMS_Step0_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Agency Accreditation CNS --></label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Không rõ loại đại lý nào để nộp đơn sau?&lt;br/&gt;Vui lòng xem qua</label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
@@ -5539,8 +5563,16 @@ and
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Intro Accred CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nếu bạn không được ủy quyền ký các hồ sơ pháp lý với tư cách là đại diện của Đại lý, xin vui lòng yêu cầu đại diện được chỉ định hợp pháp đăng ký vào cổng và gửi đơn.</label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Intro CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Minor Changes --></label>
@@ -5549,6 +5581,10 @@ and
     <customLabels>
         <label>Đơn gia nhập làm thành viên mới</label>
         <name>ISSP_AMS_Step0_New_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 New Application CNS --></label>
+        <name>ISSP_AMS_Step0_New_Application_CNS</name>
     </customLabels>
     <customLabels>
         <label>Đơn nộp thành viên mới hoặc đơn thay đổi đang thực hiện</label>
@@ -5579,6 +5615,10 @@ and
         <name>ISSP_AMS_Step0_SAA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 SAA --></label>
+        <name>ISSP_AMS_Step0_SAA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Đại lý Specific Sales Activity</label>
         <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
     </customLabels>
@@ -5597,6 +5637,10 @@ and
     <customLabels>
         <label>Hiện tại dịch vụ đăng ký trực tuyến Chứng nhân Đại lý Vận chuyển Hàng hoá IATA chưa được cung cấp tại quốc gia bạn chọn. Bạn sẽ được chuyển tới trang web của IATA nơi bạn có thể tiếp tục quy trình xin chứng nhận Đại lý Vận chuyển Hàng hoá. Bạn có muốn di chuyển tới đó không?</label>
         <name>ISSP_AMS_Step1_GoTo_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step1_GoTo_Cargo_CNS --></label>
+        <name>ISSP_AMS_Step1_GoTo_Cargo_CNS</name>
     </customLabels>
     <customLabels>
         <label>Hiện tại dịch vụ đăng ký trực tuyến Chứng nhân Đại lý du lịch IATA chưa được cung cấp tại quốc gia bạn chọn. Bạn sẽ được chuyển tới trang web của IATA nơi bạn có thể tiếp tục quy trình xin chứng nhận Đại lý Du lịch. Bạn có muốn di chuyển tới đó không?</label>
@@ -5633,6 +5677,10 @@ and
     <customLabels>
         <label>Đơn xin Phê duyệt để trở thành Đại lý Du lịch/ Đại lý Vận chuyển Hàng hóa IATA</label>
         <name>ISSP_AMS_Step1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title --></label>
+        <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
         <label>Đơn nháp phải được gửi trong vòng 2 tuần, nếu không bạn sẽ cần phải bắt đầu lại quy trình xin chứng nhận</label>
@@ -6043,6 +6091,10 @@ and
         <name>ISSP_AMS_Step5_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
         <name>ISSP_AMS_Step5_ReviewBeforeSubmit</name>
     </customLabels>
@@ -6069,6 +6121,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS StepFinal In Addition2 --></label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal In Addition CNS --></label>
+        <name>ISSP_AMS_StepFinal_In_Addition_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
@@ -6107,6 +6163,10 @@ and
         <name>ISSP_AMS_StepsAll_Cargo_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo Title CNS --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Courier_Title --></label>
         <name>ISSP_AMS_StepsAll_Courier_Title</name>
     </customLabels>
@@ -6125,6 +6185,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Street --></label>
         <name>ISSP_AMS_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Submit CNS --></label>
+        <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Submit IATA --></label>
@@ -6803,6 +6867,10 @@ and
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Become_Endorsed_Agent_CNS --></label>
+        <name>ISSP_Become_Endorsed_Agent_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Bilateral, both carriers can issue electronic tickets --></label>
         <name>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</name>
     </customLabels>
@@ -6823,8 +6891,32 @@ and
         <name>ISSP_CASSLink_Export</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CASSLink_Export_CNS --></label>
+        <name>ISSP_CASSLink_Export_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CASSLink_Import --></label>
         <name>ISSP_CASSLink_Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Documents --></label>
+        <name>ISSP_CNS_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Endorsement --></label>
+        <name>ISSP_CNS_Endorsement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_PaymentLink_ServiceName --></label>
+        <name>ISSP_CNS_PaymentLink_ServiceName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote --></label>
+        <name>ISSP_CNS_quote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote2 --></label>
+        <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -6863,6 +6955,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Xin vui lòng chia sẻ chúng tôi về trải nghiệm của bạn và tên của nhân viên mà bạn nhận được sự trợ giúp. Chúng tôi sẽ đảm bảo rằng họ sẽ nhận được tin nhắn của bạn.</label>
         <name>ISSP_CaseComplimentMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CaseComplimentMessage_CNS --></label>
+        <name>ISSP_CaseComplimentMessage_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CaseInformation --></label>
@@ -7345,6 +7441,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
+        <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Truy cập vào</label>
         <name>ISSP_Email_AccessRejected_subject1</name>
     </customLabels>
@@ -7421,12 +7521,28 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact2_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nếu liên hệ trên không được trao quyền để nhận những thông báo này, xin vui lòng thông báo cho IATA ngay lập tức về những thay đổi cần thiết, thông qua Cổng thông tin khách hàng của chúng tôi.</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact3_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact3_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Liên hệ thanh toán BSP/CASS mới</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Portal --></label>
+        <name>ISSP_Email_CNS_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Service --></label>
+        <name>ISSP_Email_CNS_Service</name>
     </customLabels>
     <customLabels>
         <label>Bình luận mới về hồ sơ số</label>
@@ -7501,6 +7617,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Log_Case_CNS --></label>
+        <name>ISSP_Email_Log_Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>và đăng nhập bằng thông tin người dùng của bạn:</label>
         <name>ISSP_Email_LoginInformation</name>
     </customLabels>
@@ -7537,12 +7657,24 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_PortalStatusChange_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalStatusChange_Subject_CNS --></label>
+        <name>ISSP_Email_PortalStatusChange_Subject_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email_PortalUrl --></label>
         <name>ISSP_Email_PortalUrl</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalUrl_CNS --></label>
+        <name>ISSP_Email_PortalUrl_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>đã đổi từ trạng thái Cổng thông tin Khách hàng IATA của bạn sang</label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_PortalUser_StatusChange_CNS --></label>
+        <name>ISSP_Email_PortalUser_StatusChange_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_Rejected_Reason --></label>
@@ -7561,6 +7693,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Email_ThankYouContacting</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_ThankYouContacting_cns --></label>
+        <name>ISSP_Email_ThankYouContacting_cns</name>
+    </customLabels>
+    <customLabels>
         <label>Xin cảm ơn bạn trước,</label>
         <name>ISSP_Email_ThankYouInAdvance</name>
     </customLabels>
@@ -7575,6 +7711,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Chào mừng bạn đến với</label>
         <name>ISSP_Email_WelcomeTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Welcome_CNS --></label>
+        <name>ISSP_Email_Welcome_CNS</name>
     </customLabels>
     <customLabels>
         <label>Bạn có thể truy cập vào nó ở</label>
@@ -8457,8 +8597,16 @@ Nếu bạn tiếp tục gặp về đề về đăng ký cho Cổng thông tin 
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Không có công ty nào được tìm thấy dựa trên tiêu chuẩn tìm kiếm của bạn. Xin vui lòng chỉnh sửa tiêu chuẩn tìm kiếm và thử lại một lần nữa, hoặc nhấn vào Tạo Mới để tạo một hồ sơ công ty mới</label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateStandardAirline_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateStandardAirline_CNS</name>
     </customLabels>
     <customLabels>
         <label>Không tìm thấy dữ liệu phù hợp với tiêu chí tìm kiếm của bạn. Xin vui lòng nhấn vào &quot;Back&quot; (Quay lại) để tiếp tục quá trình đăng ký như là Người dùng Công cộng hoặc sửa đổi tiêu chí tìm kiếm của bạn và thử lại.
@@ -8467,14 +8615,26 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGP_CNS --></label>
+        <name>ISSP_NoRecordsFoundGP_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Không tìm thấy công ty nào liên quan với mã GSA và quốc gia này. Vui lòng kiểm tra nếu bạn đã nhập thông tin chính xác.
 &lt;br/&gt;&lt;br/&gt; 
 Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin khách hàng IATA, xin vui lòng tham khảo&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;hướng dẫn khắc phục sự cố&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundGSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGSA_CNS --></label>
+        <name>ISSP_NoRecordsFoundGSA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Không tìm thấy Tổ Chức theo các tiêu chí tìm kiếm này. Xin vui lòng sửa đổi việc tìm kiếm của bạn và thử lại.</label>
         <name>ISSP_NoRecordsFoundNext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundNext_CNS --></label>
+        <name>ISSP_NoRecordsFoundNext_CNS</name>
     </customLabels>
     <customLabels>
         <label>Không có ứng dụng khả dụng</label>
@@ -8641,6 +8801,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_PageDescription_ISSP_FAQ2Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PageDescription_ISSP_FAQ2Case_CNS --></label>
+        <name>ISSP_PageDescription_ISSP_FAQ2Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Tìm kiếm các bài viết thông tin của IATA</label>
         <name>ISSP_PageDescription_ISSP_faq_template</name>
     </customLabels>
@@ -8665,6 +8829,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
 &lt;b&gt;Cảnh báo!&lt;/b&gt;&lt;br/&gt;
 Xin lưu ý nhiều hóa đơn IATA xuất cho các đại lý IATA đều được thu thông qua BPS / CASS. Bạn nên kiểm tra các chi tiết trong hóa đơn để đảm bảo hoá đơn chưa được thanh toán trước khi bạn tiến hành trả bằng thẻ tín dụng.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Payment_Link_Description_CNS --></label>
+        <name>ISSP_Payment_Link_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Pending --></label>
@@ -8974,6 +9142,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Registration_generalError_CNS --></label>
+        <name>ISSP_Registration_generalError_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Một Người dùng Cổng thông tin có  địa chỉ email đó, nhưng trước đây đã không được sử dụng.</label>
         <name>ISSP_Registration_inactiveUserExist</name>
     </customLabels>
@@ -9174,6 +9346,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Sender_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Sender Email CNS --></label>
+        <name>ISSP_Sender_Email_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Dịch vụ</label>
         <name>ISSP_Service</name>
     </customLabels>
@@ -9361,6 +9537,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
               Trân trọng,
               Bộ phận Dịch Vụ Khách Hàng IATA</label>
         <name>ISSP_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Thanks_for_request_cns --></label>
+        <name>ISSP_Thanks_for_request_cns</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP The Cargo Interline Agreement --></label>
@@ -9617,6 +9797,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label>Không thể hoàn tất quá trình đăng ký của bạn. Xin vui lòng liên hệ với bộ phận hỗ trợ Cổng Thông Tin Khách Hàng IATA bằng cách điền vào biểu mẫu câu hỏi có sẵn tại http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_generalError_CNS --></label>
+        <name>ISSP_generalError_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Portal_Application_Right_Trigger --></label>
@@ -12028,53 +12212,135 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_Payment_Method</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_User_Role</name>
+        <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12146,6 +12412,624 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <picklistValues>
             <masterLabel>Travel Agent</masterLabel>
             <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Currency_Center_Currency_Codes</name>
+        <picklistValues>
+            <masterLabel>AED</masterLabel>
+            <translation><!-- AED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ALL</masterLabel>
+            <translation><!-- ALL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMD</masterLabel>
+            <translation><!-- AMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ANG</masterLabel>
+            <translation><!-- ANG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOA</masterLabel>
+            <translation><!-- AOA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ARS</masterLabel>
+            <translation><!-- ARS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AUD</masterLabel>
+            <translation><!-- AUD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AWG</masterLabel>
+            <translation><!-- AWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AZN</masterLabel>
+            <translation><!-- AZN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BAM</masterLabel>
+            <translation><!-- BAM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBD</masterLabel>
+            <translation><!-- BBD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BDT</masterLabel>
+            <translation><!-- BDT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BGN</masterLabel>
+            <translation><!-- BGN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BHD</masterLabel>
+            <translation><!-- BHD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BIF</masterLabel>
+            <translation><!-- BIF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BMD</masterLabel>
+            <translation><!-- BMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BND</masterLabel>
+            <translation><!-- BND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BOB</masterLabel>
+            <translation><!-- BOB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BRL</masterLabel>
+            <translation><!-- BRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSD</masterLabel>
+            <translation><!-- BSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BTN</masterLabel>
+            <translation><!-- BTN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BWP</masterLabel>
+            <translation><!-- BWP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BZD</masterLabel>
+            <translation><!-- BZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHF</masterLabel>
+            <translation><!-- CHF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLP</masterLabel>
+            <translation><!-- CLP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNY</masterLabel>
+            <translation><!-- CNY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>COP</masterLabel>
+            <translation><!-- COP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CRC</masterLabel>
+            <translation><!-- CRC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CUP</masterLabel>
+            <translation><!-- CUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CVE</masterLabel>
+            <translation><!-- CVE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CZK</masterLabel>
+            <translation><!-- CZK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DJF</masterLabel>
+            <translation><!-- DJF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DKK</masterLabel>
+            <translation><!-- DKK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DOP</masterLabel>
+            <translation><!-- DOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DZD</masterLabel>
+            <translation><!-- DZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EGP</masterLabel>
+            <translation><!-- EGP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERN</masterLabel>
+            <translation><!-- ERN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETB</masterLabel>
+            <translation><!-- ETB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FJD</masterLabel>
+            <translation><!-- FJD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FKP</masterLabel>
+            <translation><!-- FKP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GBP</masterLabel>
+            <translation><!-- GBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEL</masterLabel>
+            <translation><!-- GEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GHS</masterLabel>
+            <translation><!-- GHS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GIP</masterLabel>
+            <translation><!-- GIP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GMD</masterLabel>
+            <translation><!-- GMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GNF</masterLabel>
+            <translation><!-- GNF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GTQ</masterLabel>
+            <translation><!-- GTQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GYD</masterLabel>
+            <translation><!-- GYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HKD</masterLabel>
+            <translation><!-- HKD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HNL</masterLabel>
+            <translation><!-- HNL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HRK</masterLabel>
+            <translation><!-- HRK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HTG</masterLabel>
+            <translation><!-- HTG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HUF</masterLabel>
+            <translation><!-- HUF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IDR</masterLabel>
+            <translation><!-- IDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ILS</masterLabel>
+            <translation><!-- ILS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INR</masterLabel>
+            <translation><!-- INR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IQD</masterLabel>
+            <translation><!-- IQD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRR</masterLabel>
+            <translation><!-- IRR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISK</masterLabel>
+            <translation><!-- ISK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JMD</masterLabel>
+            <translation><!-- JMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOD</masterLabel>
+            <translation><!-- JOD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JPY</masterLabel>
+            <translation><!-- JPY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KES</masterLabel>
+            <translation><!-- KES --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KHR</masterLabel>
+            <translation><!-- KHR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KMF</masterLabel>
+            <translation><!-- KMF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KPW</masterLabel>
+            <translation><!-- KPW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KRW</masterLabel>
+            <translation><!-- KRW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KWD</masterLabel>
+            <translation><!-- KWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KYD</masterLabel>
+            <translation><!-- KYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KZT</masterLabel>
+            <translation><!-- KZT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LAK</masterLabel>
+            <translation><!-- LAK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LBP</masterLabel>
+            <translation><!-- LBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LKR</masterLabel>
+            <translation><!-- LKR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LRD</masterLabel>
+            <translation><!-- LRD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LSL</masterLabel>
+            <translation><!-- LSL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LTL</masterLabel>
+            <translation><!-- LTL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LVL</masterLabel>
+            <translation><!-- LVL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LYD</masterLabel>
+            <translation><!-- LYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAD</masterLabel>
+            <translation><!-- MAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MGA</masterLabel>
+            <translation><!-- MGA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MKD</masterLabel>
+            <translation><!-- MKD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMK</masterLabel>
+            <translation><!-- MMK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MNT</masterLabel>
+            <translation><!-- MNT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOP</masterLabel>
+            <translation><!-- MOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MRO</masterLabel>
+            <translation><!-- MRO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MUR</masterLabel>
+            <translation><!-- MUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MVR</masterLabel>
+            <translation><!-- MVR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MWK</masterLabel>
+            <translation><!-- MWK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MXN</masterLabel>
+            <translation><!-- MXN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYR</masterLabel>
+            <translation><!-- MYR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MZN</masterLabel>
+            <translation><!-- MZN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NAD</masterLabel>
+            <translation><!-- NAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NGN</masterLabel>
+            <translation><!-- NGN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NIO</masterLabel>
+            <translation><!-- NIO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOK</masterLabel>
+            <translation><!-- NOK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NPR</masterLabel>
+            <translation><!-- NPR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NZD</masterLabel>
+            <translation><!-- NZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OMR</masterLabel>
+            <translation><!-- OMR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PAB</masterLabel>
+            <translation><!-- PAB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PEN</masterLabel>
+            <translation><!-- PEN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PGK</masterLabel>
+            <translation><!-- PGK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PHP</masterLabel>
+            <translation><!-- PHP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PKR</masterLabel>
+            <translation><!-- PKR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PLN</masterLabel>
+            <translation><!-- PLN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PYG</masterLabel>
+            <translation><!-- PYG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QAR</masterLabel>
+            <translation><!-- QAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RON</masterLabel>
+            <translation><!-- RON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSD</masterLabel>
+            <translation><!-- RSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RUB</masterLabel>
+            <translation><!-- RUB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RUR</masterLabel>
+            <translation><!-- RUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RWF</masterLabel>
+            <translation><!-- RWF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAR</masterLabel>
+            <translation><!-- SAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SBD</masterLabel>
+            <translation><!-- SBD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SCR</masterLabel>
+            <translation><!-- SCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDD</masterLabel>
+            <translation><!-- SDD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDG</masterLabel>
+            <translation><!-- SDG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEK</masterLabel>
+            <translation><!-- SEK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SGD</masterLabel>
+            <translation><!-- SGD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHP</masterLabel>
+            <translation><!-- SHP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SLL</masterLabel>
+            <translation><!-- SLL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOS</masterLabel>
+            <translation><!-- SOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STD</masterLabel>
+            <translation><!-- STD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SVC</masterLabel>
+            <translation><!-- SVC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SYP</masterLabel>
+            <translation><!-- SYP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SZL</masterLabel>
+            <translation><!-- SZL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>THB</masterLabel>
+            <translation><!-- THB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TND</masterLabel>
+            <translation><!-- TND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOP</masterLabel>
+            <translation><!-- TOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRY</masterLabel>
+            <translation><!-- TRY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTD</masterLabel>
+            <translation><!-- TTD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TWD</masterLabel>
+            <translation><!-- TWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TZS</masterLabel>
+            <translation><!-- TZS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UAH</masterLabel>
+            <translation><!-- UAH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UGX</masterLabel>
+            <translation><!-- UGX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UYU</masterLabel>
+            <translation><!-- UYU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VEF</masterLabel>
+            <translation><!-- VEF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VND</masterLabel>
+            <translation><!-- VND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VUV</masterLabel>
+            <translation><!-- VUV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WST</masterLabel>
+            <translation><!-- WST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XAF</masterLabel>
+            <translation><!-- XAF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XCD</masterLabel>
+            <translation><!-- XCD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XOF</masterLabel>
+            <translation><!-- XOF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XPF</masterLabel>
+            <translation><!-- XPF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YER</masterLabel>
+            <translation><!-- YER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZAR</masterLabel>
+            <translation><!-- ZAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZMK</masterLabel>
+            <translation><!-- ZMK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZMW</masterLabel>
+            <translation><!-- ZMW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZWD</masterLabel>
+            <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13131,684 +14015,26 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Role</name>
+        <name>EF_Manager_Approval</name>
         <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Currency_Center_Currency_Codes</name>
-        <picklistValues>
-            <masterLabel>AED</masterLabel>
-            <translation><!-- AED --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ALL</masterLabel>
-            <translation><!-- ALL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AMD</masterLabel>
-            <translation><!-- AMD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ANG</masterLabel>
-            <translation><!-- ANG --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AOA</masterLabel>
-            <translation><!-- AOA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ARS</masterLabel>
-            <translation><!-- ARS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AUD</masterLabel>
-            <translation><!-- AUD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AWG</masterLabel>
-            <translation><!-- AWG --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>AZN</masterLabel>
-            <translation><!-- AZN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BAM</masterLabel>
-            <translation><!-- BAM --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BBD</masterLabel>
-            <translation><!-- BBD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BDT</masterLabel>
-            <translation><!-- BDT --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BGN</masterLabel>
-            <translation><!-- BGN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BHD</masterLabel>
-            <translation><!-- BHD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BIF</masterLabel>
-            <translation><!-- BIF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BMD</masterLabel>
-            <translation><!-- BMD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BND</masterLabel>
-            <translation><!-- BND --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BOB</masterLabel>
-            <translation><!-- BOB --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BRL</masterLabel>
-            <translation><!-- BRL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BSD</masterLabel>
-            <translation><!-- BSD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BTN</masterLabel>
-            <translation><!-- BTN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BWP</masterLabel>
-            <translation><!-- BWP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>BZD</masterLabel>
-            <translation><!-- BZD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CAD</masterLabel>
-            <translation><!-- CAD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CHF</masterLabel>
-            <translation><!-- CHF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CLP</masterLabel>
-            <translation><!-- CLP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CNY</masterLabel>
-            <translation><!-- CNY --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>COP</masterLabel>
-            <translation><!-- COP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CRC</masterLabel>
-            <translation><!-- CRC --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CUP</masterLabel>
-            <translation><!-- CUP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CVE</masterLabel>
-            <translation><!-- CVE --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>CZK</masterLabel>
-            <translation><!-- CZK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>DJF</masterLabel>
-            <translation><!-- DJF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>DKK</masterLabel>
-            <translation><!-- DKK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>DOP</masterLabel>
-            <translation><!-- DOP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>DZD</masterLabel>
-            <translation><!-- DZD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>EGP</masterLabel>
-            <translation><!-- EGP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ERN</masterLabel>
-            <translation><!-- ERN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ETB</masterLabel>
-            <translation><!-- ETB --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>EUR</masterLabel>
-            <translation><!-- EUR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>FJD</masterLabel>
-            <translation><!-- FJD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>FKP</masterLabel>
-            <translation><!-- FKP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GBP</masterLabel>
-            <translation><!-- GBP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GEL</masterLabel>
-            <translation><!-- GEL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GHS</masterLabel>
-            <translation><!-- GHS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GIP</masterLabel>
-            <translation><!-- GIP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GMD</masterLabel>
-            <translation><!-- GMD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GNF</masterLabel>
-            <translation><!-- GNF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GTQ</masterLabel>
-            <translation><!-- GTQ --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>GYD</masterLabel>
-            <translation><!-- GYD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>HKD</masterLabel>
-            <translation><!-- HKD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>HNL</masterLabel>
-            <translation><!-- HNL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>HRK</masterLabel>
-            <translation><!-- HRK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>HTG</masterLabel>
-            <translation><!-- HTG --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>HUF</masterLabel>
-            <translation><!-- HUF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IDR</masterLabel>
-            <translation><!-- IDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ILS</masterLabel>
-            <translation><!-- ILS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>INR</masterLabel>
-            <translation><!-- INR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IQD</masterLabel>
-            <translation><!-- IQD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRR</masterLabel>
-            <translation><!-- IRR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ISK</masterLabel>
-            <translation><!-- ISK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>JMD</masterLabel>
-            <translation><!-- JMD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>JOD</masterLabel>
-            <translation><!-- JOD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>JPY</masterLabel>
-            <translation><!-- JPY --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KES</masterLabel>
-            <translation><!-- KES --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KHR</masterLabel>
-            <translation><!-- KHR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KMF</masterLabel>
-            <translation><!-- KMF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KPW</masterLabel>
-            <translation><!-- KPW --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KRW</masterLabel>
-            <translation><!-- KRW --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KWD</masterLabel>
-            <translation><!-- KWD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KYD</masterLabel>
-            <translation><!-- KYD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>KZT</masterLabel>
-            <translation><!-- KZT --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LAK</masterLabel>
-            <translation><!-- LAK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LBP</masterLabel>
-            <translation><!-- LBP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LKR</masterLabel>
-            <translation><!-- LKR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LRD</masterLabel>
-            <translation><!-- LRD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LSL</masterLabel>
-            <translation><!-- LSL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LTL</masterLabel>
-            <translation><!-- LTL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LVL</masterLabel>
-            <translation><!-- LVL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>LYD</masterLabel>
-            <translation><!-- LYD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MAD</masterLabel>
-            <translation><!-- MAD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MGA</masterLabel>
-            <translation><!-- MGA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MKD</masterLabel>
-            <translation><!-- MKD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MMK</masterLabel>
-            <translation><!-- MMK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MNT</masterLabel>
-            <translation><!-- MNT --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MOP</masterLabel>
-            <translation><!-- MOP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MRO</masterLabel>
-            <translation><!-- MRO --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MUR</masterLabel>
-            <translation><!-- MUR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MVR</masterLabel>
-            <translation><!-- MVR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MWK</masterLabel>
-            <translation><!-- MWK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MXN</masterLabel>
-            <translation><!-- MXN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MYR</masterLabel>
-            <translation><!-- MYR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>MZN</masterLabel>
-            <translation><!-- MZN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NAD</masterLabel>
-            <translation><!-- NAD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NGN</masterLabel>
-            <translation><!-- NGN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NIO</masterLabel>
-            <translation><!-- NIO --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NOK</masterLabel>
-            <translation><!-- NOK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NPR</masterLabel>
-            <translation><!-- NPR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>NZD</masterLabel>
-            <translation><!-- NZD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>OMR</masterLabel>
-            <translation><!-- OMR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PAB</masterLabel>
-            <translation><!-- PAB --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PEN</masterLabel>
-            <translation><!-- PEN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PGK</masterLabel>
-            <translation><!-- PGK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PHP</masterLabel>
-            <translation><!-- PHP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PKR</masterLabel>
-            <translation><!-- PKR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PLN</masterLabel>
-            <translation><!-- PLN --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>PYG</masterLabel>
-            <translation><!-- PYG --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>QAR</masterLabel>
-            <translation><!-- QAR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>RON</masterLabel>
-            <translation><!-- RON --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>RSD</masterLabel>
-            <translation><!-- RSD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>RUB</masterLabel>
-            <translation><!-- RUB --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>RUR</masterLabel>
-            <translation><!-- RUR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>RWF</masterLabel>
-            <translation><!-- RWF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SAR</masterLabel>
-            <translation><!-- SAR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SBD</masterLabel>
-            <translation><!-- SBD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SCR</masterLabel>
-            <translation><!-- SCR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SDD</masterLabel>
-            <translation><!-- SDD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SDG</masterLabel>
-            <translation><!-- SDG --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SEK</masterLabel>
-            <translation><!-- SEK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SGD</masterLabel>
-            <translation><!-- SGD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SHP</masterLabel>
-            <translation><!-- SHP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SLL</masterLabel>
-            <translation><!-- SLL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SOS</masterLabel>
-            <translation><!-- SOS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>STD</masterLabel>
-            <translation><!-- STD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SVC</masterLabel>
-            <translation><!-- SVC --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SYP</masterLabel>
-            <translation><!-- SYP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SZL</masterLabel>
-            <translation><!-- SZL --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>THB</masterLabel>
-            <translation><!-- THB --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TND</masterLabel>
-            <translation><!-- TND --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TOP</masterLabel>
-            <translation><!-- TOP --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TRY</masterLabel>
-            <translation><!-- TRY --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TTD</masterLabel>
-            <translation><!-- TTD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TWD</masterLabel>
-            <translation><!-- TWD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>TZS</masterLabel>
-            <translation><!-- TZS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>UAH</masterLabel>
-            <translation><!-- UAH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>UGX</masterLabel>
-            <translation><!-- UGX --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>USD</masterLabel>
-            <translation><!-- USD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>UYU</masterLabel>
-            <translation><!-- UYU --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>VEF</masterLabel>
-            <translation><!-- VEF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>VND</masterLabel>
-            <translation><!-- VND --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>VUV</masterLabel>
-            <translation><!-- VUV --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>WST</masterLabel>
-            <translation><!-- WST --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>XAF</masterLabel>
-            <translation><!-- XAF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>XCD</masterLabel>
-            <translation><!-- XCD --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>XOF</masterLabel>
-            <translation><!-- XOF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>XPF</masterLabel>
-            <translation><!-- XPF --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>YER</masterLabel>
-            <translation><!-- YER --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ZAR</masterLabel>
-            <translation><!-- ZAR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ZMK</masterLabel>
-            <translation><!-- ZMK --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ZMW</masterLabel>
-            <translation><!-- ZMW --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ZWD</masterLabel>
-            <translation><!-- ZWD --></translation>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13835,95 +14061,53 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
+        <name>EF_Invoice_Distribution</name>
         <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Manager_Approval</name>
+        <name>EF_User_Role</name>
         <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
