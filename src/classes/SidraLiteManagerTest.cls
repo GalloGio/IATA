@@ -45,24 +45,12 @@ public class SidraLiteManagerTest {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, PASSENGER);
     }
 
-    public static Case createInvoicingCargo() {
-        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
-    }
-    
     public static Case createInvoicingAgent() {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, AGENT);
     }
 
-    public static Case createInvoicingPassenger() {
-        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, PASSENGER);
-    }
-
     public static Case createInvoicingCargo() {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
-    }
-
-    public static Case createInvoicingAgent() {
-        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, AGENT);
     }
 
     private static Case createParentCase(Id recordtypeID, String type) {
