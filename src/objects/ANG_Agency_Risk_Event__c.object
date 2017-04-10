@@ -153,37 +153,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_Event_Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Event Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Active</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Inactive</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Inactive_Withdrawn</fullName>
-                    <default>false</default>
-                </value>
-                <value>
-                    <fullName>Inactive_Revoked</fullName>
-                    <default>false</default>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <label>Expiration Date</label>
@@ -249,6 +218,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Risk_Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_Risk_Type__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
@@ -296,14 +275,14 @@
         <active>true</active>
         <label>Risk Event</label>
         <picklistValues>
-            <picklist>ANG_Event_Status__c</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Inactive_Revoked</fullName>
@@ -343,10 +322,10 @@
         <errorConditionFormula>IF(
 !ISNEW() &amp;&amp;
 ISCHANGED( ANG_Issued_Date__c )&amp;&amp;(
-ISPICKVAL(ANG_Event_Status__c,&apos;Active&apos; )||
-ISPICKVAL(ANG_Event_Status__c,&apos;Inactive_Withdrawn&apos;)||
-ISPICKVAL(ANG_Event_Status__c,&apos;Inactive_Revoked&apos;)||
-(ISPICKVAL(ANG_Event_Status__c,&apos;Inactive&apos;)&amp;&amp;
+ISPICKVAL(ANG_Risk_Status__c,&apos;Active&apos; )||
+ISPICKVAL(ANG_Risk_Status__c,&apos;Inactive_Withdrawn&apos;)||
+ISPICKVAL(ANG_Risk_Status__c,&apos;Inactive_Revoked&apos;)||
+(ISPICKVAL(ANG_Risk_Status__c,&apos;Inactive&apos;)&amp;&amp;
  ANG_Expired__c )) ,True,False)</errorConditionFormula>
         <errorDisplayField>ANG_Issued_Date__c</errorDisplayField>
         <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
