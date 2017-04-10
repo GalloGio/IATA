@@ -157,7 +157,6 @@ public class ANG_RiskEventGenerator {
 
 		// for each object on the list, verify that it matches a config and create a risk event
 		List<ANG_Agency_Risk_Event__c> riskEvents = new List<ANG_Agency_Risk_Event__c>();
-		Set<Id> typeIds = new Set<Id>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if(checkRequisites(o, config)){
@@ -169,15 +168,12 @@ public class ANG_RiskEventGenerator {
 					risk.put(sourceFields.get(objectName), o.Id);
 					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
-					typeIds.add(risk.ANG_Risk_Type__c);
 					riskEvents.add(risk);
 				}
 			}
 		}
 
-		if(riskEvents.isEmpty()) return;
-
-		upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
+		if(!riskEvents.isEmpty()) upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
 	}
 
 	public void loadInitialInformations(){
