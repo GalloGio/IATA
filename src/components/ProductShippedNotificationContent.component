@@ -21,7 +21,7 @@
         <tr style="background-color:#0391d3;">
             <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product Name</th>
             <th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Product number</th>
-            <!--<th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Order Number</-->th>                 
+            <!--<th style="font-size:12px;background-color:#0391d3;border-width: 1px;padding: 8px;border-style: solid;border-color: #394a58;text-align:left;color:white">Order Number</th>-->                 
         </tr>
         <apex:repeat value="{!orderItems}" var="oi">
         <tr>

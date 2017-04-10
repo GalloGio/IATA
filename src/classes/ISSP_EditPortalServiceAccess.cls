@@ -31,6 +31,10 @@ public with sharing class ISSP_EditPortalServiceAccess{
 	public list<Contact> usersToCreateList {get; set;}
 	public Boolean otherUsers {get; set;}
 	public list<Contact> otherUsersList {get; set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public List<SelectOption> getRightsOptions(){
         List<SelectOption> options = new List<SelectOption>();
@@ -131,14 +135,14 @@ public with sharing class ISSP_EditPortalServiceAccess{
     */
    
     public Pagereference AssignIFAPContact(){
-        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?MainNav=Services&subNav=Access&mid=M4S2&id='+ PSA.Contact__r.AccountId + '&vContactId=' + PSA.Contact__c + '&vContactName=' + EncodingUtil.urlEncode(PSA.Contact__r.Name, 'UTF-8'));
+        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?MainNav=Services&subNav=Access&mid=M4S2&id='+ PSA.Contact__r.AccountId + '&vContactId=' + PSA.Contact__c + '&vContactName=' + EncodingUtil.urlEncode(PSA.Contact__r.Name, 'UTF-8') + commParam);
         p.setredirect(true);
         return p;
       return null;
     }
     
     public Pagereference DenyAccess(){
-        Pagereference p  = new Pagereference ('/ISSP_EditPortalServiceAccess?&mid=M4S2&id='+ PSA.Id);
+        Pagereference p  = new Pagereference ('/ISSP_EditPortalServiceAccess?&mid=M4S2&id='+ PSA.Id + commParam);
         String oldStatus = PSA.Right__c;
         String oldReason = PSA.Access_Status_Reason__c;
         PSA.Right__c = 'Access Denied';
@@ -158,7 +162,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
     }
     
     public Pagereference GrantAccess(){
-        Pagereference p  = new Pagereference ('/ISSP_EditPortalServiceAccess?&mid=M4S2&id='+ PSA.Id);
+        Pagereference p  = new Pagereference ('/ISSP_EditPortalServiceAccess?&mid=M4S2&id='+ PSA.Id + commParam);
         String oldStatus = PSA.Right__c;
         String oldReason = PSA.Access_Status_Reason__c;
         PSA.Right__c = 'Access Granted';
@@ -319,13 +323,13 @@ public with sharing class ISSP_EditPortalServiceAccess{
 	        }
         }
 
-        Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId);
+        Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);
         return p;
     }
     
     public Pagereference RedirectToService(){       
-        Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId );
+        Pagereference p  = new Pagereference ('/apex/ISSP_PortalService?Id='+ ServiceId + commParam);
         p.setredirect(true);
         return p;
     }

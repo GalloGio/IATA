@@ -2093,6 +2093,18 @@
         <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Send_expiration_Reminder_CNS</fullName>
+        <description>ISSP Send expiration Reminder CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
+    </alerts>
+    <alerts>
         <fullName>ITDI_Email_Alert</fullName>
         <ccEmails>simardd@iata.org</ccEmails>
         <ccEmails>afarar@iata.org</ccEmails>
@@ -3555,6 +3567,17 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_email_notification_for_a_new_attachment_on_a_case_CNS</fullName>
+        <description>Send email notification for a new attachment on a case CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
     </alerts>
@@ -11028,7 +11051,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Reset_reopen_reason2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 and 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -13400,7 +13423,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ReopenCase</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
@@ -15024,7 +15047,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     </rules>
     <rules>
         <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
         <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -16055,7 +16078,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>AccreditationDataEntryReason</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16091,7 +16114,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoBELUX</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16112,7 +16135,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoCHLI</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16134,7 +16157,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_CZSL</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16156,7 +16179,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16178,7 +16201,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_ROMO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16208,7 +16231,7 @@ For cases coming from web forms</description>
             <name>ChangerecordtypetoInternalSCE</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
@@ -16276,7 +16299,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16290,7 +16313,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoFR</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16304,7 +16327,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoIT</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16318,7 +16341,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoUK</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -17683,7 +17706,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>New_Attachment_From_Portal_User_False</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.New_Attachment_From_Portal_User__c</field>
             <operation>equals</operation>
