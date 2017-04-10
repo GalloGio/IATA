@@ -15,9 +15,8 @@ private class HttpCallTest {
         System.assertEquals('?' + paramPair, firstParam);
         System.assertEquals('&' + paramPair, secondParam);
 
-        String Paramff = HttpCall.buildParam('', true, '');
-        String Paramfg = HttpCall.buildParam('', 1, '');
-
+		String Paramff = HttpCall.buildParam('', true, '');
+        String Paramfg = HttpCall.buildParam('', 1, '');		
     }
     
     @isTest static void testInvoke() {

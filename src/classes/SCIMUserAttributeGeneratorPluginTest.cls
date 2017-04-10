@@ -10,7 +10,7 @@ private class SCIMUserAttributeGeneratorPluginTest {
         String actual = (String)response.outputParameters.get(UserProvisioningUtils.PARAM_USERPAYLOAD);
 
         // assert
-       //System.assertEquals(expected, actual);
+        //System.assertEquals(expected, actual);
     }
 
     // Helper methods
