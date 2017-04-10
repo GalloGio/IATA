@@ -99,7 +99,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ' FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -114,6 +114,9 @@ public class ANG_RiskEventGenerator {
 
 		//for cases were no risk event should be generated;
 		if(skip) return;
+
+		//prevent recursion
+		skip = true;
 
 		// make initial filter (recordType) and fetch necessary fields to query
 		Boolean reQuery = false;
@@ -163,8 +166,8 @@ public class ANG_RiskEventGenerator {
 					risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
 					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
 					risk.ANG_Created_from__c = objectName;
-					risk.ANG_Issued_Date__c = System.today();
 					risk.put(sourceFields.get(objectName), o.Id);
+					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
 					typeIds.add(risk.ANG_Risk_Type__c);
 					riskEvents.add(risk);
@@ -172,34 +175,9 @@ public class ANG_RiskEventGenerator {
 			}
 		}
 
-		if(!riskEvents.isEmpty()){
+		if(riskEvents.isEmpty()) return;
 
-			//fetch Risk Event Type information (to create the unique key)
-			Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Risk_ID__c FROM ANG_Risk_Event_Type__c WHERE Id IN :typeIds]);
-
-			for(ANG_Agency_Risk_Event__c re : riskEvents){
-				re.ANG_UniqueKey__c = re.get(sourceFields.get(objectName))+types.get(re.ANG_Risk_Type__c).ANG_Risk_ID__c;
-			}
-
-			List<Database.UpsertResult> results = Database.upsert(riskEvents, ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c, false);
-
-			// If we are generating a duplicate error (meaning we already have a Risk Event of 
-			// the same type for this object), we do nothing (risk event is not created), for 
-			// other errors, throw the message to the interface 
-
-			for(Database.UpsertResult r : results){
-				if(!r.isSuccess()){
-					for(Database.Error e : r.getErrors()){
-						Boolean isDuplicateError = e instanceOf Database.DuplicateError;
-						System.debug(loggingLevel.ERROR, '____ [cls ANG_RiskEventGenerator - generate] Error found. Is duplicate? - ' + (isDuplicateError ? 'Yes' : 'No'));
-						if(!isDuplicateError) throw new RiskEventGeneratorException(e.getMessage());
-					}
-				}
-			}
-		}
-
-		//prevent recursion
-		skip = true;
+		upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
 	}
 
 	public void loadInitialInformations(){
