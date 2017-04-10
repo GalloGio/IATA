@@ -1,5 +1,5 @@
 public class  EmailMessageWrapper{
- 
+
 
 public string  FromAddress    {get;set;}
 public string ToAddress     {get;set;}
@@ -22,19 +22,15 @@ public Map<String, String>ParameterBodyMap    {get;set;}
      this.Body = body;
      this.ParameterBodyMap = mapBodyParams;
  }
- 
- public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String community) {
-    if(community == null) {
-        sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, null);
-    } else {
-        sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, community);
-    }
- }
- 
- public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId, String community) {
-     
- //throw new TransformationException(' ' + listEmailMessageWrapper  + '   '+ emailTemplateNameDeveloperName);
 
+ public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String community) {
+ 	sendEmail(listEmailMessageWrapper, emailTemplateNameDeveloperName, null, community);
+ }
+
+ public static void sendEmail(List<EmailMessageWrapper> listEmailMessageWrapper, String emailTemplateNameDeveloperName, String userId, String community) {
+
+ //throw new TransformationException(' ' + listEmailMessageWrapper  + '   '+ emailTemplateNameDeveloperName);
+    if(community == null) community = '';
      List<Messaging.SendEmailResult> listEmailResult = null;
      List<Messaging.Singleemailmessage> listSingleEmailMessages = new List<Messaging.Singleemailmessage>();
      EmailTemplate emailTemplate = [SELECT Id, Subject, HtmlValue, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateNameDeveloperName ];
@@ -46,14 +42,14 @@ public Map<String, String>ParameterBodyMap    {get;set;}
 
      for (EmailMessageWrapper emailMessageWrapper : listEmailMessageWrapper) {
          Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-         
+
          if (!orgAddressMap.isEmpty()){
             if(community.contains('CNS') ){
                 mail.setOrgWideEmailAddressId(orgAddressByEmail.get('cns_noreply@cnsc.us'));
             }else{
                 mail.setOrgWideEmailAddressId(orgAddressByEmail.get('noreply@iata.org'));
             }
-            
+
          }
          else{
             if(community.contains('CNS') ){
@@ -107,5 +103,5 @@ public Map<String, String>ParameterBodyMap    {get;set;}
 
           //throw new TransformationException(' ' + listEmailResult  + '   '+ emailTemplateNameDeveloperName);
  }
- 
+
  }
