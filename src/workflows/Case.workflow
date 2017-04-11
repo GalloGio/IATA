@@ -14621,7 +14621,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13))) OR 8 OR 9</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13))) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -14686,6 +14686,16 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
             <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Invoicing Collection Cases</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Customer Charge Request</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
