@@ -14718,7 +14718,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>Debt Recovery,Customer Charge Request</value>
+            <value>Debt Recovery</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
