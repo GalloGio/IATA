@@ -2487,6 +2487,13 @@ Case description: {!Case.Description}
         <value>End date</value>
     </labels>
     <labels>
+        <fullName>English_Alphabet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>English Alphabet</shortDescription>
+        <value>Please type only in the English alphabet</value>
+    </labels>
+    <labels>
         <fullName>ErrMsg_Shipping_Tax_General_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
