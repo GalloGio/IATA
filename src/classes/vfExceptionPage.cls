@@ -17,7 +17,7 @@ public class vfExceptionPage{
         this.ContactName  = u.Name;
         this.c.ContactId = u.ContactId;
         this.c.BSPCountry__c = u.Contact.Account.BillingCountry;
-        this.communityName = 'ISS';
+        this.communityName = 'IATA';
         if(u.Contact.CNS_Contact__c) this.communityName = 'CNS';
     }
     public void CreateCase() {
