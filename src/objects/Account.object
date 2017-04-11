@@ -2560,7 +2560,7 @@
         <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
-        <label>ANG_HE_RiskHistoryAssessment</label>
+        <label>Risk History Assessment HE</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
