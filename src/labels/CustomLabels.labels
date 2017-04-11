@@ -22575,4 +22575,334 @@ title,Title,Name</value>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+    <labels>
+        <fullName>issp_apppicker_new_application</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>new application</shortDescription>
+        <value>New Application</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_request_new_application</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>request new application</shortDescription>
+        <value>Request a New Application</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_select_role</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select role</shortDescription>
+        <value>Select your role</value>
+    </labels>	
+    <labels>
+        <fullName>OneId_Account_Association</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Account Association</shortDescription>
+        <value>Account Association</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Account_Creation</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Account Creation</shortDescription>
+        <value>Account Creation</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Account_Note_When_Account_Not_Found</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Account Note When Account Not Found</shortDescription>
+        <value>If your account is not found, please, modify your search criteria and try again</value>
+    </labels>
+    <labels>
+        <fullName>OneId_All_rights_reserved</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_All rights reserved</shortDescription>
+        <value>All rights reserved</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Billing_City</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Billing City</shortDescription>
+        <value>Billing City</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Billing_Country</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Billing Country</shortDescription>
+        <value>Billing Country</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Billing_Street</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Billing Street</shortDescription>
+        <value>Billing Street</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Community_Name</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId Community Name</shortDescription>
+        <value>identity</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Contact_Association_Validation</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Contact Association &amp; Validation</shortDescription>
+        <value>Contact Association &amp; Validation</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Contact_Creation</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Contact Creation</shortDescription>
+        <value>Contact Creation</value>
+    </labels>
+    <labels>
+        <fullName>OneId_CreateNewAccount</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_CreateNewAccount</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Create_an_account</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Create an account</shortDescription>
+        <value>Registration Process</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Help_Community</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Help Community</shortDescription>
+        <value>Help Community</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Help_Community_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Help Community Link</shortDescription>
+        <value>http://www.iata.org/</value>
+    </labels>
+    <labels>
+        <fullName>OneId_IATA_Code</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_IATA Code</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>OneId_IATA_represent_lead_and_serve_the_airline_industry</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_IATA represent, lead and serve the airline industry</shortDescription>
+        <value>Our mission is to represent, lead and serve the airline industry</value>
+    </labels>
+    <labels>
+        <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_International Air Transport Association (IATA)</shortDescription>
+        <value>International Air Transport Association (IATA)</value>
+    </labels>
+    <labels>
+        <fullName>OneId_JobFunction_Help_Msg</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_JobFunction_Help_Msg</shortDescription>
+        <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>OneId_My_available_applications</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_My available applications</shortDescription>
+        <value>My available applications</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Name</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>OneId_NoRecordsFoundGP</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NoRecordsFoundGP</shortDescription>
+        <value>No records were found matching your search criteria. Please modify your search criteria and try again.
+&lt;br/&gt;&lt;br/&gt;
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Nothing_found</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Nothing found</shortDescription>
+        <value>Nothing found</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Online_Help</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Online Help</shortDescription>
+        <value>Online Help</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Online_Help_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Online Help Link</shortDescription>
+        <value>http://www.iata.org/</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Please_Wait</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Please_Wait</shortDescription>
+        <value>Please wait...</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Please_check_reCaptcha</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Please check reCaptcha</shortDescription>
+        <value>Please check reCaptcha</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Press_to_Validate</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Press to Validate</shortDescription>
+        <value>Press to Validate</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Registration_Error_BusinessPhone</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Registration_Error_BusinessPhone</shortDescription>
+        <value>Please enter your Business Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Request_Access</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Request Access</shortDescription>
+        <value>Request Access</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Request_this_App</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Request this App</shortDescription>
+        <value>Request this App</value>
+    </labels>
+    <labels>
+        <fullName>OneId_SearchAccount</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_SearchAccount</shortDescription>
+        <value>Search your company</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Sign_In</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Sign In</shortDescription>
+        <value>Sign In</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Terms_of_Use</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Terms of Use</shortDescription>
+        <value>Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Terms_of_Use_Link</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Terms of Use Link</shortDescription>
+        <value>http://www.iata.org/</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Thank_you_for_subscribing_to_this_new_service</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Thank you for subscribing to this new service</shortDescription>
+        <value>Thank you for subscribing to this new service, your request is being processed.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Type</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>OneId_You_will_be_notified_by_email_when_you_can_access_the_new_service</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_You will be notified by email when you can access the new service.</shortDescription>
+        <value>You will be notified by email when you can access the new service.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Your_request_has_been_successfully_sent</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Your request has been successfully sent</shortDescription>
+        <value>Your request has been successfully sent</value>
+    </labels>	
 </CustomLabels>
