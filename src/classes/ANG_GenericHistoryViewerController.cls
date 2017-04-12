@@ -78,7 +78,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
             String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
 
-            String trackedFieldApiName = (String)history.get('Field'); String trackedFieldLabel = trackedFieldApiName;
+            String trackedFieldApiName = (String)history.get('Field') == 'TextName' ? 'Name' : (String)history.get('Field'); String trackedFieldLabel = trackedFieldApiName;
             System.debug('trackedFieldApiName ' + trackedFieldApiName);
 
             if(trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType') trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
