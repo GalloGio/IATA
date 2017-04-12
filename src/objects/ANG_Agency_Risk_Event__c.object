@@ -218,9 +218,9 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_Risk_Status__c</fullName>
+        <fullName>ANG_Event_Status__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -275,7 +275,7 @@
         <active>true</active>
         <label>Risk Event</label>
         <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
+            <picklist>ANG_Event_Status</picklist>
             <values>
                 <fullName>Active</fullName>
                 <default>false</default>

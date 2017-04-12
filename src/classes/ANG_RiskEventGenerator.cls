@@ -184,9 +184,6 @@ public class ANG_RiskEventGenerator {
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
 			riskTypes.add(re.ANG_Risk_Type__c);
 			accountIds.add(re.ANG_AccountId__c);
-
-			if(re.ANG_Issued_Date__c >= System.today()) re.ANG_Risk_Status__c = 'Active';
-			else re.ANG_Risk_Status__c = 'Inactive';
 		}
 
 		if(riskTypes.isEmpty() && accountIds.isEmpty()) return;
@@ -201,6 +198,14 @@ public class ANG_RiskEventGenerator {
 			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
 
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
+
+			if(String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')){
+				if(re.ANG_Issued_Date__c < System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = 'Inactive';
+				else re.ANG_Event_Status__c = 'Active';
+				
+				if(re.ANG_Expiration_Date__c <= System.today()) re.ANG_Expired__c = true;
+			}
+			
 		}
 
 		if(!Trigger.isExecuting || !Trigger.isBefore) upsert newObjects;
