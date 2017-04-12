@@ -2633,6 +2633,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
                 <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Reject approval</fullName>
@@ -2659,6 +2660,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
                 <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Reject Disapproval</fullName>
@@ -2685,6 +2687,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <controllingFieldValues>NEW.SA.1.0</controllingFieldValues>
                 <controllingFieldValues>NEW.TIDS.1.0</controllingFieldValues>
                 <controllingFieldValues>TERMINATED.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>
@@ -8316,18 +8319,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Authorize Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Started</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject Disapproval</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reject approval</fullName>
                 <default>false</default>
             </values>
             <values>

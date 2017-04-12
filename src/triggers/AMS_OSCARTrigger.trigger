@@ -107,7 +107,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
                 if(oscar.Is_using_credit_card__c == true){
-                    oscar.Requested_Bank_Guarantee_amount__c = 5000;
+
+                    if(oscar.Requested_Bank_Guarantee_amount__c == null)
+                        oscar.Requested_Bank_Guarantee_amount__c = 5000;
+
                     oscar.Requested_Bank_Guarantee_currency__c = 'USD';
                 }
             }
@@ -415,7 +418,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if (oldOSCAR.Is_using_credit_card__c == false && updatedOscar.Is_using_credit_card__c == true) {
-            updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
+            
+            if(updatedOSCAR.Requested_Bank_Guarantee_amount__c == null)
+                updatedOSCAR.Requested_Bank_Guarantee_amount__c = 5000;
+            
             updatedOSCAR.Requested_Bank_Guarantee_currency__c =  'USD';
             updatedOSCAR.STEP34__c = 'In Progress';
             updatedOSCAR.STEP35__c = 'In Progress';
