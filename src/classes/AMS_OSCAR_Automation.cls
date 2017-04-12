@@ -519,7 +519,12 @@ public with sharing class AMS_OSCAR_Automation {
             if (oscar != null) {
                 oscar.Dossier_Validation__c = Date.today();
                 oscar.Validation_result__c = 'Failed';
-                oscar.Status__c = 'On Hold_Internal';
+                
+                if(oscar.Process__c == AMS_Utils.NEWHELITE)
+                    oscar.Status__c = 'Pending Approval';
+                else
+                    oscar.Status__c = 'On Hold_Internal';
+
                 res = True;
             }
 
