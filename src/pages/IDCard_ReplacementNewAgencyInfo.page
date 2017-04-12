@@ -139,7 +139,8 @@
     
     function refreshLanguage() {
         setCookie('apex__idcard_portal_lang', document.getElementById('{!$Component.idcardForm.langSelect}').value, 365);
-        window.location.reload();
+        //window.location.reload();
+        callRefresh();
     }
 
     function getSelectedContact2(type)
@@ -157,7 +158,7 @@
     function callClosePopup()
         {
             closePopup();
-            document.getElementById('{!$Component.idcardForm.theHiddenInput}').value = '';
+            //document.getElementById('{!$Component.idcardForm.theHiddenInput}').value = '';
         }
 
 </Script>
@@ -177,6 +178,7 @@
                              <apex:selectList id="langSelect" value="{!SelectedLanguage}" size="1" required="true">
                              <apex:selectOptions value="{!LangItems}" />
                              <apex:actionSupport event="onchange" onsubmit="refreshLanguage()" reRender=""></apex:actionSupport>
+                             <apex:actionFunction name="callRefresh"  action="{!refresh}" />
                              </apex:selectList>
                           </apex:actionRegion>
                         </div>
@@ -361,6 +363,8 @@
 
                             <apex:outputPanel id="popup"> 
                                 <apex:outputPanel id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
+                                    <apex:actionFunction name="closePopup" action="{!closePopup}" rerender="popup">
+                                    </apex:actionFunction>
                                          <apex:commandButton value="X" title="Close the popup" onclick="callClosePopup();" styleClass="closeButton" rerender="popInnerOutputPnl,Msgs"/>
                                              <apex:pageblockSection columns="1">      
                                                  <apex:pageBlockSectionItem >  
@@ -380,7 +384,7 @@
                                                 </apex:pageblockSectionItem>
                                                 <apex:pageBlockSectionItem >
                                                     <apex:outputLabel value="{!$Label.IDCard_ReportAgencyIncorrectInfo2}" escape="false" style="color:black"/>
-                                                </apex:pageblockSectionItem>                                
+                                                </apex:pageblockSectionItem>                               
                                          </apex:pageblockSection>
                                              <apex:commandLink action="{!Confirm}" value="Continue..." styleClass="btn" rerender="popInnerOutputPnl"/>
                                 </apex:outputPanel>
