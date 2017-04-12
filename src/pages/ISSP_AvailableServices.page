@@ -41,6 +41,9 @@
             }
             $('#ModalNewServiceRequest').modal('toggle');
             if (doInsert == 1) {
+              if(appPortalRole == null  || appPortalRole == undefined) {
+                appPortalRole = '';
+              }                
               ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
             } else {
               ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
