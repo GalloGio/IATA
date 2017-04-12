@@ -34,7 +34,7 @@
 						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">
 								<apex:outputLink value="/{!pWrapper.participant.Local_Governance__c}" target="_blank">{! pWrapper.participant.Local_Governance__r.Name }</apex:outputLink>
 						</td>
-						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Group_Owner__r.Name}</td>
+						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.gOwner}</td>
 						<td class="dataCell" style="vertical-align: top;" rowspan="{! pWrapper.rowspan }">{! pWrapper.participant.Local_Governance__r.Mission__c }</td>
 					</apex:outputPanel>
 
