@@ -280,16 +280,6 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Portal_App_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>One Id Portal App Role</label>
-        <length>100</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>	
-    <fields>
         <fullName>ByPassValidationRule__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
