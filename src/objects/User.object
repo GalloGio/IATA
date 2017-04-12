@@ -1337,6 +1337,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Portal_App_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>One Id Portal App Role</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Portal_User_Frozen_Checkbox__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
