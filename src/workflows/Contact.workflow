@@ -13,6 +13,19 @@
         <template>ISS_Portal/Notify_Admin_of_user_creationVF</template>
     </alerts>
     <alerts>
+        <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
+        <ccEmails>luukkaa@iata.org</ccEmails>
+        <description>Alert admins that a contact has registered - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Portal Administrator</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_Admin_of_user_creationVF_cns</template>
+    </alerts>
+    <alerts>
         <fullName>EF_Email_Notification_On_Client_EF_Contact_Deactivation</fullName>
         <ccEmails>efs@iata.org</ccEmails>
         <description>E&amp;F : Email Notification On Client E&amp;F Contact Deactivation</description>
@@ -47,6 +60,18 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
+    </alerts>
+    <alerts>
+        <fullName>ISSP_BSPCASS_Payment_contact_cns</fullName>
+        <description>ISSP_BSPCASS Payment contact - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>Portal Administrator</recipient>
+            <type>accountTeam</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
     </alerts>
@@ -99,6 +124,18 @@
         <template>ISS_Portal/ISS_Portal_User_Status_Change_Inac_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Notify_Portal_User_Status_Change_UnknownContact_cns</fullName>
+        <description>ISSP Notify Portal User Status Change_UnknownContact - CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact_Old_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Send_alert_to_Contact_User_if_someone_is_modifying_his_info</fullName>
         <description>ISSP Send alert to Contact User if someone is modifying his info</description>
         <protected>false</protected>
@@ -121,6 +158,18 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF</template>
+    </alerts>
+    <alerts>
+        <fullName>ISS_Send_Change_Of_Portal_User_Status_Notification_cns</fullName>
+        <description>ISS Send Change Of Portal User Status Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
     </alerts>
     <alerts>
         <fullName>Renewal_Email_alert</fullName>
@@ -363,7 +412,7 @@
             <name>New_user_portal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
@@ -437,7 +486,7 @@
             <name>ISS_Send_Change_Of_Portal_User_Status_Notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal Status. New users get the Welcome email message so we don&apos;t want to send this out to them, nor to Rejected or Inactivated users.</description>
         <formula>ISCHANGED( User_Portal_Status__c ) &amp;&amp;  (PRIORVALUE(User_Portal_Status__c)  &lt;&gt;  &quot;&quot;) &amp;&amp;  ( NOT(ISPICKVAL(User_Portal_Status__c, &apos;Rejected&apos;))  || NOT(ISPICKVAL(User_Portal_Status__c, &apos;Deactivate&apos;)) ) &amp;&amp; ( ISPICKVAL(User_Portal_Status__c, &apos;Approved User&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Approved Admin&apos;)  || ISPICKVAL(User_Portal_Status__c, &apos;Regional Administrator&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
@@ -448,7 +497,7 @@
             <name>ISSP_Notify_Portal_User_Status_Change_UnknownContact</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify Portal User on change of their Portal User, when Status = Rejected AND Reason for Inactivation = Unknown Contact</description>
         <formula>ISCHANGED(Portal_Inactivation_Reason__c)</formula>
         <triggerType>onAllChanges</triggerType>
@@ -473,11 +522,16 @@
             <name>Alert_admins_that_a_contact_has_registered</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.User_Portal_Status__c</field>
             <operation>equals</operation>
             <value>Pending Approval</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>ISS</value>
         </criteriaItems>
         <description>If a contact is created as a &quot;pending approval&quot; contact the administrators should now it.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -503,10 +557,36 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
+        <booleanFilter>1 AND NOT( 2)</booleanFilter>
         <criteriaItems>
             <field>Contact.BSP_CASS_Payment_contact__c</field>
             <operation>equals</operation>
             <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
+        </criteriaItems>
+        <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ISSP_BSPCASS Payment contact - CNS</fullName>
+        <actions>
+            <name>ISSP_BSPCASS_Payment_contact_cns</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Contact.BSP_CASS_Payment_contact__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Community__c</field>
+            <operation>startsWith</operation>
+            <value>CNS</value>
         </criteriaItems>
         <description>Send email to Portal Admins when &quot;BSP/CASS Payment contact&quot; checkbox is checked on the Contact (in Portal the user can do it in the My Profile page)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
