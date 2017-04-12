@@ -7,6 +7,7 @@ public with sharing class AMP_ChatterBroadcastToolController {
 
 	public String strAcctList {get{
 			String tmpStr = '';
+			numberOfAccounts = 0;
 			for (AccountWrapper aw : lstAccounts) {
 				if (aw.isSelected) {
 					tmpStr += (tmpStr != '' ? ', ' : '') + aw.acct.Name;
