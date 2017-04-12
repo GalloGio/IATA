@@ -8,6 +8,7 @@ public without sharing class vfISSP_FAQ2Case
     public static final String OnlyCancel   = 'OnlyCancel';
     public static final String CancelAndCreateACase   = 'CancelAndCreateACase';
     public static final String CancelAndSubmit   = 'CancelAndSubmit';
+    public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
 
     public String currentButtonsToShow {get; set;}
     public boolean SHowButtons {get; set;}
@@ -22,6 +23,7 @@ public without sharing class vfISSP_FAQ2Case
     public list<ArticleViewLine> articleViewLines { get; set; }
     //public FAQ__kav selectedArtical { get; set; }
     public ArticleModalView SelectedArticleModalView {get; set;}
+    public Id parentAccountId {get;set;} //TF - SP9-C5
 
     public boolean isAgencyUser {get;set;} //TF - SP9-C5
     public boolean isGSAUser {get;set;} //TF - SP9-C5
@@ -74,6 +76,7 @@ public without sharing class vfISSP_FAQ2Case
     public Boolean isTopicDefault = false; // INC263231
 
     public list<String> errorMessage {get; set;}
+    public String ccOthers {get;set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -107,9 +110,7 @@ public without sharing class vfISSP_FAQ2Case
         //Call the new method that decides what Links the user allowed to see according to his case record type
         setCaseRecordTypeAccess();
 
-        //Call for the new method that arrange the fields according to the Custom settings
-        GenerateFieldsBySettings();
-
+        
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
         if(profileName.startsWith('ISS Portal DPC') ){  isDPCUser= true; }
@@ -134,6 +135,10 @@ public without sharing class vfISSP_FAQ2Case
         Contact con = DAL_ISSP.getContact(user.ContactId);
         Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
         AccountISOCountry = con.Account.IATA_ISO_Country__r.ISO_Code__c != null ? con.Account.IATA_ISO_Country__r.ISO_Code__c : '';
+        this.parentAccountId = con.AccountId;
+
+        //Call for the new method that arrange the fields according to the Custom settings
+        GenerateFieldsBySettings();
 
         myTopic = ApexPages.currentPage().getParameters().get('topic');
         this.currentButtonsToShow = OnlyCancel;
@@ -463,7 +468,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference save()
     {
-
+        this.errorMessage = new list<String>();
         if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic))||//added &&iscompliment to bypass error message
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
             (newCase.Subject == null ||newCase.Subject == '')||
@@ -494,7 +499,16 @@ public without sharing class vfISSP_FAQ2Case
 
         addDecsription();
         setRecordType(); //TF - SP11
-
+        
+        // find CC contacts
+        list<Contact> listCCContacts = new list<Contact>();
+        try {
+            listCCContacts = validateCCOthers();
+        } catch (CCOthersException e) {
+            this.errorMessage.add(e.getMessage());
+            return null;
+        }
+        
         //ASsign new CAse Record Type
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
@@ -530,6 +544,7 @@ public without sharing class vfISSP_FAQ2Case
         else{
             system.debug('wwe newCase2: ' + newCase );
             Database.insert(newCase);
+            addCaseTeamContacts(newCase, listCCContacts);
             return new Pagereference('/ISSP_Case?caseId='+newCase.Id + commParam);
         }
     }
@@ -538,6 +553,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference saveAttach()
     {system.debug('wwewwe IFAP_Country_ISO__c: ' + newCase.IFAP_Country_ISO__c );
+         this.errorMessage = new list<String>();
          if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic)||
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
             (newCase.Subject == null ||newCase.Subject == '')||
@@ -580,6 +596,14 @@ public without sharing class vfISSP_FAQ2Case
             cnsTopicMap.put(ct.Topic__c, ct);
         }
 
+        // find CC contacts
+        list<Contact> listCCContacts = new list<Contact>();
+        try {
+            listCCContacts = validateCCOthers();
+        } catch (CCOthersException e) {
+            this.errorMessage.add(e.getMessage());
+            return null;
+        }
         Boolean isCNS = ISSP_Utilities.isCNS();
         if(isCNS || cnsTopicMap.containsKey(newCase.Topic__c.replace(' ', ''))) {
             newCase.CNSCase__c = true;
@@ -606,9 +630,63 @@ public without sharing class vfISSP_FAQ2Case
         }
         else{
             Database.insert(newCase);
+            addCaseTeamContacts(newCase, listCCContacts);
             //return new Pagereference('/p/attach/NoteAttach?pid=' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
             return new Pagereference('/apex/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
+    }
+
+    /**
+        Check cc input box, all emails inside must be in a valid contact
+        Otherwise throw an error
+    **/
+    public class CCOthersException extends Exception {}
+    private list<Contact> validateCCOthers() {
+        list<String> listEmail = new list<String>();
+        for (String ccemail: this.ccOthers.split(';')) {
+            listEmail.add(ccemail.trim());
+        }
+        list<Contact> listContact = [SELECT Id, Email FROM Contact WHERE email IN :listEmail];
+        
+        // Check that all emails were found
+        list<String> listWrongEmails = new list<String>();
+        for (String email: listEmail) {
+            if (!isEmailInContactList(email, listContact)) {
+                listWrongEmails.add(email);
+            }
+        }
+        if (!listWrongEmails.isEmpty()) {
+            throw new CCOthersException('Couldn\'t find any Contact with these emails: ' + listWrongEmails + '');
+        }
+        return listContact;
+    }
+
+    /**
+        Check if input email is one of the input contacts
+    **/
+    private Boolean isEmailInContactList(String email, list<Contact> listContact) {
+        for (Contact contact: listContact) {
+            if (email == contact.Email) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+        Add Team Roles to input case, one per each contact
+    **/
+    private void addCaseTeamContacts(Case cse, list<Contact> listContact) {
+        if (listContact.isEmpty()) return;
+        list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
+        for (Contact contact: listContact) {
+            listCaseTeam.add(new CaseTeamMember(
+                ParentId = cse.Id,
+                MemberId = contact.Id,
+                TeamRoleId = PARTNER_USER_ROLE
+            ));
+        }
+        insert listCaseTeam;
     }
 
     public   PageReference IwishtoComplain()
@@ -1389,6 +1467,7 @@ public without sharing class vfISSP_FAQ2Case
         //newCase     = new Case();
         newSection  = new sectionRecordWrapper();
         fullList    = new List<sectionRecordWrapper>();
+        this.ccOthers = '';
 
     if(ISSP_CaseFields_Lst != null && ISSP_CaseFields_Lst.size() > 0){
         for (ISSP_Case_Fields__c thisField : ISSP_CaseFields_Lst)

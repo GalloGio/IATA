@@ -445,6 +445,54 @@
                                                      oncomplete="showArticle()">
                                     <apex:param name="artid" value="" />
                                 </apex:actionfunction>
+                                <apex:actionfunction action="{!addCCOther}" name="submitAddCCOther" rerender="existingCaseForm" status="changeOwnerStatus">
+                                    <apex:param name="otherEmail" value="" assignTo="{!inputccotheremail}"/>
+                                </apex:actionfunction>
+
+                                <script>
+                                $(document).ready(function() {
+                                    // Dialog modal for add + linked button actions
+                                    $("#ccotherdialog").dialog({
+                                        autoOpen: false,
+                                        modal: true,
+                                        width: "400px",
+                                        resizable: false,
+                                        draggable: false,
+                                        open: function (event, ui) {
+                                            $(this).parent().children().children(".ui-dialog-titlebar-close").hide();
+                                        }
+                                    });
+                                });
+                                function submitccother() {
+                                    var email = $("#ccotheremail").val();
+                                    $("#ccotheremail").val("");
+                                    $("#ccotherdialog").dialog("close");
+                                    submitAddCCOther(email);
+                                }
+                                </script>
+
+                               <!-- Adding new Teaam Meber Email Dialog -->
+                               <div id="ccotherdialog" title="**Add a new CC Other**" hidden="hidden">
+                                   <div class="row form-group" style="padding-top:20px;">
+                                       <div class="col-lg-3" style="padding-left:15px; padding-top:7px;">
+                                           <apex:outputLabel for="ccotheremail" value="**Email**" />
+                                       </div>
+                                       <div class="col-lg-9">
+                                           <div class="input-container" style="position: relative;">
+                                               <input id="ccotheremail" required="required" style="width: 100%;" class="form-control rec mandatory" type="text" />
+                                           </div>
+                                       </div>
+                                       <p style="text-align:center; padding-top:50px;">
+                                       <div class="col-lg-6">
+                                           <input id="ccothersubmit" value="**Add**" class="btn btn-block btn_iata_success" onclick="submitccother()"/>
+                                       </div>
+                                       <div class="col-lg-6" style="padding-right:25px">
+                                           <input id="ccotherclose" value="{! $Label.ISSP_Cancel }" class="btn btn_iata_cancel btn-block" onclick="$('#ccotherdialog').dialog('close');"/>
+                                       </div>
+                                       </p>
+                                   </div>
+                               </div>
+                               
                                 <apex:pageblock rendered="{!NOT(isNewCase)}">
                                     <apex:pagemessages />
                                     <apex:pageblockbuttons >
@@ -571,6 +619,17 @@
                                             </apex:outputText>
                                             <!--         <apex:commandLink action="{!redirectToPDF}" value="{!$Label.ISSP_AMS_Download_PDF_Copy}" id="theCommandLink"/>  -->
                                         </apex:pageblocksectionitem>
+                                        <!-- CC Others info -->
+                                        <apex:pageblocksectionitem >
+                                            <apex:outputlabel value="**CC Others**" for="ccothers" />
+                                            <apex:outputText value="{!CCOthers}" id="ccothers"/>
+                                        </apex:pageblocksectionitem>
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputPanel layout="none"/>
+                                            <apex:outputPanel layout="none">
+                                                <input id="btnaddccother" value="**Add CC Other**" class="btn" onclick="$('#ccotherdialog').dialog('open');"/>
+                                            </apex:outputPanel>
+                                        </apex:pageBlockSectionItem>
 
                                     </apex:pageblocksection>
                                     

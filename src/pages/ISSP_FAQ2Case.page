@@ -338,6 +338,18 @@
                            
                         </apex:outputPanel>
                             <apex:outputpanel id="FieldsRep">
+                                <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                    <div class="alert" role="alert"></div>
+                                </li>
+                                <!-- CC input box -->
+                                <li style="display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
+                                    <div class="row form-group">
+                                        <label class="col-lg-5 control-label">CC Others</label>
+                                        <div class="col-lg-7">
+                                            <apex:inputText styleclass="form-control rec" value="{!ccOthers}" />
+                                        </div>
+                                    </div>
+                                </li>
                                 <apex:repeat value="{!fullList}" var="section">
                                     <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
                                         <div class="alert" role="alert">{!section.section}</div>
