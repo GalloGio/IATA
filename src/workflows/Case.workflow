@@ -16112,7 +16112,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoBELUX</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16133,7 +16133,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>ChangeIATACountrytoCHLI</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16155,7 +16155,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_CZSL</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16177,7 +16177,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16199,7 +16199,7 @@ For cases coming from web forms</description>
             <name>Change_IATA_Country_to_ROMO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>1 OR 2</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
