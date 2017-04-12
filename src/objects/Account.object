@@ -23126,7 +23126,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+        <picklistValues> 
             <picklist>ANG_HE_RiskStatus</picklist>
             <values>
                 <fullName>A</fullName>
@@ -69878,7 +69878,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist> 
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
