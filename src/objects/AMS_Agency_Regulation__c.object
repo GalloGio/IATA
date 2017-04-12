@@ -263,6 +263,10 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>3 years</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
