@@ -173,7 +173,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>GDI Enabled</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

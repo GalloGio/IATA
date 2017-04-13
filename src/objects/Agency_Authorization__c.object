@@ -57,7 +57,7 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>ANG_Form_of_Payment_ID__c</fullName>
+        <fullName>ANG_FormOfPayment_ID__c</fullName>
         <externalId>false</externalId>
         <label>Form of Payment ID</label>
         <picklist>
@@ -102,7 +102,7 @@
 &quot;BSPLink&quot;, 
 &quot;BSPLink&quot;, 
 &quot;Form_of_Payment&quot;,
-   CASE(ANG_Form_of_Payment_ID__c, 
+   CASE(ANG_FormOfPayment_ID__c, 
    &quot;CC&quot;, &quot;Card Payment Method&quot;,
    &quot;CA&quot;, &quot;Cash Payment Method&quot;,
    &quot;EP&quot;, &quot;IEP Payment Method&quot;,&quot;&quot;),
@@ -182,6 +182,10 @@
                 <fullName>Deactivation in process</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Not Authorized</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -216,7 +220,7 @@
         <active>true</active>
         <label>BSPLink</label>
         <picklistValues>
-            <picklist>ANG_Form_of_Payment_ID__c</picklist>
+            <picklist>ANG_FormOfPayment_ID__c</picklist>
             <values>
                 <fullName>CA</fullName>
                 <default>false</default>
@@ -251,11 +255,11 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Form_of_Payment</fullName>
+        <fullName>FormOfPayment</fullName>
         <active>true</active>
-        <label>Form of Payment</label>
+        <label>Form Of Payment</label>
         <picklistValues>
-            <picklist>ANG_Form_of_Payment_ID__c</picklist>
+            <picklist>ANG_FormOfPayment_ID__c</picklist>
             <values>
                 <fullName>CA</fullName>
                 <default>false</default>
@@ -276,16 +280,12 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Deactivation in process</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Non-Active</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Not set</fullName>
-                <default>true</default>
+                <fullName>Not Authorized</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
     </recordTypes>
