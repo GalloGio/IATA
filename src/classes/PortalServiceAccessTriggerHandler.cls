@@ -181,8 +181,8 @@ public without sharing class PortalServiceAccessTriggerHandler {
     }
     
     public static void manageAccessTD (Set <Id> accessIds, Set <Id> contactIds){
-        System.debug(LoggingLevel.ERROR, 'accessIds: ' + accessIds);
-        System.debug(LoggingLevel.ERROR, 'contactIds: ' + contactIds);
+        System.debug('accessIds: ' + accessIds);
+        System.debug('contactIds: ' + contactIds);
         List <Portal_Application_Right__c> accessListUpdate = new List <Portal_Application_Right__c>();
         List <Portal_Application_Right__c> accessList =
             [SELECT Id, Contact__c
@@ -191,15 +191,15 @@ public without sharing class PortalServiceAccessTriggerHandler {
             AND Right__c = 'Access Granted'
             AND Contact__c IN :contactIds];
         if (!accessList.isEmpty()){
-            System.debug(LoggingLevel.ERROR, 'accessList: ' + accessList);
+            System.debug('accessList: ' + accessList);
             for (Portal_Application_Right__c thisAccess : accessList){
                 if (!accessIds.contains(thisAccess.Id) && contactIds.contains(thisAccess.Contact__c)){
-                    System.debug(LoggingLevel.ERROR, 'accessIds contains id');
+                    System.debug('accessIds contains id');
                     thisAccess.Right__c = 'Obsolete';
                     accessListUpdate.add(thisAccess);
                 }
                 else{
-                    System.debug(LoggingLevel.ERROR, 'accessIds not contains id');
+                    System.debug('accessIds not contains id');
                 }
             }
         }
