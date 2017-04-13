@@ -659,7 +659,7 @@ public without sharing class vfISSP_FAQ2Case
             }
         }
         if (!listWrongEmails.isEmpty()) {
-            throw new CCOthersException('Couldn\'t find any Contact with these emails: ' + listWrongEmails + '');
+            throw new CCOthersException(Label.ISSP_CCOther_Wrong_Emails.replace('{0}',String.valueOf(listWrongEmails)));
         }
         return listContact;
     }

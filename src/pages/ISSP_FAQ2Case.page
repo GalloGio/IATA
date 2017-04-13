@@ -346,7 +346,7 @@
                                 <!-- CC input box -->
                                 <li style="display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
                                     <div class="row form-group">
-                                        <label class="col-lg-5 control-label">CC Others</label>
+                                        <label class="col-lg-5 control-label">{!$Label.ISSP_CCOthers}</label>
                                         <div class="col-lg-7">
                                             <apex:inputText styleclass="form-control rec" value="{!ccOthers}" />
                                         </div>
