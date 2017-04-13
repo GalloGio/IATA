@@ -672,9 +672,11 @@ public without sharing class vfISSP_FAQ2Case
 
         Boolean isCNS = ISSP_Utilities.isCNS();
         if(isCNS ) {
-            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1].ISO_Code__c;
-            this.newCase.IFAP_Country_ISO__c = usaId ;
-            this.newCase1.IFAP_Country_ISO__c = usaId ;
+            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            if(!lsIsoCountries.isEmpty()) {
+                this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+            }
         }
         
         return null;
@@ -756,9 +758,11 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
 
         if(selectDataCategory.CategoryName.startsWith('CNS')) {
-            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].ISO_Code__c;
-            this.newCase.IFAP_Country_ISO__c = usaId ;
-            this.newCase1.IFAP_Country_ISO__c = usaId ;
+            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            if(!lsIsoCountries.isEmpty()) {
+                this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+            }
         }
     }
     /*
