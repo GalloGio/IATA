@@ -130,7 +130,7 @@ public with sharing class SIDRACaseHelper {
 
                 // in case we have 2 SIDRA cases related to an account define which one
                 // becomes the child (filling the parentId)
-	            if (thisCase!=null && otherSidraCase!=null) {
+	            if (thisCase!=null && otherSidraCase!=null && otherSidraCase.ParentId != thisCase.Id) {
 	                if (IRR_WITH_REASONS.contains(thisCase.IRR_Withdrawal_Reason__c)) {
 	                    thisCase.ParentId = otherSidraCase.Id;
 						casesToUpdate.add(thisCase);
