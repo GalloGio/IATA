@@ -21,7 +21,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     boolean trgCaseLastSIDRADate = false;
   boolean trgCase_ContactLastSurveyUpdate = false;          
   boolean trgParentCaseUpdate = true;                  //3333333333333
-  boolean trgICCSManageProductAssignment = false;            
+  boolean trgICCSManageProductAssignment = false;           
   boolean trgICCS_ASP_CaseClosed = false;
   boolean trgCreateUpdateServiceRenderedRecord = false;        
   boolean trgCaseEscalationMailNotificationICH = false;
@@ -365,7 +365,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     }  
   }
   /*trgICCSManageProductAssignment Trigger*/
-  
+    
   /*trgICCS_ASP_CaseClosed Trigger*/
   /*@author: Constantin BUZDUGA, blue-infinity
    * @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
