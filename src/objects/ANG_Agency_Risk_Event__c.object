@@ -153,6 +153,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Event_Status__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Event_Status</globalPicklist>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <label>Expiration Date</label>
@@ -216,16 +226,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>ANG_Event_Status__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Event_Status</globalPicklist>
-        <label>Status</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_Risk_Type__c</fullName>
@@ -296,9 +296,9 @@
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>New</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
         <lookupDialogsAdditionalFields>ANG_AccountId__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_Type__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
