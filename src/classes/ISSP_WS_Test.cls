@@ -8,6 +8,7 @@ private class ISSP_WS_Test {
     }
        
     static testMethod void NewUser_2() {
+    /*
     	List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
     	insert errorList;
     	
@@ -70,13 +71,14 @@ private class ISSP_WS_Test {
         
         myInput.services = 'CASS02';
         ISSP_WS_NewUser.createUser(myInput);
-        
+        */
        /* myInput.services = 'CASS03';
         ISSP_WS_NewUser.createUser(myInput);*/
  
     }
     
     static testMethod void NewUser_2_A() {
+    /*
     	List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
     	insert errorList;
     	
@@ -118,6 +120,7 @@ private class ISSP_WS_Test {
         
         myInput.services = 'SIS';
         ISSP_WS_NewUser.createUser(myInput);
+        */
         
     }
     
