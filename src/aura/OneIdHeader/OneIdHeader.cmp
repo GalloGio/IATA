@@ -1,0 +1,22 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
+	<aura:attribute name="vfHost" type="String" default=""/>
+	<aura:attribute name="commName" type="String" default="{!$Label.c.OneId_Community_Name}"/>
+	<!--aura:handler name="init" value="{!this}" action="{!c.doInit}" /-->
+	
+    <div class="oiHeader">
+		<a class="homeIcon" href="{!'/' + v.commName}">
+			<span class="icon icon-logo"></span>
+			<span class="subLogo"></span>
+		</a>
+		<div id="suiteBar">
+			<div id="headerBar">
+				&nbsp;
+			</div>
+		</div>	
+	</div>
+	<div id="miniTopNav">
+		<span class="tnContainer centralLimiter">
+		</span>
+	</div>
+</aura:component>

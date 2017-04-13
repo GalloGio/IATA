@@ -23,7 +23,7 @@ global class CongaManager {
         PageReference pageref = new PageReference(CONGA7_URL);
         pageref.getParameters().put('sessionId', apiSessionId);
         pageref.getParameters().put('serverUrl', apiServerURL);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('TemplateId', congaTemplate);
         pageref.getParameters().put('DefaultPDF', '1');
         //pageref.getParameters().put('OFN', 'file name');
@@ -32,7 +32,7 @@ global class CongaManager {
         pageref.getParameters().put('ds7', '12');
         pageref.getParameters().put('EmailTemplateId', emailTemplateId);
         pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', caseId);
+        pageref.getParameters().put('EmailRelatedToId', String.valueof(caseId).substring(0,15));
 
         makeCall(pageref.getURL());
     }
@@ -41,7 +41,7 @@ global class CongaManager {
         PageReference pageref = new PageReference(CONGA7_URL);
         pageref.getParameters().put('sessionId', apiSessionId);
         pageref.getParameters().put('serverUrl', apiServerURL);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('TemplateId', congaTemplate);
         pageref.getParameters().put('DefaultPDF', '1');
         //pageref.getParameters().put('OFN', 'file name');
@@ -58,7 +58,7 @@ global class CongaManager {
         //String url = CONGA8_URL;
         String url = CONGA8_URL + '?sessionId=' + apiSessionId;
         url += '&serverUrl=' + apiServerURL;
-        url += '&id=' + caseId;
+        url += '&id=' + String.valueof(caseId).substring(0,15);
         url += '&TemplateId=' + congaTemplate;
         url += '&DefaultPDF=1';
         //url +='OFN=[file name]';
@@ -70,7 +70,7 @@ global class CongaManager {
         }
         url += '&EmailFromID=' + OrgWideDefaultsId;
         url += '&EmailToId=' + contactId;
-        url += '&EmailRelatedToId=' + emailRelatedCaseId;
+        url += '&EmailRelatedToId=' + String.valueof(emailRelatedCaseId).substring(0,15);
         url += '&SC0=1';
         url += '&SC1=Attachments';
 
