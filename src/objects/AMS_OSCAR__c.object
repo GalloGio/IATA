@@ -1450,6 +1450,18 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Country__c</fullName>
+        <description>Formula field to display country name at the OSCAR level</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATA_ISO_Country__r.Name</formula>
+        <label>Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Created_By_Role__c</fullName>
         <externalId>false</externalId>
         <formula>$UserRole.Name</formula>
