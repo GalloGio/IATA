@@ -315,4 +315,15 @@
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Unique_Source_Validation</fullName>
+        <active>true</active>
+        <description>Only one source field can be filled</description>
+        <errorConditionFormula>(
+  IF(NOT(ISBLANK(ANG_CaseId__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_ChangeCode__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_OscarId__c)) , 1, 0)
+) &gt; 1</errorConditionFormula>
+        <errorMessage>Please, fill only one of the source fields</errorMessage>
+    </validationRules>
 </CustomObject>
