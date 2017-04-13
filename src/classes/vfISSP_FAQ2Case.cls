@@ -1150,7 +1150,7 @@ public without sharing class vfISSP_FAQ2Case
 
             // Get all account in the hierarchy
             for (Account acc: [
-                SELECT Id, IATAcode__c
+                SELECT Id, IATAcode__c, Site
                 FROM Account
                 WHERE IATAcode__c != null
                 AND (Id = :parentId
@@ -1160,7 +1160,7 @@ public without sharing class vfISSP_FAQ2Case
                 OR Parent.Parent.Parent.ParentId = :parentId
                 OR Parent.Parent.Parent.Parent.ParentId = :parentId)
                 ORDER BY IATAcode__c ASC]) {
-                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c));
+                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.Site));
             }
         } catch (Exception e) {
             System.debug(e.getMessage());
