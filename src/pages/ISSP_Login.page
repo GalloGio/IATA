@@ -48,7 +48,10 @@
 
     <apex:define name="body">
      <div class="page_login">
-         <div id="header"><a href="/"><img alt="IATA" src="{!urlfor($Resource.IIS_Portal, IF(communityName=='CNS','/images/logocns.png','/images/logo.jpg'))}" border="0" /></a></div>
+         <div id="header">
+            <apex:outputPanel rendered="{!communityName!='CNS'}"> <a href="/"><img alt="IATA" src="{!urlfor($Resource.IIS_Portal, '/images/logo.jpg')}" border="0" /></a></apex:outputPanel>
+            <apex:outputPanel rendered="{!communityName=='CNS'}"> <a href="http://www.cnsc.net"><img alt="CNS" src="{!urlfor($Resource.IIS_Portal, '/images/logocns.png')}" border="0" /></a></apex:outputPanel>
+         </div>
 
 <!-- START NEW LOGIN AREA     -->
 <div id="main-container">

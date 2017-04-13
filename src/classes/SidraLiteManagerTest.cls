@@ -45,12 +45,12 @@ public class SidraLiteManagerTest {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, PASSENGER);
     }
 
-    public static Case createInvoicingCargo() {
-        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
-    }
-    
     public static Case createInvoicingAgent() {
         return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, AGENT);
+    }
+
+    public static Case createInvoicingCargo() {
+        return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
     }
 
     private static Case createParentCase(Id recordtypeID, String type) {
@@ -104,7 +104,8 @@ public class SidraLiteManagerTest {
             Description = 'Test Case 1',
             Start_Date_of_Sales_Period__c = Date.today(),
             End_Date_of_Sales_Period__c = Date.today(),
-            Next_Remittance_Date__c = Date.today()
+            Next_Remittance_Date__c = Date.today(),
+            Has_the_agent_paid_invoice__c = 'Not paid'
         );
 
         if (type==AGENT) {

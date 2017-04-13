@@ -107,6 +107,7 @@ public  class ISSP_TC_Accept {
         if (!userList.isEmpty()){
             if (!userList[0].ToU_Accepted__c){
                 PageReference pr = new PageReference('/ISSP_TC_Accept');
+                if(communityName=='CNS') pr = new PageReference('/ISSP_TC_Accept?CommunityName=CNS');
                 system.debug('REDIRECTING TO TC ACCEPT');
                 pr.setRedirect(true);
                 return pr;
