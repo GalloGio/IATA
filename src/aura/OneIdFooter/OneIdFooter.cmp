@@ -1,0 +1,42 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="LightningConnectedAppHelper">
+	<aura:attribute name="greeting" type="String" default="OneId" access="global" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+ 	<aura:attribute name="today" type="Date" default=""/>
+	<div id="ft">
+		<div class="header">
+			<div class="widthLimiter centerAll">
+				<span class="icon icon-logo"></span>
+				<h2>{!$Label.c.OneId_IATA_represent_lead_and_serve_the_airline_industry}</h2>
+			</div>
+		</div>
+		<div class="widthLimiter centerAll">
+			<a class="footerEl" href="{!$Label.c.OneId_Help_Community_Link}" target="_blank">
+				<div class="iataItem_Icon">
+					<span class="icon icon-community"></span>
+				</div>
+				<p class="icon_subTitle">
+					{!$Label.c.OneId_Help_Community}
+				</p>
+			</a>
+			<a class="footerEl" href="{!$Label.c.OneId_Terms_of_Use_Link}" target="_blank">
+				<div class="iataItem_Icon">
+					<span class="icon icon-tick"></span>
+				</div>
+				<p class="icon_subTitle">
+					{!$Label.c.OneId_Terms_of_Use}
+				</p>
+			</a>
+			<a class="footerEl" href="{!$Label.c.OneId_Online_Help_Link}" target="_blank">
+				<div class="iataItem_Icon">
+					<span class="icon icon-questionMark"></span>
+				</div>
+				<p class="icon_subTitle">
+					{!$Label.c.OneId_Online_Help}
+				</p>
+			</a>
+			<div class="copyright clearfix">
+				<p> &copy; {!$Label.c.OneId_International_Air_Transport_Association_IATA}&nbsp;{!v.today}. {!$Label.c.OneId_All_rights_reserved}.</p>
+			</div>
+		</div> 
+	</div>
+</aura:component>
