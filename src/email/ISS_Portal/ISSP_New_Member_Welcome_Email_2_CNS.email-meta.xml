@@ -11,7 +11,7 @@ CNS Customer Portal
 Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName}, 
 
 Welcome to CNS Customer Portal. 
-Your e-mail adress is {!Receiving_User.Email} 
+Your e-mail address is {!Receiving_User.Email} 
 Temporary password: {!Contact.Password} 
 
 Please follow the link below to finalize your registration process: 
