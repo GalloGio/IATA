@@ -12,6 +12,10 @@
         <fullName>C</fullName>
         <default>false</default>
     </globalPicklistValues>
-    <masterLabel>Risk Status Values</masterLabel>
+    <globalPicklistValues>
+        <fullName>Not Applicable</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <masterLabel>Risk Status</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

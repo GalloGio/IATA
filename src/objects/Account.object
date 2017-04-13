@@ -2569,7 +2569,7 @@
     <fields>
         <fullName>ANG_HE_RiskStatus__c</fullName>
         <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskStatus</globalPicklist>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
         <label>Risk Status HE</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -23126,8 +23126,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues> 
-            <picklist>ANG_HE_RiskStatus</picklist>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -25441,7 +25441,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -28389,7 +28389,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -30703,7 +30703,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -34543,7 +34543,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -36600,7 +36600,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -41913,7 +41913,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -44354,7 +44354,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -48617,7 +48617,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -52791,7 +52791,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -55343,7 +55343,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -57578,7 +57578,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -59813,7 +59813,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -62422,7 +62422,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -69878,7 +69878,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist> 
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -69893,7 +69893,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
@@ -74009,7 +74009,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_HE_RiskStatus</picklist>
+            <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
                 <default>false</default>
