@@ -57,14 +57,14 @@ public class SurveyBatchTest {
         insert con;
 
         User u1 = new User(FirstName='Ángel',
- 						   Division='UnitTest',
- 						   License_Cost_Center__c='AAA000AA00',
- 						   Username='test1@iata.org.amsdev1',
- 						   LastName='Peña', Email='test1@iata.org',
- 						   Alias='Test1', CommunityNickname='Test1',
- 						   TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
- 						   EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
- 						   LanguageLocaleKey='en_US');
+                Division='UnitTest',
+                License_Cost_Center__c='AAA000AA00',
+                Username='test1@iata.org.amsdev1',
+                LastName='Peña', Email='test1@iata.org',
+                Alias='Test1', CommunityNickname='Test1',
+                TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+                EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+                LanguageLocaleKey='en_US');
 
         insert u1;
 
@@ -73,15 +73,15 @@ public class SurveyBatchTest {
 
   // static testMethod void SurveyCustomerRecoveryBatchTest() {
   //
-  // // 	User u1 = new User(FirstName='Ángel',
-  // // 					   Division='UnitTest',
-  // // 					   License_Cost_Center__c='AAA000AA00',
-  // // 					   Username='test1@iata.org.amsdev1',
-  // // 					   LastName='Peña', Email='test1@iata.org',
-  // // 					   Alias='Test1', CommunityNickname='Test1',
-  // // 					   TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
-  // // 					   EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
-  // // 					   LanguageLocaleKey='en_US');
+  // //   User u1 = new User(FirstName='Ángel',
+  // //              Division='UnitTest',
+  // //              License_Cost_Center__c='AAA000AA00',
+  // //              Username='test1@iata.org.amsdev1',
+  // //              LastName='Peña', Email='test1@iata.org',
+  // //              Alias='Test1', CommunityNickname='Test1',
+  // //              TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+  // //              EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+  // //              LanguageLocaleKey='en_US');
   //       //
   //       // insert u1;
   //
@@ -222,7 +222,7 @@ public class SurveyBatchTest {
   //           insert listCases;
   //
   //           for(Case c : listCases)
-  //           	c.Status = 'Closed';
+  //             c.Status = 'Closed';
   //
   //           update listCases;
   //
@@ -288,16 +288,16 @@ public class SurveyBatchTest {
   //           CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
   //
   //           // User u1 = new User(FirstName='Ángel',
-  // 	// 				   Division='UnitTest',
-  // 	// 				   License_Cost_Center__c='AAA000AA00',
-  // 	// 				   Username='test1@iata.org.amsdev1',
-  // 	// 				   LastName='Peña', Email='test1@iata.org',
-  // 	// 				   Alias='Test1', CommunityNickname='Test1',
-  // 	// 				   TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
-  // 	// 				   EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
-  // 	// 				   LanguageLocaleKey='en_US');
+  //   //            Division='UnitTest',
+  //   //            License_Cost_Center__c='AAA000AA00',
+  //   //            Username='test1@iata.org.amsdev1',
+  //   //            LastName='Peña', Email='test1@iata.org',
+  //   //            Alias='Test1', CommunityNickname='Test1',
+  //   //            TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+  //   //            EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+  //   //            LanguageLocaleKey='en_US');
   //           //
-  //        // 	insert u1;
+  //        //   insert u1;
   //           User u1 = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
   //
   //           // list<IATA_ISO_Country__c> listCountries = new list<IATA_ISO_Country__c>();
@@ -791,7 +791,7 @@ public class SurveyBatchTest {
             Date twoweeksAgo = date.today().addDays(- 14);
 
             u2.UserRoleId = r1.Id;
-          	update u2;
+            update u2;
 
             List<Case> cases = new List<Case>();
                         cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
