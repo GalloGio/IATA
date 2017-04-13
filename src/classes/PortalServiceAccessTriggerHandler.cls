@@ -15,9 +15,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
     public static void SendEmailToPortalAdminToValidateRequest(list<Portal_Application_Right__c> newPortalApplicationRightList) {
 
         ////ENV.EmailTemplateDN.Notify_Admin_of_app_requestVF //Notify_Admin_of_app_requestVF
-        // 
-
-        System.debug(LoggingLevel.ERROR, '--->' + newPortalApplicationRightList);
 
         System.debug(LoggingLevel.ERROR, 'zZzZ Start SendEmailToPortalAdminToValidateRequest ==>'+ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
 
@@ -74,13 +71,21 @@ public without sharing class PortalServiceAccessTriggerHandler {
         list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
 
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
-            System.debug(LoggingLevel.ERROR, 'zZzZ par==>'+par);
+
             //if (par.Application_Name__c != 'Treasury Dashboard'){
             if (!par.Application_Name__c.startsWith('Treasury Dashboard') && !par.Application_Name__c.startsWith('Standards Setting Workspace')){
+
+                //System.debug(LoggingLevel.ERROR, 'par.Right__c : ' + par.Right__c);
 
                 if(!ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)){
                     continue;
                 }
+
+                Boolean cannotManagedPortalAdmin = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
+
+                //System.debug(LoggingLevel.ERROR, 'cannotManagedPortalAdmin : ' + cannotManagedPortalAdmin);
+                //System.debug(LoggingLevel.ERROR, 'par.Application_Name__c : ' + par.Application_Name__c);
+                //System.debug(LoggingLevel.ERROR, 'iepAccountStatusMap.get(par.Account__c) : ' + iepAccountStatusMap.get(par.Account__c));
 
                 // The email to the Portal administrator can only be send when
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = false
@@ -88,11 +93,11 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = true && portal_application__c = IEP Service && 
                 //      IEP Account Status = open
                 //
-                Boolean cannotManagedPortalAdmin = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
-
                 if( (cannotManagedPortalAdmin == false) ||
                     (cannotManagedPortalAdmin == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
                      iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) ){
+
+                    System.debug(LoggingLevel.ERROR, 'SEND MAIL TO ADMIN!!!');
                     
                     Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);
                     if(null == portalAdminUserIDs) continue;
@@ -123,7 +128,11 @@ public without sharing class PortalServiceAccessTriggerHandler {
                         emailMsg.setWhatId(par.ID); 
                         msgList.add(emailMsg);
                     }
+                } else {
+                    System.debug(LoggingLevel.ERROR, 'Mail not send 1');
                 }
+            } else {
+                System.debug(LoggingLevel.ERROR, 'Mail not send 2');
             }
         }
 
