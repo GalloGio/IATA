@@ -97,8 +97,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
                     (cannotManagedPortalAdmin == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
                      iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) ){
 
-                    System.debug(LoggingLevel.ERROR, 'SEND MAIL TO ADMIN!!!');
-                    
                     Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);
                     if(null == portalAdminUserIDs) continue;
                     for(ID userId : portalAdminUserIDs) {
