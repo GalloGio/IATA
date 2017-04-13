@@ -1145,7 +1145,7 @@ public without sharing class AMS_Utils {
 
         if(oscarProcess == NEWHELITE){
 
-            return 'Standard without Cash';
+            return 'Cashless';
         
         }
 
