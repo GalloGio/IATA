@@ -885,7 +885,7 @@
                                 </apex:actionstatus>
                             </apex:outputpanel>
 
-                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true"/>
+                            <c:GenericAttachmentList rendered="{!AND(NOT(isNewCase),NOT(isPWCProfile),NOT(isDPCUser),NOT(isIFAPCase))}" sobjectId="{!newCase.Id}" isPortal="true" showAttachFileButton="{!NOT(IsTwoMonthsClosedCase)}"/>
                             
                             <c:Archive_Attachment_List_Component rendered="{!AND(NOT(isNewCase),OR(isPWCProfile,isDPCUser))}" caseid="{!newCase.Id}"></c:Archive_Attachment_List_Component>
                             
@@ -988,7 +988,7 @@
                                 <!-- Case Comments -->
                                 <apex:pageblock rendered="{!AND(NOT(isNewCase),newCase.Status != 'Draft')}" id="CustomList" >   
                                     <apex:pageBlockSection title="{!$Label.ISSP_Registration_Comments}" columns="1">
-                                    <apex:commandbutton rendered="{!NOT(disableCaseComments)}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
+                                    <apex:commandbutton rendered="{!AND(NOT(disableCaseComments),NOT(IsTwoMonthsClosedCase))}" action="{!AddComment}" value="{!$Label.ISSP_btn_AddComment}" style="padding:5px" />
                                     <apex:pageblocktable value="{!List_CaseComment}" var="o" width="100%" rendered="{!IF(List_CaseComment.size > 0 , true , false)}">
                                         <apex:column headervalue="{!$Label.ISSP_Created_Date}" value="{!o.CreatedDate}" />
                                         <apex:column headervalue="{!$Label.ISSP_Email_Comment}" value="{!o.CommentBody}" />

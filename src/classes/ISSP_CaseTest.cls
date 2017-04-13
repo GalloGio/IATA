@@ -319,6 +319,51 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
 	}
+    
+	public static testMethod void testISSP_Case_6() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
+        
+        // insert a case using json to set the field ClosedDate
+        String caseJSON = '{"attributes":{'
+            + '"type":"CasSe",'
+            + '"url":"/services/data/v25.0/sobjects/Case/500E0000002nH2fIAE"},'
+            + '"CreatedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"Subject":"test 1",'
+            + '"Status":"Closed",'
+            + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"AccountId":"' + account.id + '",'
+            + '"ContactId":"' + contact.id + '",'
+            + '"Region__c":"Europe",'
+            + '"RecordTypeId":"' + recordTypeId + '",'
+            + '"CaseArea__c":"test",'
+            + '"Reason1__c":"test",'
+            + '"Visible_on_ISS_Portal__c":"true"'
+            + '}';
+        Case c = (Case) JSON.deserialize(caseJSON, Case.class );
+        insert c;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+            cttr.newCase = c;
+        	cttr.showAlertMessage();
+        }
+        Test.stopTest();
+	}
 
 	public static testMethod void testISSP_Case_99() {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
@@ -332,6 +377,7 @@ public class ISSP_CaseTest {
     	currentUserInfo.LanguageLocaleKey = 'pt_BR';
         update currentUserInfo;
 
+        Test.StartTest();
         ISSP_Case cttr = new ISSP_Case();
         cttr.getItems();
         currentUserInfo.LanguageLocaleKey = 'zh_CN';
@@ -479,8 +525,8 @@ public class ISSP_CaseTest {
         cttr.getCaseTypeItems();
         cttr.newCase.CaseArea__c = 'test';
         cttr.getCaseTypeItems();
-
-		List<SelectOption> selectOptions = cttr.getCaseClassificationItems();
+        List<SelectOption> selectOptions = cttr.getCaseClassifi
+        Test.StopTest();
 	}
 
  }

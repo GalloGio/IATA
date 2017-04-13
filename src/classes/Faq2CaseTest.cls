@@ -14,7 +14,6 @@ private class Faq2CaseTest {
         articleVL2.getPath();
         Test.stopTest();
     }
-
     static testMethod void testFaq2Case_Cases_a()
     {
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -738,7 +737,6 @@ private class Faq2CaseTest {
 		);
 		insert testAccount;
         Contact con = ISSP_ObjectFactory.createNewContact();
-
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Spain', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
 		insert country;
 
@@ -764,15 +762,10 @@ private class Faq2CaseTest {
 		  controller.topic = '2';
 		  //controller.refreshAirlineList();
 		  controller.setRecordType();
-
-
-
 		  controller.create();
 		  	  controller.back();
 		  controller.refreshTopicPickList();
 		  controller.refreshSubTopicPickList();
-
-
 		  controller.subtopic = ENV.SelectOptionDefaultValue;
 		  controller.refreshSubTopicPickList();
 		  controller.createSatisfiedRecord();
@@ -795,14 +788,15 @@ private class Faq2CaseTest {
 		  newCase.IFAP_Country_ISO__c ='t1';
 		  newCase.Subject = 'test';
 		  newCase.Description = 'test';
-
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-		  controller.save();
+		  controller.ccOthers = 'fake@email.com';
+		  controller.saveAttach();
+		  controller.ccOthers = 'Test@test11.com';
+		  controller.saveAttach();
 		}
 		Test.stopTest();
     }
-
     private static Integer getIndex(clsDataCategoryContainer cont) {
         //controller.DataCategoryContainer.lst_DataCategories[index]
         return 0;
@@ -824,5 +818,35 @@ private class Faq2CaseTest {
         }
 
         return 0;
+    }
+    
+    static testMethod void testinitIATACodeList() {
+        Account account1 = new Account(Name='test1', IATAcode__c = '1');
+        insert account1;
+        
+        Contact contact = new Contact(
+            Salutation = 'Mr.',
+            FirstName= 'first',
+            LastName= 'last',
+            AccountId = account1.id);
+        insert contact;
+
+        vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+        
+        Test.StartTest();
+        ctrl.initIATACodeList(account1.id);
+        Account account2 = new Account(Name='test2', IATAcode__c = '2', ParentId=account1.Id);
+        insert account2;
+        ctrl.initIATACodeList(account2.id);
+        Account account3 = new Account(Name='test3', IATAcode__c = '3', ParentId=account2.Id);
+        insert account3;
+        ctrl.initIATACodeList(account3.id);
+        Account account4 = new Account(Name='test4', IATAcode__c = '4', ParentId=account3.Id);
+        insert account4;
+        ctrl.initIATACodeList(account4.id);
+        Account account5 = new Account(Name='test5', IATAcode__c = '5', ParentId=account4.Id);
+        insert account5;
+        ctrl.initIATACodeList(account5.id);
+        Test.StopTest();
     }
 }

@@ -12821,6 +12821,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>ISSP_Case_Closed_More_Than_2_Months</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>Disclaimer: this case has been closed for more than 2 weeks, Please create a new query if you would like to contact us</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Status_Resolved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Status Resolved</shortDescription>
+        <value>Resolved</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Cases</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -17185,6 +17201,54 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Related contacts</shortDescription>
         <value>Related contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Contact</fullName>
+        <categories>ISSP, IFAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Contact</shortDescription>
+        <value>Relocate under another account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Current_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Current Account</shortDescription>
+        <value>Current Account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Description</shortDescription>
+        <value>Move contact under another account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Failed</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Failed</shortDescription>
+        <value>Relocation failed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_No_Accounts</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate No Accounts</shortDescription>
+        <value>There is no other account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Select_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Select Account</shortDescription>
+        <value>Select Account</value>
     </labels>
     <labels>
         <fullName>ISSP_Reopen</fullName>
