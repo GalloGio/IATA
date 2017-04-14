@@ -43,6 +43,15 @@ public class vfIECEBC_OptOut {
         }
         set;
     }
+
+    public Boolean fromResubscribe {
+
+        get {
+            String resubscribe = ApexPages.currentPage().getParameters().get('isFromResubscribe');
+            return resubscribe != null && resubscribe != '';
+        }
+        set;
+    }
     
     public PageReference unsubscribe() {
         List<String> userReasons = new List<String>();
@@ -71,6 +80,8 @@ public class vfIECEBC_OptOut {
     }
     public string getemailurl(){
         return ApexPages.currentPage().getParameters().get('e');
+        return EncodingUtil.urlEncode(ApexPages.currentPage().getParameters().get('e'), 'UTF-8');
+        //return ApexPages.currentPage().getParameters().get('e');
     }
     public Map<String, Boolean> reasons {
         get {
