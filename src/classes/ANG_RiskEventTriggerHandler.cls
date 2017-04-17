@@ -35,6 +35,7 @@ public class ANG_RiskEventTriggerHandler {
                 || re.ANG_Issued_Date__c != oldRe.ANG_Issued_Date__c
                 || re.ANG_Risk_Type__c != oldRe.ANG_Risk_Type__c
                 || re.ANG_Source_Id__c != oldRe.ANG_Source_Id__c
+                || re.ANG_Event_Status__c != oldRe.ANG_Event_Status__c
             ){
 				changedRisks.add(re);
 			}
