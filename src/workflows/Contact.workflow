@@ -14,6 +14,7 @@
     </alerts>
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
+        <ccEmails>luukkaa@iata.org</ccEmails>
         <description>Alert admins that a contact has registered - CNS</description>
         <protected>false</protected>
         <recipients>
@@ -411,7 +412,7 @@
             <name>New_user_portal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
