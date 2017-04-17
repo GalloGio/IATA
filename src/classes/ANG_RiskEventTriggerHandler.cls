@@ -22,7 +22,7 @@ public class ANG_RiskEventTriggerHandler {
     // ************************************************************
 	
 	private void loadInformationsInsert() {
-        new ANG_RiskEventGenerator(triggerNew, newMap).loadInitialInformations();
+        new ANG_RiskEventGenerator(triggerNew).loadInitialInformations();
 	}
 	
 	private void loadInformationsUpdate() {
@@ -42,6 +42,6 @@ public class ANG_RiskEventTriggerHandler {
 
 		if(changedRisks.isEmpty()) return;
 
-        new ANG_RiskEventGenerator(changedRisks, newMap).loadInitialInformations();
+        new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
 	}
 }
