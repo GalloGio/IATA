@@ -5,9 +5,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
 
     public static final String CURRENCYCENTERAPPURL = '/ISSP_CurrencyCenterHome';
 
-    public static Set<Id> IEP_contactIDs;
-    public static Map<Id, Id> IEP_contactIDsMap;
-
     public static void onAfterInsert(list<Portal_Application_Right__c> newPortalApplicationRightList 
                                    , map<ID, Portal_Application_Right__c> newPortalApplicationRightMap) {
         
@@ -18,27 +15,93 @@ public without sharing class PortalServiceAccessTriggerHandler {
     public static void SendEmailToPortalAdminToValidateRequest(list<Portal_Application_Right__c> newPortalApplicationRightList) {
         ////ENV.EmailTemplateDN.Notify_Admin_of_app_requestVF //Notify_Admin_of_app_requestVF
 
-        System.debug(LoggingLevel.ERROR, '---------> Cá estou eu!!!');
-
-        if (IEP_contactIDs == null) {
-            IEP_contactIDs = new Set<Id>();
-            IEP_contactIDsMap = new Map<Id, Id>();
-
-            List<Connected_App_Roles__c> rolesAux = [SELECT Role__c FROM Connected_App_Roles__c where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' and Manage_User_Access__c = true];
-            Set<String> roles = new Set<String>();
-            for(Connected_App_Roles__c r : rolesAux) {
-                roles.add(r.Role__c);
-            }
-
-            List<Portal_Application_Right__c> parList = [Select Contact__c, contact__r.account.Top_Parent__c From Portal_Application_Right__c where ANG_Portal_Service_Role__c in : roles];
-
-            for(Portal_Application_Right__c p : parList) {
-                IEP_contactIDs.add(p.Contact__c);
-                IEP_contactIDsMap.put(p.Contact__c, p.contact__r.account.Top_Parent__c);
-            }
+        List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
+                                                   FROM Connected_App_Roles__c 
+                                                  where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' 
+                                                    and Manage_User_Access__c = true];
+        Set<String> roles = new Set<String>();
+        for(Connected_App_Roles__c r : rolesAux) {
+            roles.add(r.Role__c);
         }
 
-        System.debug(LoggingLevel.ERROR, '----->' + IEP_contactIDs);
+        //System.debug(LoggingLevel.ERROR, 'Roles->' + roles);
+
+        //
+        // Get all the accounts to restrict the query on portal application right.
+        //
+        Set<String> accountIDsIepAux = new Set<String>();
+        for(Portal_Application_Right__c par : newPortalApplicationRightList) {
+            if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
+                if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
+                    accountIDsIepAux.add(par.Account__c);
+                }
+            } 
+        }            
+
+        //System.debug(LoggingLevel.ERROR, 'accountIDsIepAux->' + accountIDsIepAux);                
+
+        //
+        // Get all the top parents linked to the accounts that have the configured roles .
+        //
+        List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
+                                                         contact__r.accountId
+                                                    From Portal_Application_Right__c
+                                                   Where account__c in : accountIDsIepAux];
+
+        //System.debug(LoggingLevel.ERROR, 'parl->' + parl);
+
+        Set<String> accountsSet = new Set<String>();
+
+        Map<String, String> topParents = new Map<String, String>();
+
+        for(Portal_Application_Right__c par : parl) {
+            if(par.contact__r.account.Top_Parent__c != null) {
+                accountsSet.add(par.contact__r.account.Top_Parent__c);
+                topParents.put(par.contact__r.account.Top_Parent__c, par.contact__r.accountId);
+            }
+            accountsSet.add(par.contact__r.accountId);           
+            topParents.put(par.contact__r.accountId, par.contact__r.accountId);
+        }
+
+        //System.debug(LoggingLevel.ERROR, 'accountsSet->' + accountsSet);
+        //System.debug(LoggingLevel.ERROR, 'topParents->' + topParents);
+
+        //
+        // Get all portal application right with the top parent linked to the accounts that have the configured roles.
+        //
+        List<Portal_Application_Right__c> parList2 = [Select Account__c,
+                                                             Contact__c
+                                                        From Portal_Application_Right__c
+                                                       Where ANG_Portal_Service_Role__c in : roles
+                                                         And contact__r.accountId in : accountsSet];
+
+        //System.debug(LoggingLevel.ERROR, 'parList2->' + parList2);
+
+        Map<Id, Set<Id>> IEP_accountIDs = new Map<Id, Set<Id>>();
+
+        for(Portal_Application_Right__c p : parList2) {
+            Set<ID> contactIDs = IEP_accountIDs.get(p.Account__c);
+            if(null == contactIDs)
+                contactIDs = new Set<ID>();
+            contactIDs.add(p.Contact__c);
+            IEP_accountIDs.put(p.Account__c, contactIDs);
+        }
+
+        for(Portal_Application_Right__c par : newPortalApplicationRightList) {
+            if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
+                if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
+                    Set<ID> contactIDs = IEP_accountIDs.get(par.Account__c);
+                    if(null == contactIDs)
+                        contactIDs = new Set<ID>();
+                    contactIDs.add(par.Contact__c);
+                    IEP_accountIDs.put(par.Account__c, contactIDs);                                
+                }
+            } 
+        }            
+
+        //System.debug(LoggingLevel.ERROR, 'IEP_accountIDs->' + IEP_accountIDs);
+
+        //--------------------
 
         ID templateId = getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
 
@@ -47,20 +110,15 @@ public without sharing class PortalServiceAccessTriggerHandler {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminOfAppRequestVF + ' not found');   
             return;
         }
+
+        //
+        // Normal part
+        //
         Set<ID> accountIDs = new Set<ID>();
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
             if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
                 if (!ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
                     accountIDs.add(par.Account__c);
-                }
-            } 
-        }
-
-        Set<ID> contactIDsIep = new Set<ID>();
-        for(Portal_Application_Right__c par : newPortalApplicationRightList) {
-            if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
-                if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-                    contactIDsIep.addAll(IEP_contactIDs);
                 }
             } 
         }
@@ -74,14 +132,30 @@ public without sharing class PortalServiceAccessTriggerHandler {
             accIdToUserIdMap.put(member.AccountId, userIDs);
         }
 
-        map<ID, Set<ID>> accIdToUserIdMapIep = new map<ID, Set<ID>>();
-        for(User user : getPortalIepUsers(contactIDsIep)) {
-            Set<ID> userIDs = accIdToUserIdMapIep.get(user.ContactId);
+        //
+        // IEP Part
+        //
+        map<ID, Set<Id>> accIdToUserIdMapIep = new map<Id, Set<ID>>();
+
+        for(Id key : IEP_accountIDs.keySet()) {
+            Set<Id> userIDsAux = new Set<id>();
+
+            //System.debug(LoggingLevel.ERROR, 'key->' + key);
+            //System.debug(LoggingLevel.ERROR, 'topParents.get(key)->' + topParents.get(key));
+
+            userIDsAux.addAll(getPortalIepUsers(IEP_accountIDs.get(key)));
+
+            Set<Id> userIDs = accIdToUserIdMapIep.get(topParents.get(key));
+
             if(null == userIDs)
                 userIDs = new Set<ID>();
-            userIDs.add(user.id);
-            accIdToUserIdMapIep.put(user.contactId, userIDs);
+
+            userIDs.addAll(userIDsAux);
+
+            accIdToUserIdMapIep.put(topParents.get(key), userIDs);
         }
+
+        //System.debug(LoggingLevel.ERROR, 'accIdToUserIdMapIep->' + accIdToUserIdMapIep);        
 
         ID standartReplyUserID = getStandartReplyUserID(ENV.Reply_Email);
 
@@ -96,16 +170,17 @@ public without sharing class PortalServiceAccessTriggerHandler {
                     continue;
                 }
 
-                system.debug(LoggingLevel.ERROR, 'Email to admin');
+                //system.debug(LoggingLevel.ERROR, 'Email to admin');
 
                 Set<ID> portalAdminUserIDs;
                 if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-                    if(IEP_contactIDsMap.get(par.contact__c) == par.contact__r.account.Top_Parent__c) {
-                        portalAdminUserIDs = accIdToUserIdMap.get(par.contact__c);
-                    }
+                    System.debug(LoggingLevel.ERROR, 'EasyPay');        
+                    portalAdminUserIDs = accIdToUserIdMapIep.get(par.Account__c);
                 } else {
                     portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);                   
                 }
+
+                //System.debug(LoggingLevel.ERROR, 'accIdToUserIdMapIep->' + portalAdminUserIDs);        
 
                 if(null == portalAdminUserIDs) {
                     continue;
@@ -119,7 +194,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
                        emailMsg.setTemplateId(templateId);
                     } 
 
-                    system.debug(LoggingLevel.ERROR, 'Email to admin : ' + userId);
+                    //system.debug(LoggingLevel.ERROR, 'Email to admin : ' + userId);
                     
                     emailMsg.setTargetObjectId(userId);
                     emailMsg.saveAsActivity = false;
@@ -148,7 +223,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
             Messaging.sendEmail(msgList);
         }
         else 
-            system.debug(LoggingLevel.ERROR, 'emials not sent !');
+            system.debug(LoggingLevel.ERROR, 'Emails not sent !');
     }
     
     public static ID getStandartReplyUserID(String senderAddress) {
@@ -186,12 +261,15 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 AND TeamMemberRole=: ENV.TeamMemberRolePL.PortalAdministrator]; 
     }
 
-    public static list<User> getPortalIepUsers(Set<Id> contactIds) {        
-        return 
-            [SELECT Id,
-                    ContactId
-               FROM User 
-              WHERE ContactId IN: contactIds]; 
+    public static Set<Id> getPortalIepUsers(Set<Id> contactIds) {        
+        List<User> ul = [SELECT Id
+                          FROM User 
+                         WHERE ContactId IN: contactIds]; 
+        Set<Id> rs = new Set<Id>();                         
+        for(User u : ul) {
+            rs.add(u.id);            
+        }
+        return rs;
     }
 
     public static void manageAccessTD (Set <Id> accessIds, Set <Id> contactIds){
