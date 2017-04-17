@@ -1,9 +1,11 @@
 <apex:component >
+<apex:attribute name="communityName" type="string" description="communityName" />
     <head>
+        <link rel="shortcut icon" href="{!urlfor($Resource.IIS_Portal,'/images/background_IATA.png')}"/>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>IATA Customer Portal</title>
+            <title>{!IF(communityName=='CNS','CNS Portal','IATA Customer Portal')}</title>
 
         <!-- Latest compiled and minified CSS -->
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /> -->

@@ -1,0 +1,56 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" controller="ISSP_Registration">
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+    
+
+ <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>CNS</title>
+	<link rel="icon" type="image/png" href="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}"/>
+	<link rel="shortcut icon" href="{!urlfor($Resource.IIS_Portal,'/images/logocns.png')}"/>
+
+	<link rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/style.css')}" type="text/css" />
+    <!-- Latest compiled and minified CSS -->
+    <link title="bs"  rel="stylesheet" href="{!urlfor($Resource.IIS_Portal,'/css/bootstrap.css')}" type="text/css" />
+
+	<!-- jQuery -->
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+     <!-- Latest compiled and minified JavaScript -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+     <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
+    
+</head>
+
+<body>
+
+<!--****{!ISPICKVAL($User.UserType,'Guest')}***-->
+
+	<div class="container">
+	
+		<div class="row">   </div>
+	    <div class="row">
+	        <div class="logbox">
+	           <apex:insert name="body"/>
+	        </div>
+	    </div>
+	</div>
+	<div id="dvBackgroundMaster" style="">
+	    <img id="ctl00_imgBackgroundMaster" class="wwBg" title="Page Background Image" alt="Page Background Image" src="{!urlfor($Resource.IIS_Portal,'/images/background_IATA.png')}" />
+	</div>
+
+
+</body>
+</html>
+
+</apex:page>
