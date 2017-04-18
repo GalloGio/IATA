@@ -14,22 +14,99 @@ public without sharing class PortalServiceAccessTriggerHandler {
     
     public static void SendEmailToPortalAdminToValidateRequest(list<Portal_Application_Right__c> newPortalApplicationRightList) {
         ////ENV.EmailTemplateDN.Notify_Admin_of_app_requestVF //Notify_Admin_of_app_requestVF
-    System.debug('zZzZ Start SendEmailToPortalAdminToValidateRequest ==>'+ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
+
+        List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
+                                                   FROM Connected_App_Roles__c 
+                                                  where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' 
+                                                    and Manage_User_Access__c = true];
+
+        Set<String> roles = new Set<String>();
+        for(Connected_App_Roles__c r : rolesAux) {
+            roles.add(r.Role__c);
+        }
+    
         ID templateId = getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
-    System.debug('zZzZ templateId==>'+templateId);
+    
         ID templateID_CNS = getEmailTemplateIdByName (ENV.EmailTemplateData.NotifyAdminOfAppRequestVF_CNS);
         if(String.isBlank(templateId)) {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminOfAppRequestVF + ' not found');   
             return;
         }
         Set<ID> accountIDs = new Set<ID>();
+        Map<id, boolean> cannotManagedPortalAdminMap = new Map<id, boolean>();
+        Set<String> accountIDsIepAux = new Set<String>();
+
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
             if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
-                accountIDs.add(par.Account__c);
+                if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
+                    accountIDsIepAux.add(par.Account__c);
+                } else {
+                    accountIDs.add(par.Account__c);
+                }                
+                cannotManagedPortalAdminMap.put(par.Portal_Application__c, par.Portal_Application__r.Cannot_be_managed_by_portal_admin__c);
             } 
         }
-    System.debug('zZzZ accountIDs==>'+accountIDs);
+
+        //
+        // Get account's IEP Status to supress mails from beeing send.
+        //
+        List<Account> accountsStatus = [Select id, ANG_IEP_Status_FF__c From Account Where Id in : accountIDs];
+        Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
+        for(Account account : accountsStatus) {
+            iepAccountStatusMap.put(account.id, account.ANG_IEP_Status_FF__c);
+        }
+
+        //
+        // Get all the top parents linked to the accounts.
+        //
+        List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
+                                                         contact__r.accountId
+                                                    From Portal_Application_Right__c
+                                                   Where account__c in : accountIDsIepAux];
+
+
+        //
+        // Set with all accountIds and top parent ids
+        //
+        Set<String> accountsSet = new Set<String>();
+        Map<String, String> topParents = new Map<String, String>();
+
+        for(Portal_Application_Right__c par : parl) {
+            if(par.contact__r.account.Top_Parent__c != null) {
+                accountsSet.add(par.contact__r.account.Top_Parent__c);
+                topParents.put(par.contact__r.account.Top_Parent__c, par.contact__r.accountId);
+            }
+            accountsSet.add(par.contact__r.accountId);           
+            topParents.put(par.contact__r.accountId, par.contact__r.accountId);
+        }
+
+        //
+        // Get all portal application right with the top parent linked to the accounts that have the configured roles.
+        //
+        List<Portal_Application_Right__c> parList2 = [Select Account__c,
+                                                             Contact__c
+                                                        From Portal_Application_Right__c
+                                                       Where ANG_Portal_Service_Role__c in : roles
+                                                         And contact__r.accountId in : accountsSet];
+
+        //
+        // Set with all contacts per account
+        //                                                         
+        Map<Id, Set<Id>> IEP_accountIDs = new Map<Id, Set<Id>>();
+
+        for(Portal_Application_Right__c p : parList2) {
+            Set<ID> contactIDs = IEP_accountIDs.get(p.Account__c);
+            if(null == contactIDs)
+                contactIDs = new Set<ID>();
+            contactIDs.add(p.Contact__c);
+            IEP_accountIDs.put(p.Account__c, contactIDs);
+        }
+
+        //
+        // Get the users by account. NORMAL PART
+        //
         map<ID, Set<ID>> accIdToUserIdMap = new map<ID, Set<ID>>();
+
         for(AccountTeamMember member : getPortalAdmins(accountIDs)) {
             Set<ID> userIDs = accIdToUserIdMap.get(member.AccountId);
             if(null == userIDs)
@@ -37,57 +114,100 @@ public without sharing class PortalServiceAccessTriggerHandler {
             userIDs.add(member.UserId);
             accIdToUserIdMap.put(member.AccountId, userIDs);
         }
-    System.debug('zZzZ ENV.Reply_Email==>'+ENV.Reply_Email);
+
+        //
+        // Get the users by account. EASYPAY PART
+        //
+        map<ID, Set<Id>> accIdToUserIdMapIep = new map<Id, Set<ID>>();
+
+        for(Id key : IEP_accountIDs.keySet()) {
+            Set<Id> userIDsAux = new Set<id>();
+
+            userIDsAux.addAll(getPortalIepUsers(IEP_accountIDs.get(key)));
+
+            Set<Id> userIDs = accIdToUserIdMapIep.get(topParents.get(key));
+
+            if(null == userIDs)
+                userIDs = new Set<ID>();
+
+            userIDs.addAll(userIDsAux);
+
+            accIdToUserIdMapIep.put(topParents.get(key), userIDs);
+        }
+    
         ID standartReplyUserID = getStandartReplyUserID(ENV.Reply_Email);
-    System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
+    
         ID standardReplyUserID_CNS = getStandartReplyUserID(ENV.Reply_Email_CNS);
         list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
-    System.debug('zZzZ par==>'+par);
+    
             //if (par.Application_Name__c != 'Treasury Dashboard'){
             if (!par.Application_Name__c.startsWith('Treasury Dashboard') && !par.Application_Name__c.startsWith('Standards Setting Workspace')){
                 
                 if(!ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)){
                     continue;
                 }
+
+                Boolean cannotManagedPortalAdmin = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
                 
-                Set<ID> portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);
-                if(null == portalAdminUserIDs) continue;
-                for(ID userId : portalAdminUserIDs) {
-                    Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
-                    if(par.Conctact_is_CNS__c!=null && par.Conctact_is_CNS__c){
-                        emailMsg.setTemplateId(templateId_CNS);
-                    }else{
-                    emailMsg.setTemplateId(templateId);
-                    } 
-                    emailMsg.setTargetObjectId(userId);
-                    emailMsg.saveAsActivity = false;
-                    
-                    if(!par.Conctact_is_CNS__c && par.Conctact_is_CNS__c!=null){
-                        if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
-                    else {
-                        emailMsg.setReplyTo(ENV.Reply_Email);
-                        emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                // The email to the Portal administrator can only be send when
+                // portal_application__c.Cannot_be_managed_by_portal_admin__c = false
+                // OR
+                // portal_application__c.Cannot_be_managed_by_portal_admin__c = true && portal_application__c = IEP Service && 
+                //      IEP Account Status = open
+                //
+                if( (cannotManagedPortalAdmin == false) ||
+                    (cannotManagedPortalAdmin == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
+                     iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) ) {
+
+                    Set<ID> portalAdminUserIDs;
+                    if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
+                        System.debug(LoggingLevel.ERROR, 'EasyPay');        
+                        portalAdminUserIDs = accIdToUserIdMapIep.get(par.Account__c);
+                    } else {
+                        portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);                   
                     }
 
-                    }else{
-                         if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
-                        else {
-                            emailMsg.setReplyTo(ENV.Reply_Email_CNS);
-                            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject_CNS);
-                        }
+                    if(null == portalAdminUserIDs) {
+                        continue;
                     }
-                    emailMsg.setWhatId(par.ID); 
-                    msgList.add(emailMsg);
+
+                    for(ID userId : portalAdminUserIDs) {
+                        Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
+                        if(par.Conctact_is_CNS__c!=null && par.Conctact_is_CNS__c){
+                            emailMsg.setTemplateId(templateId_CNS);
+                        }else{
+                        emailMsg.setTemplateId(templateId);
+                        } 
+                        emailMsg.setTargetObjectId(userId);
+                        emailMsg.saveAsActivity = false;
+                        
+                        if(!par.Conctact_is_CNS__c && par.Conctact_is_CNS__c!=null){
+                            if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
+                        else {
+                            emailMsg.setReplyTo(ENV.Reply_Email);
+                            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                        }
+
+                        }else{
+                             if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
+                            else {
+                                emailMsg.setReplyTo(ENV.Reply_Email_CNS);
+                                emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject_CNS);
+                            }
+                        }
+                        emailMsg.setWhatId(par.ID); 
+                        msgList.add(emailMsg);
+                    }
                 }
             }
         }
-    System.debug('zZzZ msgList==>'+msgList);
+    
         if(!msgList.isEmpty()){
             Messaging.sendEmail(msgList);
         }
         else 
-            system.debug(LoggingLevel.ERROR, 'emials not sent !');
+            system.debug(LoggingLevel.ERROR, 'Emails not sent !');
     }
     
     public static ID getStandartReplyUserID(String senderAddress) {
@@ -123,6 +243,17 @@ public without sharing class PortalServiceAccessTriggerHandler {
                FROM AccountTeamMember 
               WHERE AccountId IN: accountIds 
                 AND TeamMemberRole=: ENV.TeamMemberRolePL.PortalAdministrator]; 
+    }
+    
+    public static Set<Id> getPortalIepUsers(Set<Id> contactIds) {        
+        List<User> ul = [SELECT Id
+                          FROM User 
+                         WHERE ContactId IN: contactIds]; 
+        Set<Id> rs = new Set<Id>();                         
+        for(User u : ul) {
+            rs.add(u.id);            
+        }
+        return rs;
     }
     
     public static void manageAccessTD (Set <Id> accessIds, Set <Id> contactIds){
