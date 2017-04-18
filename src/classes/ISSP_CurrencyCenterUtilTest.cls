@@ -6,9 +6,8 @@ private class ISSP_CurrencyCenterUtilTest {
     }
     
     @isTest static void testCheckIfUserHasAccessToServiceWithoutUser() {
-        Boolean result;
-        result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
-        System.assertEquals(result,false);
+        PageReference result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
+        System.assertNotEquals(new PageReference('/ISSP_Homepage'),result);
     }
     
     @isTest static void testStampVisitDateTimeWithoutUser() {

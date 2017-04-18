@@ -822,4 +822,15 @@ global class AMS_HierarchyHelper {
 
 	}
 
+	public class AccountStruct{
+		
+	    public String parentIATACode;
+	    public String locationType;
+
+	    public AccountStruct(String parentIATACode, String locationType) {
+	        this.parentIATACode = parentIATACode;
+	        this.locationType = locationType;
+	    }
+	}
+
 }

@@ -1005,6 +1005,18 @@ la seguente procedura per completarlo :
         <name>CurrencyCenter_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_1 --></label>
+        <name>CurrencyCenter_Disclaimer_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_2 --></label>
+        <name>CurrencyCenter_Disclaimer_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_3 --></label>
+        <name>CurrencyCenter_Disclaimer_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Download_Pdf --></label>
         <name>CurrencyCenter_Download_Pdf</name>
     </customLabels>
@@ -1349,6 +1361,10 @@ la seguente procedura per completarlo :
         <name>Direct_Sales</name>
     </customLabels>
     <customLabels>
+        <label><!-- Discounted Amount --></label>
+        <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Download Invoice --></label>
         <name>Download_Invoice</name>
     </customLabels>
@@ -1419,6 +1435,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- End date --></label>
         <name>End_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- English Alphabet --></label>
+        <name>English_Alphabet</name>
     </customLabels>
     <customLabels>
         <label><!-- ErrMsg Shipping &amp; Tax - general error --></label>
@@ -2506,8 +2526,8 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
-        <label>&quot;If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
-Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.&quot;</label>
+        <label>If the above address is incorrect, please report agency incorrect information (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) and should not continue until the agency address has been correctly modified. &lt;br/&gt; 
+Kindly note that home-based agents are required to coordinate with their colleagues at the address above to receive the ID Card. Applicants will be held responsible at all costs for incorrect agency address. To continue, please click the button below.</label>
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
@@ -4864,6 +4884,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar CNS --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Updated Companies --></label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
@@ -5054,6 +5078,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>É possibile effettuare cambi o variazioni solamente una volta terminato il processo di accreditamento</label>
         <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Message_Accredited_Agent_CNS --></label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
         <label>Richiesta Variazione</label>
@@ -5248,6 +5276,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS No Pending CNS --></label>
+        <name>ISSP_AMS_No_Pending_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -5292,8 +5324,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_OPTION_CGO_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION CGO BRANCH CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_BRANCH_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Agente cargo IATA - Nuova sede centrale</label>
         <name>ISSP_AMS_OPTION_CGO_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION CGO HO CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_HO_CNS</name>
     </customLabels>
     <customLabels>
         <label>Corriere - Filiale</label>
@@ -5500,6 +5540,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step0_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Agency Accreditation CNS --></label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Non é sicuro del tipo di richiesta da dover presentare?&lt;br/&gt;Consulti le informazioni contenute nel seguente</label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
@@ -5528,8 +5572,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Intro Accred CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Qualora non si disponga dell&apos;autorizzazione a firmare documenti legali a nome dell&apos;agenzia, si raccomanda di incaricare un rappresentante legale che si registri al portale e invii la domanda.</label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Intro CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Minor Changes --></label>
@@ -5538,6 +5590,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>Nuova Domanda di Accreditamento</label>
         <name>ISSP_AMS_Step0_New_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 New Application CNS --></label>
+        <name>ISSP_AMS_Step0_New_Application_CNS</name>
     </customLabels>
     <customLabels>
         <label>Pratiche di Accreditamento o Variazione in corso</label>
@@ -5568,6 +5624,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step0_SAA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 SAA --></label>
+        <name>ISSP_AMS_Step0_SAA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Specific Sales Activity</label>
         <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
     </customLabels>
@@ -5586,6 +5646,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>La domanda di accreditamento IATA on line per una nuova agenzia cargo non è ancora disponibile per il paese selezionato. Verrete ora indirizzati al sito Web di IATA in cui potrete continuare il processo di accreditamento della vostra agenzia cargo. Volete procedere?</label>
         <name>ISSP_AMS_Step1_GoTo_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step1_GoTo_Cargo_CNS --></label>
+        <name>ISSP_AMS_Step1_GoTo_Cargo_CNS</name>
     </customLabels>
     <customLabels>
         <label>La domanda di accreditamento IATA on line per una nuova agenzia di viaggi non è ancora disponibile per il paese selezionato. Verrete ora indirizzati al sito Web di IATA in cui potrete continuare il processo di accreditamento della vostra agenzia di viaggi. Volete procedere?</label>
@@ -5622,6 +5686,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>Domanda d&apos;accreditamento come agente cargo / passeggeri IATA</label>
         <name>ISSP_AMS_Step1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title --></label>
+        <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
         <label>Le bozze delle domande devono essere inviate entro 2 settimane; in caso contrario, si dovrà ricominciare il processo.</label>
@@ -6032,6 +6100,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step5_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
         <name>ISSP_AMS_Step5_ReviewBeforeSubmit</name>
     </customLabels>
@@ -6058,6 +6130,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS StepFinal In Addition2 --></label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal In Addition CNS --></label>
+        <name>ISSP_AMS_StepFinal_In_Addition_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepFinal Pax BR Abroad Thanks --></label>
@@ -6096,6 +6172,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_StepsAll_Cargo_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo Title CNS --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Courier_Title --></label>
         <name>ISSP_AMS_StepsAll_Courier_Title</name>
     </customLabels>
@@ -6114,6 +6194,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Street --></label>
         <name>ISSP_AMS_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Submit CNS --></label>
+        <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Submit IATA --></label>
@@ -6792,6 +6876,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Become_Endorsed_Agent_CNS --></label>
+        <name>ISSP_Become_Endorsed_Agent_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Bilateral, both carriers can issue electronic tickets --></label>
         <name>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</name>
     </customLabels>
@@ -6812,8 +6900,32 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_CASSLink_Export</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CASSLink_Export_CNS --></label>
+        <name>ISSP_CASSLink_Export_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CASSLink_Import --></label>
         <name>ISSP_CASSLink_Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Documents --></label>
+        <name>ISSP_CNS_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Endorsement --></label>
+        <name>ISSP_CNS_Endorsement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_PaymentLink_ServiceName --></label>
+        <name>ISSP_CNS_PaymentLink_ServiceName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote --></label>
+        <name>ISSP_CNS_quote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote2 --></label>
+        <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -6852,6 +6964,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>La preghiamo di raccontarci la sua esperienza con la persona che la ha aiutato e le faremo arrivare il suo messaggio</label>
         <name>ISSP_CaseComplimentMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CaseComplimentMessage_CNS --></label>
+        <name>ISSP_CaseComplimentMessage_CNS</name>
     </customLabels>
     <customLabels>
         <label>Informazioni sul caso</label>
@@ -7334,6 +7450,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_AccessRejected4</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
+        <name>ISSP_Email_AccessRejected4_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Accesso a</label>
         <name>ISSP_Email_AccessRejected_subject1</name>
     </customLabels>
@@ -7410,12 +7530,28 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact2_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nel caso in cui il contatto qui indicato non fosse quello giusto per ricevere queste notifiche, La preghiamo di informare immediatamente la IATA attraverso il portale clienti</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact3_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact3_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nuovo contatto pagamenti BSP/CASS</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Portal --></label>
+        <name>ISSP_Email_CNS_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Service --></label>
+        <name>ISSP_Email_CNS_Service</name>
     </customLabels>
     <customLabels>
         <label>Nuovo commento relativo al caso n°</label>
@@ -7490,6 +7626,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Log_Case_CNS --></label>
+        <name>ISSP_Email_Log_Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>ed effettui il login con le sue credenziali:</label>
         <name>ISSP_Email_LoginInformation</name>
     </customLabels>
@@ -7526,12 +7666,24 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_PortalStatusChange_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalStatusChange_Subject_CNS --></label>
+        <name>ISSP_Email_PortalStatusChange_Subject_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email_PortalUrl --></label>
         <name>ISSP_Email_PortalUrl</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalUrl_CNS --></label>
+        <name>ISSP_Email_PortalUrl_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>ha modificato il suo stato sul Portale clienti IATA in</label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_PortalUser_StatusChange_CNS --></label>
+        <name>ISSP_Email_PortalUser_StatusChange_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_Rejected_Reason --></label>
@@ -7550,6 +7702,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Email_ThankYouContacting</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_ThankYouContacting_cns --></label>
+        <name>ISSP_Email_ThankYouContacting_cns</name>
+    </customLabels>
+    <customLabels>
         <label>Grazie in anticipo,</label>
         <name>ISSP_Email_ThankYouInAdvance</name>
     </customLabels>
@@ -7564,6 +7720,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>Benvenuti su</label>
         <name>ISSP_Email_WelcomeTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Welcome_CNS --></label>
+        <name>ISSP_Email_Welcome_CNS</name>
     </customLabels>
     <customLabels>
         <label>Può accedere al portale dal suo</label>
@@ -8446,8 +8606,16 @@ Se continua ad avere problemi per registrarsi nel portale clienti, la preghiamo 
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nessun risultato per il suo criterio di ricerca. La preghiamo di cambiare i criteri della ricerca e di provare di nuovo oppure scegliere Nuovo per creare un nuovo conto</label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateStandardAirline_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateStandardAirline_CNS</name>
     </customLabels>
     <customLabels>
         <label>Nessun risultato corrisponde ai criteri di ricerca. Fate clic su &quot;Indietro&quot; per procedere con il processo di registrazione in qualità di &quot;Pubblico generale&quot;, oppure modificate i vostri criteri di ricerca ed eseguite nuovamente la ricerca.
@@ -8456,14 +8624,26 @@ Nel caso riscontriate ancora problemi nel corso della registrazione al portale c
         <name>ISSP_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGP_CNS --></label>
+        <name>ISSP_NoRecordsFoundGP_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nessuna compagnia é stata trovata con la combinazione del codice GSA e il paese. Si assicuri di aver introdotto l&apos;informazione corretta.
 &lt;br/&gt;&lt;br/&gt; 
 Se continua ad aver problemi con la registrazione nel portale clienti IATA allora consulti la nostra&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;guida alla risoluzione dei problemi&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundGSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGSA_CNS --></label>
+        <name>ISSP_NoRecordsFoundGSA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nessuna organizzazione corrispondente ai criteri di ricerca. Modificare la ricerca e provare di nuovo.</label>
         <name>ISSP_NoRecordsFoundNext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundNext_CNS --></label>
+        <name>ISSP_NoRecordsFoundNext_CNS</name>
     </customLabels>
     <customLabels>
         <label>Nessuna richiesta disponibile</label>
@@ -8630,6 +8810,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_PageDescription_ISSP_FAQ2Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PageDescription_ISSP_FAQ2Case_CNS --></label>
+        <name>ISSP_PageDescription_ISSP_FAQ2Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Cerchi articoli di informazione IATA</label>
         <name>ISSP_PageDescription_ISSP_faq_template</name>
     </customLabels>
@@ -8654,6 +8838,10 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
 &lt;b&gt;ATTENZIONE!&lt;/b&gt;&lt;br/&gt;
 Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghiamo pertanto di fare attenzione prima del pagamento con carta di credito, per essere sicuro di non averlo gia pagato.</label>
         <name>ISSP_Payment_Link_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Payment_Link_Description_CNS --></label>
+        <name>ISSP_Payment_Link_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Pending --></label>
@@ -8963,6 +9151,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Registration_generalError</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Registration_generalError_CNS --></label>
+        <name>ISSP_Registration_generalError_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Questo indirizzo e-mail corrisponde a un Utente del portale già esistente, ma disattivato in precedenza.</label>
         <name>ISSP_Registration_inactiveUserExist</name>
     </customLabels>
@@ -9163,6 +9355,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Sender_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Sender Email CNS --></label>
+        <name>ISSP_Sender_Email_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Servizi</label>
         <name>ISSP_Service</name>
     </customLabels>
@@ -9350,6 +9546,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
               Cordiali saluti,
               Servizi di assistenza clienti IATA</label>
         <name>ISSP_Thanks_for_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Thanks_for_request_cns --></label>
+        <name>ISSP_Thanks_for_request_cns</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP The Cargo Interline Agreement --></label>
@@ -9606,6 +9806,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label>Non è possibile finalizzare il processo di registrazione. Contatti l&apos;assistenza del Portale clienti IATA completando il form di richiesta disponibile su  http://www.iata.org/customer-portal/Pages/index.aspx?</label>
         <name>ISSP_generalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_generalError_CNS --></label>
+        <name>ISSP_generalError_CNS</name>
     </customLabels>
     <customLabels>
         <label>Si � verificato un errore durante il tentativo di recuperare il tipo di fattura {!invoiceType}. Contatti l&apos;assistenza clienti</label>
@@ -10258,6 +10462,158 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- No special characters --></label>
         <name>No_special_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Association --></label>
+        <name>OneId_Account_Association</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Creation --></label>
+        <name>OneId_Account_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Note When Account Not Found --></label>
+        <name>OneId_Account_Note_When_Account_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_All rights reserved --></label>
+        <name>OneId_All_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing City --></label>
+        <name>OneId_Billing_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing Country --></label>
+        <name>OneId_Billing_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing Street --></label>
+        <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId Community Name --></label>
+        <name>OneId_Community_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Contact Association &amp; Validation --></label>
+        <name>OneId_Contact_Association_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Contact Creation --></label>
+        <name>OneId_Contact_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CreateNewAccount --></label>
+        <name>OneId_CreateNewAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Create an account --></label>
+        <name>OneId_Create_an_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Help Community --></label>
+        <name>OneId_Help_Community</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Help Community Link --></label>
+        <name>OneId_Help_Community_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_IATA Code --></label>
+        <name>OneId_IATA_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_IATA represent, lead and serve the airline industry --></label>
+        <name>OneId_IATA_represent_lead_and_serve_the_airline_industry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_International Air Transport Association (IATA) --></label>
+        <name>OneId_International_Air_Transport_Association_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_JobFunction_Help_Msg --></label>
+        <name>OneId_JobFunction_Help_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_My available applications --></label>
+        <name>OneId_My_available_applications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Name --></label>
+        <name>OneId_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NoRecordsFoundGP --></label>
+        <name>OneId_NoRecordsFoundGP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Nothing found --></label>
+        <name>OneId_Nothing_found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Online Help --></label>
+        <name>OneId_Online_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Online Help Link --></label>
+        <name>OneId_Online_Help_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Please_Wait --></label>
+        <name>OneId_Please_Wait</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Please check reCaptcha --></label>
+        <name>OneId_Please_check_reCaptcha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Press to Validate --></label>
+        <name>OneId_Press_to_Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Registration_Error_BusinessPhone --></label>
+        <name>OneId_Registration_Error_BusinessPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Request Access --></label>
+        <name>OneId_Request_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Request this App --></label>
+        <name>OneId_Request_this_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_SearchAccount --></label>
+        <name>OneId_SearchAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Sign In --></label>
+        <name>OneId_Sign_In</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Terms of Use --></label>
+        <name>OneId_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Terms of Use Link --></label>
+        <name>OneId_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Thank you for subscribing to this new service --></label>
+        <name>OneId_Thank_you_for_subscribing_to_this_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Type --></label>
+        <name>OneId_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_You will be notified by email when you can access the new service. --></label>
+        <name>OneId_You_will_be_notified_by_email_when_you_can_access_the_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Your request has been successfully sent --></label>
+        <name>OneId_Your_request_has_been_successfully_sent</name>
     </customLabels>
     <customLabels>
         <label><!-- Only one subscription can  be purchased --></label>
@@ -11224,6 +11580,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Automated Case Message --></label>
+        <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -11616,6 +11976,18 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>idcard_replacementHeadText</name>
     </customLabels>
     <customLabels>
+        <label><!-- new application --></label>
+        <name>issp_apppicker_new_application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- request new application --></label>
+        <name>issp_apppicker_request_new_application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- select role --></label>
+        <name>issp_apppicker_select_role</name>
+    </customLabels>
+    <customLabels>
         <label><!-- label custom price --></label>
         <name>label_custom_price</name>
     </customLabels>
@@ -11932,6 +12304,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Late_Remittance_Report</name>
     </customTabs>
     <customTabs>
+        <label><!-- Manage Provisioning Requests --></label>
+        <name>Manage_Provisioning_Requests</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Mass Case Creation Non-Compliance --></label>
         <name>Mass_Case_Creation_Non_Compliance</name>
     </customTabs>
@@ -12015,21 +12391,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <label><!-- Welcome --></label>
         <name>Welcome</name>
     </customTabs>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
     <globalPicklists>
         <name>EF_Role</name>
         <picklistValues>
@@ -12155,6 +12516,21 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Payment_Terms</name>
         <picklistValues>
             <masterLabel>07 days after invoice date</masterLabel>
@@ -12213,85 +12589,34 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>Sector</name>
+        <name>EF_User_Role</name>
         <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Status</name>
-        <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12899,6 +13224,77 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <picklistValues>
             <masterLabel>ZWD</masterLabel>
             <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13617,37 +14013,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Category</name>
         <picklistValues>
             <masterLabel>ANSP</masterLabel>
@@ -13912,6 +14277,17 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <picklistValues>
             <masterLabel>Travel Agency Association</masterLabel>
             <translation><!-- Travel Agency Association --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

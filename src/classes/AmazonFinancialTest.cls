@@ -251,7 +251,7 @@ Temporary commented
         Case testCase1 = new Case(  CaseArea__c = 'TTBS',
                                     status = 'Agent Notified (Mail)',
                                     Financial_Review_Type__c = 'Annual',
-                                    Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
+                                    //Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
                                     Origin = 'Other',
                                     SuppliedEmail = 'paia@iata.org',
                                     SuppliedPhone = '12456987456',
@@ -380,7 +380,7 @@ Temporary commented
         
         Case testCase1 = new Case(  CaseArea__c = 'TTBS',
                                     ArchivedDate__c = date.today(),
-                                    Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
+                                    //Tax_Effective_Date__c = Date.valueOf('2011-08-29'),
                                     Origin = 'Other',
                                     SuppliedEmail = 'paia@iata.org',
                                     SuppliedPhone = '12456987456',

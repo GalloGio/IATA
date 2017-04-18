@@ -184,6 +184,9 @@
                                         </apex:selectList>
                                     </div>
                                     <apex:commandLink styleClass="text-link" action="{!prepareNewShipToAddress}" value="{!labels['btnAdd']}" status="shipToRunningStatus" reRender="errorMessage,shipToIsDefaultGroup,shipToAddress,shipToButtonSection" />
+                                    <div>
+                                        <span align="right" class="optional">{!$Label.English_Alphabet}</span>
+                                    </div>
                                 </div>
 
                                 <apex:outputPanel id="shipToIsDefaultGroup" rendered="{! !stopProcess}">

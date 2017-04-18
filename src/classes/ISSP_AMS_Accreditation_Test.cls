@@ -3,16 +3,17 @@ private class ISSP_AMS_Accreditation_Test
 {
     @testSetup static void customSettingSetup() {
         insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL',Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
+        insert new ISSP_CS__c(Name = 'No Notification Email Contact Id',Value__c = null);
     }
 
     @isTest static void ISSP_AMS_Accreditation_Test_1() 
     {
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
         							IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
         							IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
         							IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
         insert country;
-        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes');
         insert country2;
 
 		Id rtIdBr = [ SELECT Id FROM RecordType 
@@ -78,12 +79,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -200,12 +201,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -323,12 +324,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -441,12 +442,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -561,12 +562,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -703,12 +704,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo Agent';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -919,12 +920,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo Agent';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = null;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1097,12 +1098,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo Agent';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = null;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1271,12 +1272,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Travel Agent';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = null;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1452,12 +1453,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1641,12 +1642,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1798,12 +1799,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -1880,19 +1881,19 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newInternationalSales.CurrencyIsoCode = '';
             ctrl.createInternationalSales();
 
-            ctrl.newForm.ISSP_AMS_where_incorporated__c='testΩx';
-            ctrl.newForm.ISSP_AMS_Principal_business_Org__c='testΩx';
-            ctrl.hqAccount.BillingState='testΩx';
-            ctrl.newContact.Job_title__c ='testΩx';
-            ctrl.newContact.AddressStreet__c='testΩx';
-            ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c='testΩx';
-            ctrl.newContact.AddressCity__c='testΩx';
-            ctrl.newContact.First_name__c='testΩx';
-            ctrl.newContact.Last_name__c='testΩx';
-            ctrl.hqAccount.BillingStreet='testΩx';
-            ctrl.hqAccount.BillingCity='testΩx';
-            ctrl.newForm.ISSP_AMS_Online_Agency_URL__c='testΩx';
-            ctrl.newForm.ISSP_AMS_Legal_Reg_Name_Address__c='testΩx';
+            ctrl.newForm.ISSP_AMS_where_incorporated__c='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Principal_business_Org__c='testÎ©x';
+            ctrl.hqAccount.BillingState='testÎ©x';
+            ctrl.newContact.Job_title__c ='testÎ©x';
+            ctrl.newContact.AddressStreet__c='testÎ©x';
+            ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c='testÎ©x';
+            ctrl.newContact.AddressCity__c='testÎ©x';
+            ctrl.newContact.First_name__c='testÎ©x';
+            ctrl.newContact.Last_name__c='testÎ©x';
+            ctrl.hqAccount.BillingStreet='testÎ©x';
+            ctrl.hqAccount.BillingCity='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Online_Agency_URL__c='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Legal_Reg_Name_Address__c='testÎ©x';
             ctrl.validateCharactersInForm();
 
             ctrl.goToStep3Section1();
@@ -2010,23 +2011,23 @@ private class ISSP_AMS_Accreditation_Test
             //ctrl.newCase.Region__c = 'test2';
             //ctrl.sendConfirmationEmail(ctrl.newCase);
 
-            ctrl.hqAccount.Website = 'Σ';
+            ctrl.hqAccount.Website = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingCountry = 'Σ';
+            ctrl.hqAccount.BillingCountry = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingPostalCode = 'Σ';
+            ctrl.hqAccount.BillingPostalCode = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingCity = 'Σ';
+            ctrl.hqAccount.BillingCity = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingStreet = 'Σ';
+            ctrl.hqAccount.BillingStreet = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.TradeName__c = 'Σ';
+            ctrl.hqAccount.TradeName__c = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.Name = 'Σ';
+            ctrl.hqAccount.Name = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.newContact.Name = 'Σ';
+            ctrl.newContact.Name = 'Î£';
             ctrl.validateCharactersInCompanyWindow();
-            ctrl.newContact.Registration_number__c = 'Σ';
+            ctrl.newContact.Registration_number__c = 'Î£';
             ctrl.validateCharactersInCompanyWindow();
         }
     }
@@ -2104,12 +2105,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -2285,12 +2286,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'GB';
             insert testCase;
@@ -2341,6 +2342,14 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.con.Account.Sector__c = 'Cargo Agent';
             ctrl.isHOAccredited  = false;
             ctrl.isocountry.EACP_Country__c = true;
+            ctrl.getOfficeTypes();
+
+            ctrl.sectorValue = 'Cargo_Agent';
+            ctrl.con.Account.Sector__c = 'Cargo Agent';
+            ctrl.isHOAccredited  = false;
+            ctrl.isocountry.EACP_Country__c = false;
+            ctrl.isCASSImport = true;
+            ctrl.isoCountry.Disable_non_IATA_Cargo_Agents__c = false;
             ctrl.getOfficeTypes();
 
             ctrl.con.Account.Category__c = 'IATA Cargo Agent';
@@ -2475,12 +2484,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = child.Id;
 			testCase.IFAP_Country_ISO__c = 'CN';
 			testCase.Applicable_to_Which_Version_s__c = '5';
@@ -2689,12 +2698,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = false;
+            //testCase.Continous_Feed_SAF__c = false;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -2766,19 +2775,19 @@ private class ISSP_AMS_Accreditation_Test
             ctrl.newInternationalSales.CurrencyIsoCode = '';
             ctrl.createInternationalSales();
 
-            ctrl.newForm.ISSP_AMS_where_incorporated__c='testΩx';
-            ctrl.newForm.ISSP_AMS_Principal_business_Org__c='testΩx';
-            ctrl.hqAccount.BillingState='testΩx';
-            ctrl.newContact.Job_title__c ='testΩx';
-            ctrl.newContact.AddressStreet__c='testΩx';
-            ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c='testΩx';
-            ctrl.newContact.AddressCity__c='testΩx';
-            ctrl.newContact.First_name__c='testΩx';
-            ctrl.newContact.Last_name__c='testΩx';
-            ctrl.hqAccount.BillingStreet='testΩx';
-            ctrl.hqAccount.BillingCity='testΩx';
-            ctrl.newForm.ISSP_AMS_Online_Agency_URL__c='testΩx';
-            ctrl.newForm.ISSP_AMS_Legal_Reg_Name_Address__c='testΩx';
+            ctrl.newForm.ISSP_AMS_where_incorporated__c='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Principal_business_Org__c='testÎ©x';
+            ctrl.hqAccount.BillingState='testÎ©x';
+            ctrl.newContact.Job_title__c ='testÎ©x';
+            ctrl.newContact.AddressStreet__c='testÎ©x';
+            ctrl.newForm.ISSP_AM_Means_Identified_Travel_Agency__c='testÎ©x';
+            ctrl.newContact.AddressCity__c='testÎ©x';
+            ctrl.newContact.First_name__c='testÎ©x';
+            ctrl.newContact.Last_name__c='testÎ©x';
+            ctrl.hqAccount.BillingStreet='testÎ©x';
+            ctrl.hqAccount.BillingCity='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Online_Agency_URL__c='testÎ©x';
+            ctrl.newForm.ISSP_AMS_Legal_Reg_Name_Address__c='testÎ©x';
             ctrl.validateCharactersInForm();
 
             ctrl.goToStep3Section1();
@@ -2901,23 +2910,23 @@ private class ISSP_AMS_Accreditation_Test
             //ctrl.newCase.Region__c = 'test2';
             //ctrl.sendConfirmationEmail(ctrl.newCase);
 
-            ctrl.hqAccount.Website = 'Σ';
+            ctrl.hqAccount.Website = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingCountry = 'Σ';
+            ctrl.hqAccount.BillingCountry = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingPostalCode = 'Σ';
+            ctrl.hqAccount.BillingPostalCode = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingCity = 'Σ';
+            ctrl.hqAccount.BillingCity = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.BillingStreet = 'Σ';
+            ctrl.hqAccount.BillingStreet = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.TradeName__c = 'Σ';
+            ctrl.hqAccount.TradeName__c = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.hqAccount.Name = 'Σ';
+            ctrl.hqAccount.Name = 'Î£';
             ctrl.validateCharactersInAgencyWindow();
-            ctrl.newContact.Name = 'Σ';
+            ctrl.newContact.Name = 'Î£';
             ctrl.validateCharactersInCompanyWindow();
-            ctrl.newContact.Registration_number__c = 'Σ';
+            ctrl.newContact.Registration_number__c = 'Î£';
             ctrl.validateCharactersInCompanyWindow();
         }
     }
@@ -2998,12 +3007,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = parent.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -3101,12 +3110,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = child.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -3261,12 +3270,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'Cargo';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = parent.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             insert testCase;
@@ -3275,12 +3284,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase2.Reason1__c = 'Cargo';
             testCase2.Customer_recovery__c = false;
-            testCase2.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase2.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase2.BounceEmailCounter__c = 0.0;
             testCase2.Case_Language__c = 'English';
             testCase2.Subject = 'Test 007';
             testCase2.Reopened_case__c = 0.0;
-            testCase2.Continous_Feed_SAF__c = true;
+            //testCase2.Continous_Feed_SAF__c = true;
             testCase2.Account_Concerned__c = parent.Id;
             testCase2.IFAP_Country_ISO__c = 'tq';
             testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
@@ -3543,12 +3552,12 @@ private class ISSP_AMS_Accreditation_Test
             testCase.BSPCountry__c = 'Hong Kong (SAR), China';
             testCase.Reason1__c = 'New HO';
             testCase.Customer_recovery__c = false;
-            testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
             testCase.BounceEmailCounter__c = 0.0;
             testCase.Case_Language__c = 'English';
             testCase.Subject = 'Test 006';
             testCase.Reopened_case__c = 0.0;
-            testCase.Continous_Feed_SAF__c = true;
+            //testCase.Continous_Feed_SAF__c = true;
             testCase.Account_Concerned__c = parent.Id;
             testCase.IFAP_Country_ISO__c = 'tq';
             
@@ -3595,5 +3604,165 @@ private class ISSP_AMS_Accreditation_Test
         }
 
         Test.stopTest();
+    }
+
+    // CB - test change of bank details w creation of child cases & oscars for them
+    @isTest static void ISSP_AMS_Accreditation_Test_14() 
+    {
+
+        
+        Id OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+
+        Id rtAccRoleOwnership = Schema.SObjectType.AMS_Account_Role__c.getRecordTypeInfosByName().get('Ownership').getRecordTypeId();
+
+        Id rtAccreditContPersonOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Person').getRecordTypeId();
+        Id rtAccreditContCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Company').getRecordTypeId();
+        //NoC
+        Id rtAccreditContPreviousOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Owner').getRecordTypeId();
+        Id rtAccreditContCurrentOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Owner').getRecordTypeId();
+        Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
+        Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' ,
+                                    Enable_Minor_Changes_from_Portal__c = true,
+                                    Local_language_Agency_details_required__c = true);
+        insert country;
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
+        insert country2;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType 
+        WHERE SobjectType = 'Account'
+        AND DeveloperName = 'IATA_Agency'][0].Id; 
+
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '1000000';
+        parent.IATA_ISO_Country__c = country.Id; 
+
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+
+       
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'Travel Agent';
+        child.Top_Parent__c = parent.Id;
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr ;
+        child.IATACode__c = '2000000';
+        child.Location_Type__c = 'BR';
+        insert child;
+        System.debug('child Id: ' + child.Id);
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= parent.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
+
+        System.debug('con Id: ' + con.Id);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        System.debug('newUser Id: ' + newUser.Id);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        AMS_Person__c p1 = new AMS_Person__c(Name='Test1 Person', User__c=newUser.Id);
+        insert p1;
+
+        AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+        insert hierarchy;
+
+        AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = parent.Id, Child_Account__c = child.Id);
+        insert rel1;
+
+        AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist = new  AMS_Accreditation_Country_CheckList__c();
+        AMS_Acc_Checklist.IATA_ISO_Country__c = country.id ;
+        AMS_Acc_Checklist.Operation__c = 'Travel Agent';
+        AMS_Acc_Checklist.License_required__c = false ;
+        AMS_Acc_Checklist.Registration_required__c = false ;
+        AMS_Acc_Checklist.Statement_of_International_Sales__c = false ; 
+        insert AMS_Acc_Checklist;
+
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = new AMS_Accreditation_Requirement__c(); 
+        ISSP_AMS_Accreditation_Acc_Req.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist.Id ;
+        ISSP_AMS_Accreditation_Acc_Req.Language__c = 'English';
+        ISSP_AMS_Accreditation_Acc_Req.Location_type__c = 'HO; Head Office;Branch';
+        ISSP_AMS_Accreditation_Acc_Req.Requirement_text__c = 'cdd';
+        ISSP_AMS_Accreditation_Acc_Req.Sort_Order__c = 1;
+        ISSP_AMS_Accreditation_Acc_Req.Name = 'TestReq1';
+        insert ISSP_AMS_Accreditation_Acc_Req;
+
+        
+        System.runAs(newUser)
+        {
+
+            Case testCase2 = ISSP_ObjectFactory.createNewCase();
+            testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase2.Reason1__c = 'Cargo';
+            testCase2.Region__c = 'Europe';
+            testCase2.Customer_recovery__c = false;
+            //testCase2.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            testCase2.BounceEmailCounter__c = 0.0;
+            testCase2.Case_Language__c = 'English';
+            testCase2.Subject = 'Test 007';
+            testCase2.Reopened_case__c = 0.0;
+            //testCase2.Continous_Feed_SAF__c = true;
+            testCase2.AccountId = parent.Id;
+            testCase2.Account_Concerned__c = parent.Id;
+            testCase2.IFAP_Country_ISO__c = 'tq';
+            testCase2.RecordTypeId = OSCAR_RECORD_TYPE_ID;
+
+            insert testCase2;
+
+
+            AMS_Pax_Accreditation_Form__c newForm2 = new AMS_Pax_Accreditation_Form__c();
+            newForm2.IsGSA__c = 'No';
+            newForm2.CurrencyIsoCode = country.CurrencyIsoCode;
+            newForm2.SAAM_Case__c = testCase2.Id;
+            newForm2.Agency_Codes_Concerned__c = '2000000';
+            newForm2.Scope_of_Change__c = 'HO - Selected Branches';
+            insert newForm2 ;
+
+            Test.startTest();
+  
+            ApexPages.currentPage().getParameters().put('caseId', testCase2.Id );
+            ApexPages.currentPage().getParameters().put('isBankAccountChange' ,'true');
+            ApexPages.currentPage().getParameters().put('isNoticeOfChange' ,'true');
+            ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
+            ctrl2.newCase = testCase2 ;
+
+            ctrl2.isNoticeOfChange = true;
+            ctrl2.isBankAccountChange = true;
+
+            ctrl2.newForm.Scope_of_Change__c = 'HO - Selected Branches';
+            ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
+            ctrl2.newform.Accept_terms_and_conditions__c = true;
+
+            Pagereference pr1 = ctrl2.goToFinalStep();
+
+            Test.stopTest();
+
+
+
+        }
+
+       
+        // Check that the child case was create & it has an OSCAR attached
+        list<Case> childCases = [SELECT Id, ParentId, OSCAR__c FROM Case ORDER BY CreatedDate ASC];
+        System.assertNotEquals(true, childCases.isEmpty());
+        System.assertEquals(null, childCases[0].ParentId);
+       // System.assertEquals(childCases[0].Id, childCases[1].ParentId);
+      //  System.assertNotEquals(null, childCases[1].OSCAR__c);
+
     }
 }
