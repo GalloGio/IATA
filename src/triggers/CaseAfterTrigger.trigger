@@ -8,7 +8,6 @@
 07 - trgCreateUpdateServiceRenderedRecord - ALL: Common
 08 - trgCaseEscalationMailNotificationICH - ALL: Common
 09 - trgCheckSISCaseRecycleBinAfterInsert - ALL: isInsert
-10 - trgCustomerPortalCaseSharing - ALL: isInsert
 11 - CaseBeforInsert - ALL: isInsert
 12 - AMS_OSCARCaseTrigger - ALL: isInsert, isUpdate
 13 - trgAccelyaRequestSetCountry - ALL: isInsert
@@ -17,44 +16,43 @@
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = false;
-    boolean trgCaseLastSIDRADate = false;
-  boolean trgCase_ContactLastSurveyUpdate = false;          
-  boolean trgParentCaseUpdate = true;                  //3333333333333
-  boolean trgICCSManageProductAssignment = false;           
-  boolean trgICCS_ASP_CaseClosed = false;
-  boolean trgCreateUpdateServiceRenderedRecord = false;        
-  boolean trgCaseEscalationMailNotificationICH = false;
-  boolean trgCheckSISCaseRecycleBinAfterInsert = true;        //2222222222222
-  boolean trgCustomerPortalCaseSharing = false;
-  boolean CaseBeforInsert = true;                    //3333333333333
-  boolean AMS_OSCARCaseTrigger = false;
-  boolean trgAccelyaRequestSetCountry = true;              //3333333333333
-  boolean trgCase = true;                        //3333333333333
+    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;
+    boolean trgCaseLastSIDRADate = GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;
+	boolean trgCase_ContactLastSurveyUpdate = GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;
+	boolean trgParentCaseUpdate = GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;										//33333333333333
+	boolean trgICCSManageProductAssignment = GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;					//33333333333333
+	boolean trgICCS_ASP_CaseClosed = GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;
+	boolean trgCreateUpdateServiceRenderedRecord = GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;			
+	boolean trgCaseEscalationMailNotificationICH = GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;
+	boolean trgCheckSISCaseRecycleBinAfterInsert = GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;				//22222222222222
+	boolean CaseBeforInsert = GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;												//33333333333333
+	boolean AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
+	boolean trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;						//33333333333333
+	boolean trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;							
     /**********************************************************************************************************************************/
     
     /*Record type*/
     ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-  Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-  ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
-  Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
+    Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+    ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+    Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+    Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+    Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
     Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
     ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
     ID caseRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
     Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
-  Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
-  Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
-  Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
-  ID AccelyacaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-  ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+    Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
+    Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
+    Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
+    ID AccelyacaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
+    ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
     /*Record type*/  
     
     /*Variables*/
     Boolean caseRecType = false;
     String CPCcaseRecType;
-  Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
+    Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
     Boolean isIFAPCase = false;
   Integer futureLimit = Limits.getFutureCalls();
   Boolean ThereAreICCSProductManagementCases = false;
@@ -655,51 +653,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     } //if trgCheckSISCaseRecycleBinAfterInsert
     /*trgCheckSISCaseRecycleBinAfterInsert Trigger.isInsert*/
     
-    /*trgCustomerPortalCaseSharing Trigger.isInsert
-    //Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
-    if(trgCustomerPortalCaseSharing){
-      try{  
-        for(Case ObjCaseNew : Trigger.New){ 
-          CPCcaseRecType = ObjCaseNew.RecordTypeId;            
-          UserIds.add(ObjCaseNew.OwnerId);                                        
-        }    
-        if(CPCcaseRecType == caseRecordTypeID){ 
-          lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
-          bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-          for(Case ObjCaseNew : Trigger.New){                  
-            ObjCaseNew.BusinessHoursId = bHourObj.Id;
-          } 
-          if(lstUsers.Size()>0){
-            for(Case ObjCaseNew : Trigger.New){
-              for(Integer i=0;i<lstUsers.Size();i++){
-                if(ObjCaseNew.OwnerId == lstUsers[i].Id){
-                  ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
-                  System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
-                  break;
-                }
-              }           
-            }   
-          }else{        
-            lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
-            if(lstQueue.Size()>0){
-              for(Case ObjCaseNew : Trigger.New){
-                for(Integer i=0;i<lstQueue.Size();i++){
-                  if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
-                    ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
-                    break;
-                  }
-                }           
-              }
-            } //lstQueue.Size
-          } //else
-        } //if CPCcaseRecType
-      }
-      catch(Exception e){
-        System.debug('Error Message -----: ' + e.getMessage());
-      } 
-    } //if trgCustomerPortalCaseSharing
-    /*trgCustomerPortalCaseSharing Trigger.isInsert*/
-    
     /*CaseBeforInsert Trigger.isInsert*/
     if(CaseBeforInsert){
       system.debug('CaseBeforInsert Trigger.isInsert');
@@ -787,7 +740,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   /****************************************************************************************************************************************************/    
     /*Trigger.isUpdate*/
   else if (Trigger.isUpdate) {
-        /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate
+    /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate
     if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
       Set<Id> sCaseIds = new Set<Id>();
       // Check if received cases are IFAP Cases
