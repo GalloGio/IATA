@@ -48,28 +48,24 @@ public without sharing class PortalServiceAccessTriggerHandler {
         }
 
         //
-        // Get account's IEP Status to supress mails from beeing send.
-        //
-        List<Account> accountsStatus = [Select id, ANG_IEP_Status_FF__c From Account Where Id in : accountIDs];
-        Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
-        for(Account account : accountsStatus) {
-            iepAccountStatusMap.put(account.id, account.ANG_IEP_Status_FF__c);
-        }
-
-        //
         // Get all the top parents linked to the accounts.
         //
         List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
-                                                         contact__r.accountId
+                                                         contact__r.accountId,
+                                                         contact__r.account.ANG_IEP_Status_FF__c
                                                     From Portal_Application_Right__c
                                                    Where account__c in : accountIDsIepAux];
-
 
         //
         // Set with all accountIds and top parent ids
         //
         Set<String> accountsSet = new Set<String>();
         Map<String, String> topParents = new Map<String, String>();
+
+        //
+        // Get account's IEP Status to supress mails from beeing send.
+        //
+        Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
 
         for(Portal_Application_Right__c par : parl) {
             if(par.contact__r.account.Top_Parent__c != null) {
@@ -78,6 +74,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
             }
             accountsSet.add(par.contact__r.accountId);           
             topParents.put(par.contact__r.accountId, par.contact__r.accountId);
+            iepAccountStatusMap.put(par.contact__r.accountId, par.contact__r.account.ANG_IEP_Status_FF__c);
         }
 
         //
@@ -284,8 +281,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
             update accessListUpdate;
         }
     }
-
-
 
     /*** Automatically subscribe the new Currency Center users to all the existing Country Profile records***/
     public static void SubscribeNewUsersToAllCountryProfiles(Map<Id, Portal_Application_Right__c> newItems){
