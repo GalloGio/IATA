@@ -8,8 +8,6 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject> {
 	
 	global ANG_ConversionBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate) {
 		
-		System.debug('Starting ANG_ConversionBatch');
-
 		structures= structuresToMigrate;
 
 		Integer queryResults = structures.size();
@@ -17,8 +15,6 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject> {
 		this.query = 'SELECT Id from Account LIMIT ' + queryResults;
 		
 		this.run = 0;
-		
-		System.debug('Structures to be migrated:'+queryResults);
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
