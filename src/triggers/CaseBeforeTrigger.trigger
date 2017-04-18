@@ -7,6 +7,7 @@
 06 - UserInfoUpdate - All: Common, isInsert, isUpdate                FILE
 07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate      FILE
 08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate            FILE
+09 - trgCustomerPortalCaseSharing - ALL: isInsert	
 10 - trgBeforeInsertUpdate - All: Common                      FILE
 11 - CalculateBusinessHoursAges - All: isUpdate                    FILE
 12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate                FILE
@@ -819,6 +820,60 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }   
         }
         /*trgBeforeInsertUpdate Trigger*/
+  
+        /*trgCustomerPortalCaseSharing Trigger
+		//Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
+		if(trgCustomerPortalCaseSharing){
+			try{
+				String CPCcaseRecType;
+				BusinessHours bHourObj = new BusinessHours();
+				Set<Id> UserIds = new Set<Id>();
+				list<User> lstUsers = new List<User>();
+				list<QueueSobject> lstQueue = new List<QueueSobject>();
+				//GM - IMPRO - START
+				//the control on record type has been thought for a single insert only
+				for(Case ObjCaseNew : Trigger.New){ 
+					CPCcaseRecType = ObjCaseNew.RecordTypeId;            
+					UserIds.add(ObjCaseNew.OwnerId);                                        
+				}
+				
+				if(CPCcaseRecType == PortalRecordTypeID){ 
+					lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
+					bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
+					for(Case ObjCaseNew : Trigger.New){                	
+						ObjCaseNew.BusinessHoursId = bHourObj.Id;
+					} 
+					if(lstUsers.Size()>0){
+						for(Case ObjCaseNew : Trigger.New){
+							for(Integer i=0;i<lstUsers.Size();i++){
+								if(ObjCaseNew.OwnerId == lstUsers[i].Id){
+									ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
+									System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
+									break;
+								}
+							}           
+						}   
+					}else{        
+						lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
+						if(lstQueue.Size()>0){
+							for(Case ObjCaseNew : Trigger.New){
+								for(Integer i=0;i<lstQueue.Size();i++){
+									if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
+										ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
+										break;
+									}
+								}           
+							}
+						} //lstQueue.Size
+					} //else
+				} //if CPCcaseRecType
+			}//GM - IMPRO - END
+			catch(Exception e){
+				System.debug('Error Message -----: ' + e.getMessage());
+			} 
+		} //if trgCustomerPortalCaseSharing
+		/*trgCustomerPortalCaseSharing Trigger*/
+        
     }
     /*Share trigger code*/
     
