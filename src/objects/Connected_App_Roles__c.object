@@ -44,12 +44,30 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Default_User_Role__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Default user Role to be used on the portal. Role assigned by default to be stored in the Portal Service Access Object</description>
+        <externalId>false</externalId>
+        <label>Default User Role</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
         <label>Description</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Manage_User_Access__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User portal roles that will receive the notification mail.</description>
+        <externalId>false</externalId>
+        <label>Manage User Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>PermissionSet_Provisioning__c</fullName>
