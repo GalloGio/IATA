@@ -2,6 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered</fullName>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>Alert admins that a contact has registered</description>
         <protected>false</protected>
         <recipients>
@@ -14,7 +15,7 @@
     </alerts>
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
-        <ccEmails>luukkaa@iata.org</ccEmails>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>Alert admins that a contact has registered - CNS</description>
         <protected>false</protected>
         <recipients>
