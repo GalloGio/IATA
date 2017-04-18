@@ -6,7 +6,7 @@ public with sharing class FeedItemHelper {
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		
+		System.Debug('trigger 1');
 		String strAcceptedValues = '';
 
 		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
@@ -16,8 +16,15 @@ public with sharing class FeedItemHelper {
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
- 	   		if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
- 	   			setRelatedAccountIds.add(fi.ParentId);
+
+		Pattern p = Pattern.compile('#[A-Z]{2}\\w*');
+		Matcher regexMatcher = p.matcher(fi.body.toUpperCase());
+
+
+ 	   		if (String.valueOf(fi.ParentId).startsWith('001') 
+ 	   			&& (!fi.Body.contains('#') || !regexMatcher.matches()) 
+ 	   		 	&& fi.Type == 'TextPost') {
+	 	   			setRelatedAccountIds.add(fi.ParentId);
  	   		}
  	   	}
 		if (!setRelatedAccountIds.isEmpty()) {
@@ -32,13 +39,11 @@ public with sharing class FeedItemHelper {
 
 
 				for (FeedItem fi : lstTriggerNew) {
- 	   			fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
+ 	   				fi.addError ('Please use hashtags (#) to define the topic(s) of your post.\r\nYou can choose one or more of the following topics:\r\n' + strAcceptedValues);
 					// if (String.valueOf(fi.ParentId).startsWith('001') && !fi.Body.contains('#') && fi.Type == 'TextPost') {
 					// }
 				}
  	   		}
  	   	}
-
 	}
-
 }
