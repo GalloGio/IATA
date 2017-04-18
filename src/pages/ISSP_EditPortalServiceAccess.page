@@ -212,7 +212,11 @@
                                 </th>
                                 <td class="data2Col  first ">
                                 <apex:selectList styleClass="iatainputbox" id="ContactList" value="{!SelectedContacts}" required="true" multiselect="true" size="5">
-                                    <apex:selectOptions value="{!Contacts}" />
+                                    <apex:selectOptions value="{!Contacts[0]}" />                                    
+                                    <apex:selectOptions value="{!Contacts[1]}" />
+                                    <apex:selectOptions value="{!Contacts[2]}" />
+                                    <apex:selectOptions value="{!Contacts[3]}" />
+                                    <apex:selectOptions value="{!Contacts[4]}" />
                                 </apex:selectList>
                                 </td></tr>
                             </apex:outputPanel>
