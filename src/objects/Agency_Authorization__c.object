@@ -101,7 +101,7 @@
         <formula>CASE( RecordType.DeveloperName , 
 &quot;BSPLink&quot;, 
 &quot;BSPLink&quot;, 
-&quot;Form_of_Payment&quot;,
+&quot;FormOfPayment&quot;,
    CASE(ANG_FormOfPayment_ID__c, 
    &quot;CC&quot;, &quot;Card Payment Method&quot;,
    &quot;CA&quot;, &quot;Cash Payment Method&quot;,
@@ -292,4 +292,35 @@
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <webLinks>
+        <fullName>New_Agency_Authorization</fullName>
+        <availability>online</availability>
+        <description>Create Agency Authorization</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Agency Authorization</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/36.0/integration.js&quot;)} 
+
+var changeTab = function(result){ 
+if(result.success == true){ 
+} 
+}; 
+
+var openSubtab = function(result) 
+{ 
+
+var recordtypeResult = sforce.connection.query(&quot;Select id FROM RecordType WHERE DeveloperName=&apos;BSPLink&apos;&quot;); 
+
+var recordTypeValue = recordtypeResult.getArray(&apos;records&apos;); 
+
+
+sforce.console.openSubtab(result.id, &apos;/a8t/e?CF00Nw00000094V1O=&apos;+&apos;{!Account.Name}&apos;+&apos;&amp;CF00Nw00000094V1O_lkid=&apos;+&apos;{!Account.Id}&apos;+&apos;&amp;RecordType=&apos;+recordTypeValue[0].Id, true, &apos;Agency Authorization&apos;, null, changeTab); 
+}; 
+
+sforce.console.getEnclosingPrimaryTabId(openSubtab);</url>
+    </webLinks>
 </CustomObject>
