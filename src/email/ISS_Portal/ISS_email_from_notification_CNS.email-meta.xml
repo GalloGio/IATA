@@ -11,14 +11,14 @@
 
 Dear {!Contact.Salutation} {!Receiving_User.FirstName} {!Receiving_User.LastName},
 
-A new notification has been posted on your IATA portal account.  You can find it in &apos;My Notifications&apos; on the portal Home Page.
+A new notification has been posted on your CNS portal account.  You can find it in &apos;My Notifications&apos; on the portal Home Page.
 
 Subject:
 &quot;{!Notification__c.Subject__c} &quot;
 
-You can access it on your IATA Customer Portal
+You can access it on your CNS Customer Portal
 
 Thank you in advance,
-IATA Customer Service</textOnly>
+CNS Customer Service</textOnly>
     <type>custom</type>
 </EmailTemplate>
