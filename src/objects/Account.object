@@ -23087,7 +23087,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -25386,7 +25386,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -28319,7 +28319,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -30618,7 +30618,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -34443,7 +34443,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -36485,7 +36485,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -41787,7 +41787,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -44213,7 +44213,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -48461,7 +48461,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -52620,7 +52620,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -55157,7 +55157,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -57377,7 +57377,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -59597,7 +59597,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -62191,7 +62191,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -69647,7 +69647,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
@@ -73748,7 +73748,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Legacy</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
