@@ -6,7 +6,6 @@ public with sharing class FeedItemHelper {
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		System.Debug('trigger 1');
 		String strAcceptedValues = '';
 
 		for (AMP_Account_Topics__c at : AMP_Account_Topics__c.getAll().Values()) {
@@ -17,12 +16,11 @@ public with sharing class FeedItemHelper {
 		set<Id> setRelatedAccountIds = new set<Id>();
 		for (FeedItem fi : lstTriggerNew) {
 
-		Pattern p = Pattern.compile('#[A-Z]{2}\\w*');
+		Pattern p = Pattern.compile('[^.]*#[A-Z]{2}\\w*[^.]*');
 		Matcher regexMatcher = p.matcher(fi.body.toUpperCase());
 
-
  	   		if (String.valueOf(fi.ParentId).startsWith('001') 
- 	   			&& (!fi.Body.contains('#') || !regexMatcher.matches()) 
+ 	   			&& !regexMatcher.matches() 
  	   		 	&& fi.Type == 'TextPost') {
 	 	   			setRelatedAccountIds.add(fi.ParentId);
  	   		}
