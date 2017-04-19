@@ -100,13 +100,26 @@ private class CaseBeforeTriggerTest {
                           Origin = 'asd',
                           Region__c = 'Americas',
                           BSPCountry__c = 'Anguilla',
-                          IATAcode__c = '123456',
+                          IATAcode__c = '12345678',
                           parentid = cas.id,
                           Country_concerned__c = 'Italy',
                           contactid = con.id,
                           AccountId = a.id
         );
         insert cas3; 
+
+        Case cas4 = new Case(recordtypeID = AmericacaseRecordTypeID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          IATAcode__c = '12345678910',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas4; 
 
     }
 
