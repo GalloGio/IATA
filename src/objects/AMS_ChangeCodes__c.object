@@ -21,31 +21,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Billable_Countries_To_Exclude__c</fullName>
-        <description>Region To Exclude if the Change code is Billable, works together with the field &quot;Billable Location Class To Exclude&quot;
-Possible values are Country ISO Code Ex: PT;ES;IT
-Values must be Separated by &quot;;&quot;</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Possible values are Country ISO Code Ex: PT;ES;IT
-Values must be Separated by &quot;;&quot;
-Region To Exclude if the Change code is Billable, works together with the field &quot;Billable Location Class To Exclude&quot;</inlineHelpText>
-        <label>Billable Countries To Exclude</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Billable_Location_Class_To_Exclude__c</fullName>
-        <description>Location Class To Exclude if the Change code is Billable, works together with the field &quot;Billable Countries To Exclude&quot;
+        <fullName>Billable_Location_Class__c</fullName>
+        <description>Location Class To include if the Change code is Billable
 Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
 Values must be Separated by &quot;;&quot;</description>
         <externalId>false</externalId>
-        <inlineHelpText>Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
-Values must be Separated by &quot;;&quot;
-Location Class To Exclude if the Change code is Billable, works together with the field &quot;Billable Countries To Exclude&quot;</inlineHelpText>
-        <label>Billable Location Class To Exclude</label>
+        <inlineHelpText>Location Class To include if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
+Values must be Separated by &quot;;&quot;</inlineHelpText>
+        <label>Billable Location Class</label>
         <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
