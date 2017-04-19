@@ -1784,7 +1784,7 @@ private class CaseBeforeTriggerTest {
             
        Account a = new Account( name ='IFAP ACCT',
                     industry = 'pluto',
-                                     IATA_ISO_Country__c=isoCountry.id,
+                    IATA_ISO_Country__c=isoCountry.id,
                                      recordtypeID = hqrt,
                                      IATACode__c ='1234567',
                                      Type = 'IATA Cargo Agent',
