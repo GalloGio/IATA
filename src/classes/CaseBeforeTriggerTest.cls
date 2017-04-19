@@ -737,6 +737,17 @@ private class CaseBeforeTriggerTest {
     }
 
     @isTest static void trgICCS_ASP_CaseTest() {
+      
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
       // Create a new ISO Country
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR');
         insert country;
@@ -784,7 +795,7 @@ private class CaseBeforeTriggerTest {
         lstCases = [SELECT Id FROM Case WHERE RecordTypeId = :RT_ICCS_ASP_Id];
         System.AssertEquals(1,lstCases.size()); // Check that the case was not inserted
         
-        
+        cs.ownerid = testUser.id;
         cs.Status = 'Closed';
         update cs;
         
@@ -1491,6 +1502,16 @@ private class CaseBeforeTriggerTest {
     
     //Simulate 4th non-compliance (error)
     @istest static void CaseClosedTest(){
+      Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+      
       list<Case> lsCaseFSM = CreateFSMCases();
       system.assert(lsCaseFSM.size()>0);
       
@@ -1500,6 +1521,7 @@ private class CaseBeforeTriggerTest {
         FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
         system.debug(Logginglevel.ERROR, 'DTULLO Account ID --> ' + FSMCase.AccountId);
         system.debug(Logginglevel.ERROR, 'DTULLO Contact ID --> ' + FSMCase.ContactId);
+        FSMCase.ownerid = testUser.id;
         FSMCase.status = 'Closed';
       }
       
@@ -1628,7 +1650,17 @@ private class CaseBeforeTriggerTest {
       
       test.StopTest();
     }
-@istest static void TestUpdate(){
+    @istest static void TestUpdate(){
+      Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+      
       list<Case> lsCaseFSM = CreateFSMCases();
       system.assert(lsCaseFSM.size()>0);
       
@@ -1667,6 +1699,7 @@ private class CaseBeforeTriggerTest {
       
       for(Case FSMCase:lsCaseFSM){
         FSMCase.FS_Deadline_Date__c = system.today().addDays(-10);
+        FSMCase.ownerid = testUser.id;
         FSMCase.Status = 'Closed';
       }
       
