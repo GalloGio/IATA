@@ -78,8 +78,7 @@ public class vfIECEBC_OptOut {
         pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }
-    public string getemailurl(){
-        return ApexPages.currentPage().getParameters().get('e');
+    public string getemailurl(){        
         return EncodingUtil.urlEncode(ApexPages.currentPage().getParameters().get('e'), 'UTF-8');
         //return ApexPages.currentPage().getParameters().get('e');
     }
