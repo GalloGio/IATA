@@ -18,6 +18,7 @@ private class CaseBeforeTriggerTest {
         ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
         Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
         ID SIDRAcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+        ID AmericacaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('CasesAmericas');
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
         insert isoCountry;
@@ -93,6 +94,20 @@ private class CaseBeforeTriggerTest {
         cas1.Short_Payment_Date__c = system.today();
 
         update cas1;
+
+        Case cas3 = new Case(recordtypeID = AmericacaseRecordTypeID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          IATAcode__c = '123456',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas3; 
+
     }
 
     @isTest static void unitTest2() {
@@ -1744,6 +1759,8 @@ private class CaseBeforeTriggerTest {
       
       test.StopTest();
     }
+
+
 
 
 
