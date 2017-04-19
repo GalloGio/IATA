@@ -31,6 +31,7 @@ private class CaseBeforeTriggerTest {
                                  IATA_ISO_Country__c=isoCountry.id,
                                  recordtypeID = hqrt,
                                  IATACode__c ='1234567',
+                                 Site_Index__c = '1234567',
                                  Type = 'IATA Cargo Agent',
                                  billingCountry = 'ss',Location_Type__c = 'AO',
                                  category__c = 'IATA Cargo Agent',
