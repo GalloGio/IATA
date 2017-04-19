@@ -193,13 +193,8 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>Source_Campaign__c</columns>
-        <columns>Unsubscribe_From__c</columns>
         <columns>Email__c</columns>
-        <columns>Type__c</columns>
-        <columns>Other_Reason__c</columns>
-        <columns>Is_Relation_Created__c</columns>
-        <columns>Event_Date__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
