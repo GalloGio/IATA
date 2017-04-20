@@ -2,6 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered</fullName>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>Alert admins that a contact has registered</description>
         <protected>false</protected>
         <recipients>
@@ -14,6 +15,7 @@
     </alerts>
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
+        <ccEmails>noreply@iata.org</ccEmails>
         <description>Alert admins that a contact has registered - CNS</description>
         <protected>false</protected>
         <recipients>
@@ -411,7 +413,7 @@
             <name>New_user_portal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
