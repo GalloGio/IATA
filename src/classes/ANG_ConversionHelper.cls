@@ -395,13 +395,13 @@ global with sharing class ANG_ConversionHelper {
 
 	public class StatisticGeneratorStructure{
 
-		public Integer totalHierarchies;
+		public Integer totalHierarchies{get;set;}
 
-		public Integer totalValidHierarchies;
+		public Integer totalValidHierarchies{get;set;}
 
-		public Integer totalMigratedHierarchies;
+		public Integer totalMigratedHierarchies{get;set;}
 		
-		public Integer totalInvalidHierarchies;
+		public Integer totalInvalidHierarchies{get;set;}
 
 		public Map<String,ANG_ConversionHelper.HierarchyStructure> validHierarchies;
 		
