@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Newgen ISS Callout Mapping</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>CalloutClass__c</fullName>
+        <description>Callout Class Implementation</description>
+        <externalId>false</externalId>
+        <label>Callout Class</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remote_Site__c</fullName>
+        <description>Remote Site Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Remote Site Name</inlineHelpText>
+        <label>Remote Site</label>
+        <length>200</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Newgen ISS Callout Mapping</label>
+    <visibility>Public</visibility>
+</CustomObject>
