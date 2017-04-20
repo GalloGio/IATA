@@ -22978,6 +22978,41 @@ title,Title,Name</value>
         <value>SECTION 2 - General Information</value>
     </labels>
 	
+	<labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>1. Identification of Agency for which Approval Requested</value>
+    </labels>
+	<labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_GenInfo</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section2_GenInfo</shortDescription>
+        <value>2. General Info</value>
+    </labels>
+	<labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_AgencyContacts</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section3_AgencyContacts</shortDescription>
+        <value>3. Agency Contacts</value>
+    </labels>
+	<labels>
+        <fullName>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</shortDescription>
+        <value>4.Security of Electronic Tickets</value>
+    </labels>
+	<labels>
+        <fullName>ISSP_AMS_LeftNav_Section5_Other Info </fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info </shortDescription>
+        <value>5. Other Info</value>
+    </labels>	
     <labels>
         <fullName>ISSP_AMS_Step3_5_Other_Info</fullName>        
         <language>en_US</language>
