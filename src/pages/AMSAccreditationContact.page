@@ -213,6 +213,9 @@
                 <apex:actionFunction name="removeFromAcListServer" action="{!removeFromAcList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
+                <apex:actionFunction name="removeFromTsListServer" action="{!removeFromTsList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
+                    <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
+                </apex:actionFunction>
                 <apex:actionFunction name="removeFromAccountListServer" action="{!removeFromAccountList}" immediate="true" reRender="selected, accounts, trainedstaff, messages, messages2" status="loadingStatus">
                     <apex:param value="" assignTo="{!toUnselect}" name="toUnselect" />
                 </apex:actionFunction>
@@ -668,6 +671,7 @@
                                             <table id="wt" class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
                                                     <tr>
+                                                        <th class="slds-row-action slds-size--1-of-12" scope="col"></th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Issuer__c.Label}</th>
                                                         <th class="slds-text-heading--label slds-size--1-of-5" scope="col">{!$ObjectType.AMS_Accreditation_Contact__c.Fields.First_Name__c.Label}</th>
@@ -676,6 +680,12 @@
                                                 </thead>
                                                 <tbody>
                                                         <tr class="slds-hint-parent">
+                                                        <td class="slds-size--1-of-12">
+                                                            <apex:outputPanel>
+                                                            <img onclick="if(confirm('Are you sure?')){removeFromTsListServer({!trainedStaffIndex});}return false;" alt="remove" class="pointer" style="max-width: 22px; max-height: 22px;" src="{!$Resource.remove_icon}"/>
+                                                             </apex:outputPanel>
+                                                        </td>
+
                                                             <td class="slds-size--1-of-5" data-label="{ObjectType.AMS_Accreditation_Contact__c.Fields.Certificate_Name__c.Label}">
                                                                 <apex:inputField html-class="slds-input inputPointer" value="{!tsw.ac.Certificate_Name__c}"/>
                                                             </td>
