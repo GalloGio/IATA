@@ -13,17 +13,8 @@ public without sharing class PortalServiceAccessTriggerHandler {
     }
     
     public static void SendEmailToPortalAdminToValidateRequest(list<Portal_Application_Right__c> newPortalApplicationRightList) {
-        ////ENV.EmailTemplateDN.Notify_Admin_of_app_requestVF //Notify_Admin_of_app_requestVF
 
-        List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
-                                                   FROM Connected_App_Roles__c 
-                                                  where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' 
-                                                    and Manage_User_Access__c = true];
-
-        Set<String> roles = new Set<String>();
-        for(Connected_App_Roles__c r : rolesAux) {
-            roles.add(r.Role__c);
-        }
+        Set<String> roles = ANG_ISSP_IEPMailRecipientsUtils.getIEPRolesManageUserAccess();
     
         ID templateId = getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
     
@@ -47,60 +38,21 @@ public without sharing class PortalServiceAccessTriggerHandler {
             } 
         }
 
-        //
-        // Get all the top parents linked to the accounts.
-        //
-        List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
-                                                         contact__r.accountId,
-                                                         contact__r.account.ANG_IEP_Status_FF__c
-                                                    From Portal_Application_Right__c
-                                                   Where account__c in : accountIDsIepAux];
-
-        //
-        // Set with all accountIds and top parent ids
-        //
-        Set<String> accountsSet = new Set<String>();
-        Map<String, String> topParents = new Map<String, String>();
+        Map<ID, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
 
         //
         // Get account's IEP Status to supress mails from beeing send.
         //
         Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
 
+        List<Portal_Application_Right__c> parl = [Select contact__r.account.ANG_IEP_Status_FF__c From Portal_Application_Right__c Where account__c in : accountIDsIepAux];
+        
         for(Portal_Application_Right__c par : parl) {
-            if(par.contact__r.account.Top_Parent__c != null) {
-                accountsSet.add(par.contact__r.account.Top_Parent__c);
-                topParents.put(par.contact__r.account.Top_Parent__c, par.contact__r.accountId);
-            }
-            accountsSet.add(par.contact__r.accountId);           
-            topParents.put(par.contact__r.accountId, par.contact__r.accountId);
             iepAccountStatusMap.put(par.contact__r.accountId, par.contact__r.account.ANG_IEP_Status_FF__c);
         }
 
         //
-        // Get all portal application right with the top parent linked to the accounts that have the configured roles.
-        //
-        List<Portal_Application_Right__c> parList2 = [Select Account__c,
-                                                             Contact__c
-                                                        From Portal_Application_Right__c
-                                                       Where ANG_Portal_Service_Role__c in : roles
-                                                         And contact__r.accountId in : accountsSet];
-
-        //
-        // Set with all contacts per account
-        //                                                         
-        Map<Id, Set<Id>> IEP_accountIDs = new Map<Id, Set<Id>>();
-
-        for(Portal_Application_Right__c p : parList2) {
-            Set<ID> contactIDs = IEP_accountIDs.get(p.Account__c);
-            if(null == contactIDs)
-                contactIDs = new Set<ID>();
-            contactIDs.add(p.Contact__c);
-            IEP_accountIDs.put(p.Account__c, contactIDs);
-        }
-
-        //
-        // Get the users by account. NORMAL PART
+        // Get the users by account. 
         //
         map<ID, Set<ID>> accIdToUserIdMap = new map<ID, Set<ID>>();
 
@@ -112,26 +64,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
             accIdToUserIdMap.put(member.AccountId, userIDs);
         }
 
-        //
-        // Get the users by account. EASYPAY PART
-        //
-        map<ID, Set<Id>> accIdToUserIdMapIep = new map<Id, Set<ID>>();
-
-        for(Id key : IEP_accountIDs.keySet()) {
-            Set<Id> userIDsAux = new Set<id>();
-
-            userIDsAux.addAll(getPortalIepUsers(IEP_accountIDs.get(key)));
-
-            Set<Id> userIDs = accIdToUserIdMapIep.get(topParents.get(key));
-
-            if(null == userIDs)
-                userIDs = new Set<ID>();
-
-            userIDs.addAll(userIDsAux);
-
-            accIdToUserIdMapIep.put(topParents.get(key), userIDs);
-        }
-    
         ID standartReplyUserID = getStandartReplyUserID(ENV.Reply_Email);
     
         ID standardReplyUserID_CNS = getStandartReplyUserID(ENV.Reply_Email_CNS);
