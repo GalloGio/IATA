@@ -2436,6 +2436,34 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>RU_EG_IN</fullName>
+        <columns>NAME</columns>
+        <columns>BSP_Country_free_text__c</columns>
+        <columns>Case_BSP_Country__c</columns>
+        <columns>CASS_Country_free_text__c</columns>
+        <columns>ISO_Code__c</columns>
+        <columns>Region__c</columns>
+        <columns>Sub_Region__c</columns>
+        <columns>Cargo_Agency_Accreditation__c</columns>
+        <columns>Cargo_Branch_Country__c</columns>
+        <columns>Cargo_HO_Country__c</columns>
+        <columns>AMS_Settlement_System_CASS__c</columns>
+        <columns>CASS_Domestic__c</columns>
+        <columns>CASS_Export__c</columns>
+        <columns>CASS_Import__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Russian Federation,Egypt,India</value>
+        </filters>
+        <label>RU + EG + IN</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>IATAAdmins</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>new_dpcs</fullName>
         <columns>NAME</columns>
         <columns>ISO_Code__c</columns>
