@@ -22906,6 +22906,85 @@ title,Title,Name</value>
         <shortDescription>regular price</shortDescription>
         <value>Regular Price</value>
     </labels>
+	<labels>
+        <fullName>ISSP_AMS_Previous_Default_2</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Previous_Default_2</shortDescription>
+        <value>* Have you, or any person who is a director of, or who holds a material financial interest or a position of management in the Applicant currently or previously been involved in any fiduciary breach or crime, or subject to bankruptcy proceedings, or been a director of or had a financial interest or held a position of management in an Agent which has been removed from the Agency List or is currently subject to review or default action by IATA for non-compliance with the conditions of its Accreditation?</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cash_Location</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
+        <value><strong>Head Entity - Standard with cash</strong> (mentioned in SECTION 1 above)</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
+        <value><strong>Head Entity - Standard without cash</strong> (mentioned in SECTION 1 above)</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless  </shortDescription>
+        <value>Accreditaiton type requested</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_Secu_of_Elect_Tickets</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Secu_of_Elect_Tickets</shortDescription>
+        <value>SECTION 4 - Security of Electronic Tickets</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_Step3_5_Event_of_inspection</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_5_Event_of_inspection</shortDescription>
+        <value>In the event of an inspection, the Applicant will be required to provide evidence that it meets the security requirements for issuance of Electronic Tickets, in accordance with the provisions of section 8, and in particular the Payment Card Industry (PCI) Data Security Standards as referenced in section 2.1.6 of Resolution 890.</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Identi_Appro_Req</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_Identi_Appro_Req</shortDescription>
+        <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription> 
+        <value>SECTION 2 - General Information</value>
+    </labels>
+
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription>
+        <value>SECTION 2 - General Information</value>
+    </labels>
+	
+    <labels>
+        <fullName>ISSP_AMS_Step3_5_Other_Info</fullName>        
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 5 Other Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
+    </labels>
     <labels>
         <fullName>select_all</fullName>
         <categories>IEC</categories>
