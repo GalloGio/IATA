@@ -212,7 +212,7 @@
                                 </th>
                                 <td class="data2Col  first ">
                                 <apex:selectList styleClass="iatainputbox" id="ContactList" value="{!SelectedContacts}" required="true" multiselect="true" size="5">                                    
-                                    <apex:selectOptions value="{!if(Contacts.size == 1, Contacts[0], Contacts[1])}" rendered="{!if(Contacts.size == 1, true, false)}"/>
+                                    <apex:selectOptions value="{!if(Contacts.size == 1, Contacts[0], Contacts[1])}" />
                                     <apex:selectOptions value="{!if(Contacts.size == 3, Contacts[2], "")}" rendered="{!if(Contacts.size == 3, true, false)}"/>
                                     <apex:selectOptions value="{!if(Contacts.size == 4, Contacts[3], "")}" rendered="{!if(Contacts.size == 4, true, false)}"/>
                                     <apex:selectOptions value="{!if(Contacts.size == 5, Contacts[4], "")}" rendered="{!if(Contacts.size == 5, true, false)}"/>
