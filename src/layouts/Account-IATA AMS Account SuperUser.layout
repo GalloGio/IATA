@@ -118,7 +118,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ANG_IsNewGenAgency__c</field>
+                <field>ANG_RiskStatus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -189,6 +189,18 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_IEP_Status_FF__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_CashCondition__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_RiskStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_RiskHistoryAssessment__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
