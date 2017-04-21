@@ -30,7 +30,7 @@ global with sharing class ANG_ConversionHelper {
         -5 => 'Agencies in multiple hierarchies',
         -6 => 'Hierarchies with invalid agencies sectors',
         -7 => 'Hierarchies with agencies missing top parent',
-        -8 => 'Orfan Branches (BR)'
+        -8 => 'Orphan Branches (BR)'
     };   
 
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
@@ -65,19 +65,6 @@ global with sharing class ANG_ConversionHelper {
 
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
-
-		//List<Account> allAccountsInvolved = [Select Id, Name, Location_Type__c, Top_Parent__c, ParentId from Account where Id in :allAgencies];
-
-		//List<AMS_Agencies_Hierarchy__c> allHierarchiesInvolved = [Select Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :allHierarchies];
-
-		//System.debug('Size of structure:'+toReturn.size());
-
-		//Integer run = 0;
-
-		//For(ANG_ConversionHelper.HierarchyStructure toReturnStruct :toReturn.values()){
-	//		System.debug('Running ' + run++);
-//			toReturnStruct.fillAgencies(allAccountsInvolved,allHierarchiesInvolved);
-//		}
 
 		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
 
@@ -340,9 +327,6 @@ global with sharing class ANG_ConversionHelper {
 		Map<Id,List<Account>> allAgenciesMap = fetchAllAgenciesInvolved(structures);
 
 		Map<Id,AMS_Agencies_Hierarchy__c> allHierarchiesInvolvedMap = fetchAllHierarchiesInvolved(structures);
-
-					System.debug('All allAgenciesMap:' + allAgenciesMap);
-					System.debug('All allHierarchiesInvolvedMap:' + allHierarchiesInvolvedMap);
 
 		for(ANG_ConversionHelper.HierarchyStructure struct: structures){
 
