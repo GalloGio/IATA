@@ -2,7 +2,7 @@
 <messaging:plainTextEmailBody >
 Your request for unsubscribe has been received.
 Unsubscribed Email: {!relatedTo.Email__c} 
-Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.Unsubscribe_From__r.Name)}
+Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.BillingAccName__c)}
 
 At all time, you can resume receiving important information from IATA ebroadcast (on your current email address or on a new one).
 </messaging:plainTextEmailBody>
@@ -114,7 +114,7 @@ text-align: right;
 <tr>
     <td class="two-columns" style="text-align: left; padding: 0 20px;">
     Unsubscribed Email: {!relatedTo.Email__c}<br/>
-    Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.Unsubscribe_From__r.Name)}
+    Unsubscribe From: {!IF(ISBLANK(relatedTo.Unsubscribe_From__c), 'All Senders',relatedTo.BillingAccName__c)}
     </td>
 </tr>
 <tr>
