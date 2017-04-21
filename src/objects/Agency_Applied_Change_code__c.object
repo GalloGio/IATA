@@ -1022,7 +1022,7 @@ AND(
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
