@@ -50,6 +50,9 @@ private class ANG_RiskEventGeneratorTest {
 
 		new ANG_RiskEventGenerator(caseList, caseMap).generate();
 
+		//second time will just upsert
+		new ANG_RiskEventGenerator(caseList, caseMap).generate();
+
 		Test.stopTest();
 
 		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Risk_Type__c FROM ANG_Agency_Risk_Event__c];
