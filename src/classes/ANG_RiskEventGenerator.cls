@@ -166,7 +166,6 @@ public class ANG_RiskEventGenerator {
 					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
 					risk.ANG_Created_from__c = objectName;
 					risk.put(sourceFields.get(objectName), o.Id);
-					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
 					riskEvents.add(risk);
 				}
@@ -184,9 +183,6 @@ public class ANG_RiskEventGenerator {
 			//check list of objects to query
 			riskTypes.add(re.ANG_Risk_Type__c);
 			accountIds.add(re.ANG_AccountId__c);
-
-			//needed for manual creation or changes
-			re.ANG_UniqueKey__c = re.ANG_Source_Id__c+re.ANG_Risk_ID__c;
 
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
 		}
