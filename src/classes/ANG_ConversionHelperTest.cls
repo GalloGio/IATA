@@ -157,11 +157,22 @@ private class ANG_ConversionHelperTest {
 
 		System.assertEquals(3,finalStructNew.totalInvalidHierarchies);
 
+		List<Account> accountsChanged = [SELECT Id, ParentId , Location_Type__c, Top_Parent__c from Account];
+		
+		Map<Id,Account> accountsChangedMap =new Map<Id,Account>();
 
+		for(Account acct: accountsChanged)
+			accountsChangedMap.put(acct.Id, acct);
+
+		Account acct =null;
+		
 		// validate if all the accounts have the same parent id and top parent, or if it's an HE it doesn't have any
 		for(ANG_ConversionHelper.HierarchyStructure struct: validStruct.values()){
 			if(!struct.isSingleAgencyHierarchy){
-				for(Account acct : struct.allAgencies.values()){
+				for(Id acctId : struct.allAgencies){
+
+					acct =accountsChangedMap.get(acctId);
+
 					if(acct.Id != struct.topParentId){
 						System.assertEquals(struct.topParentId, acct.ParentId);
 						System.assertEquals(struct.topParentId, acct.Top_Parent__c);
@@ -196,9 +207,7 @@ private class ANG_ConversionHelperTest {
 
 		// now the update part.
 
-		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(validStruct.values());
-
-    	Id conversionBatchId = Database.executeBatch(conversionBatch);	
+    	Id conversionBatchId = ANG_ConversionHelper.runMigration('US');
 
 		Test.stopTest();
 

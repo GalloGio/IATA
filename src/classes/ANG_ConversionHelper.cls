@@ -24,16 +24,25 @@ global with sharing class ANG_ConversionHelper {
 	public static final Set<String> LOCATIONTYPESNEWGEN = new Set<String>{'AE','HE'};
     
     public static Map<Integer, String> errorMessages = new Map<Integer, String> {
-        -2 => 'Hierarchy with wrong Record Type',
-        -3 => 'Hierarchy with branches abroad',
-        -4 => 'Hierarchy with invalid location classes',
+        -2 => 'Hierarchies with wrong Record Type',
+        -3 => 'Hierarchies with branches abroad',
+        -4 => 'Hierarchies with invalid location classes',
         -5 => 'Agencies in multiple hierarchies',
-        -6 => 'Hierarchy with invalid sectors',
-        -7 => 'Hierarchy is missing top parent',
-        -8 => 'Orfan Branch'
+        -6 => 'Hierarchies with invalid agencies sectors',
+        -7 => 'Hierarchies with agencies missing top parent',
+        -8 => 'Orfan Branches (BR)'
     };   
 
+   public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
+            
+        Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
 
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure));
+            
+   }
+    
 	public static Map<Id,ANG_ConversionHelper.HierarchyStructure> buildHierarchyStructure(String country){
 
 		Set<Id> allAgencies = new Set<Id>();
@@ -57,15 +66,18 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsInvolved = [Select Id, Name, Location_Type__c, Top_Parent__c, ParentId from Account where Id in :allAgencies];
+		//List<Account> allAccountsInvolved = [Select Id, Name, Location_Type__c, Top_Parent__c, ParentId from Account where Id in :allAgencies];
 
-		List<AMS_Agencies_Hierarchy__c> allHierarchiesInvolved = [Select Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :allHierarchies];
+		//List<AMS_Agencies_Hierarchy__c> allHierarchiesInvolved = [Select Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :allHierarchies];
 
+		//System.debug('Size of structure:'+toReturn.size());
 
-		For(ANG_ConversionHelper.HierarchyStructure toReturnStruct :toReturn.values()){
+		//Integer run = 0;
 
-			toReturnStruct.fillAgencies(allAccountsInvolved,allHierarchiesInvolved);
-		}
+		//For(ANG_ConversionHelper.HierarchyStructure toReturnStruct :toReturn.values()){
+	//		System.debug('Running ' + run++);
+//			toReturnStruct.fillAgencies(allAccountsInvolved,allHierarchiesInvolved);
+//		}
 
 		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
 
@@ -254,6 +266,22 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static Id runMigration(String countryName){
+
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
+
+		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
+
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+
+		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
+
+    	Id conversionBatchId = Database.executeBatch(conversionBatch);	
+
+    	return conversionBatchId;
+
+	}
+
 
 	public static ANG_ConversionHelper.StatisticGeneratorStructure fetchStatistics(Map<Id,ANG_ConversionHelper.HierarchyStructure> structure){
 
@@ -293,6 +321,14 @@ global with sharing class ANG_ConversionHelper {
 
 	public static List<ANG_ConversionHelper.HierarchyStructure> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
 
+		System.debug('Preparing to convert:'+structures);
+
+		Map<Id,Account> allAgenciesFinalMap = null;
+
+		Set<Account> allAgencies = null;
+
+		AMS_Agencies_Hierarchy__c hierarchy = null;
+
 		Set<Account> accountsToUpdate = new Set<Account>();
 
 		Set<AMS_Agencies_relationhip__c> relationsToUpdate = new Set<AMS_Agencies_relationhip__c>();
@@ -301,9 +337,26 @@ global with sharing class ANG_ConversionHelper {
 
 		List<ANG_ConversionHelper.HierarchyStructure> toReturn = new List<ANG_ConversionHelper.HierarchyStructure>();
 
+		Map<Id,List<Account>> allAgenciesMap = fetchAllAgenciesInvolved(structures);
+
+		Map<Id,AMS_Agencies_Hierarchy__c> allHierarchiesInvolvedMap = fetchAllHierarchiesInvolved(structures);
+
+					System.debug('All allAgenciesMap:' + allAgenciesMap);
+					System.debug('All allHierarchiesInvolvedMap:' + allHierarchiesInvolvedMap);
+
 		for(ANG_ConversionHelper.HierarchyStructure struct: structures){
 
-			ANG_ConversionHelper.MigrationContainer container = changeStructure(struct);
+			allAgencies = new Set<Account>();
+			allAgencies.addAll(allAgenciesMap.get(struct.hierarchyId));
+
+			allAgenciesFinalMap = new Map<Id,Account>();
+
+			for(Account acct: allAgencies)
+				allAgenciesFinalMap.put(acct.Id,acct);
+
+			hierarchy = allHierarchiesInvolvedMap.get(struct.hierarchyId);
+
+			ANG_ConversionHelper.MigrationContainer container = changeStructure(struct,allAgenciesFinalMap,hierarchy);
 
 			accountsToUpdate.addAll(container.accountsToUpdate);
 			relationsToUpdate.addAll(container.relationsToUpdate);
@@ -331,8 +384,88 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static Map<Id,List<Account>> fetchAllAgenciesInvolved(List<ANG_ConversionHelper.HierarchyStructure> structs){
 
-	public static ANG_ConversionHelper.MigrationContainer changeStructure(ANG_ConversionHelper.HierarchyStructure struct){
+		Set<Id> accountIdsToSearch = new Set<Id>();
+
+		Map<Id,List<Account>> toReturn = new Map<Id,List<Account>>();
+
+
+		for(ANG_ConversionHelper.HierarchyStructure struct:structs){
+
+			if(!struct.isSingleAgencyHierarchy)
+				accountIdsToSearch.addAll(struct.allAgencies);
+			else
+				accountIdsToSearch.add(struct.topParentId);
+		}
+
+		List<Account> accountsSearched = [SELECT Id, Name, Location_Type__c, ParentId from Account where Id in :accountIdsToSearch];
+
+		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
+
+		for(Account acct: accountsSearched){
+			accountsSearchedMap.put(acct.Id,acct);
+		}
+
+		for(ANG_ConversionHelper.HierarchyStructure struct:structs){
+
+			for(Id accountId: struct.allAgencies){
+
+				if(toReturn.get(struct.hierarchyId) == null){
+
+					toReturn.put(struct.hierarchyId, new List<Account>{accountsSearchedMap.get(accountId)});
+
+				}else{
+
+					toReturn.get(struct.hierarchyId).add(accountsSearchedMap.get(accountId));
+				}
+
+			}
+
+
+
+		}
+
+		return toReturn;
+
+	}
+
+	public static Map<Id,AMS_Agencies_Hierarchy__c> fetchAllHierarchiesInvolved(List<ANG_ConversionHelper.HierarchyStructure> structs){
+
+		Set<Id> hierarchyIdsToSearch = new Set<Id>();
+
+		Map<Id,AMS_Agencies_Hierarchy__c> toReturn = new Map<Id,AMS_Agencies_Hierarchy__c>();
+
+
+		for(ANG_ConversionHelper.HierarchyStructure struct:structs){
+
+			if(!struct.isSingleAgencyHierarchy)
+				hierarchyIdsToSearch.add(struct.hierarchyId);
+		}
+
+		
+		System.debug('Found these hierarchyIdsToSearch Id:' + hierarchyIdsToSearch);
+
+		List<AMS_Agencies_Hierarchy__c> hierarchiesSearched = [SELECT Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :hierarchyIdsToSearch];
+
+		System.debug('Found these:' + hierarchiesSearched);
+
+		Map<Id,AMS_Agencies_Hierarchy__c> hierarchiesSearchedMap = new Map<Id,AMS_Agencies_Hierarchy__c>();
+
+		for(AMS_Agencies_Hierarchy__c h: hierarchiesSearched){
+			hierarchiesSearchedMap.put(h.Id,h);
+		}
+
+		for(ANG_ConversionHelper.HierarchyStructure struct:structs){
+
+			toReturn.put(struct.hierarchyId, hierarchiesSearchedMap.get(struct.hierarchyId));
+			
+		}
+
+		return toReturn;
+	}
+
+	public static ANG_ConversionHelper.MigrationContainer changeStructure(ANG_ConversionHelper.HierarchyStructure struct, Map<Id,Account> allAgencies, AMS_Agencies_Hierarchy__c hierarchy){
 
 
 		Set<Account> accountsToUpdate = new Set<Account>();
@@ -340,25 +473,25 @@ global with sharing class ANG_ConversionHelper {
 		Set<AMS_Agencies_relationhip__c> relationsToUpdate = new Set<AMS_Agencies_relationhip__c>();
 
 		if(struct.isSingleAgencyHierarchy){
-			struct.allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
-			accountsToUpdate.add(struct.allAgencies.get(struct.topParentId));
+			allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
+			accountsToUpdate.add(allAgencies.get(struct.topParentId));
 		}
 		else{
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
 					rel.Parent_Account__c = struct.topParentId;
 					
-					struct.allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
+					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
 
-					struct.allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
+					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
 
-					if(struct.allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
-						struct.allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
+					if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
+						allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
 					
 					rel.Hierarchy__r.Migrated__c= true;
 
-					accountsToUpdate.add(struct.allAgencies.get(rel.Parent_Account__c));
-					accountsToUpdate.add(struct.allAgencies.get(rel.Child_Account__c));
+					accountsToUpdate.add(allAgencies.get(rel.Parent_Account__c));
+					accountsToUpdate.add(allAgencies.get(rel.Child_Account__c));
 
 					relationsToUpdate.add(rel);
 
@@ -366,10 +499,11 @@ global with sharing class ANG_ConversionHelper {
 		}
 		struct.migrated = true;
 
-		if(!struct.isSingleAgencyHierarchy)
-			struct.hierarchy.Migrated__c = true;
+		if(!struct.isSingleAgencyHierarchy){
+			hierarchy.Migrated__c = true;
+		}
 	
-		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,relationsToUpdate,struct.hierarchy);
+		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,relationsToUpdate,hierarchy);
 
 	}
 
@@ -435,11 +569,10 @@ global with sharing class ANG_ConversionHelper {
 		public List<AMS_Agencies_relationhip__c> relations;
 		public Boolean isValid;
 		public Integer errorCategory;
-		public String iataCodeTopParent;
+		public String iataCodeTopParent{get;set;}
 		public boolean migrated;
-		public String nameTopParent;
-		public Map<Id,Account> allAgencies;
-		public AMS_Agencies_Hierarchy__c hierarchy;
+        public String nameTopParent{get;set;}
+		public Set<Id> allAgencies;
 
 		public HierarchyStructure(Account acct){
 
@@ -455,12 +588,15 @@ global with sharing class ANG_ConversionHelper {
 			errorCategory = isValid ? DEFAULTMESSAGE : ORFANBRANCH;
 			migrated = LOCATIONTYPESNEWGEN.contains(acct.Location_Type__c);
 
-			allAgencies = new Map<Id,Account>();
-			allAgencies.put(acct.Id, acct);
+			allAgencies = new Set<Id>();
+			allAgencies.add(acct.Id);
 
 		}
 
 		public HierarchyStructure(AMS_Agencies_relationhip__c relationShip){
+
+			if(allAgencies == null)
+				allAgencies = new Set<Id>();
 
 			isSingleAgencyHierarchy = false;
 			hierarchyId = relationShip.Hierarchy__c;
@@ -472,57 +608,10 @@ global with sharing class ANG_ConversionHelper {
 			migrated = relationShip.Hierarchy__r.Migrated__c;
 			nameTopParent = relationShip.Child_Account__r.Top_Parent__r.Name;
 
-		}
-
-		public void fillAgencies(List<Account> accounts, List<AMS_Agencies_Hierarchy__c> hierarches){
-
-			if(allAgencies == null)
-				allAgencies = new Map<Id,Account>();
-			
-			Map<Id,Account> accountIds = new Map<Id,Account>();
-
-			For(Account acct: accounts)
-				accountIds.put(acct.Id,acct);
-
-			Map<Id,AMS_Agencies_Hierarchy__c> hierarchyIds = new Map<Id,AMS_Agencies_Hierarchy__c>();
-
-			For(AMS_Agencies_Hierarchy__c hier: hierarches)
-				hierarchyIds.put(hier.Id,hier);
-
-			For(Account acct: accounts){
-				For(AMS_Agencies_relationhip__c rel: relations){
-				
-					if(accountIds.containsKey(rel.Child_Account__c))
-						allAgencies.put(rel.Child_Account__c,accountIds.get(rel.Child_Account__c));
-				
-					if(hierarchyIds.containsKey(rel.Hierarchy__c))
-						hierarchy = hierarchyIds.get(rel.Hierarchy__c);
-				}
-			}
-
-			if(accountIds.containsKey(topParentId))
-				allAgencies.put(topParentId,accountIds.get(topParentId));
+			allAgencies.add(relationShip.Child_Account__c);
+			allAgencies.add(relationShip.Parent_Account__c);
 
 		}
-
-
-
-		
-		/* Not used but could be in the future if needed.
-
-		public HierarchyStructure(List<AMS_Agencies_relationhip__c> relationShips){
-
-			if(relationShips.isEmpty())
-				return;
-
-			hierarchyId = relationShips.get(0).Hierarchy__c;
-			topParentId = relationShips.get(0).Child_Account__r.Top_Parent__r.Id;
-			relations = new List<AMS_Agencies_relationhip__c>();
-			relations.addAll(relationShips);
-			isValid = false;
-			errorCategory = DEFAULTMESSAGE;
-			iataCodeTopParent = relationShips.get(0).Child_Account__r.Top_Parent__r.IATACode__c;
-		}*/
 
 		public HierarchyStructure addRelation(AMS_Agencies_relationhip__c relationShip){
 
@@ -531,10 +620,46 @@ global with sharing class ANG_ConversionHelper {
 			else
 				relations.add(relationShip);
 
+			if(allAgencies == null)
+				allAgencies = new Set<Id>();
+
+			allAgencies.add(relationShip.Child_Account__c);
+			allAgencies.add(relationShip.Parent_Account__c);
+
 			return this;
 
 		}
 		
+	} 
+
+
+	global class ControllerLightStructure{
+
+		public Integer totalHierarchies{get;set;}
+
+		public Integer totalValidHierarchies{get;set;}
+
+		public Integer totalMigratedHierarchies{get;set;}
+		
+		public Integer totalInvalidHierarchies{get;set;}
+		
+		public Map<Integer,List<ANG_ConversionHelper.HierarchyStructure>> inValidHierarchies;
+
+		public ControllerLightStructure(StatisticGeneratorStructure struct){
+
+			this.totalHierarchies = struct.totalHierarchies;
+
+			this.totalValidHierarchies = struct.totalValidHierarchies;
+			
+			this.totalMigratedHierarchies = struct.totalMigratedHierarchies;
+			
+			this.totalInvalidHierarchies = struct.totalInvalidHierarchies;
+
+			this.inValidHierarchies = struct.inValidHierarchies;
+
+		}
+
+
 	} 
 
 }
