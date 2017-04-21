@@ -1,14 +1,14 @@
 global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 
-	global String fetchEndPoint(String endPoint){
+	global static String fetchEndPoint(String endPoint){
 
 		// dummy method, we don't need to do nothing in this instance.
 
 		return endPoint;
 	}
 
-	global String serializeData(Object obj){
+	global static String serializeData(Object obj){
 
 		Account acct = (Account)obj;
 
@@ -18,8 +18,17 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 	
-	global void doCallOut(Object obj, String endpoint){
-	
+	global static void doCallOut(Object obj, String endpoint){
+		
+		String body = serializeData(obj);
+
+		sendCallout(body,endpoint);
+
+	}
+
+	@future (callout=true)
+	private static void sendCallout(String body, String endpoint){
+
 		HttpRequest req = new HttpRequest(); 
 	 
 		//Set HTTPRequest Method
@@ -28,10 +37,11 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		//Set HTTPRequest header properties
 		req.setHeader('content-type', 'application/json;charset=UTF-8');
 		req.setHeader('Connection','keep-alive');
-		req.setEndpoint(endpoint);
+		req.setEndpoint(fetchEndPoint(endpoint));
 
 		//Set the HTTPRequest body	
-		req.setBody(serializeData(obj)); 	
+
+		req.setBody(body); 	
 
 		Http http = new Http();
 
@@ -49,18 +59,19 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 
+
 	private class IEPMasterDataPayload {
 
 		String  AccountIATACode;
 		Boolean AllHierarchy;
-        
-        public IEPMasterDataPayload(String iataCode, Boolean allHierarchyb){
-        	
-        	this.AccountIATACode = iataCode;
-        	this.allHierarchy = allHierarchyb;
-        
-        }
-    
-    }
+
+		public IEPMasterDataPayload(String iataCode, Boolean allHierarchyb){
+			
+			this.AccountIATACode = iataCode;
+			this.allHierarchy = allHierarchyb;
+		
+		}
+
+	}
 
 }

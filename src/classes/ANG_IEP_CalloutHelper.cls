@@ -9,15 +9,13 @@ public  with sharing class ANG_IEP_CalloutHelper {
 		System.debug('Custom Setting:' + calloutMapping);
 
 		// Get the Type corresponding to the class name
-        Type t = Type.forName(calloutMapping.CalloutClass__c);
+		Type t = Type.forName(calloutMapping.CalloutClass__c);
 
 		System.debug('Custom Setting Call out class :' + calloutMapping.CalloutClass__c);
 
 		ANG_CalloutHelperInt callout = (ANG_CalloutHelperInt)t.newInstance();
 
-		String endPoint = callout.fetchEndPoint(calloutMapping.Remote_Site__c);
-
-		callout.doCallOut(obj, endpoint);
+		callout.doCallOut(obj, calloutMapping.Remote_Site__c);
 		
 	}
 
