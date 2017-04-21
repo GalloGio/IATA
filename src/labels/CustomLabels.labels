@@ -18484,6 +18484,54 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>reCAPTCHA verification Failed</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</shortDescription>
+        <value>has been granted with the following portal service role:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</shortDescription>
+        <value>You can access it</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_1</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_1</shortDescription>
+        <value>This is to inform you that your</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_2</shortDescription>
+        <value>portal service role has been changed to:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject</shortDescription>
+        <value>IATA Customer Portal – Change of</value>
+    </labels>            
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
+        <value>Portal Service Role</value>
+    </labels>
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
