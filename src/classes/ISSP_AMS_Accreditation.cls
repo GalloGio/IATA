@@ -3053,6 +3053,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     private string getAgentTypeLabel(string agentType) {
         if (agentType == 'IATA Passenger Sales Agent') {
+        if (agentType == 'Legacy') {
             return Label.ISSP_AMS_IATA_Passenger_Sales_Agent;
         }
         return agentType;
@@ -3079,7 +3080,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_OPTION_COURIER_HO;
         } else if (amsLocationType == 'New BR / IP - Courier') {
             return Label.ISSP_AMS_OPTION_COURIER_BRANCH;
-        } else if (amsLocationType == 'New HO - IATA Passenger Sales Agent') {
+        } else if (amsLocationType == 'New HO - Legacy') {
             return Label.ISSP_AMS_OPTION_PAX_HO;
         } else if (amsLocationType == 'New BR Abroad - IATA Passenger Sales Agent') {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD;
