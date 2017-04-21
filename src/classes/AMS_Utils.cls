@@ -103,6 +103,8 @@ public without sharing class AMS_Utils {
     public static final String AO = 'AO';
     public static final String SA = 'SA';
 
+    public static final String IEP = 'IEP';
+
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
     public static final String new_BR           = 'NEW.BR'          ;
@@ -1991,9 +1993,37 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
-    /** 
-     Wrapper Object for Mapping the Entity for Field 
-     Example : change_code__r.Account__r.name 
+    /**
+    Method called from process builder 'NEWGEN - Trigger SFDC-EasyPay integration': will trigger the integration with EasyPay and generate a change code
+    **/
+    @InvocableMethod
+    public static void startIEP(List<Id> accIds){
+
+        List<Agency_Applied_Change_code__c> codesToCreate = new List<Agency_Applied_Change_code__c>();
+
+        // get the configurations for the change code
+        AMS_ChangeCodes__c changeCodeConfig = AMS_ChangeCodesConfigHelper.getChangeCodeConfig(IEP);
+
+        List<Account> accs = [SELECT Id, IATAcode__c FROM Account WHERE Id in :accIds];
+
+        //first insert change codes
+        for(Account acc :accs){
+            codesToCreate.add(AMS_ChangeCodesHelper.generateTechnicalChangeCode(acc.Id, changeCodeConfig));
+        }
+
+        if(!codesToCreate.isEmpty()){
+            insert codesToCreate;
+        }
+
+        //call integration only after the change codes are succesfully inserted
+        for(Account acc :accs){
+           //ANG_IEP_CalloutHelper.invokeCustomImpl('IEP',acc);
+        }
+    }
+
+    /**
+     Wrapper Object for Mapping the Entity for Field
+     Example : change_code__r.Account__r.name
 
     */
     private class wrapperData {

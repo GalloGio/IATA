@@ -524,4 +524,18 @@ public class AMS_ChangeCodesHelper {
         list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
         return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
     }
+
+    // Generate a 'technical' change code to be used by integration
+    public static Agency_Applied_Change_code__c generateTechnicalChangeCode(Id accId, AMS_ChangeCodes__c changeCodeConfig){
+
+        Agency_Applied_Change_code__c codeToCreate = new Agency_Applied_Change_code__c();
+        codeToCreate.Change_Code__c = changeCodeConfig.Change_Code__c;
+        codeToCreate.Bulletin_Information__c = changeCodeConfig.Bulletin_Memo_Text__c;
+        codeToCreate.To_Publish_in_e_Bulletin__c = changeCodeConfig.Published_in_bulletin__c;
+        codeToCreate.Account__c = accId;
+        System.debug('## codeToCreate: '+codeToCreate);
+
+        return codeToCreate;
+    }
+
 }

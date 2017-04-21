@@ -142,5 +142,31 @@ private class AMS_ChangeCodesHelperTest {
         //System.assertEquals();
     
 
+
+	}
+	static testmethod void testCreateTechnicalChangeCode(){
+
+		AMS_ChangeCodes__c changeCodeConfig = new AMS_ChangeCodes__c();
+        changeCodeConfig.Name = 'IEP';
+        changeCodeConfig.Change_Code__c = 'IEP';
+        changeCodeConfig.Bulletin_Memo_Text__c = 'test text';
+        changeCodeConfig.Published_in_bulletin__c = false;
+        changeCodeConfig.Skip_Agency_Update__c = true;
+        changeCodeConfig.Integration_RecId__c = 'F';
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry;
+
+        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',
+                                 Name='Test HE',Short_Name__c='Test HE');
+        insert acct;
+
+		Test.startTest();
+
+		System.assert(AMS_ChangeCodesHelper.generateTechnicalChangeCode(acct.id,changeCodeConfig).Change_Code__c == 'IEP');
+
+		Test.stopTest();
 	}
 }
