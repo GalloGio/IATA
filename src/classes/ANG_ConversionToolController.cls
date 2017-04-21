@@ -1,6 +1,6 @@
 /**
 * @author Jana Konickova
-* @date 2017-04-19
+* @date 2017-04-21
 * @description controller ANG_ConversionToolController.cls of the page ANG_ConversionTool.page and of the page ANG_ConversionToolDetail.page
 * 
 */
@@ -11,7 +11,6 @@ public with sharing class ANG_ConversionToolController {
 	public Boolean displayTable { get; set; }
 	public Account iataCountryName { get; set; }
 	public List<ANG_ConversionToolController.OverviewTableRow> OverviewTable { get; set; }
-	//public ANG_ConversionHelper.StatisticGeneratorStructure finalStruct;
 	public ANG_ConversionHelper.ControllerLightStructure finalStruct;
 	public List<ANG_ConversionToolController.wrapperHierarchyStructure> wrStructure {get; set;}	
 
@@ -48,14 +47,8 @@ public with sharing class ANG_ConversionToolController {
 		selectedCountryName = iataCountry.Name;
 		system.debug('----------------------iataCountryName.IATA_ISO_Country__c = '+iataCountryName.IATA_ISO_Country__c );
 		system.debug('----------------------selectedCountryName = '+selectedCountryName );
-		/*
-		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(selectedCountryName);
-		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
-		finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
-		*/
 		finalStruct = ANG_ConversionHelper.runFullAnalyses(selectedCountryName);
 		OverviewTable = createOverviewTable(finalStruct);
-		//OverviewTable = createOverviewTable(structure);
 		displayTable=true;
 
 		return null;
@@ -95,25 +88,19 @@ public with sharing class ANG_ConversionToolController {
 		*/
 		//We create a new list of HierarchyStructures that we be populated only with HierarchyStructures if they are selected
 		List<ANG_ConversionHelper.HierarchyStructure> selectedHierarchyStructs = new List<ANG_ConversionHelper.HierarchyStructure>();
-
-		//We will cycle through our list of cContacts and will check to see if the selected property is set to true, if it is we add the Contact to the selectedContacts list
-		for(ANG_ConversionToolController.wrapperHierarchyStructure wrStruct: getDetailTable()) {
+		for(ANG_ConversionToolController.wrapperHierarchyStructure wrStruct: wrStructure) {
 			if(wrStruct.selected == true) {
 				selectedHierarchyStructs.add(wrStruct.struct);
 			}
 		}
-
-		// Now we have our list of selected HierarchyStructures and can perform any type of logic we want
 		System.debug('------------ These are the selected hierarchies... --------------');
 		for(ANG_ConversionHelper.HierarchyStructure struct: selectedHierarchyStructs) {
 			system.debug('----------------- struct: '+struct);
 		}
-		wrStructure=null; // we need this line if we performed a write operation  because getDetailTable gets a fresh list now
 		return null;
 	}
 
 
-	//public List<ANG_ConversionToolController.OverviewTableRow>  createOverviewTable(ANG_ConversionHelper.StatisticGeneratorStructure finalStruct){
 	public List<ANG_ConversionToolController.OverviewTableRow>  createOverviewTable(ANG_ConversionHelper.ControllerLightStructure finalStruct){
 
 		Integer listSize;
@@ -148,12 +135,6 @@ public with sharing class ANG_ConversionToolController {
 		tblRow.count = finalStruct.totalInvalidHierarchies;
 		tblRow.isDetail = false;
 		table.add(tblRow);
-
-		/*System.debug('------------------ Valid Hierarchies -----------------------');
-
-		for(ANG_ConversionHelper.HierarchyStructure hStructure: finalStruct.validHierarchies.values()){
-			System.debug('IATA Code:' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId);
-		}*/
 
 		System.debug('------------ ::: Invalid Hierarchies ::: --------------------');
 		Set<Integer> errorValues = finalStruct.inValidHierarchies.keySet();
