@@ -48,16 +48,16 @@ public without sharing class AMS_AgencyUpdateHelper {
         List<AMS_Agency_Updates__c> toRemoveAgencyUpdate = new List<AMS_Agency_Updates__c>();
 
         //get the change code settings to skip agency update generation
-        Set<String> codesToGenerateUpdate = new Set<String>();
+        Set<String> codesToSkipUpdate = new Set<String>();
         for(AMS_ChangeCodes__c codeConf :[SELECT Change_Code__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true]){
-            codesToGenerateUpdate.add(codeConf.Change_Code__c);
+            codesToSkipUpdate.add(codeConf.Change_Code__c);
         }
 
         Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>();
         Set<Id> agencyIds = new Set<Id>();
         for(SObject obj: updatedRecords){
-            //only add if the corresponding change code setting is not flagged to skip agency update;
-            if (!codesToGenerateUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
+            //only create update if the change code corresponding change code setting is not flagged to skip agency update;
+            if (!codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
                 if(obj.getSObjectType() != Schema.Account.getSObjectType()){
                     agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
                 }

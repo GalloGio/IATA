@@ -85,6 +85,8 @@ public class AMS_AccountTriggerHandler {
             System.debug('Not Handling minor changes');
        }
 
+       AMS_Utils.startIntegration(accs,oldMap);
+
     }
 
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
