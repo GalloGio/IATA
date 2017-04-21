@@ -205,6 +205,20 @@ public with sharing class AMS_AccreditationContactController {
         this.acWrapper.remove(this.toUnselect);
         return null;
     }
+
+    public PageReference removeFromTsList()
+    {
+        //AMS_Accreditation_Contact__c acToDelete = this.acList.get(this.toUnselect);
+        AMS_Accreditation_Contact__c acToDelete = trainedStaffWrapper.get(toUnselect).ac;
+        
+        if(acToDelete.id != null)
+        {
+            this.forDeletion.add(acToDelete);
+        }
+        
+        this.trainedStaffWrapper.remove(this.toUnselect);
+        return null;
+    }
     
     public PageReference removeFromAccountList()
     {

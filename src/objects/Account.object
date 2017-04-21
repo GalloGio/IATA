@@ -79982,7 +79982,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Key Account Plan</masterLabel>
+        <masterLabel>Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>
