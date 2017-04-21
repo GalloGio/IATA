@@ -19,7 +19,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 	}
 	
 	global void doCallOut(Object obj, String endpoint){
-	
+		
 		HttpRequest req = new HttpRequest(); 
 	 
 		//Set HTTPRequest Method
@@ -28,7 +28,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		//Set HTTPRequest header properties
 		req.setHeader('content-type', 'application/json;charset=UTF-8');
 		req.setHeader('Connection','keep-alive');
-		req.setEndpoint(endpoint);
+		req.setEndpoint(fetchEndPoint(endpoint));
 
 		//Set the HTTPRequest body	
 		req.setBody(serializeData(obj)); 	
@@ -53,14 +53,14 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 		String  AccountIATACode;
 		Boolean AllHierarchy;
-        
-        public IEPMasterDataPayload(String iataCode, Boolean allHierarchyb){
-        	
-        	this.AccountIATACode = iataCode;
-        	this.allHierarchy = allHierarchyb;
-        
-        }
-    
-    }
+
+		public IEPMasterDataPayload(String iataCode, Boolean allHierarchyb){
+			
+			this.AccountIATACode = iataCode;
+			this.allHierarchy = allHierarchyb;
+		
+		}
+
+	}
 
 }
