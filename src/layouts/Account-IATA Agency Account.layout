@@ -776,6 +776,8 @@
         <relatedList>AMS_Inspection__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>New_Agency_Authorization</customButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
         <fields>Authority__c</fields>
