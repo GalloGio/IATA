@@ -337,10 +337,14 @@ public with sharing class ISSP_EditPortalServiceAccess{
     public List<List<SelectOption>> getContacts() {
         List<List<SelectOption>> options = new List<List<SelectOption>>();
         List<List<Contact>> NotGrantedContacts_Lst = new List<List<Contact>>();
-        List <Contact> ContactList2;
-        List <Contact> ContactList3;
-        List <Contact> ContactList4;
-        List <Contact> ContactList5;
+        List <Contact> ContactList2 = new List<Contact>();
+        List <Contact> ContactList3 = new List<Contact>();
+        List <Contact> ContactList4 = new List<Contact>();
+        List <Contact> ContactList5 = new List<Contact>();
+
+        List<SelectOption> none = new List<SelectOption>();
+        none.add(new SelectOption('', '--None--'));
+        options.add(none);
         //INC314232: for governator limits we are creating 5 lists for limiting 1k contacts per list
         List <Contact> ContactList1 =
         	[SELECT Id, Name , AccountId,
@@ -349,9 +353,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
         	Account.IATACode__c  from Contact
         	WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
             order by id
-            Limit 1000];  
-
-        //options.add(new SelectOption('', '--None--'));
+            Limit 1000];          
         
         NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList1));
         if(ContactList1.size() == 1000){
@@ -446,6 +448,5 @@ public with sharing class ISSP_EditPortalServiceAccess{
             }
         }
         return cAux;   
-    }
-    
+    }    
 }
