@@ -2,6 +2,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	
 	public static final Integer STATUSOK = 200;
 
+
 	public static void invokeCustomImpl(String changeCode, Object obj) {
 
 		ANG_CalloutMapping__c calloutMapping = ANG_CalloutMapping__c.getInstance(changeCode);
@@ -15,7 +16,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		ANG_CalloutHelperInt callout = (ANG_CalloutHelperInt)t.newInstance();
 
-		callout.doCallOut(obj, calloutMapping.Remote_Site__c);
+		callout.doCallOut(callout.serializeData(obj), calloutMapping.Remote_Site__c);
 		
 	}
 

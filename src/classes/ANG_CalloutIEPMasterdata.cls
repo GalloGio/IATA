@@ -1,14 +1,14 @@
 global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 
-	global String fetchEndPoint(String endPoint){
+	global static String fetchEndPoint(String endPoint){
 
 		// dummy method, we don't need to do nothing in this instance.
 
 		return endPoint;
 	}
 
-	global String serializeData(Object obj){
+	global static String serializeData(Object obj){
 
 		Account acct = (Account)obj;
 
@@ -18,7 +18,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 	
-	global void doCallOut(Object obj, String endpoint){
+	@future (callout=true)
+	global static void doCallOut(String calloutBody, String endpoint){
 		
 		HttpRequest req = new HttpRequest(); 
 	 
@@ -31,7 +32,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		req.setEndpoint(fetchEndPoint(endpoint));
 
 		//Set the HTTPRequest body	
-		req.setBody(serializeData(obj)); 	
+		req.setBody(calloutBody); 	
 
 		Http http = new Http();
 
