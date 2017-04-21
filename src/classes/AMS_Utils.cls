@@ -103,6 +103,8 @@ public without sharing class AMS_Utils {
     public static final String AO = 'AO';
     public static final String SA = 'SA';
 
+    public static final String IEP = 'IEP';
+
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
     public static final String new_BR           = 'NEW.BR'          ;
@@ -1991,9 +1993,39 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
-    /** 
-     Wrapper Object for Mapping the Entity for Field 
-     Example : change_code__r.Account__r.name 
+    /**
+    Will trigger the integration with EasyPay and generate a change code
+    **/
+    public static void startIntegration(List<Account> newAccs, Map<Id,Account> oldMap){
+
+        // get the configurations for the change code
+        Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = AMS_ChangeCodesHelper.fetchChangeCodeConfiguration(newAccs, oldMap);
+
+        //only run if there are codes to be created
+        if(!mapAccCodeConf.keySet().isEmpty()){
+
+        //first insert change codes
+            Map<Account, Agency_applied_change_code__c> accChangeCodeMap = new Map<Account, Agency_applied_change_code__c>();
+            for(Account acc :mapAccCodeConf.keySet()){
+                accChangeCodeMap.put(acc,AMS_ChangeCodesHelper.generateIntegrationChangeCode(acc, mapAccCodeConf.get(acc)));
+        }
+
+            if(!accChangeCodeMap.values().isEmpty()){
+                insert accChangeCodeMap.values();
+        }
+
+            //do call only after the change codes are succesfully inserted
+            for(Account acc :accChangeCodeMap.keySet()){
+               //ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
+           }
+        }
+    }
+
+
+
+    /**
+     Wrapper Object for Mapping the Entity for Field
+     Example : change_code__r.Account__r.name
 
     */
     private class wrapperData {
