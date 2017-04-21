@@ -242,6 +242,8 @@ public with sharing class AMS_AccreditationContactHelper
         con.RecordTypeId = AMS_Utils.getId('Contact', 'Standard_Contact');
         con.Training_dangerous_goods_completed__c = ac.Training_dangerous_goods_completed__c;
         con.list_Dangerous_Goods_Awareness__c = ac.list_Dangerous_Goods_Awareness__c;
+        con.Authorized_Signatory__c = ac.Authorised_signatory__c;
+        con.Designated_Portal_Admin__c = ac.Portal_administrator__c;
         return con;
     }
 
