@@ -49,7 +49,7 @@
                 </thead>
                 <tbody>
                     <aura:iteration items="{!v.boardMonitoredActivities}" var="bma" indexVar="index">
-                        <c:AMP_BoardMonitoredActivity bma="{!bma}" displayType="{!v.displayType}" index="{!index}"/>
+                        <c:AMP_BoardMonitoredActivity bma="{!bma}" accountId="{!v.accountId}" displayType="{!v.displayType}" index="{!index}"/>
                     </aura:iteration>
                 </tbody>
             </table>
