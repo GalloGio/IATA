@@ -70,6 +70,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Top_Parent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
@@ -149,6 +153,10 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Category__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Category_Other_Value__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

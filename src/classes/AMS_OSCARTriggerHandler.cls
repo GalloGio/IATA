@@ -569,7 +569,15 @@ public class AMS_OSCARTriggerHandler {
 							if (dlResult.startsWith('ERROR')) oscar.addError(dlResult);
 							else accounts.get(oscar.Account__c).Due_Diligence_Status__c = AMS_Utils.IN_PROGRESS;
 						}
-					}					
+					}
+
+					system.debug('RB - Sanity check already passed: ' + oscar.Sanity_Check_Passed__c);
+
+            		if(oscar.Sanity_Check_Passed__c == true) {
+                	oscar.addError('Change code already generated for this OSCAR! Please perform a withdrawal in order to pass Sanity Check, rollback data through an OSCAR Correction and Set this OSCAR Status to Closed_Withdrawn');                
+            		}
+            
+            		oscar.Sanity_Check_Passed__c = true;					
 
 				} else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
