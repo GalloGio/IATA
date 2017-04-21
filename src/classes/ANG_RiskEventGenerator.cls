@@ -166,7 +166,6 @@ public class ANG_RiskEventGenerator {
 					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
 					risk.ANG_Created_from__c = objectName;
 					risk.put(sourceFields.get(objectName), o.Id);
-					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
 					riskEvents.add(risk);
 				}
@@ -185,9 +184,6 @@ public class ANG_RiskEventGenerator {
 			riskTypes.add(re.ANG_Risk_Type__c);
 			accountIds.add(re.ANG_AccountId__c);
 
-			//needed for manual creation or changes
-			re.ANG_UniqueKey__c = re.ANG_Source_Id__c+re.ANG_Risk_ID__c;
-
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
 		}
 
@@ -204,7 +200,7 @@ public class ANG_RiskEventGenerator {
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
 
 			if(String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')){
-				if(re.ANG_Issued_Date__c < System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = 'Inactive';
+				if(re.ANG_Issued_Date__c > System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = 'Inactive';
 				else re.ANG_Event_Status__c = 'Active';
 				
 				if(re.ANG_Expiration_Date__c <= System.today()) re.ANG_Expired__c = true;

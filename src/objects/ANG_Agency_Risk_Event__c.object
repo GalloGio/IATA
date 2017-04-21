@@ -345,17 +345,6 @@ Id
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
-        <fullName>Unique_Source_Validation</fullName>
-        <active>true</active>
-        <description>Only one source field can be filled</description>
-        <errorConditionFormula>(
-  IF(NOT(ISBLANK(ANG_CaseId__c)) , 1, 0) +
-  IF(NOT(ISBLANK(ANG_ChangeCode__c)) , 1, 0) +
-  IF(NOT(ISBLANK(ANG_OscarId__c)) , 1, 0)
-) &gt; 1</errorConditionFormula>
-        <errorMessage>Please, fill only one of the source fields</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Prevent_users_from_changing_issued_date</fullName>
         <active>true</active>
         <description>Prevent users from changing RE&apos;s issue date if the event status is &quot;Active&quot; or &quot;Inactive_Withdrawn&quot; or &quot;Inactive_Revoked&quot; or if RE is &quot;Inactive&quot; and has Expired= true</description>
@@ -367,5 +356,16 @@ ISPICKVAL(ANG_Event_Status__c,&apos;Inactive_Revoked&apos;)||
  ANG_Expired__c ))</errorConditionFormula>
         <errorDisplayField>ANG_Issued_Date__c</errorDisplayField>
         <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Unique_Source_Validation</fullName>
+        <active>true</active>
+        <description>Only one source field can be filled</description>
+        <errorConditionFormula>(
+  IF(NOT(ISBLANK(ANG_CaseId__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_ChangeCode__c)) , 1, 0) +
+  IF(NOT(ISBLANK(ANG_OscarId__c)) , 1, 0)
+) &gt; 1</errorConditionFormula>
+        <errorMessage>Please, fill only one of the source fields</errorMessage>
     </validationRules>
 </CustomObject>
