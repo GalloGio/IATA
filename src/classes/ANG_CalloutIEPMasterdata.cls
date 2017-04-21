@@ -18,9 +18,17 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 	
-	@future (callout=true)
-	global static void doCallOut(String calloutBody, String endpoint){
+	global static void doCallOut(Object obj, String endpoint){
 		
+		String body = serializeData(obj);
+
+		sendCallout(body,endpoint);
+
+	}
+
+	@future (callout=true)
+	private static void sendCallout(String body, String endpoint){
+
 		HttpRequest req = new HttpRequest(); 
 	 
 		//Set HTTPRequest Method
@@ -32,7 +40,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		req.setEndpoint(fetchEndPoint(endpoint));
 
 		//Set the HTTPRequest body	
-		req.setBody(calloutBody); 	
+
+		req.setBody(body); 	
 
 		Http http = new Http();
 
@@ -49,6 +58,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			throw new AMS_ApplicationException('ANG_CalloutIEPMasterdata: The masterdata could not be sent to IEP. Status:' + res.getStatusCode() + ' - Reason:'+ res.getStatus());
 
 	}
+
 
 	private class IEPMasterDataPayload {
 
