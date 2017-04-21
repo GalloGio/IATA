@@ -76,6 +76,14 @@ global with sharing class ANG_ConversionHelper {
 		for(Account acct: allAccountsSingleHierarchyBR)
 			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
 
+		List<AMS_Agencies_Hierarchy__c> alreadyMigratedStructures = [SELECT Id from AMS_Agencies_Hierarchy__c where Migrated__c = true];
+
+		for(AMS_Agencies_Hierarchy__c h: alreadyMigratedStructures){
+
+			toReturn.put(h.Id,createNewHierarchyStructure(h));
+
+		}
+
 		return toReturn;
 	}
 
@@ -206,6 +214,12 @@ global with sharing class ANG_ConversionHelper {
 		return struct;
 	}
 
+	private static ANG_ConversionHelper.HierarchyStructure createNewHierarchyStructure(AMS_Agencies_Hierarchy__c hierarchy){
+
+		ANG_ConversionHelper.HierarchyStructure struct = new ANG_ConversionHelper.HierarchyStructure(hierarchy);
+
+		return struct;
+	}
 
 	private Static ANG_ConversionHelper.HierarchyStructure createNewSoloHierarchyStructure(Account acct){
 
@@ -217,7 +231,7 @@ global with sharing class ANG_ConversionHelper {
 
 	public static void printStatistics(ANG_ConversionHelper.StatisticGeneratorStructure struct){
 
-		System.debug('---------------------------------');
+		System.debug('----------------------------------');
 		System.debug('Total Hierarchies:'+struct.totalHierarchies);
 		System.debug('Total Valid Hierarchies:'+struct.totalValidHierarchies);
 		System.debug('Total Invalid Hierarchies:'+struct.totalInvalidHierarchies);
@@ -549,7 +563,7 @@ global with sharing class ANG_ConversionHelper {
 
 		public boolean isSingleAgencyHierarchy;
 		public Id hierarchyId;
-		public Id topParentId;
+		public Id topParentId{get;set;}
 		public List<AMS_Agencies_relationhip__c> relations;
 		public Boolean isValid;
 		public Integer errorCategory;
@@ -557,6 +571,24 @@ global with sharing class ANG_ConversionHelper {
 		public boolean migrated;
         public String nameTopParent{get;set;}
 		public Set<Id> allAgencies;
+
+		public HierarchyStructure(AMS_Agencies_Hierarchy__c hierarchy){
+
+			isSingleAgencyHierarchy = false;
+			hierarchyId = hierarchy.Id;
+			topParentId = null;
+			relations = new List<AMS_Agencies_relationhip__c>(); 
+			iataCodeTopParent = null;
+			nameTopParent = null;
+
+			isValid = true;
+
+			errorCategory = DEFAULTMESSAGE;
+			migrated = true;
+
+			allAgencies = new Set<Id>();
+
+		}
 
 		public HierarchyStructure(Account acct){
 
