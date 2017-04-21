@@ -10,7 +10,7 @@
            >
     <html>
     
-    	<c:ISSP_Header ></c:ISSP_Header>    
+    	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  		<body>
         <c:pkb_css />
     	<c:pkb_js pkbCon="{!pkbCon}" />    
@@ -32,7 +32,7 @@
 	</script>  
     
      <div class="container">   
-         <c:ISSP_CustomNavigation />
+         <c:ISSP_CustomNavigation communityName="{!communityName}"/>
      <apex:outputText rendered="{!viewingArticle}">
         <apex:variable var="typeName" value="{!SUBSTITUTE(pkbCon.theKad.articleTypeName, pkbCon.kavExtension, '')}" />
         <apex:variable var="articleURL" value="{!pkbCon.currentSiteUrl}articles{!pkbCon.selectedLanguageURL}{!typeName}/{!pkbCon.theKad.urlName}" />
@@ -57,10 +57,11 @@
                                     <c:issp_pkb_narrow pkbCon="{!pkbCon}" />
                                     <div id="contactUs">
                                         {!$Label.PKB2_Contact_Us_Link_Prompt}<br/>
-                                        <apex:outputLink value="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1">
+                                        <apex:outputLink value="/ISSP_FAQ2Case?MainNav=Queries&subNav=MyQueries&mid=M1S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}">
                                             {!$Label.PKB2_Contact_Us}</apex:outputLink>
                                         <br/><br/>
-                                        Located in the United States?<br/>
+                                        <apex:outputText value="{!if(communityName=='CNS','Travel Agent Located in the United States?','Located in the United States?')}"/>
+                                        <br/>
                                         Please Contact Us <a href="http://www.iatan.org/Pages/default.aspx">here</a>
                                         <br/><br/>
                                         
@@ -84,9 +85,9 @@
                             <apex:outputText rendered="{!NOT(displayContactUs)}">
                                 <apex:outputText rendered="{!NOT(viewingArticle)}">
                                     <br/>
-                                    <c:pkb_featured pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
-                                    <c:pkb_popular pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" />
-                                    <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="true" />
+                                    <c:pkb_featured pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" communityName="{!communityName}"/>
+                                    <c:pkb_popular pkbCon="{!pkbCon}" rendered="{!NOT(searchExecuted)}" communityName="{!communityName}"/>
+                                    <c:pkb_results pkbCon="{!pkbCon}" rendered="{!searchExecuted}" showHeaderInfo="true" communityName="{!communityName}"/>
                                 </apex:outputText>
                                 
                                 <apex:outputText rendered="{!viewingArticle}">
@@ -104,8 +105,8 @@
                         </div>
                     </div>
                </div>
+               <div style="clear: both;"><c:ISSP_CustomFooter communityName="{!communityName}"/></div>
          </div><!-- end container-->
-      <c:ISSP_CustomFooter />
 
   </body>
     

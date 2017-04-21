@@ -542,6 +542,9 @@
                                                         </apex:outputPanel>
 
                                                         <div class="form-address is-hidden">
+                                                            <div>
+                                                                <span class="optional">{!$Label.English_Alphabet}</span>
+                                                            </div>
                                                             <div class="field-group text inline">
                                                                 <label>
                                                                     <span class="input-label">Address nickname <span class="required">*</span> <span class="optional">(i.e work, home)</span></span>
