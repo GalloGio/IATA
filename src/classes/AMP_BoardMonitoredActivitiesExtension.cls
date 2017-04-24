@@ -94,6 +94,18 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			AND AM_Related_to_Sector__c = :acc.Sector__c
 			AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
 
+			for(Objective__c o : lstBMAs)
+                if(o.Comments__r == null)
+                    insert new Comment__c(Account__c = o.Account__c, Parent_Objective__c = o.Id);
+                
+              //second time for ensure that every objective has a comment. better way: create ant the end if no comment exists   
+             lstBMAs =
+			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+			(SELECT Id, Name, Detail__c, Status__c FROM Comments__r  ORDER BY CreatedDate DESC LIMIT 1)
+			FROM Objective__c
+			WHERE RecordTypeId = :DivisionRecordTypeId
+			AND AM_Related_to_Sector__c = :acc.Sector__c
+			AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
 			return lstBMAs;
 		}
 

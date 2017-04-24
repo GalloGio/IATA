@@ -469,8 +469,8 @@
         <fields>Termination_Date__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortField>Termination_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
