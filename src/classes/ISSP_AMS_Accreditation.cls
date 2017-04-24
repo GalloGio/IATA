@@ -3157,6 +3157,15 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
             
             System.debug('SFSF accredModel ' + accredModel);
+
+            if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
+                accredModel = AMS_Utils.AGENTTYPE_NOCASH; 
+            } else if (newForm.Agent_Type__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+                accredModel = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+            } else{
+                accredModel = newForm.Agent_Type__c;
+            }
+
             //Get distinct set of Languages for this country / operation requirements
             distinctReqmentLangs = [
                                        SELECT Language__c
