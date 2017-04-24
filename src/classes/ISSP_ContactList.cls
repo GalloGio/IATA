@@ -30,6 +30,10 @@ public with sharing class ISSP_ContactList {
     public Boolean contactsWithIdCard {get; set;}
     public String contactsWithIdCardString {get; set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {
@@ -240,7 +244,7 @@ public with sharing class ISSP_ContactList {
                 system.debug('ORDERING LIKE: ' + sortDirection);
                 size = 10;
 
-                String query = ' CreatedDate , Name , Account.Name ';
+                String query = ' CreatedDate , Name , Account.Name , ValidContactDomainName__c, ValidContactDomainImage__c ';
                 for(Schema.FieldSetMember f : this.getFields()) {
                     query +=  ', '+f.getFieldPath() ;
                 }
@@ -611,7 +615,7 @@ public with sharing class ISSP_ContactList {
 			errorMessage.add(Label.ISSP_SelectOnlyOneContact);
 		}
 		else{
-			PageReference pr = new PageReference('/ISSP_PortalUserStatusChange?id=' + thisRecordId);
+			PageReference pr = new PageReference('/ISSP_PortalUserStatusChange?id=' + thisRecordId + commParam);
 			return pr;
 		}
 		return null;

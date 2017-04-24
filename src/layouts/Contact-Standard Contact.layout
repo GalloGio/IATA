@@ -154,6 +154,10 @@
                 <field>Email</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ValidContactDomainImage__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IDcard_Email__c</field>
             </layoutItems>
@@ -235,6 +239,10 @@
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
                 <width>100%</width>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Contact__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -360,11 +368,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>APJC_Participant__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>LCAG_Member__c</field>
             </layoutItems>
             <layoutItems>

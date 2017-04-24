@@ -8,7 +8,7 @@
            action="{!securityCheck}">
     
 	<html> 
-		<c:ISSP_Header ></c:ISSP_Header>
+		<c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
 		<c:iss_ap_css />
 		<c:ISSP_WaitingStatus />
 		<body>
@@ -614,7 +614,7 @@
 
 	<div class="container">
 		<div id="contentWrapper">
-			<c:ISSP_CustomNavigation />
+			<c:ISSP_CustomNavigation communityName="{!communityName}"/>
 	
 	<div class="panel-primary">
 		<div class="panel-heading head_panel_green">
@@ -1467,7 +1467,7 @@
 	</div>	
 	</div>
 	</div>
-		<c:ISSP_CustomFooter />
+		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
 		<script>
 						

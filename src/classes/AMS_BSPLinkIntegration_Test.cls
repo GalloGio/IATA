@@ -165,7 +165,7 @@ private class AMS_BSPLinkIntegration_Test {
     	AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-1);
+		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
 				
 		test.startTest();
@@ -183,35 +183,11 @@ private class AMS_BSPLinkIntegration_Test {
 		test.StopTest();
     }
     
-    static testMethod void DeactivationUndoSingleAgencyErrormore10Days() {
-    	
-    	AMS_BSPLinkIntegration_Test.CreateConfiguration();
-		
-		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-15);
-		update cases;
-				
-		test.startTest();
-		
-		Test.setMock(HttpCalloutMock.class, new AMS_BSPLinkIntegration_Test.AMS_BSPLinkIntegration_Test_MockWS('ErrorDeactivationUndo'));
-		
-		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();
-		list<id> lsId = new list<id>();
-		lsId.add([select Id from account where Name='Accnt1'].get(0).Id);
-		lsResp = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('DeactivationUndo', lsId, 'Hierarchy', cases.get(0).Id);
-		
-		system.assertEquals('Error', lsResp.get(0).result);
-		system.assertEquals('Cannot undo deactivation if more than 10 days passed since deactivation', lsResp.get(0).description);
-		
-		test.StopTest();
-    } 
-    
-    
     static testMethod void DeactivationUndoSingleAgencySuccess() {
     	AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now().addDays(-1);
+		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
 		
 		test.startTest();
@@ -286,7 +262,7 @@ private class AMS_BSPLinkIntegration_Test {
 		test.StopTest();
     }
     
-    static testMethod void DeactivationSingleAgencyAccountInvolvedSuccess() {
+    static testMethod void DeactivationSingleAgencyAccountInvolvedError() {
     	AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 		
@@ -299,7 +275,29 @@ private class AMS_BSPLinkIntegration_Test {
 		
 		lsId.add([select Id from AMS_Oscar__c where Account__r.Name='Accnt3.2'].get(0).Id);
 		lsResp = AMS_BSPLinkIntegration.ProcessBSPLink('Deactivation', lsId, 'AccountsInvolved');
-		system.debug('DTULLO 250 --> ' + lsResp.get(0));
+		system.debug(LoggingLevel.ERROR, 'DTULLO 250 --> ' + lsResp.get(0));
+		system.assertEquals('Error', lsResp.get(0).result);
+		system.assertEquals('Related case not found', lsResp.get(0).description);
+		
+		test.StopTest();
+    }
+    
+    static testMethod void DeactivationSingleAgencyAccountInvolvedSuccess() {
+    	AMS_BSPLinkIntegration_Test.CreateConfiguration();
+		
+		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();		
+
+		AMS_Oscar__c osc = [select Id, Account__c from AMS_Oscar__c where Account__r.Name='Accnt3.2'].get(0);
+
+		Case oscarCase = new Case(Oscar__c = osc.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'), AccountId = osc.Account__c);
+        insert oscarCase;
+
+		test.startTest();
+		
+		Test.setMock(HttpCalloutMock.class, new AMS_BSPLinkIntegration_Test.AMS_BSPLinkIntegration_Test_MockWS('Success'));
+		
+		lsResp = AMS_BSPLinkIntegration.ProcessBSPLink('Deactivation', new List<Id>{osc.Id}, 'AccountsInvolved');
+		system.debug(LoggingLevel.ERROR, 'DTULLO 250 --> ' + lsResp.get(0));
 		system.assertEquals('Ok', lsResp.get(0).result);
 		system.assertEquals('Deactivation in process', [select Status__c from Agency_Authorization__c where account__r.name='Accnt3.2'].get(0).Status__c);
 		

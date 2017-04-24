@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_PersonalInformation" extensions="ISSP_PersonalInformationWithoutSharing"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
      <link rel="stylesheet" href="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/css/intlTelInput.css')}"/>
      <script type="text/javascript">
@@ -23,7 +23,7 @@
     </style>
 
     <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
         <div class="panel panel-primary">
             <div class="panel-heading head_panel_green">
                 <a name="form"></a>
@@ -82,6 +82,15 @@
                                     <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.IATACode__c.Label}</label>
                                     <div class="col-lg-7">
                                         <div>{!con.Account.IATACode__c} </div>
+                                    </div>
+                                </apex:outPutPanel>
+                            </div>
+
+                            <div class="row">
+                                <apex:outPutPanel layout="block" rendered="{!isIATAAirlineAcct}">
+                                    <label class="lbl col-lg-5" style="padding-left:28px">{!$ObjectType.Account.fields.Airline_Prefix__c.Label}</label>
+                                    <div class="col-lg-7">
+                                        <div>{!con.Account.Airline_Prefix__c} </div>
                                     </div>
                                 </apex:outPutPanel>
                             </div>
@@ -347,7 +356,7 @@
                           <div class="row">
                                 <apex:outputLabel styleClass="lbl col-xs-5" value="{!$ObjectType.Account.fields.Fin_statements_submission_deadline__c.Label}" />
                                 <div class="col-md-7">
-                                   <apex:outputField value="{!con.account.Fin_statements_submission_deadline__c}" />
+                                   {!FinSubmission}
                                 </div>
                              </div>
                           </apex:outputText> 
@@ -375,6 +384,25 @@
                     
                 </apex:outputPanel>
                         </div>
+
+                        <!-- Account email domain validation  -->
+                        <apex:outputPanel layout="block" styleclass="panel-body form-horizontal" style="padding-top: 0px;" rendered="{! AND (bIsAdmin, AccountDomainValidRT) }">
+                          <apex:form>
+                            <div style="padding-top:15px;" >
+                                <div class="row">
+                                    <div class="lbl col-lg-12" style="padding-bottom:5px;">{! $Label.ISSP_CompanyInformation_EMADOMVAL_Title }</div>
+                                </div>
+                                <apex:repeat value="{! validEmailDomains }" var="ved">
+                                    <apex:outputText styleclass="col-lg-12" style="padding-left:18px;" value="- {! ved.Name }" />
+                                </apex:repeat>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                          <apex:commandButton styleClass="btn btn_iata_primary btn-block" style="margin-top:12px;" value="{! $Label.ISSP_CompanyInformation_EMADOMVAL_AddBtn }" action="{! goToEmaDomVal }" immediate="true" />
+                                    </div>
+                                </div>
+                            </div>
+                          </apex:form>
+                        </apex:outputPanel>
                     </div>
                     <!-- end col -->
                 </div>
@@ -489,7 +517,6 @@
                                 </div>
                                 <div class="col-lg-7">
                                 <apex:inputField styleclass="form-control editModeBR editModeTradeNameBR latinonlyBR" value="{!branchOffice.TradeName__c}"/>
-
                                 <div class="hiddenerror" style="display: none;">
                                     <p class="errormsg" style="line-height: 26px;">{!$Label.ISSP_EnterValidString} </p>
                                 </div>
@@ -585,7 +612,7 @@
                             
                             <div class="row form-group">
                                 <div class="col-md-5" style="padding-left:28px">
-                                    <label class="lbl" for="businessinputwebsite">Web site</label>
+                                    <label class="lbl" for="businessinputwebsite">[{!$Label.Web_Site}]</label>
                                 </div>
                                 <div class="col-md-7 emailBR">
                                     <apex:inputHidden id="businesswebsite" value="{!branchOffice.WebSite}" />
@@ -698,7 +725,7 @@
         </apex:form>
         
         
-          <c:ISSP_CustomFooter />
+          <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
     <script>
       function validateCompanyProfile(){
@@ -755,6 +782,7 @@
             }
             return flag;
         }
+
         function validateLatinCharsOnlyBR(){
         var regExLatin = new RegExp("^[\\x00-\\x7F\\xA0-\\xFF]+$");
         var flag = true;

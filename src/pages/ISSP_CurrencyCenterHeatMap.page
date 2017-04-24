@@ -1,0 +1,127 @@
+<apex:page controller="ISSP_CurrencyCenterHeatMapCtrl"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<head>
+<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/heat_map.css')}" />
+
+<script type="text/javascript">
+	function handleSearchChange(){
+		handleSearchAF();
+	}
+
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	})
+
+	/*** handle popover for indicators definitions***/
+	$(function () {
+	$('[data-toggle="popover"]').popover(
+	    { container: 'body',
+	      html: 'true', 
+	      placement: 'auto left',
+	      trigger: 'focus' });
+	})
+</script>
+
+</head>
+
+<body >
+	<div class="container">
+
+		<c:ISSP_CustomNavigation />
+		<apex:form id="form">
+		<apex:actionFunction name="handleSearchAF" rerender="tablePanel,lastUpdateDate,pdfButton" action="{!reSearch}"/>
+
+		<div class="row">
+      		<div class="col-xs-12 service-header">
+            
+				<div class="row hidden-print">
+					<a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
+				</div>
+
+				<div class="row page-title-wrapper hidden-print">
+					<div class="col-xs-6 col-md-4">
+						<div class="page-title">{!$Label.CurrencyCenter_Heat_Map}</div>
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<!--<input type="text" class="form-control search-field" placeholder="{!$Label.CurrencyCenter_Search}" />-->
+						<apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="{!$Label.CurrencyCenter_Search}" onkeyup="handleSearchChange();"/>&nbsp;
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<apex:outputPanel id="pdfButton">
+							<button class="btn btn-blue" onclick="window.print();">
+								<span class="glyphicon glyphicon-print" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_Print}
+							</button>
+							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterHeatMapPdf?search={!searchText}','_blank');" >
+								<span class="glyphicon download-icon" aria-hidden="true"></span>{!$Label.CurrencyCenter_Download_Pdf}
+							</button>
+						</apex:outputPanel>
+					</div>
+				</div>
+
+				<div class="row hm-table">
+					<div class="last-update-info">
+						{!$ObjectType.Country_Profile__c.fields.HM_Last_Indicators_Update_Date__c.Label}:&nbsp;
+						<apex:outputText id="lastUpdateDate" value="{0,date,dd MMM yyyy}"><apex:param value="{!lastUpdateDate}"/></apex:outputText>
+					</div>
+
+					<apex:outputPanel id="tablePanel">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Spot_Change}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Spot_Change}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Forward_NDF}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Credit_Spread}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Sovereign_Credit_Rating}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_GDP_Growth}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Inflation}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Current_Account_part1}{!$Label.CurrencyCenter_def_Current_Account_part2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Non_Performing_Loans}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1}{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}"/></a></th>
+								</tr>
+							</thead>
+							<tbody>
+								<apex:repeat value="{!cList}" var="c">
+								<tr>
+									<td class="country-cell"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/flags/' + c.ISO_Code__c + '.png')}" />&nbsp;<a href="#" data-toggle="tooltip" title="{!c.Region__c}"><!--{!c.Name}-->{!c.Country_Name__r.Name}</a></td>
+									<td class="heat-map-cell-{!c.HM_Spot_1m_ch__c}"></td>
+									<td class="heat-map-cell-{!c.HM_Spot_12m_ch__c}"></td>
+									<td class="heat-map-cell-{!c.HM_Fwd_NDF__c}"></td>
+									<td class="heat-map-cell-{!c.HM_Credit_spread__c}"></td>
+									<td class="heat-map-cell-{!c.HM_Cr_Rating__c}"></td>
+									<td class="heat-map-cell-{!c.HM_GDP__c}"></td>
+									<td class="heat-map-cell-{!c.HM_CPI__c}"></td>
+									<td class="heat-map-cell-{!c.HM_CA__c}"></td>
+									<td class="heat-map-cell-{!c.HM_NPL__c}"></td>
+									<td class="heat-map-cell-{!c.HM_FX_Res__c}"></td>
+									<td class="heat-map-cell-{!c.HM_FX_Res_percent__c}"></td>
+								</tr>
+								</apex:repeat>
+							</tbody>
+                      	</table>
+                  	</apex:outputPanel>
+
+				</div>
+
+      		</div>
+      	</div>
+
+
+
+		
+		</apex:form>
+		<span class="hidden-print">
+		<c:ISSP_CustomFooter />
+		</span>
+
+	</div>
+</body>
+
+</html>
+
+</apex:page>

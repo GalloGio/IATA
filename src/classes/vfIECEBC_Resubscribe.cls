@@ -33,6 +33,7 @@ public class vfIECEBC_Resubscribe {
 
         PageReference pr = Page.IECEBC_PublicConfirmation;
         pr.setRedirect(true);
+        pr.getParameters().put('isFromResubscribe','true');
         pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }

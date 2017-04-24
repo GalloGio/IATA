@@ -18,12 +18,12 @@ public with sharing class AMS_AccountRoleCreatorTest {
         testCase.BSPCountry__c = 'Hong Kong (SAR), China';
         testCase.Reason1__c = 'Agency';
         testCase.Customer_recovery__c = false;
-        testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+        //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
         testCase.BounceEmailCounter__c = 0.0;
         testCase.Case_Language__c = 'English';
         testCase.Subject = 'Test 006';
         testCase.Reopened_case__c = 0.0;
-        testCase.Continous_Feed_SAF__c = true;
+        //testCase.Continous_Feed_SAF__c = true;
         testCase.Account_Concerned__c = acc1.Id;
         testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;
@@ -76,8 +76,13 @@ public with sharing class AMS_AccountRoleCreatorTest {
         delete roleList;
                 
         Account ownerAccount = new Account(Name='OwnerAccount', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141234', AIMS_ID__c = '98765431', Source_System__c = 'AIMS2');
-        insert ownerAccount;
         
+        Account brAccount  = new Account(Name='OwnerAccount', Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATAcode__c = '0004141231', AIMS_ID__c = '98765432', Source_System__c = 'AIMS2', Top_Parent__c = ownerAccount.Id);
+        
+        insert new List<Account>{ownerAccount,brAccount};
+
+
+
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c];
         acList.get(0).Contact__c = newCon.Id;
         acList.get(0).Person_AMS__c = null;
@@ -88,10 +93,13 @@ public with sharing class AMS_AccountRoleCreatorTest {
         acList.add(companyOwnershipAC);
         upsert acList;
         
+
         Test.startTest();
+        
         List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
 
         System.assertEquals(1, aoaList.size());
+
 
         Set<Id> accountsInvolved = new Set<Id>();
         accountsInvolved.add(aoaList.get(0).SAAM_Case__r.AccountId);
@@ -107,6 +115,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(20, roleList.get(0).Percentage__c);
         
         companyOwnershipAC.Financial_Interest__c = 100;
+        companyOwnershipAC.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         update companyOwnershipAC;
         
         
@@ -116,6 +125,24 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(1, roleList.size());
         System.assertEquals('Ownership', roleList.get(0).RecordType.DeveloperName);
         System.assertEquals(100, roleList.get(0).Percentage__c);
+
+
+        AMS_OSCAR__c oscarToBR = new AMS_OSCAR__c(Account__c = brAccount.Id
+                                      ,Process__c = 'NEW.BR'
+                                      ,AMS_Online_Accreditation__c = acList.get(0).AMS_Pax_Accreditation_Form__c 
+                                      );
+        
+        insert oscarToBR;
+
+        oscarToBR.STEP6__c  = 'Passed';
+        oscarToBR.STEP10__c = 'Passed';
+        
+        update oscarToBR;
+        
+        AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess);
+
+        List<AMS_Accreditation_Contact__c> aclistLinkOnly = AMS_AccountRoleCreator.getPersonLinkingOnly(acList);
+        
         Test.stopTest();
     }
 
@@ -820,6 +847,71 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
 
         Test.stopTest();
+
+    }
+
+
+    @isTest static void test_OldAndNewOwnersMapping(){
+
+    
+        List<AMS_Pax_Accreditation_Form__c> aoaList = [select id , SAAM_Case__r.AccountId from AMS_Pax_Accreditation_Form__c limit 1];
+        
+        List<AMS_Accreditation_Contact__c> accreditationContactsToProcess = [select id,Agency_owner__c,First_Name__c,Last_Name__c,Financial_interest__c from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c in :aoaList  limit 1];
+        
+        accreditationContactsToProcess.get(0).Agency_owner__c = true;
+
+
+        Set<Id> accounts = new Set<Id>();
+        accounts.add(aoaList.get(0).SAAM_Case__r.AccountId);
+
+        Id acctId = new List<Id>(accounts).get(0);
+    
+        List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();       
+        allAccountRoles.add(new AMS_Account_Role__c( Account__c = acctId,
+                                                     Percentage__c = 100,
+                                                     Owner_Name__c = 'Adrien Silva'
+                                                    ));
+        insert allAccountRoles;
+
+        Test.startTest();
+
+        system.debug('aaa allAccountRoles: ' + allAccountRoles);
+        system.debug('aaa accreditationContactsToProcess: ' + accreditationContactsToProcess);
+        system.debug('aaa aoaList: ' + aoaList);
+
+        AMS_AccountRoleCreator.OldAndNewOwners oldNewOwners =  AMS_AccountRoleCreator.getNewAndOldOwnersForChangeCodeCreation(allAccountRoles ,accreditationContactsToProcess ,accounts);
+
+        AMS_AccountRoleCreator.OwnersByAccountWrapper oldOwnersByAcctID = oldNewOwners.getOldOwnersByAccountId(acctId);
+        AMS_AccountRoleCreator.OwnersByAccountWrapper newOwnersByAcctID = oldNewOwners.getNewOwnersByAccountId(acctId);
+
+        system.debug('aaa oldOwnersByAcctID: ' + oldOwnersByAcctID.owners);
+        system.debug('aaa newOwnersByAcctID: ' + newOwnersByAcctID.owners);
+
+
+        //Old Owners
+        
+        system.assertEquals(acctId,oldOwnersByAcctID.acctId);
+        
+        system.assertEquals(oldOwnersByAcctID.owners.get(0).name,
+                            allAccountRoles.get(0).Owner_Name__c
+                            );
+
+        system.assertEquals(oldOwnersByAcctID.owners.get(0).financialInterest,
+                            String.valueOf(allAccountRoles.get(0).Percentage__c)
+                            );
+
+        //New Owners
+
+        system.assertEquals(acctId,newOwnersByAcctID.acctId);
+
+        system.assertEquals(newOwnersByAcctID.owners.get(0).name,
+                            accreditationContactsToProcess.get(0).First_Name__c + ' ' + accreditationContactsToProcess.get(0).Last_Name__c
+                            );
+
+        system.assertEquals(newOwnersByAcctID.owners.get(0).financialInterest,
+                            String.valueOf(accreditationContactsToProcess.get(0).Financial_interest__c)
+                            );
+        Test.stopTest(); 
 
     }
 }

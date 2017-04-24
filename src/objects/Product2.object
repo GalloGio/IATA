@@ -2793,7 +2793,7 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
     </fields>
     <fields>
         <fullName>IsActive</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>IsNewRelease__c</fullName>
@@ -4577,6 +4577,7 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>GDP_CAC_Web_for_Member_Airlines</fullName>
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
+        <columns>Display_to_ECommerce__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
@@ -4993,9 +4994,9 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Product_Manager_lookup__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>PRODUCT2.FAMILY</field>
+            <field>Product_Section__c</field>
             <operation>equals</operation>
-            <value>GDP</value>
+            <value>DBP001</value>
         </filters>
         <filters>
             <field>IEC_Parent_Product__c</field>

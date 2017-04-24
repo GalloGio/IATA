@@ -320,7 +320,7 @@ public with sharing class AMS_AccountRoleCreator
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
         List<AMS_Oscar__c> oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
-
+        system.debug('### su' + oscars.size());
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
         String oscarProcess;
@@ -354,7 +354,7 @@ public with sharing class AMS_AccountRoleCreator
 
             String commaSeparatedFields = AMS_AccreditationContactHelper.loadFieldsDynamically('AMS_Accreditation_Contact__c');
 
-            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c';
+            String query = 'SELECT ' + commaSeparatedFields + ', AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Process__c, Person_AMS__r.Contact__c, RecordType.DeveloperName, AMS_Ownership_Role__r.Id, AMS_Ownership_Role__r.Duty__c,  AMS_Ownership_Role__r.Hours__c, AMS_Ownership_Role__r.IsManager__c, AMS_Ownership_Role__r.Percentage__c, AMS_Ownership_Role__r.Position__c, AMS_Ownership_Role__r.Owner_Account__c,Company__r.name ';
             query = query + ' FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :accreditationId AND (RecordTypeId in ';
             query = query + '(' + recordTypesPerson +' ) ';
             query = query + ' OR RecordTypeId in ';
@@ -379,7 +379,7 @@ public with sharing class AMS_AccountRoleCreator
 
             //get all the roles
             List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
-            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
+            allAccountRoles = [SELECT Id, RecordTypeId, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Person__c, Person__r.Contact__c, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c,Owner_Account__r.Name from AMS_Account_role__c where Account__c in: accounts and Active__c = true];
 
             //Register New and Old Owners for EBulletion Report purposes
 
@@ -402,8 +402,9 @@ public with sharing class AMS_AccountRoleCreator
             List<AMS_Accreditation_Contact__c> accreditationContactsToInsertOnlyContacts = new List<AMS_Accreditation_Contact__c>();
 
             // let's find out which AMS_Account_roles are to deactivate.
-
+            system.debug('### su' + accreditationContactsToProcess.size());
             for(AMS_Accreditation_Contact__c aContact :accreditationContactsToProcess){
+                
 
                 //does is have a link to an AMS_Account_role ? If so, let's deactivate the Role and add it to the list of new Accreditation to Create.
                 if(aContact.AMS_Ownership_Role__c != null && !isCorrectionProcess){
@@ -413,7 +414,9 @@ public with sharing class AMS_AccountRoleCreator
                 
                 //does is have a link to an AMS_Account_role and is a correction or is
                 // second time this process runs for an Accreditation Contact ? let's mark for update.
-                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+                //INC304974: verifies if the record type of AMS Accreditation Contact is not a Company (another account)
+                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess && !recordTypesCompany.contains(aContact.RecordTypeId)){  
+                    system.debug('## SU runRoleCreatorForOnlineAccreditations : ' + aContact.AMS_Ownership_Role__c + ' ; '  +isCorrectionProcess+ ' ; ' + aContact.RecordTypeId);   
                     accreditationContactsToUpdate.add(aContact);
                     continue;
                 }
@@ -422,7 +425,7 @@ public with sharing class AMS_AccountRoleCreator
                 if(aContact.AMS_Ownership_Role__c == null && aContact.Agency_owner__c){
                     accreditationContactsToInsert.add(aContact);
                     continue;
-                }else{
+                }else if(!recordTypesCompany.contains(aContact.RecordTypeId)){
                     accreditationContactsToInsertOnlyContacts.add(aContact);
                     continue;
                 }
@@ -661,7 +664,10 @@ public with sharing class AMS_AccountRoleCreator
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
 
+                accreditationsAndContacts.put(ac,ac.Contact__c);
+
                 personsToDelete.add(ac.Person_AMS__c);
+
                 personsAndContacts.put(ac.Person_AMS__r.Id,ac.Contact__c);
 
                 continue;
@@ -680,6 +686,8 @@ public with sharing class AMS_AccountRoleCreator
             }
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
+
+                accreditationsAndContacts.put(ac,ac.Contact__c);
 
                 personsToDelete.add(ac.Person_AMS__c);
 
@@ -1206,7 +1214,7 @@ public with sharing class AMS_AccountRoleCreator
             for (AMS_Account_Role__c acctRole : allAccountRoles)
             {
                 if(acctId == acctRole.Account__c)
-                    oldOwnersList.add(new OwnerFieldsEntity (acctRole.Owner_Name__c, String.valueOf(acctRole.Percentage__c)));            
+                    oldOwnersList.add(new OwnerFieldsEntity ((acctRole.Owner_Account__r.Name != null ? acctRole.Owner_Account__r.Name:acctRole.Owner_Name__c) , String.valueOf(acctRole.Percentage__c)));            
             }
             
             OwnersByAccountWrapper oldOwnersWrapper = new OwnersByAccountWrapper(acctId , oldOwnersList);
@@ -1226,7 +1234,10 @@ public with sharing class AMS_AccountRoleCreator
             {
                 if(accrtContact.Agency_owner__c) 
                 {
-                    String name = (accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c  ) + (accrtContact.Last_Name__c == null ? '' : ( ' ' + accrtContact.Last_Name__c));
+                    String name = (accrtContact.Company__r.name == null ? 
+                        ((accrtContact.First_Name__c == null ? '' : accrtContact.First_Name__c + ' ' ) + (accrtContact.Last_Name__c == null ? '' : (accrtContact.Last_Name__c)))
+                        : accrtContact.Company__r.name);
+
                     newOwnersList.add(new OwnerFieldsEntity (name, String.valueOf(accrtContact.Financial_interest__c)));
                 }
             }

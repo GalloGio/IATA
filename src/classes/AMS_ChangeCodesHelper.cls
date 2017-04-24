@@ -1,5 +1,9 @@
 public class AMS_ChangeCodesHelper {
 
+        //Account ID => Change Code Struct
+        public static Map<ID,ChangeCodeStruct> aaccHistoryPerAcct = new Map <ID,ChangeCodeStruct> ();
+
+
     /** 
      Wrapper Object for Change Codes
     */
@@ -134,14 +138,16 @@ public class AMS_ChangeCodesHelper {
 
         Integer index = 0;
 
-        Set<Account> accountsToUpdate = new Set<Account>();
-
+        Set<Account> accountsToUpdate = new Set<Account>();        
+        
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
         
-        
-        List<ChangeCodeStruct> aaccHistoryToProcess = new List <ChangeCodeStruct> ();
+
         ObjectChangesStruct objectChangesByChangeCode = null;
         
+        //Account ID => Change Code Struct
+        Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
+
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
             Boolean isActive = false;
@@ -158,7 +164,10 @@ public class AMS_ChangeCodesHelper {
 
             aaccToInsert.add(changeCodeResult.changeCode);
             
-            aaccHistoryToProcess.add(changeCodeResult);
+        
+            aaccHistoryToProcess.put(oscarAgencies.get(index).Id, changeCodeResult);
+            aaccHistoryPerAcct.put(oscarAgencies.get(index).Id, changeCodeResult);
+
             
             System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
             
@@ -182,20 +191,29 @@ public class AMS_ChangeCodesHelper {
             insert aaccToInsert;
         }
 
+       // Add the IDs of the Change Codes after they are inserted
 
-        
-        // Add the IDs of the Change Codes after they are inserted
+        createAAChangeCodesHistory( aaccToInsert, aaccHistoryToProcess.values());
+     
+        return accountsToUpdateList;
+    }
+
+
+/** 
+     Create Change Codes History
+    */
+    public static void createAAChangeCodesHistory(List<Agency_Applied_Change_code__c> aaccToInsert,List<ChangeCodeStruct> aaccHistoryToProcessValues) {
 
         List<AMS_Agency_A_Change_code_History__c> aaccHistoryToInsert = new List<AMS_Agency_A_Change_code_History__c>();
-
-        if(!aaccHistoryToProcess.isEmpty()){
+        
+        if(!aaccHistoryToProcessValues.isEmpty()){
 
             System.debug('## aaccToInsert: '+ aaccToInsert);
-            System.debug('## aaccHistoryToProcess: '+ aaccHistoryToProcess);
+            System.debug('## aaccHistoryToProcessValues: '+ aaccHistoryToProcessValues);
 
-            index = 0;
+            Integer index = 0;
 
-            for(ChangeCodeStruct ccStruct : aaccHistoryToProcess)
+            for(ChangeCodeStruct ccStruct : aaccHistoryToProcessValues)
             {
 
                 if(!ccStruct.changeCodeFielsHistory.isEmpty())
@@ -218,9 +236,8 @@ public class AMS_ChangeCodesHelper {
 
             insert aaccHistoryToInsert;
         }
-            return accountsToUpdateList;
     }
-
+   
    /** 
 
      Support for Old method from AMS_Utils
@@ -399,7 +416,12 @@ public class AMS_ChangeCodesHelper {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null) {
+                //if (accToUpdateStatus != null) {
+
+                if (accToUpdateStatus != null 
+                    && !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
+                    (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
+                    ) {
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
                     changeCodes.add(changeCode);
 

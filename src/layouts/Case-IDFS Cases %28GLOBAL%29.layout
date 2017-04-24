@@ -112,6 +112,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactPhone</field>
             </layoutItems>
             <layoutItems>
@@ -200,6 +204,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -398,7 +406,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>GenericAttachmentListCase</page>
+                <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>

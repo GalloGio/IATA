@@ -1,5 +1,6 @@
 public with sharing class SIDRAliteMassApprovalController{
 
+    public static final Integer MAX_SEARCH_ELEMENTS = 900;
     public static final Id SIDRA_LITE_RECORDTYPE = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA Lite').getRecordtypeId();
     public static final String APPROVED = 'Approved';
     public static final String REJECTED = 'Rejected';
@@ -11,6 +12,7 @@ public with sharing class SIDRAliteMassApprovalController{
     public static final String REI = 'REI';
     public static final String TER = 'TER';
     public static final String REI_AFTER_TER = 'REI After TER';
+    public static final String NOT_APPROVAL = 'NOT';
 
     public list<WrapperCase> listWrapperCase {get;set;}
     public list<WrapperCase> listWrapperResult {get;set;}
@@ -30,19 +32,30 @@ public with sharing class SIDRAliteMassApprovalController{
     **/
     public SIDRAliteMassApprovalController() {
         reset();
-        search();
     }
 
     /**
         Search all cases based on the filters selected by the user
     **/
     public void search() {
-        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c ';
+        if (this.filter.selectedActionType==null || this.filter.selectedActionType=='') {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,'Select an Action Type'));
+            return;
+        }
+        
+        String query = 'Select Id, CaseNumber, SIDRA_Lite_Reason__c, BSP_CASS__c, Region__c, BSPCountry__c, DEF_Approval_Rejection__c, ';
+        query += ' DEF_Withdrawal_Approval_Rejection__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, REI_ApprovalRejectin__c, ';
+        query += ' TER_Approval_Rejection__c, IRR_Withdrawal_Reason__c, DEF_Withdrawal_Reason__c, accountId, AIMS_status__c, CreatedDate, ';
+        query += ' Reason_for_Default__c, Termination_Reason__c, Termination_date__c, OwnerId, Reason_of_REI_WD__c, Type_of_REI_WD__c, ';
+        query += ' NOT_Approval__c, NOT_Date__c, Subject, Owner.Name, Account.Name, Account.Status__c';
         query += ' From Case';
         query += ' Where RecordtypeId = :SIDRA_LITE_RECORDTYPE';
 
         if (this.filter.cse.BSP_CASS__c != '' && this.filter.cse.BSP_CASS__c != null) {
             query += ' And BSP_CASS__c = \'' + this.filter.cse.BSP_CASS__c + '\'';
+        }
+        if (this.filter.cse.SIDRA_Lite_Reason__c != '' && this.filter.cse.SIDRA_Lite_Reason__c != null) {
+            query += ' And SIDRA_Lite_Reason__c = \'' + this.filter.cse.SIDRA_Lite_Reason__c + '\'';
         }
         // Region is mandatory
         query += ' And Region__c = \'' + this.filter.cse.Region__c + '\'';
@@ -58,16 +71,20 @@ public with sharing class SIDRAliteMassApprovalController{
         if (this.filter.selectedActionType == IRR_WD) {
             query += ' And IRR_Withdrawal_Approval_Rejection__c = null';
             query += ' And IRR_Approval_Rejection__c = :APPROVED';
+            query += ' And AG_Request_IRR_Withdrawal__c != null';
             if (this.filter.cse.IRR_Withdrawal_Reason__c != null) {
                 query += ' And IRR_Withdrawal_Reason__c = \'' + this.filter.cse.IRR_Withdrawal_Reason__c + '\'';
             }
         }
         if (this.filter.selectedActionType == DEF) {
             query += ' And DEF_Approval_Rejection__c = null';
+            query += ' And SIDRA_Lite_Default_Date__c != null';
+            query += ' And Account.Status__c != \'Terminated\'';
         }
         if (this.filter.selectedActionType == DEF_WD) {
             query += ' And DEF_Withdrawal_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
+            query += ' And AG_Request_DEF_Withdrawal__c != null';
             if (this.filter.cse.DEF_Withdrawal_Reason__c != null) {
                 query += ' And DEF_Withdrawal_Reason__c = \'' + this.filter.cse.DEF_Withdrawal_Reason__c + '\'';
             }
@@ -76,11 +93,14 @@ public with sharing class SIDRAliteMassApprovalController{
             query += ' And REI_ApprovalRejectin__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And DEF_Withdrawal_Approval_Rejection__c != :APPROVED';
+            query += ' And AG_Reinstatement_Request__c != null';
         }
         if (this.filter.selectedActionType == TER) {
             query += ' And TER_Approval_Rejection__c = null';
             query += ' And DEF_Approval_Rejection__c = :APPROVED';
             query += ' And (DEF_Withdrawal_Approval_Rejection__c != :APPROVED OR REI_ApprovalRejectin__c != :APPROVED)';
+            query += ' And Propose_Default__c != null';
+            query += ' And Account.Status__c != \'Terminated\'';
         }
         if (this.filter.selectedActionType == REI_AFTER_TER) {
             query += ' And TER_Approval_Rejection__c = :APPROVED';
@@ -88,22 +108,36 @@ public with sharing class SIDRAliteMassApprovalController{
             query += ' And REI_ApprovalRejectin__c  = null';
             query += ' And AG_Reinstatement_Request__c != null';
         }
+        if (this.filter.selectedActionType == NOT_APPROVAL) {
+            query += ' And NOT_Date__c != null';
+            query += ' And NOT_Approval__c = null';
+            query += ' And Account.Status__c != \'Terminated\'';
+        }
 
         query += ' order by CaseNumber desc';
-        query += ' limit 1000';
+        query += ' limit ' + (MAX_SEARCH_ELEMENTS + 1);
+        initListWrapperCase(query);
 
-        System.debug('*** QUERY: ' + query);
-
-        if (this.listWrapperCase.size() >= 1000) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Your search criteria result exceeds the limit of number of records (1,000). Try to apply more filters to reduce the number of records or process your request in multiple sessions'));
-        }
-
-        this.listWrapperCase = new list<WrapperCase>();
-        for (Case cse: Database.query(query)) {
-            this.listWrapperCase.add(new WrapperCase(cse));
-        }
         // hide processed section to show result section
         this.showProcessedSection = false;
+    }
+    
+    /**
+        Creates a list of wrappers with the input query and checks if the maximum lilmit is exceeded
+    **/
+    private void initListWrapperCase(String query) {
+        System.debug('*** QUERY: ' + query);
+        this.listWrapperCase = new list<WrapperCase>();
+        for (Case cse: Database.query(query)) {
+            if (this.listWrapperCase.size() < MAX_SEARCH_ELEMENTS) {
+                this.listWrapperCase.add(new WrapperCase(cse));
+            } else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,
+                    'Your search criteria result exceeds the limit of number of records (' + MAX_SEARCH_ELEMENTS + ').'
+                    + 'Try to apply more filters to reduce the number of records or process your request in multiple sessions'));
+                return;
+            }
+        }
     }
 
     /**
@@ -253,6 +287,8 @@ public with sharing class SIDRAliteMassApprovalController{
                 wrapper.cse.REI_ApprovalRejectin__c = ApproveReject;
                 wrapper.cse.Reason_of_REI_WD__c = filter.cse.Reason_of_REI_WD__c;
                 wrapper.cse.Type_of_REI_WD__c = filter.cse.Type_of_REI_WD__c;
+            } else if (type == NOT_APPROVAL) {
+                wrapper.cse.NOT_Approval__c = ApproveReject;
             }
             listUpdateCase.add(wrapper.cse);
         }
@@ -324,4 +360,53 @@ public with sharing class SIDRAliteMassApprovalController{
             this.category = '';
         }
     }
+
+    /**
+        Redirect to the Page in csv format
+    **/
+    public PageReference exportCSV() {
+        return Page.SIDRAliteMassApprovalExport;
+    }
+
+    /**
+        Returns a string with the content of current listWrapper in csv format
+    **/
+    public String getcsvContent() {
+        Map <String, Schema.SObjectField> mapCaseFields = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
+
+        // create csv header
+        String content = '"Id"';
+        content += ',"' + mapCaseFields.get('CaseNumber').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Subject').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('SIDRA_Lite_Reason__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('BSP_CASS__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('Region__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('BSPCountry__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('OwnerId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapCaseFields.get('AccountId').getDescribe().getLabel() + ' Id"';
+        content += ',"' + mapCaseFields.get('AccountId').getDescribe().getLabel() + ' Name"';
+        content += ',"' + mapCaseFields.get('AIMS_status__c').getDescribe().getLabel() + '"';
+        content += ',"' + mapCaseFields.get('CreatedDate').getDescribe().getLabel() + '"';
+        content += '\n';
+        // fill each line
+        for (WrapperCase wrapper: this.listWrapperCase) {
+            content += '"' +  wrapper.cse.Id + '"';
+            content += ',"' + wrapper.cse.CaseNumber + '"';
+            content += ',"' + wrapper.cse.Subject + '"';
+            content += ',"' + wrapper.cse.SIDRA_Lite_Reason__c + '"';
+            content += ',"' + wrapper.cse.BSP_CASS__c + '"';
+            content += ',"' + wrapper.cse.Region__c + '"';
+            content += ',"' + wrapper.cse.BSPCountry__c + '"';
+            content += ',"' + wrapper.cse.OwnerId + '"';
+            content += ',"' + wrapper.cse.Owner.Name + '"';
+            content += ',"' + wrapper.cse.AccountId + '"';
+            content += ',"' + wrapper.cse.Account.Name + '"';
+            content += ',"' + wrapper.cse.AIMS_status__c + '"';
+            content += ',"' + wrapper.cse.CreatedDate + '"';
+            content += '\n';
+        }
+        return content;
+    }
+
 }

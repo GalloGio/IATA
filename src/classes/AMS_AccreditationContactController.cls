@@ -22,6 +22,7 @@ public with sharing class AMS_AccreditationContactController {
     private Id AcCurrentOwnerRt;
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
+    public boolean isChangeProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -143,6 +144,7 @@ public with sharing class AMS_AccreditationContactController {
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
         isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
+        isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
     }
     
     public void addEmptyRow()
@@ -200,6 +202,20 @@ public with sharing class AMS_AccreditationContactController {
         }
         
         this.acWrapper.remove(this.toUnselect);
+        return null;
+    }
+
+    public PageReference removeFromTsList()
+    {
+        //AMS_Accreditation_Contact__c acToDelete = this.acList.get(this.toUnselect);
+        AMS_Accreditation_Contact__c acToDelete = trainedStaffWrapper.get(toUnselect).ac;
+        
+        if(acToDelete.id != null)
+        {
+            this.forDeletion.add(acToDelete);
+        }
+        
+        this.trainedStaffWrapper.remove(this.toUnselect);
         return null;
     }
     
@@ -412,7 +428,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership != 100)
         {
             return false;
         } else

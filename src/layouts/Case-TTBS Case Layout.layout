@@ -54,12 +54,7 @@
                 <field>Account_Location_Type__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_Effective_Date__c</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -187,7 +182,7 @@
         <layoutColumns>
             <layoutItems>
                 <height>200</height>
-                <page>GenericAttachmentListCase</page>
+                <page>CaseAttachmentsView</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>

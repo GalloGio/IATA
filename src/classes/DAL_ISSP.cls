@@ -12,7 +12,7 @@ public with sharing class DAL_ISSP {
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
         return
             [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
-            	IsActive, Portal_User_Frozen_Checkbox__c
+                IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c
                FROM User 
               WHERE (Username=: nameOrEmail 
                  OR email =: nameOrEmail)
@@ -36,7 +36,7 @@ public with sharing class DAL_ISSP {
                     OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c, 
                     User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c ,
                     AccountId, Account.Name, Account.Status__c, Account.BillingStreet, Account.BillingCity,
-                    Account.BillingCountry, Account.IATACode__c, Account.BillingPostalCode,Account.BillingState,
+                    Account.BillingCountry, Account.IATACode__c, Account.Airline_Prefix__c, Account.BillingPostalCode,Account.BillingState,
                     Account.TradeName__c, Account.ParentId, Account.Top_Parent__c, Account.Airline_designator__c,
                     Account.Accumulated_Irregularities__c,Account.Sector__c,Account.Category__c,Account.VAT_Number__c,
                    	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
@@ -45,7 +45,7 @@ public with sharing class DAL_ISSP {
                		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
-                    Account.Location_Class__c
+                    Account.Location_Class__c, Account.CNS_Account__c
                     from Contact where Id=:contactId];
         if (contacts.size() > 0)
             return contacts[0];

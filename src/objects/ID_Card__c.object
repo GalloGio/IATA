@@ -887,7 +887,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <defaultValue>false</defaultValue>
         <description>Boolean that indicates whether the information should be synchronized with AIMS.</description>
         <externalId>false</externalId>
-        <label>Must synchronize with AIMS</label>
+        <label>Must Send to Print</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1093,7 +1093,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Received_From_AIMS__c</fullName>
         <description>Time stamp on when the id card was received from AIMS</description>
         <externalId>false</externalId>
-        <label>Received From AIMS</label>
+        <label>Confirmed in Production on</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1134,7 +1134,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <fullName>Sent_to_AIMS_on__c</fullName>
         <description>Time stamp on when the id card was sent to AIMS</description>
         <externalId>false</externalId>
-        <label>Sent to AIMS on</label>
+        <label>Sent to Print on</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1247,31 +1247,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     </fields>
     <label>ID Card</label>
     <listViews>
-        <fullName>AIMS_ID_Cards</fullName>
-        <columns>NAME</columns>
-        <columns>ID_Card_Application__c</columns>
-        <columns>Related_Contact__c</columns>
-        <columns>Start_Date_Agency_Month__c</columns>
-        <columns>Start_Date_Agency_Year__c</columns>
-        <columns>Start_Date_Industry__c</columns>
-        <columns>Agency_IATA_Code__c</columns>
-        <columns>Name_on_ID_Card__c</columns>
-        <columns>Nature_of_ID_Card__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>Photo__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Valid_To_Date__c</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ID_Card__c.AIMS</value>
-        </filters>
-        <label>AIMS ID Cards</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>ID_Card_Application__c</columns>
@@ -1293,79 +1268,19 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Expired</fullName>
-        <columns>NAME</columns>
-        <columns>VER_Number__c</columns>
-        <columns>Valid_To_Date__c</columns>
-        <columns>ID_Card_Application__c</columns>
-        <columns>Related_Contact__c</columns>
-        <columns>Start_Date_Agency_Month__c</columns>
-        <columns>Start_Date_Agency_Year__c</columns>
-        <columns>Start_Date_Industry__c</columns>
-        <columns>Agency_IATA_Code__c</columns>
-        <columns>Name_on_ID_Card__c</columns>
-        <columns>Nature_of_ID_Card__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Valid_From_Date__c</field>
-            <operation>lessThan</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>Expired</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Must_Sync</fullName>
-        <columns>NAME</columns>
-        <columns>Related_Contact__c</columns>
-        <columns>Valid_To_Date__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>CIN__c</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <columns>Is_Expedite__c</columns>
-        <columns>Photo__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>MustSyncWithAIMS__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Sent_to_AIMS_on__c</field>
-            <operation>equals</operation>
-        </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>notEqual</operation>
-            <value>Cancelled</value>
-        </filters>
-        <label>Must Sync</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Must_Sync1</fullName>
+        <columns>MustSyncWithAIMS__c</columns>
         <columns>NAME</columns>
         <columns>Related_Contact__c</columns>
-        <columns>Valid_To_Date__c</columns>
         <columns>Card_Status__c</columns>
+        <columns>Missing_Information__c</columns>
+        <columns>Is_Expedite__c</columns>
         <columns>CIN__c</columns>
         <columns>Photo__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>MustSyncWithAIMS__c</columns>
+        <columns>Valid_To_Date__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
-        <columns>UPDATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -1383,70 +1298,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <operation>equals</operation>
         </filters>
         <label>Must Sync</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Must_Sync_With_AIMS</fullName>
-        <columns>NAME</columns>
-        <columns>VER_Number__c</columns>
-        <columns>Is_Expedite__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Agency_Name__c</columns>
-        <columns>Agency_IATA_Code__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>MustSyncWithAIMS__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Must Sync With AIMS</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Test_Data_AIMS</fullName>
-        <booleanFilter>1 AND 2 AND (3 OR 4) AND 5</booleanFilter>
-        <columns>NAME</columns>
-        <columns>ID_Card_Application__c</columns>
-        <columns>Related_Contact__c</columns>
-        <columns>Agency_IATA_Code__c</columns>
-        <columns>Photo__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Valid_To_Date__c</columns>
-        <columns>CIN__c</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>Received_From_AIMS__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ID_Card__c.AIMS</value>
-        </filters>
-        <filters>
-            <field>Valid_To_Date__c</field>
-            <operation>greaterThan</operation>
-            <value>TODAY</value>
-        </filters>
-        <filters>
-            <field>UPDATEDBY_USER</field>
-            <operation>equals</operation>
-            <value>Stephen Begaint</value>
-        </filters>
-        <filters>
-            <field>UPDATEDBY_USER</field>
-            <operation>equals</operation>
-            <value>Constantin Buzduga</value>
-        </filters>
-        <filters>
-            <field>LAST_UPDATE</field>
-            <operation>greaterOrEqual</operation>
-            <value>10/26/2016 12:00 AM</value>
-        </filters>
-        <label>Test Data AIMS</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -1454,6 +1305,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>NAME</columns>
         <columns>MustSyncWithAIMS__c</columns>
         <columns>Sent_to_AIMS_on__c</columns>
+        <columns>CREATED_DATE</columns>
         <columns>Card_Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -1464,37 +1316,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <filters>
             <field>Card_Status__c</field>
             <operation>equals</operation>
-            <value>Cancelled</value>
+            <value>Cancelled,Cancelled ID Card</value>
         </filters>
-        <label>must synch with aims</label>
+        <label>Must Sync on Cancelled Cards</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>yesterday</fullName>
-        <columns>NAME</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
-        <columns>MustSyncWithAIMS__c</columns>
-        <columns>Card_Status__c</columns>
-        <columns>ID_Card_Application__c</columns>
-        <columns>Type_of_ID_Card__c</columns>
-        <columns>Nature_of_ID_Card__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Sent_to_AIMS_on__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>12/1/2016 12:00 AM</value>
-        </filters>
-        <filters>
-            <field>Card_Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>yesterday</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IDCardManager</group>
-        </sharedTo>
     </listViews>
     <nameField>
         <displayFormat>IDC-{000000000}</displayFormat>
@@ -1808,7 +1633,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>Cancel ID CArd</description>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Cancel Card</masterLabel>
+        <masterLabel>Cancel ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
@@ -1866,7 +1691,7 @@ alert(err);
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Reissue IDCard</masterLabel>
+        <masterLabel>Reissue ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
@@ -1920,7 +1745,7 @@ alert(err);
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Renew IDCard</masterLabel>
+        <masterLabel>Renew ID Card</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 

@@ -4,18 +4,18 @@ global class ISSP_WS_NewUser {
         WebService String responseMessage;
         WebService String responseEcho;
     }
-    
+
     global class SimpleInput {
         WebService String inputMessage;
     }
-    
+
     WebService static SimpleResponse simpleMethod1 (SimpleInput inputMessage) {
-        
+
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
                                         ORDER BY LoginTime DESC LIMIT 1];
-        
+
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
         newLog.Success__c = true;
@@ -25,7 +25,7 @@ global class ISSP_WS_NewUser {
             newLog.Login_Ip__c = loginList[0].SourceIp;
         }
         insert newLog;
-        
+
         SimpleResponse retResponseO = new SimpleResponse();
         retResponseO.responseMessage = 'Hello World';
         retResponseO.responseEcho = inputMessage.inputMessage;
@@ -38,7 +38,7 @@ global class ISSP_WS_NewUser {
         WebService String responseErrorMessage;
         WebService String federationId;
     }
-    
+
     global class UserInputData {
         WebService String firstName;
         WebService String lastName;
@@ -51,7 +51,7 @@ global class ISSP_WS_NewUser {
         WebService String sisMemberId;
         WebService String description;
     }
-    
+
     WebService static ResponseOne createUser (UserInputData inputData) {
 
         Savepoint sPointContact = Database.setSavepoint();
@@ -67,15 +67,15 @@ global class ISSP_WS_NewUser {
         String app = inputData.services;
         String sisMemberId = inputData.sisMemberId;
         String description = inputData.description;
-        
+
         String theUser;
         String theContact;
-        
+
         // Get request IP
         List <LoginHistory> loginList = [SELECT Id, SourceIp FROM LoginHistory
                                         WHERE UserId = :UserInfo.getUserId()
                                         ORDER BY LoginTime DESC LIMIT 1];
-        
+
         // Create log object record
         ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
         newLog.Success__c = true;
@@ -100,12 +100,14 @@ global class ISSP_WS_NewUser {
         fulldescription = fulldescription + 'SIS Member Id: ' + sisMemberId + '\n';
         fulldescription = fulldescription + 'Description: ' + description + '\n';
         newLog.Input_Description__c = fulldescription;
-        
+
         String appId = '';
-        
+
         String userAccount;
         String userAccountType;
-        
+
+        Boolean isCNS = false;
+
         // Build the Return Struture
         ResponseOne retResponseOne = new ResponseOne();
         retResponseOne.isSuccess = true;
@@ -120,14 +122,14 @@ global class ISSP_WS_NewUser {
             retResponseOne.isSuccess = false;
             retResponseOne.responseErrorCode = errorCode;
             retResponseOne.responseErrorMessage = errorMessage;
-            
+
             //insert log record
             newLog.Success__c = false;
             newLog.Error_Code__c = errorCode;
             newLog.Error_Message__c = errorMessage;
             newLog.Finished__c = system.now();
             insert newLog;
-            
+
             return retResponseOne;
         }
         else if (userLastName == '' || userLastName == null){
@@ -137,14 +139,14 @@ global class ISSP_WS_NewUser {
             retResponseOne.isSuccess = false;
             retResponseOne.responseErrorCode = errorCode;
             retResponseOne.responseErrorMessage = errorMessage;
-            
+
             //insert log record
             newLog.Success__c = false;
             newLog.Error_Code__c = errorCode;
             newLog.Error_Message__c = errorMessage;
             newLog.Finished__c = system.now();
             insert newLog;
-            
+
             return retResponseOne;
         }
         else if (app == '' || app == null){
@@ -154,18 +156,18 @@ global class ISSP_WS_NewUser {
             retResponseOne.isSuccess = false;
             retResponseOne.responseErrorCode = errorCode;
             retResponseOne.responseErrorMessage = errorMessage;
-            
+
             //insert log record
             newLog.Success__c = false;
             newLog.Error_Code__c = errorCode;
             newLog.Error_Message__c = errorMessage;
             newLog.Finished__c = system.now();
             insert newLog;
-            
+
             return retResponseOne;
         }
         else{
-            String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$';
+            String emailRegex = '^[a-zA-Z0-9._|\\\\%#~`=?&/$^*!}{+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,8}$';
             Pattern MyPattern = Pattern.compile(emailRegex);
             Matcher MyMatcher = MyPattern.matcher(userEmail);
             if (!MyMatcher.matches()){
@@ -175,14 +177,14 @@ global class ISSP_WS_NewUser {
                 retResponseOne.isSuccess = false;
                 retResponseOne.responseErrorCode = errorCode;
                 retResponseOne.responseErrorMessage = errorMessage;
-                
+
                 //insert log record
                 newLog.Success__c = false;
                 newLog.Error_Code__c = errorCode;
                 newLog.Error_Message__c = errorMessage;
                 newLog.Finished__c = system.now();
                 insert newLog;
-                
+
                 return retResponseOne;
             }
             else{
@@ -199,6 +201,11 @@ global class ISSP_WS_NewUser {
                 else if (app.toUpperCase() == 'CASS03'){
                     //app = 'CASSLink Analytics';
                     serviceId = serviceIdInstance.CASSLinkRouteAnalyzer__c;
+                }
+                else if (app.toUpperCase() == 'CASS04'){
+                    //app = 'CASSLink Analytics';
+                    serviceId = serviceIdInstance.CASSLinkExport__c;
+                    isCNS = true;
                 }
                 else if (app.toUpperCase() == 'SIS'){
                     serviceId = serviceIdInstance.SIS__c;
@@ -218,14 +225,14 @@ global class ISSP_WS_NewUser {
                     retResponseOne.isSuccess = false;
                     retResponseOne.responseErrorCode = errorCode;
                     retResponseOne.responseErrorMessage = errorMessage;
-                    
+
                     //insert log record
                     newLog.Success__c = false;
                     newLog.Error_Code__c = errorCode;
                     newLog.Error_Message__c = errorMessage;
                     newLog.Finished__c = system.now();
                     insert newLog;
-                    
+
                     return retResponseOne;
                 }
                 else{
@@ -243,14 +250,14 @@ global class ISSP_WS_NewUser {
                             retResponseOne.isSuccess = false;
                             retResponseOne.responseErrorCode = errorCode;
                             retResponseOne.responseErrorMessage = errorMessage;
-                            
+
                             //insert log record
                             newLog.Success__c = false;
                             newLog.Error_Code__c = errorCode;
                             newLog.Error_Message__c = errorMessage;
                             newLog.Finished__c = system.now();
                             insert newLog;
-                            
+
                             return retResponseOne;
                         }
                         else{
@@ -265,14 +272,14 @@ global class ISSP_WS_NewUser {
                                 retResponseOne.isSuccess = false;
                                 retResponseOne.responseErrorCode = errorCode;
                                 retResponseOne.responseErrorMessage = errorMessage;
-                                
+
                                 //insert log record
                                 newLog.Success__c = false;
                                 newLog.Error_Code__c = errorCode;
                                 newLog.Error_Message__c = errorMessage;
                                 newLog.Finished__c = system.now();
                                 insert newLog;
-                                
+
                                 return retResponseOne;
                             }
                             else{
@@ -287,14 +294,14 @@ global class ISSP_WS_NewUser {
                                     retResponseOne.isSuccess = false;
                                     retResponseOne.responseErrorCode = errorCode;
                                     retResponseOne.responseErrorMessage = errorMessage;
-                                    
+
                                     //insert log record
                                     newLog.Success__c = false;
                                     newLog.Error_Code__c = errorCode;
                                     newLog.Error_Message__c = errorMessage;
                                     newLog.Finished__c = system.now();
                                     insert newLog;
-                                    
+
                                     return retResponseOne;
                                 }
                                 else{
@@ -316,20 +323,20 @@ global class ISSP_WS_NewUser {
                                         }
                                         catch (Exception e){
                                             Database.rollback(sPointContact);
-                                            
+
                                             errorCode = '001';
                                             errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                             retResponseOne.isSuccess = false;
                                             retResponseOne.responseErrorCode = errorCode;
                                             retResponseOne.responseErrorMessage = errorMessage;
-                                            
+
                                             //insert log record
                                             newLog.Success__c = false;
                                             newLog.Error_Code__c = errorCode;
                                             newLog.Error_Message__c = errorMessage;
                                             newLog.Finished__c = system.now();
                                             insert newLog;
-                                            
+
                                             return retResponseOne;
                                         }
                                         retResponseOne.federationId = thisUser.FedContactId__c;
@@ -345,7 +352,7 @@ global class ISSP_WS_NewUser {
                                             retResponseOne.responseErrorCode = errorCode;
                                             retResponseOne.responseErrorMessage = errorMessage;
                                             */
-                                            
+
                                             //insert log record
                                             newLog.Success__c = true;
                                             newLog.Error_Code__c = errorCode;
@@ -358,9 +365,9 @@ global class ISSP_WS_NewUser {
                                                 newLog.Contact__c = theContact;
                                             }
                                             insert newLog;
-                                            
+
                                             retResponseOne.federationId = thisUser.FedContactId__c;
-                                            
+
                                             return retResponseOne;
                                         }
                                         else{
@@ -371,20 +378,20 @@ global class ISSP_WS_NewUser {
                                             }
                                             catch (Exception e){
                                                 Database.rollback(sPointContact);
-                                                
+
                                                 errorCode = '001';
                                                 errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                                 retResponseOne.isSuccess = false;
                                                 retResponseOne.responseErrorCode = errorCode;
                                                 retResponseOne.responseErrorMessage = errorMessage;
-                                                
+
                                                 //insert log record
                                                 newLog.Success__c = false;
                                                 newLog.Error_Code__c = errorCode;
                                                 newLog.Error_Message__c = errorMessage;
                                                 newLog.Finished__c = system.now();
                                                 insert newLog;
-                                                
+
                                                 return retResponseOne;
                                             }
                                             retResponseOne.federationId = thisUser.FedContactId__c;
@@ -397,20 +404,20 @@ global class ISSP_WS_NewUser {
                                         }
                                         catch (Exception e){
                                             Database.rollback(sPointContact);
-                                            
+
                                             errorCode = '001';
                                             errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                             retResponseOne.isSuccess = false;
                                             retResponseOne.responseErrorCode = errorCode;
                                             retResponseOne.responseErrorMessage = errorMessage;
-                                            
+
                                             //insert log record
                                             newLog.Success__c = false;
                                             newLog.Error_Code__c = errorCode;
                                             newLog.Error_Message__c = errorMessage;
                                             newLog.Finished__c = system.now();
                                             insert newLog;
-                                            
+
                                             return retResponseOne;
                                         }
                                     }
@@ -436,14 +443,14 @@ global class ISSP_WS_NewUser {
                                 retResponseOne.isSuccess = false;
                                 retResponseOne.responseErrorCode = errorCode;
                                 retResponseOne.responseErrorMessage = errorMessage;
-                                
+
                                 //insert log record
                                 newLog.Success__c = false;
                                 newLog.Error_Code__c = errorCode;
                                 newLog.Error_Message__c = errorMessage;
                                 newLog.Finished__c = system.now();
                                 insert newLog;
-                                
+
                                 return retResponseOne;
                             }
                             else{
@@ -472,20 +479,20 @@ global class ISSP_WS_NewUser {
                                     }
                                     catch (Exception e){
                                         Database.rollback(sPointContact);
-                                        
+
                                         errorCode = '001';
                                         errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                         retResponseOne.isSuccess = false;
                                         retResponseOne.responseErrorCode = errorCode;
                                         retResponseOne.responseErrorMessage = errorMessage;
-                                        
+
                                         //insert log record
                                         newLog.Success__c = false;
                                         newLog.Error_Code__c = errorCode;
                                         newLog.Error_Message__c = errorMessage;
                                         newLog.Finished__c = system.now();
                                         insert newLog;
-                                        
+
                                         return retResponseOne;
                                     }
                                     retResponseOne.federationId = conId15;
@@ -494,7 +501,7 @@ global class ISSP_WS_NewUser {
                                     Portal_Application_Right__c thisAppRight = appRightList[0];
                                     if (thisAppRight.Right__c == 'Access Granted'){
                                         //access already granted
-                                        
+
                                         //insert log record
                                         newLog.Success__c = true;
                                         newLog.Error_Code__c = errorCode;
@@ -507,9 +514,9 @@ global class ISSP_WS_NewUser {
                                             newLog.Contact__c = theContact;
                                         }
                                         insert newLog;
-                                        
+
                                         retResponseOne.federationId = conId15;
-                                        
+
                                         return retResponseOne;
                                     }
                                     else{
@@ -524,20 +531,20 @@ global class ISSP_WS_NewUser {
                                         }
                                         catch (Exception e){
                                             Database.rollback(sPointContact);
-                                            
+
                                             errorCode = '001';
                                             errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                             retResponseOne.isSuccess = false;
                                             retResponseOne.responseErrorCode = errorCode;
                                             retResponseOne.responseErrorMessage = errorMessage;
-                                            
+
                                             //insert log record
                                             newLog.Success__c = false;
                                             newLog.Error_Code__c = errorCode;
                                             newLog.Error_Message__c = errorMessage;
                                             newLog.Finished__c = system.now();
                                             insert newLog;
-                                            
+
                                             return retResponseOne;
                                         }
                                     }
@@ -555,14 +562,14 @@ global class ISSP_WS_NewUser {
                                 retResponseOne.isSuccess = false;
                                 retResponseOne.responseErrorCode = errorCode;
                                 retResponseOne.responseErrorMessage = errorMessage;
-                                
+
                                 //insert log record
                                 newLog.Success__c = false;
                                 newLog.Error_Code__c = errorCode;
                                 newLog.Error_Message__c = errorMessage;
                                 newLog.Finished__c = system.now();
                                 insert newLog;
-                                
+
                                 return retResponseOne;
                             }
                             else{
@@ -592,14 +599,14 @@ global class ISSP_WS_NewUser {
                                     retResponseOne.isSuccess = false;
                                     retResponseOne.responseErrorCode = errorCode;
                                     retResponseOne.responseErrorMessage = errorMessage;
-                                    
+
                                     //insert log record
                                     newLog.Success__c = false;
                                     newLog.Error_Code__c = errorCode;
                                     newLog.Error_Message__c = errorMessage;
                                     newLog.Finished__c = system.now();
                                     insert newLog;
-                                    
+
                                     return retResponseOne;
                                 }
                                 else{
@@ -628,8 +635,8 @@ global class ISSP_WS_NewUser {
                                     }
                                 }
                             }
-                            
-                            Contact con = ISSP_WS_Utilities.createContact(userFirstName, userLastName, userEmail,  userAccount);
+
+                            Contact con = ISSP_WS_Utilities.createContact(userFirstName, userLastName, userEmail,  userAccount, isCNS);
                             String conId15 = '';
                             try{
                                 insert con;
@@ -639,20 +646,20 @@ global class ISSP_WS_NewUser {
                             }
                             catch (Exception e){
                                 Database.rollback(sPointContact);
-                                
+
                                 errorCode = '001';
                                 errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                 retResponseOne.isSuccess = false;
                                 retResponseOne.responseErrorCode = errorCode;
                                 retResponseOne.responseErrorMessage = errorMessage;
-                                
+
                                 //insert log record
                                 newLog.Success__c = false;
                                 newLog.Error_Code__c = errorCode;
                                 newLog.Error_Message__c = errorMessage;
                                 newLog.Finished__c = system.now();
                                 insert newLog;
-                                
+
                                 return retResponseOne;
                             }
                             User u = ISSP_WS_Utilities.createUser(userFirstName, userLastName, userEmail, userAccountType, con.Id);
@@ -667,27 +674,27 @@ global class ISSP_WS_NewUser {
                             }
                             catch (Exception e){
                                 Database.rollback(sPointContact);
-                                
+
                                 errorCode = '001';
                                 errorMessage = ISSP_Int_Error__c.getValues('001').Error_Message__c + e;
                                 retResponseOne.isSuccess = false;
                                 retResponseOne.responseErrorCode = errorCode;
                                 retResponseOne.responseErrorMessage = errorMessage;
-                                
+
                                 //insert log record
                                 newLog.Success__c = false;
                                 newLog.Error_Code__c = errorCode;
                                 newLog.Error_Message__c = errorMessage;
                                 newLog.Finished__c = system.now();
                                 insert newLog;
-                                
+
                                 return retResponseOne;
                             }
                             retResponseOne.federationId = conId15;
                         }
                     }
                 }
-                
+
             }
         }
         newLog.Finished__c = system.now();
@@ -699,7 +706,7 @@ global class ISSP_WS_NewUser {
         }
         insert newLog;
         return retResponseOne;
-        
+
     }
-    
+
 }

@@ -61,7 +61,8 @@ global class AMS_OSCAR_Attachments {
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+        // CB - 6 APR 2017 - AMS Enhancements AMSU-2
+        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
         
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
@@ -107,9 +108,15 @@ global class AMS_OSCAR_Attachments {
     global static Boolean deleteAttachment(string strId, String fullName) {
         Schema.SObjectType attType = Id.valueOf(strId).getSObjectType();
         Boolean result = false;
-        if (attType == Schema.Attachment.SObjectType)               result = deleteSalesforceAttachment(strId);
-        if (attType == Schema.Archived_Attachment__c.SObjectType)   result = deleteArchivedAttachment(strId);
-        if (attType == Schema.AmazonFile__c.SObjectType)            result = deleteAmazonAttachment(strId, fullName);
+        if (attType == Schema.Attachment.SObjectType) {
+            result = deleteSalesforceAttachment(strId);
+        }
+        if (attType == Schema.Archived_Attachment__c.SObjectType) {
+            result = deleteArchivedAttachment(strId);
+        }
+        if (attType == Schema.AmazonFile__c.SObjectType) {
+            result = deleteAmazonAttachment(strId, fullName);
+        }
         //System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
         return result;
     }
@@ -203,8 +210,11 @@ global class AMS_OSCAR_Attachments {
     
     
     public Boolean getCanAttachFilesToCase() {
-        if(cse.Status == 'Draft') return false;
-        else return true;
+        if(cse.Status != 'Draft') {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public PageReference goToAttachmentPage() {

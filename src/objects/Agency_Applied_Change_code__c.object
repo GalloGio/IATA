@@ -269,11 +269,23 @@
         <label>Change Code</label>
         <picklist>
             <picklistValues>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DEF</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>DFE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DOM</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -467,7 +479,7 @@ AND(
         <externalId>false</externalId>
         <label>End Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -486,6 +498,19 @@ AND(
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <description>Show the IATA Code from the related Account</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <inlineHelpText>Show the IATA Code from the related Account</inlineHelpText>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>IRR_Expiration_Date__c</fullName>
@@ -630,7 +655,7 @@ AND(
         <label>Operation</label>
         <length>5</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -997,7 +1022,7 @@ AND(
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1019,7 +1044,7 @@ AND(
         <externalId>false</externalId>
         <label>Start Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1539,11 +1564,23 @@ AND(
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DEF</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>DFE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1564,10 +1601,6 @@ AND(
             </values>
             <values>
                 <fullName>NTW</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RCM</fullName>
                 <default>false</default>
             </values>
             <values>
