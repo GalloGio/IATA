@@ -3158,10 +3158,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             
             System.debug('SFSF accredModel ' + accredModel);
 
-            if(newForm.Agent_Type__c == 'Standard with Cash'){
-                accredModel = 'Cash'; 
-            } else if (newForm.Agent_Type__c == 'Standard no Cash'){
-                accredModel = 'Cashless';
+            if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
+                accredModel = AMS_Utils.AGENTTYPE_NOCASH; 
+            } else if (newForm.Agent_Type__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+                accredModel = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
             } else{
                 accredModel = newForm.Agent_Type__c;
             }
