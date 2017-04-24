@@ -1062,13 +1062,25 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void selectPageName() {
+        
         amsAgentType = newForm.Agent_Type__c;
         if (isNoticeOfChange) {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
-        } else if (sectorValue.StartsWith('Travel_Agent')) {
+
+        } else if (  sectorValue.StartsWith('Travel_Agent') && newForm.Agent_Type__c != 'Standard with Cash' && newForm.Agent_Type__c != 'Standard no Cash') {
+            
             includedPageName = 'ISSP_AMS_Pax_Form';
+            includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';         
+        
+        } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == 'Standard no Cash' || newForm.Agent_Type__c == 'Standard with Cash' ) && ( newCase.Reason1__c == 'New HE standard' || newCase.Reason1__c == 'New HE lite' ))){             
+            includedPageName = 'ISSP_ANG_PAX_HE';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
+
+        } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == 'Standard no Cash' || newForm.Agent_Type__c == 'Standard with Cash' ) && ( newCase.Reason1__c == 'New AE standard' || newCase.Reason1__c == 'New AE lite' ))){
+            includedPageName = 'ISSP_ANG_PAX_AE';
+            includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
+
         } else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')  && newCase.Reason1__c == 'New HO') {
             includedPageName = 'ISSP_AMS_Cargo_Form';
             includedSummaryPage = 'ISSP_AMS_CGO_ReadOnly';
@@ -3071,6 +3083,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     private string getAgentTypeLabel(string agentType) {
         if (agentType == 'IATA Passenger Sales Agent') {
+        if (agentType == 'Legacy') {
             return Label.ISSP_AMS_IATA_Passenger_Sales_Agent;
         }
         return agentType;
@@ -3097,7 +3110,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_OPTION_COURIER_HO;
         } else if (amsLocationType == 'New BR / IP - Courier') {
             return Label.ISSP_AMS_OPTION_COURIER_BRANCH;
-        } else if (amsLocationType == 'New HO - Legacy Accreditation') {
+        } else if (amsLocationType == 'New HO - Legacy') {
             return Label.ISSP_AMS_OPTION_PAX_HO;
         } else if (amsLocationType == 'New BR Abroad - IATA Passenger Sales Agent') {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD;
@@ -3873,8 +3886,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public boolean draftHQCaseExists {
         get {
             List<Case> dupeDrafts = [
-                SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND Reason1__c = 'New HO'
+                SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND 
+                (Reason1__c = 'New HO' OR Reason1__c = 'New HE standard' OR Reason1__c = 'New HE lite') 
             ];
+
             system.debug('getter draftHQCaseExists dupeDrafts.size(): ' + dupeDrafts.size());
             if (dupeDrafts.size() > 0) {
                 isNewCase = false;
