@@ -11715,7 +11715,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_an_Authorized_Signatories_ASP_Case</name>
             <type>Alert</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -15764,7 +15764,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Subject</field>
             <operation>startsWith</operation>
@@ -16845,7 +16845,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16885,7 +16885,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <booleanFilter>(1 OR 2 OR 3) AND 4 and 5</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -18010,7 +18010,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
