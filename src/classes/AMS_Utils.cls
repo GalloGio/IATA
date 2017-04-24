@@ -183,6 +183,11 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
 
+    public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
+    public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+    public static final String ACCREDITATIONMODEL_CASH = 'Cash';
+    public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
+
 
     static {
         refreshCache();
