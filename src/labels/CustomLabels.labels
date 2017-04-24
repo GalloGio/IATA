@@ -18628,6 +18628,22 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value> Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access. </value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</shortDescription>
+        <value>Dear IEP Admin / Wallet Manager,</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_AccessRequest2_IEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_AccessRequest2_IEP</shortDescription>
+        <value>Service has been transferred to your IEP Admin / Wallet Manager.</value>
+    </labels>            
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
