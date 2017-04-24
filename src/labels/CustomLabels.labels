@@ -19661,7 +19661,9 @@ lblAttention:Attention</value>
         <value>errMissCompany:Company name cannot be empty
 errMissAttn:Attention cannot be empty
 errMissPhone:Phone cannot be empty
-errMissState:State/Province cannot be empty</value>
+errMissState:State/Province cannot be empty
+msgAddrExist:Shipping address is already in system.
+msgErrorCartNotCompliant:Your country is non-compliant with one or more products in this cart. Please remove these products and try again or contact Customer Services to order this product</value>
     </labels>
     <labels>
         <fullName>Labels_IECConfirmOrder</fullName>
