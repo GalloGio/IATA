@@ -8094,7 +8094,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Gross Amnt Second year</value>
     </labels>
     <labels>
-<<<<<<< HEAD
         <fullName>ISSP_AMS_Head_Entity_Cash</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8109,9 +8108,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>New Head Entity lite - Standard Accreditation with no Cash</value>
     </labels>
     <labels>
-=======
         <value>New Head Entity - Standard Accreditation with no Cash</value>
->>>>>>> b6c62ad28b2d59838d06788d59fa770ce267b07c
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
         <language>en_US</language>
         <protected>false</protected>
