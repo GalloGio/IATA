@@ -1068,16 +1068,16 @@ public without sharing class ISSP_AMS_Accreditation {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
 
-        } else if (  sectorValue.StartsWith('Travel_Agent') && newForm.Agent_Type__c != 'Standard with Cash' && newForm.Agent_Type__c != 'Standard no Cash') {
+        } else if (  sectorValue.StartsWith('Travel_Agent') && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) {
             
             includedPageName = 'ISSP_AMS_Pax_Form';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';         
         
-        } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == 'Standard no Cash' || newForm.Agent_Type__c == 'Standard with Cash' ) && ( newCase.Reason1__c == 'New HE standard' || newCase.Reason1__c == 'New HE lite' ))){             
+        } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE))){             
             includedPageName = 'ISSP_ANG_PAX_HE';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
 
-        } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == 'Standard no Cash' || newForm.Agent_Type__c == 'Standard with Cash' ) && ( newCase.Reason1__c == 'New AE standard' || newCase.Reason1__c == 'New AE lite' ))){
+        } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == CASE_REASON_AE_STANDARD || newCase.Reason1__c == CASE_REASON_AE_LITE))){
             includedPageName = 'ISSP_ANG_PAX_AE';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
 
@@ -3887,7 +3887,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         get {
             List<Case> dupeDrafts = [
                 SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND 
-                (Reason1__c = 'New HO' OR Reason1__c = 'New HE standard' OR Reason1__c = 'New HE lite') 
+                (Reason1__c = 'New HO' OR Reason1__c = AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = AMS_UTILS.CASE_REASON_HE_LITE) 
             ];
 
             system.debug('getter draftHQCaseExists dupeDrafts.size(): ' + dupeDrafts.size());
