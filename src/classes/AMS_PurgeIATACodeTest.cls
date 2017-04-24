@@ -139,6 +139,12 @@ private class AMS_PurgeIATACodeTest {
 	}
 
 	@isTest static void aMS_PurgeIATACodeControllerTest() {
+		Id purgeId;
+		AMS_SOQL_Query_Export__c exportRecord = new AMS_SOQL_Query_Export__c(
+			Name = 'Full Purge IATA Code',
+			Order_Direction__c = 'Ascending'
+		);
+
 
 		PageReference pageRef = Page.AMS_PurgeIATACodePage;
 
@@ -149,10 +155,13 @@ private class AMS_PurgeIATACodeTest {
         Test.startTest();
         
         //AMS_VoucherManagerPage page = new AMS_VoucherManagerPage(sc);
+
+		purgeId = controller.fullPurgeId;
+		purgeId = controller.litePurgeId;
         
         controller.checkBatchStatus();
 
-        controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,,');
+        controller.contentFile = Blob.valueOf('Id,IATACode__c,');
 
         controller.fetchSOQLObjects();
 
@@ -160,9 +169,30 @@ private class AMS_PurgeIATACodeTest {
 
         controller.runPurgeProcess();
 
+        controller.checkBatchStatus();
+
+        controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,Wed Jan 01,xxx,xxx,yyy');
+
+        controller.fetchSOQLObjects();
+
+        controller.ReadFile();
+
+        controller.runPurgeProcess();
+
+
         List<String> notesTest = controller.noteListFullPurge;
 		List<String> notesTest2 = controller.noteListLitePurge;
 		List<String> notesTest3 = controller.noteListUpload;
+
+		insert exportRecord;
+
+		controller.fetchSOQLObjects();
+
+		exportRecord.Name = 'Lite Purge IATA Code';
+
+		update exportRecord;
+	
+		controller.fetchSOQLObjects();
 
         Test.stopTest();
 
