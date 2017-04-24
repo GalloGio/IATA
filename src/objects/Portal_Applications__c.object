@@ -77,6 +77,116 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
+        <fullName>ANG_Accredited_Agents_Only__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Service can only be subscribed by accredited agents.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Active OR Changes processed.</inlineHelpText>
+        <label>Accredited Agents Only</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Country_Coverage__c</fullName>
+        <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
+        <externalId>false</externalId>
+        <label>Country Coverage</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Country_Coverage__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR (
+  AND(
+    CONTAINS(Name, &quot;IATA EasyPay&quot;),
+    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c),
+    TRIM(ANG_Country_Coverage__c) != &quot;&quot;
+  ),
+  AND(
+    NOT(CONTAINS(Name, &quot;IATA EasyPay&quot;))
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Country Coverage</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Restrict_Accredited_Agent__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  (
+    AND (
+      CONTAINS($User.Customer_type__c,&quot;Agency&quot;),
+      $User.ANG_Is_Accredited_Agent__c,
+      ANG_Accredited_Agents_Only__c
+    )
+  ),
+  (
+    AND (
+      CONTAINS($User.Customer_type__c,&quot;Agency&quot;),
+      ANG_Accredited_Agents_Only__c = false
+    )
+  ),
+  (
+    NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))  
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Restrict Accredited Agent</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Flag_Restrict_Sector__c</fullName>
+        <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
+        <externalId>false</externalId>
+        <formula>OR(
+  (
+    AND($User.ANG_Sector__c != &quot;Travel Agent&quot;, $User.ANG_Sector__c != &quot;Cargo Agent&quot;)
+  ),
+  (
+    AND (OR($User.ANG_Sector__c = &quot;Travel Agent&quot;, $User.ANG_Sector__c = &quot;Cargo Agent&quot;),
+           $User.ANG_Sector__c = TEXT(ANG_Restrict_by_Agency_Sector__c))  
+  ),
+  (
+    TEXT(ANG_Restrict_by_Agency_Sector__c) = &quot;&quot;
+  )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Restrict Sector</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
+        <description>Permitted agency sector</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Restrict portal visibility to either Travel or Cargo Agents. Will be visible to Agents in both sectors if left empty.</inlineHelpText>
+        <label>Restrict by Agency Sector</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -295,6 +405,9 @@
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
 &quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_CNS_Endorsement,
 &quot;CNS Payment Link&quot;, $Label.ISSP_CNS_PaymentLink_ServiceName,
+&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name 
 )</formula>
@@ -325,6 +438,9 @@ Name
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
       &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
+	  &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+      &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+      &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
       &quot;&quot;
       )</formula>
@@ -535,6 +651,17 @@ Name
         <active>true</active>
         <label>ISS Portal Application</label>
         <picklistValues>
+            <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
+            <values>
+                <fullName>Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>TD_Access_Level__c</picklist>
             <values>
                 <fullName>Basic</fullName>
@@ -613,4 +740,14 @@ Name
         <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Restrict_by_Agency_Sector</fullName>
+        <active>true</active>
+        <description>Only allow to save when Restrict by Agency Sector is not empty IF Agency checkbox = TRUE</description>
+        <errorConditionFormula>AND(
+ NOT(Agency__c),
+ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
+)</errorConditionFormula>
+        <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Sector.</errorMessage>
+    </validationRules>
 </CustomObject>

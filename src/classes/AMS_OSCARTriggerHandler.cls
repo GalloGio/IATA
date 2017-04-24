@@ -39,6 +39,7 @@ public class AMS_OSCARTriggerHandler {
         copyDataFromTargetAgency();
 		updateOSCARAppointments();
 		handleVRProcess();
+		checkOwnershipOnProcess(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
 	}
 
 	public static void handleBeforeInsert() {
@@ -1843,6 +1844,66 @@ public class AMS_OSCARTriggerHandler {
 		return changeOscars;
 	}
 
+
+	public static void sendEmailAlert(Id oscarId, String oscarCommCaseId, boolean wasApproved) {
+
+		if(oscarCommCaseId != null){
+
+	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
+			AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchContactInfoFromCase(oscarCommCaseId), oscarId, ANGemailTemplates(wasApproved), oscarCommCaseId, owea[0], false);
+
+		}else{
+
+			System.debug('Could not find the case Id to send the email.');
+		
+		}
+
+	}
+
+
+	private static List<Contact> fetchContactInfoFromCase(String oscarCommCaseId){
+
+		 return [Select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c from Contact where Id in (select ContactId from Case where Id = :oscarCommCaseId )];
+
+	}
+	
+	private static Map<String, Id> ANGemailTemplates(boolean wasApproved){
+
+        Map<String, Id> multilangTemplates = new Map<String, Id>();
+
+        String templateId = 'ANG_New_HE_Accreditation_Decision';
+
+        String auxStrDecision = wasApproved ? templateId+'_APP' : templateId+'_DIS';
+
+        //Get the templates for NG accreditation outcoume
+        List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + auxStrDecision + '%\'' );
+
+        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+        for(EmailTemplate et: etNG){
+            if(!countryTemplates.containsKey(et.DeveloperName))
+                countryTemplates.put(et.DeveloperName, et);
+        }
+
+        //map template Ids with their respective language
+        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+        
+        for(Schema.Picklistentry pe: prefLanguages){
+            EmailTemplate langTemplate = countryTemplates.get(auxStrDecision+ '_' + pe.getValue());
+            if(langTemplate == null) //English is default and must exist in the system
+                countryTemplates.get(auxStrDecision+'_English');
+                if(langTemplate != null)
+		            multilangTemplates.put(pe.getValue(), langTemplate.Id);
+        }
+
+        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+        if(multilangTemplates.isEmpty())
+            multilangTemplates.put('English', countryTemplates.get(auxStrDecision + '_English').Id);
+
+        return multilangTemplates;
+
+    }
+ 
 	public static Map<Id,AMS_HierarchyHelper.AccountStruct> getAccountsInfoBeforeChanges(Map<Id,Account> accountsMap) {
 
 
@@ -1862,6 +1923,74 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		return locationTypeAccountID;
+	}
+
+
+	public static void checkOwnershipOnProcess(List<AMS_OSCAR__c> oscars, Map<Id,AMS_OSCAR__c> oldMap){
+
+		Map<Id, Integer> contacts = getAccreditationContacts(oscars);
+
+		ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		
+		Map<Id, Integer> allPercentages = getAllOWnersPercentage(oscars);
+
+		For(AMS_OSCAR__c oscar: oscars){
+
+			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && oscar.RecordTypeId == newNGRT){
+
+				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
+					continue;
+				else	
+					if(!validate100Ownership(oscar,allPercentages))
+						oscar.addError('Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.');
+
+			}
+		}
+
+	}
+
+	public static Map<Id, Integer> getAccreditationContacts(List<AMS_Oscar__c> oscars){
+
+		Set<Id> onlineForms = new Set<Id>();
+
+		For(AMS_OSCAR__c oscar : oscars)
+			onlineForms.add(oscar.AMS_Online_Accreditation__c);
+
+		List<AggregateResult> sumPercentageAR = [select AMS_Pax_Accreditation_Form__r.Id, count(Id) numberOfContacts from AMS_Accreditation_Contact__c  where AMS_Pax_Accreditation_Form__c in :onlineForms group by AMS_Pax_Accreditation_Form__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('numberOfContacts')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static Map<Id, Integer> getAllOWnersPercentage(List<AMS_Oscar__c> oscars){
+
+		Set<Id> accounts = new Set<Id>();
+
+		For(AMS_OSCAR__c oscar : oscars)
+			accounts.add(oscar.Account__c);
+
+		List<AggregateResult> sumPercentageAR = [select Account__r.Id, SUM(Percentage__c) percentage from AMS_Account_Role__c  where Account__c in :accounts and Active__c = true group by Account__r.Id];
+
+		Map<Id,Integer> toReturn = new Map<Id,Integer>();
+
+		for(AggregateResult ar: sumPercentageAR){
+			toReturn.put((Id)ar.get('Id'), Integer.valueOf(ar.get('percentage')));
+		}
+
+		return toReturn;
+
+	}
+
+	public static boolean validate100Ownership(AMS_OSCAR__c oscar,  Map<Id, Integer> percentages){
+
+		return percentages.get(oscar.Account__c) == 100;
+
 	}
 
 }
