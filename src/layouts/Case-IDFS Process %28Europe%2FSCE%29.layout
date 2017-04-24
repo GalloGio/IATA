@@ -209,6 +209,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>IsComplaint__c</field>
             </layoutItems>
         </layoutColumns>
