@@ -32,6 +32,32 @@
         <template>Quality/OI_Approved_by_RPM</template>
     </alerts>
     <fieldUpdates>
+        <fullName>OI_Status_WF</fullName>
+        <description>Update field Status WF</description>
+        <field>OI_Status_WF__c</field>
+        <formula>IF(ISNULL(Date_Time_Closed__c),
+IF(ISNULL(Terminated_Date__c),
+IF(ISNULL(Pending_eff_validation_date__c),
+IF(ISNULL(Conclusion_Date__c),
+IF(AND(NOT(ISNULL(Overall_Deadline__c)),Overall_Deadline__c&lt;TODAY()), &quot;Delayed&quot;,
+IF(NOT(ISNULL(Submission_for_Approval_Date__c)), 
+IF(ISNULL(Extension_approved_date__c), 
+IF(ISNULL(Submission_for_extension_date__c),
+IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Action Plan&quot;)
+,&quot;Pending Extension Approval&quot;)
+,&quot;Extended&quot;)					
+,&quot;Investigation&quot;)
+)
+,&quot;Concluded&quot;)
+,&quot;Pending Effectiveness Validation&quot;)
+	,&quot;Terminated&quot;)
+, &quot;Closed&quot;)</formula>
+        <name>OI Status WF</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>OI_Submitted_for_approval</fullName>
         <field>Submission_for_Approval_Date__c</field>
         <formula>now()</formula>
@@ -78,7 +104,7 @@
             <name>Update_Date_Time_Closed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Status__c</field>
             <operation>equals</operation>
@@ -89,5 +115,16 @@
             <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update OI Status</fullName>
+        <actions>
+            <name>OI_Status_WF</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status</description>
+        <formula>OR(	ISNEW(), 	AND(NOT(ISNEW()), 		OR( 			ISCHANGED(Date_Time_Closed__c), 			ISCHANGED(Extension_approved_date__c), 			ISCHANGED(Submission_for_extension_date__c), 			ISCHANGED(Submission_for_Approval_Date__c), 			ISCHANGED(Overall_Deadline__c), ISCHANGED(Pending_eff_validation_date__c),  ISCHANGED(Terminated_Date__c),	 ISCHANGED(OI_Approval_date__c),			ISCHANGED(Conclusion_Date__c) 		) 	) )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
