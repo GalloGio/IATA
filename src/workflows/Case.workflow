@@ -5131,6 +5131,18 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ICCS_Unique_Case</fullName>
+        <field>ICCS_Unique_Case__c</field>
+        <formula>IF(IsClosed, CASESAFEID(Id), CASESAFEID(Account.Id) +
+TEXT(ICCS_Product__c)+
+TEXT(ICCS_Country__c)+
+TEXT(ICCS_Currencies__c)+"Open")</formula>
+        <name>ICCS Unique Case</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ICH_Case_Area</fullName>
         <description>Set case area to ICH</description>
         <field>CaseArea__c</field>
@@ -11662,6 +11674,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </criteriaItems>
         <description>Rule to detect when new docs have been received for notification to case owner</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ICCS Unique Case</fullName>
+        <actions>
+            <name>ICCS_Unique_Case</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>RecordType.DeveloperName == 'FDS_ICCS_Product_Management', ISCHANGED(IsClosed)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>ICCS Unique Case - Closed</fullName>
