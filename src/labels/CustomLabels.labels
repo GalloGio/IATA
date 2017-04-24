@@ -8108,14 +8108,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>New Head Entity lite - Standard Accreditation with no Cash</value>
     </labels>
     <labels>
-        <value>New Head Entity - Standard Accreditation with no Cash</value>
-        <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS How Many PrevAgencies</shortDescription>
-        <value>* How many travel agencies previously worked for?</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_IATA_Passenger_Sales_Agent</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
