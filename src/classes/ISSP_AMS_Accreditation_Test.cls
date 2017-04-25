@@ -842,7 +842,9 @@ private class ISSP_AMS_Accreditation_Test
 		}
 			
 	}
-
+  
+    /*  
+  
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s() 
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
@@ -1367,6 +1369,8 @@ private class ISSP_AMS_Accreditation_Test
         }
             
     }
+    
+    */
     
     @isTest static void ISSP_AMS_Accreditation_Test_20() 
     {
@@ -4473,6 +4477,8 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();        
     }
 
+    /*
+
     @isTest
     static void ISSP_AMS_Accreditation_Test_ICC_14() {
         Account childAccount;
@@ -4843,6 +4849,8 @@ private class ISSP_AMS_Accreditation_Test
 
         Test.stopTest();        
     }
+    
+    */
 
     private static Account icc_testAccount(IATA_ISO_Country__c country) {
 
@@ -4928,7 +4936,7 @@ private class ISSP_AMS_Accreditation_Test
         return newUser;
     }
 
-
+    /*
     @isTest
     static void ISSP_AMS_Accreditation_Test_ICC_17() {
         Account childAccount;
@@ -6801,7 +6809,7 @@ private class ISSP_AMS_Accreditation_Test
         testUser = icc_testUser2(testContact, 'de');
 
         System.runAs(testUser) {
-/*
+
             Case newCase = new Case(
                 IFAP_Country_ISO__c = 'tq',
                 CaseArea__c = 'Accreditation Process',
@@ -6821,7 +6829,7 @@ private class ISSP_AMS_Accreditation_Test
             insert form;
 
             ApexPages.currentPage().getParameters().put('caseId', newCase.Id);
-  */
+  
           
             accr = icc_initialize(country, childAccount);
 
@@ -6982,7 +6990,7 @@ private class ISSP_AMS_Accreditation_Test
         testUser = icc_testUser2(testContact, 'de');
 
         System.runAs(testUser) {
-/*
+
             Case newCase = new Case(
                 IFAP_Country_ISO__c = 'tq',
                 CaseArea__c = 'Accreditation Process',
@@ -7002,7 +7010,7 @@ private class ISSP_AMS_Accreditation_Test
             insert form;
 
             ApexPages.currentPage().getParameters().put('caseId', newCase.Id);
-  */
+  
           
             accr = icc_initialize(country, childAccount);
 
@@ -7044,7 +7052,7 @@ private class ISSP_AMS_Accreditation_Test
     }
 
 
-
+*/
 
 
     private static ISSP_AMS_Accreditation icc_initialize(IATA_ISO_Country__c country, Account child) {
@@ -7089,4 +7097,5 @@ private class ISSP_AMS_Accreditation_Test
 
         return ctrl;
     }
+    
 }
