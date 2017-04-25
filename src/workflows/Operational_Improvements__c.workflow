@@ -104,7 +104,7 @@ IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Acti
             <name>Update_Date_Time_Closed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Operational_Improvements__c.Status__c</field>
             <operation>equals</operation>
