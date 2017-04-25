@@ -59,8 +59,8 @@ public with sharing class ANG_ConversionToolController {
 		PageReference pageRef;
 		pageRef = Page.ANG_ConversionToolDetail;
 		pageRef.setRedirect(false);
-		String errCode = apexpages.currentpage().getParameters().get('detailCode');
-		System.debug('------------ParamValue errCode: '+ errCode);
+		//String errCode = apexpages.currentpage().getParameters().get('detailCode');
+		//System.debug('------------ParamValue errCode: '+ errCode);
 		System.debug('------------ParamValue errorDetailCode: '+ this.errorDetailCode);
 		return pageRef;
 	}   
@@ -69,6 +69,7 @@ public with sharing class ANG_ConversionToolController {
 		PageReference pageRef;
 		pageRef = Page.ANG_ConversionTool;
 		pageRef.setRedirect(false);
+		wrStructure = null;
 		return pageRef;
 	}  
 
