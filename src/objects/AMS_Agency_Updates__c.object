@@ -64,7 +64,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -77,7 +77,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -148,7 +148,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -293,7 +293,7 @@
     <nameField>
         <displayFormat>A-{00000000}</displayFormat>
         <label>Code</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Agency Updates</pluralLabel>
