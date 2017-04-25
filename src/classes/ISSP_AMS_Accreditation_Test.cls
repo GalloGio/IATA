@@ -842,7 +842,9 @@ private class ISSP_AMS_Accreditation_Test
 		}
 			
 	}
-
+  
+    /*  
+  
     @isTest static void ISSP_AMS_Accreditation_Test_NOC_1s() 
     {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
@@ -1367,6 +1369,8 @@ private class ISSP_AMS_Accreditation_Test
         }
             
     }
+    
+    */
     
     @isTest static void ISSP_AMS_Accreditation_Test_20() 
     {
