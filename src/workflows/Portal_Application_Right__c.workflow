@@ -634,16 +634,12 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-TEXT(Right__c) = &apos;Access Requested&apos;,
-Portal_Application__r.Name != &apos;Treasury Dashboard&apos;,
-OR(
-ISBLANK(Contact__r.Community__c),
-NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;))
-),
-Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot;
-)</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <formula>AND( TEXT(Right__c) = &apos;Access Requested&apos;,
+Portal_Application__r.Name != &apos;Treasury Dashboard&apos;, 
+OR( ISBLANK(Contact__r.Community__c), 
+NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;)) ), 
+Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot; )</formula>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Notify contact of access request - CNS</fullName>
