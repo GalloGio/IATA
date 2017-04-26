@@ -29,13 +29,44 @@ public class AMS_AgencyRegulationTriggerHandler {
             //contacts that will receive notifications for DGR certificates renewal
             Map<Id, List<Contact>> keyContactsPerAccount = new Map<Id, List<Contact>>();
 
-            List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+            //get all accounts
+            List<Account> allAccounts = new List<Account>([SELECT Id, Top_Parent__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
 
-            for(Contact c: allContacts){
-                if(!keyContactsPerAccount.containsKey(c.AccountId))
-                    keyContactsPerAccount.put(c.AccountId, new List<Contact>());
+            Set<Id> accountIdsHOs = new Set<Id>();
+            Map<Id, Id> parentPerBR = new Map<Id, Id>();
 
-                keyContactsPerAccount.get(c.AccountId).add(c);
+            //check if the account is an AO or HO to get the contacts of TopParent
+            for(Account ac: allAccounts){
+                if(ac.Location_Type__c != 'HO' && ac.Location_Type__c != 'AO'){
+                    accountIds.remove(ac.Id);
+                    accountIdsHOs.add(ac.Top_Parent__c);
+                    if(!parentPerBR.containsKey(ac.Top_Parent__c))
+                        parentPerBR.put(ac.Top_Parent__c, ac.Id);
+                }
+            }
+
+            //get contacts of first accounts
+            if(!accountIds.isEmpty()) {
+                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+
+                for(Contact c: allContacts){
+                    if(!keyContactsPerAccount.containsKey(c.AccountId))
+                        keyContactsPerAccount.put(c.AccountId, new List<Contact>());
+
+                    keyContactsPerAccount.get(c.AccountId).add(c);
+                }
+            }
+
+            //get contacts of topParents and relate them with first account
+            if(!accountIdsHOs.isEmpty()){
+                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+
+                for(Contact cHO: allContactsHOs){
+                    if(!keyContactsPerAccount.containsKey(parentPerBR.get(cHO.AccountId)))
+                        keyContactsPerAccount.put(parentPerBR.get(cHO.AccountId), new List<Contact>());
+
+                    keyContactsPerAccount.get(parentPerBR.get(cHO.AccountId)).add(cHO);
+                }
             }
 
             AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount); 
