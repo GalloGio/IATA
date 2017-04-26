@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Application_IEP_Portal_Service_Role_Change</fullName>
+        <description>Application IEP Portal Service Role Change</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_contact_Portal_Serv_Role_ChangeVF</template>
+    </alerts>
+    <alerts>
         <fullName>Application_access_granted</fullName>
         <description>Application access granted</description>
         <protected>false</protected>
