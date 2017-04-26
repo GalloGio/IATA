@@ -84,6 +84,10 @@ global with sharing class ANG_ConversionHelper {
 
 		}
 
+		System.debug('All hierarchies:'+allHierarchies.size());
+		
+		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHO.size());
+
 		return toReturn;
 	}
 

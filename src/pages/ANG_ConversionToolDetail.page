@@ -3,7 +3,7 @@
     <apex:sectionHeader title="Agencies migration tool: exception management" />   
     <apex:PageBlock id="pb"  >
         <apex:pageBlockSection title="Exception management" collapsible="false" id="Overview"  rendered="true" columns="1">
-            <h1>Hierarchies with branches abroad</h1>
+            <h1>{!DetailMessage} for {!selectedCountryName}</h1>
             <br />
             The system identified some hierarchies containing branches abroad. There are an exception because the Multicountry accreditation type is not supported yet.
             <br /><br />
