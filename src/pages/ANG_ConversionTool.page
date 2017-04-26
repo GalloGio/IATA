@@ -1,4 +1,4 @@
-<apex:page controller="ANG_ConversionToolController" showHeader="true" tabStyle="ANG_Conversion_Tool__tab">
+<apex:page controller="ANG_ConversionToolController" showHeader="true">
 
 	<style>
 		.hidden {
