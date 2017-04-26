@@ -16,7 +16,12 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	Set <Id> ContactDelRightSet = new Set <Id>();
     Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
     Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
-	
+
+    //ANG project
+    ANG_PortalApplicationRightHandler handler = new ANG_PortalApplicationRightHandler();
+    if(Trigger.isAfter && Trigger.isInsert) handler.onAfterInsert();
+    if(Trigger.isAfter && Trigger.isUpdate) handler.onAfterUpdate();
+	//end of ANG
     
     for(Portal_Application_Right__c access : trigger.new){
         system.debug('ONE RECORD');
