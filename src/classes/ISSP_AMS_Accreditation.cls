@@ -1066,7 +1066,7 @@ public without sharing class ISSP_AMS_Accreditation {
             includedPageName = 'ISSP_ANG_PAX_HE';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
 
-        } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == CASE_REASON_AE_STANDARD || newCase.Reason1__c == CASE_REASON_AE_LITE))){
+        } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_LITE))){
             includedPageName = 'ISSP_ANG_PAX_AE';
             includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
 
@@ -3842,7 +3842,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         get {
             List<Case> dupeDrafts = [
                 SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND 
-                (Reason1__c = 'New HO' OR Reason1__c = AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = AMS_UTILS.CASE_REASON_HE_LITE) 
+                (Reason1__c = 'New HO' OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_LITE) 
             ];
 
             system.debug('getter draftHQCaseExists dupeDrafts.size(): ' + dupeDrafts.size());
