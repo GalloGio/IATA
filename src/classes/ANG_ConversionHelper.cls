@@ -15,7 +15,7 @@ global with sharing class ANG_ConversionHelper {
 	public static final Integer ORFANBRANCH = -8;
 	public static final Integer DEFAULTMESSAGE = -1;
 
-    public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D','T','F'};
+    public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D'};
     public static final Set<String> ALLOWEDSECTORS = new Set<String>{'Travel Agent'};
 
     public static final Set<String> OLDLOCATIONTYPES = new Set<String>{'BR','HO','SA','AO'};
@@ -48,7 +48,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Id> allAgencies = new Set<Id>();
 		Set<Id> allHierarchies = new Set<Id>();
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
@@ -175,6 +175,17 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static boolean validateBranchesAbroad(List<AMS_Agencies_relationhip__c> relationShips){
+
+		for(AMS_Agencies_relationhip__c rel: relationShips){
+			if(rel.Child_Account__r.IATA_ISO_Country__r.Name != rel.Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name)
+				return false;
+		}
+
+		return true;
+
+	}
+
 
 	public static ANG_ConversionHelper.HierarchyStructure performValidationsOnHierarchy(ANG_ConversionHelper.HierarchyStructure struct){
 
@@ -199,6 +210,12 @@ global with sharing class ANG_ConversionHelper {
 			if(!validateCorrectSectorInAgencies(struct.relations)){
 				struct.isValid = false;
 				struct.errorCategory = WRONGSECTOR;
+				return struct;
+			}
+
+			if(!validateBranchesAbroad(struct.relations)){
+				struct.isValid = false;
+				struct.errorCategory = BRANCHABROAD;
 				return struct;
 			}
 
