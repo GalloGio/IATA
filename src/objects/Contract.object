@@ -317,11 +317,11 @@ E&amp;F CRM Project</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>005</fullName>
+                <fullName>0005</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>0005</fullName>
+                <fullName>005</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
             </picklistValues>
@@ -1477,10 +1477,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         </picklistValues>
         <picklistValues>
             <picklist>Dunning_Procedure__c</picklist>
-            <values>
-                <fullName>005</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>EF01</fullName>
                 <default>false</default>
