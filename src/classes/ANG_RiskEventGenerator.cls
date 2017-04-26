@@ -166,6 +166,7 @@ public class ANG_RiskEventGenerator {
 					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
 					risk.ANG_Created_from__c = objectName;
 					risk.put(sourceFields.get(objectName), o.Id);
+					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
 					riskEvents.add(risk);
 				}
