@@ -18637,6 +18637,54 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Service has been transferred to your IEP Admin / Wallet Manager.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</shortDescription>
+        <value>has been granted with the following portal service role:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</shortDescription>
+        <value>You can access it</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_1</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_1</shortDescription>
+        <value>This is to inform you that your</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_2</shortDescription>
+        <value>portal service role has been changed to:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject</shortDescription>
+        <value>IATA Customer Portal – Change of</value>
+    </labels>            
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
+        <value>Portal Service Role</value>
+    </labels>    
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23079,7 +23127,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
-        <value><strong>Head Entity - Standard with cash</strong> (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
 
     <labels>
@@ -23087,14 +23135,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
-        <value><strong>Head Entity - Standard without cash</strong> (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
 
     <labels>
-        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless</fullName>        
+        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</fullName>        
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless  </shortDescription>
+        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</shortDescription>
         <value>Accreditaiton type requested</value>
     </labels>
 
@@ -23105,7 +23153,6 @@ title,Title,Name</value>
         <shortDescription>ISSP_Secu_of_Elect_Tickets</shortDescription>
         <value>SECTION 4 - Security of Electronic Tickets</value>
     </labels>
-
     <labels>
         <fullName>ISSP_AMS_Step3_5_Event_of_inspection</fullName>        
         <language>en_US</language>
@@ -23113,7 +23160,6 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_Step3_5_Event_of_inspection</shortDescription>
         <value>In the event of an inspection, the Applicant will be required to provide evidence that it meets the security requirements for issuance of Electronic Tickets, in accordance with the provisions of section 8, and in particular the Payment Card Industry (PCI) Data Security Standards as referenced in section 2.1.6 of Resolution 890.</value>
     </labels>
-
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_Identi_Appro_Req</fullName>        
         <language>en_US</language>
@@ -23121,23 +23167,13 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_STEP_3_1_Identi_Appro_Req</shortDescription>
         <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
     </labels>
-
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription> 
         <value>SECTION 2 - General Information</value>
-    </labels>
-
-    <labels>
-        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription>
-        <value>SECTION 2 - General Information</value>
-    </labels>
-	
+    </labels>	
 	<labels>
         <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>        
         <language>en_US</language>
@@ -23167,10 +23203,10 @@ title,Title,Name</value>
         <value>4.Security of Electronic Tickets</value>
     </labels>
 	<labels>
-        <fullName>ISSP_AMS_LeftNav_Section5_Other Info </fullName>        
+        <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>        
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info </shortDescription>
+        <shortDescription>ISSP_AMS_LeftNav_Section5_Other_Info</shortDescription>
         <value>5. Other Info</value>
     </labels>	
     <labels>
