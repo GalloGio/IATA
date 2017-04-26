@@ -75,7 +75,7 @@ private class clsICCSPMCaseCloseControllerTest {
         
         // 3rd case
         insert cs3;
-        closeCaseAndNotif(cs3);
+        //closeCaseAndNotif(cs3);
         
         test.stopTest();
         //////////////////////////
