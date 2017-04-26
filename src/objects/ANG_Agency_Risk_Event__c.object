@@ -161,7 +161,7 @@
         <fullName>ANG_Event_Status__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Event_Status</globalPicklist>
-        <label>Status</label>
+        <label>Event Status</label>
         <required>true</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
