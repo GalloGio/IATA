@@ -481,6 +481,10 @@
                 <default>false</default>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -5354,6 +5358,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
             <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
@@ -8325,6 +8333,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
             <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
@@ -11275,6 +11287,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
+            <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
