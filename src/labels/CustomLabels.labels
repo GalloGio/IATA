@@ -9177,7 +9177,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</shortDescription>
-        <value>Changes can only be made once your agency has been accredited to CNS</value>
+        <value>Changes can only be made once your agency has been endorsed with CNS</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Multiple_Changes</fullName>
@@ -16059,9 +16059,9 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateAgency_CNS</shortDescription>
-        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundCreateStandardAirline</fullName>
@@ -16079,9 +16079,9 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundCreateStandardAirline_CNS</shortDescription>
-        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
+        <value>No Company was found for these search criteria. Please modify your search and try again or click Create New to create a new company record. 
 &lt;br/&gt;&lt;br/&gt;
-If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundGP</fullName>
@@ -16101,7 +16101,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <shortDescription>ISSP_NoRecordsFoundGP_CNS</shortDescription>
         <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
-If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFoundGSA</fullName>
@@ -16139,9 +16139,9 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundNext_CNS</shortDescription>
-        <value>No Organization was found for these search criteria. Please modify your search and try again.
+        <value>No Company was found for these search criteria. Please modify your search and try again.
 &lt;br/&gt;&lt;br/&gt; 
-If you continue to experience issues registering for the CNS Customer Portal then please consult us at Tel: 786-413-1000</value>
+If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
     <labels>
         <fullName>ISSP_No_application_available</fullName>
@@ -19795,7 +19795,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>identity</value>
+        <value>s</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
@@ -21773,6 +21773,22 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
         <value>https://iata.my.salesforce.com</value>
+    </labels>
+    <labels>
+        <fullName>SIDRA_Automated_Case_Message</fullName>
+        <categories>SIDRA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA Automated Case Message</shortDescription>
+        <value>Automated message: Please be aware of another SIDRA Case in another currency created for this agency in the same period. Make sure that the short payment amount in both currencies is communicated to the agent and only one IRR action will be applicable.
+
+Case number: {0}
+Short payment amount: {1}
+Currency: {2}
+Short Payment Amount USD: {3}
+Remittance date: {4}
+
+***Above details might change after the creation of the case, Please refer to the case mentioned for accurate information.</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>

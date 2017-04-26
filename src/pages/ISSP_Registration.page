@@ -48,6 +48,9 @@
                          else if (url.indexOf(".com/")!=-1) {
                             domain = ".com/";
                          }
+                         else if (url.indexOf(".net/")!=-1) {
+                            domain = ".net/";
+                         }
                          //alert("domain: " +domain);
                          
                          first=url.split(domain);
