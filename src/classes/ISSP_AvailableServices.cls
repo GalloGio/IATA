@@ -79,7 +79,7 @@ public with sharing class ISSP_AvailableServices{
 
         availablePortalServiceRoles = new List<SelectOption>();
 
-        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)'];
+        List<Connected_App_Roles__c> roles = [SELECT Default_User_Role__c, Role__c FROM Connected_App_Roles__c where Connected_App__c = 'IATA EasyPay (EDENRED)'];
         
         availablePortalServiceRoles.add(new SelectOption('', ''));
         
