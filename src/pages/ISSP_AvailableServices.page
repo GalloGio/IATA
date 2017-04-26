@@ -10,6 +10,11 @@
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
+
+    function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
+      var appPortalRole = $('[id$="portalRoles"]').val();
+      newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService);
+    }       
        
     function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
         var doInsert;
@@ -35,6 +40,9 @@
             }
             $('#ModalNewServiceRequest').modal('toggle');
             if (doInsert == 1) {
+              if(appPortalRole == null  || appPortalRole == undefined) {
+                appPortalRole = '';
+              }                            
               ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
             } else {
               ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
@@ -355,7 +363,7 @@
                 </apex:outputPanel> 
 
                 <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
-                  <a onclick=" newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}','{!Serv.portalServiceRole}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');" class="btn_iata_success btn-block btn">
+                  <a onclick=" <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>
                 </apex:outputPanel> 
