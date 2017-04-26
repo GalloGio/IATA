@@ -1107,7 +1107,7 @@
                 <fullName>Travel Agent</fullName>
                 <default>false</default>
             </picklistValues>
-                        <picklistValues>
+            <picklistValues>
                 <fullName>Accommodation</fullName>
                 <default>false</default>
             </picklistValues>
