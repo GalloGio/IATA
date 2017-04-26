@@ -74,7 +74,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 	public static Set<String> getIEPDefaultRoles() {
         List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                    FROM Connected_App_Roles__c 
-                                                  WHERE Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' 
+                                                  WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
                                                     AND Default_User_Role__c = true];
 		
         Set<String> roles = new Set<String>();
@@ -87,7 +87,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 	public static Set<String> getIEPRolesManageUserAccess() {
 	        List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                        FROM Connected_App_Roles__c 
-                                                      WHERE Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)' 
+                                                      WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
                                                         AND Manage_User_Access__c = true];
 
         Set<String> roles = new Set<String>();
