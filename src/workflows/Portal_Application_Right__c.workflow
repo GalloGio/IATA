@@ -288,7 +288,7 @@
     <fieldUpdates>
         <fullName>Notify_Admin_of_contact_request</fullName>
         <field>Notification_Template__c</field>
-        <formula>&quot;NT-0022&quot;</formula>
+        <formula>&quot;NT-0684&quot;</formula>
         <name>Notify Admin of contact request</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -634,22 +634,15 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND NOT(3)</booleanFilter>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Requested</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>notEqual</operation>
-            <value>Treasury Dashboard</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Community__c</field>
-            <operation>startsWith</operation>
-            <value>CNS</value>
-        </criteriaItems>
+        <formula>AND(
+TEXT(Right__c) = &apos;Access Requested&apos;,
+Portal_Application__r.Name != &apos;Treasury Dashboard&apos;,
+OR(
+ISBLANK(Contact__r.Community__c),
+NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;))
+),
+Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot;
+)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
