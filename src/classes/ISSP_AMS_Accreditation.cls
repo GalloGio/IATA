@@ -3081,8 +3081,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
     }
 
-    private string getAgentTypeLabel(string agentType) {
-        if (agentType == 'IATA Passenger Sales Agent') {
+    private string getAgentTypeLabel(string agentType) {        
         if (agentType == 'Legacy') {
             return Label.ISSP_AMS_IATA_Passenger_Sales_Agent;
         }
