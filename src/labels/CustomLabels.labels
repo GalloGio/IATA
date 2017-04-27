@@ -22920,7 +22920,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
-        <value><strong>Head Entity - Standard with cash</strong> (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
 
     <labels>
@@ -22928,7 +22928,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
-        <value><strong>Head Entity - Standard without cash</strong> (mentioned in SECTION 1 above)</value>
+        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
 
     <labels>
