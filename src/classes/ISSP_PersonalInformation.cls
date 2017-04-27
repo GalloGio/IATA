@@ -153,7 +153,7 @@ public with sharing class ISSP_PersonalInformation {
 			isValidatedAirlineUser = true ;
 		}        
         
-        if(con.Account.Sector__c == 'Travel Agent' && (con.Account.Category__c == 'IATA Passenger Sales Agent' || con.Account.Category__c == ' Domestic Agent') && con.Account.IATA_ISO_Country__r.ANG_Portal_Service__c != null){
+        if(con.Account.Sector__c == AMS_UTILS.CATEGORY_TRAVEL_AGENT && (con.Account.Category__c == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT || con.Account.Category__c == AMS_UTILS.CATEGORY_DOMESTIC_AGENT) && con.Account.IATA_ISO_Country__r.ANG_Portal_Service__c != null){
             showIEPStatus = true;
         }
        

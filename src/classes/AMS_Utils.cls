@@ -169,8 +169,9 @@ public without sharing class AMS_Utils {
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
-    public static final String SECTOR_PASSENGER = 'Travel Agent';
+    public static final String SECTOR_PASSENGER = 'Travel Agent';    
     public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
+
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
@@ -178,6 +179,11 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
+    public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
+    public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
+
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
