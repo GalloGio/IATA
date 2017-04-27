@@ -2349,16 +2349,16 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <fullName>Status_Image__c</fullName>
         <externalId>false</externalId>
         <formula>CASE(OI_Status_auto__c,
-	&quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrC&quot;, &quot;C &quot;,40,620 ),
-	&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrF&quot;, &quot;E &quot;,40,620 ),
-	&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrH&quot;, &quot;OAP&quot;,40,620 ),
-	&quot;Delayed&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrE&quot;, &quot;Delayed &quot;,40,620 ),
-	&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrK&quot;, &quot;PEA&quot;,40,620 ),
-	&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrI&quot;, &quot;PA&quot;,40,620 ),
-	&quot;Concluded&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrD&quot;, &quot;CO&quot;,40,620 ),
-	&quot;Pending Effectiveness Validation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrJ&quot;, &quot;PEV &quot;,40,620 ),
-	&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GNrG&quot;, &quot;I&quot;,40,620 ),
-	&quot;Terminated&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=01526000000GUlk&quot;, &quot;T&quot;,40,620 ),
+	&quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1ex&quot;, &quot;C &quot;,40,620 ),
+	&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dz&quot;, &quot;E &quot;,40,620 ),
+	&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1df&quot;, &quot;OAP&quot;,40,620 ),
+	&quot;Delayed&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1e4&quot;, &quot;Delayed &quot;,40,620 ),
+	&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dB&quot;, &quot;PEA&quot;,40,620 ),
+	&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dV&quot;, &quot;PA&quot;,40,620 ),
+	&quot;Concluded&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1eY&quot;, &quot;CO&quot;,40,620 ),
+	&quot;Pending Effectiveness Validation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dQ&quot;, &quot;PEV &quot;,40,620 ),
+	&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dk&quot;, &quot;I&quot;,40,620 ),
+	&quot;Terminated&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1fC&quot;, &quot;T&quot;,40,620 ),
 	&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status Image</label>
@@ -2754,7 +2754,131 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <picklistValues>
             <picklist>Affected_Process__c</picklist>
             <values>
+                <fullName>Agency Management %28AM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agency Risk Management %28ARM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline %26 Location Coding and MITA%2FBIETA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Participation %28AP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Susp %28AS%29 %26 Funds Mgmt %28FM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Suspension %28AS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Services %28BS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Billing %26 Reporting %28BR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Card Payment Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Code Transfers %26 Mergers %28CTM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service %28CS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Funds Management %28FM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governance - Cargo %28GOV CGO%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Governance - Passenger %28GOV PAX%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House %28ICH%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Currency Clearance Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Currency Clearance Services %28ICCS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA-IATAN ID Cards %28IDC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IBCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Calendar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Fee Management %28IFM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Life Cycle MGMT %28ISSLC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISS Lifecycle Mgmt</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoicing %26 Collection %28IC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New ISS Deployment %28NID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Post-Termination Recovery %28PTR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Simplified Interline Settlement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4005,6 +4129,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <errorMessage>When ‘Frequency of occurrence’ is selected as ‘Other’, please describe your choice in the ‘Remarks’ field.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>OI_Overall_effectiveness_of_improvement</fullName>
+        <active>true</active>
+        <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled</description>
+        <errorConditionFormula>AND(OI_Status_auto__c=&quot;Closed&quot;, ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
+        <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
+        <errorMessage>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>OI_type_Other_check</fullName>
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(  OI_Type__c   , &quot;Other&quot;), ISBLANK( If_other_please_explain__c ))</errorConditionFormula>
@@ -4122,7 +4254,7 @@ try{
           jQuery( this ).dialog( &quot;close&quot; );
           location.reload();
         },
-        &quot;8 Months&quot;: function() {
+        &quot;9 Months&quot;: function() {
           updateOIObject(OIobject, 9);
           jQuery( this ).dialog( &quot;close&quot; );
           location.reload();
