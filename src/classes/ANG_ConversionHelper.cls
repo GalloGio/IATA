@@ -15,7 +15,7 @@ global with sharing class ANG_ConversionHelper {
 	public static final Integer ORFANBRANCH = -8;
 	public static final Integer DEFAULTMESSAGE = -1;
 
-    public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D','T','F'};
+    public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D'};
     public static final Set<String> ALLOWEDSECTORS = new Set<String>{'Travel Agent'};
 
     public static final Set<String> OLDLOCATIONTYPES = new Set<String>{'BR','HO','SA','AO'};
@@ -48,7 +48,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Id> allAgencies = new Set<Id>();
 		Set<Id> allHierarchies = new Set<Id>();
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
@@ -75,6 +75,18 @@ global with sharing class ANG_ConversionHelper {
 
 		for(Account acct: allAccountsSingleHierarchyBR)
 			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
+
+		List<AMS_Agencies_Hierarchy__c> alreadyMigratedStructures = [SELECT Id from AMS_Agencies_Hierarchy__c where Migrated__c = true];
+
+		for(AMS_Agencies_Hierarchy__c h: alreadyMigratedStructures){
+
+			toReturn.put(h.Id,createNewHierarchyStructure(h));
+
+		}
+
+		System.debug('All hierarchies:'+allHierarchies.size());
+		
+		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHO.size());
 
 		return toReturn;
 	}
@@ -163,6 +175,17 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static boolean validateBranchesAbroad(List<AMS_Agencies_relationhip__c> relationShips){
+
+		for(AMS_Agencies_relationhip__c rel: relationShips){
+			if(rel.Child_Account__r.IATA_ISO_Country__r.Name != rel.Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name)
+				return false;
+		}
+
+		return true;
+
+	}
+
 
 	public static ANG_ConversionHelper.HierarchyStructure performValidationsOnHierarchy(ANG_ConversionHelper.HierarchyStructure struct){
 
@@ -190,6 +213,12 @@ global with sharing class ANG_ConversionHelper {
 				return struct;
 			}
 
+			if(!validateBranchesAbroad(struct.relations)){
+				struct.isValid = false;
+				struct.errorCategory = BRANCHABROAD;
+				return struct;
+			}
+
 			if(struct.errorCategory == DEFAULTMESSAGE){
 				struct.isValid = true;
 				struct.errorCategory = 0;
@@ -206,6 +235,12 @@ global with sharing class ANG_ConversionHelper {
 		return struct;
 	}
 
+	private static ANG_ConversionHelper.HierarchyStructure createNewHierarchyStructure(AMS_Agencies_Hierarchy__c hierarchy){
+
+		ANG_ConversionHelper.HierarchyStructure struct = new ANG_ConversionHelper.HierarchyStructure(hierarchy);
+
+		return struct;
+	}
 
 	private Static ANG_ConversionHelper.HierarchyStructure createNewSoloHierarchyStructure(Account acct){
 
@@ -217,7 +252,7 @@ global with sharing class ANG_ConversionHelper {
 
 	public static void printStatistics(ANG_ConversionHelper.StatisticGeneratorStructure struct){
 
-		System.debug('---------------------------------');
+		System.debug('----------------------------------');
 		System.debug('Total Hierarchies:'+struct.totalHierarchies);
 		System.debug('Total Valid Hierarchies:'+struct.totalValidHierarchies);
 		System.debug('Total Invalid Hierarchies:'+struct.totalInvalidHierarchies);
@@ -549,7 +584,7 @@ global with sharing class ANG_ConversionHelper {
 
 		public boolean isSingleAgencyHierarchy;
 		public Id hierarchyId;
-		public Id topParentId;
+		public Id topParentId{get;set;}
 		public List<AMS_Agencies_relationhip__c> relations;
 		public Boolean isValid;
 		public Integer errorCategory;
@@ -557,6 +592,24 @@ global with sharing class ANG_ConversionHelper {
 		public boolean migrated;
         public String nameTopParent{get;set;}
 		public Set<Id> allAgencies;
+
+		public HierarchyStructure(AMS_Agencies_Hierarchy__c hierarchy){
+
+			isSingleAgencyHierarchy = false;
+			hierarchyId = hierarchy.Id;
+			topParentId = null;
+			relations = new List<AMS_Agencies_relationhip__c>(); 
+			iataCodeTopParent = null;
+			nameTopParent = null;
+
+			isValid = true;
+
+			errorCategory = DEFAULTMESSAGE;
+			migrated = true;
+
+			allAgencies = new Set<Id>();
+
+		}
 
 		public HierarchyStructure(Account acct){
 

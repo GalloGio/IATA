@@ -146,12 +146,12 @@ private class ANG_ConversionHelperTest {
 
 		ANG_ConversionHelper.printStatistics(finalStructNew);
 
-		System.assertEquals(3,finalStructNew.totalHierarchies);
+		System.assertEquals(4,finalStructNew.totalHierarchies);
 		
 		// this finalStructNew.totalMigratedHierarchies is only 1 because one of the hierarchies envolved wasn't really an hierarchy, was just an HO that became HE. In the fetchStatistics method, we don't have a way to
 		// distinguish between regular HE or migrated HO. This is also why we only have 4 agencies when fetching statistics.
 
-		System.assertEquals(0,finalStructNew.totalMigratedHierarchies);
+		System.assertEquals(1,finalStructNew.totalMigratedHierarchies);
 		
 		System.assertEquals(0,finalStructNew.totalValidHierarchies);
 
@@ -226,12 +226,12 @@ private class ANG_ConversionHelperTest {
 
 		ANG_ConversionHelper.printStatistics(finalStructNew);
 
-		System.assertEquals(3,finalStructNew.totalHierarchies);
+		System.assertEquals(4,finalStructNew.totalHierarchies);
 		
 		// this finalStructNew.totalMigratedHierarchies is only 1 because one of the hierarchies envolved wasn't really an hierarchy, was just an HO that became HE. In the fetchStatistics method, we don't have a way to
 		// distinguish between regular HE or migrated HO. This is also why we only have 4 agencies when fetching statistics.
 
-		System.assertEquals(0,finalStructNew.totalMigratedHierarchies);
+		System.assertEquals(1,finalStructNew.totalMigratedHierarchies);
 		
 		System.assertEquals(0,finalStructNew.totalValidHierarchies);
 
