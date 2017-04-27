@@ -670,6 +670,54 @@ private class AMS_UtilsTest {
         } catch (AMS_ApplicationException e) {
              System.assert(e.getMessage().contains('Value parameter is null or empty'), 'message=' + e.getMessage());
         }
+    }
+
+        @isTest static void testStartIntegration(){
+
+        //creat setting for change code IEP
+        AMS_ChangeCodes__c changeCodeConfig = new AMS_ChangeCodes__c();
+        changeCodeConfig.Name = 'IEP';
+        changeCodeConfig.Change_Code__c = 'IEP';
+        changeCodeConfig.Bulletin_Memo_Text__c = 'test text';
+        changeCodeConfig.Published_in_bulletin__c = false;
+        changeCodeConfig.Skip_Agency_Update__c = true;
+        changeCodeConfig.Integration_RecId__c = 'F';
+        changeCodeConfig.Field1__c = 'ANG_IEP_Status__c';
+        changeCodeConfig.Field1Values__c = 'VALUES:In Progress' ;
+        changeCodeConfig.Field2__c = 'ANG_IEP_Status__c';
+        changeCodeConfig.Field2Values__c ='CHANGED' ;
+        changeCodeConfig.Field3__c = 'ANG_IEP_HE_AccntNum__c';
+        changeCodeConfig.Field3Values__c = 'NOT BLANK';
+        changeCodeConfig.Field4__c = 'Location_Type__c';
+        changeCodeConfig.Field4Values__c ='VALUES:HO;HE;AO' ;
+        changeCodeConfig.Field5__c = 'IATAcode__c';
+        changeCodeConfig.Field5Values__c = 'NOT BLANK';
+
+        insert changeCodeConfig;
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+        insert ctry;
+
+        Id accountRT = AMS_Utils.getId('Account', 'IATA_Agency');
+
+        //create account to match triggering fields on settings
+        Account acct = new Account(IATA_ISO_Country__c = ctry.id, Location_Type__c = 'HE', RecordTypeId = accountRT, IATACode__c='1234567',
+                                     Name='Test HE',Short_Name__c='Test HE',ANG_IEP_Status__c='Open',ANG_IEP_HE_AccntNum__c='126473547');
+        insert acct;
+
+        //integration will run on trigger because settings conditions are met: ANG_IEP_Status__c changed and value is 'In Progress'
+        acct.ANG_IEP_Status__c = 'In Progress';
+        update acct;
+
+        Test.startTest();
+
+        //assert change code is created
+        System.assertEquals ([SELECT COUNT() FROM Agency_Applied_Change_code__c WHERE Change_Code__C = 'IEP' AND Account__r.Id = :acct.Id], 1, '1 IEP change code should have been generated');
+
+        //assert no update was generated
+        System.assertEquals([SELECT COUNT() FROM AMS_Agency_Updates__c WHERE Account__r.name = :acct.Id], 0, 'No updates should be generated for IEP change code');
+
+        Test.stopTest();
 
     }
 }
