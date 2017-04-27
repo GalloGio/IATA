@@ -467,30 +467,26 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
+
+                System.debug('Sending the email for the user to anounce approval of the oscar');
+
+                //using an already existing method to send email aler to user.
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,true);
+
+            }
+
             // Approve the Approval Process from the Manager's perspective
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             
-                if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
 
-                    System.debug('Sending the email for the user to anounce approval of the oscar');
-
-                    //using an already existing method to send email aler to user.
-                    AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,true);
-
-                }
             }
             updatedOSCAR.STEP2__c = 'Passed';
         }
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
-
-            // Approve the Approval Process from the Manager's perspective
-            List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
-            if (currentApprovals.size() > 0) {
-                AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
-            }
 
             if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
 
@@ -499,6 +495,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     //using an already existing method to send email aler to user.
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,false);
 
+            }
+            
+            // Approve the Approval Process from the Manager's perspective
+            List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
+            if (currentApprovals.size() > 0) {
+                AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
             }
 
             updatedOSCAR.STEP2__c = 'Failed';
