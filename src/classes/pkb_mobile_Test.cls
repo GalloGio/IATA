@@ -266,14 +266,24 @@ public class pkb_mobile_Test {
         system.assert(!resp.isSuccess);
 
     }
-
-
+     @isTest
+    static void test_mobileKnowledgeArticleData(){
+         pkb_mobile_proxy.mobileKnowledgeArticleData mkad = new pkb_mobile_proxy.mobileKnowledgeArticleData();
+         String summary = mkad.summary;
+         String urlName = mkad.urlName;
+         DateTime lastModifiedDate = mkad.lastModifiedDate;
+         DateTime firstPublishedDate = mkad.firstPublishedDate;
+    }
     //public static pkb_mobile_proxy.ResponseItem getArticleDetail(pkb_mobile_proxy.RequestItem req){
     @isTest(SeeAllData=true)
     static void test_getArticleDetail() {
 
         pkb_mobile_proxy.ResponseItem resp = null;
-
+        pkb_mobile_proxy.ArticleDetail artcDetail = new pkb_mobile_proxy.ArticleDetail(); 
+        String urlName = artcDetail.urlName;
+        DateTime lastModifiedDate = artcDetail.lastModifiedDate;
+        DateTime firstPublishedDate = artcDetail.firstPublishedDate;
+        DateTime lastPublishedDate = artcDetail.lastPublishedDate;
         //with setup
         populatePKB2Environment();
         PKB__c pkS = populateSetup();
@@ -347,7 +357,7 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from Case where CreatedById =: UserInfo.getUserId()].size();
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -358,7 +368,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData.put('questionBody','WHAT WHOULD PKB2 DO');//;
         testRequestItem.contactData.put('latitude','0.2');//;
         testRequestItem.contactData.put('longitude','0.2');//;
-        testRequestItem.contactData.put('emoIcon',emo);//;
+        //testRequestItem.contactData.put('emoIcon',emo);//;
 
         pkb_mobile_proxy.ResponseItem resp =  pkb_mobile_controller.processContactUs(testRequestItem);
         Test.stopTest();
@@ -368,11 +378,11 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c, Customer_emoticon__c  from Case where id =: resp.caseId];
+        Case c = [select Id, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-        system.assertEquals(emo, c.Customer_emoticon_value__c);
-        system.assert(c.Customer_emoticon__c.contains(emo) );
+        //system.assertEquals(emo, c.Customer_emoticon_value__c);
+        //system.assert(c.Customer_emoticon__c.contains(emo) );
 
 
     }
@@ -390,7 +400,7 @@ public class pkb_mobile_Test {
         testRequestItem.sessionId = 'TESTSESSION';
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -421,7 +431,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData = new map<String,String>();
 
         initialSize = [select Id from Case where CreatedById =: UserInfo.getUserId()].size();
-        emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         testRequestItem.sessionId = 'TESTSESSION';
         testRequestItem.contactData.put('firstName','TEST');//
@@ -431,7 +441,7 @@ public class pkb_mobile_Test {
         testRequestItem.contactData.put('questionBody','WHAT WHOULD PKB2 DO');//;
         testRequestItem.contactData.put('latitude','0.2');//;
         testRequestItem.contactData.put('longitude','0.2');//;
-        testRequestItem.contactData.put('emoIcon',emo);//;
+        //testRequestItem.contactData.put('emoIcon',emo);//;
 
         resp =  pkb_mobile_controller.processContactUs(testRequestItem);
         Test.stopTest();
@@ -442,11 +452,11 @@ public class pkb_mobile_Test {
         system.assert(resp.isSuccess);
         system.assertEquals( (initialSize+1) , finalSize );
 
-        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s,Customer_emoticon_value__c, Customer_emoticon__c  from Case where id =: resp.caseId];
+        Case c = [select Id, ContactId, pkbgeolocalization__Latitude__s,pkbgeolocalization__Longitude__s/*,Customer_emoticon_value__c, Customer_emoticon__c*/  from Case where id =: resp.caseId];
         system.assertEquals(c.pkbgeolocalization__Latitude__s,0.2 );
         system.assertEquals(c.pkbgeolocalization__Longitude__s, 0.2);
-        system.assertEquals(emo, c.Customer_emoticon_value__c);
-        system.assert(c.Customer_emoticon__c.contains(emo) );
+        //system.assertEquals(emo, c.Customer_emoticon_value__c);
+        //system.assert(c.Customer_emoticon__c.contains(emo) );
 
         List<PKB_Article_Feedback_Deflection__c> sessionDeflections = [ select Id,Session_ID__c , Contact__c
                                                             from PKB_Article_Feedback_Deflection__c
@@ -529,7 +539,7 @@ public class pkb_mobile_Test {
 
         Integer initialSize = [select Id from PKB_Article_Feedback_Deflection__c ].size();
 
-        String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
+        //String emo = Case.Customer_emoticon_value__c.getDescribe().getPickListValues().get(0).getValue();
 
         Test.startTest();
 
@@ -669,8 +679,9 @@ public class pkb_mobile_Test {
         pkb_mobile_proxy.RequestItem testRequestItem = null;
 
 
-        Test.startTest();
-
+        Test.startTest(); 
+        Object phoneCallAvailable = pkb_mobile_proxy.getPhoneCallAvailable();
+        pkb_mobile_proxy.PKBDataCategory pKBDataCategory = new pkb_mobile_proxy.PKBDataCategory('testc', 'testr');
     //case0 : invoke with null
         response=pkb_mobile_proxy.getRemoteAction(null);
         system.assert(response.Contains('"isSuccess":false'));
@@ -678,7 +689,7 @@ public class pkb_mobile_Test {
     //case1 : invoke with empty
         response=pkb_mobile_proxy.getRemoteAction('{}');
         system.assert(response.Contains('"isSuccess":false'));
-
+ 
     //case2 : invoke with invalid json string
         response=pkb_mobile_proxy.getRemoteAction('{NOT VALID}');
         system.assert(response.Contains('"isSuccess":false'));
@@ -719,6 +730,11 @@ public class pkb_mobile_Test {
 
 
         Test.stopTest();
+    }
+
+    static testMethod void testSendEmail(){
+     //   Object e = new Object('First exception');       
+        pkb_mobile_proxy.notifyAdmin(new TestException('Test Exc'), 'testIntro', 'testAdminEmail@test.com');
     }
 
 
@@ -832,6 +848,7 @@ public class pkb_mobile_Test {
         PKB__c pkS = populateSetup();
         pkb_Controller.DEFAULT_SITE_NAME = siteName;
         pkb_mobile_proxy tmp = new pkb_mobile_proxy();
+        String selectedCategory = tmp.selectedCategory;
     }
 
 

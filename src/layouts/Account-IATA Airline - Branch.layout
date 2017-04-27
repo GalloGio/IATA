@@ -38,6 +38,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ACLI_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Airline_Prefix__c</field>
             </layoutItems>
             <layoutItems>
@@ -59,6 +63,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Portal_Service_Report__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -346,6 +354,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>AIMS_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Last_Modified_by_Source__c</field>
             </layoutItems>
             <layoutItems>
@@ -494,6 +506,7 @@
         <customButtons>Edit_All_Airline_BA</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Client__c</fields>
         <fields>EF_Status__c</fields>
         <fields>Data_Currency__c</fields>

@@ -1,20 +1,29 @@
-public with sharing class CongaManager {
+global class CongaManager {
 
     public class CongaMergeException extends Exception{}
 
     public static final String CONGA7_URL = 'https://www.appextremes.com/apps/Conga/PM.aspx'; //old version
 	public static final String CONGA8_URL = 'https://composer.congamerge.com/composer8/index.html'; // version 8
-	public static final String SOAP_URL_290 = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/u/29.0/' + UserInfo.getOrganizationId();
+	//public static final String SOAP_URL_290 = URL.getSalesforceBaseUrl().toExternalForm() + '/services/Soap/u/29.0/' + UserInfo.getOrganizationId();
+    //public static final String SOAP_URL_290 = 'https://iata--biz--c.cs87.visual.force.com/services/Soap/u/29.0/00D8E0000000N1K';
 
     // dummy variable to test HTTP response
     public static System.HttpResponse TEST_RESPONSE;
 
-    public static void sendMail(String sessionId, Id caseId, Id contactId, Id congaTemplate, Id emailTemplateId) {
+    /**
+        Provides a session Id valid to be used with Conga
+        This method executed in a regular class returns a different session id not valid for Conga
+    **/
+    public static string getValidSessionId() {
+        return UserInfo.getSessionId();
+    }
+
+    public static void sendMail(String apiSessionId, String apiServerURL, Id caseId, Id contactId, Id congaTemplate, Id emailTemplateId) {
         // create Conga merge URL
         PageReference pageref = new PageReference(CONGA7_URL);
-        pageref.getParameters().put('sessionId', sessionId);
-        pageref.getParameters().put('serverUrl', SOAP_URL_290);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('sessionId', apiSessionId);
+        pageref.getParameters().put('serverUrl', apiServerURL);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('TemplateId', congaTemplate);
         pageref.getParameters().put('DefaultPDF', '1');
         //pageref.getParameters().put('OFN', 'file name');
@@ -23,16 +32,16 @@ public with sharing class CongaManager {
         pageref.getParameters().put('ds7', '12');
         pageref.getParameters().put('EmailTemplateId', emailTemplateId);
         pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', caseId);
+        pageref.getParameters().put('EmailRelatedToId', String.valueof(caseId).substring(0,15));
 
         makeCall(pageref.getURL());
     }
 
-    public static void attachFile(String sessionId, Id caseId, Id congaTemplate) {
+    public static void attachFile( String apiSessionId, String apiServerURL, Id caseId, Id congaTemplate) {
         PageReference pageref = new PageReference(CONGA7_URL);
-        pageref.getParameters().put('sessionId', sessionId);
-        pageref.getParameters().put('serverUrl', SOAP_URL_290);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('sessionId', apiSessionId);
+        pageref.getParameters().put('serverUrl', apiServerURL);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('TemplateId', congaTemplate);
         pageref.getParameters().put('DefaultPDF', '1');
         //pageref.getParameters().put('OFN', 'file name');
@@ -45,38 +54,53 @@ public with sharing class CongaManager {
         makeCall(pageref.getURL());
     }
 
-    public static String sendEmailURL(String sessionId, Id caseId, Id contactId, Id congaTemplate, Id emailTemplateId, String OrgWideDefaultsId) {
-        PageReference pageref = new PageReference(CONGA8_URL);
-        pageref.getParameters().put('sessionId', sessionId);
-        pageref.getParameters().put('serverUrl', SOAP_URL_290);
-        pageref.getParameters().put('id', caseId);
-        pageref.getParameters().put('TemplateId', congaTemplate);
-        pageref.getParameters().put('DefaultPDF', '1');
-        //pageref.getParameters().put('OFN', 'file name');
+    public static String sendEmailURL(String apiSessionId, String apiServerURL, Id caseId, Id emailRelatedCaseId, Id contactId, Id congaTemplate, Id emailTemplateId, String OrgWideDefaultsId,list<String> listQueries) {
+        //String url = CONGA8_URL;
+        String url = CONGA8_URL + '?sessionId=' + apiSessionId;
+        url += '&serverUrl=' + apiServerURL;
+        url += '&id=' + String.valueof(caseId).substring(0,15);
+        url += '&TemplateId=' + congaTemplate;
+        url += '&DefaultPDF=1';
+        //url +='OFN=[file name]';
 
         // send email
-        pageref.getParameters().put('ds7', '2'); //returns automatically to send mail SF page
-        pageref.getParameters().put('EmailTemplateId', emailTemplateId);
-        pageref.getParameters().put('EmailFromID', OrgWideDefaultsId);
-        pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', caseId);
-        return pageref.getURL();
+        url += '&ds7=2'; //returns automatically to send mail SF page
+        if (emailTemplateId!=null) {
+            url += '&EmailTemplateId=' + emailTemplateId;
+        }
+        url += '&EmailFromID=' + OrgWideDefaultsId;
+        url += '&EmailToId=' + contactId;
+        url += '&EmailRelatedToId=' + String.valueof(emailRelatedCaseId).substring(0,15);
+        url += '&SC0=1';
+        url += '&SC1=Attachments';
+
+        if (listQueries!=null && !listQueries.isEmpty()) {
+            url += '&QueryId=' + String.join(listQueries,',');
+        }
+        return url;
     }
 
 
-    public static String goToSendEmailConga(String sessionId, Id caseId, Id contactId, String OrgWideDefaultsId) {
+    public static String goToSendEmailConga(String apiSessionId, String apiServerURL, Id caseId, Id emailRelatedCaseId, Id contactId, String OrgWideDefaultsId,list<String> listQueries) {
         PageReference pageref = new PageReference(CONGA8_URL);
-        pageref.getParameters().put('sessionId', sessionId);
-        pageref.getParameters().put('serverUrl', SOAP_URL_290);
-        pageref.getParameters().put('id', caseId);
+        pageref.getParameters().put('sessionId', apiSessionId);
+        pageref.getParameters().put('serverUrl', apiServerURL);
+        pageref.getParameters().put('id', String.valueof(caseId).substring(0,15));
         pageref.getParameters().put('DefaultPDF', '1');
 
-        // send email
-        pageref.getParameters().put('ds7', '0'); //not automated, shows conga window
+        // create attachment
+        pageref.getParameters().put('ds7', '0');
         pageref.getParameters().put('EmailFromID', OrgWideDefaultsId);
         pageref.getParameters().put('EmailToId', contactId);
-        pageref.getParameters().put('EmailRelatedToId', caseId);
-        return pageref.getURL();
+        pageref.getParameters().put('EmailRelatedToId', String.valueof(emailRelatedCaseId).substring(0,15));
+        pageref.getParameters().put('SC0', '1');
+        pageref.getParameters().put('SC1', 'Attachments');
+        String url = pageref.getURL();
+        if (listQueries!=null && !listQueries.isEmpty()) {
+            url += '&QueryId=' + String.join(listQueries,',');
+        }
+
+        return url;
     }
 
     /**

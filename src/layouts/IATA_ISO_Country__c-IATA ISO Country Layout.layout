@@ -180,6 +180,10 @@
                 <behavior>Edit</behavior>
                 <field>Local_language_Agency_details_required__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Country__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -209,6 +213,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Enable_Minor_Changes_from_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Due_diligence_mandatory__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -354,6 +362,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Listed_In__c</fields>
+        <fields>Market_Size__c</fields>
+        <relatedList>Country_Profile__c.Country_Name__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Price_Table__c.ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -363,6 +377,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>EmailTemplate__c.IATA_ISO_Country__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

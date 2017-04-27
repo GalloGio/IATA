@@ -74,4 +74,85 @@ private class AMS_UpdateAccountStateTest {
 		//a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		//system.assertEquals('',a4.Account__r.BillingState);
 	}
+
+	@isTest
+	static void test_ExecuteMethod() {
+		List<sObject> scopeList;
+
+		Account account;
+		IATA_ISO_Country__c country;
+		IATA_ISO_State__c state;
+		AMS_Address__c address;
+		AMS_Agency__c agency;
+
+		country = new IATA_ISO_Country__c(
+			Name = 'Portugal',
+			ISO_Code__c = 'PT',
+			AIMS_Area_Name__c = 'Lisboa'
+		);
+
+		insert country;
+
+		state = new IATA_ISO_State__c(
+			Name = 'Lisboa',
+			IATA_ISO_Country__c = country.Id,
+			ISO_Code__c = 'LX'
+		);
+
+		insert state;
+		
+		address = new AMS_Address__c(
+			State__c = state.Id,
+			Country__c = country.Id
+		);
+
+		insert address;
+		
+		account = new Account(
+			Name = 'Test Account',
+			BillingState = 'Lisboa',
+			BillingCity = 'Lisboa',
+			Sector__c = 'Travel Agent',
+			Location_Type__c = 'HO',
+			Status__c = 'Approved',
+			Company_Type__c = 'A',
+			IATACode__c = '100',
+			IATA_ISO_Country__c = country.Id,
+			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+		);
+
+		insert account;
+
+		agency = new AMS_Agency__c(
+			Account__c = account.Id,
+			Primary_Address__c = address.Id,
+			Country__c = country.Id
+		);
+
+		insert agency;
+
+		scopeList = [
+			SELECT
+				id,
+				Primary_Address__r.State__c,
+				Primary_Address__r.State__r.Name,
+				Primary_Address__r.State__r.ISO_Code__c,
+				Primary_Address__r.Country__r.AIMS_Area_Name__c,
+				Primary_Address__r.Country__r.ISO_Code__c,
+				Account__c,
+				Account__r.Id,
+				Account__r.BillingState
+			FROM
+				AMS_Agency__c
+			WHERE
+				    Primary_Address__c <> NULL
+				AND Primary_Address__r.State__c <> NULL
+				AND Primary_Address__r.Country__c <> NULL
+				AND Account__r.BillingState <> NULL
+		];
+
+		AMS_UpdateAccountState updateAccountState = new AMS_UpdateAccountState();
+
+		updateAccountState.execute(null, scopeList);
+	}
 }

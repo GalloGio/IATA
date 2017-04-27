@@ -57,6 +57,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>BillingAccName__c</fullName>
+        <externalId>false</externalId>
+        <label>BillingAccName</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Email__c</fullName>
         <description>The Email Address to opt out</description>
         <externalId>true</externalId>
@@ -192,11 +203,9 @@
     <label>EBC Email Exclusion</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
         <columns>Email__c</columns>
-        <columns>Type__c</columns>
-        <columns>Source_Campaign__c</columns>
-        <columns>Other_Reason__c</columns>
-        <columns>Event_Date__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

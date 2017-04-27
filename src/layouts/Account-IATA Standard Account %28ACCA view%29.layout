@@ -29,6 +29,10 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_GDP_Billing_accounts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -104,7 +108,11 @@
         <fields>ParentId</fields>
         <fields>IATACode__c</fields>
     </miniLayout>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>SendEmail</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Case_Type__c</fields>

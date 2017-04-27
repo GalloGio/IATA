@@ -64,7 +64,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -77,7 +77,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -87,7 +87,7 @@
         <label>Change Code</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -148,7 +148,7 @@
         <relationshipLabel>AMS Agency Updates</relationshipLabel>
         <relationshipName>AMS_Agency_Updates</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -234,15 +234,16 @@
         <fullName>AMS_1_agency</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>IATACode__c</columns>
         <columns>RelationShip__c</columns>
         <columns>Update_Type__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Account__c</field>
+            <field>IATACode__c</field>
             <operation>equals</operation>
-            <value>WUHAN XIANGSHENG AIR SERVICE CO.,LTD</value>
+            <value>01119200014</value>
         </filters>
         <label>AMS 1 agency</label>
         <language>en_US</language>
@@ -284,7 +285,7 @@
         <filters>
             <field>IATACode__c</field>
             <operation>equals</operation>
-            <value>86100180014</value>
+            <value>08300217553</value>
         </filters>
         <label>AMS - Debug 1 rec</label>
         <language>en_US</language>
@@ -292,7 +293,7 @@
     <nameField>
         <displayFormat>A-{00000000}</displayFormat>
         <label>Code</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>AMS Agency Updates</pluralLabel>

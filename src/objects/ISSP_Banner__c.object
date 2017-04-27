@@ -151,6 +151,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>All - CNS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Albania</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1101,6 +1105,66 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accommodation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Airline Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equipment Manufacturer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Governmental Institution</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Holding Company</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>General Sales Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Infrastructure Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internal Use</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Non-Airline Transportation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recreational</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -2360,10 +2424,10 @@ _blank = new window</description>
         <columns>OBJECT_ID</columns>
         <columns>NAME</columns>
         <columns>Status__c</columns>
-        <columns>Publication_end_date__c</columns>
         <columns>Country__c</columns>
         <columns>Sector__c</columns>
         <columns>Publication_start_date__c</columns>
+        <columns>Publication_end_date__c</columns>
         <columns>Zone_1_text_hyperlink__c</columns>
         <filterScope>Everything</filterScope>
         <filters>

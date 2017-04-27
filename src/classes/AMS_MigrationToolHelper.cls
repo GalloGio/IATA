@@ -1,4 +1,4 @@
-public with sharing class AMS_MigrationToolHelper {
+public without sharing class AMS_MigrationToolHelper {
 	// this class is responsible for migrating Portal SAAM cases and SAAM cases that need to be converted into Comunication Cases (w/ AMS_OSCAR__c objects)
 	
 	final static ID rtCommCase = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
@@ -31,7 +31,7 @@ public with sharing class AMS_MigrationToolHelper {
     }
 
 
-	public static CaseContainer migratecases(CaseContainer cont){
+	public static CaseContainer migratecases(CaseContainer cont, String processType){
 
 		Savepoint sp = null;
 
@@ -40,9 +40,9 @@ public with sharing class AMS_MigrationToolHelper {
 			sp = Database.setSavepoint();
 
 			if(cont.fromPortal)
-					cont = processFromPortal(cont); //call portal method
+					cont = processFromPortal(cont,processType); //call portal method
 			else{
-					cont = processNotFromPortalNew(cont);
+					cont = processNotFromPortalNew(cont,processType);
 			}
 
 		} catch(Exception e) {
@@ -207,11 +207,11 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static CaseContainer processFromPortal(CaseContainer cont){
+	private static CaseContainer processFromPortal(CaseContainer cont, String processTypeInput){
 
 		Case caseToProcess = cont.c;
 
-		String processType = processTypeMap.get(caseToProcess.Reason1__c);
+		String processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
 
 		if(processType == null){
 
@@ -491,7 +491,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	}
 
-	private static List<AMS_Accreditation_Contact__c> createAccreditationContacts(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId, String typeOfProcess){
+	public static List<AMS_Accreditation_Contact__c> createAccreditationContacts(AMS_Pax_Accreditation_Form__c accreditationObj, Id accountId, String typeOfProcess){
 
 		// get all the owners and create accreditation contacts
 
@@ -514,7 +514,7 @@ public with sharing class AMS_MigrationToolHelper {
 
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, String caseId){
 		
-		List<Case> cases = [SELECT id, Financial_Assessment_compliant__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
+		List<Case> cases = [SELECT id, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
 
 		if(cases.isEmpty())
 			return null;
@@ -541,8 +541,10 @@ public with sharing class AMS_MigrationToolHelper {
 		oscar.Finalization_checklist__c = saamCase.Finalization_checklist__c;
 		oscar.Financial_Assessment_deadline__c = saamCase.Financial_Assessment_deadline__c;
 		oscar.Financial_Assessment_requested__c = saamCase.Financial_Assessment_requested__c;
-		if(!Test.isRunningTest())
+		if(!Test.isRunningTest()){
 			oscar.Financial_Review_Result__c = saamCase.Financial_Assessment_compliant__c;
+			oscar.Reason_for_change_of_Financial_result__c = saamCase.Reason_for_change_of_Financial_result__c == null ? '.' : saamCase.Reason_for_change_of_Financial_result__c;
+		}
 		oscar.Billing_Document_Number__c = saamCase.Invoice_number__c;
 		oscar.Local_Inspection_compliant__c = saamCase.Local_Inspection_compliant__c == 'Yes' ? 'Passed' :  (saamCase.Local_Inspection_compliant__c == 'No' ? 'Failed' : 'N/A' );
 		oscar.Local_Inspection_deadline__c = saamCase.Local_Inspection_deadline__c;
@@ -601,11 +603,11 @@ public with sharing class AMS_MigrationToolHelper {
 	}
 
 
-	private static CaseContainer processNotFromPortalNew(CaseContainer cont){
+	private static CaseContainer processNotFromPortalNew(CaseContainer cont, String processTypeInput){
 
 		Case caseToProcess = cont.c;
 
-		String processType = processTypeMap.get(caseToProcess.Reason1__c);
+		String processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c) : processTypeInput;
 
 		if(processType == null){
 

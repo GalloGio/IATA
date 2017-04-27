@@ -373,7 +373,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 6 AND 4 AND 5 AND (2 OR 3)</booleanFilter>
+        <booleanFilter>1 AND 6 AND 4 AND (5 OR 7) AND (2 OR 3)</booleanFilter>
         <criteriaItems>
             <field>EmailMessage.Incoming</field>
             <operation>equals</operation>
@@ -403,6 +403,11 @@
             <field>EmailMessage.CcAddress</field>
             <operation>notEqual</operation>
             <value>info.americas@iata.org</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>FDS ICCS Generic Request Management</value>
         </criteriaItems>
         <description>Change case status to Action Needed when an incoming email is received to a case with status Pending Customer or Escalated Externally. Including extra criteria for info.americas@iata.org in CC.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -524,7 +529,7 @@
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),SIDRA,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Process,SEDA,Invoicing Collection Cases</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),SIDRA,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Process,SEDA,Invoicing Collection Cases,FDS ICCS Generic Request Management</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -624,7 +629,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND  (  Parent.IsClosed = FALSE,   CreatedDate &gt; Parent.CreatedDate ,   Incoming = TRUE ,   OR   (  	AND  	(  		Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, 		NOT(ISNULL(Parent.Update_AIMS_DEF__c))  	), 	AND 	( 		Parent.RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;, 		FromAddress &lt;&gt; &quot;noreply.ifap@iata.org&quot; 	), 	Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, 	Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  	Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, 	Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, 	AND  	(  		Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, 		FromAddress &lt;&gt; &quot;iataglobalidcardprogram@iata.org&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Renewal Application&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card New Application&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Replacement Application&quot;,  		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Reissue Application&quot;  	)   ),  NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Email &amp; Comment&quot;)),  NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;))  )</formula>
+        <formula>AND  (  Parent.IsClosed = FALSE,   CreatedDate &gt; Parent.CreatedDate ,   Incoming = TRUE ,   OR   (  	AND  	(  		Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, 		NOT(ISNULL(Parent.Update_AIMS_DEF__c))  	), 	AND 	( 		Parent.RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;, 		FromAddress &lt;&gt; &quot;noreply.ifap@iata.org&quot; 	), 	Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;, 	Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,  	Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, 	Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, 	AND  	(  		Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, 		FromAddress &lt;&gt; &quot;iataglobalidcardprogram@iata.org&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Renewal Application&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card New Application&quot;, 		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Replacement Application&quot;,  		Subject &lt;&gt; &quot;Confirmation IATA/IATAN ID Card Reissue Application&quot;  	)   ),  NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Email &amp; Comment&quot;)),  NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New Comment&quot;))  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

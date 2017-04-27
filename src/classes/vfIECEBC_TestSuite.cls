@@ -91,7 +91,7 @@ public class vfIECEBC_TestSuite {
         String userId = Site.createPortalUser(usr, a.Id, 'testpassword');
         IECUserManager.login(usr.Username, 'testpassword', null);
            
-		IECTestUtil_Account = a;
+        IECTestUtil_Account = a;
         IECTestUtil_Contact = c;
         IECTestUtil_BillingAccount = ba;
         IECTestUtil_User = usr;
@@ -102,7 +102,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void initPostRunAs() {
-    	IECEBC_TestUtility.createEbcSetupAndRelatedData();
+        IECEBC_TestUtility.createEbcSetupAndRelatedData();
         oProductCategory = IECEBC_TestUtility.oEbcProductCategory;
         
         oProduct = IECEBC_TestUtility.oEbcProductNonMember;
@@ -140,24 +140,34 @@ public class vfIECEBC_TestSuite {
         insert accr;
             
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111111'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111112'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111113'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111114'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111115'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111116'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='1111117'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='1111118'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111119'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111120')
             };
         insert gpavs;
         return gpavs;
     }
-    
+    public static List<ID_CARD__c> createIDCARD(id ProductAccountViewId) {
+       
+        List<ID_CARD__c> gpavs = new List<ID_CARD__c>{
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1',Agency_IATA_Code__c='X1', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2',Agency_IATA_Code__c='X2', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3',Agency_IATA_Code__c='X3', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4',Agency_IATA_Code__c='X4', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono')
+         };
+        insert gpavs;
+        return gpavs;
+    }
     //////////////////// TESTS /////////////////////
     public static void testPageLoadDashboard() {
-		PageReference pageRef = Page.IECEBC_Dashboard;
+        PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef); 
         
         Account newAccount = new Account();
@@ -185,9 +195,9 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             layoutController.getSProdCACPro();
             layoutController.getSProdGAD();
@@ -208,16 +218,16 @@ public class vfIECEBC_TestSuite {
         }
     }
     public static void testCampaignCreate() {
-		PageReference pageRef = Page.IECEBC_Campaign;
+        PageReference pageRef = Page.IECEBC_Campaign;
         Test.setCurrentPage(pageRef);
 
         User usr = initPreRunAs(true);
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             EBC_Campaign__c camp = new EBC_Campaign__c();
@@ -239,16 +249,16 @@ public class vfIECEBC_TestSuite {
         }
     }
     public static void testCampaignCreateAndExit() {
-		PageReference pageRef = Page.IECEBC_Campaign;
+        PageReference pageRef = Page.IECEBC_Campaign;
         Test.setCurrentPage(pageRef);
 
         User usr = initPreRunAs(true);
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             EBC_Campaign__c camp = new EBC_Campaign__c();
@@ -270,7 +280,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testCampaignListing() {
-		PageReference pageRef = Page.IECEBC_CampaignList;
+        PageReference pageRef = Page.IECEBC_CampaignList;
         Test.setCurrentPage(pageRef);
         
         Account newAccount = new Account();
@@ -297,9 +307,9 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_CampaignList campaignListPageCon = new vfIECEBC_CampaignList();
@@ -343,7 +353,7 @@ public class vfIECEBC_TestSuite {
     }
 
     public static void testCampaignListingActions() {
-		PageReference pageRef = Page.IECEBC_CampaignList;
+        PageReference pageRef = Page.IECEBC_CampaignList;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -359,9 +369,9 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_CampaignList campaignListPageCon = new vfIECEBC_CampaignList();
@@ -372,8 +382,8 @@ public class vfIECEBC_TestSuite {
             campaignListComponentCon.sortBy = campaignListPageCon.sortBy;
             vfIECEBC_CampaignList.CAMPAIGNS_PER_PAGE = campaigns.size();
             
-         	// Duplicate
-         	campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
+            // Duplicate
+            campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
             campaignListComponentCon.selectedCampaign.Name = 'Duplicate 1';
             PageReference duplicatePR = campaignListComponentCon.duplicate();
             
@@ -383,7 +393,8 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(campaigns[1].From_Name__c, newCampaign.From_Name__c);
             System.assertEquals(campaigns[1].Billing_Account__c, newCampaign.Billing_Account__c);
             System.assertNotEquals(campaigns[1].Id, newCampaign.Id);
-            System.assertEquals('/iec/IECEBC_Campaign?id=' + newCampaign.Id, duplicatePR.getUrl());
+            System.debug('duplicatePR.getUrl()>>>'+String.ValueOf(duplicatePR.getUrl()));
+            System.assertEquals('/apex/IECEBC_Campaign?id=' + newCampaign.Id, duplicatePR.getUrl());
             
             System.assertEquals(campaigns.size(), campaignListComponentCon.campaigns.size());
             campaignListComponentCon = new vfIECEBC_CampaignList();
@@ -393,14 +404,14 @@ public class vfIECEBC_TestSuite {
             System.assertEquals(campaigns.size() + 1, campaignListComponentCon.campaignsCount);
             
             // Delete
-         	campaignListComponentCon.selectedCampaignId = newCampaign.Id;
+            campaignListComponentCon.selectedCampaignId = newCampaign.Id;
             System.debug(campaignListComponentCon.selectedCampaign);
             PageReference deletePR = campaignListComponentCon.deleteCampaign();
             System.assertEquals(null, deletePR);
             System.assertEquals(campaigns.size(), campaignListComponentCon.campaignsCount);
             
             // Rename
-         	campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
+            campaignListComponentCon.selectedCampaignId = campaigns[1].Id;
             campaignListComponentCon.selectedCampaign.Name = 'Updated name 1';
             PageReference savePR = campaignListComponentCon.save();
             System.assertEquals(null, savePR);
@@ -414,7 +425,7 @@ public class vfIECEBC_TestSuite {
     
     public static void testCampaignScheduling() {
         
-		PageReference pageRef = Page.IECEBC_CampaignSchedule;
+        PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -440,10 +451,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -479,7 +490,7 @@ public class vfIECEBC_TestSuite {
             
             PageReference pr = campaignExtCon.saveAndContinue();
             
-        	System.assertEquals(0, ApexPages.getMessages().size());
+            System.assertEquals(0, ApexPages.getMessages().size());
             
             System.assertEquals(campaignExtCon.con.getId(), pr.getParameters().get('id'));
             System.assertEquals(campaignExtCon.getPRByStepNumber(6, true).getUrl(), pr.getUrl());
@@ -506,56 +517,56 @@ public class vfIECEBC_TestSuite {
         insert camp;
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-            new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-            new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+            new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+            new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
         };
         insert gpavs;*/
         
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
-		PageReference pageRef = Page.IECEBC_CampaignConfirm;
+        PageReference pageRef = Page.IECEBC_CampaignConfirm;
         pageRef.getParameters().put('id', camp.Id);
         Test.setCurrentPage(pageRef);
         
         camp = [
             SELECT
-            	Id,
-            	Name,
-            	EBC_Master_Filter__c,
+                Id,
+                Name,
+                EBC_Master_Filter__c,
                 Audience__c,
                 EBC_Design__c,
                 From_Name__c,
                 Google_Analytics_Tracking_Code__c,
                 Is_Google_Analytics_Tracker_Active__c,
                 Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-            	Maximum_Allowed_Step__c,
-            	Billing_Account__c,
+                Maximum_Allowed_Step__c,
+                Billing_Account__c,
                 Number_of_Recipients__c,
                 Scheduled_Date__c,
                 Scheduled_Date_Valid_Until__c,
                 Status__c,
                 Subject__c
             FROM
-            	EBC_Campaign__c
+                EBC_Campaign__c
             WHERE
-            	Id = :camp.Id
+                Id = :camp.Id
         ];
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             Test.setMock(HttpCalloutMock.class, new CampaignPayWithCredit_Mock());
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -575,16 +586,16 @@ public class vfIECEBC_TestSuite {
         update oBillingAccount;
         
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;
         
@@ -631,16 +642,16 @@ public class vfIECEBC_TestSuite {
         insert accr;
             /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
             };
         insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -688,8 +699,8 @@ public class vfIECEBC_TestSuite {
             n.campaignId = camp.Id;
             n.templateExternalId = 'templateextid';
             
-	        //IECEBC_ETTemplateCreate.updateEmailTemplate('test', 'test', 'test', 'HTML');
-	        */
+            //IECEBC_ETTemplateCreate.updateEmailTemplate('test', 'test', 'test', 'HTML');
+            */
             //Database.executeBatch(n,SchdlIECEBCStartCampaign.BATCH_SIZE);
             /*
             Test.stopTest();
@@ -698,6 +709,73 @@ public class vfIECEBC_TestSuite {
             EBC_Campaign__c cPostSend = [Select Id, Status__c From EBC_Campaign__c Where id = :camp.Id];
             System.assertEquals('STARTED', cPostSend.Status__c);
             */
+        }
+    }
+    public static void testCampaignIDCardSendMassMailing() {
+        
+        User usr = initPreRunAs(true); 
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        List<ID_CARD__c> gidcard = createIDCARD(gpavs[0].Id);
+            
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id,
+                                                 New_Balance__c = 1000,
+                                                 Total_Count__c = 1000, 
+                                                 Activity_Type__c = 'Credit', 
+                                                 Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agent',
+                                                                      Search_Level__c=null,
+                                                                      Filter_Description__c = 'Preferred Language',
+                                                                      Data_Type__c = 'Text', 
+                                                                      Filter_Field__c = 'Agency_Name__c');
+        insert af;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            
+            Test.setMock(HttpCalloutMock.class, new ET_SendMassMailingSuccess_Mock());
+            
+            
+            EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agent',
+                                                                         Billing_Account__c = oBillingAccount.Id,
+                                                                         OwnerId = usr.Id);
+            insert masterFilter;
+            EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, 
+                                                                   EBC_Application_Filter__c = af.Id,
+                                                                   Field_Operator__c = '=',
+                                                                   Field_Value__c = 'IATA');
+            insert cf;
+            EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+            insert tpl;
+            EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar',
+                                                       Number_of_Recipients__c = 4,
+                                                       Subject__c = 'Foo Subject',
+                                                       From_Name__c = 'Foo From Name',
+                                                       Is_Google_Analytics_Tracker_Active__c = true,
+                                                       Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
+                                                       Billing_Account__c = oBillingAccount.Id,
+                                                       EBC_Master_Filter__c = masterFilter.Id,
+                                                       EBC_Design__c = tpl.Id,
+                                                       OwnerId = usr.Id,
+                                                       Status__c = 'APPROVED',
+                                                       Send_Datetime__c = Datetime.now());
+            insert camp;
+            
+            Test.startTest();
+            
+            SchdlIECEBCStartCampaign.prepare(camp, 'test', 'test', 'test', 'test', 'test');
+            SchdlIECEBCStartCampaign.Schedule(null);
+            Test.stopTest();
+            
         }
     }
     
@@ -709,16 +787,16 @@ public class vfIECEBC_TestSuite {
         update oBillingAccount;
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -813,16 +891,16 @@ public class vfIECEBC_TestSuite {
         User usr = initPreRunAs(true);
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -927,7 +1005,7 @@ public class vfIECEBC_TestSuite {
 //        System.runAs(usr) {
         System.runAs(IECEBC_TestUtility.oUser) {
             User usr = IECEBC_TestUtility.oUser;
-			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
+            vfIECEBC_TestPaymentSuite.initPostRunAs(5);
             
             
             EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
@@ -1001,7 +1079,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testTemplateNew() {
-		PageReference pageRef = Page.IECEBC_TemplateNew;
+        PageReference pageRef = Page.IECEBC_TemplateNew;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -1013,10 +1091,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_TemplateList listController = new vfIECEBC_TemplateList();
@@ -1032,7 +1110,7 @@ public class vfIECEBC_TestSuite {
             System.assert(compController.globalTemplates.size() > 0);
             for(EBC_Template__c t : compController.globalTemplates) {
                 if (t.Name == 'unittesttemplate') {
-		            listController.selectedTemplateId = t.Id;
+                    listController.selectedTemplateId = t.Id;
                     break;
                 }
             }
@@ -1046,8 +1124,8 @@ public class vfIECEBC_TestSuite {
             
             System.assertEquals(4, listController.newTemplateStepNumber);
             System.assertEquals(true, listController.isSaved);
-            
-            System.assertEquals('/iec/IECEBC_TemplateEdit?id=' + listController.newTemplate.Id, pr.getUrl());
+            System.debug('duplicatePR.getUrl() >>>'+String.ValueOf(pr.getUrl()));
+            System.assertEquals('/apex/IECEBC_TemplateEdit?id=' + listController.newTemplate.Id, pr.getUrl());
             
             pageRef = Page.IECEBC_MosaicoEditor;
             pageRef.getParameters().put('Id', listController.newTemplate.Id);
@@ -1071,7 +1149,7 @@ public class vfIECEBC_TestSuite {
         childTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
         insert childTpl;
 
-		PageReference pageRef = Page.IECEBC_MosaicoEditor;
+        PageReference pageRef = Page.IECEBC_MosaicoEditor;
         pageRef.getParameters().put('Id', childTpl.Id);
         Test.setCurrentPage(pageRef);
         
@@ -1079,10 +1157,10 @@ public class vfIECEBC_TestSuite {
                 
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(childTpl);
@@ -1105,7 +1183,7 @@ public class vfIECEBC_TestSuite {
         childTpl.RecordTypeId = Schema.SObjectType.EBC_Template__c.getRecordTypeInfosByName().get('User Templates').getRecordTypeId();
         insert childTpl;
 
-		PageReference pageRef = Page.IECEBC_MosaicoEditor;
+        PageReference pageRef = Page.IECEBC_MosaicoEditor;
         pageRef.getParameters().put('Id', childTpl.Id);
         Test.setCurrentPage(pageRef);
         
@@ -1113,10 +1191,10 @@ public class vfIECEBC_TestSuite {
                 
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(childTpl);
@@ -1125,7 +1203,7 @@ public class vfIECEBC_TestSuite {
             Test.setMock(HttpCalloutMock.class, new ET_SendTestListDetective_Mock());
             Boolean IsAsExpected = false;
             try {
-            	vfIECEBC_MosaicoEditor.sendTest(childTpl.Id, 'foo@bar.com');
+                vfIECEBC_MosaicoEditor.sendTest(childTpl.Id, 'foo@bar.com');
             } catch(Exception e) {
                 IsAsExpected = true;
             }
@@ -1136,7 +1214,7 @@ public class vfIECEBC_TestSuite {
     
     public static void testCampaignTemplate() {
         
-		PageReference pageRef = Page.IECEBC_CampaignSchedule;
+        PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -1147,16 +1225,16 @@ public class vfIECEBC_TestSuite {
         insert accr;
             
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
             };
         insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -1183,10 +1261,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -1199,7 +1277,7 @@ public class vfIECEBC_TestSuite {
             List<SelectOption> masterFilters = recipientExtCon.getMasterFilters();
             System.assertEquals(1, masterFilters.size());
             
-			// Step 1
+            // Step 1
             vfIECEBC_RecipientEdit recipientEditCon = new vfIECEBC_RecipientEdit();
             recipientEditCon.campaign = camp;
             System.assertEquals(1, recipientEditCon.newListStepNumber);
@@ -1240,7 +1318,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testCampaignPreview() {
-		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        PageReference pageRef = Page.IECEBC_CampaignPreview;
         Test.setCurrentPage(pageRef);
         
 
@@ -1271,10 +1349,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(tpl);
@@ -1285,7 +1363,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testCampaignRecipientsExistingList() {
-		PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -1308,10 +1386,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -1335,7 +1413,7 @@ public class vfIECEBC_TestSuite {
     
     /*
     public static void testPageLoadLoginRequired() {
-		PageReference pageRef = Page.IECEBC_Dashboard;
+        PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef);
         
         vfIECEBC layoutController = new vfIECEBC();
@@ -1347,15 +1425,15 @@ public class vfIECEBC_TestSuite {
         
     }
     public static void testPageLoadUnauthorized() {
-		PageReference pageRef = Page.IECEBC_Dashboard;
+        PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef);
         
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
         
         System.runAs(usr) {
-        	vfIECEBC layoutController = new vfIECEBC();
+            vfIECEBC layoutController = new vfIECEBC();
             
-        	PageReference pr = layoutController.pageLoad();
+            PageReference pr = layoutController.pageLoad();
             pr.getParameters().clear();
             
             System.assertEquals(Page.IECUnauthorized.getUrl().toLowerCase(), pr.getUrl().toLowerCase());
@@ -1364,7 +1442,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testCampaignApprovalRejected() {
-		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        PageReference pageRef = Page.IECEBC_CampaignPreview;
         Test.setCurrentPage(pageRef);
         
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -1398,7 +1476,7 @@ public class vfIECEBC_TestSuite {
             init();
             
             // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+            vfIECEBC layoutController = new vfIECEBC();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -1410,7 +1488,7 @@ public class vfIECEBC_TestSuite {
         
         System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
         
-		pageRef = Page.EBC_CampaignApproval;
+        pageRef = Page.EBC_CampaignApproval;
         Test.setCurrentPage(pageRef); 
          
         ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
@@ -1423,7 +1501,7 @@ public class vfIECEBC_TestSuite {
     }
     
     public static void testPageLoadAccountSettings() {
-		PageReference pageRef = Page.IECEBC_AccountSettings;
+        PageReference pageRef = Page.IECEBC_AccountSettings;
         Test.setCurrentPage(pageRef);
 
         User usr = IECTestUtil.createSampleGuestUserAndLogin();
@@ -1433,7 +1511,7 @@ public class vfIECEBC_TestSuite {
             init();
             
             // Layout PageLoad
-        	vfIECEBC layoutController = new vfIECEBC();
+            vfIECEBC layoutController = new vfIECEBC();
             System.assertEquals(null, layoutController.pageLoad());
             
             EBC_Campaign__c camp = new EBC_Campaign__c();
@@ -1457,7 +1535,7 @@ public class vfIECEBC_TestSuite {
     }
 
     public static void testCampaignApproval() {
-		PageReference pageRef = Page.IECEBC_CampaignPreview;
+        PageReference pageRef = Page.IECEBC_CampaignPreview;
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
@@ -1488,10 +1566,10 @@ public class vfIECEBC_TestSuite {
         
         System.runAs(usr) {
             initPostRunAs();
-        	Test.startTest();
+            Test.startTest();
             
             // Layout PageLoad
-        	vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
@@ -1503,7 +1581,7 @@ public class vfIECEBC_TestSuite {
         
         System.assertEquals('PENDING_APPROVAL', campResult.Status__c);
         
-		pageRef = Page.EBC_CampaignApproval;
+        pageRef = Page.EBC_CampaignApproval;
         Test.setCurrentPage(pageRef); 
          
         ApexPages.StandardController adminSc = new ApexPages.StandardController(camp);
@@ -1515,6 +1593,12 @@ public class vfIECEBC_TestSuite {
         System.assertEquals('APPROVED', campResult.Status__c);
     }
 */
+    
+    // CRON expression: midnight on March 15.
+    // Because this is a test, job executes
+    // immediately after Test.stopTest().
+    public static String CRON_EXP = '0 0 0 15 3 ? 2024';
+
     public static void testOptOut() {
         
         User usr = initPreRunAs(true);
@@ -1523,16 +1607,16 @@ public class vfIECEBC_TestSuite {
         update oBillingAccount;
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -1570,10 +1654,38 @@ public class vfIECEBC_TestSuite {
             System.assertEquals('Foo Bar', con.billingAccountName);
             
             con.sender = con.billingAccountId;
-            con.reasons.put('The content is not relevant to me', true);
+            //con.reasons.put('The content is not relevant to me', true);
+            con.getemailurl();
+            con.reasons.put('The content is not relevant for me', true);
             PageReference pr = con.unsubscribe();
-            SchdlIECEBCEmailExclusionRelation.Schedule();
+            
+            //
+            // Schedule the test job
+            String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation',
+                                CRON_EXP, 
+                                new SchdlIECEBCEmailExclusionRelation());
+                 
+            // Get the information from the CronTrigger API object
+            CronTrigger ct = [SELECT Id
+                                    ,CronExpression
+                                    ,TimesTriggered 
+                                    ,NextFireTime
+                                FROM CronTrigger 
+                                WHERE id = :jobId];
+        
+             // Verify the expressions are the same
+             System.assertEquals(CRON_EXP, ct.CronExpression);
+        
+              // Verify the job has not run
+              System.assertEquals(0, ct.TimesTriggered);
+        
+              // Verify the next time the job will run
+              System.assertEquals('2024-03-15 00:00:00', String.valueOf(ct.NextFireTime));
+            //
+            System.abortJob(jobId);
+            //old code SchdlIECEBCEmailExclusionRelation.Schedule();
             Test.stopTest();
+            
         }
     }
     
@@ -1585,16 +1697,16 @@ public class vfIECEBC_TestSuite {
         update oBillingAccount;
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -1657,16 +1769,16 @@ public class vfIECEBC_TestSuite {
         update oBillingAccount;
         /*
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',			GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'b',			GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'c',			GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'd',			GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'e',			GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'f',			GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-                new GDP_Products_Account_View__c(Name = 'optout',		GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
+            new GDP_Products_Account_View__c(Name = 'a',            GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'b',            GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'c',            GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'd',            GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'e',            GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'f',            GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1'),
+                new GDP_Products_Account_View__c(Name = 'optout',       GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0')
                 };
                     insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
@@ -1722,17 +1834,17 @@ public class vfIECEBC_TestSuite {
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
             if (req.getBody().contains('UpdateRequest') && req.getBody().contains('<Objects xsi:type="ns1:Email"')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="SenderProfile">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:bd3d1a1a-ec41-480e-afb7-b40ecc759053</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-e161038d-4385-48e6-b71b-cbd772cc87ab"><wsu:Created>2016-10-14T15:52:12Z</wsu:Created><wsu:Expires>2016-10-14T15:57:12Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>SenderProfile created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>6744b526-2692-e611-8302-8cdcd4afd9e9</NewObjectID><Object xsi:type="SenderProfile"><PartnerKey xsi:nil="true" /><ObjectID>6744b526-2692-e611-8302-8cdcd4afd9e9</ObjectID><CustomerKey>12345</CustomerKey><Name>API Created Sender Profile</Name><Description>API Created Sender Profile</Description><FromName>Angel Cruz</FromName><FromAddress>acruz@example.com</FromAddress></Object></Results><RequestID>b5fdf1fc-34cf-4496-9d2e-21c9c3d734f8</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:bd3d1a1a-ec41-480e-afb7-b40ecc759053</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-e161038d-4385-48e6-b71b-cbd772cc87ab"><wsu:Created>2016-10-14T15:52:12Z</wsu:Created><wsu:Expires>2016-10-14T15:57:12Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>SenderProfile created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>6744b526-2692-e611-8302-8cdcd4afd9e9</NewObjectID><Object xsi:type="SenderProfile"><PartnerKey xsi:nil="true" /><ObjectID>6744b526-2692-e611-8302-8cdcd4afd9e9</ObjectID><CustomerKey>12345</CustomerKey><Name>API Created Sender Profile</Name><Description>API Created Sender Profile</Description><FromName>Angel Cruz</FromName><FromAddress>acruz@example.com</FromAddress></Object></Results><RequestID>b5fdf1fc-34cf-4496-9d2e-21c9c3d734f8</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="SendClassification">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:f7259669-a862-45cf-acee-70a26417371d</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-b8ba713f-454e-4ba0-8783-94d9f41bb8f2"><wsu:Created>2016-10-14T16:21:00Z</wsu:Created><wsu:Expires>2016-10-14T16:26:00Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>SendClassification created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>56529c2d-2a92-e611-8302-8cdcd4afd9e9</NewObjectID><Object xsi:type="SendClassification"><PartnerKey xsi:nil="true" /><ObjectID>56529c2d-2a92-e611-8302-8cdcd4afd9e9</ObjectID><CustomerKey>12345</CustomerKey><Name>12345</Name><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>12345</CustomerKey></SenderProfile><DeliveryProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>eBroadcast</CustomerKey></DeliveryProfile></Object></Results><RequestID>4a124448-0576-4930-bec4-b2c075fa6001</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:f7259669-a862-45cf-acee-70a26417371d</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-b8ba713f-454e-4ba0-8783-94d9f41bb8f2"><wsu:Created>2016-10-14T16:21:00Z</wsu:Created><wsu:Expires>2016-10-14T16:26:00Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>SendClassification created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>56529c2d-2a92-e611-8302-8cdcd4afd9e9</NewObjectID><Object xsi:type="SendClassification"><PartnerKey xsi:nil="true" /><ObjectID>56529c2d-2a92-e611-8302-8cdcd4afd9e9</ObjectID><CustomerKey>12345</CustomerKey><Name>12345</Name><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>12345</CustomerKey></SenderProfile><DeliveryProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>eBroadcast</CustomerKey></DeliveryProfile></Object></Results><RequestID>4a124448-0576-4930-bec4-b2c075fa6001</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('UpdateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSend">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:ac01a04d-f2d9-4e4c-88d3-ebe3adbb35bb</wsa:MessageID><wsa:RelatesTo>urn:uuid:f10eaef0-353b-4dd1-9968-1b8c86956352</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-8486ebe9-6036-4851-b36b-858334ebb529"><wsu:Created>2016-10-06T12:24:58Z</wsu:Created><wsu:Expires>2016-10-06T12:29:58Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>OK</StatusCode><StatusMessage>Created TriggeredSend</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID></Results><RequestID>aafc81b7-6a77-499d-a961-19fc6cbc3e82</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>   ');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:ac01a04d-f2d9-4e4c-88d3-ebe3adbb35bb</wsa:MessageID><wsa:RelatesTo>urn:uuid:f10eaef0-353b-4dd1-9968-1b8c86956352</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-8486ebe9-6036-4851-b36b-858334ebb529"><wsu:Created>2016-10-06T12:24:58Z</wsu:Created><wsu:Expires>2016-10-06T12:29:58Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>OK</StatusCode><StatusMessage>Created TriggeredSend</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID></Results><RequestID>aafc81b7-6a77-499d-a961-19fc6cbc3e82</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>   ');
             }
             
             r.setStatusCode(200);
@@ -1743,13 +1855,13 @@ public class vfIECEBC_TestSuite {
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
             if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="Email">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:edcc6710-7f98-4b2d-8255-de1fe067a007</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-29666917-fb74-421a-af90-57f452f59caa"><wsu:Created>2016-10-06T11:58:25Z</wsu:Created><wsu:Expires>2016-10-06T12:03:25Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>Created Email.</StatusMessage><OrdinalID>0</OrdinalID><NewID>1</NewID><Object xsi:type="Email"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Name>a7B8E000000D0kbUAC</Name><HTMLBody></HTMLBody><Subject>This is a rendering test for eBroadcast</Subject><IsHTMLPaste>true</IsHTMLPaste><EmailType>HTML</EmailType></Object></Results><RequestID>6dea7ca7-6fc1-4cbb-af71-74adfa1d082f</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:edcc6710-7f98-4b2d-8255-de1fe067a007</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-29666917-fb74-421a-af90-57f452f59caa"><wsu:Created>2016-10-06T11:58:25Z</wsu:Created><wsu:Expires>2016-10-06T12:03:25Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>Created Email.</StatusMessage><OrdinalID>0</OrdinalID><NewID>1</NewID><Object xsi:type="Email"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Name>a7B8E000000D0kbUAC</Name><HTMLBody></HTMLBody><Subject>This is a rendering test for eBroadcast</Subject><IsHTMLPaste>true</IsHTMLPaste><EmailType>HTML</EmailType></Object></Results><RequestID>6dea7ca7-6fc1-4cbb-af71-74adfa1d082f</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('UpdateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSend">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:ac01a04d-f2d9-4e4c-88d3-ebe3adbb35bb</wsa:MessageID><wsa:RelatesTo>urn:uuid:f10eaef0-353b-4dd1-9968-1b8c86956352</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-8486ebe9-6036-4851-b36b-858334ebb529"><wsu:Created>2016-10-06T12:24:58Z</wsu:Created><wsu:Expires>2016-10-06T12:29:58Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>OK</StatusCode><StatusMessage>Created TriggeredSend</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID></Results><RequestID>aafc81b7-6a77-499d-a961-19fc6cbc3e82</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>   ');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:ac01a04d-f2d9-4e4c-88d3-ebe3adbb35bb</wsa:MessageID><wsa:RelatesTo>urn:uuid:f10eaef0-353b-4dd1-9968-1b8c86956352</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-8486ebe9-6036-4851-b36b-858334ebb529"><wsu:Created>2016-10-06T12:24:58Z</wsu:Created><wsu:Expires>2016-10-06T12:29:58Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>OK</StatusCode><StatusMessage>Created TriggeredSend</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID></Results><RequestID>aafc81b7-6a77-499d-a961-19fc6cbc3e82</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>   ');
             }
             
             r.setStatusCode(200);
@@ -1760,13 +1872,13 @@ public class vfIECEBC_TestSuite {
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
             if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="Email">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:edcc6710-7f98-4b2d-8255-de1fe067a007</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-29666917-fb74-421a-af90-57f452f59caa"><wsu:Created>2016-10-06T11:58:25Z</wsu:Created><wsu:Expires>2016-10-06T12:03:25Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>Created Email.</StatusMessage><OrdinalID>0</OrdinalID><NewID>1</NewID><Object xsi:type="Email"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Name>a7B8E000000D0kbUAC</Name><HTMLBody></HTMLBody><Subject>This is a rendering test for eBroadcast</Subject><IsHTMLPaste>true</IsHTMLPaste><EmailType>HTML</EmailType></Object></Results><RequestID>6dea7ca7-6fc1-4cbb-af71-74adfa1d082f</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:edcc6710-7f98-4b2d-8255-de1fe067a007</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-29666917-fb74-421a-af90-57f452f59caa"><wsu:Created>2016-10-06T11:58:25Z</wsu:Created><wsu:Expires>2016-10-06T12:03:25Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>Created Email.</StatusMessage><OrdinalID>0</OrdinalID><NewID>1</NewID><Object xsi:type="Email"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Name>a7B8E000000D0kbUAC</Name><HTMLBody></HTMLBody><Subject>This is a rendering test for eBroadcast</Subject><IsHTMLPaste>true</IsHTMLPaste><EmailType>HTML</EmailType></Object></Results><RequestID>6dea7ca7-6fc1-4cbb-af71-74adfa1d082f</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:931209e7-4685-4010-94c4-b9b039e5c98e</wsa:MessageID><wsa:RelatesTo>urn:uuid:bd61d290-7e80-46b6-9e03-46e63a89eb68</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-457d5977-6b84-4842-a6e8-0c61e0cc9fa4"><wsu:Created>2016-10-06T12:21:31Z</wsu:Created><wsu:Expires>2016-10-06T12:26:31Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition created</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</NewObjectID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID>63f8a167-bf8b-e611-8844-0025b3d7f36a</ObjectID><CustomerKey>tue322</CustomerKey><Name>tue322</Name><SendClassification><PartnerKey xsi:nil="true" /><ObjectID>c1e1715a-a970-e611-8844-0025b3d7f36a</ObjectID><SenderProfile><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>10691121</CustomerKey></SenderProfile></SendClassification><Email><PartnerKey xsi:nil="true" /><ID>173905</ID><ObjectID xsi:nil="true" /></Email><List><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /></List><AutoAddSubscribers>false</AutoAddSubscribers><EmailSubject>Test of large xml</EmailSubject><IsMultipart>true</IsMultipart></Object></Results><RequestID>42bc6718-ac24-45a1-ba6b-acca18994289</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('UpdateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSendDefinition">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>UpdateResponse</wsa:Action><wsa:MessageID>urn:uuid:816a24b2-236f-497e-8aa1-7e46e870d894</wsa:MessageID><wsa:RelatesTo>urn:uuid:4c4de283-ad44-4121-8b9c-1f8e7fc25779</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-1e94f5a9-cd81-4ddc-9b2f-b6d587550db8"><wsu:Created>2016-10-06T12:22:35Z</wsu:Created><wsu:Expires>2016-10-06T12:27:35Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><UpdateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>TriggeredSendDefinition updated</StatusMessage><OrdinalID>0</OrdinalID><Object xsi:type="TriggeredSendDefinition"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><CustomerKey>tue322</CustomerKey><TriggeredSendStatus>Active</TriggeredSendStatus></Object></Results><RequestID>599a5821-fd43-4e91-9051-e3909f52a1cb</RequestID><OverallStatus>OK</OverallStatus></UpdateResponse></soap:Body></soap:Envelope>');
             } else if (req.getBody().contains('CreateRequest') && req.getBody().contains('<Objects xsi:type="TriggeredSend">')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:4b20ee68-dd01-4109-86c1-68e0bcc57f59</wsa:MessageID><wsa:RelatesTo>urn:uuid:d5339cef-c42d-4ac0-8294-f932663f6deb</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-0f3a915e-ac8a-4f03-89a2-6fde3b6dacf4"><wsu:Created>2016-10-06T12:31:27Z</wsu:Created><wsu:Expires>2016-10-06T12:36:27Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>Error</StatusCode><StatusMessage>Unable to queue Triggered Send request.  There are no valid subscribers.</StatusMessage><OrdinalID>0</OrdinalID><ErrorCode>180008</ErrorCode><NewID>0</NewID><SubscriberFailures><Subscriber><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><EmailAddress>a768E000000CvM6QAK@cubicmedia.ca</EmailAddress><SubscriberKey>a768E000000CvM6QAK@cubicmedia.ca</SubscriberKey></Subscriber><ErrorCode>TriggeredSendSubscriberProcessingError</ErrorCode><ErrorDescription>Error Code: 24 - Subscriber was excluded by List Detective.</ErrorDescription></SubscriberFailures></Results><RequestID>2c3a2150-4d37-430d-a25e-b19f65311940</RequestID><OverallStatus>Error</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
+                r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:4b20ee68-dd01-4109-86c1-68e0bcc57f59</wsa:MessageID><wsa:RelatesTo>urn:uuid:d5339cef-c42d-4ac0-8294-f932663f6deb</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-0f3a915e-ac8a-4f03-89a2-6fde3b6dacf4"><wsu:Created>2016-10-06T12:31:27Z</wsu:Created><wsu:Expires>2016-10-06T12:36:27Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results xsi:type="TriggeredSendCreateResult"><StatusCode>Error</StatusCode><StatusMessage>Unable to queue Triggered Send request.  There are no valid subscribers.</StatusMessage><OrdinalID>0</OrdinalID><ErrorCode>180008</ErrorCode><NewID>0</NewID><SubscriberFailures><Subscriber><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><EmailAddress>a768E000000CvM6QAK@cubicmedia.ca</EmailAddress><SubscriberKey>a768E000000CvM6QAK@cubicmedia.ca</SubscriberKey></Subscriber><ErrorCode>TriggeredSendSubscriberProcessingError</ErrorCode><ErrorDescription>Error Code: 24 - Subscriber was excluded by List Detective.</ErrorDescription></SubscriberFailures></Results><RequestID>2c3a2150-4d37-430d-a25e-b19f65311940</RequestID><OverallStatus>Error</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
             }
             
             r.setStatusCode(200);
@@ -1777,7 +1889,7 @@ public class vfIECEBC_TestSuite {
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
             if (req.getEndpoint().toLowerCase().contains('iecebc_recipientcount')) {
-	            r.setBody('7');
+                r.setBody('7');
             }
             
             r.setStatusCode(200);

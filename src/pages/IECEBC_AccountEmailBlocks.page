@@ -69,7 +69,7 @@
 			</script>
 			
 			<!-- Start of Page Content -->
-			<main class="main-content manage-account">
+			<main class="main-content">
 				<div class="inner-wrapper">
 					<h1 class="page-title">Account Details</h1>
 					
@@ -126,6 +126,18 @@
 																						<p>{!prpOption.tooltipDescription}</p>
 																					</div>
 																				</div>
+                                                                                <script>
+                                                                                
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 
+                                                                               
+                                                                                </script>
+																				
 																			</div>
 																			
 																			<div class="package-credits">
@@ -150,13 +162,24 @@
 																					<span class="input-state selected">Selected</span>
 																				</label>
 																				
-																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																				<apex:outputPanel rendered="{!prpOption.isDisabled}">
 																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
 																					<div class="tooltip-container">
 																						<div class="tooltip-description">
 																							<p>{!prpOption.tooltipDescription}</p>
 																						</div>
 																					</div>
+                                                                                <script>
+                                                                                
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 
+                                                                               
+                                                                                </script>
 																				</apex:outputPanel>
 																			</div>
 																			
@@ -185,13 +208,22 @@
 																					<span class="input-state selected">Selected</span>
 																				</label>
 																					
-																				<apex:outputPanel rendered="{!prpOption.isDisabled}"> 
+																				<apex:outputPanel rendered="{!prpOption.isDisabled}">
 																					<a href="#" class="tooltip-icon js-tooltip"><i class="fa fa-exclamation-triangle"></i></a>
 																					<div class="tooltip-container">
 																						<div class="tooltip-description">
 																							<p>{!prpOption.tooltipDescription}</p>
 																						</div>
 																					</div>
+                                                                                <script>
+                                                                                jQuery( ".checkbox-box" )
+                                                                                  .mouseout(function() {
+                                                                                    jQuery(".tooltip-container", this ).removeClass("is-open");
+                                                                                    jQuery(".tooltip-container", this ).addClass("is-closed");
+                                                                                    
+                                                                                  });
+                                                                                 </script>
+																				
 																				</apex:outputPanel>
 																			</div>
 																			
@@ -229,7 +261,7 @@
 													<div class="table-container">
 														<table class="data-table table-payment table-confirmation">
 															<tbody>
-																<tr class="item no-space">
+																<tr class="item">
 																	<th>
 																		<strong>
 																			<apex:outputText value="Please make a selection!" rendered="{!showPurchasedSelectionMessage}"/>
@@ -258,7 +290,7 @@
 													<div class="footer-actions">
 														<ul class="list actions sectionActions">
                                                             <li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');window.location='{!URLFOR($Page.IECEBC_AccountExtras)}';" styleClass="text-link" value="Cancel"/></li>
-															<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');"  action="{!goToPaymentPage}" styleClass="button" value="Submit payment" rendered="{!selectedProductRatePlan!=null}"/></li>
+															<li><apex:commandLink onclick="ShowWaitingStatus('.sectionActions');"  action="{!goToPaymentPage}" styleClass="button" value="Proceed to payment" rendered="{!selectedProductRatePlan!=null}"/></li>
 														</ul>
 													</div>
 												</apex:form>

@@ -2,7 +2,6 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -32,6 +31,14 @@
                 <field>Legal_name__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Link_agent_name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Link_agent_code__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
@@ -41,6 +48,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Portal_Service_Report__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -157,6 +168,10 @@
                 <field>VAT_Number_2__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Location_Class__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Agent_Type_Code__c</field>
             </layoutItems>
@@ -177,6 +192,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -224,7 +243,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>ID Card</label>
+        <label>ID Card Key Account Setting</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -500,17 +519,24 @@
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <relatedList>AMS_Agency_Regulation__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Contact__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Person__c</fields>
         <fields>Owner_Name__c</fields>
         <fields>Owner_Account__c</fields>
         <fields>Percentage__c</fields>
         <fields>Contact_Email__c</fields>
         <fields>Termination_Date__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortField>Termination_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>Contact_Name__c</fields>
@@ -540,13 +566,13 @@
         <excludeButtons>New</excludeButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
+        <fields>NAME</fields>
         <fields>Bulletin_Information__c</fields>
         <fields>OSCAR__c</fields>
         <fields>Reason_Code__c</fields>
         <fields>Reason_Description__c</fields>
         <fields>Created_Date_To_Show__c</fields>
         <fields>CREATEDBY_USER</fields>
-        <fields>Source__c</fields>
         <fields>AIMS_Updated_by__c</fields>
         <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
         <sortField>Created_Date_To_Show__c</sortField>
@@ -635,6 +661,7 @@
     <relatedLists>
         <fields>Contact.NAME</fields>
         <fields>Contact.VER_Number_2__c</fields>
+        <fields>NAME</fields>
         <fields>Delegate__c</fields>
         <relatedList>Managed_agency__c.Account__c</relatedList>
     </relatedLists>
@@ -704,6 +731,33 @@
         <fields>IsAgencyEligible__c</fields>
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
         <sortField>Year__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>Accreditation_Endorsement_organisation__c</fields>
+        <fields>Accreditation_Endorsement_Status_code__c</fields>
+        <fields>Airline__c</fields>
+        <fields>Airline_Code__c</fields>
+        <fields>OSCAR__c</fields>
+        <relatedList>AMS_Inspection__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>RECORDTYPE</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
         <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>

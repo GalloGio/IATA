@@ -44,6 +44,7 @@ private class FinancialSecurityHandlerTest {
             system.assertEquals(null, fs.Renewal_Case__c);
         }  
         
-        
+        delete fs;
+        undelete fs;
     }   
 }

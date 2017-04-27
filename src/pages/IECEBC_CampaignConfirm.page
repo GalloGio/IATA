@@ -15,12 +15,13 @@
                 <div class="inner-wrapper">
                     <c:IECEBC_ProgressComponent currentStepNumber="{!currentStepNumber}" campaign="{!ebcCampaign}" />
                     
-                    <h1 class="page-title">Confirm</h1>
-                    
-                    <apex:outputText rendered="{!EBC_Campaign__c.Status__c != 'DRAFT'}">
+                    <!-- <h1 class="page-title">Confirm</h1>-->
+                    <br/>
+                    <br/>
+                    <apex:outputText rendered="{!'DRAFT' != 'DRAFT'}">
                         This campaign has already been paid.
                     </apex:outputText>
-                    <apex:outputText rendered="{!EBC_Campaign__c.Status__c == 'DRAFT'}">
+                    <apex:outputText rendered="{!'DRAFT' == 'DRAFT'}">
                         <div class="row row-payment">
                             <section class="columns main-container campaign-cost">
                                 <apex:form id="campaignCostForm" >
@@ -141,7 +142,7 @@
                                                                         <apex:outputPanel id="disabledItemOutputPanel" rendered="{!prpOption.isDisabled}">
                                                                             <div class="checkbox-box">
                                                                                 <div class="custom-user-input checkbox">
-                                                                                    <span class="disabled-user-input checkbox"></span>		  
+                                                                                    <span class="disabled-user-input checkbox"></span>        
                                                                                     
                                                                                     <apex:inputCheckbox id="chckActTypeDisabled" value="{!prpOption.selected}" styleClass="custom-user-input checkbox" 
                                                                                                         onclick="updateEmailBlockSelection({!prpOption.index})"
@@ -164,6 +165,7 @@
                                                                             
                                                                             <div class="package-credits">
                                                                                 <apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
                                                                             </div>
                                                                             <div class="package-price">
                                                                                 <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
@@ -195,6 +197,7 @@
                                                                             
                                                                             <div class="package-credits">
                                                                                 <apex:outputText value="{0,number,###,###,##0} emails"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
                                                                             </div>
                                                                             <div class="package-price">
                                                                                 <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
@@ -232,8 +235,9 @@
                                                                                 <span class="text-orange">
                                                                                     <apex:outputText value="{0,number,###,###,##0}"><apex:param value="{!prpOption.currentEmailCredits}" /></apex:outputText>
                                                                                 </span>
-                                                                                <br/>
                                                                                 emails
+                                                                                <br/>
+                                                                                <span class="per-email">$<apex:outputText value="{0,number,###,###,##0.000}"><apex:param value="{!prpOption.amount / prpOption.currentEmailCredits}" /></apex:outputText>/email</span>
                                                                             </div>
                                                                             <div class="package-price">
                                                                                 <apex:outputText value="${0,number,###,###,##0.00}"><apex:param value="{!prpOption.amount}" /></apex:outputText>
@@ -245,7 +249,7 @@
                                                                 
                                                             </ul>
                                                         </div>
-                                                    </apex:outputPanel>	
+                                                    </apex:outputPanel> 
                                                 </li>
                                                 
                                                 <!--  between email block or product rate plan offering -->
@@ -296,7 +300,7 @@
                                                                         </apex:outputPanel>
                                                                         
                                                                         <apex:outputPanel id="callToUpgradePanel" rendered="{!!acctRatePlan.allowSelectUpgrade}">
-                                                                            <a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>																
+                                                                            <a class="small" href="mailto:globaldata@iata.org?subject=eBroadcast upgrade">Contact us to get this plan</a>                                                               
                                                                         </apex:outputPanel>
                                                                         
                                                                         <div class="plan-box">
@@ -392,10 +396,9 @@
                                                                             <apex:param value="{!emailCreditPurchased}"/>
                                                                         </apex:outputText>
                                                                     </strong>
-                                                                    email credits.
-                                                                    <br/>
-                                                                    <apex:outputText value="At a unit cost of ${0,number,###,###,##0.000}/email">
-                                                                        <apex:param value="{!emailUnitCost}"/>
+                                                                    <apex:outputText value="email(s) at a cost of ${0,number,###,###,##0.000}/email">
+                                                                        <apex:param value="{!totalPurchaseAmount / emailCreditPurchased}"/>
+                                                                        <!-- <apex:param value="{!emailUnitCost}"/> -->
                                                                     </apex:outputText>
                                                                 </apex:outputPanel>
                                                             </th>

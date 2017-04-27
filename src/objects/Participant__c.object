@@ -31,7 +31,7 @@
     <actionOverrides>
         <actionName>New</actionName>
         <content>NewParticipantByEmail</content>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <skipRecordTypeSelect>true</skipRecordTypeSelect>
         <type>Visualforce</type>
     </actionOverrides>
     <actionOverrides>
@@ -154,6 +154,27 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Hidden_Account_Id__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.AccountId,
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;,Contact__r.Account.Parent.Id,
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+
+Contact__r.Account.Parent.Id,
+Contact__r.AccountId),
+
+Contact__r.AccountId
+)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Hidden Account Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Local_Governance__c</fullName>
         <externalId>false</externalId>
         <label>Local Governance</label>
@@ -230,7 +251,24 @@
     <fields>
         <fullName>Main_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(NOT(ISBLANK(Head_Quartier__c)),  Head_Quartier__r.Name  ,   Contact__r.Account.Name   )</formula>
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, HYPERLINK(&apos;/&apos; + Contact__r.AccountId,Contact__r.Account.Name ,&quot;_self&quot;), 
+
+
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, HYPERLINK(&apos;/&apos; + Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),
+
+
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
+
+	IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
+
+		HYPERLINK(&apos;/&apos; +  Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),		
+HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)),
+		
+HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)
+
+)
+)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Account</label>
         <required>false</required>
@@ -245,35 +283,35 @@
         <label>Participant Role</label>
         <picklist>
             <picklistValues>
-                <fullName>1 Chair</fullName>
+                <fullName>Chair</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>1 Co-Chair</fullName>
+                <fullName>Co-Chair</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>2 Vice-Chair</fullName>
+                <fullName>Vice-Chair</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>3 Accredited Representative</fullName>
+                <fullName>Accredited Representative</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>4 Accredited Alternate</fullName>
+                <fullName>Designated Alternate</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>5 Representative</fullName>
+                <fullName>Member</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>6 Alternate</fullName>
+                <fullName>Observer</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>7 Observer</fullName>
+                <fullName>Facilitator</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -319,6 +357,27 @@
         <unique>false</unique>
     </fields>
     <label>Participant</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Local_Governance__c</columns>
+        <columns>Head_Quartier__c</columns>
+        <columns>Main_Account__c</columns>
+        <columns>Hidden_Account_Id__c</columns>
+        <columns>Title__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Participant_Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Main_Account__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>APJC Participant - {0000}</displayFormat>
         <label>Participant Number</label>
@@ -326,6 +385,173 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Participants</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Local_Group_Participants</fullName>
+        <active>true</active>
+        <label>Local Group Participants</label>
+        <picklistValues>
+            <picklist>Local_Group_Type__c</picklist>
+            <values>
+                <fullName>ALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC %2F FAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EACP JC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participant_Type__c</picklist>
+            <values>
+                <fullName>Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Observer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vice-Chair</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Reg_Div_Group_Participants</fullName>
+        <active>true</active>
+        <label>Reg/Div Group Participants</label>
+        <picklistValues>
+            <picklist>Local_Group_Type__c</picklist>
+            <values>
+                <fullName>ALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>APJC %2F FAG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPJC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CEC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CGA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EACP JC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JALWG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LCAG-P %2F Credit Card WG</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participant_Type__c</picklist>
+            <values>
+                <fullName>Accredited Representative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-Chair</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Designated Alternate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facilitator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Member</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Observer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vice-Chair</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>

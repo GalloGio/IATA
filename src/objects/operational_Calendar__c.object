@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>used to host information on the ISS / ICH / ICCS calendars</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>First_Day__c</fullName>
+        <description>first day of the period</description>
+        <externalId>false</externalId>
+        <label>First Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>HAR_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>HAR Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ISS_operation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ISS Operation</label>
+        <referenceTo>AMS_Settlement_System__c</referenceTo>
+        <relationshipLabel>Operational Calendars</relationshipLabel>
+        <relationshipName>Operational_Calendars</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Last_Day__c</fullName>
+        <description>period last day</description>
+        <externalId>false</externalId>
+        <label>Last Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Operation_Code__c</fullName>
+        <description>IRIS operation code</description>
+        <externalId>false</externalId>
+        <label>Operation Code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Operation Currency</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Period_code__c</fullName>
+        <description>IRIS combination of period and operation</description>
+        <externalId>false</externalId>
+        <label>Operation + Period code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Operation Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>BSP International</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSP Domestic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Period_Code__c</fullName>
+        <description>IRIS period code</description>
+        <externalId>false</externalId>
+        <label>Period Code</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remittance_Day__c</fullName>
+        <description>remittance date</description>
+        <externalId>false</externalId>
+        <label>Remittance Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>frequency_code__c</fullName>
+        <externalId>false</externalId>
+        <label>Remittance Frequency Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Operational Calendar</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>mgo</fullName>
+        <columns>NAME</columns>
+        <columns>ISS_operation__c</columns>
+        <columns>Operation_Code__c</columns>
+        <columns>Period_Code__c</columns>
+        <columns>Operation_Period_code__c</columns>
+        <columns>First_Day__c</columns>
+        <columns>Last_Day__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>Settlement_Day__c</columns>
+        <columns>Operation_Currency__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ISS_operation__c</field>
+            <operation>equals</operation>
+            <value>BSP-IN</value>
+        </filters>
+        <label>. mgo</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>Calendar-{00000000}</displayFormat>
+        <label>FDS Calendar Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Operational Calendars</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>ISS_Calendar</fullName>
+        <active>true</active>
+        <description>used to host ISS (BSP and CASS) Calendars</description>
+        <label>ISS Calendar</label>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>BSP Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP International</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

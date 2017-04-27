@@ -1,4 +1,4 @@
-<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" 
+<apex:page controller="IEC_ConfirmOrderController" action="{!onLoadAction}" language="{!language}" id="pgConfirmOrder"
 	docType="html-5.0"  applyBodyTag="false" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" cache="true">
 	
 	<!--[if lte IE 8]>
@@ -295,10 +295,22 @@
 						                        		</td>
 						                        		<td class="price total-price">
 						                        			<apex:outputText value="{0, number, currency}">
-				                                                <apex:param value="{!item.subTotal}"/>
+				                                                <apex:param value="{!IF(AND(item.setupFee != null, item.setupFee > 0),item.subTotal - item.setupFee,item.subTotal)}"/>
 				                                            </apex:outputText>
 						                        		</td>
 							                        </tr>
+							                        <apex:variable value="0" var="setup" rendered="{!AND(item.setupFee != null, item.setupFee > 0)}"> 
+													<tr class="promotion">
+														<td class="product-name" colspan="3"><i>Flat fee</i></td>
+														<td class="quantity"></td>
+														<td class="price item-price"></td>
+														<td class="price total-price">
+															<apex:outputText value="{0, number, currency}">
+				                                                <apex:param value="{!item.setupFee}" />
+				                                            </apex:outputText>
+														</td>
+													</tr>
+								                	</apex:variable>
 							                        <apex:variable value="1" var="hasDiscounts" rendered="{!AND(item.charges!=null, item.charges.size>0)}">
 								                        <tr class="promotion">
 								                        	<td class="product-name">
@@ -428,7 +440,7 @@
 					                    <li><apex:outputLink value="{!$Site.BaseUrl}/IEC_ShoppingCart" rendered="{!vfOrder.orderPreviousType != 'Quote'}">Edit Order</apex:outputLink></li>
 					                    <li>
 											<apex:actionFunction name="submitOrder" reRender="errorBloc,frmConfirmOrder, stepBloc,ContinueShopping" action="{!submitOrder}" status="submitStatus" oncomplete="$(window).scrollTop(0);" />
-								        	<button class="button wide" type="button" onclick="submitOrder();">
+								        	<button class="button wide" type="button" onclick="submitOrder();" style="{! IF(stopProcess, 'display:none', '')}">
 						                		{!$Label.Submit_Order}
 												<apex:actionStatus id="submitStatus"> 
 					                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
@@ -473,4 +485,5 @@
 			</script>
 		</body>
 	</html>
+
 </apex:page>

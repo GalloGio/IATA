@@ -90,10 +90,13 @@ trigger updateAccountFieldBasedOnIATAwebCode on Case (before insert, before upda
                     system.debug('IATA CODE 3: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                     /* //in case the user enters 10 digits we need to get the 11th digit*/
                     if (WebIATAcode.length() == 10 && WebIATAcode2.length() == 10) {
+                        if(WebIATAcode.isNumeric())
+                        {
                         String t = WebIATAcode.trim();
                         Long a = Long.valueof(t);
                         Long remainder = math.mod(a, 7);
                         WebIATAcode = WebIATAcode + remainder ;
+                        }                        
                     }
                     system.debug('IATA CODE 4: ' + WebIATAcode + ' length: ' + WebIATAcode.length());
                     // Create an entry in the map for the processed key

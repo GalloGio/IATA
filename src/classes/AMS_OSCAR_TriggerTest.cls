@@ -1,7 +1,7 @@
 @isTest class AMS_OSCAR_TriggerTest {
     
     @testSetup static void setup(){
-		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
+        AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
     }
 
     @isTest static void insertOSCARTest() {
@@ -113,7 +113,7 @@
     }
 
     @isTest static void updateOSCARTestOKSecondStep() {
-		Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
 
         Test.startTest();
         
@@ -288,9 +288,9 @@
         Test.startTest();
         
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		update a;
-		Contact c = [select id from Contact where AccountId = :a.Id];
-		
+        update a;
+        Contact c = [select id from Contact where AccountId = :a.Id];
+        
         AMS_OSCAR__c oscar = [SELECT id, Status__c, OwnerId, (SELECT Id FROM Cases__r) from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
 
@@ -300,7 +300,7 @@
         }catch(DmlException e){ /*validation on queues*/ }
                      
         try{
-            oscar.Status__c = 'Closed_Not Accepted'; 
+            oscar.Status__c = 'Closed_ Not Accepted'; 
             update oscar;
         }     catch(DmlException e){ /*validation on queues*/ }               
 
@@ -403,7 +403,7 @@
         
         oscar = [SELECT id, status__c from AMS_OSCAR__C LIMIT 1];
         
-        oscar.status__c = 'Closed_Not Accepted';
+        oscar.status__c = 'Closed_ Not Accepted';
          
         try{
             update oscar;   
@@ -436,8 +436,8 @@
         Test.startTest();
         
         // List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('Africa_ME_OSCAR','Americas_OSCAR','Asia_Pacific_OSCAR','China_N_Asia_OSCAR','Europe_OSCAR')];
-		List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
-		
+        List<Group> queues = [ select Id, DeveloperName from Group where  Type = 'Queue' and DeveloperName in ('AgencyManagementAP','AgencyManagementAfricaME','AgencyManagementAmericas','AgencyManagementChinaNAsia','CasesACCEuropeOffOnshore')];
+        
         String americas = null;
         String europe = null;
         String china = null;
@@ -452,7 +452,7 @@
             else if(q.DeveloperName.contains('China'))
                 china = q.id;
             else if(q.DeveloperName.contains('Africa'))
-            	africa = q.id;
+                africa = q.id;
             else if(q.DeveloperName.contains('AgencyManagementAP'))
                 asia = q.id;
         }
@@ -517,8 +517,8 @@
         ctry.Region__c = 'China & North Asia';
         update ctry;
 
-		a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
-		
+        a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
         oscar = new AMS_OSCAR__c(Account__c = a.id, OwnerId = UserInfo.getUserId(), Invoice_number__c='4');
         insert oscar;
 
@@ -549,21 +549,37 @@
 
      @isTest static void changeCodeGenOnApprovalDisapproval() {
         
-        Test.startTest();
-        Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
+        
+        Account a = [SELECT id,Status__c from Account where Name = 'Test1 Agency' LIMIT 1];
 
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
 
+        Test.startTest();
+        
+        Integer c = 0;
 
         for (AMS_OSCAR__c oscarT : [SELECT id, STEP1__c, STEP10__c, STEP11__c, STEP12__c, STEP13__c, STEP14__c, STEP15__c, STEP16__c, STEP17__c, STEP18__c, STEP19__c, STEP2__c,STEP20__c,
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId,RPM_Approval__c from AMS_OSCAR__c limit 2])
         {
+
+            AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+            changeCode.name = 'NEW';
+            changeCode.reasonCode = '21';
+
+            changeCode.memoText = 'New application in progress';
+            changeCode.reasonDesc  = 'NEW APPLICATION';
+            changeCode.status  = '2';
+
+            AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscarT}, new List<Account> {a}, true); 
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
 
             update oscarT;
 
+            if( c== 0){           
+            
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
             update oscarT;
 
@@ -572,6 +588,9 @@
             System.assertEquals(AMS_Utils.PASSED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code fin created
 
+            }
+            else{
+
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -579,6 +598,10 @@
 
             System.assertEquals(AMS_Utils.FAILED,oscarT.STEP2__c);
             //TODO ASSERT: assert change code dis created
+                
+            }
+            
+            c++;
         }
 
         Test.stopTest();
@@ -793,4 +816,180 @@
 
         Test.stopTest();
     }
+
+    @isTest static void testSTEP29() {
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP29__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+        
+        Test.startTest();
+
+        oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+        oscar.STEP29__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void testVR_1() { 
+
+        Account a = [SELECT id,Status__c from Account where Name = 'Test2 Agency' LIMIT 1];
+
+        AMS_OSCAR__c oscar = [SELECT id, STEP30__c, STEP31__c, STEP32__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
+
+        Id volRelRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('VOLUNTARY RELINQUISHMENT').getRecordTypeId();
+
+        /*ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+        
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+        agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = a.Id));
+
+        insert agenciesinvolved;*/
+        
+        Test.startTest();
+
+        oscar.RecordTypeId = volRelRT;
+        oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
+        oscar.Form_Effective_date__c = Date.today();
+        oscar.STEP6__c = AMS_Utils.PASSED;
+       
+        update oscar;
+
+        oscar.Suspend_in_BSPLink_CASSLink__c = true;
+        oscar.STEP30__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        oscar.STEP31__c = AMS_Utils.PASSED;
+
+        update oscar;
+        
+        oscar.STEP32__c = AMS_Utils.PASSED;
+
+        update oscar;
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_ICC_01() {
+        Test.startTest();
+
+        IATA_ISO_Country__c country  = new IATA_ISO_Country__c(
+          Name = 'Portugal',
+          ISO_Code__c = 'PT',
+          AIMS_Area_Name__c = 'Lisboa',
+          Region__c = 'Americas'
+        );
+
+        insert country;
+
+        Account account = new Account(
+                Name = 'Test Account',
+                BillingCity = 'Lisboa',
+                Sector__c = 'Travel Agent',
+                Location_Type__c = 'HO',
+                Location_Class__c = 'C',
+                Status__c = 'Approved',
+                Company_Type__c = 'A',
+                IATACode__c = '100',
+                IATA_ISO_Country__c = country.Id,
+                RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId
+        );
+
+        insert account;
+
+        List<AMS_OSCAR__c> oscarList = new List<AMS_OSCAR__c>{
+            new AMS_Oscar__c(
+                Name = 'Test Oscar 1',
+                Account__c = account.Id,
+                STEP1__c = 'In Progress'
+            ),
+            new AMS_Oscar__c(
+                Name = 'Test Oscar 2',
+                Account__c = account.Id,
+                AML_result__c = 'In Progress'
+            ),
+            new AMS_Oscar__c(
+                Name = 'Test Oscar 3',
+                Account__c = account.Id,
+                STEP2__c = 'In Progress',
+                AML_result__c = 'In Progress'
+            ),
+            new AMS_Oscar__c(
+                Name = 'Test Oscar 4',
+                Account__c = account.Id,
+                STEP2__c = 'In Progress',
+                STEP6__c = 'In Progress',
+                AML_result__c = 'In Progress',
+                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId()
+            ),
+            new AMS_Oscar__c(
+                Name = 'Test Oscar 5',
+                Account__c = account.Id,
+                STEP2__c = 'In Progress',
+                STEP6__c = 'In Progress',
+                AML_result__c = 'In Progress',
+                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId()
+            ),
+          new AMS_Oscar__c(
+                Name = 'Test Oscar 6',
+                Account__c = account.Id,
+                STEP2__c = 'In Progress',
+                STEP6__c = 'In Progress',
+                AML_result__c = 'In Progress',
+                RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId(),
+                Apply_Penalty_Fee__c = false
+            )
+        };
+
+        List<AMS_OSCAR_HistoryFields__c> cs = new List<AMS_OSCAR_HistoryFields__c> {
+            new AMS_OSCAR_HistoryFields__c(
+                Name = 'STEP1__c',
+                HasExternalLabel__c = true,
+                FieldName__c = 'STEP1__c'
+            ),
+            new AMS_OSCAR_HistoryFields__c(
+                Name = 'AML_result__c',
+                HasExternalLabel__c = false,
+                FieldName__c = 'AML_result__c'
+            )
+        };
+
+        insert cs;
+
+        insert oscarList;
+
+        oscarList[0].First_Step_Completed__c = true;
+        oscarList[0].STEP1__c = 'Passed';
+
+        oscarList[1].First_Step_Completed__c = true;
+        oscarList[1].AML_result__c = 'Passed';
+
+        oscarList[2].First_Step_Completed__c = true;
+        oscarList[2].STEP2__c = 'Failed';
+        oscarList[2].RPM_Approval__c = 'Authorize Disapproval';
+        oscarList[2].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+        
+        oscarList[3].First_Step_Completed__c = true;
+        oscarList[3].STEP6__c = 'Passed';
+        oscarList[3].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscarList[3].AMS_Correction_change_code__c = 'COR';
+
+        oscarList[4].First_Step_Completed__c = true;
+        oscarList[4].STEP6__c = 'Passed';
+        oscarList[4].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscarList[4].AMS_Correction_change_code__c = 'CAD';
+
+        oscarList[5].First_Step_Completed__c = true;
+        oscarList[5].STEP6__c = 'Passed';
+        oscarList[5].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
+        oscarList[5].AMS_Correction_change_code__c = 'LET';
+        oscarList[5].Apply_Penalty_Fee__c = true;
+        oscarList[5].Type_of_change__c = 'Location';
+
+        update oscarList;
+
+        Test.stopTest();
+    }
+
 }

@@ -3,7 +3,10 @@
     <customButtons>E2CP__New_Comment</customButtons>
     <customButtons>Conga_Merge_JS</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
-    <customButtons>Create_SIDRA_lite</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>Manage_Attachments</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -137,11 +140,19 @@
                 <behavior>Readonly</behavior>
                 <field>SuppliedEmail</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer_Case__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>IATA_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -326,6 +337,9 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

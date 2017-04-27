@@ -14,7 +14,7 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>hattinghc@iata.org</submitter>
+        <submitter>kalatsidie@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
@@ -23,10 +23,6 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>naouriy@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>payned@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>

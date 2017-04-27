@@ -118,17 +118,18 @@
         <accessLevel>Edit</accessLevel>
         <accountSettings>
             <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>None</contactAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
             <opportunityAccessLevel>None</opportunityAccessLevel>
         </accountSettings>
+        <description>E&amp;F need access to Others and Operators, but also, because the contracts sharing permissions are based on the account permissions, they need permissions on the airlines.</description>
         <label>E&amp;F</label>
         <sharedTo>
-            <role>E_F</role>
+            <role>IDFSEFServices</role>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Others</value>
+            <value>Operator,Others,Standard Account,Airline Branch,Airline Headquarters</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -194,6 +195,29 @@
             <field>Merged_Account__c</field>
             <operation>notEqual</operation>
             <value>Merged</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>IATA_Country_Office</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <label>IATA Country Office</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>IATA Country Office</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Category__c</field>
+            <operation>equals</operation>
+            <value>IATA Regional Office</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>

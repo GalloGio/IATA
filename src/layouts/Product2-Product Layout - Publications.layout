@@ -69,6 +69,10 @@
                 <field>IEC_SAP_ProfitCenter__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IEC_Override_Profit_Center__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>IEC_Subscribe_to_Zuora__c</field>
             </layoutItems>

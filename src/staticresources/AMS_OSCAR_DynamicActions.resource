@@ -14,11 +14,24 @@ var dyn_functions = {
                 var sResult = '';
                 if (r == true) {
                     
-					var argList = args.split(", ");
+                    var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
-                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+                    var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c,Account__r.Location_Class__c, Account__r.Sector__c , Account__r.Company_type__C FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+
                     var records = resultOscarData.getArray("records");
+
+                    if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'I' && records[0].Account__r.Sector__c == 'Cargo Agent' && records[0].AMS_Online_Accreditation__r.Link_agent_name__c == null ){
+                        var resultLinkAgent = confirm("The “Link Agent Name” field is not filled. Are you sure you want to proceed ?");
+                        if(resultLinkAgent == false){
+                            sResult = 'Please fill the Link Agent Name before proceding';
+                            return 'false';
+                        }
+                    }
+
+                    //Prevent error with cross reference fields
+                    var oscar = new sforce.SObject("AMS_OSCAR__c");
+                    oscar.Id = records[0].Id;
 
                     //if oscar is mso do not allow more than one appointment
                     if(records.length > 0 && records[0].Process__c == 'NEW.MSO.1.0'){
@@ -46,7 +59,7 @@ var dyn_functions = {
 
                             
                             if(result[0] == '1'){
-                                records[0].STEP10__c = 'Passed';
+                                oscar.STEP10__c = 'Passed';
                                 sResult = '- Generate IATACode - Success!\n\r';
 
                                 //Update data after IATACode Generation
@@ -60,7 +73,7 @@ var dyn_functions = {
                                 //    records[0].Flag_Data_to_Account__c = true;
                                 //}
                             } else{
-                                records[0].STEP10__c = 'Failed';
+                                oscar.STEP10__c = 'Failed';
                                 sResult = '- Generate IATACode - Error! '+ result[1] + ' (code: '+ result[0] +')\n\r';
                             }
                             //sforce.connection.update(records);
@@ -77,7 +90,7 @@ var dyn_functions = {
                                 sResult = sResult + '- Move Data To Account - Failed to copy data to Account. Please contact your Administrator.\n(Error: ' + result2 +')\n\r';
                                 createNewChangeCode = false;
                             }else{
-                                records[0].Flag_Data_to_Account__c = 'true';
+                                oscar.Flag_Data_to_Account__c = 'true';
                                 bUpdate = true;
                                 sResult = sResult + '- Move Data To Account - Success!\n\r';
                             }
@@ -92,14 +105,36 @@ var dyn_functions = {
                         if (records.length>0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true' && records[0].Flag_Data_to_Account__c == 'true' 
                                 && records[0].Flag_Data_to_SAPECC__c == 'false') {
                             
-                            records[0].Flag_Data_to_SAPECC__c = 'true';
-                            records[0].STEP8__c = 'In Progress';
+                            oscar.Flag_Data_to_SAPECC__c = 'true';
+                            oscar.STEP8__c = 'In Progress';
                             
                         }
 
+                        var ddResult = 'ByPassed!';
+
+                        if (
+                            records.length > 0 && recordsFlag[0].Flag_IATACode_Formula__c == 'true'
+                            && records[0].AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c == 'true' 
+                            && (records[0].Process__c == 'NEW.HO.1.0' || records[0].Process__c == 'NEW.BR.ABROAD' || records[0].Process__c == 'NEW.TIDS.1.0')
+                        ){
+                            
+                            if(records[0].Account__r.Due_Diligence_Status__c == 'In Progress'){
+                                ddResult = 'ByPassed (process is already in progress)';
+                                oscar.STEP17__c = 'In progress';
+                                bUpdate = true;
+                            }else{
+                                ddResult = this.performAMLaux(argList[2]);
+                            }
+                            
+
+                        } 
+
+                        sResult = sResult + '- Due diligence - ' + ddResult + '\r\n'; 
+
                         if(bUpdate){
-                            sforce.connection.update(records);
+                            console.info("Update result: "+sforce.connection.update([oscar]));
                         }
+
                     }
 
                 } else {
@@ -124,11 +159,11 @@ var dyn_functions = {
                 var records = queryResult.getArray('records');
 
                 if(result == ''){
-                	records[0].STEP8__c = 'In Progress';
-                	alert('Executed with success.');
+                    records[0].STEP8__c = 'In Progress';
+                    alert('Executed with success.');
                 }
                 else{
-                	records[0].STEP8__c = 'Failed';
+                    records[0].STEP8__c = 'Failed';
                     alert('XML generated successfully but unable to send it to SAP due to connectivity issues.');
                 }
                 sforce.connection.update(records);
@@ -147,18 +182,18 @@ var dyn_functions = {
                 }
                 sforce.connection.update(records);
            },
-		   SubmitForApproval:function (argsList) {
-		   
+           SubmitForApproval:function (argsList) {
+           
                /*
-				var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
-				
+                var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
+                
                 if(result == 'true'){
-                	alert('An email has been sent for your manager approval.');
+                    alert('An email has been sent for your manager approval.');
                 }
                 else{
-                	alert('An error has occurred.')
+                    alert('An error has occurred.')
                 }
-				*/
+                */
            },
            createIFAP:function(arg1){
                 var result = sforce.apex.execute("AMS_OSCAR_Webservice","createIFAPFromOSCAR", {oscarId: arg1}); 
@@ -196,40 +231,39 @@ var dyn_functions = {
                 }
            },
            performAML:function (arg) {
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
-                
-                // error
-                if (result[0].substring(0, 6) == 'ERROR:') {
-                    alert(result);
-                } 
-                else {
-                    
+                var result = this.performAMLaux(arg);
+                alert(result);
+           },
+           performAMLaux:function (arg) {
+                var rc = 'Due Diligence Case created successfully.';
+                var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createAMLCase", {oscarId: arg});
+
+                // OK
+                if (result[0].substring(0, 6) != 'ERROR:') {                    
                     var caseId = result[0];
 
                     var changeTab = function(result){
                         if(result.success == true){
                             //sforce.console.focusPrimaryTabById(caseId);
-                            alert('AML Case created successfully.');
                         }
                     };
 
                     // Use the results primary tab id and open a new subtab
                    var openSubtab = function(result)
                    {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'AML Case', null, changeTab);    
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'Due Diligence Case', null, changeTab);    
                    };
                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
 
+                } else {
+                    rc = result;
                 }
-           
+                return rc;           
            },
            congaMerge:function(args){
                 
                 var argList = args.split(", ");
-
-                
-
+            
                 var arg1 = argList[0];
                 var arg2 = argList[1];
                 var arg3 = argList[2];
@@ -409,7 +443,29 @@ var dyn_functions = {
                 if(confirm('Do you want to proceed reactivating agencies?')){
                     oscarIdsToRemove.push(arg);
 
-                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndoOrReactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"Reactivation",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
+
+                    for (var i = 0; i < response.length; i++) {
+                        if(response[i].result=='Ok'){
+                            sMessageSuccess = sMessageSuccess + "Success: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                        if(response[i].result=='Error'){
+                            sMessageError = sMessageError + "Error: " + response[i].IATACode + ": " + response[i].description + "\n";
+                        }
+                    }
+                    alert("Result: \n\n" + sMessageError + "\n\n" + sMessageSuccess);
+                }
+            },
+
+            undoDeactivationBSPLink:function (arg) {
+                var oscarIdsToRemove = [];
+                var sMessageSuccess = "";
+                var sMessageError = "";
+
+                if(confirm('Do you want to proceed reactivating agencies?')){
+                    oscarIdsToRemove.push(arg);
+
+                    var response = sforce.apex.execute("AMS_BSPLinkIntegration","ProcessBSPLink",{sProcess:"DeactivationUndo",objectIds:oscarIdsToRemove,sTypeOfRemoval:"AccountsInvolved"});
 
                     for (var i = 0; i < response.length; i++) {
                         if(response[i].result=='Ok'){

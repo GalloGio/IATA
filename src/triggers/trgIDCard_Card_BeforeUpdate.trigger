@@ -23,8 +23,8 @@ trigger trgIDCard_Card_BeforeUpdate on ID_Card__c (before update) {
             
             if (updatedIdCard.Card_Status__c == IDCardUtil.CARDSTATUS_PRINTED_DELIVERED && newIdCard.Card_Status__c == IDCardUtil.CARDSTATUS_CANCELED ) {
                //make sure not to set flag twice.
-                if(newIdCard.MustSyncWithAIMS__c != true)                    
-                    newIdCard.MustSyncWithAIMS__c = true;
+                //if(newIdCard.MustSyncWithAIMS__c != true)                    
+                    //newIdCard.MustSyncWithAIMS__c = true;
             }            
         }        
     }

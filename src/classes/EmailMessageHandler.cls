@@ -41,9 +41,10 @@ public with sharing class EmailMessageHandler {
 			EmailMessage myEmail = messagesPerCaseId.get(parentCase.Id);
 			
 			// if parent is SIDRA case && email is a notice of irregularity, then update the NOI Sent field to NOW()
+			// Added condition to populate field only one time.
 			if (myEmail.Incoming == false && 
 				mapAttachmentsPerCaseId.get(parentCase.Id) != null &&
-				mapAttachmentsPerCaseId.get(parentCase.Id).Name.contains('Notice of Irregularity')) 
+				mapAttachmentsPerCaseId.get(parentCase.Id).Name.contains('Notice of Irregularity') && parentCase.NOI_sent__c == null) 
 			{
 					parentCase.NOI_sent__c = datetime.now();
 					cases2update.add(parentCase);

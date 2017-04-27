@@ -129,6 +129,14 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>TC_Removal_of_trade_name__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CNS - Removal of trade name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_VMFR__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

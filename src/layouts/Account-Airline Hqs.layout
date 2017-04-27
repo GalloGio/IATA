@@ -176,6 +176,10 @@
                 <behavior>Edit</behavior>
                 <field>BIETA_Member__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNS_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -726,6 +730,7 @@
     <relatedLists>
         <customButtons>Edit_All_Airline_BA</customButtons>
         <fields>NAME</fields>
+        <fields>BillingAgreement_Name__c</fields>
         <fields>Client__c</fields>
         <fields>Contract__c</fields>
         <fields>EF_Status__c</fields>

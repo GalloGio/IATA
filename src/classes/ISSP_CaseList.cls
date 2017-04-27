@@ -18,6 +18,9 @@ public with sharing class ISSP_CaseList {
     
     public string soqlOrder {get;set;}
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+
     public String sortExpression {
      get { return sortExp; }
      set {

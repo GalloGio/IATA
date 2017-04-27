@@ -1,4 +1,4 @@
-<apex:component allowDML="true">
+<apex:component allowDML="true" controller="ISSP_Homepage">
 <apex:attribute name="pkbCon" type="pkb_Controller" required="true" description="handle to the pkb controller" />
 <script type="text/javascript">
 
@@ -6,7 +6,7 @@
 * jQuery.browser.mobile (http://detectmobilebrowser.com/)
 * jQuery.browser.mobile will be true if the browser is a mobile device
 **/
-    
+
  // var $ = jQuery.noConflict();
 
 // capture some data from the Apex controller and store in js vars
@@ -57,7 +57,7 @@ function setLanguage(e) {
   doSearch();
 }
 
-// called when page is rendered, uses the category data passed from the Apex controller to build the selectedCategories array 
+// called when page is rendered, uses the category data passed from the Apex controller to build the selectedCategories array
 // as well as to set the category selects to any previously-selected categories
 function setCurrCategories() {
   var i, j, selects, catObjs;
@@ -82,7 +82,7 @@ function setCurrCategories() {
           }
         }
       }
-    }  
+    }
   }
 }
 
@@ -91,7 +91,7 @@ function setCurrCategories() {
 function setCategory(e) {
   var i;
   var o;
-  var selects = document.getElementsByTagName('select');  
+  var selects = document.getElementsByTagName('select');
   selectedCategories = new Array();
 
   // check all of the select lists in the narrow search section and pull out the selected values
@@ -107,14 +107,14 @@ function setCategory(e) {
 }
 
 function clearCategory(e) {
-  
+
   selectedCategories = new Array();
-    
+
   buildSearchHref();
   doSearch();
 }
-        
-    
+
+
 // grabs all of the relevant search details (query, category selections) and uses those to build the href of the search link
 // continuously updating the href property of the search link this way allows the "right-click and open in new tab/window..."
 // options to always work
@@ -126,15 +126,16 @@ function buildSearchHref() {
   var url = pkbHome + '?';
 
   var params = new Array();
-	
+
     //alert(selectedCategories.join(','));
-    
-  if (validSearchQuery()) params.push("{!pkbCon.queryParam}=" +encodeURIComponent(currSearch)); 
+
+  if (validSearchQuery()) params.push("{!pkbCon.queryParam}=" +encodeURIComponent(currSearch));
   params.push("{!pkbCon.languageParam}=" +encodeURIComponent(currLanguage));
   if (selectedCategories.length) params.push("{!pkbCon.categoryParam}=" +encodeURIComponent(selectedCategories.join(',')));
   if (contactUs) params.push("{!pkbCon.contactUsParam}={!pkbCon.contactUsValue}");
   if (portalUser) params.push("&MainNav=resources&subNav=faq&mid=M2S1");
-    
+
+  if ('{!communityName}' !== undefined && '{!communityName}' !== '') { params.push('CommunityName={!communityName}');}
   url += params.join('&');
   e.href = url;
 }
@@ -173,9 +174,9 @@ function freezeInputs() {
   var selects = document.getElementsByTagName('select');
   var textarea = document.getElementById(SEARCH_TEXT_ID);
   var i;
-  
+
   for (i = 0; i < selects.length; i++) {
-    if (selects[i].id.indexOf(CATEGORY_SELECT_ID_PREFIX) > -1) { 
+    if (selects[i].id.indexOf(CATEGORY_SELECT_ID_PREFIX) > -1) {
       selects[i].disabled = true;
     }
   }
@@ -223,7 +224,7 @@ function hideNext() {
 }
 
 var noResultsFound = true;
-function hideResultsRss() { 
+function hideResultsRss() {
   e = document.getElementById(RSS_RESULTS_LINK_ID);
   if (!e) return;
   if (noResultsFound) e.style.display = 'none';
@@ -245,7 +246,7 @@ function showFeedbackDialog() {
 function copyComments() {
   var o = $('[id$=' +FEEDBACK_COMMENTS_ID+ ']');
   var p = $('#' +FEEDBACK_TEXT_ID);
-  
+
   if (o.length && p.length) o[0].value = p[0].value;
 }
 
@@ -300,7 +301,7 @@ function adjustHeight() {
 
 function rewriteContactUsFormAction() {
   if (!contactUs) return;
-  
+
   var actionURL = pkbHome;
   if (viewingArticle) actionURL += '?id={!pkbCon.theKad.id}';
 
@@ -316,7 +317,7 @@ function rewriteFeedbackFormAction() {
   var actionURL = pkbHome + '?id={!pkbCon.theKad.id}';
 
   var o = $('[id$=' +FEEDBACK_YESNO_FORM_ID+ ']');
-  var p = $('[id$=' +FEEDBACK_FORM_ID+ ']');  
+  var p = $('[id$=' +FEEDBACK_FORM_ID+ ']');
 
   if (o.length) o[0].action = actionURL;
   if (p.length) p[0].action = actionURL;
@@ -329,7 +330,7 @@ function clearCaseErrorMsg() {
 }
 
 function prepareToRenderOverlay() {
-  openDialogWhenReady = true; 
+  openDialogWhenReady = true;
 }
 
 $('#' +FEEDBACK_DIALOG_ID).ready(function() {
@@ -349,7 +350,7 @@ $(window).load(function() {
   rewriteContactUsFormAction();
   rewriteFeedbackFormAction();
 });
-       
+
 </script>
-    
+
 </apex:component>

@@ -3061,6 +3061,15 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>CNS_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the contacts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Call_Status_Update__c</fullName>
         <externalId>false</externalId>
         <label>Call Status Update</label>
@@ -4376,21 +4385,41 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <externalId>false</externalId>
         <formula>/*PreProd*/
 /* 
+IF( AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;) , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
++SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
+SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+
+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+
+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ 
+SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+
+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
+IF(Account.IATACode__c != &apos;&apos; 
+, 
 IF(Account.IATACode__c != &apos;&apos; 
 , 
 &quot;http://www-qa.iata.org/services/finance/pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-)
+))
 */
 
 /*Prod*/ 
+IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
++SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
+SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+
+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+
+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ 
+SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+
+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
 IF(Account.IATACode__c != &apos;&apos; 
 , 
-&quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
+&quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
-&quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-)</formula>
+&quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
+))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Credit Card Payment Link</label>
         <required>false</required>
@@ -7072,6 +7101,25 @@ TotalRows-Successes-Errors</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>MITA_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>MITA Service</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000Sd6U</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Name</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>MITA_Teletype__c</fullName>
         <externalId>false</externalId>
         <label>Teletype</label>
@@ -8953,7 +9001,9 @@ IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&
 &amp;&quot; &quot;&amp; 
 IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -9530,6 +9580,44 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <trackHistory>false</trackHistory>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValidContactDomainImage__c</fullName>
+        <description>Shows an image to represent a valid or invalid domain for current contact email, used for ISSP portal</description>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(ValidContactDomainName__c, &quot;valid&quot;),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 16, 106),
+IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 16, 147),
+  &quot;&quot; )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>if the company has any company domains defined, this field shows information on whether the domain of this contact is among the valid ones or not.</inlineHelpText>
+        <label>Email domain validity check</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValidContactDomainName__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid Contact Email Domain</label>
+        <picklist>
+            <picklistValues>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>WebStar_ID__c</fullName>
@@ -12043,6 +12131,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -13321,6 +13420,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -14493,6 +14603,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             <values>
                 <fullName>SIS User</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -15682,6 +15803,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>iiNET User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16997,6 +17129,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -18248,6 +18391,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -19422,6 +19576,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Staff</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21795,6 +21960,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>Approved User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24314,6 +24490,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
             <values>
                 <fullName>iiNET User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27123,6 +27310,17 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ValidContactDomainName__c</picklist>
+            <values>
+                <fullName>invalid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>segment_lifecycle__c</picklist>
             <values>
                 <fullName>1 - Prospect</fullName>
@@ -27266,7 +27464,7 @@ ISCHANGED(ISSP_Contact_Name__c )
         <fullName>Contact_email_change_BSPlink</fullName>
         <active>true</active>
         <description>prevents changes of email address for BSPlink users.</description>
-        <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedar@iata.org&quot;,
+        <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedaa@iata.org&quot;,
 NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
         <errorMessage>Changing a BSPlink user&apos;s email may cause problems with SSO.If the user&apos;s access to BSPlink is to be switched to another email, do the changes in BSPlink. Otherwise if the contact is changing their email, please post a comment on the portal chatter group</errorMessage>
     </validationRules>

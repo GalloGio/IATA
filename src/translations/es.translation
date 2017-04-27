@@ -1,5 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- AMS INTEGRATION --></label>
+        <name>AMS</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- AMS =&gt; GDP Sync --></label>
+        <name>AMS_GDP_Sync</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Force.com for Amazon Web Services --></label>
+        <name>AWS_Toolkit</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- SnapShot --></label>
+        <name>BLND_SnapShot</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Call Scripting --></label>
+        <name>CallScripting</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Clicktools --></label>
+        <name>Clicktools</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- DPC Management --></label>
+        <name>DPC_Management</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- E&amp;F CRM --></label>
+        <name>EF_CRM</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- E&amp;F --></label>
+        <name>E_F</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- ExactTarget --></label>
+        <name>ExactTarget</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- FDS - ICCS --></label>
+        <name>FDS_ICCS</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GDP --></label>
+        <name>GDP</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA 3B GSS-MDP --></label>
+        <name>IATA_3B_GSS_MDP</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA - Auto Assignment --></label>
+        <name>IATA_Auto_Assignment</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA Financial Assessment --></label>
+        <name>IATA_Financial_Assessment</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA Financial Security Monitoring --></label>
+        <name>IATA_Financial_Security_Monitoring</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATAforce --></label>
+        <name>IATAforce</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- ID Card --></label>
+        <name>ID_Card</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IEC Admin Console --></label>
+        <name>IEC_Admin_Console</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- MITA / BIETA --></label>
+        <name>MITA_BIETA</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- PKB 2 --></label>
+        <name>PKB_2</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Regional Reporting --></label>
+        <name>Regional_Reporting</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Release Planning --></label>
+        <name>Release_Planning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Requirement Planning without Estimation --></label>
+        <name>Requirement_Planning_without_Estimation</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- SARA --></label>
+        <name>SARA</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IS Help Desk --></label>
+        <name>SIS_Help_Desk</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Strategic Account Planning --></label>
+        <name>StrategicAccountPlanning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- TTBS --></label>
+        <name>TTBS</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- eBroadcast --></label>
+        <name>eBroadcast</name>
+    </customApplications>
     <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
         <name>AIMSAccountBeforeUpdate_AutoProcess</name>
@@ -11,6 +127,10 @@
     <customLabels>
         <label><!-- AMS Conga Merge --></label>
         <name>AMS_Conga_Merge</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS Due Diligence Lock --></label>
+        <name>AMS_Due_Diligence_Lock</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS Duplicate Username --></label>
@@ -69,6 +189,10 @@
         <name>AMS_OSCAR_Action12</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action13 --></label>
+        <name>AMS_OSCAR_Action13</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -119,6 +243,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_CHANGE_RECONSIDERATION --></label>
         <name>AMS_OSCAR_CHANGE_RECONSIDERATION</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_CHANGE_REJECTION_FINALIZATION --></label>
+        <name>AMS_OSCAR_CHANGE_REJECTION_FINALIZATION</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS_OSCAR_CHANGE_WITHDRAWAL --></label>
@@ -319,6 +447,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_Warning_1 --></label>
         <name>AMS_OSCAR_Warning_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_PERFORM_CORRECTION --></label>
+        <name>AMS_PERFORM_CORRECTION</name>
     </customLabels>
     <customLabels>
         <label><!-- ANY --></label>
@@ -723,6 +855,10 @@
         <name>Confirm_purchase</name>
     </customLabels>
     <customLabels>
+        <label><!-- Confirmation --></label>
+        <name>Confirmation</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ContactDirectSalesMessage --></label>
         <name>ContactDirectSalesMessage</name>
     </customLabels>
@@ -769,6 +905,366 @@
     <customLabels>
         <label><!-- Credit card validation --></label>
         <name>Credit_card_validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Action_Summary --></label>
+        <name>CurrencyCenter_Action_Summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Actual_Amount_Blocked --></label>
+        <name>CurrencyCenter_Actual_Amount_Blocked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Airlines_Charges --></label>
+        <name>CurrencyCenter_Airlines_Charges</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_All_Other_Countries --></label>
+        <name>CurrencyCenter_All_Other_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_All_Others --></label>
+        <name>CurrencyCenter_All_Others</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_All_Others_Country --></label>
+        <name>CurrencyCenter_All_Others_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Attachments_Description --></label>
+        <name>CurrencyCenter_Attachments_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Attachments_Name --></label>
+        <name>CurrencyCenter_Attachments_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Attachments_Section --></label>
+        <name>CurrencyCenter_Attachments_Section</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_BSP --></label>
+        <name>CurrencyCenter_BSP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_BSP_CASS_Proffile --></label>
+        <name>CurrencyCenter_BSP_CASS_Proffile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_BSP_Profile --></label>
+        <name>CurrencyCenter_BSP_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Back_Home --></label>
+        <name>CurrencyCenter_Back_Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Blocked_Funds --></label>
+        <name>CurrencyCenter_Blocked_Funds</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Blocked_Funds_Countries --></label>
+        <name>CurrencyCenter_Blocked_Funds_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Blocked_Funds_Country --></label>
+        <name>CurrencyCenter_Blocked_Funds_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Bloomberg_Feeds --></label>
+        <name>CurrencyCenter_Bloomberg_Feeds</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS --></label>
+        <name>CurrencyCenter_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_CASS_Profile --></label>
+        <name>CurrencyCenter_CASS_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Countries --></label>
+        <name>CurrencyCenter_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Countries_Map --></label>
+        <name>CurrencyCenter_Countries_Map</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Country_Profiles --></label>
+        <name>CurrencyCenter_Country_Profiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency --></label>
+        <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Details --></label>
+        <name>CurrencyCenter_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_1 --></label>
+        <name>CurrencyCenter_Disclaimer_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_2 --></label>
+        <name>CurrencyCenter_Disclaimer_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Disclaimer_3 --></label>
+        <name>CurrencyCenter_Disclaimer_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Download_Pdf --></label>
+        <name>CurrencyCenter_Download_Pdf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Due_Date --></label>
+        <name>CurrencyCenter_Due_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Economic_Profile --></label>
+        <name>CurrencyCenter_Economic_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Exchange_Rates_Directory --></label>
+        <name>CurrencyCenter_Exchange_Rates_Directory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Exchange_Rates_Directory_Subtitle --></label>
+        <name>CurrencyCenter_Exchange_Rates_Directory_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Exchange_Rates_Directory_Text --></label>
+        <name>CurrencyCenter_Exchange_Rates_Directory_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Exchange_Rates_Directory_Title --></label>
+        <name>CurrencyCenter_Exchange_Rates_Directory_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Fares_And_Ticketing --></label>
+        <name>CurrencyCenter_Fares_And_Ticketing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Follow --></label>
+        <name>CurrencyCenter_Follow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Follow_Country --></label>
+        <name>CurrencyCenter_Follow_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_General_Information --></label>
+        <name>CurrencyCenter_General_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Heat_Map --></label>
+        <name>CurrencyCenter_Heat_Map</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_ICCS --></label>
+        <name>CurrencyCenter_ICCS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Important_Contacts --></label>
+        <name>CurrencyCenter_Important_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Issue_Started --></label>
+        <name>CurrencyCenter_Issue_Started</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Manage_Notifications --></label>
+        <name>CurrencyCenter_Manage_Notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Manage_Notifications_Button --></label>
+        <name>CurrencyCenter_Manage_Notifications_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Manage_Notifications_Info --></label>
+        <name>CurrencyCenter_Manage_Notifications_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Next_Action --></label>
+        <name>CurrencyCenter_Next_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Number_of_Airlines_Reporting --></label>
+        <name>CurrencyCenter_Number_of_Airlines_Reporting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Preferences_Save_Error --></label>
+        <name>CurrencyCenter_Preferences_Save_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Preferences_Updated --></label>
+        <name>CurrencyCenter_Preferences_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Print --></label>
+        <name>CurrencyCenter_Print</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Regional_Outlook_News --></label>
+        <name>CurrencyCenter_Regional_Outlook_News</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Repatriation_Process --></label>
+        <name>CurrencyCenter_Repatriation_Process</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Save_Preferences --></label>
+        <name>CurrencyCenter_Save_Preferences</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Search --></label>
+        <name>CurrencyCenter_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Search_Additional_Information --></label>
+        <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Select_Country --></label>
+        <name>CurrencyCenter_Select_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Subject --></label>
+        <name>CurrencyCenter_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Treasury_Dashboard --></label>
+        <name>CurrencyCenter_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Unfollow --></label>
+        <name>CurrencyCenter_Unfollow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Update_Feeds --></label>
+        <name>CurrencyCenter_Update_Feeds</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Watch_List --></label>
+        <name>CurrencyCenter_Watch_List</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Watch_List_Countries --></label>
+        <name>CurrencyCenter_Watch_List_Countries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Watch_List_Country --></label>
+        <name>CurrencyCenter_Watch_List_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ACD_CCD --></label>
+        <name>CurrencyCenter_def_ACD_CCD</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_BSP_CASS_ICH --></label>
+        <name>CurrencyCenter_def_BSP_CASS_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_CTC --></label>
+        <name>CurrencyCenter_def_CTC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Credit_Spread --></label>
+        <name>CurrencyCenter_def_Credit_Spread</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_def_Currency_Exchange_Rate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Current_Account_part1 --></label>
+        <name>CurrencyCenter_def_Current_Account_part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Current_Account_part2 --></label>
+        <name>CurrencyCenter_def_Current_Account_part2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Devaluation_Risk --></label>
+        <name>CurrencyCenter_def_Devaluation_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1 --></label>
+        <name>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2 --></label>
+        <name>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Foreign_Exchange_Reserves_2 --></label>
+        <name>CurrencyCenter_def_Foreign_Exchange_Reserves_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Forward_NDF --></label>
+        <name>CurrencyCenter_def_Forward_NDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_GDP_Growth --></label>
+        <name>CurrencyCenter_def_GDP_Growth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ICCS --></label>
+        <name>CurrencyCenter_def_ICCS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ICCS_2 --></label>
+        <name>CurrencyCenter_def_ICCS_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ICER --></label>
+        <name>CurrencyCenter_def_ICER</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ICH --></label>
+        <name>CurrencyCenter_def_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_ICH_2 --></label>
+        <name>CurrencyCenter_def_ICH_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_IROE --></label>
+        <name>CurrencyCenter_def_IROE</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Inflation --></label>
+        <name>CurrencyCenter_def_Inflation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_MITA --></label>
+        <name>CurrencyCenter_def_MITA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Non_Performing_Loans --></label>
+        <name>CurrencyCenter_def_Non_Performing_Loans</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_PSC --></label>
+        <name>CurrencyCenter_def_PSC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_PTC --></label>
+        <name>CurrencyCenter_def_PTC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Sovereign_Credit_Rating --></label>
+        <name>CurrencyCenter_def_Sovereign_Credit_Rating</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_Spot_Change --></label>
+        <name>CurrencyCenter_def_Spot_Change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_def_TTBS --></label>
+        <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
         <label><!-- Current password --></label>
@@ -863,6 +1359,10 @@
         <name>Direct_Sales</name>
     </customLabels>
     <customLabels>
+        <label><!-- Discounted Amount --></label>
+        <name>Discounted_Amount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Download Invoice --></label>
         <name>Download_Invoice</name>
     </customLabels>
@@ -933,6 +1433,10 @@
     <customLabels>
         <label><!-- End date --></label>
         <name>End_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- English Alphabet --></label>
+        <name>English_Alphabet</name>
     </customLabels>
     <customLabels>
         <label><!-- ErrMsg Shipping &amp; Tax - general error --></label>
@@ -2037,12 +2541,12 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_ReplacementOption</name>
     </customLabels>
     <customLabels>
-        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/contactus.aspx &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Avise de la información incorrecta de la agencia &lt;/a&gt;&quot;</label>
+        <label>&quot;&lt;a href=&quot;&quot; http://www.iata.org/customer-portal/Pages/index.aspx? &quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Avise de la información incorrecta de la agencia &lt;/a&gt;&quot;</label>
         <name>IDCard_ReportAgencyIncorrectInfo</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Si la dirección anterior es incorrecta, por favor, póngase en contacto con la agencia para facilitar la informacion correcta (&lt;a href=&quot;&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot;&quot; style=&quot;&quot;color: blue;&quot;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) y no continúe hasta que la dirección en la agencia se haya actualizado. &lt;br/&gt; 
-Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coordinarse con sus compañeros en la dirección mencionada arriba para recibir la tarjeta de identificación en su dirección personal. Para continuar, por favor haga clic en el botón de abajo.&quot;</label>
+        <label>Si la dirección anterior es incorrecta, por favor, póngase en contacto con la agencia para facilitar la informacion correcta (&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; style=&quot;color: blue;&quot;&gt;Report Agency incorrect information&lt;/a&gt;) y no continúe hasta que la dirección en la agencia se haya actualizado. &lt;br/&gt; 
+Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coordinarse con sus compañeros en la dirección mencionada arriba para recibir la tarjeta de identificación en su dirección personal. Para continuar, por favor haga clic en el botón de abajo.</label>
         <name>IDCard_ReportAgencyIncorrectInfo2</name>
     </customLabels>
     <customLabels>
@@ -2541,14 +3045,15 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-non-canada.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
+&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-SP.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
         <name>ID_Card_Terms_Condition</name>
     </customLabels>
     <customLabels>
-        <label>&quot;I have read and accept the 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
+        <label>I have read and accept the 
+&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
-&lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation-travel/idcard/Documents/tc-idc-application-en-canada.pdf&apos;);&quot;&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;&quot;</label>
+&lt;a href=&quot;JavaScript:newPopup(&apos;http://www.iata.org/services/accreditation/idcard/Documents/2016-05-IATA-IATAN-IDC-Cardholder-Agreement-SP.pdf
+&apos;);&quot;&gt;Terms &amp; Conditions. &lt;/a&gt;</label>
         <name>ID_Card_Terms_ConditionCA</name>
     </customLabels>
     <customLabels>
@@ -2840,6 +3345,18 @@ and
         <name>IEC_Registration_UserExist</name>
     </customLabels>
     <customLabels>
+        <label><!-- SAP Customer Issue on Address --></label>
+        <name>IEC_SAP_Customer_Address_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SAP Customer Issue --></label>
+        <name>IEC_SAP_Customer_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SAP Customer Issue on Shipping Address --></label>
+        <name>IEC_SAP_Customer_Shipping_Address_Issue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IEC_Trial_RequestFail --></label>
         <name>IEC_Trial_RequestFail</name>
     </customLabels>
@@ -3081,6 +3598,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Código designador de aerolínea de 2 letras</label>
         <name>ISSP_2_letter_Airline_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP 3 Digit Code --></label>
+        <name>ISSP_3_Digit_Code</name>
     </customLabels>
     <customLabels>
         <label>Su contraseña no ha cambiado durante los últimos 90 días. Por razones de seguridad, le rogamos que la cambie ahora.</label>
@@ -4383,6 +4904,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NOC_StepD_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC StepD ProgressBar CNS --></label>
+        <name>ISSP_AMS_NOC_StepD_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Propietario(s) actualizado(s) - Empresas</label>
         <name>ISSP_AMS_NOC_Updated_Companies</name>
     </customLabels>
@@ -4573,6 +5098,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Sólo puede realizar cambios una vez se haya acreditado con IATA.</label>
         <name>ISSP_AMS_NoC_Message_Accredited_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Message_Accredited_Agent_CNS --></label>
+        <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
         <label>Notificación de cambio</label>
@@ -4767,6 +5296,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_No_Pending</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS No Pending CNS --></label>
+        <name>ISSP_AMS_No_Pending_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_No_Requirements --></label>
         <name>ISSP_AMS_No_Requirements</name>
     </customLabels>
@@ -4811,8 +5344,16 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_OPTION_CGO_BRANCH</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION CGO BRANCH CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_BRANCH_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Agente de carga de la IATA - Nueva oficina central</label>
         <name>ISSP_AMS_OPTION_CGO_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION CGO HO CNS --></label>
+        <name>ISSP_AMS_OPTION_CGO_HO_CNS</name>
     </customLabels>
     <customLabels>
         <label>Mensajería - Oficina de sucursal</label>
@@ -4963,6 +5504,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Roles_and_Responsibilities</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS SA Office Select --></label>
+        <name>ISSP_AMS_SA_Office_Select</name>
+    </customLabels>
+    <customLabels>
         <label>SECCIÓN 1 - Datos de la oficina central acreditada de la IATA</label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
@@ -5015,6 +5560,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_Agency_Accreditation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Agency Accreditation CNS --></label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>¿No está seguro del tipo de agencia para el que desea solicitar la acreditación?&lt;br/&gt;En este caso, consulte aquí</label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
@@ -5043,8 +5592,16 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Intro Accred CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Si no está autorizado para firmar documentos legales en nomber de su agencia, le rogamos se dirija a la persona oportuna para que ésta se registre en el portal y realice la solicitud en línea.</label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Intro CNS --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
         <label>Los cambios tales como el nombre de la compañía, el teléfono o los números de FAX se pueden realizar directamente desde su &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;Página de la información&lt;/a&gt; empresarial</label>
@@ -5053,6 +5610,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Nueva solicitud de acreditación</label>
         <name>ISSP_AMS_Step0_New_Application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 New Application CNS --></label>
+        <name>ISSP_AMS_Step0_New_Application_CNS</name>
     </customLabels>
     <customLabels>
         <label>Borradores de solicitudes &amp; cambios en curso</label>
@@ -5083,6 +5644,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_SAA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 SAA --></label>
+        <name>ISSP_AMS_Step0_SAA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Actividad Específica de Ventas</label>
         <name>ISSP_AMS_Step0_Specific_Sales_Activity</name>
     </customLabels>
@@ -5101,6 +5666,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>La solicitud de acreditación de la IATA en línea para una nueva agencia de carga no está disponible todavía para el país seleccionado. Ahora le redirigiremos a la página web de la IATA, dónde podrá continuar con el proceso de acreditación para su agencia de transporte de carga. ¿Quiere ir a esa página ahora?</label>
         <name>ISSP_AMS_Step1_GoTo_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step1_GoTo_Cargo_CNS --></label>
+        <name>ISSP_AMS_Step1_GoTo_Cargo_CNS</name>
     </customLabels>
     <customLabels>
         <label>La solicitud de acreditación de la IATA en línea para una nueva agencia de viajes no está disponible todavía para el país seleccionado. Ahora le redirigiremos a la página web de la IATA, dónde podrá continuar con el proceso de acreditación para su agencia de viajes. ¿Quiere ir a esa página ahora?</label>
@@ -5139,6 +5708,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Solicitud de aprobación como agente de ventas de pasajero/carga de la IATA</label>
         <name>ISSP_AMS_Step1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title --></label>
+        <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
         <label>Las solicitudes provisionales deberán presentarse en 2 semanas; de lo contrario, deberá comenzar de nuevo el proceso de acreditación.</label>
@@ -5549,6 +6122,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step5_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Por favor revise todos los detalles de su solicitud antes de aceptar los terminos&amp;condiciones detallados mas abajo y antes de enviar dicha solicitud a IATA. Una vez el formulario enviado, podra Usted descargar una copia en formato PDF.</label>
         <name>ISSP_AMS_Step5_ReviewBeforeSubmit</name>
     </customLabels>
@@ -5575,6 +6152,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Contacto y asistencia - Mis casos</label>
         <name>ISSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepFinal In Addition CNS --></label>
+        <name>ISSP_AMS_StepFinal_In_Addition_CNS</name>
     </customLabels>
     <customLabels>
         <label>Gracias por enviar su solicitud de acreditación para la sucursal en el extranjero de su agencia de viajes.</label>
@@ -5613,6 +6194,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_StepsAll_Cargo_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo Title CNS --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Courier_Title --></label>
         <name>ISSP_AMS_StepsAll_Courier_Title</name>
     </customLabels>
@@ -5631,6 +6216,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Calle y n.º</label>
         <name>ISSP_AMS_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Submit CNS --></label>
+        <name>ISSP_AMS_Submit_CNS</name>
     </customLabels>
     <customLabels>
         <label>Enviar a la IATA</label>
@@ -5749,243 +6338,311 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_download_of</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyChanges --></label>
+        <label>Cambios en la agencia</label>
         <name>ISSP_AMS_eBulletin_AgencyChanges</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AgencyInformation --></label>
+        <label>El texto de ayuda con cambios en la agencia va aquí...</label>
+        <name>ISSP_AMS_eBulletin_AgencyChanges_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Información sobre la agencia</label>
         <name>ISSP_AMS_eBulletin_AgencyInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area1 --></label>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly --></label>
+        <name>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Weekly</name>
+    </customLabels>
+    <customLabels>
+        <label>Área 1 - América del Norte, Central, del Sur &amp; alrededores</label>
         <name>ISSP_AMS_eBulletin_Area1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area2 --></label>
+        <label>Área 2 - Europa, Oriente Medio &amp; África</label>
         <name>ISSP_AMS_eBulletin_Area2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Area3 --></label>
+        <label>Área 3 - Extremo Oriente, Australia, Nueva Zelanda e islas del Pacífico</label>
         <name>ISSP_AMS_eBulletin_Area3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_AvailableCountries --></label>
+        <label>Países disponibles</label>
         <name>ISSP_AMS_eBulletin_AvailableCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CASS --></label>
+        <label>Agentes CASS Asociados, Import y Courier</label>
         <name>ISSP_AMS_eBulletin_CASS</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Cargo --></label>
+        <label>Carga</label>
         <name>ISSP_AMS_eBulletin_Cargo</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Countries --></label>
+        <label>Países</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_CountrySelection --></label>
+        <label>Selección de país</label>
         <name>ISSP_AMS_eBulletin_CountrySelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Country_SelectAll --></label>
+        <label>Seleccionar todos</label>
         <name>ISSP_AMS_eBulletin_Country_SelectAll</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DAILY_Bulletin --></label>
+        <label>Boletín electrónico DIARIO</label>
         <name>ISSP_AMS_eBulletin_DAILY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_DailyFrequency --></label>
+        <label>Habilitar boletín electrónico DIARIO</label>
+        <name>ISSP_AMS_eBulletin_DAILY_Bulletin_Enable</name>
+    </customLabels>
+    <customLabels>
+        <label>Guardar &amp; configurar DIARIAMENTE</label>
+        <name>ISSP_AMS_eBulletin_DAILY_Setup</name>
+    </customLabels>
+    <customLabels>
+        <label>Frecuencia diaria</label>
         <name>ISSP_AMS_eBulletin_DailyFrequency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Defaults --></label>
+        <label>Defaults</label>
         <name>ISSP_AMS_eBulletin_Defaults</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Description --></label>
+        <label>Información sobre defaults, incluye reactivaciones</label>
+        <name>ISSP_AMS_eBulletin_Defaults_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Permite generar informes DIARIOS y SEMANALES sobre cualquier cambio o actualización relativo a las Agencias</label>
         <name>ISSP_AMS_eBulletin_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Disabled --></label>
+        <label>Inactiva</label>
         <name>ISSP_AMS_eBulletin_Disabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Domestic --></label>
+        <label>Doméstico (solo para Indonesia &amp; China)</label>
         <name>ISSP_AMS_eBulletin_Domestic</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Enabled --></label>
+        <label>Activa</label>
         <name>ISSP_AMS_eBulletin_Enabled</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsDaily --></label>
+        <label>Se ha producido un error. Vuelva a intentarlo más tarde.</label>
+        <name>ISSP_AMS_eBulletin_ErrorMsg_00</name>
+    </customLabels>
+    <customLabels>
+        <label>No hay información de códigos de cambio para extraer para el período especificado.</label>
+        <name>ISSP_AMS_eBulletin_ErrorMsg_01</name>
+    </customLabels>
+    <customLabels>
+        <label>Filtrar opciones (DIARIO)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsDaily</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_FilterOptionsWeekly --></label>
+        <label>Filtrar opciones (SEMANAL)</label>
         <name>ISSP_AMS_eBulletin_FilterOptionsWeekly</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Filter_Geographic_Area --></label>
+        <label>Filtrar por área geográfica</label>
         <name>ISSP_AMS_eBulletin_Filter_Geographic_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_GeographicArea --></label>
+        <label>Área geográfica</label>
         <name>ISSP_AMS_eBulletin_GeographicArea</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Instructions --></label>
+        <label>Instrucciones</label>
         <name>ISSP_AMS_eBulletin_Instructions</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Irregularities --></label>
+        <label>Irregularidades</label>
         <name>ISSP_AMS_eBulletin_Irregularities</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_NewApplicationProcesses --></label>
+        <label>La información sobre irregularidades va aquí...</label>
+        <name>ISSP_AMS_eBulletin_Irregularities_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Nuevos procesos de solicitud</label>
         <name>ISSP_AMS_eBulletin_NewApplicationProcesses</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Daily_Notifications --></label>
+        <label>El texto de ayuda para nuevas solicitudes va aquí...</label>
+        <name>ISSP_AMS_eBulletin_NewApplications_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Deshabilitar notificaciones diarias por correo electrónico</label>
         <name>ISSP_AMS_eBulletin_OptOut_Daily_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_OptOut_Weekly_Notifications --></label>
+        <label>Deshabilitar notificaciones semanales por correo electrónico</label>
         <name>ISSP_AMS_eBulletin_OptOut_Weekly_Notifications</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Passenger --></label>
+        <label>Pasaje</label>
         <name>ISSP_AMS_eBulletin_Passenger</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Processing_eBulletin --></label>
+        <label>Procesando boletín electrónico...</label>
         <name>ISSP_AMS_eBulletin_Processing_eBulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Program --></label>
+        <label>Programa</label>
         <name>ISSP_AMS_eBulletin_Program</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_ProgramSelection --></label>
+        <label>Selección de programa</label>
         <name>ISSP_AMS_eBulletin_ProgramSelection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone --></label>
+        <label>Recibir boletín electrónico para zona horaria</label>
         <name>ISSP_AMS_eBulletin_Receive_eBulletin_TimeZone</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Reviews --></label>
+        <label><!-- ISSP_AMS_eBulletin_Reinstatements --></label>
+        <name>ISSP_AMS_eBulletin_Reinstatements</name>
+    </customLabels>
+    <customLabels>
+        <label>Revisiones financieras (reviews)</label>
         <name>ISSP_AMS_eBulletin_Reviews</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport --></label>
+        <label>Incluye avisos de Terminación / Cierre</label>
+        <name>ISSP_AMS_eBulletin_Reviews_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Generar informe:</label>
         <name>ISSP_AMS_eBulletin_RunReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_LastExecution --></label>
+        <label>Desde la última descarga de hoy</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_LastExecution</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_RunReport_opt_Today --></label>
+        <label>Día completo</label>
         <name>ISSP_AMS_eBulletin_RunReport_opt_Today</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectWeek --></label>
+        <label>Seleccionar semana:</label>
         <name>ISSP_AMS_eBulletin_SelectWeek</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SelectedCountries --></label>
+        <label>Países seleccionados</label>
         <name>ISSP_AMS_eBulletin_SelectedCountries</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Criteria --></label>
+        <label>Criterios de selección</label>
         <name>ISSP_AMS_eBulletin_Selection_Criteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Selection_Download --></label>
+        <label>Criterios de selección/Generar informes</label>
         <name>ISSP_AMS_eBulletin_Selection_Download</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Status --></label>
+        <label>Estado</label>
         <name>ISSP_AMS_eBulletin_Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_SubscriptionInformation --></label>
+        <label>Información de suscripción</label>
         <name>ISSP_AMS_eBulletin_SubscriptionInformation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Termination_Closures --></label>
+        <label>Terminaciones y cierres voluntarios</label>
         <name>ISSP_AMS_eBulletin_Termination_Closures</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_TimeZone_Selection --></label>
+        <label>Incluye reactivación tras terminación y cierre voluntario</label>
+        <name>ISSP_AMS_eBulletin_Termination_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>Selección de zona horaria</label>
         <name>ISSP_AMS_eBulletin_TimeZone_Selection</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_Title --></label>
+        <label>Boletín online AIRS/CAIRS</label>
         <name>ISSP_AMS_eBulletin_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_WEEKLY_Bulletin --></label>
+        <label><!-- ISSP AMS eBulletin Unavailable --></label>
+        <name>ISSP_AMS_eBulletin_Unavailable</name>
+    </customLabels>
+    <customLabels>
+        <label>Boletín electrónico SEMANAL</label>
         <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadDailyReport --></label>
+        <label>Habilitar el boletín electrónico SEMANAL</label>
+        <name>ISSP_AMS_eBulletin_WEEKLY_Bulletin_Enable</name>
+    </customLabels>
+    <customLabels>
+        <label>Guardar &amp; configurar SEMANALMENTE</label>
+        <name>ISSP_AMS_eBulletin_WEEKLY_Setup</name>
+    </customLabels>
+    <customLabels>
+        <label>Descargar informe diario</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadDailyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_DownloadWeeklyReport --></label>
+        <label>Descargar informe semanal</label>
         <name>ISSP_AMS_eBulletin_btn_DownloadWeeklyReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_EditSelectionCriteria --></label>
+        <label>Editar criterios de selección</label>
         <name>ISSP_AMS_eBulletin_btn_EditSelectionCriteria</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_btn_SaveGenerateReport --></label>
+        <label>Guardar &amp; generar informe</label>
         <name>ISSP_AMS_eBulletin_btn_SaveGenerateReport</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_eBulletin_UserGuide --></label>
+        <label>Guía de usuario del boletín electrónico</label>
         <name>ISSP_AMS_eBulletin_eBulletin_UserGuide</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_btn --></label>
+        <label>Continuar a Boletín Electrónico</label>
         <name>ISSP_AMS_eBulletin_home_btn</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl1 --></label>
+        <label>En tal caso, puede consultar la</label>
         <name>ISSP_AMS_eBulletin_home_lbl1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl2 --></label>
+        <label>Guía de usuario</label>
         <name>ISSP_AMS_eBulletin_home_lbl2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl3 --></label>
+        <label>Gestionar sus criterios de selección y generar los informes.</label>
         <name>ISSP_AMS_eBulletin_home_lbl3</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_home_lbl4 --></label>
+        <label>¿Necesita ayuda para usar el</label>
         <name>ISSP_AMS_eBulletin_home_lbl4</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_1 --></label>
+        <label>Descargue un informe SEMANAL si desea recibir información sobre acontecimientos DIARIOS anteriores a los últimos 7 días.</label>
         <name>ISSP_AMS_eBulletin_info_1</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_2 --></label>
+        <label>(Tal vez necesite ajustar antes sus opciones de filtro SEMANAL)</label>
         <name>ISSP_AMS_eBulletin_info_2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_info_Daily_available_days --></label>
+        <label>Boletín DIARIO disponible durante los últimos 7 días:</label>
         <name>ISSP_AMS_eBulletin_info_Daily_available_days</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_AMS_eBulletin_lbl_Enable --></label>
+        <label>Habilitar:</label>
         <name>ISSP_AMS_eBulletin_lbl_Enable</name>
     </customLabels>
     <customLabels>
@@ -6057,7 +6714,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Account_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Account Statement Location --></label>
+        <label>Código IATA</label>
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
     <customLabels>
@@ -6081,6 +6738,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Active --></label>
+        <name>ISSP_Active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Active agreements --></label>
+        <name>ISSP_Active_agreements</name>
+    </customLabels>
+    <customLabels>
         <label>Añadir usuario a este servicio</label>
         <name>ISSP_Add_User_to_this_service</name>
     </customLabels>
@@ -6101,7 +6766,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Administrator</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Agency Head Office code --></label>
+        <label>Código Oficina Principal Agencia</label>
         <name>ISSP_Agency_Head_Office_code</name>
     </customLabels>
     <customLabels>
@@ -6113,12 +6778,24 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Agent_Accredited</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Agreement type --></label>
+        <name>ISSP_Agreement_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Agreements available --></label>
+        <name>ISSP_Agreements_available</name>
+    </customLabels>
+    <customLabels>
         <label>Aerolínea</label>
         <name>ISSP_Airline</name>
     </customLabels>
     <customLabels>
         <label>Tipo de contacto</label>
         <name>ISSP_Airline_Contact_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Airline Prefix --></label>
+        <name>ISSP_Airline_Prefix</name>
     </customLabels>
     <customLabels>
         <label>Las compañías aéreas transportan a 3000 millones de pasajeros al año en viajes de negocios o de placer.</label>
@@ -6185,6 +6862,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Available_services</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Available types --></label>
+        <name>ISSP_Available_types</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_BSPLink --></label>
         <name>ISSP_BSPLink</name>
     </customLabels>
@@ -6217,6 +6898,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Become_Endorsed_Agent_CNS --></label>
+        <name>ISSP_Become_Endorsed_Agent_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Bilateral, both carriers can issue electronic tickets --></label>
+        <name>ISSP_Bilateral_both_carriers_can_issue_electronic_tickets</name>
+    </customLabels>
+    <customLabels>
         <label>Sucursales</label>
         <name>ISSP_Branches</name>
     </customLabels>
@@ -6233,8 +6922,32 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_CASSLink_Export</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_CASSLink_Export_CNS --></label>
+        <name>ISSP_CASSLink_Export_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_CASSLink_Import --></label>
         <name>ISSP_CASSLink_Import</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Documents --></label>
+        <name>ISSP_CNS_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_Endorsement --></label>
+        <name>ISSP_CNS_Endorsement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_PaymentLink_ServiceName --></label>
+        <name>ISSP_CNS_PaymentLink_ServiceName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote --></label>
+        <name>ISSP_CNS_quote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CNS_quote2 --></label>
+        <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CampaigeNotification_Confirm --></label>
@@ -6274,6 +6987,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Por favor cuentenos su experiencia con la persona que le ha atendido y nos aseguraremos que reciba su mensaje.</label>
         <name>ISSP_CaseComplimentMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CaseComplimentMessage_CNS --></label>
+        <name>ISSP_CaseComplimentMessage_CNS</name>
     </customLabels>
     <customLabels>
         <label>Información del caso</label>
@@ -6388,6 +7105,14 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_CompanyInformation</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP CompanyInformation EMADOMVAL AddBtn --></label>
+        <name>ISSP_CompanyInformation_EMADOMVAL_AddBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP CompanyInformation EMADOMVAL Title --></label>
+        <name>ISSP_CompanyInformation_EMADOMVAL_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Ubicación de la empresa</label>
         <name>ISSP_CompanyLocation</name>
     </customLabels>
@@ -6452,12 +7177,16 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Confirm_Personal_Information</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Consolidated --></label>
+        <label>Consolidado</label>
         <name>ISSP_Consolidated</name>
     </customLabels>
     <customLabels>
         <label>Contacto</label>
         <name>ISSP_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ContactList HoverPopup Text --></label>
+        <name>ISSP_ContactList_HoverPopup_Text</name>
     </customLabels>
     <customLabels>
         <label>Su nombre</label>
@@ -6576,7 +7305,15 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Currency</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Currency Filter --></label>
+        <label><!-- ISSP_CurrencyCenter --></label>
+        <name>ISSP_CurrencyCenter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_CurrencyCenter_Description --></label>
+        <name>ISSP_CurrencyCenter_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Moneda</label>
         <name>ISSP_Currency_Filter</name>
     </customLabels>
     <customLabels>
@@ -6628,7 +7365,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Designator_Code_Question</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Display Records per page --></label>
+        <label>Mostrar _MENU_ Registros por página</label>
         <name>ISSP_Display_Records_per_page</name>
     </customLabels>
     <customLabels>
@@ -6662,6 +7399,38 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label><!-- ISSP EBulletin Description --></label>
         <name>ISSP_EBulletin_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL AddBtn --></label>
+        <name>ISSP_EMADOMVAL_AddBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL BackBtn --></label>
+        <name>ISSP_EMADOMVAL_BackBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL ImportantInformation --></label>
+        <name>ISSP_EMADOMVAL_ImportantInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL RemoveConfirmMsg --></label>
+        <name>ISSP_EMADOMVAL_RemoveConfirmMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle Action --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_Action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle AddedOn --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_AddedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL TableTitle EmailDomain --></label>
+        <name>ISSP_EMADOMVAL_TableTitle_EmailDomain</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP EMADOMVAL Title --></label>
+        <name>ISSP_EMADOMVAL_Title</name>
     </customLabels>
     <customLabels>
         <label>Modificar</label>
@@ -6702,6 +7471,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>ha sido denegado por el Servicio al cliente de IATA</label>
         <name>ISSP_Email_AccessRejected4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_AccessRejected4_CNS --></label>
+        <name>ISSP_Email_AccessRejected4_CNS</name>
     </customLabels>
     <customLabels>
         <label>Acceso a</label>
@@ -6780,12 +7553,28 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact2_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact2_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>En caso de que el contacto arriba indicado &lt;b&gt; no fuera el contacto pertinente para recibir estas nofificaciones  &lt;/b&gt;, le rogamos que comunique inmediatamente a IATA las modificaciones necesarias a través del Portal de atención al cliente</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_BSP_CASS_Payment_contact3_CNS --></label>
+        <name>ISSP_Email_BSP_CASS_Payment_contact3_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Nuevo contacto para pagos de BSP/CASS</label>
         <name>ISSP_Email_BSP_CASS_Payment_contact_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Portal --></label>
+        <name>ISSP_Email_CNS_Portal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_CNS_Service --></label>
+        <name>ISSP_Email_CNS_Service</name>
     </customLabels>
     <customLabels>
         <label>Nuevo comentario en el caso n.°</label>
@@ -6860,6 +7649,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_Log_Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_Log_Case_CNS --></label>
+        <name>ISSP_Email_Log_Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>e inicie sesión con su información de usuario:</label>
         <name>ISSP_Email_LoginInformation</name>
     </customLabels>
@@ -6896,12 +7689,24 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_PortalStatusChange_Subject</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalStatusChange_Subject_CNS --></label>
+        <name>ISSP_Email_PortalStatusChange_Subject_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email_PortalUrl --></label>
         <name>ISSP_Email_PortalUrl</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_PortalUrl_CNS --></label>
+        <name>ISSP_Email_PortalUrl_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>ha cambiado su estado en el portal de clientes de IATA a</label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_PortalUser_StatusChange_CNS --></label>
+        <name>ISSP_Email_PortalUser_StatusChange_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Email_Rejected_Reason --></label>
@@ -6920,6 +7725,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Email_ThankYouContacting</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Email_ThankYouContacting_cns --></label>
+        <name>ISSP_Email_ThankYouContacting_cns</name>
+    </customLabels>
+    <customLabels>
         <label>Gracias por adelantado.</label>
         <name>ISSP_Email_ThankYouInAdvance</name>
     </customLabels>
@@ -6934,6 +7743,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label>Le damos la bienvenida a</label>
         <name>ISSP_Email_WelcomeTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Email_Welcome_CNS --></label>
+        <name>ISSP_Email_Welcome_CNS</name>
     </customLabels>
     <customLabels>
         <label>Puede acceder a él en su</label>
@@ -6960,7 +7773,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_EmailsFailure</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_EnterValidString --></label>
+        <label>Por favor introduzca únicamente caracteres latinos</label>
         <name>ISSP_EnterValidString</name>
     </customLabels>
     <customLabels>
@@ -6972,8 +7785,12 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Excess --></label>
+        <label>Exceso</label>
         <name>ISSP_Excess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Existing Agreements --></label>
+        <name>ISSP_Existing_Agreements</name>
     </customLabels>
     <customLabels>
         <label>Enlaces externos</label>
@@ -7109,7 +7926,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Fullpayment --></label>
+        <label>Pago total</label>
         <name>ISSP_Fullpayment</name>
     </customLabels>
     <customLabels>
@@ -7341,11 +8158,15 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_IATA_Code_Search_Format</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP IATA Designator --></label>
+        <name>ISSP_IATA_Designator</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;El código IATA no existe. Introduzca el código IATA correcto. Si no posee un código IATA, seleccione &quot;&quot;Otro&quot;&quot; en &quot;&quot;Tipo de cliente&quot;&quot;.&quot;</label>
         <name>ISSP_IATA_NOT_Found</name>
     </customLabels>
     <customLabels>
-        <label>El código IATA no existe en {!Country}. Seleccione el país adecuado. Si el error persiste, póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>El código IATA no existe en {!Country}. Seleccione el país adecuado. Si el error persiste, póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_IATA_NOT_Found_for_Country</name>
     </customLabels>
     <customLabels>
@@ -7513,6 +8334,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_InactiveUser_Subscription_Portal</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Inactive agreements --></label>
+        <name>ISSP_Inactive_agreements</name>
+    </customLabels>
+    <customLabels>
         <label>Contraseña no válida.</label>
         <name>ISSP_InvalidPassword</name>
     </customLabels>
@@ -7549,7 +8374,7 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_LanguageDependentLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Last Updated on --></label>
+        <label>Última actualización</label>
         <name>ISSP_Last_Updated_on</name>
     </customLabels>
     <customLabels>
@@ -7619,6 +8444,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
     <customLabels>
         <label><!-- ISSP MIR Rates Link --></label>
         <name>ISSP_MIR_Rates_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Agreements Service Name --></label>
+        <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ContactList --></label>
@@ -7801,8 +8630,16 @@ Si continúa teniendo problemas al registrase en el Portal del Cliente, por favo
         <name>ISSP_NoRecordsFoundCreateAgency2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateAgency_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateAgency_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>No se ha encontrado ninguna organización según sus criterios de búsqueda. Por favor, modifique sus criterios de búsqueda e inténtelo de nuevo, o seleccione &quot;Nuevo&quot; para crear una nueva cuenta</label>
         <name>ISSP_NoRecordsFoundCreateStandardAirline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundCreateStandardAirline_CNS --></label>
+        <name>ISSP_NoRecordsFoundCreateStandardAirline_CNS</name>
     </customLabels>
     <customLabels>
         <label>No se ha encontrado ningún registro que coincida con sus criterios de búsqueda. Haga clic en “Atrás” para continuar con el proceso de registro en calidad de Público general, o modifique sus criterios de búsqueda e inténtelo de nuevo.
@@ -7811,14 +8648,26 @@ Si sigue teniendo problemas con el registro en el portal de clientes de IATA, co
         <name>ISSP_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGP_CNS --></label>
+        <name>ISSP_NoRecordsFoundGP_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>No se ha encontrado ninguna empresa con su combinación de código GSA y país, le rogamos compruebe que ha introducido los datos correctos.
 &lt;br/&gt;&lt;br/&gt; 
 Si continúa teniendo dificultades en el proceso de registro para el Portal IATA de Atención al Cliente, le rogamos consulte nuestra&lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;Guía de solución de problemas&lt;/a&gt;</label>
         <name>ISSP_NoRecordsFoundGSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_NoRecordsFoundGSA_CNS --></label>
+        <name>ISSP_NoRecordsFoundGSA_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>No se ha encontrado ninguna empresa con estos criterios de búsqueda. Modifique su búsqueda e inténtelo de nuevo.</label>
         <name>ISSP_NoRecordsFoundNext</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_NoRecordsFoundNext_CNS --></label>
+        <name>ISSP_NoRecordsFoundNext_CNS</name>
     </customLabels>
     <customLabels>
         <label>No hay ninguna solicitud disponible.</label>
@@ -7875,6 +8724,22 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
     <customLabels>
         <label>Tenga en cuenta que no puede emplear ninguna de las últimas 4 contraseñas usadas.</label>
         <name>ISSP_Old_Passwords</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Intermodal Issuing Date --></label>
+        <name>ISSP_One_Way_Intermodal_Issuing_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Intermodal Participating Date --></label>
+        <name>ISSP_One_Way_Intermodal_Participating_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Passenger Issuing Airline --></label>
+        <name>ISSP_One_Way_Passenger_Issuing_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP One Way Passenger Participating --></label>
+        <name>ISSP_One_Way_Passenger_Participating</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -7969,6 +8834,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_PageDescription_ISSP_FAQ2Case</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PageDescription_ISSP_FAQ2Case_CNS --></label>
+        <name>ISSP_PageDescription_ISSP_FAQ2Case_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Busque artículos de información de IATA</label>
         <name>ISSP_PageDescription_ISSP_faq_template</name>
     </customLabels>
@@ -7985,7 +8854,7 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_PasswordMatch</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Past Periods --></label>
+        <label>Ultimos periodos</label>
         <name>ISSP_Past_Periods</name>
     </customLabels>
     <customLabels>
@@ -7995,7 +8864,11 @@ Tenga en cuenta que muchas facturas de IATA agentes acreditados se cobran a trav
         <name>ISSP_Payment_Link_Description</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Pending --></label>
+        <label><!-- ISSP_Payment_Link_Description_CNS --></label>
+        <name>ISSP_Payment_Link_Description_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label>Pendiente</label>
         <name>ISSP_Pending</name>
     </customLabels>
     <customLabels>
@@ -8298,8 +9171,12 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Registration_acceptGeneralConditions</name>
     </customLabels>
     <customLabels>
-        <label>Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_Registration_generalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Registration_generalError_CNS --></label>
+        <name>ISSP_Registration_generalError_CNS</name>
     </customLabels>
     <customLabels>
         <label>Ya existe un usuario del portal con esa dirección de correo electrónico, pero se ha desactivado con anterioridad.</label>
@@ -8442,6 +9319,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Satisfactory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Save --></label>
+        <name>ISSP_Save</name>
+    </customLabels>
+    <customLabels>
         <label>Guardar y nuevo</label>
         <name>ISSP_SaveNew</name>
     </customLabels>
@@ -8498,6 +9379,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Sender_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Sender Email CNS --></label>
+        <name>ISSP_Sender_Email_CNS</name>
+    </customLabels>
+    <customLabels>
         <label>Servicios</label>
         <name>ISSP_Service</name>
     </customLabels>
@@ -8530,7 +9415,11 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Showing page --></label>
+        <label><!-- ISSP Show all the agreements --></label>
+        <name>ISSP_Show_all_the_agreements</name>
+    </customLabels>
+    <customLabels>
+        <label>Página</label>
         <name>ISSP_Showing_page</name>
     </customLabels>
     <customLabels>
@@ -8683,6 +9572,30 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_Thanks_for_request</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Thanks_for_request_cns --></label>
+        <name>ISSP_Thanks_for_request_cns</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The Cargo Interline Agreement --></label>
+        <name>ISSP_The_Cargo_Interline_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The One Way Issuing Airline --></label>
+        <name>ISSP_The_One_Way_Issuing_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The One Way Participating Airline --></label>
+        <name>ISSP_The_One_Way_Participating_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The Passenger Interline Agreement --></label>
+        <name>ISSP_The_Passenger_Interline_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP The Passenger and Cargo Interline Traffic Agreement --></label>
+        <name>ISSP_The_Passenger_and_Cargo_Interline_Traffic_Agreement</name>
+    </customLabels>
+    <customLabels>
         <label>Título</label>
         <name>ISSP_Title</name>
     </customLabels>
@@ -8763,6 +9676,102 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_View_GFA_Communication</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
+        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
+        <name>ISSP_View_PWC_Lithuania_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Argentina_DC --></label>
+        <name>ISSP_View_PwC_Argentina_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Azerbaijan_DC --></label>
+        <name>ISSP_View_PwC_Azerbaijan_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Central --></label>
+        <name>ISSP_View_PwC_Central</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Change_Requests --></label>
+        <name>ISSP_View_PwC_Change_Requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_China_DC --></label>
+        <name>ISSP_View_PwC_China_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_DIP_Reviews --></label>
+        <name>ISSP_View_PwC_DIP_Reviews</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Egypt_DC --></label>
+        <name>ISSP_View_PwC_Egypt_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Estonia_DC --></label>
+        <name>ISSP_View_PwC_Estonia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Greece_DC --></label>
+        <name>ISSP_View_PwC_Greece_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_India_DC --></label>
+        <name>ISSP_View_PwC_India_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Indonesia_DC --></label>
+        <name>ISSP_View_PwC_Indonesia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Israel_DC --></label>
+        <name>ISSP_View_PwC_Israel_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Malaysia_DC --></label>
+        <name>ISSP_View_PwC_Malaysia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Mongolia_DC --></label>
+        <name>ISSP_View_PwC_Mongolia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Philippines_DC --></label>
+        <name>ISSP_View_PwC_Philippines_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Poland_DC --></label>
+        <name>ISSP_View_PwC_Poland_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Romania_DC --></label>
+        <name>ISSP_View_PwC_Romania_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Slovenia_DC --></label>
+        <name>ISSP_View_PwC_Slovenia_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Spain_DC --></label>
+        <name>ISSP_View_PwC_Spain_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Sweden_DC --></label>
+        <name>ISSP_View_PwC_Sweden_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Thailand_DC --></label>
+        <name>ISSP_View_PwC_Thailand_DC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_View_PwC_Vietnam_DC --></label>
+        <name>ISSP_View_PwC_Vietnam_DC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_ContactList --></label>
         <name>ISSP_WaitChangeMessage</name>
     </customLabels>
@@ -8795,6 +9804,14 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_btn_AddComment</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP cannot open the selected account --></label>
+        <name>ISSP_cannot_open_the_selected_account</name>
+    </customLabels>
+    <customLabels>
+        <label>8 caracteres</label>
+        <name>ISSP_characters_new_password</name>
+    </customLabels>
+    <customLabels>
         <label>¿Desea leer las preguntas frecuentes antes de crear un caso?</label>
         <name>ISSP_consult_FAQ</name>
     </customLabels>
@@ -8811,8 +9828,12 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>ISSP_filtered_from_total_records</name>
     </customLabels>
     <customLabels>
-        <label>No se puede completar el proceso de registro. Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/contactus.aspx.</label>
+        <label>No se puede completar el proceso de registro. Póngase en contacto con el servicio de asistencia del Portal de clientes de IATA rellenando el formulario de consulta disponible en http://www.iata.org/customer-portal/Pages/index.aspx?.</label>
         <name>ISSP_generalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_generalError_CNS --></label>
+        <name>ISSP_generalError_CNS</name>
     </customLabels>
     <customLabels>
         <label>Se ha producido un error al recuperar el tipo de factura {!invoiceType}. Póngase en contacto con el departamento de atención al cliente.</label>
@@ -8821,6 +9842,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label>El tipo de factura {!invoiceType} no está disponible para su compañía. Póngase en contacto con el servicio de atención al cliente.</label>
         <name>ISSP_invoiceType_is_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label>1 letra</label>
+        <name>ISSP_letters_new_password</name>
+    </customLabels>
+    <customLabels>
+        <label>La contraseña debe contener al menos:</label>
+        <name>ISSP_new_password_must_have</name>
+    </customLabels>
+    <customLabels>
+        <label>1 número</label>
+        <name>ISSP_number_new_password</name>
     </customLabels>
     <customLabels>
         <label>de</label>
@@ -9207,6 +10240,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>LabelsVF_Order2</name>
     </customLabels>
     <customLabels>
+        <label><!-- Labels for VF page Order 3 --></label>
+        <name>LabelsVF_Order3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Labels for VF page IECConfirmOrder --></label>
         <name>Labels_IECConfirmOrder</name>
     </customLabels>
@@ -9253,6 +10290,90 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- Last name --></label>
         <name>Last_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentButtonLanguage --></label>
+        <name>LiveAgentButtonLanguage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentCheckingAvailableAgents --></label>
+        <name>LiveAgentCheckingAvailableAgents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentCustomSettingNotFound --></label>
+        <name>LiveAgentCustomSettingNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentFootNote --></label>
+        <name>LiveAgentFootNote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentNEW --></label>
+        <name>LiveAgentNEW</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentOfflineButton --></label>
+        <name>LiveAgentOfflineButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPlaceHolder --></label>
+        <name>LiveAgentPlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatChannelQuestion --></label>
+        <name>LiveAgentPostChatChannelQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatComments --></label>
+        <name>LiveAgentPostChatComments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatExperienceAnswer --></label>
+        <name>LiveAgentPostChatExperienceAnswer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatFieldsRequired --></label>
+        <name>LiveAgentPostChatFieldsRequired</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatPlaceHolder --></label>
+        <name>LiveAgentPostChatPlaceHolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatProfessionalismQuestion --></label>
+        <name>LiveAgentPostChatProfessionalismQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatResubmission --></label>
+        <name>LiveAgentPostChatResubmission</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatSubmitButton --></label>
+        <name>LiveAgentPostChatSubmitButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatThankContact --></label>
+        <name>LiveAgentPostChatThankContact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatThankFeedback --></label>
+        <name>LiveAgentPostChatThankFeedback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatTitle --></label>
+        <name>LiveAgentPostChatTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentPostChatComments --></label>
+        <name>LiveAgentPostChatresolutionQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentWaitingMessageChat --></label>
+        <name>LiveAgentWaitingMessageChat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- LiveAgentWaitingMessageReady --></label>
+        <name>LiveAgentWaitingMessageReady</name>
     </customLabels>
     <customLabels>
         <label><!-- Location --></label>
@@ -9303,19 +10424,19 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Message</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Add --></label>
+        <label>Añadir</label>
         <name>MultiselectPicklist_Add</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Down --></label>
+        <label>Abajo</label>
         <name>MultiselectPicklist_Down</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Remove --></label>
+        <label>Eliminar</label>
         <name>MultiselectPicklist_Remove</name>
     </customLabels>
     <customLabels>
-        <label><!-- MultiselectPicklist_Up --></label>
+        <label>Arriba</label>
         <name>MultiselectPicklist_Up</name>
     </customLabels>
     <customLabels>
@@ -9365,6 +10486,158 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- No special characters --></label>
         <name>No_special_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Association --></label>
+        <name>OneId_Account_Association</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Creation --></label>
+        <name>OneId_Account_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Account Note When Account Not Found --></label>
+        <name>OneId_Account_Note_When_Account_Not_Found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_All rights reserved --></label>
+        <name>OneId_All_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing City --></label>
+        <name>OneId_Billing_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing Country --></label>
+        <name>OneId_Billing_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Billing Street --></label>
+        <name>OneId_Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId Community Name --></label>
+        <name>OneId_Community_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Contact Association &amp; Validation --></label>
+        <name>OneId_Contact_Association_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Contact Creation --></label>
+        <name>OneId_Contact_Creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_CreateNewAccount --></label>
+        <name>OneId_CreateNewAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Create an account --></label>
+        <name>OneId_Create_an_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Help Community --></label>
+        <name>OneId_Help_Community</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Help Community Link --></label>
+        <name>OneId_Help_Community_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_IATA Code --></label>
+        <name>OneId_IATA_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_IATA represent, lead and serve the airline industry --></label>
+        <name>OneId_IATA_represent_lead_and_serve_the_airline_industry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_International Air Transport Association (IATA) --></label>
+        <name>OneId_International_Air_Transport_Association_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_JobFunction_Help_Msg --></label>
+        <name>OneId_JobFunction_Help_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_My available applications --></label>
+        <name>OneId_My_available_applications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Name --></label>
+        <name>OneId_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_NoRecordsFoundGP --></label>
+        <name>OneId_NoRecordsFoundGP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Nothing found --></label>
+        <name>OneId_Nothing_found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Online Help --></label>
+        <name>OneId_Online_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Online Help Link --></label>
+        <name>OneId_Online_Help_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Please_Wait --></label>
+        <name>OneId_Please_Wait</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Please check reCaptcha --></label>
+        <name>OneId_Please_check_reCaptcha</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Press to Validate --></label>
+        <name>OneId_Press_to_Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Registration_Error_BusinessPhone --></label>
+        <name>OneId_Registration_Error_BusinessPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Request Access --></label>
+        <name>OneId_Request_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Request this App --></label>
+        <name>OneId_Request_this_App</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_SearchAccount --></label>
+        <name>OneId_SearchAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Sign In --></label>
+        <name>OneId_Sign_In</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Terms of Use --></label>
+        <name>OneId_Terms_of_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Terms of Use Link --></label>
+        <name>OneId_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Thank you for subscribing to this new service --></label>
+        <name>OneId_Thank_you_for_subscribing_to_this_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Type --></label>
+        <name>OneId_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_You will be notified by email when you can access the new service. --></label>
+        <name>OneId_You_will_be_notified_by_email_when_you_can_access_the_new_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Your request has been successfully sent --></label>
+        <name>OneId_Your_request_has_been_successfully_sent</name>
     </customLabels>
     <customLabels>
         <label><!-- Only one subscription can  be purchased --></label>
@@ -9433,6 +10706,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- Orders --></label>
         <name>Orders</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Oscar Attachments --></label>
+        <name>Oscar_Attachments</name>
     </customLabels>
     <customLabels>
         <label><!-- Overall maximum size --></label>
@@ -10327,6 +11604,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Automated Case Message --></label>
+        <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -10659,6 +11940,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>Web</name>
     </customLabels>
     <customLabels>
+        <label><!-- Web Site --></label>
+        <name>Web_Site</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Welcome Message --></label>
         <name>Welcome_Message</name>
     </customLabels>
@@ -10713,6 +11998,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
         <name>idcard_replacementHeadText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- new application --></label>
+        <name>issp_apppicker_new_application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- request new application --></label>
+        <name>issp_apppicker_request_new_application</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- select role --></label>
+        <name>issp_apppicker_select_role</name>
     </customLabels>
     <customLabels>
         <label><!-- label custom price --></label>
@@ -10914,6 +12211,210 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <label><!-- wire transfer payment msg --></label>
         <name>wire_transfer_payment_msg</name>
     </customLabels>
+    <customTabs>
+        <label><!-- AMS =&gt; GDP Synchronizer --></label>
+        <name>AMS_GDP_Synchronizer</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- AWS Explorer --></label>
+        <name>AWS_Explorer</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- About Clicktools --></label>
+        <name>AboutClicktools</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- About ExactTarget for AppExchange --></label>
+        <name>AboutExactTargetforAppExchange</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- About Strategic Account Planning --></label>
+        <name>AboutStrategicAccountPlanning</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- About Force.com for Amazon Web Services --></label>
+        <name>About_Force_com_Toolkit_for_AWS</name>
+    </customTabs>
+    <customTabs>
+        <label>Acceso a servicios</label>
+        <name>Access_to_Services</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Acli Update --></label>
+        <name>Acli_Update</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Agreements --></label>
+        <name>Agreements</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Annual Certificate Campaign --></label>
+        <name>Annual_Certificate_Campaign</name>
+    </customTabs>
+    <customTabs>
+        <label>Servicios disponibles</label>
+        <name>Available_Services</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Snapshot --></label>
+        <name>BLND_Snapshot</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- CNS E-Bulletin --></label>
+        <name>CNS_E_Bulletin</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Campaign Customers --></label>
+        <name>Campaign_Customers</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Campaign Notification --></label>
+        <name>Campaign_Notification</name>
+    </customTabs>
+    <customTabs>
+        <label>Casos</label>
+        <name>Cases_IFAP_Portal_Tab</name>
+    </customTabs>
+    <customTabs>
+        <label>Cambiar idioma</label>
+        <name>Change_Language</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Clicktools --></label>
+        <name>Clicktools</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- EC2 Console --></label>
+        <name>EC2_Console</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- EC2 Images --></label>
+        <name>EC2_Images</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Encryption Utility --></label>
+        <name>Encryption_Utility</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- ExactTarget --></label>
+        <name>ExactTarget</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Financial Assessment Campaign --></label>
+        <name>Financial_Assessment_Campaign</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Financial Security Request --></label>
+        <name>Financial_Security_Request</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- IATA Code Loader --></label>
+        <name>IATA_Code_Loader</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- IEC INTERNAL --></label>
+        <name>IEC_INTERNAL</name>
+    </customTabs>
+    <customTabs>
+        <label>Preguntas frecuentes</label>
+        <name>ISSP_Knowledge</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- ISS Operations Loader --></label>
+        <name>ISS_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Late Remittance Report --></label>
+        <name>Late_Remittance_Report</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Manage Provisioning Requests --></label>
+        <name>Manage_Provisioning_Requests</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Mass Case Creation Non-Compliance --></label>
+        <name>Mass_Case_Creation_Non_Compliance</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Mass Email Request --></label>
+        <name>Mass_Email_Request</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Mass Email Reminder --></label>
+        <name>Mass_Reminder_Email</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Memorandums --></label>
+        <name>Memorandums</name>
+    </customTabs>
+    <customTabs>
+        <label>Mi perfil</label>
+        <name>MyProfile</name>
+    </customTabs>
+    <customTabs>
+        <label>Mis casos</label>
+        <name>My_Cases</name>
+    </customTabs>
+    <customTabs>
+        <label>Mis contactos</label>
+        <name>My_Contacts</name>
+    </customTabs>
+    <customTabs>
+        <label>Mis servicios</label>
+        <name>My_Services</name>
+    </customTabs>
+    <customTabs>
+        <label>Mi estado</label>
+        <name>My_Status</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- OPS --></label>
+        <name>OPS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- PKB 2 Settings --></label>
+        <name>PKB_2_Settings</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Purge IATA Code Process --></label>
+        <name>Purge_IATA_Code_Process</name>
+    </customTabs>
+    <customTabs>
+        <label>Recursos</label>
+        <name>Resources</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- S3 Samples --></label>
+        <name>S3_Samples</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- SIDRA Lite Mass Action --></label>
+        <name>SIDRA_Lite_Mass_Action</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- SIDRA Lite Mass Approval --></label>
+        <name>SIDRA_Lite_Mass_Approval</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Search / Create --></label>
+        <name>Search_Create</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Settlement &amp; Operation --></label>
+        <name>Settlement_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Projects Calendar --></label>
+        <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Voucher Management --></label>
+        <name>Voucher_Management</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Welcome --></label>
+        <name>Welcome</name>
+    </customTabs>
     <globalPicklists>
         <name>EF_Currency</name>
         <picklistValues>
@@ -11630,6 +13131,774 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Role</name>
+        <picklistValues>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Sector</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation><!-- Airline --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation><!-- Airline Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation><!-- Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo Agent</masterLabel>
+            <translation><!-- Cargo Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Education</masterLabel>
+            <translation><!-- Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation><!-- Equipment Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation><!-- Financial Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation><!-- General Sales Agent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation><!-- Governmental Institution --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation><!-- Holding Company --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IATA</masterLabel>
+            <translation><!-- IATA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation><!-- Infrastructure Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation><!-- Media --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation><!-- Recreational --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation><!-- Travel Agent --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>Currency_Center_Currency_Codes</name>
+        <picklistValues>
+            <masterLabel>AED</masterLabel>
+            <translation><!-- AED --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ALL</masterLabel>
+            <translation><!-- ALL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMD</masterLabel>
+            <translation><!-- AMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ANG</masterLabel>
+            <translation><!-- ANG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AOA</masterLabel>
+            <translation><!-- AOA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ARS</masterLabel>
+            <translation><!-- ARS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AUD</masterLabel>
+            <translation><!-- AUD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AWG</masterLabel>
+            <translation><!-- AWG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AZN</masterLabel>
+            <translation><!-- AZN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BAM</masterLabel>
+            <translation><!-- BAM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BBD</masterLabel>
+            <translation><!-- BBD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BDT</masterLabel>
+            <translation><!-- BDT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BGN</masterLabel>
+            <translation><!-- BGN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BHD</masterLabel>
+            <translation><!-- BHD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BIF</masterLabel>
+            <translation><!-- BIF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BMD</masterLabel>
+            <translation><!-- BMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BND</masterLabel>
+            <translation><!-- BND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BOB</masterLabel>
+            <translation><!-- BOB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BRL</masterLabel>
+            <translation><!-- BRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BSD</masterLabel>
+            <translation><!-- BSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BTN</masterLabel>
+            <translation><!-- BTN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BWP</masterLabel>
+            <translation><!-- BWP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BZD</masterLabel>
+            <translation><!-- BZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAD</masterLabel>
+            <translation><!-- CAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CHF</masterLabel>
+            <translation><!-- CHF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CLP</masterLabel>
+            <translation><!-- CLP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CNY</masterLabel>
+            <translation><!-- CNY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>COP</masterLabel>
+            <translation><!-- COP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CRC</masterLabel>
+            <translation><!-- CRC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CUP</masterLabel>
+            <translation><!-- CUP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CVE</masterLabel>
+            <translation><!-- CVE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CZK</masterLabel>
+            <translation><!-- CZK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DJF</masterLabel>
+            <translation><!-- DJF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DKK</masterLabel>
+            <translation><!-- DKK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DOP</masterLabel>
+            <translation><!-- DOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DZD</masterLabel>
+            <translation><!-- DZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EGP</masterLabel>
+            <translation><!-- EGP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ERN</masterLabel>
+            <translation><!-- ERN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETB</masterLabel>
+            <translation><!-- ETB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EUR</masterLabel>
+            <translation><!-- EUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FJD</masterLabel>
+            <translation><!-- FJD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FKP</masterLabel>
+            <translation><!-- FKP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GBP</masterLabel>
+            <translation><!-- GBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GEL</masterLabel>
+            <translation><!-- GEL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GHS</masterLabel>
+            <translation><!-- GHS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GIP</masterLabel>
+            <translation><!-- GIP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GMD</masterLabel>
+            <translation><!-- GMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GNF</masterLabel>
+            <translation><!-- GNF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GTQ</masterLabel>
+            <translation><!-- GTQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GYD</masterLabel>
+            <translation><!-- GYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HKD</masterLabel>
+            <translation><!-- HKD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HNL</masterLabel>
+            <translation><!-- HNL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HRK</masterLabel>
+            <translation><!-- HRK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HTG</masterLabel>
+            <translation><!-- HTG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HUF</masterLabel>
+            <translation><!-- HUF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IDR</masterLabel>
+            <translation><!-- IDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ILS</masterLabel>
+            <translation><!-- ILS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>INR</masterLabel>
+            <translation><!-- INR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IQD</masterLabel>
+            <translation><!-- IQD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRR</masterLabel>
+            <translation><!-- IRR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ISK</masterLabel>
+            <translation><!-- ISK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JMD</masterLabel>
+            <translation><!-- JMD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JOD</masterLabel>
+            <translation><!-- JOD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>JPY</masterLabel>
+            <translation><!-- JPY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KES</masterLabel>
+            <translation><!-- KES --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KHR</masterLabel>
+            <translation><!-- KHR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KMF</masterLabel>
+            <translation><!-- KMF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KPW</masterLabel>
+            <translation><!-- KPW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KRW</masterLabel>
+            <translation><!-- KRW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KWD</masterLabel>
+            <translation><!-- KWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KYD</masterLabel>
+            <translation><!-- KYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>KZT</masterLabel>
+            <translation><!-- KZT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LAK</masterLabel>
+            <translation><!-- LAK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LBP</masterLabel>
+            <translation><!-- LBP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LKR</masterLabel>
+            <translation><!-- LKR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LRD</masterLabel>
+            <translation><!-- LRD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LSL</masterLabel>
+            <translation><!-- LSL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LTL</masterLabel>
+            <translation><!-- LTL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LVL</masterLabel>
+            <translation><!-- LVL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LYD</masterLabel>
+            <translation><!-- LYD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAD</masterLabel>
+            <translation><!-- MAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MGA</masterLabel>
+            <translation><!-- MGA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MKD</masterLabel>
+            <translation><!-- MKD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMK</masterLabel>
+            <translation><!-- MMK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MNT</masterLabel>
+            <translation><!-- MNT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOP</masterLabel>
+            <translation><!-- MOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MRO</masterLabel>
+            <translation><!-- MRO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MUR</masterLabel>
+            <translation><!-- MUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MVR</masterLabel>
+            <translation><!-- MVR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MWK</masterLabel>
+            <translation><!-- MWK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MXN</masterLabel>
+            <translation><!-- MXN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MYR</masterLabel>
+            <translation><!-- MYR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MZN</masterLabel>
+            <translation><!-- MZN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NAD</masterLabel>
+            <translation><!-- NAD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NGN</masterLabel>
+            <translation><!-- NGN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NIO</masterLabel>
+            <translation><!-- NIO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOK</masterLabel>
+            <translation><!-- NOK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NPR</masterLabel>
+            <translation><!-- NPR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NZD</masterLabel>
+            <translation><!-- NZD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OMR</masterLabel>
+            <translation><!-- OMR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PAB</masterLabel>
+            <translation><!-- PAB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PEN</masterLabel>
+            <translation><!-- PEN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PGK</masterLabel>
+            <translation><!-- PGK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PHP</masterLabel>
+            <translation><!-- PHP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PKR</masterLabel>
+            <translation><!-- PKR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PLN</masterLabel>
+            <translation><!-- PLN --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PYG</masterLabel>
+            <translation><!-- PYG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QAR</masterLabel>
+            <translation><!-- QAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RON</masterLabel>
+            <translation><!-- RON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSD</masterLabel>
+            <translation><!-- RSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RUB</masterLabel>
+            <translation><!-- RUB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RUR</masterLabel>
+            <translation><!-- RUR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RWF</masterLabel>
+            <translation><!-- RWF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SAR</masterLabel>
+            <translation><!-- SAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SBD</masterLabel>
+            <translation><!-- SBD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SCR</masterLabel>
+            <translation><!-- SCR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDD</masterLabel>
+            <translation><!-- SDD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SDG</masterLabel>
+            <translation><!-- SDG --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SEK</masterLabel>
+            <translation><!-- SEK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SGD</masterLabel>
+            <translation><!-- SGD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHP</masterLabel>
+            <translation><!-- SHP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SLL</masterLabel>
+            <translation><!-- SLL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOS</masterLabel>
+            <translation><!-- SOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>STD</masterLabel>
+            <translation><!-- STD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SVC</masterLabel>
+            <translation><!-- SVC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SYP</masterLabel>
+            <translation><!-- SYP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SZL</masterLabel>
+            <translation><!-- SZL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>THB</masterLabel>
+            <translation><!-- THB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TND</masterLabel>
+            <translation><!-- TND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TOP</masterLabel>
+            <translation><!-- TOP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TRY</masterLabel>
+            <translation><!-- TRY --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TTD</masterLabel>
+            <translation><!-- TTD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TWD</masterLabel>
+            <translation><!-- TWD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TZS</masterLabel>
+            <translation><!-- TZS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UAH</masterLabel>
+            <translation><!-- UAH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UGX</masterLabel>
+            <translation><!-- UGX --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USD</masterLabel>
+            <translation><!-- USD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UYU</masterLabel>
+            <translation><!-- UYU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VEF</masterLabel>
+            <translation><!-- VEF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VND</masterLabel>
+            <translation><!-- VND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VUV</masterLabel>
+            <translation><!-- VUV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WST</masterLabel>
+            <translation><!-- WST --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XAF</masterLabel>
+            <translation><!-- XAF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XCD</masterLabel>
+            <translation><!-- XCD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XOF</masterLabel>
+            <translation><!-- XOF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>XPF</masterLabel>
+            <translation><!-- XPF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>YER</masterLabel>
+            <translation><!-- YER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZAR</masterLabel>
+            <translation><!-- ZAR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZMK</masterLabel>
+            <translation><!-- ZMK --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZMW</masterLabel>
+            <translation><!-- ZMW --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ZWD</masterLabel>
+            <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Payment_Terms</name>
         <picklistValues>
             <masterLabel>07 days after invoice date</masterLabel>
@@ -11665,6 +13934,98 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <picklistValues>
             <masterLabel>Inactive</masterLabel>
             <translation><!-- Inactive --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Manager_Approval</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Allow_Billing_Agreements</name>
+        <picklistValues>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -11878,10 +14239,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
             <translation><!-- Other --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Other Equipment Manufacturer</masterLabel>
-            <translation><!-- Other Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Other Private Sector Association</masterLabel>
             <translation><!-- Other Private Sector Association --></translation>
         </picklistValues>
@@ -11939,29 +14296,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Invoice_Distribution</name>
         <picklistValues>
             <masterLabel>Electronic Via Email</masterLabel>
@@ -11978,236 +14312,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <picklistValues>
             <masterLabel>Paper</masterLabel>
             <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Method</name>
-        <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>Sector</name>
-        <picklistValues>
-            <masterLabel>Accommodation</masterLabel>
-            <translation><!-- Accommodation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline</masterLabel>
-            <translation><!-- Airline --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Airline Supplier</masterLabel>
-            <translation><!-- Airline Supplier --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Association</masterLabel>
-            <translation><!-- Association --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Cargo Agent</masterLabel>
-            <translation><!-- Cargo Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Education</masterLabel>
-            <translation><!-- Education --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Financial Institution</masterLabel>
-            <translation><!-- Financial Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Sales Agent</masterLabel>
-            <translation><!-- General Sales Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Governmental Institution</masterLabel>
-            <translation><!-- Governmental Institution --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Holding Company</masterLabel>
-            <translation><!-- Holding Company --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Infrastructure Partner</masterLabel>
-            <translation><!-- Infrastructure Partner --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Media</masterLabel>
-            <translation><!-- Media --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-Airline Transportation</masterLabel>
-            <translation><!-- Non-Airline Transportation --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recreational</masterLabel>
-            <translation><!-- Recreational --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Travel Agent</masterLabel>
-            <translation><!-- Travel Agent --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>

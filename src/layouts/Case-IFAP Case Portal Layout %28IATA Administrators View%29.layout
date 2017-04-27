@@ -6,7 +6,7 @@
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
-    <customButtons>SIDRA_Lite_Action</customButtons>
+    <customButtons>SIDRA_Lite_Action_NEW</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -187,6 +187,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SuppliedEmail</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

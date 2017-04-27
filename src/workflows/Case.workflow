@@ -2004,6 +2004,8 @@
     </alerts>
     <alerts>
         <fullName>ISSP_Send_DPC_HP_Service_Request_email_notification</fullName>
+        <ccEmails>cass_l2_support_prg@dxc.com</ccEmails>
+        <ccEmails>casshelpdesk@dxc.com</ccEmails>
         <description>ISSP Send DPC HP Service Request email notification</description>
         <protected>false</protected>
         <recipients>
@@ -2093,6 +2095,18 @@
         <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
     </alerts>
     <alerts>
+        <fullName>ISSP_Send_expiration_Reminder_CNS</fullName>
+        <description>ISSP Send expiration Reminder CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/ISS_Portal_Expiration_of_Draft_VF</template>
+    </alerts>
+    <alerts>
         <fullName>ITDI_Email_Alert</fullName>
         <ccEmails>simardd@iata.org</ccEmails>
         <ccEmails>afarar@iata.org</ccEmails>
@@ -2160,14 +2174,6 @@
         </recipients>
         <recipients>
             <recipient>garcias@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jimenezm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2520,14 +2526,6 @@
         </recipients>
         <recipients>
             <recipient>garcias@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jimenezm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wana@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -3563,6 +3561,17 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_email_notification_for_a_new_attachment_on_a_case_CNS</fullName>
+        <description>Send email notification for a new attachment on a case CNS</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>cns_noreply@cnsc.us</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Owner_notification_of_new_attachment_2</template>
     </alerts>
@@ -4808,9 +4817,9 @@
     <fieldUpdates>
         <fullName>DPCtoCLopes</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>alvesc@iata.org</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
-        <name>DPCtoCLopes</name>
+        <name>DPCtoAKalash</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -5379,7 +5388,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
         <description>SIDRA</description>
         <field>Acc_IRR_leading_to_DEF__c</field>
         <formula>CASE( Region__c , 
-&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(ISPICKVAL( BSPCountry__c , &quot;India&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
+&quot;Europe&quot;, IF(AND(OR(ISPICKVAL( BSPCountry__c, &quot;Hungary&quot; ),ISPICKVAL( BSPCountry__c, &quot;Switzerland &amp; Liechtenstein&quot; ),ISPICKVAL( BSPCountry__c, &quot;Poland&quot; )),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),6,4), &quot;Africa &amp; middle east&quot;,4, &quot;Asia &amp; pacific&quot;, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Nepal&quot;), AND(OR(ISPICKVAL( BSPCountry__c , &quot;India&quot;)),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;))), 6,4),&quot;China &amp; North Asia&quot;, IF(AND(ISPICKVAL( BSPCountry__c , &quot;People&apos;s republic of China&quot;),ISPICKVAL( BSP_CASS__c ,&quot;BSP&quot;)),10,4),&quot;Americas&quot;, 
 
 IF(ISPICKVAL( BSP_CASS__c ,&quot;CASS&quot;), 4, IF(OR(ISPICKVAL( BSPCountry__c , &quot;Argentina&quot;),ISPICKVAL( BSPCountry__c , &quot;Uruguay&quot;),ISPICKVAL( BSPCountry__c , &quot;Paraguay&quot;)),8,6)),-1 
 )</formula>
@@ -5664,6 +5673,17 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Manager_ACR</fullName>
+        <field>Product_Manager_ACR__c</field>
+        <lookupValue>byrnej@iata.org</lookupValue>
+        <lookupValueType>User</lookupValueType>
+        <name>Manager ACR</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Move_to_Recycle_Bin_Europe</fullName>
@@ -6351,15 +6371,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_TER_MANUAL_ENTRY_TOTAL_OUTS_AMO</fullName>
-        <description>Total outs. amount field is cleared once the TER manual entry is filled</description>
-        <field>Total_Outstanding_Amounts_Default__c</field>
-        <name>SIDRA TER MANUAL ENTRY - TOTAL OUTS. AMO</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_TER_MANUAL_ENTRY_calc_all_outs</fullName>
         <description>When the TER manual entry date is updated, the field Calc ALL Outstanding amount (ter. date) field is cleared</description>
         <field>Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -6468,7 +6479,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_L2_Customer_S</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskIATASISCustomerSupport</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to L2 Customer S</name>
         <notifyAssignee>false</notifyAssignee>
@@ -6478,7 +6489,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>SIS_Change_Case_Owner_to_SIS_Ops</fullName>
         <field>OwnerId</field>
-        <lookupValue>SISHelpDeskSISOperations</lookupValue>
+        <lookupValue>SISHelpDesk</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SIS - Change Case Owner to SIS Ops</name>
         <notifyAssignee>false</notifyAssignee>
@@ -7014,16 +7025,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_to_IDFS_Confidential_Record_Type</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>IDFS_Confidential</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Update to IDFS Confidential Record Type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>sMAP_Update_Decision_Date</fullName>
         <field>Decision_Date__c</field>
         <formula>NOW()</formula>
@@ -7074,7 +7075,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     </fieldUpdates>
     <outboundMessages>
         <fullName>SNOW_Incident</fullName>
-        <apiVersion>30.0</apiVersion>
+        <apiVersion>35.0</apiVersion>
         <description>SNOW Incident</description>
         <endpointUrl>https://iata.service-now.com/SFDC_Case.do?SOAP</endpointUrl>
         <fields>Assigned_To__c</fields>
@@ -7086,13 +7087,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fields>Case_Language__c</fields>
         <fields>Case_Queue_ID__c</fields>
         <fields>Case_Type__c</fields>
-        <fields>Classification_SFDC__c</fields>
         <fields>Classification_SIS__c</fields>
         <fields>Classification__c</fields>
         <fields>Comments__c</fields>
         <fields>Complaint_Description__c</fields>
         <fields>Complaint_Reason__c</fields>
-        <fields>Conclusion__c</fields>
         <fields>ContactId</fields>
         <fields>Country__c</fields>
         <fields>CreatedById</fields>
@@ -7373,7 +7372,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Approval_Date_Today</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7393,7 +7392,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Deployment_Date_Today2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7413,7 +7412,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Development_Start_Date_Today</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7433,7 +7432,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>UAT_Date_Today</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -7529,7 +7528,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>New_DPC_ACR_for_ILDS_Notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11046,7 +11045,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Reset_reopen_reason2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 and 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -11166,6 +11165,21 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <value>6.0 UAT Approval - DD - s/holder comm</value>
         </criteriaItems>
         <description>Create a communication task for the case owner (to inform about stakeholder impact communication) when the case status changes to 6.0 UAT Approval - DD - s/holder comm</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>DPC System Picklist</fullName>
+        <actions>
+            <name>Manager_ACR</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.DPC_Software__c</field>
+            <operation>equals</operation>
+            <value>Germany-D,Korea-D,Maestro-D</value>
+        </criteriaItems>
+        <description>Update ACR Manger when picklist Maestro-D / Korea-D /Germany-D</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11772,7 +11786,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>Set the &quot;Eligibility_Documents Checklist approved&quot; checkbox when all the documents or actions in the Acceptance checklist have been processed (have been selected).</description>
-        <formula>AND (   RecordType.DeveloperName = &apos;FDS_ASP_Management&apos;,   OR (     AND (       ISPICKVAL( CaseArea__c , &apos;FDS - Create Authorized Signatories Package&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Contacts Updated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Package uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;),       OR (         INCLUDES( Acceptance_checklist__c , &apos;CitiDirect User Rights granted&apos;),         NOT (ISPICKVAL( Account.ICCS_Membership_Status__c, &apos;Member&apos; ))       )     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Addition&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Replacement for Exec. Officer specifically&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - ID Copies (2) &amp; Signatures checked&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Signatures Validated&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Banking Resolution applied&apos;)     ),     AND (       ISPICKVAL(CaseArea__c ,&apos;FDS - Update Authorized Signatories Package&apos;),        ISPICKVAL(Type_of_Change__c ,&apos;ASP - Signatory Deletion&apos;),        INCLUDES( Acceptance_checklist__c , &apos;ASP - Letter uploaded to MDM&apos;),       INCLUDES( Acceptance_checklist__c , &apos;ASP - Complete Status set in MDM&apos;)     )   ) )</formula>
+        <formula>OR( AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Create Authorized Signatories Package&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - List of Contacts (ICCS - AP)&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Contacts Updated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Signatures Validated&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ) , AND(  RecordType.DeveloperName =&quot;FDS_ASP_Management&quot;,  ISPICKVAL( CaseArea__c , &quot;FDS - Update Authorized Signatories Package&quot;),  OR(  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement for Exec. Officer specifically&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Banking Resolution&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Banking Resolution applied&quot;)  ),   AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Replacement&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Addition&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - ID Copies (2) &amp; Signatures&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - ID Copies (2) &amp; Signatures checked&quot;)  ),  AND(ISPICKVAL(Type_of_Change__c, &quot;ASP - Signatory Deletion&quot;),  INCLUDES(Documentation_received__c, &quot;ASP - Request Letter&quot;),  INCLUDES(Acceptance_checklist__c ,&quot;ASP - Request Letter&quot;)  )  )) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12694,7 +12708,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 OR 4) and 5</booleanFilter>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 6) and 5</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -12708,7 +12722,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Macedonia,Malta,Montenegro</value>
+            <value>Albania,Austria,Azerbaijan,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Czech Republic &amp; Slovakia,Finland,France,Georgia,Germany,Greece,Hungary,Ireland,Israel,Italy,Kazakhstan,Kosovo,Malta,Montenegro</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -12719,6 +12733,11 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
             <value>12/20/2013</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.BSPCountry__c</field>
+            <operation>equals</operation>
+            <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -13105,7 +13124,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.R_S_feedback_pending__c</field>
@@ -13188,7 +13207,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         </actions>
         <active>true</active>
         <description>SIDRA</description>
-        <formula>AND( RecordTypeId = &quot;012200000000DD9&quot;, ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
+        <formula>AND( OR($RecordType.Name = &quot;SIDRA&quot;,$RecordType.Name = &quot;SIDRA Lite&quot;), ISCHANGED(  R_S_Confirm_DEFWD_Justifications__c  ), NOT(ISPICKVAL(  DEF_Withdrawal_Approval_Rejection__c  , &quot;Approved&quot;)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13398,7 +13417,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>ReopenCase</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>contains</operation>
@@ -13501,10 +13520,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <actions>
             <name>IDFS_SIDRA_IRRWD01_request_email_to_R_S</name>
             <type>Alert</type>
-        </actions>
-        <actions>
-            <name>IDFS_SIDRA_IRRWD_R_S_comments_reset</name>
-            <type>FieldUpdate</type>
         </actions>
         <actions>
             <name>IRR_Withdrawal_ApprovalDate_Reset</name>
@@ -13891,7 +13906,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Confirm_ALL_Outstanding_Amounts_Paid__c</field>
@@ -14043,7 +14058,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>SIDRA</value>
+            <value>SIDRA,SIDRA Lite</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Calculate_ALL_Outs_Amounts_Termination__c</field>
@@ -14600,7 +14615,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13))) OR 8 OR 9</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13))) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -14664,7 +14679,17 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Invoicing Collection Cases</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>Customer Charge Request</value>
         </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
@@ -14700,7 +14725,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Internal Case,Phone,Chat</value>
+            <value>Internal Case,Phone,Chat,Voicemail</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.OwnerId</field>
@@ -14735,7 +14760,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -14748,7 +14773,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Maestro</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ISS Portal - Make escalated case visible</fullName>
@@ -14905,7 +14930,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>ISIS Multicarta</value>
+            <value>Multicarta</value>
         </criteriaItems>
         <description>Notify HP when a case  (DPC Service Request) is made visible on the portal with DPC System = CASSLink</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -14936,7 +14961,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.DPC_Software__c</field>
             <operation>equals</operation>
-            <value>Maestro</value>
+            <value>Maestro,Maestro-D</value>
         </criteriaItems>
         <description>Notify Accelya Maestro when a case (ACR or DPC SR) is made visible on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15004,7 +15029,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Assign_to_ISSP_queue</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>If automatic assignment rule fail, the case is assigned to a specific queue.</description>
         <formula>AND(  LEFT($Profile.Name, 3) = &apos;ISS&apos;,  $User.Id = OwnerId )</formula>
         <triggerType>onCreateOnly</triggerType>
@@ -15026,7 +15051,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     </rules>
     <rules>
         <fullName>ISSP Deactivate AP process draft</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Deactivate draft AP joining processs or SAAM / OSCAR Communication cases after 2 weeks</description>
         <formula>ISPICKVAL(Status,&apos;Draft&apos;)  &amp;&amp;  ISPICKVAL(Origin,&apos;Portal&apos;) &amp;&amp;  OR(RecordType__c = &apos;IDFS Airline Participation Process&apos;, RecordType__c = &apos;SAAM&apos;,RecordType__c = &apos;OSCAR Communication&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -15921,7 +15946,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS)</value>
+            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Region__c</field>
@@ -16057,7 +16082,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <name>AccreditationDataEntryReason</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16210,7 +16235,7 @@ For cases coming from web forms</description>
             <name>ChangerecordtypetoInternalSCE</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
@@ -16278,7 +16303,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoES</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16292,7 +16317,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoFR</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16306,7 +16331,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoIT</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16320,7 +16345,7 @@ For cases coming from web forms</description>
             <name>ChangeIATACountrytoUK</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16426,7 +16451,7 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>greaterOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Recurrence_Negative_Settlement__c</field>
@@ -16436,10 +16461,10 @@ For cases coming from web forms</description>
         <criteriaItems>
             <field>Case.Current_Outstanding_Amount_USD__c</field>
             <operation>lessOrEqual</operation>
-            <value>1000</value>
+            <value>5000</value>
         </criteriaItems>
         <description>SEDA :, the case be assigned to Airline Suspension Team automatically. 
-1) airline unpaid amount is greater than USD1000 
+1) airline unpaid amount is greater than USD5000 (changed on the 8th Feb 2017, before it was 1000) 
 2) Recurrence Negative Settlement no matter the amount</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -17531,7 +17556,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Update_Assigned_to_SIS_Agent</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17685,7 +17710,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>New_Attachment_From_Portal_User_False</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.New_Attachment_From_Portal_User__c</field>
             <operation>equals</operation>
@@ -17721,20 +17746,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Partner</value>
         </criteriaItems>
         <description>Send email notification on all Cases when is added a new comment by a portal user</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Set a case to Confidential mode</fullName>
-        <actions>
-            <name>Update_to_IDFS_Confidential_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.Set_CONFIDENTIAL__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
