@@ -7,6 +7,7 @@
     <customButtons>Close_Case_c</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Create_SAAM_Case</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
