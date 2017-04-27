@@ -22932,7 +22932,7 @@ title,Title,Name</value>
     </labels>
 
     <labels>
-        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless</fullName>        
+        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless  </shortDescription>
@@ -22970,14 +22970,6 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription> 
         <value>SECTION 2 - General Information</value>
     </labels>
-
-    <labels>
-        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription>
-        <value>SECTION 2 - General Information</value>
-    </labels>
 	
 	<labels>
         <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>        
@@ -23008,7 +23000,7 @@ title,Title,Name</value>
         <value>4.Security of Electronic Tickets</value>
     </labels>
 	<labels>
-        <fullName>ISSP_AMS_LeftNav_Section5_Other Info </fullName>        
+        <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info </shortDescription>
