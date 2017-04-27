@@ -4,6 +4,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 	public list<Objective__c> lstBMAs {get; set;}
 	public list<Objective__c> lstDivisionBMAs {get; set;}
 	private Objective__c newObjective {get; set;}
+	public Boolean canEdit {get; set;}
 	public Boolean isEditMode {get; set;}
 	public Boolean isNewLine {get; set;}
 	public Id IdConcerned {get; set;}
@@ -23,6 +24,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
   			CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
   			lstBMAs = getBMAs();
   			lstDivisionBMAs = getDivisionBMAs();
+			canEdit = getCanEdit();
   		}
 
   		public list<Objective__c> getBMAs() {
@@ -228,5 +230,32 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			// 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 			// }
 		}
+
+		public static List<String> getCommentFields() {
+			List<String> commentAccessFields = new String [] {
+				'Detail__c',
+				'Status__c'
+
+			};
+			return commentAccessFields;
+
+			}
+
+		@AuraEnabled
+	    public static Boolean getCanEdit() {
+	        Boolean canEdit = true;
+	        // Obtain the field name/token map for the Comment__c object
+	        Map<String,Schema.SObjectField> m = Schema.SObjectType.Comment__c.fields.getMap();
+
+	        List<String> lsCommentFields = getCommentFields();
+	        for (String fieldToCheck : lsCommentFields) {
+	            // Check if the user has access to view field
+	            if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+	                canEdit = false;
+	            }
+	        }
+
+	        return canEdit;
+	    }
 
 	}

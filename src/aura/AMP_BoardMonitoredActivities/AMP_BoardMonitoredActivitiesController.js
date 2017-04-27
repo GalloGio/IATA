@@ -1,7 +1,7 @@
 ({
     doInit : function(component, event, helper) {
         helper.getRelatedBMAList(component);
-
+        helper.getCanEdit(component);
     },
     handleUpdateBMAs : function(component, event, helper) {
         var comment = event.getParam("comment");

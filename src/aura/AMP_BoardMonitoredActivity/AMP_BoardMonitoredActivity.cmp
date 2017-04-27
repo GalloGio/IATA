@@ -2,7 +2,7 @@
     <aura:attribute name="bma" type="Objective__c" default="{ 'sobjectType': 'Objective__c'}" />
     <aura:attribute name="comment" type="Comment__c" default="{ 'sobjectType': 'Comment__c'}" />
     <aura:attribute name="accountId" type="String" />
-
+    <aura:attribute name="canEdit" type="Boolean" default="false" />
     <aura:attribute type="String[]" name="statusValues"/>
     <aura:attribute type="String" name="status"/>
 
@@ -68,9 +68,13 @@
             <td><ui:inputTextArea value="{!v.bma.Comments__r[0].Detail__c}" class="slds-textarea" rows="5" aura:id="detail"/></td>
 
             <aura:set attribute="else">
-                <aura:renderIf isTrue="{!v.displayType=='Division'}">
-                    <td><c:AMP_EditSaveMenu  canDelete="false"/></td>
-                </aura:renderIf>
+                <aura:If isTrue="{!v.displayType=='Division'}">
+                    <td>
+                    <aura:If isTrue="{!v.canEdit==true}">
+                        <c:AMP_EditSaveMenu  canDelete="false"/>
+                    </aura:If>
+                    </td>
+                </aura:If>
                 <td><ui:outputText value="{!v.bma.Name}" class="textwrap"/></td>
                 <aura:renderIf isTrue="{!v.displayType=='Account'}">
                     <td><c:AMP_LongText text="{!v.bma.Details__c}" /></td>
