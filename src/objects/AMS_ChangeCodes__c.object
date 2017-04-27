@@ -319,6 +319,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Skip_Agency_Update__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the change code should or should not be picked by the DPC integration</description>
+        <externalId>false</externalId>
+        <label>Skip Agency Update</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Used_By_CNS__c</fullName>
         <defaultValue>true</defaultValue>
         <description>If false, means the change code is not generated for CNS agencies</description>
