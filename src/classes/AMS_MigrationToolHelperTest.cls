@@ -558,4 +558,8 @@ private class AMS_MigrationToolHelperTest {
 
 		Test.stopTest();
     }
+	static testMethod void TestCompliant() {
+        AMS_MigrationToolHelper a = new AMS_MigrationToolHelper();
+        a.isTestCompliant();
+    }
 }
