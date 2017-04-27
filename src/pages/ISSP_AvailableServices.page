@@ -49,7 +49,14 @@
     function newAppReqCallback(res){
       
     }
-    
+
+    function refreshPage() {
+      var currentTime = new Date().getTime();
+
+      while (currentTime + 2000 >= new Date().getTime()){  }
+
+      location.reload(true);      
+    }        
 
     function doRequest(servId) {
          paraFunction(servId);
@@ -375,7 +382,7 @@
     </div>
 
     <!-- Modal New Service Request-->
-    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" onblur="refreshPage();">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
