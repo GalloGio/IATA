@@ -37,7 +37,7 @@
         <field>OI_Status_WF__c</field>
         <formula>IF(ISNULL(Date_Time_Closed__c),
 IF(ISNULL(Terminated_Date__c),
-IF(ISNULL(Pending_eff_validation_date__c),
+IF(OR(ISNULL(Pending_eff_validation_date__c),TODAY()&lt;Pending_eff_validation_date__c),
 IF(ISNULL(Conclusion_Date__c),
 IF(AND(NOT(ISNULL(Overall_Deadline__c)),Overall_Deadline__c&lt;TODAY()), &quot;Delayed&quot;,
 IF(NOT(ISNULL(Submission_for_Approval_Date__c)), 
@@ -71,6 +71,16 @@ IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Acti
         <field>OI_Approval_date__c</field>
         <formula>NOW()</formula>
         <name>OI Update Approval date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Terminate_OI</fullName>
+        <description>Set today as Termination Date to set the status as Terminated</description>
+        <field>Terminated_Date__c</field>
+        <formula>TODAY()</formula>
+        <name>Terminate OI</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>

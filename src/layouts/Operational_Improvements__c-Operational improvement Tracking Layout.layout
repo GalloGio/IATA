@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Submitted_for_extension</customButtons>
     <customButtons>Concluded_OI</customButtons>
+    <customButtons>Terminate_OI</customButtons>
     <customButtons>Close_OI</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -35,10 +36,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Name</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OI_Status_WF__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -57,385 +57,31 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
-        <fullName>Action_10_Due_Date__c</fullName>
+        <fullName>Action_Plan_Closed_Count__c</fullName>
+        <description>Number of closed Action Plans related to current OI</description>
         <externalId>false</externalId>
-        <label>Action 10 - Due Date</label>
-        <required>false</required>
+        <label>Total Closed Action Plans</label>
+        <summaryFilterItems>
+            <field>OI_Action_Plan__c.Closure_Date__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </summaryFilterItems>
+        <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Date</type>
+        <type>Summary</type>
     </fields>
     <fields>
-        <fullName>Action_10_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <fullName>Action_Plan_Count__c</fullName>
+        <description>Number of Action Plans in current OI</description>
         <externalId>false</externalId>
-        <label>Action 10 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings9</relationshipName>
-        <required>false</required>
+        <label>Total Action Plan</label>
+        <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_1_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 1 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_1_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 1 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_2_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 2 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_2_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 2 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings1</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_3_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 3 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_3_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 3 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings2</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_4_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 4 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_4_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 4 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings3</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_5_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 5 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_5_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 5 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings4</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_6_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 6 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_6_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 6 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings5</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_7_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 7 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_7_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 7 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings6</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_8_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 8 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_8_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 8 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings7</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Closure_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Closure Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Description__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Description</label>
-        <length>32768</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>6</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Action_9_Due_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Action 9 - Due Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Action_9_Owner__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Action 9 - Owner</label>
-        <referenceTo>User</referenceTo>
-        <relationshipName>Operational_improvement_Trackings8</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>Affected_Process__c</fullName>
@@ -1298,7 +944,7 @@
         <externalId>false</externalId>
         <label>Conclusion Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1317,7 +963,7 @@
         <externalId>false</externalId>
         <label>Date/Time Closed</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1589,7 +1235,7 @@
         <externalId>false</externalId>
         <label>Extension approved date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1961,7 +1607,7 @@
         <externalId>false</externalId>
         <label>OI Approval date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1972,7 +1618,7 @@
         <label>OI Status (WF)</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1980,7 +1626,10 @@
     <fields>
         <fullName>OI_Status_auto__c</fullName>
         <externalId>false</externalId>
-        <formula>OI_Status_WF__c</formula>
+        <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, TODAY()&gt;=Pending_eff_validation_date__c),
+  &quot;Pending Effectiveness Validation&quot;,
+  OI_Status_WF__c
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
         <label>OI Status (auto)</label>
@@ -2109,7 +1758,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -2118,7 +1767,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <label>Pending eff. validation date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -2127,7 +1776,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <label>Please indicate reasoning</label>
         <length>32768</length>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -2315,7 +1964,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <label>Sequence of events</label>
         <length>32768</length>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -2432,7 +2081,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <label>Submission for Approval Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -2450,7 +2099,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <label>Terminated Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -4132,7 +3781,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <fullName>OI_Overall_effectiveness_of_improvement</fullName>
         <active>true</active>
         <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled</description>
-        <errorConditionFormula>AND(OI_Status_auto__c=&quot;Closed&quot;, ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
+        <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
         <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
         <errorMessage>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</errorMessage>
     </validationRules>
@@ -4141,6 +3790,13 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(  OI_Type__c   , &quot;Other&quot;), ISBLANK( If_other_please_explain__c ))</errorConditionFormula>
         <errorMessage>When ‘OI Type’ is selected as ‘Other’, please describe your choice in the ‘If other, please explain’ field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Prevent_Conclusion_for_Pending_APs</fullName>
+        <active>true</active>
+        <description>OI Conclusion is not allowed when there are pending action plans</description>
+        <errorConditionFormula>AND(NOT(ISNULL(Conclusion_Date__c)),Action_Plan_Count__c != Action_Plan_Closed_Count__c)</errorConditionFormula>
+        <errorMessage>Don&apos;t allow conclude if any action plan is not closed.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Root_Cause_check_Man_option</fullName>
@@ -4171,12 +3827,27 @@ NOT(INCLUDES( Root_Cause_s__c , &quot;Mother Earth (force majeure)&quot;))
         <protected>false</protected>
         <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
 
-var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
-improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-improvement.Date_Time_Closed__c = new Date(&apos;{!Now()}&apos;);
-sforce.connection.update([improvement ]); 
+function htmlDecode(input){
+  var e = document.createElement(&apos;div&apos;);
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
+}
 
-window.location.reload();</url>
+if ({!ISNULL(Operational_Improvements__c.Date_Time_Closed__c)}) {
+  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+  improvement.Date_Time_Closed__c = new Date(&apos;{!Now()}&apos;);
+  var result = sforce.connection.update([improvement ]);
+
+  if(result[0].getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(htmlDecode(result[0].errors.message));
+  }
+
+} else {
+  alert(&quot;OI already closed&quot;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Concluded_OI</fullName>
@@ -4204,7 +3875,6 @@ function getOIObject() {
   }
 }
 
-
 function updateOIObject(object, months) {
   try {
  
@@ -4213,10 +3883,20 @@ function updateOIObject(object, months) {
     nextDate.setMonth(todayDate.getMonth() + months);
     object.Conclusion_Date__c = todayDate ;
     object.Pending_eff_validation_date__c = nextDate;
-    sforce.connection.update([object]); 
+    return sforce.connection.update([object])[0];
   } catch (e) {
     alert(&apos;Update Error: &apos; + e);
   }
+}
+
+function processConclusion(dialog, OIobject, months) {
+  var result = updateOIObject(OIobject, months);
+  jQuery(dialog).dialog( &quot;close&quot; );
+  if(result.getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(result.errors.message);
+  }  
 }
 
 try{
@@ -4245,24 +3925,16 @@ try{
       width: 400,
       buttons: {
         &quot;3 Months&quot;: function() {
-          updateOIObject(OIobject, 3);
-          jQuery( this ).dialog( &quot;close&quot; );
-          location.reload();
+          processConclusion(this,OIobject,3);
         },
         &quot;6 Months&quot;: function() {
-          updateOIObject(OIobject, 6);
-          jQuery( this ).dialog( &quot;close&quot; );
-          location.reload();
+          processConclusion(this,OIobject,6);
         },
         &quot;9 Months&quot;: function() {
-          updateOIObject(OIobject, 9);
-          jQuery( this ).dialog( &quot;close&quot; );
-          location.reload();
+          processConclusion(this,OIobject,9);
         },
         &quot;12 Months&quot;: function() {
-          updateOIObject(OIobject, 12);
-          jQuery( this ).dialog( &quot;close&quot; );
-          location.reload();
+          processConclusion(this,OIobject,12);
         },
         &quot;Cancel&quot;: function() {
           jQuery( this ).dialog( &quot;close&quot; );
@@ -4272,7 +3944,7 @@ try{
   });
 }
 catch(e){
-  alert(&apos;An Error has Occured. Error: &apos; + e);
+  alert(&apos;An Error has Occurred. Error: &apos; + e);
 }</url>
     </webLinks>
     <webLinks>
@@ -4308,5 +3980,37 @@ improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
 sforce.connection.update([improvement ]); 
 
 window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Terminate_OI</fullName>
+        <availability>online</availability>
+        <description>Terminate Action for an OI</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Terminate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+function htmlDecode(input){
+  var e = document.createElement(&apos;div&apos;);
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
+}
+
+if ({!ISNULL(Operational_Improvements__c.Terminated_Date__c)}) {
+  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+  improvement.Terminated_Date__c = new Date(&apos;{!Now()}&apos;);
+  var result = sforce.connection.update([improvement ]);
+
+  if(result[0].getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(htmlDecode(result[0].errors.message));
+  }
+} else {
+  alert(&quot;OI already terminated&quot;);
+}</url>
     </webLinks>
 </CustomObject>
