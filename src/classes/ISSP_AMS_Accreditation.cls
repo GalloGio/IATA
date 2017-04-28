@@ -3157,22 +3157,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             System.debug('SFSF sector ' + sector);
             System.debug('SFSF amsOfficeType ' + amsOfficeType);
             System.debug('SFSF newForm.Agent_Type__c ' + newForm.Agent_Type__c);
-            System.debug('SFSF selectedLang ' + selectedLang);
-
-
-            if(newForm.Agent_Type__c.contains('no Cash')){
-                accredModel = 'Standard without Cash';
-            } else if(newForm.Agent_Type__c.contains('with Cash')){
-                accredModel = 'Standard';
-            } else {
-                accredModel = newForm.Agent_Type__c;
-            }
+            System.debug('SFSF selectedLang ' + selectedLang);            
             
             System.debug('SFSF accredModel ' + accredModel);
 
             if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
-                accredModel = AMS_Utils.AGENTTYPE_NOCASH; 
-            } else if (newForm.Agent_Type__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+                accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH; 
+            } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH){
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
             } else{
                 accredModel = newForm.Agent_Type__c;
