@@ -182,6 +182,10 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
     public static final String CASE_REASON_AE_LITE = 'New AE lite';
 
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
+    public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
+    public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
+
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';

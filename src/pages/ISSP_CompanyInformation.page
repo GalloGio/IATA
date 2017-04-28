@@ -128,6 +128,20 @@
                                   </div>
                                  </apex:outputText>
                             
+                                                      
+                            <div class="row form-group">
+                            <apex:outputPanel rendered="{!IF(showIEPStatus,true,false)}" >
+                                <div class="col-lg-5" style="padding-left:28px">                                
+                                    <label class="lbl">{!$ObjectType.Account.fields.ANG_IEP_Status_FF__c.Label}</label>
+                                </div>
+                                <div class="col-lg-7">                                                                        
+                                    <span class="saveMode">                                        
+                                        <apex:outputText value="{!con.Account.ANG_IEP_Status_FF__c}"/>
+                                    </span>                                    
+                                </div>
+                                </apex:outputPanel>
+                            </div>
+                            
                             <apex:outputText rendered="{!isIATAAirlineAcct}">
                                 <div class="row">
                                 <apex:outputLabel styleClass="lbl col-lg-5" style="padding-left:28px" value="{!$ObjectType.Account.fields.Membership_status__c.Label}" />
