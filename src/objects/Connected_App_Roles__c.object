@@ -61,6 +61,15 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Manage_User_Access__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>User portal roles that will receive the notification mail.</description>
+        <externalId>false</externalId>
+        <label>Manage User Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>PermissionSet_Provisioning__c</fullName>
         <externalId>false</externalId>
         <label>PermissionSet Provisioning</label>

@@ -10,6 +10,11 @@
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
+
+    function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
+      var appPortalRole = $('[id$="portalRoles"]').val();
+      newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService);
+    }       
        
     function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
         var doInsert;
@@ -35,6 +40,9 @@
             }
             $('#ModalNewServiceRequest').modal('toggle');
             if (doInsert == 1) {
+              if(appPortalRole == null  || appPortalRole == undefined) {
+                appPortalRole = '';
+              }                            
               ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
             } else {
               ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
@@ -49,7 +57,14 @@
     function newAppReqCallback(res){
       
     }
-    
+
+    function refreshPage() {
+      var currentTime = new Date().getTime();
+
+      while (currentTime + 2000 >= new Date().getTime()){  }
+
+      location.reload(true);      
+    }
 
     function doRequest(servId) {
          paraFunction(servId);
@@ -355,7 +370,7 @@
                 </apex:outputPanel> 
 
                 <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
-                  <a onclick=" newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}','{!Serv.portalServiceRole}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');" class="btn_iata_success btn-block btn">
+                  <a onclick=" <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>
                 </apex:outputPanel> 
@@ -375,7 +390,7 @@
     </div>
 
     <!-- Modal New Service Request-->
-    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" onblur="location.reload(true);">
+    <div class="modal fade" id="ModalNewServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" onblur="refreshPage();">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
