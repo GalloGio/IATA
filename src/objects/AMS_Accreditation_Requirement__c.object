@@ -79,16 +79,6 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>ANG_Accreditation_Model__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
-        <label>Accreditation Model</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>MultiselectPicklist</type>
-        <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
         <fullName>File_Identifier2__c</fullName>
         <externalId>false</externalId>
         <label>File Identifier</label>
