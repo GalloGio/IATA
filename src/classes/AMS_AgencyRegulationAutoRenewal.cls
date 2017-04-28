@@ -296,6 +296,25 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
     public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea) {
         
         Id templateId;
+        Boolean templateToIATA = false;
+        List<EmailTemplate> tempIata = new List<EmailTemplate>();
+
+        if(recipents == null)
+        {
+        	templateToIATA = true;
+        	//getTemplate
+        	tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
+        	//get region
+        	List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+        	String region = oscars.get(0).Region__c;
+        	//get contact from IATA
+        	//put the contacts in recipents list
+
+        	//fake contact only for tests
+        	Contact c = new Contact(FirstName = 'Sofia', LastName = 'Silva', Email = 'sofia.silva@b-i.com', AccountId = '0014E00000UGKGb', Preferred_Language__c = 'English', BSP_CASS_Payment_contact__c = TRUE, Financial_Assessment_Contact__c = FALSE);
+        	insert c;
+        	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId = '0014E00000UGKGb' AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE)];
+        }
 
         if(recipents != null){
         
@@ -312,7 +331,11 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.saveAsActivity = true;
                     mail.setToAddresses(new List<String>{recipient.Email});
-                    mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                    if(templateToIATA){
+                    	mail.setTemplateId(tempIata.get(0).Id);
+                    } else {
+                    	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+                    }
                     mail.setTargetObjectId(recipient.Id);
                     mail.setWhatId(oscarId);
                     mail.setOrgWideEmailAddressId(owea.Id);
