@@ -18626,7 +18626,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</shortDescription>
-        <value>Dear IEP Admin / Wallet Manager,</value>
+        <value>Dear IEP Admin / Master Wallet Manager,</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Email_AccessRequest2_IEP</fullName>
@@ -18634,7 +18634,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_AccessRequest2_IEP</shortDescription>
-        <value>Service has been transferred to your IEP Admin / Wallet Manager.</value>
+        <value>Service has been transferred to your IEP Admin / Master Wallet Manager.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</fullName>
