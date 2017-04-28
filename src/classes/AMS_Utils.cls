@@ -175,6 +175,13 @@ public without sharing class AMS_Utils {
     public static final String SECTOR_PASSENGER = 'Travel Agent';
     public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
 
+    public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
+    public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
+    public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
+    public static final String CASE_REASON_HE_LITE = 'New HE lite';
+    public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
+    public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';
@@ -189,6 +196,11 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+
+    public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
+    public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+    public static final String ACCREDITATIONMODEL_CASH = 'Cash';
+    public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
 
 
     static {
