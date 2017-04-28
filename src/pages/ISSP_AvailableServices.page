@@ -370,7 +370,7 @@
                 </apex:outputPanel> 
 
                 <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
-                  <a onclick=" <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
+                  <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>
                 </apex:outputPanel> 
