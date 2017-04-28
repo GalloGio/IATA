@@ -16,7 +16,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>ISNEW() || ISCHANGED(ANG_Source_Id__c)</formula>
+        <formula>(ISNEW() &amp;&amp; ISBLANK(ANG_UniqueKey__c)) || ISCHANGED(ANG_Source_Id__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
