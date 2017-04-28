@@ -260,4 +260,32 @@ private class AMSIntegrationServicesTest {
         System.assertEquals(0, result);
         Test.stopTest();
     }
+
+    @isTest static void test_failFindAccount() {
+        String invalidAccountId = '001000000000000000';
+        Boolean result;
+
+        Test.startTest();
+
+        result = AMSIntegrationServices.updateAccountIrregularities(invalidAccountId, 1);
+        result = AMSIntegrationServices.updateAccountShortName(invalidAccountId, null);
+        result = AMSIntegrationServices.updateAccountGDPData2(invalidAccountId, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPData3(invalidAccountId, null, null, null, null, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData2(invalidAccountId, null, null, null, null, null, null, null);
+        result = AMSIntegrationServices.updateAccountGDPDataWithLegacyData(invalidAccountId, null, null, null, null, null);
+        result = AMSIntegrationServices.assignAgencyPerDPC(invalidAccountId, null);
+        result = AMSIntegrationServices.assignAgencyPerDPCandLegacyIDs(invalidAccountId, null, null);
+        result = AMSIntegrationServices.assignAgencyPerSettlementandLegacyIDs(invalidAccountId, null, null, null, null);
+
+        Test.stopTest();
+    }
+
+    @isTest static void test_failUpdateAccount() {
+        String longName = '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        Test.startTest();
+        String accountId = [select id,Name from Account where Name = 'Test1 Account'].id;
+        Boolean result;
+
+        result = AMSIntegrationServices.updateAccountShortName(accountId,longName);
+    }
 }

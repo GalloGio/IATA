@@ -357,21 +357,34 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         integer n = countersMap.get(c.Region__c) == null ? 0 : countersMap.get(c.Region__c);
         countersMap.put(c.Region__c, ++n);
 
+        //start of INC310891
+        List<SurveyBatchIgnoreUsers__c> surveyIgnoreUsers = SurveyBatchIgnoreUsers__c.getAll().values();
+        Boolean ignore; 
+        for(SurveyBatchIgnoreUsers__c siu : surveyIgnoreUsers){
+          ignore = false;
+          if(siu.FirstName__c == c.Owner.FirstName && siu.LastName__c == c.Owner.LastName){
+            IATAcases ++;
+            IATAcaseslog += c.id + ', ';
+            ignore = true;
+            break;
+          }
+        }
+        if(ignore==true)
+          continue;
+        //end of INC310891
+        
         // If the case is owned by some users the email should not start
-        if ((c.Owner.FirstName == 'Ángel' && c.Owner.LastName == 'Peña' ) ||
+   /*     if ((c.Owner.FirstName == 'Ángel' && c.Owner.LastName == 'Peña' ) ||
             (c.Owner.FirstName == 'Alvaro' && c.Owner.LastName == 'Alonso' ) ||
             (c.Owner.FirstName == 'Rafael' && c.Owner.LastName == 'Alarcon' ) ||
             (c.Owner.FirstName == 'Miguel' && c.Owner.LastName == 'Rodriguez Hernandez' ) ||
             (c.Owner.FirstName == 'Cristina' && c.Owner.LastName == 'Lopez' ) ||
             (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon' ) ||
-            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) ||
+            (c.Owner.FirstName == 'Monica' && c.Owner.LastName == 'Cabrera' ) || 
             (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado' ) ||
             (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk' ) ||
             (c.Owner.FirstName == 'Mercedes Fernandez' && c.Owner.LastName == 'Perez' ) ||
             (c.Owner.FirstName == 'Marta' && c.Owner.LastName == 'Sande Gonzalez-Cela') ||
-            (c.Owner.FirstName == 'Benoit' && c.Owner.LastName == 'Dudognon') ||
-            (c.Owner.FirstName == 'Vanesa' && c.Owner.LastName == 'Montero Rosado') ||
-            (c.Owner.FirstName == 'Vladyslav' && c.Owner.LastName == 'Maydanyk') ||
             (c.Owner.FirstName == 'Victor Manuel' && c.Owner.LastName == 'Meana Solanas') ||
             (c.Owner.FirstName == 'Raluca' && c.Owner.LastName == 'Dediu') ||
             (c.Owner.FirstName =='Sara' && c.Owner.LastName == 'Oubrahim') ||
@@ -381,7 +394,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           IATAcases ++;
           IATAcaseslog += c.id + ', ';
           continue;
-        }
+        }*/
 
     //system.debug(LoggingLevel.ERROR,'AccountCountry is... ' + AccountCountry);
 
