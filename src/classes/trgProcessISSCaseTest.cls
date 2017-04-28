@@ -349,7 +349,7 @@ private class trgProcessISSCaseTest {
 			insert saamCase;
 			
 		} catch (Exception e) {
-			Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot create a 1st FS non-compliance case. The 1st FS Deadline is ') ? true : false;
+			Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot create a 1st FA non-compliance case. The 1st FA Deadline is ') ? true : false;
 			system.assertEquals(expectedExceptionThrown, true);
 		}
 		test.StopTest();
@@ -360,7 +360,8 @@ private class trgProcessISSCaseTest {
 		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
 		test.StartTest();
 		try {
-			parentCase.FA_Second_Deadline_Date__c = Date.today();
+			parentCase.firstFAnonComplianceDate__c = Date.today();
+			parentCase.FA_Second_Deadline_Date__c = Date.today() +1;
 			update parentCase;
 			Case saamCase = new Case(
 			    ContactId = parentCase.Contact.id,
@@ -410,9 +411,63 @@ private class trgProcessISSCaseTest {
 		test.StopTest();
 	}
 
+	@isTest static void thirdFAnonComplianceDomestic() {
+		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
+		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
+		test.StartTest();
+		try {
+			parentCase.firstFAnonComplianceDate__c = Date.today();
+			parentCase.secondFAnonComplianceDate__c = Date.today();
+			parentCase.FA_Third_Deadline_Date__c = Date.today() +1;
+			update parentCase;
+			Case saamCase = new Case(
+			    ContactId = parentCase.Contact.id,
+			    AccountId = parentCase.Account.Id,
+			    Subject = 'Test SAAM case',
+			    Description = 'Test SAAM case',
+			    Status = 'Open',
+			    ParentId = parentCase.id,
+			    RecordTypeId = SAAMcaseRecordType.Id,
+			    Reason1__c = 'FA/ FS Non-Compliance',
+			    Origin = 'Internal Case',
+			    CaseArea__c = 'Accreditation Process');
+			insert saamCase;
+			
+		} catch (Exception e) {
+			Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot create a 3rd FA non-compliance case. The 3rd FA Deadline is ') ? true : false;
+			system.assertEquals(expectedExceptionThrown, true);
+		}
+		test.StopTest();
+	}
 
-
-
+	@isTest static void fourthFAnonComplianceDomestic() {
+		RecordType SAAMcaseRecordType = ams_utils.getRecordType('Case', 'ProcessEuropeSCE');
+		Case parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type, c.Account.id, c.Contact.id,  c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c from Case c where c.Subject = 'ifapCase'];
+		test.StartTest();
+		try {
+			parentCase.firstFAnonComplianceDate__c = Date.today();
+			parentCase.secondFAnonComplianceDate__c = Date.today();
+			parentCase.Third_FA_non_Compliance_Date__c = Date.today();
+			update parentCase;
+			Case saamCase = new Case(
+			    ContactId = parentCase.Contact.id,
+			    AccountId = parentCase.Account.Id,
+			    Subject = 'Test SAAM case',
+			    Description = 'Test SAAM case',
+			    Status = 'Open',
+			    ParentId = parentCase.id,
+			    RecordTypeId = SAAMcaseRecordType.Id,
+			    Reason1__c = 'FA/ FS Non-Compliance',
+			    Origin = 'Internal Case',
+			    CaseArea__c = 'Accreditation Process');
+			insert saamCase;
+			
+		} catch (Exception e) {
+			Boolean expectedExceptionThrown =  e.getMessage().contains('Cannot create a 4th FA non-compliance case.') ? true : false;
+			system.assertEquals(expectedExceptionThrown, true);
+		}
+		test.StopTest();
+	}
 
 
 
