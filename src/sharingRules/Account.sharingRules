@@ -483,7 +483,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account,Others</value>
+            <value>Standard Account,Others,IATA Standard Account</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>

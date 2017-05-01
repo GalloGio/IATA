@@ -121,6 +121,10 @@
                 <behavior>Edit</behavior>
                 <field>Last_Run__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_NotificationBatch_Run__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
