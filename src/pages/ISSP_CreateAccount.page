@@ -1,6 +1,6 @@
 <apex:page controller="ISSP_Registration"  showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
 <head>
-    <title>IATA</title>
+    <title>{!IF(communityName=='CNS','CNS','IATA')}</title>
  </head>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>

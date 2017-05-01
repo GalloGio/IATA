@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EBC_End_User_Unsubscribe</fullName>
-        <ccEmails>debonol@iata.org</ccEmails>
+        <ccEmails>globaldata@iata.org</ccEmails>
         <description>EBC End-User Unsubscribe</description>
         <protected>false</protected>
         <recipients>

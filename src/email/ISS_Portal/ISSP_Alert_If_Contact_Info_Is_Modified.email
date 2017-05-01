@@ -1,0 +1,15 @@
+<font face="Arial" size="2">Dear {!Contact.Name},
+<br>
+
+<br>
+Please note that {! IF(contains(User.Profile_Name__c, 'ISS Portal'), 'your ', '')} 
+ {! IF(AND(contains(User.Profile_Name__c, 'ISS Portal', Contains(Contact.Community__c, 'CNS')) ), 'CNS ', 'IATA')}
+ {! IF(contains(User.Profile_Name__c, 'ISS Portal'), 'Portal Administrator ' + User.Name, ' IATA')} has modified your Profile Information on the portal.
+<br>
+Your classification as a contact has been changed to:
+<br><br><b>
+BSP/CASS Payment contact: {! IF(Contact.BSP_CASS_Payment_contact__c,'Yes', 'No') }
+<br>
+Invoicing Contact: {! IF(Contact.Invoicing_Contact__c,'Yes', 'No') }</b></font>
+<br>
+<br>

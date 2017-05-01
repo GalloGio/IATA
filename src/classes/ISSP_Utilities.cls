@@ -93,4 +93,19 @@ public without sharing class ISSP_Utilities {
 	public static Boolean isNumeric(String value) {
 		return Pattern.matches('^[-+]?[0-9]*\\.?[0-9]+$', value);
 	}
+
+	public static Boolean isCNS() {
+		User u = [
+			SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+			FROM User WHERE Id =:UserInfo.getUserId()];
+		Boolean isCNS = false;
+		if((u.Contact.Account.CNS_Agency__c || u.Contact.Account.CNS_Account__c) &&
+			(u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency' ||
+			u.Contact.Account.RecordType.DeveloperName == 'Standard_Account')) {
+				isCNS = true;
+		}
+
+		return isCNS;
+
+      }
 }

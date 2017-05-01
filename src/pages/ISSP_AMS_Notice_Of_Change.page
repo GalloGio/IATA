@@ -8,7 +8,7 @@
            action="{!securityCheck}">
     
 	<html> 
-		<c:ISSP_Header ></c:ISSP_Header>
+		<c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
 		<c:iss_ap_css />
 		<c:ISSP_WaitingStatus />
 		<body>
@@ -601,20 +601,20 @@
 			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
-			<p><a href="#nav_two">{!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}</a></p>
+			<p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_location__c==true}">
-			<p><a href="#nav_true">{!$Label.ISSP_AMS_NoC_Change_of_Location}</a></p>
+			<p><a href="#nav_true">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
-		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding, $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
+		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
 		</apex:outputText>
 		
 	</div>
 
 	<div class="container">
 		<div id="contentWrapper">
-			<c:ISSP_CustomNavigation />
+			<c:ISSP_CustomNavigation communityName="{!communityName}"/>
 	
 	<div class="panel-primary">
 		<div class="panel-heading head_panel_green">
@@ -696,7 +696,7 @@
 				</apex:pageBlockSection>
 				
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
-					<apex:outputText escape="false" value="{!$Label.ISSP_AMS_NOC_Instructions}"/>
+					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
 				</apex:pageBlockSection>
 
 				<span id="nav_two"></span>
@@ -705,7 +705,7 @@
 
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}
+								{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Legal_details}</apex:outputPanel>
@@ -783,11 +783,11 @@
 					<apex:pageBlockSection columns="2" id="locationSection" collapsible="false">
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!$Label.ISSP_AMS_NoC_Change_of_Location}
+								{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_of_Location_New,$Label.ISSP_AMS_NoC_Change_of_Location)}
 							</apex:outputpanel>
 						</apex:facet>
-						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Location}</apex:outputPanel>
-						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Location_After_Change}</apex:outputPanel>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NOC_Current_Location_New, $Label.ISSP_AMS_NOC_Current_Location)}</apex:outputPanel>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NoC_Location_After_Change_New, $Label.ISSP_AMS_NoC_Location_After_Change)}</apex:outputPanel>
 
 						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Location_Details_are_correct__c.Label}" style="color:black;font-size:110%"/>
@@ -925,7 +925,7 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							{!$Label.ISSP_AMS_NoC_Change_Ownership_Shareholding}
+							{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
 						</apex:outputpanel>
 					</apex:facet>
                     
@@ -1102,7 +1102,7 @@
                     <apex:outputPanel layout="block" id="previous-owner-companies" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}">
 						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Current_Companies}</strong></div>
                         <div style="height:70px">&nbsp;</div>
-                        <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!List_PreviousCompanies.size==0}"/>
+                        <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" styleClass="alert alert-info" rendered="{!List_PreviousCompanies.size==0}"/>
 						<apex:pageBlockTable value="{!List_PreviousCompanies}" var="agencycon" id="companyList" styleClass="table-hover table table-condensed table-responsive" rendered="{!List_PreviousCompanies.size>0}">
 								<apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
 								<apex:column value="{!agencycon.Registration_number__c}"/>
@@ -1116,7 +1116,7 @@
 							<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NOC_Updated_Companies}</strong></div>
 							
 							<div class="col-md-12" style="padding-bottom:12px">
-								<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false"/>
+								<apex:outputText value="{!IF(newlabels,$Label.ISSP_AMS_Step3_4_Companies_New,$Label.ISSP_AMS_Step3_4_Companies)}" escape="false"/>
 							</div>
                             
 							<apex:commandLink id="addcompany" style="margin-left:20px;display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship','none','')}" onfocus="updateCompanyOwnerRT('Current Company Owner');showNewCompanyDialog();" ><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
@@ -1183,7 +1183,7 @@
 							</apex:pageBlockSectionItem>
 
 							<apex:pageBlockSectionItem >
-								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q1}"/>
+								<apex:outputLabel value="{!IF(newlabels, $Label.ISSP_AMS_NoC_Q1_New, $Label.ISSP_AMS_NoC_Q1)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Will_such_change_affect_the_premises__c==null), 'border:2px red solid;', '')}" value="{!newForm.Will_such_change_affect_the_premises__c}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
@@ -1467,7 +1467,7 @@
 	</div>	
 	</div>
 	</div>
-		<c:ISSP_CustomFooter />
+		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
 		<script>
 						

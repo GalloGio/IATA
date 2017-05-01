@@ -24,7 +24,11 @@ public class EF_AccountTriggerHandler {
 		// Check if account has child accounts
 		// The child account will be inactivated too.
 		//
-		Map <Id, Account> childAccsMap = new Map <Id, Account> ([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account where ParentId in: inactiveAccsSet]);
+		
+		Map <Id, Account> childAccsMap = new Map <Id, Account> ();
+
+		if(!inactiveAccsSet.isEmpty())
+			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account where ParentId in: inactiveAccsSet]);
 		
 		if(!childAccsMap.isEmpty() && run){
 			for(Account a: childAccsMap.values()){
@@ -286,13 +290,13 @@ public class EF_AccountTriggerHandler {
            emailBody = emailBody + '</table>';
            if(a.RecordTypeId==AMS_Utils.getId('Account', 'Others')){
            		if(a.EF_Client_Services_Specialist__c!=null){
-           			 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			        mail.setSaveAsActivity(false);
+           Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+           mail.setSaveAsActivity(false);
 			        mail.setToAddresses(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}); 
-			        mail.setSubject('E&F Account Critical Changes Notification');
-			        mail.setBccSender(false);
-			        mail.setUseSignature(false);       
-		            mail.setHtmlBody(emailBody);
+           mail.setSubject('E&F Account Critical Changes Notification');
+           mail.setBccSender(false);
+           mail.setUseSignature(false);       
+           mail.setHtmlBody(emailBody);
 		            mails.add(mail);
            		//Utility.sendEmail(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c}, 'E&F Account Critical Changes Notification ', emailBody, true, null);
          	     }else{

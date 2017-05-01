@@ -1,6 +1,6 @@
 public with sharing class AMP_BoardMonitoredActivitiesExtension {
 
-	public  Account acc {get;set;}
+	public  Account acc {get; set;}
 	public list<Objective__c> lstBMAs {get; set;}
 	public list<Objective__c> lstDivisionBMAs {get; set;}
 	private Objective__c newObjective {get; set;}
@@ -15,197 +15,229 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 
 
 	public AMP_BoardMonitoredActivitiesExtension(ApexPages.StandardController stdController) {
-  			// stdController.addFields(new List<String>{'Sector__c','Category__c'});
-  			this.acc = (Account)stdController.getRecord();
-  			this.acc = [SELECT Id, Name, Sector__c, Category__c FROM Account WHERE Id=:this.acc.Id];
-  			AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-  			DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
-  			CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
-  			lstBMAs = getBMAs();
-  			lstDivisionBMAs = getDivisionBMAs();
-  		}
+		// stdController.addFields(new List<String>{'Sector__c','Category__c'});
+		this.acc = (Account)stdController.getRecord();
+		this.acc = [SELECT Id, Name, Sector__c, Category__c FROM Account WHERE Id = :this.acc.Id];
+		AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
+		DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+		CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+		lstBMAs = getBMAs();
+		lstDivisionBMAs = getDivisionBMAs();
+	}
 
-  		public list<Objective__c> getBMAs() {
-  			List<Objective__c> lstBMAs = new List<Objective__c>();
-  			lstBMAs =
-			// [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
-			// FROM Objective__c WHERE RecordTypeId = :AccountRecordTypeId];
-			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
-			(SELECT Id, Name, Detail__c FROM Comments__r ORDER BY CreatedDate DESC LIMIT 1)
-			FROM Objective__c WHERE Account__c = :acc.Id AND RecordTypeId = :AccountRecordTypeId];
-			return lstBMAs;
+	public list<Objective__c> getBMAs() {
+		List<Objective__c> lstBMAs = new List<Objective__c>();
+		lstBMAs =
+		    // [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
+		    // FROM Objective__c WHERE RecordTypeId = :AccountRecordTypeId];
+		    [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+		     (SELECT Id, Name, Detail__c FROM Comments__r ORDER BY CreatedDate DESC LIMIT 1)
+		     FROM Objective__c WHERE Account__c = :acc.Id AND RecordTypeId = :AccountRecordTypeId];
+		return lstBMAs;
+	}
+
+	@AuraEnabled
+	public static list<Objective__c> getBMAs(Id accountId) {
+		Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
+		Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
+		Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+		List<Objective__c> lstBMAs = new List<Objective__c>();
+		lstBMAs =
+		    // [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
+		    // FROM Objective__c WHERE RecordTypeId = :AccountRecordTypeId];
+		    [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+		     (SELECT Id, Name, Detail__c FROM Comments__r ORDER BY CreatedDate DESC LIMIT 1)
+		     FROM Objective__c WHERE Account__c = :acc.Id AND RecordTypeId = :AccountRecordTypeId];
+		return lstBMAs;
+	}
+
+	@AuraEnabled
+	public static Objective__c upsertBMA(Objective__c bma) {
+		upsert bma;
+		return bma;
+	}
+
+	@AuraEnabled
+	public static Comment__c upsertComment(Comment__c comment) {
+		if (comment.RecordTypeId == null ) {
+			Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+			comment.RecordTypeId = CommentRecordTypeId;
+		}
+		upsert comment;
+		return comment;
+	}
+
+	public list<Objective__c> getDivisionBMAs() {
+		List<Objective__c> lstBMAs = new List<Objective__c>();
+		lstBMAs =
+		    [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+		     (SELECT Id, Name, Detail__c, Status__c FROM Comments__r WHERE Account__c = :acc.Id ORDER BY CreatedDate DESC LIMIT 1)
+		     FROM Objective__c
+		     WHERE RecordTypeId = :DivisionRecordTypeId
+		                          AND AM_Related_to_Sector__c = :acc.Sector__c
+		                                  AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
+
+		return lstBMAs;
+	}
+
+	@AuraEnabled
+	public static list<Objective__c> getDivisionBMAs(Id accountId) {
+		Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
+		Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
+		Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
+		List<Objective__c> lstBMAs = new List<Objective__c>();
+
+		Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
+
+		lstBMAs =
+		    [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+		     (SELECT Id, Name, Detail__c, Status__c, Parent_Objective__c FROM Comments__r WHERE Account__c = :acc.Id ORDER BY CreatedDate DESC LIMIT 1)
+		     FROM Objective__c
+		     WHERE RecordTypeId = :DivisionRecordTypeId
+		                          AND AM_Related_to_Sector__c = :acc.Sector__c
+		                                  AND AM_Related_to_Categories__c INCLUDES (:acc.Category__c) ];
+
+		set<id> allobjectives = new set <id>();
+		set<id> existingcomment = new set <id>();
+
+		for (Objective__c o : lstBMAs)
+			allobjectives.add(o.id);
+
+		for (Comment__c c : [SELECT Id, Name, Detail__c, Status__c, Parent_Objective__c FROM Comment__c where Account__c = :acc.Id AND Parent_Objective__c in :allobjectives])
+			existingcomment.add(c.Parent_Objective__c);
+
+		allobjectives.removeAll(existingcomment);
+
+		if (!allobjectives.isEmpty()) {
+			List<Objective__c> temp = [SELECT Id, Account__c FROM Objective__c where id in : allobjectives];
+
+			for (Objective__c o : temp)
+				insert new Comment__c(Account__c = acc.id, Parent_Objective__c = o.Id, Status__c = 'On track', RecordTypeId = CommentRecordTypeId );
 		}
 
-		@AuraEnabled
-		public static list<Objective__c> getBMAs(Id accountId) {
-			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
-			Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-			Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
-			List<Objective__c> lstBMAs = new List<Objective__c>();
-			lstBMAs =
-			// [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
-			// FROM Objective__c WHERE RecordTypeId = :AccountRecordTypeId];
-			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
-			(SELECT Id, Name, Detail__c FROM Comments__r ORDER BY CreatedDate DESC LIMIT 1)
-			FROM Objective__c WHERE Account__c = :acc.Id AND RecordTypeId = :AccountRecordTypeId];
-			return lstBMAs;
-		}
+		/*for(Objective__c o : lstBMAs)
+		    if(o.Comments__r == null)
+		        insert new Comment__c(Account__c = o.Account__c, Parent_Objective__c = o.Id);*/
 
-		@AuraEnabled
-		public static Objective__c upsertBMA(Objective__c bma) {
-			upsert bma;
-			return bma;
-		}
-
-		@AuraEnabled
-		public static Comment__c upsertComment(Comment__c comment) {
-			if(comment.RecordTypeId == null ) {
-				Id CommentRecordTypeId =  [SELECT Id FROM RecordType WHERE SObjectType = 'Comment__c' AND DeveloperName = 'Objective_Related' ].Id;
-				comment.RecordTypeId = CommentRecordTypeId;
-			}
-			upsert comment;
-			return comment;
-		}
-
-		public list<Objective__c> getDivisionBMAs() {
-			List<Objective__c> lstBMAs = new List<Objective__c>();
-			lstBMAs =
-			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
-			(SELECT Id, Name, Detail__c, Status__c FROM Comments__r WHERE Account__c = :acc.Id ORDER BY CreatedDate DESC LIMIT 1)
-			FROM Objective__c
-			WHERE RecordTypeId = :DivisionRecordTypeId
-			AND AM_Related_to_Sector__c = :acc.Sector__c
-			AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
-
-			return lstBMAs;
-		}
-
-		@AuraEnabled
-		public static list<Objective__c> getDivisionBMAs(Id accountId) {
-			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id = :accountId LIMIT 1];
-			Id AccountRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Account'].Id;
-			Id DivisionRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType = 'Objective__c' AND DeveloperName = 'Division'].Id;
-			List<Objective__c> lstBMAs = new List<Objective__c>();
-			lstBMAs =
-			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
-			(SELECT Id, Name, Detail__c, Status__c FROM Comments__r WHERE Account__c = :acc.Id ORDER BY CreatedDate DESC LIMIT 1)
-			FROM Objective__c
-			WHERE RecordTypeId = :DivisionRecordTypeId
-			AND AM_Related_to_Sector__c = :acc.Sector__c
-			AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
-
-			return lstBMAs;
-		}
+		//second time for ensure that every objective has a comment. better way: create ant the end if no comment exists
+		lstBMAs =
+		    [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
+		     (SELECT Id, Name, Detail__c, Status__c FROM Comments__r  ORDER BY CreatedDate DESC LIMIT 1)
+		     FROM Objective__c
+		     WHERE RecordTypeId = :DivisionRecordTypeId
+		                          AND AM_Related_to_Sector__c = :acc.Sector__c
+		                                  AND AM_Related_to_Categories__c INCLUDES(:acc.Category__c) ];
+		return lstBMAs;
+	}
 
 
-		public void AddNewBMA() {
-			try {
-				newObjective = new Objective__c();
-				newObjective.Account__c = acc.Id;
-				newObjective.RecordTypeId = AccountRecordTypeId;
+	public void AddNewBMA() {
+		try {
+			newObjective = new Objective__c();
+			newObjective.Account__c = acc.Id;
+			newObjective.RecordTypeId = AccountRecordTypeId;
 
-					//lstBMAs = getBMAs();
-					lstBMAs.add(newObjective);
+			//lstBMAs = getBMAs();
+			lstBMAs.add(newObjective);
 
-					IdConcerned = null;
-					isEditMode = true;
-					isNewLine = true;
-					} catch (DMLException e) {
-						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-					}
-				}
-
-				public void EditLine() {
-					isEditMode = true;
-			// lstBMAs = getBMAs();
-		}
-		public void EditCommentLine() {
+			IdConcerned = null;
 			isEditMode = true;
-			for(Objective__c o : lstDivisionBMAs) {
-				if(o.Id == IdConcerned) {
-					newObjective = o;
-					if(o.Comments__r.isEmpty()) {
-						selectedComment = new Comment__c();
-						selectedComment.RecordTypeId = CommentRecordTypeId;
-						selectedComment.Account__c = acc.Id;
-						selectedComment.Parent_Objective__c = o.Id;
-						selectedComment.Status__c = '';
-						//insert selectedComment;
-						} else {
-							selectedComment = o.Comments__r[0];
-						}
-						break;
-					}
-				}
-			//lstDivisionBMAs = getDivisionBMAs();
+			isNewLine = true;
+		} catch (DMLException e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
 		}
+	}
 
-
-		public void SaveLine() {
-			for(Objective__c o : lstBMAs) {
-				if(o.Id == IdConcerned) {
-					newObjective = o;
-					break;
+	public void EditLine() {
+		isEditMode = true;
+		// lstBMAs = getBMAs();
+	}
+	public void EditCommentLine() {
+		isEditMode = true;
+		for (Objective__c o : lstDivisionBMAs) {
+			if (o.Id == IdConcerned) {
+				newObjective = o;
+				if (o.Comments__r.isEmpty()) {
+					selectedComment = new Comment__c();
+					selectedComment.RecordTypeId = CommentRecordTypeId;
+					selectedComment.Account__c = acc.Id;
+					selectedComment.Parent_Objective__c = o.Id;
+					selectedComment.Status__c = '';
+					//insert selectedComment;
+				} else {
+					selectedComment = o.Comments__r[0];
 				}
+				break;
 			}
+		}
+		//lstDivisionBMAs = getDivisionBMAs();
+	}
+
+
+	public void SaveLine() {
+		for (Objective__c o : lstBMAs) {
+			if (o.Id == IdConcerned) {
+				newObjective = o;
+				break;
+			}
+		}
+		System.debug(newObjective);
+		try {
+			upsert newObjective;
+			lstBMAs = getBMAs();
+			isEditMode = false;
+			isNewLine = false;
 			System.debug(newObjective);
-			try {
-				upsert newObjective;
-				lstBMAs = getBMAs();
+		} catch (DMLException e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+		}
+	}
+
+	public void SaveCommentLine() {
+		for (Objective__c o : lstDivisionBMAs) {
+			if (o.Id == IdConcerned) {
+				newObjective = o;
+				break;
+			}
+		}
+		System.debug(newObjective);
+		try {
+			if (selectedComment.Status__c == null ) {
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select an Account Status for the activity'));
+			} else {
+				upsert selectedComment;
+				lstDivisionBMAs = getDivisionBMAs();
 				isEditMode = false;
 				isNewLine = false;
 				System.debug(newObjective);
-				} catch (DMLException e) {
-					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-				}
 			}
-
-			public void SaveCommentLine() {
-				for(Objective__c o : lstDivisionBMAs) {
-					if(o.Id == IdConcerned) {
-						newObjective = o;
-						break;
-					}
-				}
-				System.debug(newObjective);
-				try {					
-					if(selectedComment.Status__c == null ) {
-						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select an Account Status for the activity'));
-					}
-					else {
-						upsert selectedComment;
-						lstDivisionBMAs = getDivisionBMAs();
-						isEditMode = false;
-						isNewLine = false;
-						System.debug(newObjective);
-					}
-					} catch (DMLException e) {
-						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-					}
-				}
-
-
-				public void DeleteLine() {
-					try {
-						Objective__c newLine = new Objective__c(Id = IdConcerned);
-						delete newLine;
-						lstBMAs = getBMAs();
-						} catch (DMLException e) {
-							ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-						}
-					}
-
-
-					public void CancelEdit() {
-
-						lstBMAs = getBMAs();
-						isEditMode = false;
-						IdConcerned = null;
-						isNewLine = false;
-			// 		try {
-			// } catch (DMLException e) {
-			// 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
-			// }
+		} catch (DMLException e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
 		}
-
 	}
+
+
+	public void DeleteLine() {
+		try {
+			Objective__c newLine = new Objective__c(Id = IdConcerned);
+			delete newLine;
+			lstBMAs = getBMAs();
+		} catch (DMLException e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage()));
+		}
+	}
+
+
+	public void CancelEdit() {
+
+		lstBMAs = getBMAs();
+		isEditMode = false;
+		IdConcerned = null;
+		isNewLine = false;
+		// 		try {
+		// } catch (DMLException e) {
+		// 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
+		// }
+	}
+
+}

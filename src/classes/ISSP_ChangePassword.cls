@@ -7,6 +7,10 @@ public with sharing class ISSP_ChangePassword {
     public Boolean tempPass {get; set;}
     public Boolean changePasswordMessage {get; set;}
 
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     /**
      * Constructor
      */
@@ -59,12 +63,12 @@ public with sharing class ISSP_ChangePassword {
             	PageReference pageRef = Site.changePassword(newPassword, confirmNewPassword, currentPassword);
                 if(pageRef == null && newPassword == confirmNewPassword && Test.isRunningTest())
                 {
-                    pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes');
+                    pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
                 }
             	if (pageRef != null){
             		if (tempPass){
             			updateUsers();
-            			pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes');
+            			pageRef = new PageReference('/ISSP_PersonalInformation?mid=M5S1&confirm=yes' + commParam);
             		}
             	}
             	else{
