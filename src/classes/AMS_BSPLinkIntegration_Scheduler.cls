@@ -24,12 +24,12 @@ global class AMS_BSPLinkIntegration_Scheduler implements Schedulable  {
 		//In some cases, might need to add "Status='Queued' " to the criteria
 		if ([SELECT count() FROM AsyncApexJob WHERE JobType='BatchApex' AND (Status = 'Processing' OR Status = 'Preparing')] < 5){ 
 			Database.executeBatch(batch, BATCH_SCOPE);
-		} else {
+		} else { AMS_BSPLinkIntegration_Scheduler bspSc = new AMS_BSPLinkIntegration_Scheduler(sEmail, lsAuth, sProcess, CaseId); Datetime dt = Datetime.now().addMinutes(10); String timeForScheduler = dt.format('s m H d M \'?\' yyyy'); Id schedId = System.Schedule('MatrixRetry'+timeForScheduler,timeForScheduler,bspSc);
 		   //schedule this same schedulable class again in 30 mins
-		   AMS_BSPLinkIntegration_Scheduler bspSc = new AMS_BSPLinkIntegration_Scheduler(sEmail, lsAuth, sProcess, CaseId);
-		   Datetime dt = Datetime.now().addMinutes(10);
-		   String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
-		   Id schedId = System.Schedule('MatrixRetry'+timeForScheduler,timeForScheduler,bspSc);
+		   
+		   
+		   
+		   
 		}
 	}
 

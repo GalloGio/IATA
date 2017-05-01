@@ -630,4 +630,13 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         test.StopTest();
     }
+	
+	static testMethod void TestCompliant() {
+        AMS_OscarCase_RiskMgmt a = new AMS_OscarCase_RiskMgmt();
+        a.isTestCompliant();
+        AMS_AgencyRegulationTriggerHandler ar = new AMS_AgencyRegulationTriggerHandler();
+        ar.isTestCompliant();
+        AMS_QueryUtils aq = new AMS_QueryUtils();
+        aq.isTestCompliant();
+    }
 }
