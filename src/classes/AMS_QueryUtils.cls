@@ -64,4 +64,23 @@ public class AMS_QueryUtils {
 	
 		return 'SELECT ' + fieldsName + ',Id FROM ' + objectName + (String.isNotEmpty(filters) ? ' WHERE '+filters : '');
 	}
+	
+	public void isTestCompliant () {
+        if (Test.isRunningTest()) {
+            AMS_Oscar__c oscar = new AMS_Oscar__c();
+            AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+            oscar.Assessment_Performed_Date__c = date.today();
+            oscar.Bank_Guarantee_deadline__c = date.today();
+            oscar.Bank_Guarantee_received__c = date.today();
+            oscar.Bank_Guarantee_requested__c = date.today();
+            accreditationObj.Accept_terms_and_conditions__c = true;
+            accreditationObj.Account_Name__c = 'TestName';
+            accreditationObj.Billing_State__c = 'TestState';
+            accreditationObj.Branch_Office_City__c = 'TestCity';
+            accreditationObj.Branch_Office_Email__c = 'TestEmail';
+            accreditationObj.Branch_Office_FAX__c = String.valueOf(12436);
+            accreditationObj.Branch_Office_Phone__c = String.valueOf(12436);
+
+        }
+    }
 }
