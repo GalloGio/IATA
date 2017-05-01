@@ -97,12 +97,17 @@ public without sharing class ISSP_Case {
     public Decimal CaseStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Internal.get(newCase.Status);}    }
     public Decimal CaseDPCStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Portal.get(newCase.Escalated_Status_ACCA__c);}   }
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
             if (!newCase.Visible_on_ISS_Portal__c) {
-                PageReference pr = new PageReference('/ISSP_Homepage');
+                PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
             }
             
@@ -111,7 +116,7 @@ public without sharing class ISSP_Case {
                 Set<String> openIFAPStatuses = new Set<String>
                     {'action needed', 'agent notified (email)', 'agent notified (mail)', 'sanity check failure'};
                 if(openIFAPStatuses.contains(newCase.Status.toLowerCase()) && con.Financial_Assessment_Contact__c) {
-                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId);
+                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                 		return pr;
                     }
             }
@@ -123,10 +128,10 @@ public without sharing class ISSP_Case {
     }
     
     /**
-        Shows a disclaimer if current case was closed for more than 2 months
+        Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-        if (getIsTwoMonthsClosedCase()) {
+        if (getHideForClosedCases()) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
         }
@@ -136,9 +141,9 @@ public without sharing class ISSP_Case {
         Returns true if the input case has an specific RecordType
         and is closed for more than 2 months
     **/
-    public Boolean getIsTwoMonthsClosedCase() {
+    public Boolean getHideForClosedCases() {
         set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
-        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addMonths(-2));
+        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
     public ISSP_Case() {
@@ -682,7 +687,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             try {
                 //get parameters
@@ -725,7 +730,7 @@ public without sharing class ISSP_Case {
                 //PageReference pr = new Pagereference('/ISSP_Case?caseId='+newCase.Id);
                 //pr.setRedirect(true);
                 //return pr;
-                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
@@ -736,6 +741,13 @@ public without sharing class ISSP_Case {
     public Pagereference saveAttach() {
 
         system.debug('saveAttach AccountId: ' + accountId);
+
+        // CNS
+        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+            newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team';
+        }
+
         //TF - SP9-C5
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, System.Label.ISSP_Select_Airline);
@@ -744,7 +756,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             //get parameters
             String paramTopic = ApexPages.currentPage().getParameters().get('topic');
@@ -785,11 +797,11 @@ public without sharing class ISSP_Case {
 				**/
 
                 //return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
-            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
     }
 
@@ -800,10 +812,10 @@ public without sharing class ISSP_Case {
             return new Pagereference(retURL);
         else if (caseId != null) {
             isEditMode = false;
-            return new Pagereference('/ISSP_Case?caseId=' + caseId);
+            return new Pagereference('/ISSP_Case?caseId=' + caseId + commParam);
         } else {
             isEditMode = false;
-            return new Pagereference('/ISSP_Homepage?mid=M0S1');
+            return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
             //return null;
         }
     }
@@ -817,7 +829,7 @@ public without sharing class ISSP_Case {
         upsert closeCase ;
         //string retURL = ApexPages.currentPage().getParameters().get('retURL');
         PageReference pageRef = ApexPages.currentPage();
-        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id); //ApexPages.currentPage();
+        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id + commParam); //ApexPages.currentPage();
     }
 
     public Pagereference DPCAccept() {
@@ -922,7 +934,7 @@ public without sharing class ISSP_Case {
         }
         update newCase;
         //return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
-        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true');
+        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true' + commParam);
     }
 
     @TestVisible
@@ -1047,7 +1059,7 @@ public without sharing class ISSP_Case {
     }
 
     public Pagereference AddComment() {
-        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId'));
+        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId') + commParam);
         p.setRedirect(true);
         return p;
     }
@@ -1259,5 +1271,61 @@ public without sharing class ISSP_Case {
       		}
   		}
          return false;
+    }
+
+    /**
+        Find all Team members and returnns a String with their emails
+    **/
+    public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+    public String getCCOthers() {
+        list<Id> listContactId = new list<Id>();
+        for (CaseTeamMember teamMember: [
+                SELECT Id, MemberId, Member.Email
+                FROM CaseTeamMember
+                WHERE ParentId = :newCase.Id
+                AND TeamRoleId = :PARTNER_USER_ROLE]) {
+            listContactId.add(teamMember.MemberId);
+        }
+        list<String> listEmails = new list<String>();
+        for (Contact contact: [
+                SELECT Id, Email
+                FROM Contact
+                WHERE id IN :listContactId
+                ORDER BY Email ASC]) {
+            if (contact.Email!=null && contact.Email!='') {
+                listEmails.add(contact.Email);
+            }
+        }
+        listEmails.sort();
+        return String.join(listEmails,'; ');
+    }
+    
+    /**
+        Add a new CC Other Contat to current Case
+    **/
+    public String inputccotheremail{get; set;} 
+    public PageReference addCCOther() {
+        String findEmail = this.inputccotheremail.trim();
+        this.inputccotheremail = '';
+        if (findEmail==null||findEmail=='') return null;
+        // find contact with input email
+        list<Contact> listContact = [SELECT Id FROM Contact WHERE Email = :findEmail limit 1];
+        if (listContact.size()!=1) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Not_Found.replace('{0}',findEmail)));
+            return null;
+        }
+        // insert found contact as a team member of the case
+        try {
+            CaseTeamMember teammember = new CaseTeamMember(
+                ParentId = this.newCase.Id,
+                MemberId = listContact.get(0).Id,
+                TeamRoleId = PARTNER_USER_ROLE);
+            insert teammember;
+        } catch (DMLException e) {
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
+            }
+        }
+        return null;
     }
 }

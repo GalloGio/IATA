@@ -12513,6 +12513,62 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOther</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CCOther</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Add</shortDescription>
+        <value>Add CC Others</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Not_Found</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Not Found</shortDescription>
+        <value>No contact found with email {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Wrong_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Wrong Emails</shortDescription>
+        <value>Couldn&apos;t find any Contact with these emails: {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers</shortDescription>
+        <value>CC Others</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Email</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
         <categories>ISSP, ISSP_CampaignNotification</categories>
         <language>en_US</language>
