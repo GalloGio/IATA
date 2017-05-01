@@ -11,7 +11,7 @@
 11 - CaseBeforInsert - ALL: isInsert
 12 - AMS_OSCARCaseTrigger - ALL: isInsert, isUpdate
 13 - trgAccelyaRequestSetCountry - ALL: isInsert
-14 - trgCase - ALL: isInsert
+14 - trgCase - ALL: isInsert 
 */
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
@@ -81,7 +81,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
-    /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger
+    /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
 		if(!CaseChildHelper.noValidationsOnTrgCAseIFAP ){
 			if (Trigger.isDelete) 
@@ -548,7 +548,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/****************************************************************************************************************************************************/
     /*Trigger.isInsert*/
 	if (Trigger.isInsert) {
-        /*trgCaseLastSIDRADate Trigger.isInsert
+        /*trgCaseLastSIDRADate Trigger.isInsert*/
 		if(trgCaseLastSIDRADate){
 			//Code moved to a helper class: SIDRACaseHelper.cls by Javier Tena on 17/02/2017
        		SIDRACaseHelper.doAfterInsert(Trigger.newMap);
@@ -709,7 +709,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/****************************************************************************************************************************************************/    
     /*Trigger.isUpdate*/
 	else if (Trigger.isUpdate) {
-        /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate
+        /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
 			Set<Id> sCaseIds = new Set<Id>();
 			// Check if received cases are IFAP Cases
@@ -765,7 +765,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		
-		/*trgCaseLastSIDRADate Trigger.isUpdate
+		/*trgCaseLastSIDRADate Trigger.isUpdate*/
 		if(trgCaseLastSIDRADate){
         	//Code moved to a helper class: SIDRACaseHelper.cls by Javier Tena on 17/02/2017
       		SIDRACaseHelper.doAfterUpdate(Trigger.newMap, Trigger.oldMap);

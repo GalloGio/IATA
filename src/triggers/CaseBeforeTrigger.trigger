@@ -899,7 +899,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCase Trigger.isInsert*/
         
-        /*trgProcessISSCase Trigger.isInsert
+        /*trgProcessISSCase Trigger.isInsert*/
         if(trgProcessISSCase){//FLAG
         	system.debug('trgProcessISSCase Trigger.isInsert');
             // loop tru cases to be created
@@ -1451,7 +1451,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgCase Trigger.isUpdate*/
         
-        /*trgProcessISSCase Trigger.isUpdate
+        /*trgProcessISSCase Trigger.isUpdate*/
         if(trgProcessISSCase){//FLAG
         	system.debug('trgProcessISSCase Trigger.isUpdate');
             // loop tru cases to be update
