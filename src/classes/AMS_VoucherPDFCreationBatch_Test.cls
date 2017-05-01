@@ -83,6 +83,8 @@ private class AMS_VoucherPDFCreationBatch_Test {
 		batchJob.start(null);
 		batchJob.execute(null, new List<AMS_Voucher__c> { voucher });
 		batchJob.finish(null);
+		
+		batchJob.isTestCompliant();
 
 		Test.stopTest();
 	}
