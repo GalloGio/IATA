@@ -506,9 +506,9 @@
                     <div class="form-group">
                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Operation_Type}</label>
                     <div class="col-lg-9" style="padding-top:7px">
-                        <apex:selectRadio style="width:35%" id="operationType" value="{!sectorValue}" onchange="refreshOfficeTypes(this.value)"> <!--onchange="refreshOfficeTypes(this.value);"-->
+                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="refreshOfficeTypes(this.value)"> <!--onchange="refreshOfficeTypes(this.value);"-->
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
-                            <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
+                            <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
                             <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/ --> 
                         </apex:selectRadio>
                         <script>
@@ -722,7 +722,7 @@
                         <apex:column headerClass="info">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                         </apex:column>
-                        <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, newForm.Agent_Type__c),
+                        <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),
                                                                      $Label.ISSP_AMS_NoC_Request_for_Change)}">
                             <apex:outputText >
                                 <strong>{!reqs.Name}</strong><br/>
@@ -798,7 +798,7 @@
         <apex:outputPanel rendered="{!BEGINS(sector, 'Cargo Agent') && !isNoticeOfChange}">
             <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
             <a href="/ISSP_AMS_PDF_CGO?caseId={!newCase.Id}{!if(communityName=='CNS', '&CommunityName=CNS', '')}&mode=pdf" target="_new">{!$Label.ISSP_AMS_download_a_PDF_version}
-</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , newForm.Agent_Type__c)} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
+</a> {!$Label.ISSP_AMS_download_a_PDF_version_Of_your} {!IF(AND(newForm.Agent_Type__c=='IATA Cargo Agent', communityName=='CNS'), 'CNS Cargo Agent' , IF(newlabels,'IFACP Forwader',newForm.Agent_Type__c))} {!amsOfficeType} {!$Label.ISSP_AMS_download_a_PDF_version_Application}
         </apex:outputPanel>
         <apex:form >
         <apex:outputPanel rendered="{!isNoticeOfChange && !isBankAccountChange}" id="pdfnoc">
@@ -928,11 +928,11 @@
                 <apex:pageBlockSection title="{!$Label.ISSP_TC_Accept}" columns="1" collapsible="false">
                     <div class="aplabel">
                         <apex:outputText rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, $Label.ISSP_AMS_NoC_TC_Change_CGO), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO_New, $Label.ISSP_AMS_NoC_TC_Change_CGO)), $Label.ISSP_AMS_NoC_TC_Change_CASS), $Label.ISSP_AMS_NoC_Bank_Change1)}"/>
                             <br/><br/>
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, $Label.ISSP_AMS_NoC_TC_Change_CGO2), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP2, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO2_New, $Label.ISSP_AMS_NoC_TC_Change_CGO2)), ''), $Label.ISSP_AMS_NoC_Bank_Change2)}"/>
                             <br/><br/>
-                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, $Label.ISSP_AMS_NoC_TC_Change_CGO3), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/> 
+                            <apex:outputText escape="false" value="{!IF(BEGINS(sectorValue,'Cargo_Agent'), IF(agencyCategory='IATA Cargo Agent', IF(isocountry.EACP_Country__c, $Label.ISSP_AMS_NoC_TC_Change_EACP3, IF(newlabels, $Label.ISSP_AMS_NoC_TC_Change_CGO3_New, $Label.ISSP_AMS_NoC_TC_Change_CGO3)), ''), $Label.ISSP_AMS_NoC_Bank_Change3)}"/> 
                         </apex:outputText>  
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_NoC_TC}" rendered="{!newForm.Is_change_ownership_or_shareholding__c==false}"/>                                     
                     <br/>

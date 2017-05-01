@@ -50,20 +50,20 @@
         <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!communityName!='CNS'}"/>
     </div>
     <div style="padding-top:16px;padding-left:44px">
-        <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, $Label.ISSP_AMS_Step0_SAA)}</h3>
-        <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, $Label.ISSP_AMS_Step0_Intro)}" escape="false"/>
+        <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
+        <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
     </div>
     <div style="padding-left:138px">
           <apex:form > 
         <table width="100%">
             <tr>
-                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Agency_Accreditation_CNS, $Label.ISSP_AMS_Step0_Agency_Accreditation)}"/></h3></td>
+                <td style="width:45%;vertical-align:top;"><h3><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Agency_Accreditation_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Agency_Accreditation_New, $Label.ISSP_AMS_Step0_Agency_Accreditation))}"/></h3></td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top"><h3><apex:outputText value="{!$Label.ISSP_AMS_Step0_Changes}" rendered="{!isoCountry.Enable_Notice_of_Change__c}"/></h3></td>
             </tr>
             <tr>
                 <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
-                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, $Label.ISSP_AMS_Step0_New_Application)}"/>
-                    <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, $Label.ISSP_AMS_Step0_Intro_Accred)}" escape="false"/>
+                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+                    <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </div>
                 </td>
