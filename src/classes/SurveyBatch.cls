@@ -123,8 +123,8 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                WHERE ClosedDate > :startd AND ClosedDate < :endd
                                AND ContactId <> NULL AND Contact.Email <> NULL
                                AND (Contact.Instant_Survey_opt_out__c = NULL OR Contact.Instant_Survey_opt_out__c = '')
-
                                AND Instant_Survey_Feedback_requested__c = false
+                               AND RecordType.DeveloperName <> 'IATA_Financial_Review' /*exclude IFAP cases*/
                                    ORDER BY ClosedDate DESC]);
 
     CasesPart1 = new Set<Id>();
