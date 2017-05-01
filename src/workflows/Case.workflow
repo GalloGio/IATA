@@ -2154,10 +2154,6 @@
         <description>SCE: New Invoicing case</description>
         <protected>false</protected>
         <recipients>
-            <recipient>brierst@iata.org.inactive</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>vargasg@iata.org</recipient>
             <type>user</type>
         </recipients>
