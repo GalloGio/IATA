@@ -16,8 +16,8 @@
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;
-    boolean trgCaseLastSIDRADate = GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;
+    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;		//55555555555555
+    boolean trgCaseLastSIDRADate = GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;										//55555555555555
 	boolean trgCase_ContactLastSurveyUpdate = GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;				//44444444444444
 	boolean trgParentCaseUpdate = GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;										//33333333333333
 	boolean trgICCSManageProductAssignment = GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;					//33333333333333
