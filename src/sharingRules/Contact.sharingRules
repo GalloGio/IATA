@@ -50,15 +50,4 @@
             <value>0</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingOwnerRules>
-        <fullName>Timba_Survey_Contact_Sharing_Rule</fullName>
-        <accessLevel>Read</accessLevel>
-        <label>Timba Survey Contact Sharing Rule</label>
-        <sharedTo>
-            <group>Timba_Survey_User</group>
-        </sharedTo>
-        <sharedFrom>
-            <allInternalUsers></allInternalUsers>
-        </sharedFrom>
-    </sharingOwnerRules>
 </SharingRules>

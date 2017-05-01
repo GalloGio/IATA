@@ -484,6 +484,7 @@
             <picklistValues>
                 <fullName>Baggage</fullName>
                 <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
             <sorted>false</sorted>
         </picklist>

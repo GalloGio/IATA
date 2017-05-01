@@ -2154,7 +2154,7 @@
         <description>SCE: New Invoicing case</description>
         <protected>false</protected>
         <recipients>
-            <recipient>brierst@iata.org</recipient>
+            <recipient>brierst@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2794,7 +2794,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2821,7 +2821,7 @@
             <type>caseTeam</type>
         </recipients>
         <recipients>
-            <recipient>chaziran@iata.org</recipient>
+            <recipient>chaziran@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2836,7 +2836,7 @@
             <type>caseTeam</type>
         </recipients>
         <recipients>
-            <recipient>chaziran@iata.org</recipient>
+            <recipient>chaziran@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -2903,7 +2903,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3046,7 +3046,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3154,7 +3154,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3233,7 +3233,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3261,7 +3261,7 @@
             <type>caseTeam</type>
         </recipients>
         <recipients>
-            <recipient>chaziran@iata.org</recipient>
+            <recipient>chaziran@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3329,7 +3329,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
+            <recipient>radulescul@iata.org.inactive</recipient>
             <type>user</type>
         </recipients>
         <recipients>
