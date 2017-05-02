@@ -363,7 +363,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
 				FROM Task
 				WHERE WhatId = :objectiveId
-				ORDER BY CreatedDate DESC
+				ORDER BY CreatedDate ASC
 				];
 		}
 		return lsTasks;
