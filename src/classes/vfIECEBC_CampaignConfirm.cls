@@ -97,7 +97,7 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                         //, Test_Email_Last_Send_Time_Stamp__c
                         //, Test_Email_Total_Sent_On_Stamp_Period__c
                         //, Test_Email_Total_Sent_Today__c 
-                from EBC_Campaign__c 
+                from EBC_Campaign__c
                 where Id = :ebcCampaignId
                 limit 1] ;
             ebcCampaign = ( campaignList.size() == 0)  ? null :campaignList[0];
