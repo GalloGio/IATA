@@ -26,28 +26,28 @@
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgProcessISSCase = GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;                                       //55555555555555
-    boolean trgCase = GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
-    boolean trgCaseIFAP = GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;                                                   //44444444444444
-    boolean ISSP_CreateNotificationForCase = GlobalCaseTrigger__c.getValues('BT ISSP_CreateNotificationForCase').ON_OFF__c; 			//11111111111111
-    boolean trgCase_BeforeDelete = GlobalCaseTrigger__c.getValues('BT trgCase_BeforeDelete').ON_OFF__c;  			                    //11111111111111
-    boolean UserInfoUpdate = GlobalCaseTrigger__c.getValues('BT UserInfoUpdate').ON_OFF__c;                                             //22222222222222
-    boolean trgCheckBusinessHoursBeforeInsert = GlobalCaseTrigger__c.getValues('BT trgCheckBusinessHoursBeforeInsert').ON_OFF__c;
-    boolean trgSidraCaseBeforeInsertUpdate = GlobalCaseTrigger__c.getValues('BT trgSidraCaseBeforeInsertUpdate').ON_OFF__c;				//22222222222222
-    boolean trgBeforeInsertUpdate = GlobalCaseTrigger__c.getValues('BT trgBeforeInsertUpdate').ON_OFF__c; 						        //11111111111111
-    boolean CalculateBusinessHoursAges = GlobalCaseTrigger__c.getValues('BT CalculateBusinessHoursAges').ON_OFF__c;					    //22222222222222
-    boolean trgCase_SIS_ICH_AreaVsType = GlobalCaseTrigger__c.getValues('BT trgCase_SIS_ICH_AreaVsType').ON_OFF__c; 					//11111111111111
-    boolean trgICCSCaseValidation = GlobalCaseTrigger__c.getValues('BT trgICCSCaseValidation').ON_OFF__c;                               //22222222222222
-    boolean trgParentCaseUpdate = GlobalCaseTrigger__c.getValues('BT trgParentCaseUpdate').ON_OFF__c;							        //33333333333333
-    boolean Case_FSM_Handle_NonCompliance_BI_BU = GlobalCaseTrigger__c.getValues('BT Case_FSM_Handle_NonCompliance_BI_BU').ON_OFF__c;	//22222222222222
-    boolean trgIDCard_Case_BeforeUpdate = GlobalCaseTrigger__c.getValues('BT trgIDCard_Case_BeforeUpdate').ON_OFF__c;
-    boolean trgICCS_ASP_Case_Validation = GlobalCaseTrigger__c.getValues('BT trgICCS_ASP_Case_Validation').ON_OFF__c;                   //11111111111111
-    boolean trgCreateUpdateServiceRenderedRecord = GlobalCaseTrigger__c.getValues('BT trgCreateUpdateServiceRendered').ON_OFF__c;		//44444444444444
-    boolean updateAccountFieldBasedOnIATAwebCode = GlobalCaseTrigger__c.getValues('BT updateAccountFieldBasedOnIATA').ON_OFF__c;		//22222222222222
-    boolean CaseBeforInsert = GlobalCaseTrigger__c.getValues('BT CaseBeforInsert').ON_OFF__c;							                //33333333333333
-    boolean AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('BT AMS_OSCARCaseTrigger').ON_OFF__c;
-    boolean trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('BT trgAccelyaRequestSetCountry').ON_OFF__c;					//33333333333333
-    boolean trgCustomerPortalCaseSharing = GlobalCaseTrigger__c.getValues('BT trgCustomerPortalCaseSharing').ON_OFF__c;                 //44444444444444
+    boolean trgProcessISSCase = true;//GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;                                        //55555555555555
+    boolean trgCase = true;// GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
+    boolean trgCaseIFAP =  true;//GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;                                                   //44444444444444
+    boolean ISSP_CreateNotificationForCase =  true;//GlobalCaseTrigger__c.getValues('BT ISSP_CreateNotificationForCase').ON_OFF__c;             //11111111111111
+    boolean trgCase_BeforeDelete =  true;//GlobalCaseTrigger__c.getValues('BT trgCase_BeforeDelete').ON_OFF__c;                                 //11111111111111
+    boolean UserInfoUpdate =  true;//GlobalCaseTrigger__c.getValues('BT UserInfoUpdate').ON_OFF__c;                                             //22222222222222
+    boolean trgCheckBusinessHoursBeforeInsert =  true;//GlobalCaseTrigger__c.getValues('BT trgCheckBusinessHoursBeforeInsert').ON_OFF__c;
+    boolean trgSidraCaseBeforeInsertUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgSidraCaseBeforeInsertUpdate').ON_OFF__c;             //22222222222222
+    boolean trgBeforeInsertUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgBeforeInsertUpdate').ON_OFF__c;                               //11111111111111
+    boolean CalculateBusinessHoursAges =  true;//GlobalCaseTrigger__c.getValues('BT CalculateBusinessHoursAges').ON_OFF__c;                     //22222222222222
+    boolean trgCase_SIS_ICH_AreaVsType =  true;//GlobalCaseTrigger__c.getValues('BT trgCase_SIS_ICH_AreaVsType').ON_OFF__c;                     //11111111111111
+    boolean trgICCSCaseValidation =  true;//GlobalCaseTrigger__c.getValues('BT trgICCSCaseValidation').ON_OFF__c;                               //22222222222222
+    boolean trgParentCaseUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgParentCaseUpdate').ON_OFF__c;                                   //33333333333333
+    boolean Case_FSM_Handle_NonCompliance_BI_BU =  true;//GlobalCaseTrigger__c.getValues('BT Case_FSM_Handle_NonCompliance_BI_BU').ON_OFF__c;   //22222222222222
+    boolean trgIDCard_Case_BeforeUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgIDCard_Case_BeforeUpdate').ON_OFF__c;
+    boolean trgICCS_ASP_Case_Validation =  true;//GlobalCaseTrigger__c.getValues('BT trgICCS_ASP_Case_Validation').ON_OFF__c;                   //11111111111111
+    boolean trgCreateUpdateServiceRenderedRecord =  true;//GlobalCaseTrigger__c.getValues('BT trgCreateUpdateServiceRendered').ON_OFF__c;       //44444444444444
+    boolean updateAccountFieldBasedOnIATAwebCode =  true;//GlobalCaseTrigger__c.getValues('BT updateAccountFieldBasedOnIATA').ON_OFF__c;        //22222222222222
+    boolean CaseBeforInsert =  true;//GlobalCaseTrigger__c.getValues('BT CaseBeforInsert').ON_OFF__c;                                           //33333333333333
+    boolean AMS_OSCARCaseTrigger =  true;//GlobalCaseTrigger__c.getValues('BT AMS_OSCARCaseTrigger').ON_OFF__c;
+    boolean trgAccelyaRequestSetCountry =  true;//GlobalCaseTrigger__c.getValues('BT trgAccelyaRequestSetCountry').ON_OFF__c;                   //33333333333333
+    boolean trgCustomerPortalCaseSharing =  true;//GlobalCaseTrigger__c.getValues('BT trgCustomerPortalCaseSharing').ON_OFF__c;                 //44444444444444
     
     /**********************************************************************************************************************************/
     /*Record type*/

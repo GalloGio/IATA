@@ -16,19 +16,19 @@
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;		//55555555555555
-    boolean trgCaseLastSIDRADate = GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;										//55555555555555
-	boolean trgCase_ContactLastSurveyUpdate = GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;				//44444444444444
-	boolean trgParentCaseUpdate = GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;										//33333333333333
-	boolean trgICCSManageProductAssignment = GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;					//33333333333333
-	boolean trgICCS_ASP_CaseClosed = GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;									//44444444444444
-	boolean trgCreateUpdateServiceRenderedRecord = GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;			//44444444444444			
-	boolean trgCaseEscalationMailNotificationICH = GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;					//44444444444444
-	boolean trgCheckSISCaseRecycleBinAfterInsert = GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;				//22222222222222
-	boolean CaseBeforInsert = GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;												//33333333333333
-	boolean AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
-	boolean trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;						//33333333333333
-	boolean trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;																//33333333333333
+    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = true;//GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
+	boolean trgCaseLastSIDRADate = true;//GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;                                     //55555555555555
+	boolean trgCase_ContactLastSurveyUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;               //44444444444444
+	boolean trgParentCaseUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;                                       //33333333333333
+	boolean trgICCSManageProductAssignment = true;//GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;
+	boolean trgICCS_ASP_CaseClosed = true;//GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;                                 //44444444444444
+	boolean trgCreateUpdateServiceRenderedRecord = true;//GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;           //44444444444444
+	boolean trgCaseEscalationMailNotificationICH = true;//GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;                    //44444444444444
+	boolean trgCheckSISCaseRecycleBinAfterInsert = true;//GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;                //22222222222222
+	boolean CaseBeforInsert = true;//GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;                                               //33333333333333
+	boolean AMS_OSCARCaseTrigger = true;//GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
+	boolean trgAccelyaRequestSetCountry = true;//GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
+	boolean trgCase = true;//GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
     /**********************************************************************************************************************************/
     
     /*Record type*/
