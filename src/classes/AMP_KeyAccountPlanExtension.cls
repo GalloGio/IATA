@@ -332,6 +332,8 @@ public with sharing class AMP_KeyAccountPlanExtension {
 
 	@AuraEnabled
 	public static List<Task> getTasksByAccount(Id accountId) {
+				System.Debug('started from here?');
+
 		List<Task> lsTasks = new List<Task>();
 		if(accountId != null) {
 			List<Objective__c> activities =  getObjectives(accountId);
@@ -346,7 +348,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 						WhatId
 				FROM Task
 				WHERE WhatId IN :lsActivityIds
-				ORDER BY CreatedDate DESC
+				ORDER BY CreatedDate ASC
 				];
 		}
 		return lsTasks;
