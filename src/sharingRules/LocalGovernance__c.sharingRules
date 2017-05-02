@@ -15,7 +15,7 @@
     </sharingCriteriaRules>
     <sharingCriteriaRules>
         <fullName>Show_non_drafts_to_all</fullName>
-        <accessLevel>Edit</accessLevel>
+        <accessLevel>Read</accessLevel>
         <label>Show non-drafts to all</label>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
