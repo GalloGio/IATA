@@ -66,7 +66,7 @@ public class AMS_IATAISOCountryTriggerHandler {
 	            
 	            IATA_ISO_Country__c oldCountry = oldMap.get(isoc.id);        
 
-	            if (oldCountry.ANG_Portal_Service__c != null && isoc.ANG_Portal_Service__c == null) {
+	            if (oldCountry.ANG_Portal_Service__c != null) {
 	                portalApplicationIds.add(oldCountry.ANG_Portal_Service__c);
 	            }
 	        }
@@ -86,18 +86,21 @@ public class AMS_IATAISOCountryTriggerHandler {
 
 	            if (isUpdate) {
 	                IATA_ISO_Country__c oldCountry = oldMap.get(isoc.id);
-
+	                
 	                if (oldCountry.ISO_Code__c != isoc.ISO_Code__c) {
 	                    if (portal.ANG_Country_Coverage__c.contains(oldCountry.ISO_Code__c)) {
 	                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(oldCountry.ISO_Code__c, isoc.ISO_Code__c);
 	                        flagDone = true;
 	                    }
 	                }
-
+					
 	                //
 	                // Handle the countries that were modified and the association with the portal service was removed.
 	                //
-	                if(oldCountry.ANG_Portal_Service__c != null && isoc.ANG_Portal_Service__c == null) {
+	                if(oldCountry.ANG_Portal_Service__c != null && isoc.ANG_Portal_Service__c == null ) {
+
+						System.debug(LoggingLevel.ERROR, '-------------------------------');
+
 	                    if (flagDone) {
 	                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(',' + isoc.ISO_Code__c, '');
 	                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(isoc.ISO_Code__c + ',', '');
@@ -108,6 +111,15 @@ public class AMS_IATAISOCountryTriggerHandler {
 	                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(oldCountry.ISO_Code__c , '');
 	                    }
 	                    flagDone = true;
+	                } else {
+	                	if (isoc.ANG_Portal_Service__c != null && oldCountry.ANG_Portal_Service__c != null && isoc.ANG_Portal_Service__c != oldCountry.ANG_Portal_Service__c) {
+	                		if (oldCountry.ANG_Portal_Service__c == portal.id) {
+		                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(',' + oldCountry.ISO_Code__c, '');
+		                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(oldCountry.ISO_Code__c + ',', '');
+		                        portal.ANG_Country_Coverage__c = portal.ANG_Country_Coverage__c.replace(oldCountry.ISO_Code__c , '');
+		                        flagDone = true;
+	                		}
+	                	}
 	                }
 	            }
 
