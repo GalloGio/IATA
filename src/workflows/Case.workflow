@@ -2154,10 +2154,6 @@
         <description>SCE: New Invoicing case</description>
         <protected>false</protected>
         <recipients>
-            <recipient>brierst@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>vargasg@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2794,10 +2790,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezam@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -2820,10 +2812,6 @@
             <recipient>SIDRA ACC</recipient>
             <type>caseTeam</type>
         </recipients>
-        <recipients>
-            <recipient>chaziran@iata.org</recipient>
-            <type>user</type>
-        </recipients>
         <senderType>CurrentUser</senderType>
         <template>SCESIDRACases/DEF_DEF05_TechnicalDefaultApproved2Hours</template>
     </alerts>
@@ -2834,10 +2822,6 @@
         <recipients>
             <recipient>SIDRA ACC</recipient>
             <type>caseTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>chaziran@iata.org</recipient>
-            <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>SCESIDRACases/DEF_DEF06_TechnicalDefaultApprovedbyCM</template>
@@ -2900,10 +2884,6 @@
         </recipients>
         <recipients>
             <recipient>perezp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>radulescul@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3046,10 +3026,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezam@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3154,10 +3130,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezam@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3233,10 +3205,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>radulescul@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>sanchezam@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3259,10 +3227,6 @@
         <recipients>
             <recipient>SIDRA ACC</recipient>
             <type>caseTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>chaziran@iata.org</recipient>
-            <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
@@ -3326,10 +3290,6 @@
         </recipients>
         <recipients>
             <recipient>perezp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>radulescul@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
