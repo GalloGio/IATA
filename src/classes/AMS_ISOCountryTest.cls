@@ -87,6 +87,15 @@ public class AMS_ISOCountryTest {
             );
 
         insert easyPay1;
+
+        Portal_Applications__c easyPay2 = new Portal_Applications__c (
+                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
+            );
+
+        insert easyPay2;        
     
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', 
             ISO_Code__c = 'TS',
@@ -255,6 +264,24 @@ public class AMS_ISOCountryTest {
         ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
 
         System.assertEquals(ANG_Country_Coverage, isoc3.ISO_Code__c);
+
+        //-------
+
+        isoc2.ANG_Portal_Service__c = easyPay1.id;        
+
+        update isoc2;
+
+        isoc3.ANG_Portal_Service__c = easyPay2.id;
+
+        update isoc3;
+
+        ANG_Country_Coverage = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay1.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage, isoc2.ISO_Code__c);
+
+        String ANG_Country_Coverage2 = [SELECT ANG_Country_Coverage__c FROM Portal_Applications__c WHERE id =: easyPay2.id].ANG_Country_Coverage__c;
+
+        System.assertEquals(ANG_Country_Coverage2, isoc3.ISO_Code__c);
 
     }
 }
