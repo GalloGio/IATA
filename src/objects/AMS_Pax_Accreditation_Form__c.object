@@ -2244,6 +2244,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ISSP_AMS_Invoicing_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Invoicing Contact</label>
+        <referenceTo>AMS_Accreditation_Contact__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Invoicing Contact)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ISSP_AMS_Is_Applicant_Parent__c</fullName>
         <externalId>false</externalId>
         <label>* Is the applicant a parent, subsidiary?</label>

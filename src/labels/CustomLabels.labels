@@ -8190,6 +8190,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Invalid IATA Code: Please enter a valid code.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Invoicing_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Invoicing_Contact</shortDescription>
+        <value>Invoicing&lt;br/&gt;Contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Is_Applicant_Parent_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9862,7 +9869,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Portal Admin</shortDescription>
-        <value>Portal&lt;br/&gt;Administrator</value>
+        <value>Portal&lt;br/&gt;Admin.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Position</fullName>
