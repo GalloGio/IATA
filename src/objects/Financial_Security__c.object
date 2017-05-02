@@ -2447,7 +2447,8 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;TAANZ Bonding Scheme&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
-NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
+NOT( ISPICKVAL( Security_Type__c , &quot;Financial Guarantee&quot;) ),
+NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>
