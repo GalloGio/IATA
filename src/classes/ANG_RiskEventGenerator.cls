@@ -186,6 +186,9 @@ public class ANG_RiskEventGenerator {
 			accountIds.add(re.ANG_AccountId__c);
 
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
+
+			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = Id.valueOf(re.ANG_Source_Id__c)+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
