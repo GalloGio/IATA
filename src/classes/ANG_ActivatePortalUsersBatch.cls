@@ -64,7 +64,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
         return errorMessageResult;
     }
 	
-	public static void permissionASS(list<Id> USersID){
+	/*public static void permissionASS(list<Id> USersID){
     
 	    try { 
 	    
@@ -86,7 +86,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
 	           TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
 	        }
     
-    }
+    }*/
 
     public static User createUser(Contact con,Id userProfile){
         system.debug('createUser with profile: ' + userProfile);
@@ -170,7 +170,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
 
             Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
             Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
-            permissionASS(new list<Id>{newUser.Id});
+            //permissionASS(new list<Id>{newUser.Id});
             
         }else{
             system.debug('will update user with this profile id: ' + newUser.ProfileId);
