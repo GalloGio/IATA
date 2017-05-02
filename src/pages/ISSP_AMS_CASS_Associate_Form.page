@@ -416,8 +416,8 @@
      <div class="panel-primary">
         <div class="panel-heading head_panel_green">
             <!-- Application for approval as {!IF(OR(BEGINS(newForm.Agent_Type__c, 'I'),BEGINS(newForm.Agent_Type__c, 'E')), 'an', 'a')} {!newForm.Agent_Type__c} -->
-            {!IF(newForm.Agent_Type__c == 'IATA Cargo Agent', $Label.ISSP_AMS_StepsAll_Cargo_Title, 
-                IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', $Label.ISSP_AMS_StepsAll_Passenger_Title, 
+            {!IF(newForm.Agent_Type__c == 'IATA Cargo Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Cargo_Title_New, $Label.ISSP_AMS_StepsAll_Cargo_Title), 
+                IF(newForm.Agent_Type__c == 'IATA Passenger Sales Agent', IF(newlabels, $Label.ISSP_AMS_StepsAll_Passenger_Title_New, $Label.ISSP_AMS_StepsAll_Passenger_Title), 
                     IF(newForm.Agent_Type__c == 'EACP Intermediary', $Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title, 
                         IF(newForm.Agent_Type__c == 'CASS Associate', $Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title, 
                             IF(newForm.Agent_Type__c == 'Import Agent', $Label.ISSP_AMS_StepsAll_Import_Agent_Title, 
@@ -494,7 +494,7 @@
                                 {!$Label.ISSP_Loading_Travel_Agency_Details}
                             </apex:facet>
                         </apex:actionstatus>
-                        <apex:commandlink styleclass="pull-right" style="margin-right:5px" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!$Label.ISSP_AMS_Update_Agency}</apex:commandlink>
+                        <apex:commandlink styleclass="pull-right" style="margin-right:5px" status="actEditAccount" oncomplete="showUpdateAgencyDialog();" ><span class="glyphicon glyphicon-pencil"></span>{!IF(newlabels, $Label.ISSP_AMS_Update_Agency_New, $Label.ISSP_AMS_Update_Agency)}</apex:commandlink>
                         <apex:pageblocksectionitem >
                             <apex:outputlabel value="{!IF(isocountry.Local_language_Agency_details_required__c, txtLocalAgencyDetailsLegalNameENG, $ObjectType.Account.fields.Legal_name__c.Label)}" />
                             <apex:outputfield value="{!hqAccount.Name}" />
@@ -686,7 +686,7 @@
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1}</strong></div>
                        <div class="col-md-12">
                            <apex:outputText escape="false">
-                               {!$Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1}
+                               {!IF(newlabels, $Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1_New, $Label.ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1)}
                            </apex:outputText>
                        </div>
                        <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
