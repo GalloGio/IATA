@@ -12,7 +12,7 @@
 	    <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-	                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+	                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
 	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -24,7 +24,7 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+	                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
@@ -71,7 +71,7 @@
 	    <apex:pageBlockSection columns="1" collapsible="false">
 	        	<apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_STEP_3_2_Title,
+	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title),
                         $Label.ISSP_AMS_CGO_ReadOnly_SECTION2)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
 	                        </apex:outputpanel>                       
@@ -104,7 +104,7 @@
 	                <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
 	                 <apex:outputfield value="{!hqAccount.Fax}" />
                     
-                    <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label,
+                    <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
                                                  'Date office opened as an Intermediary')}" />           
 	                <apex:outputText value="{0,date, MMMM d,  yyyy}">
 	                    <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
@@ -147,7 +147,7 @@
 	                <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
 	                 <apex:outputfield value="{!newForm.Branch_Office_FAX__c}" />
 	                                   
-	                <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label,
+	                <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
                                                  'Date office opened as an Intermediary')}" />           
 	                <apex:outputText value="{0,date, MMMM d,  yyyy}">
 	                    <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
@@ -222,7 +222,7 @@
 	    <apex:facet name="header">
 	                        <apex:outputpanel >
 	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                            $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency, $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
+                            IF(newlabels, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency_New, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency), $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
@@ -291,12 +291,12 @@
 	    <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                                $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title, $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
+                                IF(newlabels, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title_New, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title), $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
 	    <apex:panelGrid columns="3" width="100%" headerClass="bg-primary" rowClasses="row1" columnClasses="col1, col2_4, col3">
-            <apex:outputText value="{!IF(isocountry.EACP_Country__c,$Label.ISSP_AMS_Step3_4_Q1_Intermediary,$Label.ISSP_AMS_Step3_4_Q1_Agency)}"/>
+            <apex:outputText value="{!IF(isocountry.EACP_Country__c,$Label.ISSP_AMS_Step3_4_Q1_Intermediary,IF(newlabels, $Label.ISSP_AMS_Step3_4_Q1_Agency_New, $Label.ISSP_AMS_Step3_4_Q1_Agency))}"/>
 	        <apex:outputText value="{!CASE(newForm.Has_your_firm_ever_held_a_Cargo_Agency__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" />
 	        <apex:outputText >
 	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'}" columnClasses="col1_inner, col2_inner">
@@ -459,12 +459,12 @@
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $Label.ISSP_AMS_Step3_4_Q19, $Label.ISSP_AMS_Step3_4_Q19_intermediary)}"/>
+	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_New, $Label.ISSP_AMS_Step3_4_Q19), IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_intermediary_New, $Label.ISSP_AMS_Step3_4_Q19_intermediary))}"/>
 
 	        <apex:outputText value="{!CASE(newForm.Been_a_sole_proprietor__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}"/>
 	        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 	        
-	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_Step3_4_20_Agency, $Label.ISSP_AMS_Step3_4_20_Intermediary)}"/>
+	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Agency_New, $Label.ISSP_AMS_Step3_4_20_Agency), IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Intermediary_New, $Label.ISSP_AMS_Step3_4_20_Intermediary))}"/>
 
 	        <apex:outputText value="{!CASE(newForm.Been_director_or_had_a_financial__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}"/>
 	        <apex:outputText >
