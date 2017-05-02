@@ -85,6 +85,10 @@ public class vfIECEBC_CampaignConfirm extends vfIECEBC_Controller
                         //, LastViewedDate
                         , Maximum_Allowed_Step__c
                         , Number_of_Recipients__c
+                        , Is_Payment_Step__c
+                        , Is_Step6_Valid__c
+                        , Is_Step5_Valid__c
+                        , Is_Step7_Valid__c
                         //, OwnerId
                         //, Scheduled_Date_Valid_Until__c
                         //, Scheduled_Date__c
