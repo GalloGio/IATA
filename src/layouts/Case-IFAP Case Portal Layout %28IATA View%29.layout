@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Create_Non_Compliance</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Request_Reassessment</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
