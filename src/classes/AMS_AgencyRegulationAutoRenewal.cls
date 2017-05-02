@@ -302,18 +302,31 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
         if(recipents == null)
         {
         	templateToIATA = true;
+
         	//getTemplate
         	tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
+        	
         	//get region
         	List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
         	String region = oscars.get(0).Region__c;
-        	//get contact from IATA
+
+        	//get contact from IATA by custom setting
+        	List<IATA_Contacts_by_Region__c> customSettingValues = IATA_Contacts_by_Region__c.getall().values();
+        	List<String> emailsToSend = new List<String>();
+			for(IATA_Contacts_by_Region__c cR : customSettingValues)
+			{
+				if(cR.Region__c == region)
+					emailsToSend.add(cR.Contact_Email__c);
+			}
+        	
         	//put the contacts in recipents list
+        	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend];
+        	System.debug('IATA recipents list: ' + recipents);
 
         	//fake contact only for tests
-        	Contact c = new Contact(FirstName = 'Sofia', LastName = 'Silva', Email = 'sofia.silva@b-i.com', AccountId = '0014E00000UGKGb', Preferred_Language__c = 'English', BSP_CASS_Payment_contact__c = TRUE, Financial_Assessment_Contact__c = FALSE);
+        	/*Contact c = new Contact(FirstName = 'Sofia', LastName = 'Silva', Email = 'sofia.silva@b-i.com', AccountId = '0014E00000UGKGb', Preferred_Language__c = 'English', BSP_CASS_Payment_contact__c = TRUE, Financial_Assessment_Contact__c = FALSE);
         	insert c;
-        	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId = '0014E00000UGKGb' AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE)];
+        	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId = '0014E00000UGKGb' AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE)];*/
         }
 
         if(recipents != null){
