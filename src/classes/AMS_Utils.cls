@@ -103,7 +103,6 @@ public without sharing class AMS_Utils {
     public static final String AO = 'AO';
     public static final String SA = 'SA';
 
-    public static final String IEP = 'IEP';
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -2016,7 +2015,9 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
             //do call only after the change codes are succesfully inserted
             for(Account acc :accChangeCodeMap.keySet()){
-               //ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
+                if(!Test.isRunningTest()){
+                    ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
+                }
            }
         }
     }
