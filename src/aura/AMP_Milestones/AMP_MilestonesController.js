@@ -53,7 +53,7 @@
             var mstone = component.get("v.newMilestone");
             mstone.WhatId = component.get("v.activity").Id;
             var newMilestone = JSON.parse(JSON.stringify(mstone));
-            milestones.push(newMilestone);
+            milestones.unshift(newMilestone);
             component.set("v.milestones", milestones);
         }
     },
