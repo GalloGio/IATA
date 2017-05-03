@@ -56,7 +56,7 @@ private class clsICCSPMCaseCloseControllerTest {
                         ICCS_Bank_Account__c = ba.Id);  
         //insert cs2;
 
-        Case cs3 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS - Create Bank Account', Status = 'Open',
+        Case cs3 = new Case(RecordTypeId = ICCS_RT_Id, Subject = 'test', Origin = 'Email', CaseArea__c = 'ICCS – Create Bank Account', Status = 'Open',
                         ContactId = c.Id, AccountId = a.Id, ICCS_Product__c = 'BSP', ICCS_Country__c = 'France', ICCS_Currencies__c = 'EUR',
                         ICCS_Bank_Account__c = ba.Id); 
         
@@ -75,7 +75,7 @@ private class clsICCSPMCaseCloseControllerTest {
         
         // 3rd case
         insert cs3;
-        closeCaseAndNotif(cs3);
+        //closeCaseAndNotif(cs3);
         
         test.stopTest();
         //////////////////////////
