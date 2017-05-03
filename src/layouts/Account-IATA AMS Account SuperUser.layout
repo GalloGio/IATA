@@ -52,7 +52,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -725,6 +724,7 @@
         <fields>Class__c</fields>
         <fields>CREATED_DATE</fields>
         <fields>Status__c</fields>
+        <fields>Endorsed_Accredited_By__c</fields>
         <fields>Date__c</fields>
         <fields>Original_approval_date__c</fields>
         <relatedList>Accreditation__c.Related_Account__c</relatedList>
