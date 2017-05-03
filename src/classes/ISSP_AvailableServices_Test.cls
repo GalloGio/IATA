@@ -6,31 +6,36 @@ public class ISSP_AvailableServices_Test {
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
             );
 
         Portal_Applications__c easyPay2 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
             );
 
         Portal_Applications__c easyPay3 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX,
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = true
+                ANG_Accredited_Agents_Only__c = true,
+                Agency__c = true
             );
 
         Portal_Applications__c serviceTest = new Portal_Applications__c (
                 Name = 'serviceTest',
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
             );
 
         Portal_Applications__c serviceTest2 = new Portal_Applications__c (
                 Name = 'serviceTest2',
                 ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true
             );
 
         
