@@ -348,7 +348,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 						WhatId
 				FROM Task
 				WHERE WhatId IN :lsActivityIds
-				ORDER BY CreatedDate ASC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;
@@ -363,7 +363,7 @@ public with sharing class AMP_KeyAccountPlanExtension {
 						AM_Involved__c, AM_Responsible__c, AM_Support_Required_from_Account__c
 				FROM Task
 				WHERE WhatId = :objectiveId
-				ORDER BY CreatedDate ASC
+				ORDER BY ActivityDate ASC
 				];
 		}
 		return lsTasks;
