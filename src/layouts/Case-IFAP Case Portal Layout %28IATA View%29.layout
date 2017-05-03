@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Create_Non_Compliance</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Request_Reassessment</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
     <customButtons>Close_Case_c</customButtons>
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SIDRA_Lite_Action_NEW</customButtons>
+    <customButtons>Create_SAAM_Case</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -320,16 +320,6 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Web Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Quality Issue Information</label>
@@ -414,6 +404,20 @@
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Web Links</label>
+        <layoutColumns>
+            <layoutItems>
+                <customLink>Conga_Merge_Letters</customLink>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>CustomLinks</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
