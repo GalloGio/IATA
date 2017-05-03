@@ -68,6 +68,12 @@ public class vfIECEBC_OptOut {
         
         ee.Type__c = 'OPTOUT';
         if (sender != 'all') {
+            List<Zuora__CustomerAccount__c> bAccount = new List<Zuora__CustomerAccount__c>([SELECT id, Name from Zuora__CustomerAccount__c where id = :billingAccountId]);
+            if(bAccount != null){
+                for(Zuora__CustomerAccount__c ba : bAccount){
+                    ee.BillingAccName__c = ba.Name;
+                }
+            }
             ee.Unsubscribe_From__c = billingAccountId;
         }
         
@@ -78,8 +84,7 @@ public class vfIECEBC_OptOut {
         pr.getParameters().put('e', ApexPages.currentPage().getParameters().get('e'));
         return pr;
     }
-    public string getemailurl(){
-        return ApexPages.currentPage().getParameters().get('e');
+    public string getemailurl(){        
         return EncodingUtil.urlEncode(ApexPages.currentPage().getParameters().get('e'), 'UTF-8');
         //return ApexPages.currentPage().getParameters().get('e');
     }
