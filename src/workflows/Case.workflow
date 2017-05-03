@@ -17419,10 +17419,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <operation>equals</operation>
             <value>Web</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
         <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
@@ -17492,7 +17488,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Make_new_case_visible_in_CustPortal</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
