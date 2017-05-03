@@ -6817,7 +6817,7 @@ private class ISSP_AMS_Accreditation_Test
 
         testUser = icc_testUser2(testContact, 'de');
 
-        System.runAs(testUser) {
+        
 
             Case newCase = new Case(
                 IFAP_Country_ISO__c = 'tq',
@@ -6836,7 +6836,8 @@ private class ISSP_AMS_Accreditation_Test
             );
 
             insert form;
-
+            
+          System.runAs(testUser) {
             ApexPages.currentPage().getParameters().put('caseId', newCase.Id);
   
           
@@ -6998,7 +6999,7 @@ private class ISSP_AMS_Accreditation_Test
 
         testUser = icc_testUser2(testContact, 'de');
 
-        System.runAs(testUser) {
+        
 
             Case newCase = new Case(
                 IFAP_Country_ISO__c = 'tq',
@@ -7017,7 +7018,7 @@ private class ISSP_AMS_Accreditation_Test
             );
 
             insert form;
-
+          System.runAs(testUser) {
             ApexPages.currentPage().getParameters().put('caseId', newCase.Id);
   
           
@@ -7103,7 +7104,7 @@ private class ISSP_AMS_Accreditation_Test
         ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
         ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
         ctrl.newCase = testCase;
-
+        ctrl.isTestCompliant();
         return ctrl;
     }
     
