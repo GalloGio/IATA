@@ -37,15 +37,18 @@
 
 			<apex:column >
 				<apex:facet name="header">Action</apex:facet>
-					<apex:outputPanel rendered="{!row.fieldName <> 'created' && row.isLookUpValue}">
+					<apex:outputPanel rendered="{!row.fieldName <> 'created'}">
 						<b>{!row.fieldName}</b> changed from&nbsp;
+                         <b>
+                             <apex:outputField rendered="{!row.isLookUpValueOld}" value="{!row.oldObj[row.fieldAPIName]} "/>
+                        	 <apex:outputText  rendered="{!!row.isLookUpValueOld}" value="{!row.oldValue}"/>
+                        </b> 
+                         to&nbsp;
+                        <b>
+                            <apex:outputField rendered="{!row.isLookUpValueNew}"  value="{!row.newObj[row.fieldAPIName]}"/>
+                        	<apex:outputText  rendered="{!!row.isLookUpValueNew}" value="{!row.newValue}"/>
+                        </b>
                         
-                        
-                        <b><apex:outputField value="{!row.oldObj[row.fieldAPIName]}"  /></b>
-                         to&nbsp;<b><apex:outputField value="{!row.newObj[row.fieldAPIName]}"/></b>
-					</apex:outputPanel>
-					<apex:outputPanel rendered="{!row.fieldName <> 'created' && !row.isLookUpValue}">
-						<b>{!row.fieldName}</b> changed from  <b> {!row.oldValue}</b> to <b> {!row.newValue}</b>
 					</apex:outputPanel>
 			</apex:column>
 		</apex:pageBlockTable>
