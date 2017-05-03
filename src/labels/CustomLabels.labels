@@ -858,6 +858,13 @@
         <value>BCC</value>
     </labels>
     <labels>
+        <fullName>BR_Trade_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Trade Name</shortDescription>
+        <value>Branch Trade Name</value>
+    </labels>
+    <labels>
         <fullName>BSPLink_Description</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
