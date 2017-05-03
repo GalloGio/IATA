@@ -212,7 +212,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }    
         /*UserInfoUpdate Trigger*/
         
-        /*trgCheckBusinessHoursBeforeInsert Trigger
+        /*trgCheckBusinessHoursBeforeInsert Trigger*/
         if(trgCheckBusinessHoursBeforeInsert){//FLAG
         	system.debug('trgCheckBusinessHoursBeforeInsert');
             for (Case newCaseObj: trigger.new){
@@ -1187,7 +1187,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*UserInfoUpdate Trigger.isInsert*/
         
-        /*trgCheckBusinessHoursBeforeInsert Trigger.isInsert
+        /*trgCheckBusinessHoursBeforeInsert Trigger.isInsert*/
         if(trgCheckBusinessHoursBeforeInsert){//FLAG
         	system.debug('trgCheckBusinessHoursBeforeInsert Trigger.isInsert');
         	if(hasOneSISCase){
@@ -1651,7 +1651,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*UserInfoUpdate Trigger.isUpdate*/
         
-        /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate
+        /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
         if(trgCheckBusinessHoursBeforeInsert){ //FLAG
         	system.debug('trgCheckBusinessHoursBeforeInsert Trigger.isUpdate');
             if (hasOneSISCase){
@@ -1883,7 +1883,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate*/
         
-        /*trgIDCard_Case_BeforeUpdate Trigger.isUpdate
+        /*trgIDCard_Case_BeforeUpdate Trigger.isUpdate*/
         if(trgIDCard_Case_BeforeUpdate){
         	Boolean isCurrentUserProfileInit = false;
         	Boolean isAdmin = false;
