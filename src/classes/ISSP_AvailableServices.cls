@@ -125,10 +125,10 @@ public with sharing class ISSP_AvailableServices{
                 //TODO - Remove above note once  Authorised Signatory code implemented
                 System.debug('[FM] initialization conId - '+ conId);
 
-                Contact contAcc = [SELECT User_Portal_Status__c,
-                                        Account.Location_Type__c, Account.Top_Parent__r.Location_Type__c, 
-                                        Account.ANG_IEP_Status_FF__c
-                                        FROM Contact WHERE Id = :conId limit 1];
+                //
+                // Get the contact's data.
+                //
+                Contact contAcc = AMS_Utils.getIEPContact(conId);
                 
                 System.debug('[FM] initialization contAcc - '+ contAcc);
 
