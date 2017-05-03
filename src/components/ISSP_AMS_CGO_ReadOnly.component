@@ -2,7 +2,7 @@
     <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
     			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+                        <apex:outputText value="{!IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent)}"/>
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
                     	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
                     	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -14,7 +14,7 @@
           <apex:pageBlockSection columns="1" collapsible="false">
               <apex:facet name="header">
                         <apex:outputpanel >
-                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
                         </apex:outputpanel>                       
                     </apex:facet>
@@ -60,7 +60,7 @@
     <apex:pageBlockSection columns="1" collapsible="false">
         	<apex:facet name="header">
                         <apex:outputpanel >
-                            {!$Label.ISSP_AMS_STEP_3_2_Title}
+                            {!IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title)}
                             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
                         </apex:outputpanel>                       
        		</apex:facet>
@@ -93,7 +93,7 @@
                 <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
                  <apex:outputfield value="{!hqAccount.Fax}" />
                 
-                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label}" />           
+                <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label)}" />
                 <apex:outputText value="{0,date, MMMM d,  yyyy}">
                     <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
                 </apex:outputText>
