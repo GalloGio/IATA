@@ -643,7 +643,7 @@ public without sharing class vfISSP_FAQ2Case
     private list<Contact> validateCCOthers() {
         if (this.ccOthers==null) this.ccOthers='';
         list<String> listEmail = new list<String>();
-        for (String ccemail: this.ccOthers.split(';')) {
+        for (String ccemail: this.ccOthers.replace(';',',').split(',')) {
             ccemail = ccemail.trim();
             if (ccemail!='') {
                 listEmail.add(ccemail);
@@ -1154,7 +1154,7 @@ public without sharing class vfISSP_FAQ2Case
 
             // Get all account in the hierarchy
             for (Account acc: [
-                SELECT Id, IATAcode__c, Site
+                SELECT Id, IATAcode__c, Site, Location_type__c
                 FROM Account
                 WHERE IATAcode__c != null
                 AND (Id = :parentId
@@ -1164,7 +1164,7 @@ public without sharing class vfISSP_FAQ2Case
                 OR Parent.Parent.Parent.ParentId = :parentId
                 OR Parent.Parent.Parent.Parent.ParentId = :parentId)
                 ORDER BY IATAcode__c ASC]) {
-                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.Site));
+                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c));
             }
         } catch (Exception e) {
             System.debug(e.getMessage());
@@ -1546,12 +1546,13 @@ public without sharing class vfISSP_FAQ2Case
                 || thisField.Type__c == 'Checkbox'
                 || thisField.Type__c == 'AirlineList'
                 || thisField.Type__c == 'GSA_Only_Checkbox'
+                || thisField.Type__c == 'bootstrap-select'
+                || thisField.Type__c == 'ccothers'
                 )
             {
                 fieldRecordWrapper newField = new fieldRecordWrapper(thisField);
                 // adding exception to a field
-                if (newField.fieldName=='ISSP_MyProfile_IATACODE') {
-                    newField.fieldType = 'bootstrap-select';
+                if (newField.fieldType == 'bootstrap-select' && newField.fieldValue=='IATAcode__c') {
                     newField.listOptions = initIATACodeList(this.parentAccountId);
                 }
 

@@ -797,7 +797,7 @@ private class Faq2CaseTest {
 		}
 		Test.stopTest();
     }
-    
+
     static testMethod void testFaq2Case008() {
         Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
         Account testAccount = new Account(
@@ -832,40 +832,40 @@ private class Faq2CaseTest {
             controller.topic = '2';
             //controller.refreshAirlineList();
             controller.setRecordType();
-            controller.create();
-            controller.back();
-            controller.refreshTopicPickList();
-            controller.refreshSubTopicPickList();
-            controller.subtopic = ENV.SelectOptionDefaultValue;
-            controller.refreshSubTopicPickList();
-            controller.createSatisfiedRecord();
-            controller.GeneralQueueMethod();
-            controller.CheckNewCaseRecordType();
-            controller.GenerateTopicHelpText();
-            controller.GeneratesubTopicHelpText();
-            Set<String> stString = controller.topicsToShowButton;
-            Boolean b = controller.showButton;
-            Boolean b2 = controller.isAllowedCode('test');
-            //   Boolean b3 = controller.isAllowedSector('test');
-            PageReference pr = controller.getSelectArtical();
-            PageReference pr2 = controller.create1();
-            PageReference pr3 = controller.ComplimentGeneralQueueMethod();
-            Boolean b4 = controller.isArticalSelected;
-            //   controller.refreshAirlineList();
+		  controller.create();
+		  	  controller.back();
+		  controller.refreshTopicPickList();
+		  controller.refreshSubTopicPickList();
+		  controller.subtopic = ENV.SelectOptionDefaultValue;
+		  controller.refreshSubTopicPickList();
+		  controller.createSatisfiedRecord();
+		  controller.GeneralQueueMethod();
+		  controller.CheckNewCaseRecordType();
+		  controller.GenerateTopicHelpText();
+		  controller.GeneratesubTopicHelpText();
+		  Set<String> stString = controller.topicsToShowButton;
+		  Boolean b = controller.showButton;
+		  Boolean b2 = controller.isAllowedCode('test');
+		//   Boolean b3 = controller.isAllowedSector('test');
+		  PageReference pr = controller.getSelectArtical();
+		  PageReference pr2 = controller.create1();
+		  PageReference pr3 = controller.ComplimentGeneralQueueMethod();
+		  Boolean b4 = controller.isArticalSelected;
+		//   controller.refreshAirlineList();
 
-            controller.isCompliment1 = true;
-            Case newCase = controller.newCase;
-            newCase.IFAP_Country_ISO__c ='t1';
-            newCase.Subject = 'test';
-            newCase.Description = 'test';
-            controller.topic = '0';
-            controller.subtopic = 'CGO_Bank_Guarantees__c';
+		  controller.isCompliment1 = true;
+		  Case newCase = controller.newCase;
+		  newCase.IFAP_Country_ISO__c ='t1';
+		  newCase.Subject = 'test';
+		  newCase.Description = 'test';
+		  controller.topic = '0';
+		  controller.subtopic = 'CGO_Bank_Guarantees__c';
             controller.ccOthers = 'fake@email.com';
             controller.saveAttach();
             controller.ccOthers = 'Test@test11.com';
             controller.saveAttach();
-        }
-        Test.stopTest();
+		}
+		Test.stopTest();
     }
 
     private static Integer getIndex(clsDataCategoryContainer cont) {

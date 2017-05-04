@@ -13123,6 +13123,22 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Add CC Other</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOther_Help_Text</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Help Text</shortDescription>
+        <value>To add recipients to this case please insert emails separated by "," (example1@example.com,example2@example.com)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Include_Additional_Recipients</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Include Additional Recipients</shortDescription>
+        <value>Include additional recipients</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CCOther_Not_Found</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13136,7 +13152,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP CCOther Wrong Emails</shortDescription>
-        <value>Couldn&apos;t find any Contact with these emails: {0}</value>
+        <value>Couldn&apos;t find any recipient with this email in our database, please note that they need to register in the portal as a new user so you can include them in future communication. {0}</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOthers</fullName>
@@ -13366,7 +13382,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case Closed For More Than 2 Months</shortDescription>
-        <value>Disclaimer: this case has been closed for more than 2 weeks, Please create a new query if you would like to contact us</value>
+        <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
     </labels>
     <labels>
         <fullName>ISSP_Case_Status_Resolved</fullName>
@@ -16412,7 +16428,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>IATA Code</value>
+        <value>Related Account</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_LASTNAME</fullName>
@@ -17796,7 +17812,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Relocate Select Account</shortDescription>
-        <value>Select Account</value>
+        <value>Move To</value>
     </labels>
     <labels>
         <fullName>ISSP_Reopen</fullName>

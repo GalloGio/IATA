@@ -340,18 +340,6 @@
                            
                         </apex:outputPanel>
                             <apex:outputpanel id="FieldsRep">
-                                <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
-                                    <div class="alert" role="alert"></div>
-                                </li>
-                                <!-- CC input box -->
-                                <li style="display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
-                                    <div class="row form-group">
-                                        <label class="col-lg-5 control-label">{!$Label.ISSP_CCOthers}</label>
-                                        <div class="col-lg-7">
-                                            <apex:inputText styleclass="form-control rec" value="{!ccOthers}" />
-                                        </div>
-                                    </div>
-                                </li>
                                 <apex:repeat value="{!fullList}" var="section">
                                     <li style=" display:{!IF(currentButtonsToShow == 'CancelAndSubmit','block','none')}">
                                         <div class="alert" role="alert">{!section.section}</div>
@@ -391,6 +379,10 @@
                                                             <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" size="1">
                                                                 <apex:selectoptions value="{!airlines}" />
                                                             </apex:selectlist>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
+                                                            <apex:inputText styleclass="form-control" value="{!ccOthers}" />
+                                                            <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
                                                         </apex:outputpanel>
                                                         <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
                                                             <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!newCase[field.fieldValue]}" required="false" size="1" rendered="{!field.listOptions!=null}">
