@@ -11,9 +11,7 @@ public with sharing class CheckBusinessHoursHelperclass {
     public static void trgCheckBusinessHoursBeforeInsert(list<Case> listNewCases, Map<string,Contact> CBHContactMap, Map<string,Account> CBHAccountMap) {
         Blob descDetails = null;
         BusinessHours bHour = null;
-        boolean isExcluded = false;
-        list < ExcludedEmailFromAddress__c > ListOfExcludedAddress = [SELECT Name, ApplicationName__c From ExcludedEmailFromAddress__c WHERE ApplicationName__c = : Label.ANY OR ApplicationName__c = : Label.SIS];
-        list < ExcludedCaseSubject__c > ListOfExcludedSubjectd = [SELECT Name, Application_Name__c From ExcludedCaseSubject__c WHERE Application_Name__c = : Label.ANY OR Application_Name__c = : Label.SIS];
+        boolean isExcluded = false;  
         list < Case > parentCaseNumber = new List < Case > ();
         list < Case > CasesToUpdate = new list < Case > ();
         list < Case > CasesToUpdateForStatus = new list < Case > ();
@@ -22,8 +20,11 @@ public with sharing class CheckBusinessHoursHelperclass {
         Map < string, Case > KaleCases = new Map < string, Case > ();
         List < Priority_Mapping__c > priorityMappingListSIS;
         List < Priority_Mapping__c > priorityMappingListICH;
+        List < ExcludedEmailFromAddress__c > ListOfExcludedAddress = new list <ExcludedEmailFromAddress__c>();
+        List < ExcludedCaseSubject__c > ListOfExcludedSubjectd = new list <ExcludedCaseSubject__c>();
         Boolean isPM_SIS_Not_Initialized = true;
         Boolean isPM_ICH_Not_Initialized = true;
+        Boolean Checker = false;
         
         for (Case newCaseObj: listNewCases){
             if (((newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS) 
@@ -49,6 +50,16 @@ public with sharing class CheckBusinessHoursHelperclass {
             }
         }
 
+        for (Case CHECKCaseObj: listNewCases){
+            if(CHECKCaseObj.SuppliedEmail == System.Label.KALE_SUPPORT_EMAIL){
+                 Checker = true;
+                 break;
+            }
+        }
+        if(Checker){
+            ListOfExcludedAddress = [SELECT Name, ApplicationName__c From ExcludedEmailFromAddress__c WHERE ApplicationName__c = : Label.ANY OR ApplicationName__c = : Label.SIS];
+            ListOfExcludedSubjectd = [SELECT Name, Application_Name__c From ExcludedCaseSubject__c WHERE Application_Name__c = : Label.ANY OR Application_Name__c = : Label.SIS];
+        }
         for (Case newCaseObj: listNewCases){
             if (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS && newCaseObj.Status == Label.Escalated && (newCaseObj.Assigned_To__c != Label.SIS_Help_Desk_Agent 
                   && newCaseObj.Assigned_To__c != Label.SIS_Operations && newCaseObj.Assigned_To__c != Label.SIS_L2_Customer_Support)){
@@ -151,7 +162,7 @@ public with sharing class CheckBusinessHoursHelperclass {
                 }
             }
             // K.A 9-11-2014 : IS email to case E-mail to Case - IS Help Desk 
-            if ((newCaseObj.Origin == Label.E_mail_to_Case_IS_Help_Desk || newCaseObj.Origin == Label.E_mail_to_Case_SIS_Help_Desk )&& newCaseObj.RecordTypeId != null){
+            if ((newCaseObj.Origin == Label.E_mail_to_Case_IS_Help_Desk || newCaseObj.Origin == Label.E_mail_to_Case_SIS_Help_Desk ) && newCaseObj.RecordTypeId != null){
                 system.debug('\nOrigin = E-mail to Case - IS Help Desk');
                 boolean isIS = false ;
                 if (newCaseObj.SuppliedEmail !=System.Label.KALE_SUPPORT_EMAIL && newCaseObj.Origin != Label.E_mail_to_Case_SIS_Help_Desk)  
