@@ -24,7 +24,7 @@ public with sharing class CheckBusinessHoursHelperclass {
         List < ExcludedCaseSubject__c > ListOfExcludedSubjectd = new list <ExcludedCaseSubject__c>();
         Boolean isPM_SIS_Not_Initialized = true;
         Boolean isPM_ICH_Not_Initialized = true;
-        Boolean Checker = false;
+        Boolean CheckerIN = false;
         
         for (Case newCaseObj: listNewCases){
             if (((newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS) 
@@ -52,11 +52,11 @@ public with sharing class CheckBusinessHoursHelperclass {
 
         for (Case CHECKCaseObj: listNewCases){
             if(CHECKCaseObj.SuppliedEmail == System.Label.KALE_SUPPORT_EMAIL){
-                 Checker = true;
+                 CheckerIN = true;
                  break;
             }
         }
-        if(Checker){
+        if(CheckerIN){
             ListOfExcludedAddress = [SELECT Name, ApplicationName__c From ExcludedEmailFromAddress__c WHERE ApplicationName__c = : Label.ANY OR ApplicationName__c = : Label.SIS];
             ListOfExcludedSubjectd = [SELECT Name, Application_Name__c From ExcludedCaseSubject__c WHERE Application_Name__c = : Label.ANY OR Application_Name__c = : Label.SIS];
         }
@@ -321,7 +321,17 @@ public with sharing class CheckBusinessHoursHelperclass {
         List < Case > casesToBeUpdate;
         List < Case > casesUpdated;
         Boolean isSISInitialisationBlockRun = false;
-        
+        Boolean CheckerUP = false;
+
+        for (Case CHECKCaseObj: listNewCases){
+            if(CHECKCaseObj.CaseArea__c == Label.SIS && CHECKCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID){
+                 CheckerUP = true;
+                 break;
+            }
+        }
+        if(CheckerUP)
+            busiHours = [SELECT Id, Name FROM BusinessHours WHERE Name IN(: Kale_BusinessHours_Name, : SIS_BusinessHours_Name)];
+
         for (Case caseObjNew: listNewCases){
             Case caseObjOld = mapOlds.get(caseObjNew.Id);
             // To update L2 Support team details whenever a case is escalated               
@@ -349,7 +359,7 @@ public with sharing class CheckBusinessHoursHelperclass {
             if (caseObjNew.CaseArea__c == Label.SIS && caseObjNew.RecordTypeId == sisHelpDeskCaseRecordTypeID){
                 // Variables Initialisations. This block of code run once.
                 if (isSISInitialisationBlockRun == false){
-                    busiHours = [SELECT Id, Name FROM BusinessHours WHERE Name IN(: Kale_BusinessHours_Name, : SIS_BusinessHours_Name)];
+                    
                     //CasesUpdated : Cases List returned by the "SISHelpDesk_CaseSLATracking.updateSLA", since this function doesn't modify the List Case passed in parameters.
                     casesToBeUpdate = new List < Case > ();
                     casesUpdated = new List < Case > ();
