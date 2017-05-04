@@ -9,7 +9,7 @@
     <div id="contentcontainer">
 
     <div class="col3" id="content"  style="font-family: Arial;">
-<H3>Force.com for Amazon Web Services</h3><br>
+<h3>Force.com for Amazon Web Services</h3><br>
 <br style="font-family: Arial;"><span style="font-family: Arial;">
 The Force.com for Amazon Web Services distribution brings two of the most popular cloud platforms together, 
 letting developers easily create applications that combine the power of Force.com and the Amazon Web 
