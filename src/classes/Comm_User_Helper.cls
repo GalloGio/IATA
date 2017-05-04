@@ -223,7 +223,7 @@ global without sharing class Comm_User_Helper {
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
 
             return null;
         }
@@ -284,7 +284,7 @@ global without sharing class Comm_User_Helper {
         
                } catch (exception ex) {
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
 
         }
     }
@@ -294,6 +294,7 @@ global without sharing class Comm_User_Helper {
 
         EmailMessageWrapper ew;
         String noreplyemail= 'noreply@iata.org';
+        if(commName == null) commName='';
         if(commName.contains('CNS') ){ noreplyemail ='cns_noreply@cnsc.us'; }
 
         if (bccCS){
@@ -334,7 +335,7 @@ global without sharing class Comm_User_Helper {
         
     } catch (exception ex) {
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   con  ' +    con +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
 
         }
             
@@ -371,7 +372,7 @@ global without sharing class Comm_User_Helper {
          } catch (exception ex) {
              system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
        
-           TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
+           //TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
         }
     
     }
@@ -392,7 +393,7 @@ global without sharing class Comm_User_Helper {
                  
          } catch (exception ex) {
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
         throw new transformationException(ex );
         }         
                  
@@ -409,7 +410,7 @@ global without sharing class Comm_User_Helper {
            
        } catch (exception ex) {
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   nameOrEmail' +    nameOrEmail+  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
       throw new transformationException(ex );
       }         
            
@@ -430,7 +431,7 @@ global without sharing class Comm_User_Helper {
         catch (Exception ex) {
                 
             system.debug(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
-             transformationHelper.sendSFDevsAlertMessage('error', '   contactId  ' +  contactID    +ex.getmessage() + '   ' + ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+             transformationHelper.sendSFDevsAlertMessage('error', '   contactId  ' +  contactID    +ex.getmessage() + '   ' + ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
             return false;
         } 
     }
@@ -445,7 +446,7 @@ global without sharing class Comm_User_Helper {
            }catch (Exception ex) {
                 system.debug(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
                       
-              transformationHelper.sendSFDevsAlertMessage('error', '  contactId ' +   contactId   +'   '   +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+              transformationHelper.sendSFDevsAlertMessage('error', '  contactId ' +   contactId   +'   '   +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
               return false;
                     
                 
@@ -459,7 +460,7 @@ global without sharing class Comm_User_Helper {
           }catch (Exception ex) {
       //throw new TransformationException(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
               
-       transformationHelper.sendSFDevsAlertMessage('error', '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error', '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
       return false;
             
         }
@@ -529,7 +530,7 @@ global without sharing class Comm_User_Helper {
         }catch (Exception ex) {
       //throw new TransformationException(' ' + +ex.getmessage() + '   '+ ex.getstackTraceString());
               
-       transformationHelper.sendSFDevsAlertMessage('error', '   String email, string Community, Boolean bccCS ' + '   '+ email+ '   '+ Community+ '   '+ bccCS +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error', '   String email, string Community, Boolean bccCS ' + '   '+ email+ '   '+ Community+ '   '+ bccCS +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
       return false;
             
         }
@@ -545,7 +546,7 @@ global without sharing class Comm_User_Helper {
             
                            } catch (exception ex) {
        
-       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   UsersID ' +    UsersID   +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'salvatore.viticchie@b-i.com','viticchies@iata.org','diazl@iata.org'});
+       transformationHelper.sendSFDevsAlertMessage('error ' ,  '   UsersID ' +    UsersID   +  '   ' +ex.getmessage() + '   '+ ex.getstackTraceString(),  new list<string>{'diazl@iata.org'});
 
         }
       }

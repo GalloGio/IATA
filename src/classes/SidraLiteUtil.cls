@@ -182,4 +182,14 @@ public with sharing class SidraLiteUtil{
         return !listCases.isEmpty() && listCases.get(0).id == sidraLiteCase.Id;
     }
 
+    /**
+        In Sidra Lite process has been added an exception, if certain conditions are met in Sidra Lite case
+        the process will not proceed as usual, only the parent case will be updated.
+        This method tests the Sidra Lite case and returns true if this special condition is met
+    **/
+    public static final set<String> REASONS_TO_AVOID_CHILD_UPDATE = new set<String>{'Non-payment','Technical Default'};
+    public static Boolean SidraLiteCaseMustNotBeUpdated(Case sidraLiteCase) {
+        return (sidraLiteCase.Reason_for_Default__c != null && REASONS_TO_AVOID_CHILD_UPDATE.contains(sidraLiteCase.Reason_for_Default__c));
+    }
+
 }
