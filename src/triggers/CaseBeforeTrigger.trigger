@@ -236,15 +236,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 if (!ctcIdList.isEmpty()){
                 	system.debug('##ROW##');
                 	//GM - IMPRO - START
-                	//maybe one for loop can be deleted
+                	//second for loop removed for redundancy (check original trigger) 
                     for (Contact relatedContact: ctcIdList){
                         CBHContactMap.put(relatedContact.accountid, relatedContact);
-                    }
-                    for (Contact relatedContact: ctcIdList){
-                        if (relatedContact.Email != null){
-                            if (relatedContact.Email.equals(System.Label.KALE_SUPPORT_EMAIL)) 
-                            	CBHContactMap.put(relatedContact.accountid, relatedContact);
-                        }
                     }
                     //GM - IMPRO - END
                 }
