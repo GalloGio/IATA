@@ -114,8 +114,9 @@ public with sharing class CheckBusinessHoursHelperclass {
                 }
             }
             //ICH web-to-case
-            if ((newCaseObj.CaseArea__c == Label.ICH && newCaseObj.RecordTypeId == null) || (newCaseObj.CaseArea__c == Label.ICH 
-                && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || (newCaseObj.description != null && newCaseObj.description.contains(Label.Case_Area_ICH))){
+            if ((newCaseObj.CaseArea__c == Label.ICH && newCaseObj.RecordTypeId == null) 
+                    || (newCaseObj.CaseArea__c == Label.ICH && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) 
+                    || (newCaseObj.description != null && newCaseObj.description.contains(Label.Case_Area_ICH))){
                 //kareem ich get priority list
                 if (isPM_ICH_Not_Initialized){
                     //Initialisation of variables needed for Before Insert           
