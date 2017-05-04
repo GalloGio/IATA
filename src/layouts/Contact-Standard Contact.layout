@@ -243,6 +243,9 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Authorized_Signatory__c</field>
             </layoutItems>
         </layoutColumns>
