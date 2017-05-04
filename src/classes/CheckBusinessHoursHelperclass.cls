@@ -8,27 +8,47 @@ public with sharing class CheckBusinessHoursHelperclass {
   /*variable*/
   public static string caseArea, defect, cPriority, KeyString;
   
-  /*maps, lists, sets*/
-  public static Map < string, Account > CBHAccountMap = new Map < string, Account > ();
-  public static Map < string, Contact > CBHContactMap = new Map < string, Contact > ();
-  
-    public static void trgCheckBusinessHoursBeforeInsert(list<Case> listNewCases) {
-      Blob descDetails = null;
-      BusinessHours bHour = null;
-      boolean isExcluded = false;
-      list < ExcludedEmailFromAddress__c > ListOfExcludedAddress = [SELECT Name, ApplicationName__c From ExcludedEmailFromAddress__c WHERE ApplicationName__c = : Label.ANY OR ApplicationName__c = : Label.SIS];
-      list < ExcludedCaseSubject__c > ListOfExcludedSubjectd = [SELECT Name, Application_Name__c From ExcludedCaseSubject__c WHERE Application_Name__c = : Label.ANY OR Application_Name__c = : Label.SIS];
-      list < Case > parentCaseNumber = new List < Case > ();
-      list < Case > CasesToUpdate = new list < Case > ();
-    list < Case > CasesToUpdateForStatus = new list < Case > ();
-    Map < string, Case > parentCases = new Map < string, Case > ();
-    Map < string, Case > KaleCases = new Map < string, Case > ();
-    list < string > ListOfKaleCases = new list < string > ();
+    public static void trgCheckBusinessHoursBeforeInsert(list<Case> listNewCases, Map<string,Contact> CBHContactMap, Map<string,Account> CBHAccountMap) {
+        Blob descDetails = null;
+        BusinessHours bHour = null;
+        boolean isExcluded = false;
+        list < ExcludedEmailFromAddress__c > ListOfExcludedAddress = [SELECT Name, ApplicationName__c From ExcludedEmailFromAddress__c WHERE ApplicationName__c = : Label.ANY OR ApplicationName__c = : Label.SIS];
+        list < ExcludedCaseSubject__c > ListOfExcludedSubjectd = [SELECT Name, Application_Name__c From ExcludedCaseSubject__c WHERE Application_Name__c = : Label.ANY OR Application_Name__c = : Label.SIS];
+        list < Case > parentCaseNumber = new List < Case > ();
+        list < Case > CasesToUpdate = new list < Case > ();
+        list < Case > CasesToUpdateForStatus = new list < Case > ();
+        list < string > ListOfKaleCases = new list < string > ();
+        Map < string, Case > parentCases = new Map < string, Case > ();
+        Map < string, Case > KaleCases = new Map < string, Case > ();
         List < Priority_Mapping__c > priorityMappingListSIS;
         List < Priority_Mapping__c > priorityMappingListICH;
         Boolean isPM_SIS_Not_Initialized = true;
         Boolean isPM_ICH_Not_Initialized = true;
         
+        for (Case newCaseObj: listNewCases){
+            if (((newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS) 
+                    || (newCaseObj.description != null && newCaseObj.description.contains(Label.Case_Area_SIS)) 
+                    || (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.ICH) 
+                    || (newCaseObj.RecordTypeId != null && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID))){
+                String kaleCaseNumberStr = null;
+                String sfCaseNumber = null;
+                if (newCaseObj.Subject != null && newCaseObj.Subject.contains(Label.doubleHash)){
+                    kaleCaseNumberStr = newCaseObj.Subject.split(Label.doubleHash)[1].trim(); // the case number is in index 1
+                    // get SalesForce case number from the case subject
+                    sfCaseNumber = EscalatedCaseHelper.extractSFCaseNumberFromSubject(newCaseObj.Subject);
+                    if (sfCaseNumber != null){
+                        ListOfKaleCases.add(sfCaseNumber);
+                    }
+                }
+            }
+        }
+        if (!ListOfKaleCases.isEmpty()){
+            system.debug('##ROW##');
+            for (Case cObj: [Select id, CaseNumber, External_Reference_Number__c, Kale_Status__c, Description from Case where CaseNumber in : ListOfKaleCases]){
+                KaleCases.put(cObj.CaseNumber, cObj);
+            }
+        }
+
         for (Case newCaseObj: listNewCases){
             if (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS && newCaseObj.Status == Label.Escalated && (newCaseObj.Assigned_To__c != Label.SIS_Help_Desk_Agent 
                   && newCaseObj.Assigned_To__c != Label.SIS_Operations && newCaseObj.Assigned_To__c != Label.SIS_L2_Customer_Support)){
@@ -280,7 +300,7 @@ public with sharing class CheckBusinessHoursHelperclass {
         }
     }
     
-    public static void trgCheckBusinessHoursBeforeUpdate(list<Case> listNewCases, list<Case> listOldCases) {
+    public static void trgCheckBusinessHoursBeforeUpdate(list<Case> listNewCases, list<Case> listOldCases, Map<string,Contact> CBHContactMap, Map<string,Account> CBHAccountMap) {
         String Kale_BusinessHours_Name = Label.SIS_HelpDesk_Kale;
         String SIS_BusinessHours_Name = Label.SIS_Help_Desk;
         map<Id,Case> mapOlds = new map<Id,Case>(listOldCases);

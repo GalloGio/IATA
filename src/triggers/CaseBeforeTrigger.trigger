@@ -112,7 +112,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     map<String,Case> casePerParentId = new map<String,Case>();
     map<id, Contact> contactMap = new map<id, Contact>();
     map<id, Account> accountMap = new map<id, Account>();
-    Map < string, Case > KaleCases = new Map < string, Case > ();
     
     /*CONTROLLARE IL POPOLAMENTO DELLE SEGUENTI MAPPE QUANDO VIENE CHIAMATA CheckBusinessHoursHelperClass*/
     Map <string, Contact> CBHContactMap = new Map <string, Contact> ();
@@ -126,7 +125,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     List<Profile> currentUserProfile; 
     // get a list of the Ids of all the Accounts linked to the Trigger cases
     list<Id> lstRelatedAccountIds = new list<Id>();
-    list < string > ListOfKaleCases = new list < string > ();
     /*Maps, Sets, Lists*/
     
     /***********************************************************************************************************************************************************/
@@ -250,30 +248,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                     //GM - IMPRO - END
                 }
-                //2014 To reduce SOQL queries
-                
-                for (Case newCaseObj: trigger.new){
-                    if ((trigger.isBefore && Trigger.isInsert) && ((newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.SIS) || (newCaseObj.description != null && newCaseObj.description.contains(Label.Case_Area_SIS)) 
-                    		|| (newCaseObj.CaseArea__c != null && newCaseObj.CaseArea__c == Label.ICH) || (newCaseObj.RecordTypeId != null && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID))){
-                        String kaleCaseNumberStr = null;
-                        String sfCaseNumber = null;
-                        if (newCaseObj.Subject != null && newCaseObj.Subject.contains(Label.doubleHash)){
-                            kaleCaseNumberStr = newCaseObj.Subject.split(Label.doubleHash)[1].trim(); // the case number is in index 1
-                            // get SalesForce case number from the case subject
-                            sfCaseNumber = EscalatedCaseHelper.extractSFCaseNumberFromSubject(newCaseObj.Subject);
-                            if (sfCaseNumber != null){
-                                ListOfKaleCases.add(sfCaseNumber);
-                            }
-                        }
-                    }
-                }
-                if (!ListOfKaleCases.isEmpty()){
-                	system.debug('##ROW##');
-                    for (Case cObj: [Select id, CaseNumber, External_Reference_Number__c, Kale_Status__c, Description from Case where CaseNumber in : ListOfKaleCases]){
-                        KaleCases.put(cObj.CaseNumber, cObj);
-                    }
-                }
-                
             }
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger*/
@@ -1191,7 +1165,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if(trgCheckBusinessHoursBeforeInsert){//FLAG
         	system.debug('trgCheckBusinessHoursBeforeInsert Trigger.isInsert');
         	if(hasOneSISCase){
-	            CheckBusinessHoursHelperclass.trgCheckBusinessHoursBeforeInsert(Trigger.new);
+	            CheckBusinessHoursHelperclass.trgCheckBusinessHoursBeforeInsert(Trigger.new, CBHContactMap, CBHAccountMap);
         	}
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isInsert*/
@@ -1655,7 +1629,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         if(trgCheckBusinessHoursBeforeInsert){ //FLAG
         	system.debug('trgCheckBusinessHoursBeforeInsert Trigger.isUpdate');
             if (hasOneSISCase){
-            	CheckBusinessHoursHelperclass.trgCheckBusinessHoursBeforeUpdate(Trigger.new, Trigger.old);
+            	CheckBusinessHoursHelperclass.trgCheckBusinessHoursBeforeUpdate(Trigger.new, Trigger.old, CBHContactMap, CBHAccountMap);
             }
         }
         /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
