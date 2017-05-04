@@ -42,7 +42,11 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
         test = parentAccountId; 
         system.debug('TEST: '+test);
-        List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
+
+        Id batchJobId = Database.executeBatch(new AMS_AlignOwnersInHierarchyBatch(test), 50);
+
+        
+        /*   List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
 
         // get all the relationships to extract the accounts involved
         for(AMS_Agencies_Hierarchy__c h : [SELECT Id, (SELECT Hierarchy__c, Parent_Account__r.Top_Parent__r.Id, Parent_Account__c, Child_Account__c, Child_Account__r.Status__c, Child_Account__r.Top_Parent__r.Id, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationships__r where Child_Account__r.Status__c != 'Terminated') FROM AMS_Agencies_Hierarchy__c WHERE Id In (SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:test)]) 
@@ -112,7 +116,7 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         if(!rolesToInsert.isEmpty())
             insert rolesToInsert;
             newOwners = rolesToInsert;
-
+*/
     }
 
     public static List<AMS_Account_Role__c> createRoles(List<Id> accountIds, List<AMS_Account_Role__c> rolesToClone){
