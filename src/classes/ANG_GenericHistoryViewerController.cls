@@ -72,16 +72,14 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Map<String,Boolean> isLookUpValueMap = fetchVlookups(fieldsToSearch);
 
-        System.debug('isLookUpValueMap:'+isLookUpValueMap);
-
-
         //add custom history to the list
         for(SObject history : customHistoryRecords){
                         
             String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
             String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
-
-
+            
+		boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
+            
             mergedHistoric.add(new GenericHistoryWrapper(
                                 history.get('CreatedById'),
                                 mapUserNamesPerId.get((Id)history.get('CreatedById')),
@@ -89,7 +87,7 @@ public with sharing class ANG_GenericHistoryViewerController {
                                 tmpOld,
                                 tmpNew,
                                 String.valueOf(history.get('What__c')),
-                                true,String.valueOf(history.get('ApiName__c')),isLookUpValueMap.get(tmpOld) || isLookUpValueMap.get(tmpNew)));
+                                true,String.valueOf(history.get('ApiName__c')),isLookupValue));
         }
 
 
@@ -181,43 +179,43 @@ public with sharing class ANG_GenericHistoryViewerController {
         public Object newValue {get; set;}
         public String fieldName {get; set;}
         public Boolean isCustom {get; set;}
-        public Boolean isLookUpValue {get; set;}
-        
+        public Boolean isLookUpValueNew {get; set;}
+		public Boolean isLookUpValueOld {get; set;}
+
         public sObject oldObj {get; set;}
         public sObject newObj {get; set;}
         
         public GenericHistoryWrapper(Object createdById, String createdByName, String createdDate, Object oldValue, Object newValue, String fieldName, Boolean isCustom, String fieldAPIName, boolean isLookUpValueIn){
             
-            this.isLookUpValue = isLookUpValueIn;
-
-            System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
+            this.isLookUpValueOld = (isLookUpValueIn && oldValue != '<blank>');
+			this.isLookUpValueNew = (isLookUpValueIn && newValue != '<blank>');
+            
+            //System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
 
             this.fieldAPIName = fieldAPIName;
             this.createdById = createdById;
             this.createdByName = createdByName;
             this.createdDate = createdDate;
             this.oldValue = oldValue;
-                        
-            Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
-
-            this.oldObj = idOfTheObject.getSObjectType().newSObject();
-
-            //small little pirate hack :)
-            if(fieldAPIName == 'RecordType')
-                fieldAPIName = 'RecordTypeId';
-
-            oldObj.put(String.valueOf(fieldAPIName), oldValue);
-            
             this.newValue = newValue;
             
-            this.newObj = idOfTheObject.getSObjectType().newSObject();
-
-            newObj.put(String.valueOf(fieldAPIName), newValue);
+			Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
             
-            this.fieldName = fieldName;
+            //small little pirate hack :)
+            if(fieldAPIName == 'RecordType')
+            	fieldAPIName = 'RecordTypeId';
+            
+            if(isLookUpValueOld){
+                this.oldObj = idOfTheObject.getSObjectType().newSObject();
+                oldObj.put(String.valueOf(fieldAPIName), oldValue);
+			}
+            
+            if(isLookUpValueNew){
+				this.newObj = idOfTheObject.getSObjectType().newSObject();    
+                newObj.put(String.valueOf(fieldAPIName), newValue);
+            }
 
-
-
+ 			this.fieldName = fieldName;
             this.isCustom = isCustom;
         }
 
@@ -234,6 +232,8 @@ public with sharing class ANG_GenericHistoryViewerController {
             
             return returnValue;       
         }
+        
+
 
     }
 
