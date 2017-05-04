@@ -274,6 +274,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Contact__c</field>
+                <field>Authorized_Signatory__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
