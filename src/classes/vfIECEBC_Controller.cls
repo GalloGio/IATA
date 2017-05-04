@@ -595,11 +595,13 @@ public virtual class vfIECEBC_Controller {
         
         campaignList = [SELECT Is_Payment_Step__c FROM EBC_Campaign__c WHERE Id =: campaignId Limit 1];
         system.debug('campaign size is : '+campaignList.Size());
-        if (campaignList.Size()>0) campaign = campaignList[0];
-        system.debug('#### campaign ID : ' + campaign.ID);
-        campaign.Is_Payment_Step__c = true;
-        system.debug('#### campaign.Is_Payment_Step__c : ' + campaign.Is_Payment_Step__c);
-        update campaign;
+        if (campaignList.Size()>0) {
+	        campaign = campaignList[0];
+	        system.debug('#### campaign ID : ' + campaign.ID);
+	        campaign.Is_Payment_Step__c = true;
+	        system.debug('#### campaign.Is_Payment_Step__c : ' + campaign.Is_Payment_Step__c);
+	        update campaign;
+    	}
 		
 		PageReference paymentPage = paymentPageBase;  
 		paymentPage.getParameters().put( EBC_PAYMENT_PARAM_PAYMENT_TOKEN, theToken);

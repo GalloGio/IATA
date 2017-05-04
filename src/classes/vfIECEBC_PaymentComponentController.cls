@@ -1552,14 +1552,15 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         ErrorMessage='';
         boolean result=false;
         system.debug('### !IsLocationValid() : ' + !IsLocationValid());
-        system.debug('### validation customer fields : ' + (
-                 (String.isBlank(oPaymentBillingContact.FirstName))
-                || (String.isBlank(oPaymentBillingContact.LastName))
-                || (String.isBlank(oPaymentBillingContact.Title))
-                || (String.isBlank(oPaymentBillingContact.Email))
-                || (String.isBlank(oPaymentBillingContact.Phone))
-                || (String.isBlank(oBillingAddress.Street__c))
-                || (String.isBlank(oBillingAddress.ISO_Country__c))));
+        system.debug('### validation customer fields....');
+        system.debug('Street' +oBillingAddress.Street__c);
+        system.debug('ISO Country' +oBillingAddress.ISO_Country__c);
+        system.debug('FirstName' + oPaymentBillingContact.FirstName);
+        system.debug('LastName' +oPaymentBillingContact.LastName);
+        system.debug('Title' +oPaymentBillingContact.Title);
+        system.debug('Email' +oPaymentBillingContact.Email);
+        system.debug('Phone' +oPaymentBillingContact.Phone);
+        
         
         if (!IsLocationValid() || (
                  (String.isBlank(oPaymentBillingContact.FirstName))
