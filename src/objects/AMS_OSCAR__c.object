@@ -19946,6 +19946,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
      Change_effective_as_of__c &gt; TODAY()
   ),
   RecordType.DeveloperName = &quot;CHANGE&quot;,
+  NOT(ISPICKVAL(Process__c, &quot;BANK.ACCOUNT.CHANGES&quot;)),
   ISCHANGED(STEP6__c), 
   ISPICKVAL(STEP6__c, &quot;Passed&quot;)
 )</errorConditionFormula>
