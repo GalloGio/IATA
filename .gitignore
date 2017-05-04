@@ -274,6 +274,7 @@ src/workflows/SocialPersona.workflow
 src/workflows/SocialPost.workflow
 src/layouts/EmailMessage-Email Message Layout.layout
 src/applications/standard__DataAssessment.app
+src/applications/standard__LightningSales.app
 src/workflows/Lead.workflow
 src/workflows/Contact.workflow
 src/workflows/ACCA_Notification_on_new_Application_Change_Request.workflow
