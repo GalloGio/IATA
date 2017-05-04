@@ -216,6 +216,10 @@
                 <fullName>Other</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Remittance &amp; Settlement (RS)</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -2515,11 +2519,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Remittance %26 Settlement Automated %28RS-A%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Remittance %26 Settlement Manual %28RS-M%29</fullName>
+                <fullName>Remittance %26 Settlement %28RS%29</fullName>
                 <default>false</default>
             </values>
             <values>
