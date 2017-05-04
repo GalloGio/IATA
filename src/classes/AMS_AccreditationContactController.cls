@@ -23,7 +23,6 @@ public with sharing class AMS_AccreditationContactController {
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
-    public Integer numberPortalAdmin;
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -43,7 +42,6 @@ public with sharing class AMS_AccreditationContactController {
     // Ownership is ready, so that the validation in the wizard can prevent users from using the left panel until the ownership + certain fields on OSCAR are filled.
     public AMS_AccreditationContactController(ApexPages.StandardController stdController)
     {
-        numberPortalAdmin = 0;
         acWrapper = new List<AccreditationContactWrapper>();
         accountWrapper = new List<AccountWrapper>();
         trainedStaffWrapper = new List<TrainedStaffWrapper>();
@@ -289,6 +287,8 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
+
+        Integer numberPortalAdmin = 0;
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
