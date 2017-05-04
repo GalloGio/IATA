@@ -72,16 +72,14 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Map<String,Boolean> isLookUpValueMap = fetchVlookups(fieldsToSearch);
 
-        System.debug('isLookUpValueMap:'+isLookUpValueMap);
-
-
         //add custom history to the list
         for(SObject history : customHistoryRecords){
                         
             String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
             String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
-
-
+            
+		boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
+            
             mergedHistoric.add(new GenericHistoryWrapper(
                                 history.get('CreatedById'),
                                 mapUserNamesPerId.get((Id)history.get('CreatedById')),
@@ -89,7 +87,7 @@ public with sharing class ANG_GenericHistoryViewerController {
                                 tmpOld,
                                 tmpNew,
                                 String.valueOf(history.get('What__c')),
-                                true,String.valueOf(history.get('ApiName__c')),isLookUpValueMap.get(tmpOld) || isLookUpValueMap.get(tmpNew)));
+                                true,String.valueOf(history.get('ApiName__c')),isLookupValue));
         }
 
 
