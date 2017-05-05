@@ -32,7 +32,6 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
         String errorMessageResult = '';
         
         if (theAction == 'CreateNewUserWithPartnerProfile'){
-            system.debug('ACTION ANG: ' + theAction);
             string userType = ISSP_Utilities.getContactTypeById(conId);
             string profileName = ISSP_Constant.profilNameByUserTypeMap.get('Admin').get(userType);
             string profileId = ISSP_Constant.profileIdByProfileNameMap.get(profileName);
@@ -46,8 +45,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                    errorMessageResult = e.getMessage(); return errorMessageResult;
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
@@ -63,30 +61,6 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
         
         return errorMessageResult;
     }
-	
-	/*public static void permissionASS(list<Id> USersID){
-    
-	    try { 
-	    
-	     for(Id userID :USersID)
-	     if (userId != null) {
-	                // assign Permission Set to provide access to objects
-	                Id permissionSetId = IECUserManager.getCustomerPermissionSetId();
-	                if (permissionSetId != null) {
-	                    PermissionSetAssignment oPermissionSetAssignment = new PermissionSetAssignment();
-	                    oPermissionSetAssignment.AssigneeId = userId;
-	                    oPermissionSetAssignment.PermissionSetId = permissionSetId;
-	                    insert oPermissionSetAssignment;
-	                }
-	        }
-	        
-	         } catch (exception ex) {
-	             system.debug('kerensen - Site.createPortalUser(u, accountId,null, true):');
-	       
-	           TransformationHelper.sendSFDevsAlertMessage('USersID   ' +USersID  + '     ' + ex.getMessage(),'' +' ' + ex.getMessage() + '   ' + ex.getStackTraceString() , new list<string>{'salvatore.viticchie@b-i.com'});
-	        }
-    
-    }*/
 
     public static User createUser(Contact con,Id userProfile){
         system.debug('createUser with profile: ' + userProfile);
@@ -170,7 +144,6 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
 
             Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
             Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
-            //permissionASS(new list<Id>{newUser.Id});
             
         }else{
             system.debug('will update user with this profile id: ' + newUser.ProfileId);
