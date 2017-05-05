@@ -24,7 +24,7 @@ private class AMS_AccreditationContactControllerTest
         List<Account> accs = new List<Account>();
 
         Account acc1 = new Account(Name='LegalName', Location_Type__c = 'HO', Email__c = 'test@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName', RecordTypeId = accRtId);
-        Account acc2 = new Account(Name='LegalName2', Location_Type__c = 'BR', Email__c = 'test2@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '123456782', AIMS_ID__c = '123456782', Source_System__c = 'AIMS2', Phone_Number__c = '638273481', RecordTypeId = accRtId);
+        Account acc2 = new Account(Name='LegalName2', Location_Type__c = 'BR', Email__c = 'test2@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345672', AIMS_ID__c = '12345672', Source_System__c = 'AIMS2', Phone_Number__c = '638273481', RecordTypeId = accRtId);
         accs.add(acc1);
         accs.add(acc2);
         insert accs;
@@ -33,12 +33,12 @@ private class AMS_AccreditationContactControllerTest
         testCase.BSPCountry__c = 'Hong Kong (SAR), China';
         testCase.Reason1__c = 'Agency';
         testCase.Customer_recovery__c = false;
-        testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+        //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
         testCase.BounceEmailCounter__c = 0.0;
         testCase.Case_Language__c = 'English';
         testCase.Subject = 'Test 006';
         testCase.Reopened_case__c = 0.0;
-        testCase.Continous_Feed_SAF__c = true;
+        //testCase.Continous_Feed_SAF__c = true;
         testCase.Account_Concerned__c = acc1.Id;
 		testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;

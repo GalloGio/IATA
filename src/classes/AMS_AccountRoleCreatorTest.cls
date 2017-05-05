@@ -18,12 +18,12 @@ public with sharing class AMS_AccountRoleCreatorTest {
         testCase.BSPCountry__c = 'Hong Kong (SAR), China';
         testCase.Reason1__c = 'Agency';
         testCase.Customer_recovery__c = false;
-        testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+        //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
         testCase.BounceEmailCounter__c = 0.0;
         testCase.Case_Language__c = 'English';
         testCase.Subject = 'Test 006';
         testCase.Reopened_case__c = 0.0;
-        testCase.Continous_Feed_SAF__c = true;
+        //testCase.Continous_Feed_SAF__c = true;
         testCase.Account_Concerned__c = acc1.Id;
         testCase.IFAP_Country_ISO__c = 'tq';
         testCase.AccountId = acc1.id;
@@ -115,6 +115,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         System.assertEquals(20, roleList.get(0).Percentage__c);
         
         companyOwnershipAC.Financial_Interest__c = 100;
+        companyOwnershipAC.RecordTypeId = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
         update companyOwnershipAC;
         
         

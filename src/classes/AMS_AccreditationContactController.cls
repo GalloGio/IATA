@@ -204,6 +204,20 @@ public with sharing class AMS_AccreditationContactController {
         this.acWrapper.remove(this.toUnselect);
         return null;
     }
+
+    public PageReference removeFromTsList()
+    {
+        //AMS_Accreditation_Contact__c acToDelete = this.acList.get(this.toUnselect);
+        AMS_Accreditation_Contact__c acToDelete = trainedStaffWrapper.get(toUnselect).ac;
+        
+        if(acToDelete.id != null)
+        {
+            this.forDeletion.add(acToDelete);
+        }
+        
+        this.trainedStaffWrapper.remove(this.toUnselect);
+        return null;
+    }
     
     public PageReference removeFromAccountList()
     {
@@ -338,6 +352,39 @@ public with sharing class AMS_AccreditationContactController {
                 Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
                 List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
+                List<Account> acList = new List<Account>();
+                Set<Id> idsAux = new Set<Id>();
+                Boolean emptyList = false;
+                Boolean invalidIataCode = false;
+                for (AccountWrapper acw : accountWrapper)
+                {
+                    if(acw.account.IATACode__c != null)
+                    {
+                        acList = [SELECT Id, IATACode__c FROM Account WHERE IATACode__c = :acw.account.IATACode__c];
+                        if(!acList.isEmpty() && acw.account.Id == null)
+                        {
+                            emptyList = true;
+                        }
+
+                        if(acList.isEmpty())
+                        {
+                            invalidIataCode = true;
+                        }
+                    }
+                }
+
+                if(emptyList)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure that you link the IATACode that you insert with the right Legal Name.'));
+                    return null;
+                }
+
+                if(invalidIataCode)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure that you insert an existent IATACode.'));
+                    return null;
+                }
+
                 for(AccountWrapper aw : accountWrapper)
                 {
                     System.debug('ACCOUNT WRAPPER : ' + aw);

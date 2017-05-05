@@ -4657,6 +4657,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the accounts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
         <formula>AND( 
@@ -5048,10 +5058,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
@@ -13437,7 +13443,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS Associates</fullName>
+                <fullName>CASS Associate</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -25242,10 +25248,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -28147,10 +28149,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -30009,6 +30007,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32429,6 +32498,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -32561,6 +32701,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33893,10 +34180,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Associations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -36054,10 +36337,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -38650,6 +38929,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42997,6 +43347,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -43623,10 +44044,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45554,6 +45971,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49691,6 +50179,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>September</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54432,10 +54991,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -56657,10 +57212,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -58878,10 +59429,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61480,10 +62027,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Clearing Bank</fullName>
                 <default>false</default>
             </values>
@@ -63340,10 +63883,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68644,10 +69183,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Car Rental</fullName>
                 <default>false</default>
             </values>
@@ -70804,10 +71339,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74900,10 +75431,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -75297,6 +75824,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -75498,6 +76096,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77176,10 +77921,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Car Rental</fullName>
                 <default>false</default>
             </values>
@@ -78384,7 +79125,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Key Account Plan</masterLabel>
+        <masterLabel>Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>

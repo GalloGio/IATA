@@ -11,6 +11,9 @@ public class ProductSoldNotificationContent_Ctrl {
     public String paymentTypeMsg        {get;set;}
     public Boolean containsWebDownload  {get;set;}
     public Boolean hasSetupFee          {get;set;}
+    public Decimal discountedAmount     {get;set;}
+    public Decimal totalAmount          {get;set;}
+    public Order ord                    {get;set;}
 
     public String sBaseUrl {
         get {
@@ -31,6 +34,9 @@ public class ProductSoldNotificationContent_Ctrl {
             sAccountName = lstOrder[0].BillToAccount_Name__c;
             sEmail = lstOrder[0].BillToContact_Email__c;
             sOrderNumber = lstOrder[0].OrderNumber;
+            discountedAmount = lstOrder[0].Discount_Amount__c;
+            totalAmount = lstOrder[0].Total_Amount__c;
+            ord = lstOrder[0];
 
             //set the payment method message
             if(lstOrder[0].Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard){

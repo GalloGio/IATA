@@ -11,12 +11,23 @@
 		handleSearchAF();
 	}
 
-	$(document.body).tooltip({ selector: "[title]" });
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip(); 
+	})
+
+	/*** handle popover for indicators definitions***/
+	$(function () {
+	$('[data-toggle="popover"]').popover(
+	    { container: 'body',
+	      html: 'true', 
+	      placement: 'auto left',
+	      trigger: 'focus' });
+	})
 </script>
 
 </head>
 
-<body>
+<body >
 	<div class="container">
 
 		<c:ISSP_CustomNavigation />
@@ -61,17 +72,17 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}</th>
-									<th>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}</th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Spot_Change}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Spot_1m_ch__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Spot_Change}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Spot_12m_ch__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Forward_NDF}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Fwd_NDF__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Credit_Spread}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Credit_spread__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Sovereign_Credit_Rating}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_Cr_Rating__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_GDP_Growth}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_GDP__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Inflation}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_CPI__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Current_Account_part1}{!$Label.CurrencyCenter_def_Current_Account_part2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_CA__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Non_Performing_Loans}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_NPL__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1}{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_FX_Res__c.Label}"/></a></th>
+									<th><a href="javascript://" data-toggle="popover" title="<b>{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}</b>" data-content="{!$Label.CurrencyCenter_def_Foreign_Exchange_Reserves_2}"><apex:outputText value="{!$ObjectType.Country_Profile__c.fields.HM_FX_Res_percent__c.Label}"/></a></th>
 								</tr>
 							</thead>
 							<tbody>

@@ -1,5 +1,6 @@
 <apex:component allowDML="true">
 <apex:attribute name="pkbCon" type="pkb_Controller" required="true" description="handle to the pkb controller" />
+<apex:attribute name="communityName" type="String" description="set the portal styling"/>
 <apex:variable var="atLeastOne" value="false" />
 
   <div id="featuredArticles">
@@ -16,6 +17,7 @@
         firstPublishedDate="{!a.firstPublishedDate}"
         lastPublishedDate="{!a.lastPublishedDate}"
         articleNumber="{!a.articleNumber}"
+        communityName="{!communityName}"
       />
       <apex:variable var="atLeastOne" value="true" />
       <script type="text/javascript">atLeastOneFeatured = {!atLeastOne};</script>

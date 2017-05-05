@@ -199,7 +199,7 @@
         <relationshipName>OSCARs</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -2556,7 +2556,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -3865,6 +3865,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Sanity_Check_Passed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to validate if the sanity check had been already passed. If so, it should not be allowed to pass again.</description>
+        <externalId>false</externalId>
+        <label>Sanity_Check_Passed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sanity_check_deadline__c</fullName>
         <externalId>false</externalId>
         <label>Deadline Date</label>
@@ -4048,7 +4059,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -4188,7 +4199,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -4648,6 +4659,15 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <filterScope>Queue</filterScope>
         <label>Agency Risk Management - Europe</label>
         <queue>Cases_ARM_Europe</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Cases_CNS_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - CNS</label>
+        <queue>Cases_CNS</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
@@ -15366,6 +15386,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
      Change_effective_as_of__c &gt; TODAY()
   ),
   RecordType.DeveloperName = &quot;CHANGE&quot;,
+  NOT(ISPICKVAL(Process__c, &quot;BANK.ACCOUNT.CHANGES&quot;)),
   ISCHANGED(STEP6__c), 
   ISPICKVAL(STEP6__c, &quot;Passed&quot;)
 )</errorConditionFormula>
