@@ -24,7 +24,7 @@
   */
 
 //@isTest 
-public class IECEBC_TestUtility {
+public with sharing class IECEBC_TestUtility {
 	
 	// Test User related records, created by createTestUser
 	public static User oUser {get;private set;} // community user
@@ -757,9 +757,12 @@ public class IECEBC_TestUtility {
         //trgPortalUserAfterInserUpdate = true;
         String userId = Site.createPortalUser(u, oAccount.Id, 'testpassword');
       
-         
+        system.debug('oContact->contact id before : ' + oContact);
         IECUserManager.login(u.Username, 'testpassword', null);
-           
+           system.debug('oContact->contact id after : ' + oContact);
+
+
+
         return u;
     }
     
