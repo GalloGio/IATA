@@ -3780,10 +3780,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <validationRules>
         <fullName>OI_Overall_effectiveness_of_improvement</fullName>
         <active>true</active>
-        <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled</description>
+        <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</description>
         <errorConditionFormula>AND( NOT(ISNULL(Date_Time_Closed__c)), ISPICKVAL(Overall_effectiveness_of_improvements__c,&quot;&quot;))</errorConditionFormula>
         <errorDisplayField>Overall_effectiveness_of_improvements__c</errorDisplayField>
-        <errorMessage>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</errorMessage>
+        <errorMessage>OI  can not be closed. Please fill &quot;Overall effectiveness of improvement&quot;.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>OI_type_Other_check</fullName>
@@ -3796,7 +3796,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <active>true</active>
         <description>OI Conclusion is not allowed when there are pending action plans</description>
         <errorConditionFormula>AND(NOT(ISNULL(Conclusion_Date__c)),Action_Plan_Count__c != Action_Plan_Closed_Count__c)</errorConditionFormula>
-        <errorMessage>Don&apos;t allow conclude if any action plan is not closed.</errorMessage>
+        <errorMessage>OI can not be concluded. Please make sure all action plans are closed</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Root_Cause_check_Man_option</fullName>
