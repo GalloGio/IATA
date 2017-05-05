@@ -601,11 +601,15 @@ public class AMS_ChangeCodesHelper {
         }
 
         if(condition.equals('CHANGED')){
+            if (string.ValueOf(NewAccountValues.get(sFieldToCHeck)) == null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) == null)
+                return false;
+            if ((string.ValueOf(NewAccountValues.get(sFieldToCHeck)) == null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) != null) ||
+                (string.ValueOf(NewAccountValues.get(sFieldToCHeck)) != null && string.ValueOf(OldAccountValues.get(sFieldToCHeck)) == null))
+                return true;
             if(string.ValueOf(NewAccountValues.get(sFieldToCHeck)).toUpperCase() != string.ValueOf(OldAccountValues.get(sFieldToCHeck)).toUpperCase())
                 return true;
             else return false;
         }
-
         return false;
     }
 
