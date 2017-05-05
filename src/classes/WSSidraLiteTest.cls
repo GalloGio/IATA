@@ -20,7 +20,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(ifapCase.Id);
+            WSSidraLite.sidraLiteAction(ifapCase.Id);
             System.assert(false,'Exception required');
         } catch (Exception e) {
             System.assert(true,'Exception thrown: ' + e.getMessage());
@@ -37,7 +37,22 @@ public class WSSidraLiteTest {
         insert ifapCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testUpdateIFAP_FSPassenger() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        ifapCase.FS_Letter_Sent__c = true;
+        ifapCase.Status = 'Financial Security Requested';
+        ifapCase.FS_Deadline_Date__c = Date.today().addDays(-1);
+        insert ifapCase;
+
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -50,7 +65,7 @@ public class WSSidraLiteTest {
         insert ifapCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -64,7 +79,7 @@ public class WSSidraLiteTest {
         insert ifapCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -75,6 +90,7 @@ public class WSSidraLiteTest {
         ifapCase.FS_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Security Requested';
         ifapCase.FS_Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
         //set account as inactive
         Account acc = [Select Status__c from Account where id = :ifapCase.accountId];
@@ -82,7 +98,7 @@ public class WSSidraLiteTest {
         update acc;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -92,10 +108,11 @@ public class WSSidraLiteTest {
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -105,6 +122,7 @@ public class WSSidraLiteTest {
         ifapCase.FA_Letter_Sent__c = true;
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.Deadline_Date__c = Date.today().addDays(-1);
+        ifapcase.Bank_Guarantee_received__c = Date.today();
         insert ifapCase;
         //set account as inactive
         Account acc = [Select Status__c from Account where id = :ifapCase.accountId];
@@ -112,7 +130,7 @@ public class WSSidraLiteTest {
         update acc;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -125,7 +143,7 @@ public class WSSidraLiteTest {
         insert ifapCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
         Test.stopTest();
     }
 
@@ -136,13 +154,73 @@ public class WSSidraLiteTest {
         ifapCase.Status = 'Financial Statements Uploaded';
         ifapCase.Deadline_Date__c = Date.today().addDays(-1);
         insert ifapCase;
+
+
         //set account as inactive
         Account acc = [Select Status__c from Account where id = :ifapCase.accountId];
         acc.Status__c = 'Cash basis/no commission';
         update acc;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(ifapCase.Id);
+        WSSidraLite.sidraLiteAction(ifapCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateDummyInvoicing_Passenger() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateDummyInvoicing_Cargo() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingCargo();
+        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        //set account category to CASS Associate
+        Account acc = [Select Status__c from Account where id = :invoicingCase.accountId];
+        acc.Category__c = 'CASS Associate';
+        update acc;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateDummyInvoicing_Agent() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingAgent();
+        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testCreateDummyInvoicing_InactiveAccount() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        invoicingCase.Reason1__c = 'Annual Fees';
+        invoicingCase.SAAM_Deadline_Date__c = Date.today().addDays(-1);
+        insert invoicingCase;
+
+        //set account as inactive
+        Account acc = [Select Status__c from Account where id = :invoicingCase.accountId];
+        acc.Status__c = 'Cash basis/no commission';
+        update acc;
+
+        Test.startTest();
+        WSSidraLite.sidraLiteAction(invoicingCase.Id);
         Test.stopTest();
     }
 
@@ -463,7 +541,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(smapCase.Id);
+            WSSidraLite.sidraLiteAction(smapCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case already exists');
         } catch (Exception e) {
             System.assert(true);
@@ -478,7 +556,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(smapCase.Id);
+            WSSidraLite.sidraLiteAction(smapCase.Id);
             System.assert(false,'No exception thrown for bad Decision__c value');
         } catch (Exception e) {
             System.assert(true);
@@ -495,7 +573,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(smapCase.Id);
+            WSSidraLite.sidraLiteAction(smapCase.Id);
             System.assert(false,'No exception thrown for bad Suspension_Date__c value');
         } catch (Exception e) {
             System.assert(true);
@@ -511,7 +589,7 @@ public class WSSidraLiteTest {
         insert smapCase;
 
         Test.startTest();
-        WSSidraLite.createCase(smapCase.Id);
+        WSSidraLite.sidraLiteAction(smapCase.Id);
         Test.stopTest();
 
         System.assert(smapCase.Id!=null, 'Sidra Lite case for SMAP parent case was not created');
@@ -526,7 +604,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(oscarCase.Id);
+            WSSidraLite.sidraLiteAction(oscarCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case already exists');
         } catch (Exception e) {
             System.assert(true);
@@ -546,7 +624,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(oscarCase.Id);
+            WSSidraLite.sidraLiteAction(oscarCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for no Reason value');
         } catch (Exception e) {
             System.assert(true);
@@ -566,7 +644,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(oscarCase.Id);
+            WSSidraLite.sidraLiteAction(oscarCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case when there is no OSCAR case');
         } catch (Exception e) {
             System.assert(true);
@@ -594,7 +672,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(oscarCase.Id);
+            WSSidraLite.sidraLiteAction(oscarCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case when there is no OSCAR case');
         } catch (Exception e) {
             System.assert(true);
@@ -619,7 +697,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -637,7 +715,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -655,7 +733,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -673,7 +751,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -691,7 +769,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -709,7 +787,7 @@ public class WSSidraLiteTest {
         update oscar;
 
         Test.startTest();
-        WSSidraLite.createCase(oscarCase.Id);
+        WSSidraLite.sidraLiteAction(oscarCase.Id);
         Test.stopTest();
     }
 
@@ -720,7 +798,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.createCase(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case already exists');
         } catch (Exception e) {
             System.assert(true);
@@ -735,7 +813,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid reason');
         } catch (Exception e) {
             System.assert(true);
@@ -751,7 +829,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for null Bank Guarantee Deadline');
         } catch (Exception e) {
             System.assert(true);
@@ -768,7 +846,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid Bank Guarantee Deadline');
         } catch (Exception e) {
             System.assert(true);
@@ -790,7 +868,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid Bank Guarantee Deadline');
         } catch (Exception e) {
             System.assert(true);
@@ -806,7 +884,7 @@ public class WSSidraLiteTest {
         insert saamCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(saamCase.Id);
+        WSSidraLite.sidraLiteAction(saamCase.Id);
         Test.stopTest();
 
         System.assert(saamCase.Id!=null, 'Sidra Lite case for SAAM parent case was not created');
@@ -820,7 +898,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for no SAAM deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -837,7 +915,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid SAAM deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -853,7 +931,7 @@ public class WSSidraLiteTest {
         insert saamCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(saamCase.Id);
+        WSSidraLite.sidraLiteAction(saamCase.Id);
         Test.stopTest();
 
         System.assert(saamCase.Id!=null, 'Sidra Lite case for SAAM parent case was not created');
@@ -867,7 +945,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for no SAAM deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -884,7 +962,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid SAAM deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -906,7 +984,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite case for invalid Account Type');
         } catch (Exception e) {
             System.assert(true);
@@ -922,7 +1000,7 @@ public class WSSidraLiteTest {
         insert saamCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(saamCase.Id);
+        WSSidraLite.sidraLiteAction(saamCase.Id);
         Test.stopTest();
 
         System.assert(saamCase.Id!=null, 'Sidra Lite case for SAAM parent case was not created');
@@ -936,7 +1014,7 @@ public class WSSidraLiteTest {
         insert saamCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(saamCase.Id);
+        WSSidraLite.sidraLiteAction(saamCase.Id);
         Test.stopTest();
 
         System.assert(saamCase.Id!=null, 'Sidra Lite case for SAAM parent case was not created');
@@ -950,7 +1028,7 @@ public class WSSidraLiteTest {
         insert saamCase;
 
         Test.startTest();
-        WSSidraLite.checkBussinesRules(saamCase.Id);
+        WSSidraLite.sidraLiteAction(saamCase.Id);
         Test.stopTest();
 
         System.assert(saamCase.Id!=null, 'Sidra Lite case for SAAM parent case was not created');
@@ -970,7 +1048,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update without termination date');
         } catch (Exception e) {
             System.assert(true);
@@ -991,7 +1069,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with bad termination date');
         } catch (Exception e) {
             System.assert(true);
@@ -1012,7 +1090,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with bad termination date');
         } catch (Exception e) {
             System.assert(true);
@@ -1034,7 +1112,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update without new IFAP deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -1056,7 +1134,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with invalid new IFAP deadline date');
         } catch (Exception e) {
             System.assert(true);
@@ -1078,7 +1156,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with invalid new IFAP deadline date');
         } catch (WSSidraLite.ShowConfirmationException e) {
             System.assert(true);
@@ -1102,7 +1180,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with invalid Termination date');
         } catch (Exception e) {
             System.assert(true);
@@ -1124,7 +1202,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception thrown for SIDRA Lite update with invalid Propose Default date');
         } catch (Exception e) {
             System.assert(true);
@@ -1147,7 +1225,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception caught');
         } catch (WSSidraLite.SidraLiteException e) {
             System.assert(true);
@@ -1172,7 +1250,7 @@ public class WSSidraLiteTest {
 
         Test.startTest();
         try {
-            WSSidraLite.checkBussinesRules(saamCase.Id);
+            WSSidraLite.sidraLiteAction(saamCase.Id);
             System.assert(false,'No exception caught');
         } catch (WSSidraLite.ShowConfirmationException e) {
             System.assert(true);
@@ -1292,6 +1370,284 @@ public class WSSidraLiteTest {
             WSSidraLite.updateSecondAndThirdDeadline(saamCase.Id);
         } catch (Exception e) {
             System.assert(false, 'Wrong Exception');
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testThrowPopUpMessageIFAP() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        insert ifapCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(ifapCase);
+            System.assert(false, 'Expected Exception for IFAP');
+        } catch (WSSidraLite.ShowConfirmationException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testThrowPopUpMessageSAAM() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        insert saamCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(saamCase);
+            System.assert(false, 'Expected Exception for SAAM');
+        } catch (WSSidraLite.ShowConfirmationException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testThrowPopUpMessageInvoicing() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        insert invoicingCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(invoicingCase);
+            System.assert(false, 'Expected Exception for Ivoicing collection');
+        } catch (SidraLiteUtil.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testThrowPopUpMessageSMAP() {
+        Case smapCase = SidraLiteManagerTest.createSMAPPassenger();
+        insert smapCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(smapCase);
+            System.assert(false, 'Expected Exception for SMAP');
+        } catch (SidraLiteHelperForSMAP.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testThrowPopUpMessageOSCAR() {
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        insert oscarCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(oscarCase);
+            System.assert(false, 'Expected Exception for OSCAR');
+        } catch (WSSidraLite.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testThrowPopUpMessage_ERROR() {
+        Case dummyCase = new Case();
+        insert dummyCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.throwPopUpMessage(dummyCase);
+            System.assert(false, 'Expected Exception for dummyCase');
+        } catch (WSSidraLite.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testupdateSidraLiteAndParentIFAP() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        insert ifapCase;
+
+        Case childCase = createSIDRALite(ifapCase);
+        insert childCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(ifapCase, childCase);
+        } catch (SidraLiteHelperForIFAP.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testupdateSidraLiteAndParentSAAM() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        insert saamCase;
+
+        Case childCase = createSIDRALite(saamCase);
+        insert childCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(saamCase, childCase);
+        } catch (SidraLiteHelperForSAAM.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testupdateSidraLiteAndParentInvoicing() {
+        Case invoicingCase = SidraLiteManagerTest.createInvoicingPassenger();
+        insert invoicingCase;
+
+        Case childCase = createSIDRALite(invoicingCase);
+        insert childCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(invoicingCase, childCase);
+        } catch (SidraLiteUtil.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testupdateSidraLiteAndParentSMAP() {
+        Case smapCase = SidraLiteManagerTest.createSMAPPassenger();
+        insert smapCase;
+
+        Case childCase = createSIDRALite(smapCase);
+        insert childCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(smapCase, childCase);
+        } catch (SidraLiteHelperForSMAP.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testupdateSidraLiteAndParentOSCAR() {
+        Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
+        insert oscarCase;
+
+        Case childCase = createSIDRALite(oscarCase);
+        insert childCase;
+
+        Test.startTest();
+        try {
+            WSSidraLite.updateSidraLiteAndParent(oscarCase, childCase);
+        } catch (WSSidraLite.SidraLiteException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testupdateSidraLiteAndParent_ERROR() {
+        Case dummyCase = new Case();
+        insert dummyCase;
+
+        Test.startTest();
+        list<Case> result = WSSidraLite.updateSidraLiteAndParent(dummyCase, dummyCase);
+        System.assert(result==null, 'Expected Exception for dummyCase');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testNewCaseComments_NoCases() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        insert ifapCase;
+
+        Case sidraLiteCase = createSIDRALite(ifapCase);
+        insert sidraLiteCase;
+        
+        Account account = [Select Id, Status__c from Account where id =:sidraLiteCase.AccountId];
+        account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
+        update account;
+
+        Test.startTest();
+        list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase, account);
+        System.assert(result.size()==1, 'Expected 1 case comment');
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testNewCaseComments_OtherCaseFound() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        insert ifapCase;
+
+        Case sidraLiteCase1 = createSIDRALite(ifapCase);
+        Case sidraLiteCase2 = createSIDRALite(ifapCase);
+        insert new list<Case>{sidraLiteCase1, sidraLiteCase2};
+
+        Account account = [Select Id, Status__c,
+            (Select id, caseNumber, Comments__c, Termination_date__c from Cases where id != :sidraLiteCase1.id)
+            from Account
+            where id =:ifapCase.AccountId];
+        account.Status__c = new list<string>(SidraLiteUtil.ACCOUNT_INACTIVE_STATUS)[0];
+        update account;
+
+        Test.startTest();
+        list<CaseComment> result = WSSidraLite.newCaseComments(sidraLiteCase1, account);
+        System.assert(result.size()==2, 'Expected 2 case comments');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testUpdateTerminationDate_OK() {
+        Case ifapCase = SidraLiteManagerTest.createIFAPPassenger();
+        insert ifapCase;
+
+        Test.startTest();
+        WSSidraLite.updateTerminationDate(ifapCase.Id, Date.today());
+        Test.stopTest();
+
+        ifapCase = [Select Termination_date__c from Case where Id = :ifapCase.Id];
+        System.assert( ifapCase.Termination_date__c == Date.today(), 'Termination date not changed');
+    }
+
+    @isTest
+    public static void testUpdateTerminationDate_ERROR() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        insert saamCase;
+        Id caseId = saamCase.Id;
+        delete saamCase;
+
+        Test.startTest();
+        WSSidraLite.updateTerminationDate(caseId, Date.today());
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testinsertCommentsWhenNotUpdate_OK() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+        insert saamCase;
+
+        Case sidraLiteCase = createSIDRALite(saamCase);
+        insert sidraLiteCase;
+
+        Test.startTest();
+        WSSidraLite.insertCommentsWhenNotUpdate(saamCase, sidraLiteCase);
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void testinsertCommentsWhenNotUpdate_ERROR() {
+        Case saamCase = SidraLiteManagerTest.createSAAMPassenger();
+
+        Test.startTest();
+        try {
+            WSSidraLite.insertCommentsWhenNotUpdate(saamCase, saamCase);
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
         }
         Test.stopTest();
     }

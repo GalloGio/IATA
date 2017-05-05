@@ -4,6 +4,10 @@ public with sharing class ISSP_BO_Report {
     public List<reportWrapper> fullList {get; set;}
     public String currentMonthString {get; set;}
 
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
     public ISSP_BO_Report(){
          
     }
@@ -11,7 +15,7 @@ public with sharing class ISSP_BO_Report {
     public PageReference pageLoad(){
 
         //check if user has access to MIR service
-        PageReference pr = new PageReference('/ISSP_Homepage');
+        PageReference pr = new PageReference('/ISSP_Homepage' + commParam);
         //PageReference pr = null;
         String userId = UserInfo.getUserId();
         if (userId != null && userId != ''){

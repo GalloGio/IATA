@@ -39,6 +39,7 @@ public class ChooseCommunityCtrl {
         options.add(new SelectOption('--None--','--None--'));
         options.add(new SelectOption(Comm_User_Helper.IEC,'E-commerce'));
         options.add(new SelectOption(Comm_User_Helper.ISSP,'ISS Customer Portal'));
+        options.add(new SelectOption(Comm_User_Helper.CNS,'CNS Customer Portal'));
         return options;
     }
 }

@@ -9,7 +9,7 @@
     <div id="contentcontainer">
 
     <div class="col3" id="content"  style="font-family: Arial;">
-<H3>Force.com for Amazon Web Services</h3><br>
+<h3>Force.com for Amazon Web Services</h3><br>
 <br style="font-family: Arial;"><span style="font-family: Arial;">
 The Force.com for Amazon Web Services distribution brings two of the most popular cloud platforms together, 
 letting developers easily create applications that combine the power of Force.com and the Amazon Web 
@@ -17,7 +17,7 @@ Services (AWS).&nbsp; Combining a framework for authentication, native access to
 and pre-built Amazon Machine Images (AMI), the toolkit provides the foundations nessesary to take advantage of 
 these Amazon services directly within Force.com.&nbsp; Offered as an installable package, the toolkit includes:</span>
 <br style="font-family: Arial;">
-<p class="western" style="margin-bottom: 0in; font-family: Arial;"><br>
+<p class="western" style="margin-bottom: 0in; font-family: Arial;"><br/>
 </p>
 <ul style="font-family: Arial;"><li><p class="western" style="margin-bottom: 0in;"><font size="2"><b>Force.com
     for Amazon S3:</b>&nbsp; </font><font size="2">With this integration, the S3
@@ -30,7 +30,7 @@ these Amazon services directly within Force.com.&nbsp; Offered as an installable
     ability to automatically add, remove or modify S3 objects based on
     workflow and data changes in a Force.com application.</font></p></li></ul>
 
-<p class="western" style="margin-bottom: 0in; font-family: Arial;"><br>
+<p class="western" style="margin-bottom: 0in; font-family: Arial;"><br/>
 </p>
 <ul style="font-family: Arial;"><li><p class="western" style="margin-bottom: 0in;"><font size="2"><b>Force.com
     for Amazon EC2:</b>&nbsp;&nbsp;&nbsp; Using
@@ -46,8 +46,8 @@ these Amazon services directly within Force.com.&nbsp; Offered as an installable
     use PHP with Force.com.</font></p></li></ul><br style="font-family: Arial;"><b>
     
 
-    <a href="http://wiki.apexdevnet.com/index.php/toolkit_for_amazon_web_services">Essential Resources</a>
-    
+    <a href="http://wiki.apexdevnet.com/index.php/toolkit_for_amazon_web_services">Essential Resources</a></b></br></br>
+    </br></br>
     </div>
 
     <div id="right"></div>

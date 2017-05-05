@@ -1,14 +1,14 @@
-<apex:page title="{!$Label.site.error2}" controller="vfExceptionPage" action="{!CreateCase}" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" >  
+<apex:page title="{!$Label.site.error2}" controller="vfExceptionPage" action="{!CreateCase}" showHeader="false" sidebar="false" standardStylesheets="false"  applyBodyTag="false" >
  <html>
- <c:ISSP_Header ></c:ISSP_Header>    
- <body> 
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+ <body>
      <div class="container">
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
       <center>
-        <apex:panelGrid bgcolor="white" columns="1" style="align: center;"> 
+        <apex:panelGrid bgcolor="white" columns="1" style="align: center;">
           <br/>
           <br/>
-          <apex:panelGrid width="758" cellpadding="0" cellspacing="0" bgcolor="white" columns="1" > 
+          <apex:panelGrid width="758" cellpadding="0" cellspacing="0" bgcolor="white" columns="1" >
               <br />
               <table>
                   <tr>
@@ -22,29 +22,29 @@
             <!-- You have been allocated the following:<br/>
             Case number: {!c.CaseNumber}<br/>
             Case description: <apex:outputField value="{!c.Description}"/><br/><br/>
-            
+
             Please quote this case number as a reference if you wish to contact us regarding your inquiry.<br/><br/>
              -->
             Best regards<br/><br/><br/>
-            
-            IATA Operations Service Center
+
+            {!communityName} Operations Service Center
                           <hr />
-                          {!$Label.site.error} : 
+                          {!$Label.site.error} :
 			<apex:param value="{!$Site.ErrorDescription}"/>
-		
+
                       </td>
                   </tr>
               </table>
-         </apex:panelGrid> 
-          
+         </apex:panelGrid>
+
         </apex:panelGrid>
       </center>
-      
+
       <apex:outputText styleClass="title" value="{!$Label.site.error}">
 			<apex:param value="{!$Site.ErrorDescription}"/>
 		</apex:outputText>
-      
-       <c:ISSP_CustomFooter />
+
+       <c:ISSP_CustomFooter communityName="{!communityName}"/>
     </div>
      </body>
     </html>

@@ -166,6 +166,25 @@
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>EBC_Template__c.Global</value>
+        </filters>
+        <label>Global Templates</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Audience__c</columns>
+        <columns>Is_Reusable__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
     </listViews>

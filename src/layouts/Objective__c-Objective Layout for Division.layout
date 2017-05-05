@@ -88,6 +88,10 @@
                 <field>Target__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Decreasing_Target__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Target_Progress__c</field>
             </layoutItems>
@@ -184,6 +188,14 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CreatedDate</fields>
+        <fields>StepStatus</fields>
+        <fields>OriginalActor</fields>
+        <fields>Actor</fields>
+        <fields>Comments</fields>
+        <relatedList>RelatedProcessHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>

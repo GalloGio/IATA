@@ -40,13 +40,7 @@ public with sharing class ISSP_CurrencyCenterHomeController {
 
     public PageReference checkAccess(){
         //if user has service assigned, continue
-        if(ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService()){
-            ISSP_CurrencyCenterUtil.stampVisitDateTime(8);
-            return null;
-        }
-        //else redirect to portal home page
-        else
-            return new PageReference('/ISSP_Homepage');
+        return ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
     }
 
     public PageReference GoToBlockedFunds() {

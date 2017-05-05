@@ -6,6 +6,9 @@ public class ISSP_PortalServiceAccess{
 
     public Portal_Application_Right__c PortalServiceAccess {get;set;}
     public List<Portal_Application_Right__c> PortalServiceAccess_List {get;set;}
+
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
      
     public ISSP_PortalServiceAccess(){
     
