@@ -77,6 +77,17 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
+    <fields>
+        <fullName>ANG_Restrict_internal_selection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked prevents portal services from being subscribed from Salesforce.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enabling this option prevents internal users from granting this portal service to contacts.</inlineHelpText>
+        <label>Cannot be granted internally</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
