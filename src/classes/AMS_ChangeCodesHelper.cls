@@ -553,7 +553,7 @@ public class AMS_ChangeCodesHelper {
 
                 CCToBeGenerated = false;
 
-                if(conf.Field1__c!=null && CCToBeGenerated)
+                if(conf.Field1__c!=null)
                     CCToBeGenerated = bCheckCondition(acc, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
                 if(conf.Field2__c!=null && CCToBeGenerated)
                     CCToBeGenerated = bCheckCondition(acc, conf.Field2__c, conf.Field2Values__c.toUpperCase(), mapTrgOld.get(acc.Id));
