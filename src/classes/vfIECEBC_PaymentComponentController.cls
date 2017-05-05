@@ -186,8 +186,25 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   public Contact oPaymentBillingContact{
     get{
       if (oPaymentBillingContact == null)
-      {
-        oPaymentBillingContact = billingAccount.Contact__r;
+      { system.debug('inside oPaymentBillingContact');
+        system.debug('billingAccount : '+billingAccount);
+        system.debug('Contact id : '+billingAccount.Contact__c);
+        system.debug('Contact FirstName : '+billingAccount.Contact__r.FirstName);
+
+        List<Contact> listContact = new List<Contact>();
+        listContact = [select Name, 
+                            FirstName, 
+                            LastName, 
+                            Title, 
+                            Phone, 
+                            Email 
+                     from Contact 
+                     where Id =: billingAccount.Contact__c];
+
+        system.debug('oPaymentBillingContact is : ' + listContact[0]);
+        if (listContact.size()>0) oPaymentBillingContact=listContact[0];
+
+        //oPaymentBillingContact = billingAccount.Contact__r;
       }
       return oPaymentBillingContact;
     }
@@ -516,6 +533,15 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
   public Boolean showPaymentButtons
   {
     get{
+
+      system.debug('Street : ' + oBillingAddress.Street__c);
+      system.debug('ISO Country : ' + oBillingAddress.ISO_Country__c);
+      system.debug('FirstName : ' + oPaymentBillingContact.FirstName);
+      system.debug('LastName : ' + oPaymentBillingContact.LastName);
+      system.debug('Title : ' + oPaymentBillingContact.Title);
+      system.debug('Email : ' + oPaymentBillingContact.Email);
+      system.debug('Phone : ' + oPaymentBillingContact.Phone);
+
       Boolean result = ( !editMode 
                 && !(String.isBlank(oPaymentBillingContact.FirstName))
                 && !(String.isBlank(oPaymentBillingContact.LastName))

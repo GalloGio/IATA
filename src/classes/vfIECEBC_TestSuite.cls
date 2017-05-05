@@ -46,7 +46,8 @@ public class vfIECEBC_TestSuite {
         c.Phone = '514123345';
         c.User_IECPortal_Status__c = 'Privilege - Approved';
         insert c;
-        
+        system.debug('contact id is ' + c.id);
+
         Zuora__CustomerAccount__c ba = new Zuora__CustomerAccount__c(
             Zuora__Account__c = a.Id
             , Contact__c = c.Id
