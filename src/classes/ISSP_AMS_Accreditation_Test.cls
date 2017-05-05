@@ -4647,7 +4647,7 @@ private class ISSP_AMS_Accreditation_Test
 
             accr.createAgencyContact();
 
-            pageRef = accr.securityCheck();
+            //pageRef = accr.securityCheck();
         }
 
         Test.stopTest();        
