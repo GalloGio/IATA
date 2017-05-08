@@ -811,6 +811,7 @@ public with sharing class AMS_AccreditationContactController {
         wrapped.recordId = acc.Id;
         wrapped.account.Id = acc.Id;
         wrapped.accountAc.Company__c = acc.Id;
+        wrapped.accountAc.IATACode__c = acc.IATACode__c;
         
         // fields that might get copied, but are not displayed on the form.
         if(acc.Email__c != null)

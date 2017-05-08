@@ -2,10 +2,16 @@ public class vfIECEBC_Resubscribe {
    
    public string test {get;set;}
 
-    public String email {
+public String email {
         get {
-            if (email == null) {                
-                email = IECUtil.DecryptParameter(ApexPages.currentPage().getParameters().get('e'));
+            if (email == null) {
+                
+                if(ApexPages.currentPage().getParameters().get('e') != null){
+                    email = IECUtil.DecryptParameter(ApexPages.currentPage().getParameters().get('e'));
+                }else{
+                    email = ApexPages.currentPage().getParameters().get('email');
+                }                
+                
             }
             return email;
         }
