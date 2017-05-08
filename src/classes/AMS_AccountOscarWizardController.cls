@@ -1,7 +1,7 @@
 public class AMS_AccountOscarWizardController {
 
     public Flow.Interview.OSCAR_Wizard_SIMPLEX myFlow { get; set; }
-    public Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX myFlowNG { get; set; }
+    //public Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX myFlowNG { get; set; }
 
     ApexPages.StandardController controller;
 
@@ -25,7 +25,7 @@ public class AMS_AccountOscarWizardController {
                     where id = :ApexPages.currentPage().getParameters().get('accountId')];
         return null;
     }
-
+/*
     public String getoscarId(){
         if (myFlow==null && myFlowNG==null) 
             return '';
@@ -34,7 +34,7 @@ public class AMS_AccountOscarWizardController {
         else
             return myFlowNG.OscarId;
     }
-
+*/
     public String getoscarName(){
         if (myFlow==null && myFlowNG==null) 
             return '';
