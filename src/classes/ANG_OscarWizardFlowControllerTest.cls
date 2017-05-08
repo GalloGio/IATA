@@ -37,7 +37,7 @@ private class ANG_OscarWizardFlowControllerTest {
         AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
 
         flowController.getAccount();
-
+/*
         flowController.myflow = new Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX(new Map<String, Object>());
         
         try{
@@ -66,7 +66,7 @@ private class ANG_OscarWizardFlowControllerTest {
 
 
         flowController.errorMessage = 'test errorMessage';
-        
+  */      
     }
 	
 }
