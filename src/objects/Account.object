@@ -2719,6 +2719,17 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Account_Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/apex/AccountHierarchy?id=&quot; + Id, &quot;[View Hierarchy]&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Hierarchy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account_Type__c</fullName>
         <externalId>false</externalId>
         <label>Account Type</label>
