@@ -36,10 +36,10 @@
 
 		<div class="bDescription">The hierarchy is created by associating accounts with parent accounts.</div>
 
-		<apex:form>
+		<apex:form >
 			<apex:actionFunction name="handleSearchAF" rerender="tablePanel" action="{!refreshHierarchy}"/>
 
-			<apex:outputPanel id="tablePanel">
+			
 				<div class="bRelatedList">
 					<div class="relatedAccountHierarchy">
 						<div class="bPageBlock brandSecondaryBrd secondaryPalette">
@@ -48,6 +48,8 @@
 								<apex:inputText id="searchInput" styleClass="search-input" value="{!searchString}" html-placeholder="Search within the hierarchy" onkeyup="handleSearchChange();"/>
 								<label><apex:inputCheckbox value="{!isExcludeTerminated}" onclick="handleSearchChange();" />Exclude terminated accounts</label>
 							</div>
+
+							<apex:outputPanel id="tablePanel">	
 							<div class="pbBody">
 								<table class="list" border="0" cellspacing="0" cellpadding="0">
 									<tbody>
@@ -112,11 +114,12 @@
 									</span>
 								</div>
 							</div>
+							</apex:outputPanel>
+							
 
 						</div>
 					</div>
 				</div>
-			</apex:outputPanel>
 
 		</apex:form>
 	</body>

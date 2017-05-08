@@ -69,6 +69,8 @@ public with sharing class AccountHierarchyController {
             strQuery += ')';
         }
 
+        strQuery += 'ORDER BY IATACode__c NULLS LAST';
+
         system.debug('query: ' + strQuery);
 
         lstAccountsInHierarchy = Database.query(strQuery);
@@ -195,7 +197,7 @@ public with sharing class AccountHierarchyController {
 
         public AccountWrapper (Account a, Integer level) {
             this.acc = a;
-            this.indentation = level != null ? '&nbsp;'.repeat(level*4) : '';
+            this.indentation = level != null ? '&nbsp;'.repeat(level*6) : '';
         }
      }
 }
