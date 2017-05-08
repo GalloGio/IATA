@@ -26,7 +26,7 @@
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>TagCsv</field>
             </layoutItems>
             <layoutItems>
