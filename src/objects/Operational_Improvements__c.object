@@ -1005,7 +1005,7 @@
     <fields>
         <fullName>Description__c</fullName>
         <externalId>false</externalId>
-        <label>Description</label>
+        <label>Description/sequence of events</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1622,7 +1622,7 @@
         <label>OI Status (WF)</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1630,13 +1630,12 @@
     <fields>
         <fullName>OI_Status_auto__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, TODAY()&gt;=Pending_eff_validation_date__c),
-  &quot;Pending Effectiveness Validation&quot;,
-  OI_Status_WF__c
+        <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, Pending_eff_validation_date__c&lt;=TODAY()),
+	&quot;Pending Effectiveness Validation&quot;,
+	SUBSTITUTE(OI_Status_WF__c,&quot;Delayed&quot;, IF(TODAY()&gt;Overall_Deadline__c,&quot;Delayed&quot;,&quot;&quot;))
 )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
-        <label>OI Status (auto)</label>
+        <label>OI Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3771,6 +3770,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
     <validationRules>
         <fullName>Frequency_of_occurence_Other_check</fullName>
         <active>true</active>
@@ -3965,21 +3965,35 @@ sforce.connection.update([improvement ]);
 window.location.reload();</url>
     </webLinks>
     <webLinks>
-        <fullName>Submitted_for_extension</fullName>
+        <fullName>Submit_for_extension</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Submitted for extension</masterLabel>
+        <masterLabel>Submit for extension</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
 
-var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
-improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
-sforce.connection.update([improvement ]); 
+function htmlDecode(input){
+  var e = document.createElement(&apos;div&apos;);
+  e.innerHTML = input;
+  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
+}
 
-window.location.reload();</url>
+if ({!ISNULL(Operational_Improvements__c.Submission_for_extension_date__c)}) {
+  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+  improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
+  var result = sforce.connection.update([improvement ]); 
+
+  if(result[0].getBoolean(&apos;success&apos;)) {
+    location.reload();
+  } else {
+    alert(htmlDecode(result[0].errors.message));
+  }
+} else {
+  alert(&quot;OI already submitted for extension&quot;);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>Terminate_OI</fullName>

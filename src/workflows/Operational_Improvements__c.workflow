@@ -35,23 +35,28 @@
         <fullName>OI_Status_WF</fullName>
         <description>Update field Status WF</description>
         <field>OI_Status_WF__c</field>
-        <formula>IF(ISNULL(Date_Time_Closed__c),
-IF(ISNULL(Terminated_Date__c),
-IF(OR(ISNULL(Pending_eff_validation_date__c),TODAY()&lt;Pending_eff_validation_date__c),
-IF(ISNULL(Conclusion_Date__c),
-IF(AND(NOT(ISNULL(Overall_Deadline__c)),Overall_Deadline__c&lt;TODAY()), &quot;Delayed&quot;,
-IF(NOT(ISNULL(Submission_for_Approval_Date__c)), 
-IF(ISNULL(Extension_approved_date__c), 
-IF(ISNULL(Submission_for_extension_date__c),
-IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Action Plan&quot;)
-,&quot;Pending Extension Approval&quot;)
-,&quot;Extended&quot;)					
-,&quot;Investigation&quot;)
-)
-,&quot;Concluded&quot;)
-,&quot;Pending Effectiveness Validation&quot;)
-	,&quot;Terminated&quot;)
-, &quot;Closed&quot;)</formula>
+        <formula>IF(NOT(ISNULL(Date_Time_Closed__c)), &quot;Closed&quot;,
+IF(NOT(ISNULL(Terminated_Date__c)),&quot;Terminated&quot;,
+IF(NOT(ISNULL(Conclusion_Date__c)),&quot;Concluded&quot;,
+IF(AND(
+	NOT(ISNULL(Submission_for_Approval_Date__c)),
+	NOT(ISNULL(OI_Approval_date__c)),
+	NOT(ISNULL(Submission_for_extension_date__c)),
+	NOT(ISNULL(Extension_approved_date__c))),
+	&quot;Extended Delayed&quot;,
+IF(AND(
+	NOT(ISNULL(Submission_for_Approval_Date__c)),
+	NOT(ISNULL(OI_Approval_date__c)),
+	NOT(ISNULL(Submission_for_extension_date__c))),
+	&quot;Pending Extension Approval Delayed&quot;,
+IF(AND(
+	NOT(ISNULL(Submission_for_Approval_Date__c)),
+	NOT(ISNULL(OI_Approval_date__c))),
+	&quot;Ongoing Action Plan Delayed&quot;,
+IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
+	&quot;Pending Approval Delayed&quot;,
+	&quot;Investigation Delayed&quot;
+)))))))</formula>
         <name>OI Status WF</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -65,6 +70,7 @@ IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Acti
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>OI_Update_Approval_date</fullName>
@@ -74,6 +80,7 @@ IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Acti
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Terminate_OI</fullName>
@@ -84,6 +91,7 @@ IF(ISNULL(OI_Approval_date__c), &quot;Pending Approval&quot;, &quot;Ongoing Acti
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Update_Date_Time_Closed</fullName>
