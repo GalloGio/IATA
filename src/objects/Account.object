@@ -10476,6 +10476,21 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Number_of_GDI_financial_securities__c</fullName>
+        <description>Counts the number of Financial security, security type = GDI</description>
+        <externalId>false</externalId>
+        <label>Number of GDI financial securities</label>
+        <summaryFilterItems>
+            <field>Financial_Security__c.Security_Type__c</field>
+            <operation>equals</operation>
+            <value>GDI</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Financial_Security__c.Account__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Number_of_GDP_Billing_accounts__c</fullName>
         <description>auto calculates the number of GDP billing accounts under the account</description>
         <externalId>false</externalId>
