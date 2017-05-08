@@ -34,7 +34,7 @@ public class AMS_AccountOscarWizardController {
         else
             return myFlowNG.OscarId;
     }
-*/
+
     public String getoscarName(){
         if (myFlow==null && myFlowNG==null) 
             return '';
@@ -52,7 +52,7 @@ public class AMS_AccountOscarWizardController {
         else
             return myFlowNG.OscarCaseId;
     }
-
+*/
     public String geterrorMessage(){
         if(myFlow != null){
             System.debug('UPS !! something went wrong: ' + (String)myFlow.getVariableValue('ErrorMessage'));      
