@@ -41,10 +41,10 @@ private class OscarWizzardFlowControllerTest {
         	// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
         }
 
-*/
+
         flowController.errorMessage = 'test errorMessage';
         
-       
+*/       
     
     }
 
