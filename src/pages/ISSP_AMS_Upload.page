@@ -53,7 +53,8 @@
         </div>
         </apex:form>
      <div class="col-md-12">
-        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent), $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, $Label.ISSP_Cargo_Agent))}">
+        <apex:variable var="sectorValueLabel" value="{!IF(sectorValue=='Travel_Agent', $Label.ISSP_Travel_Agent, IF(newlabels, $Label.ISSP_Cargo_Agent_New, $Label.ISSP_Cargo_Agent))}" />
+        <apex:pageBlock mode="detail" id="theBlock" title="{!amsCountryLabel} - {!IF(displayLanguage=='en_US', sectorValueLabel, $Label.ISSP_Requirements)} {!IF(displayLanguage=='en_US', $Label.ISSP_Requirements, sectorValueLabel)}">
             <div class="bg-info"><strong>{!$Label.ISSP_AMS_Step4_File_Upload}</strong></div>
             <br />
                 <apex:pageMessages />

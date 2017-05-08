@@ -316,7 +316,7 @@
         <relationshipLabel>Locations</relationshipLabel>
         <relationshipName>Locations</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -337,7 +337,7 @@
         <externalId>false</externalId>
         <label>Email</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -454,7 +454,7 @@
         <externalId>false</externalId>
         <label>Phone</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Phone</type>
     </fields>

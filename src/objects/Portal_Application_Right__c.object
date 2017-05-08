@@ -93,18 +93,6 @@
         <label>ISSP Access to Service List View</label>
     </fieldSets>
     <fields>
-        <fullName>ANG_Portal_Service_Role__c</fullName>
-        <description>Selected service portal role</description>
-        <externalId>false</externalId>
-        <label>Portal Service Role</label>
-        <length>50</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Access_Status_Reason__c</fullName>
         <externalId>false</externalId>
         <label>Reason</label>
@@ -469,9 +457,7 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
-&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
-&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
-&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name
 )</formula>
