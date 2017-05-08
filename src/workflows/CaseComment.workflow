@@ -660,17 +660,6 @@ Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SIDRA_DOP7_R%26S_feedback to CS - R%26S completed</fullName>
-        <actions>
-            <name>IDFS_SIDRA_DOP7_R_S_feedback_pending_2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <description>Used to Request R&amp;S feedback</description>
-        <formula>AND( CONTAINS( $UserRole.Name, &quot;R&amp;S&quot;) ,   ISPICKVAL(Parent.R_S_feedback_pending__c, &quot;CS requests feedback&quot;) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SIS Help Desk -New Case Comment added</fullName>
         <actions>
             <name>SIS_Help_Desk_New_Case_Comment_notification_to_SIS_customer_support</name>
