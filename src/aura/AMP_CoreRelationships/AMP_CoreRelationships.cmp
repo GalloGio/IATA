@@ -96,12 +96,12 @@
             <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout slds-table--striped">
                 <thead>
                     <tr class="headerRow" >
-                        <th style="width: 17%;"><span>IATA Group Name</span></th>
-                        <th style="width: 11%;"><span>Role Within Group</span></th>
+                        <th style="width: 16%;"><span>IATA Group Name</span></th>
+                        <th style="width: 10%;"><span>Role Within Group</span></th>
                         <th style="width: 5%;"><span>Salut.</span></th>
-                        <th style="width: 8%;"><span>First Name</span></th>
-                        <th style="width: 8%;"><span>Last Name</span></th>
-                        <th style="width: 9%;"><span>Title</span></th>
+                        <th style="width: 7%;"><span>First Name</span></th>
+                        <th style="width: 7%;"><span>Last Name</span></th>
+                        <th style="width: 13%;"><span>Title</span></th>
                     </tr>
                 </thead>
                 
