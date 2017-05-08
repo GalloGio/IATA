@@ -76,7 +76,7 @@ global with sharing class ANG_ConversionHelper {
 		for(Account acct: allAccountsSingleHierarchyBR)
 			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
 
-		List<AMS_Agencies_Hierarchy__c> alreadyMigratedStructures = [SELECT Id from AMS_Agencies_Hierarchy__c where Migrated__c = true];
+		List<AMS_Agencies_Hierarchy__c> alreadyMigratedStructures = [select Id from AMS_Agencies_Hierarchy__c where migrated__c = true and Id in (select Hierarchy__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country)];
 
 		for(AMS_Agencies_Hierarchy__c h: alreadyMigratedStructures){
 
