@@ -144,7 +144,7 @@ public with sharing class AMS_AccreditationContactController {
 
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
-        isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
+        isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW || aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEWHE)? true : false;
         isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
     }
     
@@ -287,6 +287,8 @@ public with sharing class AMS_AccreditationContactController {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, errorMissingExpiryDate));
             return null;
         }
+
+        Integer numberPortalAdmin = 0;
         
         // Verify that no emails entered for "new" contacts are found in the system
         Set<String> emailSetToConfirm = new Set<String>();
@@ -297,7 +299,18 @@ public with sharing class AMS_AccreditationContactController {
                 if(ac.ac.Email__c != '')
                     emailSetToConfirm.add(ac.ac.Email__c);
             }
+
+            if(ac.ac.Portal_administrator__c == true)
+                numberPortalAdmin++;
+
         }
+
+        if(numberPortalAdmin > 1){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'A maximum of 1 portal administrator is allowed on this page.'));
+            return null;
+        }
+
+
         if(emailSetToConfirm.size() >0)
         {
             Map<Id, Contact> idContactMap = AMS_AccreditationContactHelper.findContactsByEmail(emailSetToConfirm);

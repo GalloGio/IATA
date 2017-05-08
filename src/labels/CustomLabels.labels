@@ -8200,7 +8200,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
-        <value>New Head Entity lite - Standard Accreditation with no Cash</value>
+        <value>New Head Entity - Standard Accreditation with no Cash</value>
+    </labels>
+    <labels>        
+        <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS How Many PrevAgencies</shortDescription>
+        <value>* How many travel agencies previously worked for?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_IATA_Passenger_Sales_Agent</fullName>
@@ -19112,7 +19119,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
-    </labels>    
+    </labels>                
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
@@ -23571,7 +23578,7 @@ title,Title,Name</value>
         <fullName>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</fullName>        
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</shortDescription>
+        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless  </shortDescription>
         <value>Accreditaiton type requested</value>
     </labels>
 
@@ -23582,6 +23589,7 @@ title,Title,Name</value>
         <shortDescription>ISSP_Secu_of_Elect_Tickets</shortDescription>
         <value>SECTION 4 - Security of Electronic Tickets</value>
     </labels>
+
     <labels>
         <fullName>ISSP_AMS_Step3_5_Event_of_inspection</fullName>        
         <language>en_US</language>
@@ -23589,6 +23597,7 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_Step3_5_Event_of_inspection</shortDescription>
         <value>In the event of an inspection, the Applicant will be required to provide evidence that it meets the security requirements for issuance of Electronic Tickets, in accordance with the provisions of section 8, and in particular the Payment Card Industry (PCI) Data Security Standards as referenced in section 2.1.6 of Resolution 890.</value>
     </labels>
+
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_Identi_Appro_Req</fullName>        
         <language>en_US</language>
@@ -23596,6 +23605,7 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_STEP_3_1_Identi_Appro_Req</shortDescription>
         <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
     </labels>
+
     <labels>
         <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>        
         <language>en_US</language>
@@ -23636,7 +23646,7 @@ title,Title,Name</value>
         <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>        
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_LeftNav_Section5_Other_Info</shortDescription>
+        <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info </shortDescription>
         <value>5. Other Info</value>
     </labels>	
     <labels>

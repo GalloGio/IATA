@@ -60,8 +60,8 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Accredited_Agents_Only__c</field>
 			</layoutItems>
-			<layoutItems>
-				<behavior>Edit</behavior>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>VisibleCNS__c</field>
             </layoutItems>
         </layoutColumns>

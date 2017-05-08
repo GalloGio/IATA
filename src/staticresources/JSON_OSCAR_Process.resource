@@ -3564,7 +3564,6 @@
                         "DisplayFields":[
                            "Received_Bank_Guarantee_amount__c",
                            "Received_Bank_Guarantee_currency__c",
-                           "Send_FS_request__c",
                            "STEP35__c"
                         ],
                         "IsDependent":true

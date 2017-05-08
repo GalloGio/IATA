@@ -139,7 +139,7 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Accreditation_Model__c</field>
 			</layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CNS_Account__c</field>
             </layoutItems>

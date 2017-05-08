@@ -27,7 +27,7 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Accredited_Agents_Only__c</field>
 			</layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>VisibleCNS__c</field>
             </layoutItems>

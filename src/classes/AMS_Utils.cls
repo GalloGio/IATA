@@ -1,5 +1,7 @@
 public without sharing class AMS_Utils {
 
+    public static Boolean runningContactInsertUpdateFromOSCAR = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -104,6 +106,7 @@ public without sharing class AMS_Utils {
     public static final String SA = 'SA';
     public static final String HE = 'HE';
 
+
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
     public static final String new_BR           = 'NEW.BR'          ;
@@ -142,8 +145,9 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
     public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
     public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_NEWHE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
 
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
@@ -169,9 +173,8 @@ public without sharing class AMS_Utils {
     public static final String CHLOCTYPEBEHAVIOR_SWAP = 'Swap with the parent';
     public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
     public static final String SECTOR_CARGO = 'Cargo Agent';
-    public static final String SECTOR_PASSENGER = 'Travel Agent';    
+    public static final String SECTOR_PASSENGER = 'Travel Agent';
     public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
-
 
     public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
@@ -183,7 +186,6 @@ public without sharing class AMS_Utils {
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
     public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
-
 
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -2028,9 +2030,41 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
-    /** 
-     Wrapper Object for Mapping the Entity for Field 
-     Example : change_code__r.Account__r.name 
+    /**
+    Will trigger the integration with EasyPay and generate a change code
+    **/
+    public static void startIntegration(List<Account> newAccs, Map<Id,Account> oldMap){
+
+        // get the configurations for the change code
+        Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = AMS_ChangeCodesHelper.fetchChangeCodeConfiguration(newAccs, oldMap);
+
+        //only run if there are codes to be created
+        if(!mapAccCodeConf.keySet().isEmpty()){
+
+        //first insert change codes
+            Map<Account, Agency_applied_change_code__c> accChangeCodeMap = new Map<Account, Agency_applied_change_code__c>();
+            for(Account acc :mapAccCodeConf.keySet()){
+                accChangeCodeMap.put(acc,AMS_ChangeCodesHelper.generateIntegrationChangeCode(acc, mapAccCodeConf.get(acc)));
+        }
+
+            if(!accChangeCodeMap.values().isEmpty()){
+                insert accChangeCodeMap.values();
+        }
+
+            //do call only after the change codes are succesfully inserted
+            for(Account acc :accChangeCodeMap.keySet()){
+                if(!Test.isRunningTest()){
+                    ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
+                }
+           }
+        }
+    }
+
+
+
+    /**
+     Wrapper Object for Mapping the Entity for Field
+     Example : change_code__r.Account__r.name
 
     */
     private class wrapperData {

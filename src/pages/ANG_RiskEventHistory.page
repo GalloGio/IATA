@@ -1,10 +1,12 @@
 <apex:page showHeader="false" sidebar="false" standardController="Account">
 		
 		<apex:includeScript value="/support/console/30.0/integration.js"/>
+		<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
+		<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000IHjk'=Account.Name, 'CF00N6E000000IHjk_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
 		
-		<apex:form>
+		<apex:form >
 			<div id="observed">
-			<c:relatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" hideButtons="true" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
+			<c:relatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" urlForNewRecord="{!newLink}" hideButtons="{!NOT(Account.ANG_IsNewGenAgency__c)}" hideActionLinkDel="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.deletable)}" hideActionLinkEdit="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.updateable)}" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
 			</div>
 		</apex:form>
 
@@ -21,8 +23,23 @@
     			observer.observe(document.getElementById('observed'), { attributes: false, childList: true, characterData: false, subtree: true });
     		}
 
+	    	function navigateOnConsole(url, title) {
+	    		sforce.console.getEnclosingPrimaryTabId(function (result) {
+					sforce.console.openSubtab(result.id , url, true, title, null);
+				});
+	    	}
+
 	    	//Record links on the table should open on a new page/tab (except for deleted ones)
 	    	function bindLinks(){
+	    		var newButton = document.querySelector('.newButton');
+	    		if(newButton != null){
+	    			newButton.onclick = function(){
+	    				if(sforce.console.isInConsole()) navigateOnConsole('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');
+	    				else redirectNew();
+	    				return false;
+	    			}
+	    		}
+	    		
 	    		var links = [].slice.call(document.querySelectorAll(".targetTable a"));
 	    		links.forEach(function(el){
 	    			if(el.innerHTML == 'Del') el.target = "_self";
@@ -32,9 +49,7 @@
 	    				el.addEventListener('click', function(e){
 	    					e.preventDefault();
 	    					e.stopPropagation();
-	    					sforce.console.getEnclosingPrimaryTabId(function (result) {
-	    						sforce.console.openSubtab(result.id , linkURL, true, el.innerText, null);
-	    					});
+	    					navigateOnConsole(linkURL, el.innerText)
 	    					return false;
 	    				}, false);
 	    			}else{
