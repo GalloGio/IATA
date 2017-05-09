@@ -74,7 +74,7 @@
 			ANG_Agency_Risk_Event__c are2= new ANG_Agency_Risk_Event__c(
 				ANG_AccountId__c=acc2.id,
 				ANG_Risk_Type__c=ret.id,
-				ANG_Issued_Date__c =System.today().addDays(-2),
+				ANG_Issued_Date__c =System.today().addMonths(-1*Integer.ValueOf(ret.ANG_Expiration__c)),
 				ANG_Expiration_Date__c =System.today(),
 				ANG_Event_Status__c='Active'
 			);	
