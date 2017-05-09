@@ -9,7 +9,7 @@
             <field>Email__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
+        <senderAddress>globaldata@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Unsubscribe</template>
     </alerts>
