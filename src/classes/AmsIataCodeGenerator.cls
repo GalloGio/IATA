@@ -70,6 +70,8 @@ global class AmsIataCodeGenerator{
         importAgentsCodePrograms.add('I-Cargo Agent');
 
         Map<String, String> programCategoryMap = constructProgramCategoryMap();
+        Map<String, String> programSectorMap = constructProgramSectorMap();
+        
         
         Boolean isImportAgentWithLink = false;
         
@@ -136,10 +138,23 @@ global class AmsIataCodeGenerator{
                 if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                 {
                     //hammer: new requirement has same location class mapping to different account categories...
-                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                    if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
                         theAccount.Category__c = 'GSSA Cargo';
-                    else
+                        theAccount.Sector__c = 'Cargo Agent'; // AMS Enhancements AMSU-24
+                    }
+                    else if (theAccount.Location_Class__c == 'G') { // AMS Enhancements AMSU-24                        
+                        if (theAccount.CASS_Number__c != null) {
+                            theAccount.Category__c = 'GSSA Cargo';
+                            theAccount.Sector__c = 'Cargo Agent';
+                        } else {
+                            theAccount.Category__c = 'GSA General Sales Agent';
+                            theAccount.Sector__c = 'Travel Agent';
+                        }
+                    }
+                    else {
                         theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                        theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                        
+                    }
                 }
                 else
                 {
@@ -411,10 +426,23 @@ global class AmsIataCodeGenerator{
                             theAccount.RecordTypeId = AMS_Utils.getId('Account', 'IATA_Agency');
                             if(allowedProgramCodes.contains(theAccreditation.Location_Class__c))
                             {
-                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G')
+                                if(theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSSA && theAccount.Location_Class__c == 'G') {
                                     theAccount.Category__c = 'GSSA Cargo';
-                                else
+                                    theAccount.Sector__c = 'Cargo Agent'; // AMS Enhancements AMSU-24
+                                }
+                                else if (theAccount.Location_Class__c == 'G') { // AMS Enhancements AMSU-24                        
+                                    if (theAccount.CASS_Number__c != null) {
+                                        theAccount.Category__c = 'GSSA Cargo';
+                                        theAccount.Sector__c = 'Cargo Agent';
+                                    } else {
+                                        theAccount.Category__c = 'GSA General Sales Agent';
+                                        theAccount.Sector__c = 'Travel Agent';
+                                    }
+                                }
+                                else {
                                     theAccount.Category__c = programCategoryMap.get(theAccount.Location_Class__c);
+                                    theAccount.Sector__c = programSectorMap.get(theAccount.Location_Class__c); // AMS Enhancements AMSU-24                                    
+                                }
                             }
                             else
                             {
@@ -665,6 +693,12 @@ global class AmsIataCodeGenerator{
     {
         Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Non-IATA Locations', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
         return pcMap;
+    }
+    
+    private static Map<String, String> constructProgramSectorMap()
+    {
+        Map<String,String> psMap = new Map<String,String>{'A' => 'Travel Agent', 'C' => 'Cargo Agent', 'D' => 'Travel Agent', 'I'=> 'Cargo Agent', 'K' => 'Travel Agent', 'M' => 'Travel Agent', 'P' => 'Travel Agent', 'Q' => 'Cargo Agent', 'R' => 'Cargo Agent', 'T' => 'Travel Agent', 'X' => 'Travel Agent'};
+        return psMap;
     }
 
     private static boolean isIATACodeGeneratedUnique(String iataCode){
