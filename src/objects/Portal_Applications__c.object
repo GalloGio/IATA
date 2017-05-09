@@ -165,6 +165,94 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Flag_Restrict_by_Agency_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>OR(
+ISBLANK(ANG_Restrict_by_Agency_Category__c),
+AND(NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c)),
+   IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Airline Point of Sale&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Airline Point of Sale&apos;, true,
+    IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Domestic Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Domestic Agent&apos;, true,
+     IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;GSA General Sales Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;GSA General Sales Agent&apos;, true,
+      IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Handling Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Handling Agent&apos;, true,
+       IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;IATA Passenger Sales Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;IATA Passenger Sales Agent&apos;, true,
+        IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;MSO Member Sales Office&apos;) &amp;&amp; $User.ANG_Category__c = &apos;MSO Member Sales Office&apos;, true,
+         IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;TIDS Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;TIDS Agent&apos;, true,
+         IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;IATA Cargo Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;IATA Cargo Agent&apos;, true,
+          IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;CASS Associate&apos;) &amp;&amp; $User.ANG_Category__c = &apos;CASS Associate&apos;, true,
+           IF(INCLUDES(ANG_Restrict_by_Agency_Category__c, &apos;Import Agent&apos;) &amp;&amp; $User.ANG_Category__c = &apos;Import Agent&apos;, true, false)
+          )
+         )
+        )
+       )
+      )
+     )
+    )
+   )
+  )
+ ),
+NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Flag Restrict by Agency Category</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_by_Agency_Category__c</fullName>
+        <description>Restrict portal visibility by Agency Category.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Restrict portal visibility by Agency Category. Will be visible for all categories of Agents if left empty.</inlineHelpText>
+        <label>Restrict by Agency Category</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
         <fullName>ANG_Restrict_by_Agency_Sector__c</fullName>
         <description>Permitted agency sector</description>
         <externalId>false</externalId>
@@ -288,15 +376,6 @@
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
-    </fields>
-    <fields>
-        <fullName>GSA__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <inlineHelpText>Tick if this is the application for the GSA type of customer.</inlineHelpText>
-        <label>GSA</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>GSSA__c</fullName>
@@ -439,7 +518,7 @@ Name
       &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description,
       &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
-	  &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
+      &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
       &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
@@ -580,10 +659,6 @@ Name
     CONTAINS($User.Customer_type__c,&quot;ICH&quot;) 
     ), 
     AND( 
-    GSA__c = true, 
-    CONTAINS($User.Customer_type__c,&quot;GSA&quot;) 
-    ), 
-    AND( 
     GSSA__c = true, 
     CONTAINS($User.Customer_type__c,&quot;GSSA&quot;) 
     ), 
@@ -651,6 +726,49 @@ Name
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
         <label>ISS Portal Application</label>
+        <picklistValues>
+            <picklist>ANG_Restrict_by_Agency_Category__c</picklist>
+            <values>
+                <fullName>Airline Point of Sale</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Associate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GSA General Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Handling Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Cargo Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Passenger Sales Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Member Sales Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>ANG_Restrict_by_Agency_Sector__c</picklist>
             <values>
