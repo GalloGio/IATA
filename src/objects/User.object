@@ -61,6 +61,16 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>ANG_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact.Account.Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>    
+    <fields>
         <fullName>ANG_Customer_Country_ISO__c</fullName>
         <description>2-letter ISO Code of the IATA ISO Country related to the contact’s Account (Agency)</description>
         <externalId>false</externalId>
