@@ -334,32 +334,85 @@ public with sharing class ISSP_EditPortalServiceAccess{
         return p;
     }
     
-    public List<SelectOption> getContacts() {
-        List<SelectOption> options = new List<SelectOption>();
-        List<Contact> NotGrantedContacts_Lst = new List<Contact>();
+    public List<List<SelectOption>> getContacts() {
+        List<List<SelectOption>> options = new List<List<SelectOption>>();
+        List<List<Contact>> NotGrantedContacts_Lst = new List<List<Contact>>();
+        List <Contact> ContactList2 = new List<Contact>();
+        List <Contact> ContactList3 = new List<Contact>();
+        List <Contact> ContactList4 = new List<Contact>();
+        List <Contact> ContactList5 = new List<Contact>();
 
-        List <Contact> ContactList =
+        List<SelectOption> none = new List<SelectOption>();
+        none.add(new SelectOption('', '--None--'));
+        options.add(none);
+        //INC314232: for governator limits we are creating 5 lists for limiting 1k contacts per list
+        List <Contact> ContactList1 =
         	[SELECT Id, Name , AccountId,
         	(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
         	Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
         	Account.IATACode__c  from Contact
-        	WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')];
-        options.add(new SelectOption('', '--None--'));
-        for(Contact thisContact : ContactList ){
-            boolean isGranted = false ;
-            for(Portal_Application_Right__c APR : thisContact.Portal_Application_Rights__r){
-                if(APR.Right__c == 'Access Granted'){
-                    isGranted = true ;
-                }
-            }
-            if(isGranted != true){
-                NotGrantedContacts_Lst.add(thisContact);
-            }
+        	WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            order by id
+            Limit 1000];          
+        
+        NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList1));
+        if(ContactList1.size() == 1000){
+            ContactList2=
+            [SELECT Id, Name , AccountId,
+            (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
+            Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
+            Account.IATACode__c  from Contact
+            WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            order by id
+            Limit 1000
+            OFFSET 1000
+            ];
+            NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList2));
+        }
+        if(ContactList2.size() == 1000){
+            ContactList3 =
+            [SELECT Id, Name , AccountId,
+            (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
+            Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
+            Account.IATACode__c  from Contact
+            WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            order by id
+            Limit 1000
+            OFFSET 2000
+            ];
+            NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList3));
+        }
+        if(ContactList3.size() == 1000){
+            ContactList4 =
+            [SELECT Id, Name , AccountId,
+            (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
+            Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
+            Account.IATACode__c  from Contact
+            WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            order by id
+            Limit 1000
+            OFFSET 3000];
+            NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList4));
+        }
+         if(ContactList4.size() == 1000){
+            ContactList5 =
+            [SELECT Id, Name , AccountId,
+            (select id, Right__c from Portal_Application_Rights__r where Portal_Application__c = :ServiceId),
+            Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,
+            Account.IATACode__c  from Contact
+            WHERE User_Portal_Status__c NOT IN ('Inactive', 'Rejected', 'Deactivated')
+            order by id
+            Limit 1000
+            OFFSET 4000];
+            NotGrantedContacts_Lst.add(NotGrantedContacts(ContactList5));
         }
 
+
         if(NotGrantedContacts_Lst!= null && NotGrantedContacts_Lst.size() >0 ){
-            for(Contact thisContact : NotGrantedContacts_Lst ){
-                String theLabel = thisContact.Name + ' (';
+            for(List<Contact> listContact : NotGrantedContacts_Lst ){
+                List<SelectOption> listAux = new List<SelectOption>();
+                for(Contact thisContact : listContact ){
+                    String theLabel = thisContact.Name + ' (';
                     if (thisContact.Account.IATACode__c != null && thisContact.Account.IATACode__c != ''){
                             theLabel = theLabel + '    ' + thisContact .Account.IATACode__c;
                     }
@@ -368,18 +421,32 @@ public with sharing class ISSP_EditPortalServiceAccess{
                     }
                     if (thisContact.Account.BillingCity != null && thisContact.Account.BillingCity != ''){
                             theLabel = theLabel + ' - ' + thisContact.Account.BillingCity;
-                    }
-                
-                theLabel += ')' ;
+                    }                    
+                    theLabel += ')' ;
                     if (thisContact.Portal_Application_Rights__r.size()>0){
                             theLabel = theLabel + '    ' + thisContact.Portal_Application_Rights__r[0].Right__c;
-                    }
-                                    
-                options.add(new SelectOption(thisContact.Id, theLabel));
+                    }                                        
+                    listAux.add(new SelectOption(thisContact.Id, theLabel));
+                }
+                options.add(listAux);
             }
         }
-
         return options;
     }
-    
+
+    private List<Contact> NotGrantedContacts(List<Contact> contactList){
+        List<Contact> cAux = new List<Contact>();
+        for(Contact thisContact : contactList){
+            boolean isGranted = false ;
+            for(Portal_Application_Right__c APR : thisContact.Portal_Application_Rights__r){
+                if(APR.Right__c == 'Access Granted'){
+                    isGranted = true ;
+                }
+            }
+            if(isGranted != true){
+                cAux.add(thisContact);
+            }
+        }
+        return cAux;   
+    }    
 }
