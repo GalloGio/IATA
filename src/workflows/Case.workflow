@@ -17418,7 +17418,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2) AND 3</booleanFilter>
+        <booleanFilter>1 AND 2</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17428,10 +17428,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Origin</field>
             <operation>equals</operation>
             <value>Web</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notEqual</operation>
         </criteriaItems>
         <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
         <triggerType>onCreateOnly</triggerType>
