@@ -96,7 +96,7 @@ public without sharing class ISSP_Utilities {
 
 	public static Boolean isCNS() {
 		User u = [
-			SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName
+			SELECT Id, Contact.Account.CNS_Agency__c, Contact.Account.CNS_Account__c, Contact.Account.RecordType.DeveloperName, Contact.Account.IATA_ISO_Country__r.CNS_Country__c,Contact.Account.Sector__c
 			FROM User WHERE Id =:UserInfo.getUserId()];
 		Boolean isCNS = false;
 
