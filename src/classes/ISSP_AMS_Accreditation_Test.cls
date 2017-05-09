@@ -4645,7 +4645,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newContact.Name = 'xpto';
             accr.newContact.Financial_interest__c = 1;
 
-            accr.createAgencyContact();
+            //accr.createAgencyContact();
 
             //pageRef = accr.securityCheck();
         }
@@ -5133,7 +5133,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Been_a_sole_proprietor__c = null;
             accr.newForm.Been_director_or_had_a_financial__c = null;
 
-            accr.highLightPageForErrors();
+            //accr.highLightPageForErrors();
         }
 
         Test.stopTest();        
@@ -5216,7 +5216,7 @@ private class ISSP_AMS_Accreditation_Test
             accr.newForm.Account_Name__c = 'Xpto';
             accr.newForm.ISSP_AMS_Legal_Status__c = 'Sole Proprietorship';
 
-            accr.highLightPageForErrors();
+            //accr.highLightPageForErrors();
         }
 
         Test.stopTest();        
