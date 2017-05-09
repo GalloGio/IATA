@@ -652,17 +652,16 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*CaseBeforInsert Trigger.isInsert*/
 		
-		/*AMS_OSCARCaseTrigger Trigger.isInsert
+		/*AMS_OSCARCaseTrigger Trigger.isInsert*/
 		if(AMS_OSCARCaseTrigger){
 			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseCreationRules(trigger.New);
-	        	AMS_OscarCaseTriggerHelper.renameOSCAR(trigger.New);
-	            //AMS_OscarCaseTriggerHelper.createSidraIrregularities();
+	        	AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode(); 
 			}
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isInsert*/
-		
+
 		/*trgAccelyaRequestSetCountry Trigger.isInsert*/
 		if(trgAccelyaRequestSetCountry){
 			Set<Id> AccelyacaseIds = new Set<Id>{};
@@ -847,16 +846,16 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		}
 		/*trgICCS_ASP_CaseClosed Trigger.isUpdate*/
 		
-		/*AMS_OSCARCaseTrigger Trigger.isUpdate
+		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
 		if(AMS_OSCARCaseTrigger){
 			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
-	            AMS_OscarCaseTriggerHelper.renameOSCAR(trigger.New);
-	            //AMS_OscarCaseTriggerHelper.createSidraIrregularities();
+	            AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode();
 			}
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
+
 	/*Trigger.isUpdate*/
 	}
 	/****************************************************************************************************************************************************/    
