@@ -677,6 +677,18 @@ AND(
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IEPPayload__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(Account__r.ANG_IEP_Status_FF__c &lt;&gt; &apos;No IEP Account&apos;,OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;))),Account__r.IATACode__c,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEPPayload</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IRR_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <formula>DATETIMEVALUE(
