@@ -45,11 +45,13 @@ global class AmsIataCodeGenerator{
         String[] returnedValues =new String[]{'0',''};
         StringBuilder sb = new StringBuilder();
         Set<String> allowedProgramCodes = new Set<String>();
+        allowedProgramCodes.add('A');
         allowedProgramCodes.add('C');
         allowedProgramCodes.add('P');
         allowedProgramCodes.add('R');
         allowedProgramCodes.add('Q');
         allowedProgramCodes.add('I');
+        allowedProgramCodes.add('K');
         allowedProgramCodes.add('T');
         allowedProgramCodes.add('M');
         allowedProgramCodes.add('G');
@@ -105,7 +107,7 @@ global class AmsIataCodeGenerator{
             if(!allowedProgramCodes.contains(theAccreditation.Location_Class__c))
             {
                 returnedValues[0]='2';
-                returnedValues[1]='IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.';
+                returnedValues[1]='IATA Code Generation is only allowed for A, C, D, I, K, P, Q, R, T, M, G, X and P Location Classes.';
                 return returnedValues;
             }
             
