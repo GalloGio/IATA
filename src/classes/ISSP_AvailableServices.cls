@@ -315,7 +315,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Application_icon_URL__c, Application_URL__c,
                                                         Case_creation_record_type__c, Confirm_Box__c,
                                                         Confirm_Text__c, Description__c,
-                                                        GSA__c, GSSA__c, Hide_on_Homepage__c,
+                                                        GSSA__c, Hide_on_Homepage__c,
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,

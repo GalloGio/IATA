@@ -31,10 +31,6 @@
                 <behavior>Readonly</behavior>
                 <field>VisibleCNS__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Restrict_by_Agency_Category__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

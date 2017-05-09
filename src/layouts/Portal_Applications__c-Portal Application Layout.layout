@@ -65,6 +65,10 @@
                 <field>VisibleCNS__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Flag_Restrict_by_Agency_Category__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Restrict_by_Agency_Category__c</field>
             </layoutItems>
@@ -94,10 +98,6 @@
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>GSA__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
