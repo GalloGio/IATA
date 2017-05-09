@@ -247,6 +247,8 @@ src/profilesObjects/Premier\ Support\ User.profile
 src/profilesObjects/System\ Administrator.profile
 .project
 integration/mosaico
+src/layouts/ContentVersion-General.layout
+src/layouts/ContentVersion-Translations.layout
 src/layouts/Case-Case Layout.layout
 src/layouts/Case-Demo\ only\ for\ dev.layout
 src/layouts/Case-Demo only for dev.layout
@@ -274,6 +276,7 @@ src/workflows/SocialPersona.workflow
 src/workflows/SocialPost.workflow
 src/layouts/EmailMessage-Email Message Layout.layout
 src/applications/standard__DataAssessment.app
+src/applications/standard__LightningSales.app
 src/workflows/Lead.workflow
 src/workflows/Contact.workflow
 src/workflows/ACCA_Notification_on_new_Application_Change_Request.workflow
