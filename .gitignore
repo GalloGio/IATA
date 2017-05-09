@@ -247,6 +247,8 @@ src/profilesObjects/Premier\ Support\ User.profile
 src/profilesObjects/System\ Administrator.profile
 .project
 integration/mosaico
+src/layouts/ContentVersion-General.layout
+src/layouts/ContentVersion-Translations.layout
 src/layouts/Case-Case Layout.layout
 src/layouts/Case-Demo\ only\ for\ dev.layout
 src/layouts/Case-Demo only for dev.layout

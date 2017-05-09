@@ -7810,7 +7810,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Agency_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7900,7 +7900,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Operational_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7920,7 +7920,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Remittance_Settlement</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -7940,7 +7940,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Case_Area_Risk_Management</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -11093,7 +11093,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>DPC_Stakeholder_Communication_PQ_approved</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11113,7 +11113,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>DPC_Stakeholder_Communication_UAT_approved_DD</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11669,7 +11669,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_an_Authorized_Signatories_ASP_Case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -11699,7 +11699,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <name>Notification_to_ICCS_Contact_upon_closing_an_ASP_Case_Without_CD_Users</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -14771,7 +14771,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_HP_ACR_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14797,7 +14797,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_ACCA_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14823,7 +14823,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_DBIndia_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14849,7 +14849,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_ILDS_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14875,7 +14875,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DP_Service_Request_Multicarta_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14901,7 +14901,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_Notification_to_Accelya_Maestro</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14932,7 +14932,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_T_Systems_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 2) OR 3) AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14963,7 +14963,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <name>ISSP_Send_DPC_HP_Service_Request_email_notification</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -15233,7 +15233,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>((1 AND 4) OR 2) AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -15264,7 +15264,7 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
@@ -16809,7 +16809,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Update_Region_MENA</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16849,7 +16849,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAmericas</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2 OR 3) AND 4 and 5</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16884,7 +16884,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>UpdateRegionAsiaPacific</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -16915,7 +16915,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>Region_China_North_Asia</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 OR 2 ) AND 3 AND 4</booleanFilter>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -17138,7 +17138,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_HD_Update_time_with_customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17249,7 +17249,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Send_Case_Closure_Notification_to_the_customer</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17268,7 +17268,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Escalated_case_notification_to_CS_Manager</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17376,7 +17376,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Set_Escalated_Datetime</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -17564,7 +17564,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Update_Date_Waiting_for_Customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Send additional information request reminder to SIS customer</description>
         <formula>IF( AND(ISPICKVAL(CaseArea__c, &apos;SIS&apos;), ISPICKVAL( Status , &apos;Waiting for Customer Feedback&apos;), NOT(ISNULL(Date_Time_Waiting_for_Customer_Feedback__c))),IF(((TODAY() - DATE(YEAR(TODAY()), 1, 1) + 1) - (DATEVALUE( Date_Time_Waiting_for_Customer_Feedback__c ) - DATE(YEAR(DATEVALUE( Date_Time_Waiting_for_Customer_Feedback__c )), 1, 1) + 1)) = 3, true, null), null)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -17575,7 +17575,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Update_DateTime_Waiting_for_Customer</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -17612,7 +17612,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <name>SIS_Helpdesk_Update_resolution_case_age</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
