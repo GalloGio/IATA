@@ -1235,8 +1235,9 @@ public class  AmsIataCodeGeneratorTest
         System.assertEquals(result3[0],'2');
         System.assertEquals(result3[1].contains('This account has already an existing IATA code.'),true);
 
-        System.assertEquals(result4[0],'2');
-        System.assertEquals(result4[1], 'IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.');
+        // AMSU-24 - class A and K were added to the allowed codes, so the error below is no longer generated
+        //System.assertEquals(result4[0],'2');
+        //System.assertEquals(result4[1], 'IATA Code Generation is only allowed for C, D, I, P, Q, R, T, M, G, X and P Location Classes.');
 
         Test.stopTest();
 
