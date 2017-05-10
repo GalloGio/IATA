@@ -12,6 +12,11 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
     public List<AMS_Account_Role__c> newOwners { get; set; }
 
+    public Boolean statusPooler{get;set;}
+    public Boolean statusBatch{get;set;}
+    public Id batchJobId{get;set;}
+
+
 
     //Below To be completed: Limit the use of this tool to the Support Team. While not completed, do not allow permissions on this page into any profile.
     /*public void thorProfiles() {
@@ -40,9 +45,13 @@ public with sharing class AMS_AlignOwnersInHierarchy {
     
     public void alignOwnersInHierarchyByAccountId() {
 
-        test = parentAccountId; 
-        system.debug('TEST: '+test);
-        List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
+        statusBatch = false;
+        statusPooler = true;
+
+        batchJobId = Database.executeBatch(new AMS_AlignOwnersInHierarchyBatch(parentAccountId), 50);
+
+        
+        /*   List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
 
         // get all the relationships to extract the accounts involved
         for(AMS_Agencies_Hierarchy__c h : [SELECT Id, (SELECT Hierarchy__c, Parent_Account__r.Top_Parent__r.Id, Parent_Account__c, Child_Account__c, Child_Account__r.Status__c, Child_Account__r.Top_Parent__r.Id, Child_Account__r.Cass_Number__c, Child_Account__r.Name from AMS_Agencies_relationships__r where Child_Account__r.Status__c != 'Terminated') FROM AMS_Agencies_Hierarchy__c WHERE Id In (SELECT Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:test)]) 
@@ -112,7 +121,7 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         if(!rolesToInsert.isEmpty())
             insert rolesToInsert;
             newOwners = rolesToInsert;
-
+*/
     }
 
     public static List<AMS_Account_Role__c> createRoles(List<Id> accountIds, List<AMS_Account_Role__c> rolesToClone){
@@ -129,6 +138,28 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
 
         return newRolesToReturn;
+    }
+
+    public void checkBatchStatus() {
+
+        System.debug('hierarchy checkBatchStatus');
+
+        List<AsyncApexJob> aaj = [SELECT Id, Status FROM AsyncApexJob WHERE ID = :batchJobId];
+
+        System.debug('hierarchy aaj: ' + aaj);
+
+        if(!aaj.isEmpty()){
+            if(aaj.get(0).Status == 'Completed'){
+                statusPooler = false;
+                statusBatch = true;    
+                newOwners = [SELECT Id, Account__c, RecordTypeId, Owner_Name__c, Owner_Account__c, Percentage__c from AMS_Account_Role__c where Account__c = :parentAccountId];
+                System.debug('hierarchy job completed');
+            } else {
+                statusBatch = false;
+                System.debug('hierarchy job processing');
+            }
+        }
+
     }
 
 
