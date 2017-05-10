@@ -9,7 +9,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Change_Email_Address</template>
     </alerts>
     <alerts>
@@ -21,7 +21,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Change_Email_Address_cns</template>
     </alerts>
     <alerts>

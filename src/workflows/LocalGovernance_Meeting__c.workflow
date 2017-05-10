@@ -193,10 +193,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>quesadara@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
         </recipients>
@@ -213,10 +209,6 @@
         </recipients>
         <recipients>
             <recipient>petterssonl@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>quesadara@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

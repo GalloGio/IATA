@@ -9,7 +9,7 @@
             <type>caseTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>AMS/AMS_Notify_OSCAR_Team_Members_Assistant_Managers</template>
     </alerts>
     <alerts>
@@ -21,7 +21,7 @@
             <type>caseTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>AMS/AMS_Notify_OSCAR_Team_Members_Managers</template>
     </alerts>
     <alerts>
@@ -32,7 +32,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Approval</template>
     </alerts>
     <alerts>
@@ -43,7 +43,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>AMS/AMS_Notify_OSCAR_Owner_on_Manager_Rejection</template>
     </alerts>
     <alerts>
@@ -54,7 +54,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>AMS/AMS_Late_NOC_Termination_Notification</template>
     </alerts>
     <rules>

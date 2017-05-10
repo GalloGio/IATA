@@ -9,7 +9,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_email_from_notification</template>
     </alerts>
     <alerts>
@@ -21,7 +21,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_email_from_notification_CNS</template>
     </alerts>
     <fieldUpdates>

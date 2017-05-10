@@ -1,4 +1,4 @@
-<apex:page controller="clsFinancialSecurityRequestController" sidebar="false" id="FinancialSecurityRequest">
+    <apex:page controller="clsFinancialSecurityRequestController" sidebar="false" id="FinancialSecurityRequest">
  
  
  
@@ -23,7 +23,7 @@
       }
     
     
-    function validateFS(){
+    function validateFS(type){
           
        // var vfs = document.getElementById("FSvalueMissing").value;
        
@@ -34,7 +34,15 @@
       //     alert("Sending email for these cases is blocked. FS Letter Sent is not checked for one or more cases.");            
        
       //  else
-            MassSendEmail();
+          //  MassSendEmail();
+            
+            
+          if(type == "tracked"){
+              MassSendTrackedEmail();
+          }
+          else{
+              MassSendEmail();
+          }
     }
     
     function openLookup(baseURL, width, modified, searchParam){
@@ -110,8 +118,8 @@
       </apex:actionFunction>
  
  
-    <apex:actionFunction name="MassSendEmail" action="{!MassSendEmail}"  >
-      </apex:actionFunction>
+    <apex:actionFunction name="MassSendEmail" action="{!MassSendEmail}"/>
+    <apex:actionFunction name="MassSendTrackedEmail" action="{!MassSendTrackedEmail}"/>
 
  
  
@@ -166,10 +174,15 @@
        </center>
        <!--action="{!MassCaseCreate}"  action="{!MassCaseCreateSendEmail}" -->
             <apex:pageBlockButtons >
+
+                <apex:commandButton value="Send Emails"  onclick="validateFS('standard');"   rerender="results, errors" />                
+                <apex:commandButton value="Send Tracked Emails"  onclick="validateFS('tracked');"   rerender="results, errors"  rendered="{!$Permission.Can_send_a_tracked_email}"/>
            
-                <apex:commandButton value="Send Emails"  onclick="validateFS();"   rerender="results, errors" />                
             </apex:pageBlockButtons> 
         
+         <apex:PageBlock>
+                <input type="hidden" id="hiddenCountry" value="{!batchCountry}" />
+     </apex:PageBlock> 
      
         
         <apex:pageBlockTable value="{!Cases}" var="c" id="cases" >
@@ -245,7 +258,6 @@
                     </apex:commandLink>
                 </apex:facet>
                 <apex:outputField value="{!c.c.account.BillingCountry}"/>
-                <input type="hidden" id="hiddenCountry" value="{!c.c.account.BillingCountry}" />
             </apex:column>
            
             <apex:column >

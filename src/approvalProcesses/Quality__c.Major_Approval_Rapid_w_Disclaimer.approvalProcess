@@ -18,10 +18,6 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>payned@iata.org</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <submitter>trentinog@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>

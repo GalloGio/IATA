@@ -1,0 +1,180 @@
+<apex:component controller="SelectTrackedEmailAttachmentsController" allowDML="true">
+    <apex:attribute name="ctrl" description="parentController" type="sendSingleTrackedEmailController" required="false" assignTo="{!parent}" />
+
+    <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+
+    <script>
+        function startAttachmentSpinner(){
+            var lock = document.getElementById('attachmentSpinner'); 
+            if (lock){
+                lock.className = 'LockOn';
+            }
+        }
+
+        function stopAttachmentSpinner(){
+            var lock = document.getElementById('attachmentSpinner');
+            if (lock){
+                lock.className = 'LockOff'; 
+            }
+        }
+
+        function showAttachmentsPanel(show) {
+            var value = show?"block":"none";
+            if(value=='block'){
+                displayPanelActionFunction();
+            }
+            $( document ).ready(function() {
+                document.getElementById('attachmentsPanel').style.display=value;
+                document.getElementById('attachmentsBackground').style.display=value;
+            });
+        }        
+    </script>
+    
+    <style>
+        .LockOn {
+            background-image: url('/img/loading.gif');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            display: float; 
+            visibility: visible; 
+            position: absolute; 
+            z-index: 999; 
+            top: 0px; 
+            left: 0px; 
+            width: 100%; 
+            height: 100%; 
+            background-color: #ccc; 
+            text-align: center; 
+            filter: alpha(opacity=75); 
+            opacity: 0.75; 
+        }
+
+        .LockOff { 
+            display: none; 
+            visibility: hidden; 
+        }
+    
+        .black_overlay{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=80);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            padding: 16px;
+            border: 1px solid black;
+            background-color: white;
+            z-index:1002;
+            overflow: hidden;
+        }
+    </style>
+
+    <div id="attachmentsPanel" class="white_content">
+        <div id="attachmentSpinner" class="LockOff"/>
+        <apex:actionStatus id="attachmentActStatusId" onstart="startAttachmentSpinner();" onstop="stopAttachmentSpinner();" />
+        <apex:outputPanel id="panelToRerender">
+            <apex:form >
+            
+                <apex:pageBlock title="Select Folder">
+                    <apex:pageBlockSection columns="1">
+                    
+                        <apex:selectList label="Select Folder" id="folderList" value="{!selectedFolder}" size="1">
+                            <apex:selectOptions value="{!availableFolders}"/>
+                            <apex:actionSupport event="onchange" action="{!updateDocumentList}" rerender="panelToRerender" status="attachmentActStatusId"/>
+                        </apex:selectList>
+                    
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+                
+                <apex:actionFunction name="displayPanelActionFunction" action="{!displayPanel}" rerender="panelToRerender" status="attachmentActStatusId"/>
+            </apex:form>
+    
+            <apex:form rendered="{!myComputerSelected}">
+                <apex:pageBlock title="Select Document">
+                    <apex:pageBlockSection columns="2">
+                    
+                        <apex:outputPanel >
+                            <apex:inputFile value="{!uploadedDocument.Body}"  filename="{!uploadedDocument.Name}"/>
+                            <apex:actionSupport event="onchange" action="{!addPersonalDocument}" status="attachmentActStatusId"/>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="regionToRerender">
+                            <apex:actionRegion>
+                                <apex:pageBlockSection columns="2">
+                                    <apex:commandButton value="<<" action="{!removeDocuments}" rerender="regionToRerender" status="attachmentActStatusId"/>
+                                    <apex:selectList id="addedDocuments" label="Selected Documents" value="{!addedDocumentsSelected}" size="10" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                        <apex:selectOptions value="{!addedDocuments}"/>
+                                    </apex:selectList>
+                                
+                                </apex:pageBlockSection>
+                            </apex:actionRegion>
+                        </apex:outputPanel>
+                    
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons location="bottom">
+                        <apex:commandButton value="Cancel" action="{!cancel}"/>
+                        <apex:commandButton value="OK" action="{!save}"/>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+            </apex:form>
+    
+            <apex:form rendered="{!!myComputerSelected}">
+                <apex:outputPanel id="internalFoldersForm">
+                    <apex:pageBlock title="Select Document(s)">
+                    
+                        <apex:outputPanel style="color:#FF0000;" id="limitMessage" >
+                            <apex:outputtext rendered="{!nbOfDocuments > 1000}">The number of documents in the selected folder ({!nbOfDocuments}) exceeds the limit (1000). Please filter on the file name.</apex:outputtext>
+							<apex:outputtext rendered="{!nbOfDocuments == 0}">The selected folder is empty or your search criteria didn't match any document.</apex:outputtext>
+                        </apex:outputPanel>
+                        
+                        <apex:pageBlockSection columns="3">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputText value="File Name"/>
+                                <apex:outputpanel >
+                                    <apex:inputText value="{!documentFilter}" style="width:100px;"/>
+                                    <apex:commandButton value="Filter" action="{!applyFilter}" rerender="limitMessage,documentList" status="attachmentActStatusId"/>
+                                </apex:outputpanel>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:outputPanel ></apex:outputPanel>
+                            <apex:outputPanel ></apex:outputPanel>
+                            
+                            <apex:selectList id="documentList" label="Select File(s)" value="{!availableDocumentsSelected}" size="10" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                <apex:selectOptions value="{!availableDocuments}"/>
+                            </apex:selectList>
+                            <apex:outputPanel >
+                                <apex:commandButton value="<<" action="{!removeDocuments}" rerender="internalFoldersForm" status="attachmentActStatusId"/>
+                                <apex:commandButton value=">>" action="{!addSalesforceDocuments}" rerender="internalFoldersForm" status="attachmentActStatusId"/>
+                            </apex:outputPanel>
+                             <apex:selectList id="addedDocuments" label="Selected Documents" value="{!addedDocumentsSelected}" size="10" multiselect="true" style="min-width: 100px;max-width:350px; overflow-x: auto;">
+                                <apex:selectOptions value="{!addedDocuments}"/>
+                            </apex:selectList>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockButtons location="bottom">
+                            <apex:commandButton value="Cancel" action="{!cancel}" status="attachmentActStatusId"/>
+                            <apex:commandButton value="OK" action="{!save}" status="attachmentActStatusId"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:form>            
+        </apex:outputPanel>
+    </div>
+    
+    <div id="attachmentsBackground" class="black_overlay"></div>
+
+</apex:component>

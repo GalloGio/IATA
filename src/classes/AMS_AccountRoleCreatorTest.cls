@@ -3,14 +3,40 @@ public with sharing class AMS_AccountRoleCreatorTest {
     
     @testSetup static void setup()
     {
+
+        List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
+        customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination08', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
+                                                          TC_Legal_status__c = false, TC_Location__c = true, TC_Location_with_inspection__c = false, 
+                                                          TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Ownership_to_IATA_Agent__c = false, 
+                                                          TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false, 
+                                                          TCA_Sanity_check__c = 'COR', TCA_Application_withdrawal__c = 'COR'));
+        //customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination09', TC_Ownership_to_IATA_Agent__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership; ',
+        //                                                  TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false, 
+        //                                                  TC_Minor_Shareholding__c = false, TC_Name__c = false, TC_Location_type__c = false, 
+        //                                                  TC_Major_Shareholding__c = false, TC_Ownership_to_non_IATA_Agent__c = false, TC_VMFR__c = false,  
+        //                                                  TCA_Sanity_check__c = 'LET', TCA_Manager_approval__c = 'LET', TCA_Application_withdrawal__c = 'CWD'));
+        //customsettings.add(new AMS_AgencyChangesConfig__c(Name = 'Combination10', TC_Ownership_to_non_IATA_Agent__c = true, TCA_Sanity_check__c = 'CHO', TCA_Manager_approval__c = 'CHF', TCA_Application_withdrawal__c = 'CWD'));
+        insert customsettings;
+
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
         insert isoc;
 
         Map<string, Id> accountRoleRT = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Account_Role__c'}).get('AMS_Account_Role__c');
 
-        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+        Account acc1 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', Name='Test1 Account', 
+                    Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, 
+                    IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2',BillingStreet='test');
         insert acc1;
-        
+
+        Account acc2 = new Account(Status__c = 'Approved', Reason_for_creation__c = 'Branch is missing', Name='Test2 Account', 
+                    Location_Type__c = 'BR', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, 
+                    IATAcode__c = '12345688', AIMS_ID__c = '12345688', Source_System__c = 'AIMS2', BillingStreet='test', ParentId = acc1.Id);
+        insert acc2;
+
+        //Create a separate Account for the Owners
+        Account OwnersAccount =  new Account(Name = 'General account for owners');
+        insert OwnersAccount;
+
         AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = acc1.Id);
         insert oscar;
         
@@ -53,6 +79,24 @@ public with sharing class AMS_AccountRoleCreatorTest {
         AMS_Person__c p2 = new AMS_Person__c(Name='do', LastName__c='notDelete', First_Name__c='DontDelete', Email__c='unique123@email.com');
         insert p2;
 
+        // Add to the OSCAR the list of accounts involved in the change
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        //Create the AMS hierarchies for the first group of agencies
+        AMS_Agencies_Hierarchy__c H1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
+        List<AMS_Agencies_Hierarchy__c> hs = new List<AMS_Agencies_Hierarchy__c>{H1};
+        insert hs;
+        
+        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+        rels.add(new AMS_Agencies_relationhip__c(Hierarchy__c = H1.Id, Parent_Account__c = acc1.Id, Child_Account__c = acc2.Id, HO_Flag__c = 'true'));
+        insert rels;
+
+        
+
+        //Adding all agencies to migration list
+        List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
+        pds.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = acc2.Id));
+        insert pds;
     }
     
     @isTest static void test_RunAccountOwnershipInsertthenUpdate_ExpectUpdatedAccountRole()
@@ -82,7 +126,7 @@ public with sharing class AMS_AccountRoleCreatorTest {
         insert new List<Account>{ownerAccount,brAccount};
 
 
-
+        
         List<AMS_Accreditation_Contact__c> acList = [select Id, Contact__c, Person_AMS__c, AMS_Employee_Role__c, AMS_Ownership_Role__c, AMS_Pax_Accreditation_Form__c from AMS_Accreditation_Contact__c];
         acList.get(0).Contact__c = newCon.Id;
         acList.get(0).Person_AMS__c = null;
@@ -757,20 +801,31 @@ public with sharing class AMS_AccountRoleCreatorTest {
         List<Contact> conList = [select Id, Email, AccountId from Contact];
         List<Account> accList = [select Id, Name, Status__c from Account];
 
-        AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Contact__c = conList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
-        AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Owner_Account__c = accList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
+        //Contact OW1 = new Contact(FirstName = 'First', LastName = 'Owner1',  Email = 'theowner1@gmail.com', AccountId = OwnersAccount.Id, Phone = '123123123');
+        
 
-        List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1,owner2};
-        insert ownersList;
+        //AMS_Account_Role__c owner1 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Contact__c = conList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
+        //AMS_Account_Role__c owner2 = new AMS_Account_Role__c(Account__c = accList.get(0).Id, Owner_Account__c = accList.get(0).Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
+
+        //List<AMS_Account_Role__c> ownersList = new List<AMS_Account_Role__c>{owner1,owner2};
+        //insert ownersList;
+
+        //Create the ownerships: owner1 and owner2 own the first hierarchy and owner 3 and 4 own the second one.
+        List<AMS_Account_Role__c> roles = new List<AMS_Account_Role__c>();
+        roles.add(new AMS_Account_Role__c(RecordTypeId = ownerRecTypeId, Account__c = accList.get(0).Id, Contact__c = conList.get(0).Id, Owner_Account__c = accList.get(2).Id));
+        roles.add(new AMS_Account_Role__c(RecordTypeId = ownerRecTypeId, Account__c = accList.get(1).Id, Contact__c = conList.get(0).Id, Owner_Account__c = accList.get(2).Id));
+        
+        insert roles;
 
         List<AMS_Accreditation_Contact__c> acList = new List<AMS_Accreditation_Contact__c>();
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner1.Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
-        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = owner2.Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='', Last_name__c='Comapny', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
+        acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = roles.get(0).Id, AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, Contact__c = conList.get(0).id, First_name__c='NameToUse', Last_name__c='Last', Job_title__c='ABC', Mobile__c='+4112345678', Phone__c='3424322343', Agency_owner__c = true, Email__c='unique@email.com', RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person')));
+        //acList.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = roles.get(0).Id,AMS_Pax_Accreditation_Form__c = aoaList.get(0).Id, Company__c = accList.get(0).Id, First_name__c='', Last_name__c='Comapny', Job_title__c='', Mobile__c='+4112345678', Phone__c='3424322343', Email__c='company@email.com', Agency_owner__c = true, RecordTypeId=AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Company')));
         insert acList;
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
-        oscar.Type_of_change__c = AMS_Utils.COR;
+        //oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.Type_of_change__c = AMS_Utils.TYPECHANGE_LOCATION;
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'COR';
 
@@ -789,7 +844,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
-        oscar.Type_of_change__c = AMS_Utils.COR;
+        //oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.Type_of_change__c = AMS_Utils.TYPECHANGE_LOCATION;
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'CAD';
 
@@ -808,7 +864,8 @@ public with sharing class AMS_AccountRoleCreatorTest {
 
         oscar.RecordTypeId = correctionOSCARRecTypeId;
         oscar.AMS_Online_Accreditation__c = aoaList.get(0).Id;
-        oscar.Type_of_change__c = AMS_Utils.COR;
+        //oscar.Type_of_change__c = AMS_Utils.COR;
+        oscar.Type_of_change__c = AMS_Utils.TYPECHANGE_LOCATION;
         oscar.STEP6__c = 'Passed';
         oscar.AMS_Correction_change_code__c = 'LET';
 

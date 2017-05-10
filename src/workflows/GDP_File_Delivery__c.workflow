@@ -9,7 +9,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>IEC_GDP/IEC_GDP_File_Delivery_Notification_GSS</template>
     </alerts>
     <alerts>
@@ -21,7 +21,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>IEC_GDP/IEC_GDP_File_Delivery_Notification_MDP</template>
     </alerts>
     <fieldUpdates>

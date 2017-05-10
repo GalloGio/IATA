@@ -474,10 +474,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = AMS_ChangeCodesHelper.convertAccountToObjectChanges(accountChanges);
 
+        if(account.Source_System__c == null || account.Source_System__c.toUpperCase() != 'WEBSTAR') {
         AMS_ChangeCodesHelper.createAAChangeCodes( objectChanges, changeCodesToProcess, oscarsToProcess, accountsToProcess,false);
         // for now we shouldn't sent any notification.
         //sendNotification(accountId,accountChanges);
-
+        }
+        
     }
 
     public static void testsendNotification(String accountId,List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges ){
@@ -617,7 +619,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             //Create a new Account for the SA, with the values reported in the below table 
             
-            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
+            Account parentAccount = [SELECT Id,Name,Short_Name__c,Abbreviated_name__c,IATA_ISO_Shipping_Country__c,TradeName__c,Company_Type__c,ShippingCity,ShippingCountry,ShippingPostalCode,ShippingState,ShippingStreet,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,IATA_ISO_Country__c,Iso_State__c,Abbreviated_address__c,Website,Phone,Fax,Email__c,Top_Parent__c from Account where Id = :caseObj.Account_Concerned__c LIMIT 1];
 
             Account newSAAccount = createSAAccount(parentAccount);
 
@@ -745,6 +747,12 @@ global without sharing class AMS_RecordCreatorWebservice {
         acctSA.Category__c = 'Non-IATA Travel Agent';
         acctSA.ParentId = parentAccount.Id;
         acctSA.REASON_FOR_CREATION__C = 'Created by customer';
+
+        if (parentAccount.Top_Parent__c == null) {
+            acctSA.Top_Parent__c = parentAccount.Id;
+        } else {
+                acctSA.Top_Parent__c = parentAccount.Top_Parent__c;
+        }
 
         insert acctSA;
 

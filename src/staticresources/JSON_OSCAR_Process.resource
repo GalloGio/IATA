@@ -789,6 +789,7 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
           }],
           "DisplayFields": [
+          "Change_effective_as_of__c",
           "STEP6__c"],
           "IsDependent": false
         }]
@@ -830,7 +831,6 @@
           }],
           "DisplayFields": [
           "Confirm_DD_setup_with_agent__c",
-          "Change_effective_as_of__c",
           "STEP16__c"],
           "IsDependent": false
         }]
@@ -3128,7 +3128,11 @@
         "Steps": [{
           "Name": "STEP6",
           "Required": [],
-          "Actions": [],
+          "Actions": [{
+            "FunctionName": "checkAccountHierarchyCorrection",
+            "ActionLabel": "AMS_OSCAR_Action6",
+            "args": ["oscarid"]
+          }],
           "Automations": [{
             "Status": "Passed",
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
@@ -3138,8 +3142,9 @@
             "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
           }],
           "DisplayFields": [
-      "AMS_Correction_change_code__c",
-      "STEP6__c"],
+            "AMS_Correction_change_code__c",
+            "Type_of_change__c",
+            "STEP6__c"],
           "IsDependent": false
         }]
       

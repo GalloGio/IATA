@@ -123,6 +123,139 @@ private class CaseBeforeTriggerTest {
         insert cas4; 
 
     }
+    
+    @isTest static void unitTestPortal() {
+        ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
+        ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+        Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases');
+        ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
+        
+        IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS',AIMS_Area_Name__c='suisse',AIMS_Area_ID__c= '1' );
+        insert isoCountry;
+
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        
+        Product_Category__c PC = new Product_Category__c(
+                Name = 'test',
+                Active__c = true,
+                Short_Description__c = 'test test');
+        insert PC;
+        
+        BusinessHours bHourObj = new BusinessHours();
+        bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
+
+        Account a = new Account( name ='IFAP ACCT',
+                                 industry = 'pluto',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1234567',
+                                 Site_Index__c = '1234567',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        insert a;
+        
+        Account aICH = new Account( name ='ICH ACCT',
+                                 industry = 'pluto',
+                                 IATA_ISO_Country__c=isoCountry.id,
+                                 recordtypeID = hqrt,
+                                 IATACode__c ='1834567',
+                                 Site_Index__c = '1834567',
+                                 Type = 'IATA Cargo Agent',
+                                 billingCountry = 'ss',Location_Type__c = 'AO',
+                                 category__c = 'IATA Cargo Agent',
+                                 sector__c = 'Cargo Agent');
+        insert aICH;
+         
+        Contact con =new contact(lastname = 'pluto' ,
+                                 phone = '123',
+                                 accountid = a.id,
+                                 User_Portal_Status__c = 'Approved Admin',
+                                 Financial_Assessment_Contact__c = true);
+        insert con;
+        
+        Contact conICH =new contact(lastname = 'ICH Help Desk' ,
+                                 phone = '321',
+                                 accountid = aICH.id,
+                                 Financial_Assessment_Contact__c = true);
+        insert conICH;
+                           
+        EmailTemplate__c template = new EmailTemplate__c( 
+                        Template_Language__c = 'English', 
+                        IATA_ISO_Country__c = isoCountry.Id, 
+                        Agent_Type__c='All');
+        insert template;
+        
+        test.startTest();
+        
+        // Insert correctly a case
+        Case cas = new Case(recordtypeID = PortalsharingRTID,
+                          Status = 'Assessment Performed',
+                          Origin = 'asd',
+                          IFAP_Area__c = 'asda',
+                          Case_Creator_Email__c = 'gianluigi.test@gmail.com',
+                          Accelya_Request_Type__c = 'General Queries',
+                          Country_concerned__c = 'Italy',
+                          contactid = con.id,
+                          AccountId = a.id                         
+        );
+        insert cas; 
+        // Insert correctly a case
+        Case cas1 = new Case(recordtypeID = RT_ICC_Id,
+                          Status = 'Open',
+                          Casearea__c = 'Collection', 
+                          Reason1__c = 'Debt Recovery',
+                          contactid = con.id,
+                          AccountId = a.id,
+                          BusinessHoursId = bHourObj.id                      
+        );
+        insert cas1; 
+
+        Case cas2 = new Case(recordtypeID = RecId,
+                          Status = 'Open',
+                          Origin = 'asd',
+                          DPC_Software__c = 'Multicarta',
+                          parentid = cas.id,
+                          Country_concerned__c = 'Italy',
+                          contactid = conICH.id,
+                          AccountId = aICH.id
+        );
+        insert cas2; 
+        
+        update cas2;
+        string prodCat = PC.id;
+        Case cas3 = new Case(recordtypeID = NCRecordTypeID,
+                          Status = 'Open',
+                          Region__c = 'Americas',
+                          BSPCountry__c = 'Anguilla',
+                          CaseArea__c = 'Accreditation Products',
+                          Reason1__c = 'PAX/CARGO Certificate',
+                          Product_Category_ID__c = prodCat,
+                          IATACodeProduct__c = '38222693',
+                          QuantityProduct__c = '2',
+                          contactid = con.id,
+                          AccountId = a.id
+        );
+        insert cas3; 
+        
+        cas3.ownerid = testUser.id;
+        cas3.status = 'closed';
+        System.runAs(testUser) {
+          update cas3;
+        }
+        
+
+    }
+    //*********************************
 
     @isTest static void unitTest2() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
@@ -1062,7 +1195,7 @@ private class CaseBeforeTriggerTest {
         List<Case> cases = new List<Case>();
         
         // SMALLAMOUNT
-        cases.add(new Case( ContactId = con.Id,
+        Case cas01 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1073,11 +1206,11 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
+        );
+        insert cas01;
         
         // MINORPOLICY
-        cases.add(new Case( ContactId = con.Id,
+        Case cas02 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1088,11 +1221,11 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
+        );
+        insert cas02;
         
         // MINORPOLICY
-        cases.add(new Case( ContactId = con.Id,
+        /*Case cas03 = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
                             Subject = 'TestCase Sidra Small Amount ' + c,
                             Origin = 'Web',
@@ -1103,10 +1236,8 @@ private class CaseBeforeTriggerTest {
                             CurrencyExchangeRateUSD__c = 1,
                             BSP_CASS__c = 'BSP',
                             SIDRA_exchange_rate_updated__c = true
-        ));
-        
-        
-        insert cases;
+        );
+        insert cas03;
         
         Case rei = new Case( ContactId = con.Id,
                             AccountId = con.accountId,
@@ -1122,7 +1253,7 @@ private class CaseBeforeTriggerTest {
                             Update_AIMS_REI_DEFWITH__c = Datetime.now(),
                             REI_ApprovalRejectin__c = 'Approved',
                             DEF_Withdrawal_Approval_Rejection__c = '');
-        insert rei;
+        insert rei;*/
         
         Test.StartTest();
         
@@ -1168,9 +1299,9 @@ private class CaseBeforeTriggerTest {
         string sIndustry = 'Cargo Agent';
         string sType = 'IATA Cargo Agent';
         if(math.mod(i,2)==0)
-          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Travel Agent', Type = 'IATA Passenger Sales Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID) );
+          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Travel Agent', Type = 'IATA Passenger Sales Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID, Reason_for_creation__c = 'test') );
         else
-          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Cargo Agent', Type = 'IATA Cargo Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID) );
+          listAccount.add( new Account( Name = 'account' + i, AIMS_ID__c = String.ValueOf(i), Industry='Cargo Agent', Type = 'IATA Cargo Agent', Location_Type__c = 'HO', IATA_ISO_Country__c = lsIso[i].ID, Reason_for_creation__c = 'test'));
       }
       
       insert listAccount;
@@ -1181,7 +1312,7 @@ private class CaseBeforeTriggerTest {
     private static list<Contact> CreateContacts(list<Account> lsAccnt) {
       list<Contact> listcontact = new list<Contact>();
       for(integer i=0; i<lsAccnt.size(); i++)
-        listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true) );
+        listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = lsAccnt[i].Id, Financial_Assessment_Contact__c = true, Email='test.preprod@test.org') );
       return listcontact;
     }
 
@@ -1553,8 +1684,9 @@ private class CaseBeforeTriggerTest {
         FSMCase.ownerid = testUser.id;
         FSMCase.status = 'Closed';
       }
-      
-      update lsCaseFSM;
+      System.runAs(testUser) {
+          update lsCaseFSM;
+      }
       
       list<Case> lsNCCase = new list<Case>();
       
@@ -1731,8 +1863,9 @@ private class CaseBeforeTriggerTest {
         FSMCase.ownerid = testUser.id;
         FSMCase.Status = 'Closed';
       }
-      
-      update lsCaseFSM;
+      System.runAs(testUser) {
+          update lsCaseFSM;
+      }
       
       try{
         update lsNCCase;
@@ -1800,7 +1933,6 @@ private class CaseBeforeTriggerTest {
        date dead = date.today().addDays(40);
        
        Case c = new Case(recordtypeID = IFAPcaseRecordTypeID,
-                 Status = 'Assessment Performed',
                  Origin = 'asd',
                  IFAP_Area__c = 'asda',
                  Financial_Review_Type__c ='bla',

@@ -47,7 +47,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>amandussoc@iata.org</name>
+                <name>amandussoc@iata.org.preprod</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

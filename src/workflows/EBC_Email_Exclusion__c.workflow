@@ -9,8 +9,8 @@
             <field>Email__c</field>
             <type>email</type>
         </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderAddress>globaldata@iata.org.preprod</senderAddress>
+        <senderType>CurrentUser</senderType>
         <template>EBC/EBC_Unsubscribe</template>
     </alerts>
     <rules>

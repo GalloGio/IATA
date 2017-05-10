@@ -5,175 +5,90 @@ global with sharing class SignaturitRestEvents {
 https://iata--bi.cs87.my.salesforce.com/services/apexrest/signaturit/event
 */
 
-	public static String testJson;
+    public static String testJson;
 
-	public class SignaturitEventException extends Exception {}
+    public class SignaturitEventException extends Exception {}
 
-	@HttpPost
-	global static void receiveEvent() {
-		String jsonStr = '';
-		try {
-			jsonStr = Test.isRunningTest()? testJson: RestContext.request.requestBody.toString();
-			//saveLog(jsonStr);
-			processEvent(jsonStr);
-		} catch (Exception e) {
-			//saveLog('ERROR ' + e.getMessage());
-			String message = 'ERROR in SignaturitRestEvents.receiveEvent()\n JSON:' + jsonStr;
-			System.debug(message + '\n' + e.getMessage());
-			TransformationHelper.sendEmailSupport('SignaturitRestEvents.receiveEvent()', message + '\n' + e.getMessage());
-			//EM: Send back error message to Signaturit in order to handle the exceptions
-			throw new SignaturitEventException(message,e);
-		}
-	}
+    public static String SENT = 'sent';
 
-/*
-	private static void saveLog(String text) {
-		Tracked_Email__c email;
-		//json = json.replace('\\','\\\\');
-		email = new Tracked_Email__c(
-			Case__c = '5008E000000cX6NQAU',
-			FromAddress__c ='test@email.com',
-			Subject__c = 'body',
-			TextBody__c = text
-		);
-		insert email;
-	}
-*/
-	@HttpGet
-	global static String testService() {
-		return 'testService OK';
-	}
+    public static Map<String, Integer> STATUSES = new Map<String,Integer>{
+        SENT => 0,
+        'email_processed' => 1,
+        'email_bounced' => 2,
+        'email_delivered' => 3,
+        'email_opened' => 4
+    };
 
-	global static void processEvent(String jsonStr) {
-		jsonStr = jsonStr.replace('"date"','"date_x"');
-		JSONParser parser = JSON.createParser(jsonStr);
-		EventResponse response = (EventResponse)parser.readValueAs(EventResponse.class);
+    @HttpPost
+    global static void receiveEvent() {
+        Map<String,String> params = RestContext.request.params;
 
-		System.debug('****** ' + response);
+        try{
+            Tracked_Email_Certificate__c trackedEmailCertificate = [Select Tracked_Email__r.Id
+                                            From Tracked_Email_Certificate__c
+                                            Where Name =: params.get('certificate[id]') limit 1];
 
-		list<Tracked_Email__c> listTrackedEmail = [
-			Select Id
-			From Tracked_Email__c
-			Where Signaturit_Id__c = :response.certificate.id
-			or Signaturit_Certificate_Ids__c like :'%' + response.certificate.id + '%'
-			limit 1];
+            Tracked_Email__c trackedEmail = [Select Id, Status__c, Email__c, AdditionalTo__c
+                                            From Tracked_Email__c
+                                            Where Id =: trackedEmailCertificate.Tracked_Email__r.Id];
 
-		if (listTrackedEmail.isEmpty() ) {
-			throw new SignaturitEventException('SignaturitRestEvents Error in processEvent(). No Tracked Email found with id ' + response.certificate.id );
-		}
+            Tracked_Email_Event__c event = new Tracked_Email_Event__c(
+                Parent__c = trackedEmail.Id,
+                Recipient_Address__c = params.get('certificate[email]'),
+                Recipient_Name__c = params.get('certificate[name]'),
+                Attachment__c = params.get('certificate[file][name]'),
+                Timestamp__c = parseDateString(params.get('certificate[created_at]')),
+                Status__c = params.get('type')
+            );
+            insert event;
 
-		Tracked_Email__c trackedEmail = listTrackedEmail.get(0);
+            String logText = 'Event : ' + event;
 
-		Savepoint sp = Database.setSavepoint();
-		try {
-			Tracked_Email_Event__c event = new Tracked_Email_Event__c(
-				Parent__c = trackedEmail.Id,
-				Timestamp__c = response.getEventDate(),
-				Status__c = response.getEventType()
-			);
-			insert event;
+            // Update Tracked Email status if necessary
+            // Consider the event only if the recipient is a [to]
+            if(event.Recipient_Address__c == trackedEmail.Email__c
+                || (trackedEmail.AdditionalTo__c != null && new Set<String>(trackedEmail.AdditionalTo__c.split(';')).contains(event.Recipient_Address__c))){
+                
+                // compare the status of the email and the event
+                Integer currentStatus = STATUSES.get(trackedEmail.Status__c);
+                Integer eventStatus = STATUSES.get(event.Status__c);
 
-			trackedEmail.Status__c = event.Status__c;
-			update trackedEmail;
+                if(eventStatus > currentStatus){
+                    logText += '\r\nChanged tracked email status from ' + currentStatus + ' to ' + eventStatus; 
+                    trackedEmail.Status__c = event.Status__c;
+                    update trackedEmail;
+                }
+                else{
+                    logText += '\r\nNOT updating tracked email status : old status';
+                }            
+            }
+            else{
+                logText += '\r\nNOT updating tracked email status : cc or bcc address';
+            }
 
-		} catch ( Exception e) {
-			Database.rollback(sp);
-			System.debug('SignaturitRestEvents Error in processEvent() : ' + e.getMessage());
-			throw new SignaturitEventException('SignaturitRestEvents Error in processEvent()', e);
-		}
-	}
+            ///Signaturit_Log__c log1 = new Signaturit_Log__c(Log_Text__c = logText);
+            //insert log1;
+        }
+        catch(Exception e){
+            //Signaturit_Log__c log1 = new Signaturit_Log__c(Log_Text__c = ''+e.getMessage());
+            //insert log1;
+        }
+    }
+    
+    @HttpGet
+    global static String testService() {
+        return 'testService OK';
+    }
 
-
-	global class EventResponse {
-		global String date_x;
-		global String type;
-		global Certificate certificate;
-
-		public DateTime getEventDate() {
-
-			if (certificate.last_event == null) {
-				return getDate();
-			}
-			return certificate.last_event.getDate();
-		}
-
-		public String getEventType() {
-			//EM
-			if (certificate == null)	return null;
-			if (certificate.last_event == null) {
-				return this.type;
-			}
-			return certificate.last_event.type;
-		}
-
-		private DateTime getDate() {
-			return parseDateString(date_x);
-		}
-	}
-
-	global class Certificate {
-		//global CertifiedEmail certified_email;
-		global String created_at;
-		//global EventData [] events;
-		global String id;
-		global EventData last_event;
-		global String recipient_email;
-		global String recipient_name;
-
-	}
-
-	global class EventData {
-		global String date_x;
-		global String created_at;
-		global String type;
-
-		public DateTime getDate() {
-			return parseDateString(date_x);
-		}
-	}
-
-	public static DateTime parseDateString(String dateStr) {
-		try {
-			list<Integer> timeParts = new list<Integer>();
-			for ( String part: dateStr.split('[T:+-]') ) {
-				timeParts.add( Integer.ValueOf(part));
-			}
-			return DateTime.newInstanceGmt(timeParts[0], timeParts[1], timeParts[2], timeParts[3], timeParts[4], timeParts[5]);
-		} catch( Exception e) {
-			return DateTime.now();
-		}
-	}
-
-/*
-	public Tracked_Email__c checkstatus(Tracked_Email__c te, JSONParser parser) {
-		try {
-			system.debug('@@@parser: ' +parser);
-			MailInfoResponse response = (MailInfoResponse)parser.readValueAs(MailInfoResponse.class);
-			String laststatus;
-			if (response != null)
-				laststatus = response.certificates[0].events[response.certificates[0].events.size()-1].type;
-			system.debug('@@@laststatus: ' +laststatus);
-
-
-			if (te.status__c != laststatus) {
-				te.status__c = laststatus;
-				return te;
-			}
-			else return null;
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-	*/
-
-	global class MailInfoResponse {
-		global String created_at;
-		//global String data;
-		global String id;
-		global Certificate [] certificates;
-
-	}
-
-
+    public static DateTime parseDateString(String dateStr) {
+        try {
+            list<Integer> timeParts = new list<Integer>();
+            for ( String part: dateStr.split('[T:+-]') ) {
+                timeParts.add( Integer.ValueOf(part));
+            }
+            return DateTime.newInstanceGmt(timeParts[0], timeParts[1], timeParts[2], timeParts[3], timeParts[4], timeParts[5]);
+        } catch( Exception e) {
+            return DateTime.now();
+        }
+    }
 }

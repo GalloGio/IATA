@@ -235,6 +235,35 @@ body a:hover {
 <!-- <apex:includeScript value="https://code.jquery.com/jquery-git.js"/> -->
     <apex:includeScript value="https://code.jquery.com/jquery-2.1.4.js"/>
 <script>
+          $(function() {
+    if (!document.referrer.match(/\/purchases\/new/)) { return; }
+
+    var paymentDate = $('.purchaseDetails').find('td:contains("Date")').next().text() || undefined,
+        paymentDate = moment(paymentDate).format('YYYY-MM-DD');
+
+    var pardotData = {
+      discount_amount:   dataLayerOrderDetails.order_items[0].discount_in_cents / 100,
+      cost_center:       dataLayerOrderDetails.order_items[0].product_metadata['commerce']['cost-centre'],
+      product_code:      dataLayerOrderDetails.order_items[0].product_metadata['commerce']['product-code'],
+      email:             dataLayerOrderDetails.buyer.email,
+      order_number:      dataLayerOrderDetails.id,
+      total_amount_paid: dataLayerOrderDetails.total_in_dollars,
+      tax_amount:        dataLayerOrderDetails.tax_in_dollars,
+      shipping_amount:   dataLayerOrderDetails.shipping_in_dollars,
+      lms_payment_date:  paymentDate,
+      success_location:  'https://yardstickadmin.com'
+    }
+
+    var iframe = document.createElement('iframe');
+
+    iframe.src    = 'https://go.pardot.com/l/123902/2016-08-24/6k44kc?' + $.param(pardotData);
+    iframe.height = '1px';
+    iframe.width  = '1px';
+
+    document.body.appendChild(iframe);
+  });
+
+
             
         function refreshLanguage() {
             setCookie('apex__idcard_portal_lang', $("[id*='langSelect']").val(), 365);

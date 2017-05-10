@@ -9,7 +9,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>E_F_Services/EF_Location_Currency_Approved</template>
     </alerts>
     <alerts>

@@ -20,7 +20,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>unfiled$public/New_Idea_Submitted</template>
     </alerts>
     <rules>

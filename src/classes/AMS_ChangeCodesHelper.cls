@@ -139,12 +139,15 @@ public class AMS_ChangeCodesHelper {
         Integer index = 0;
 
         Set<Account> accountsToUpdate = new Set<Account>();        
+
         
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
         
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
+        System.debug('[FM] createAAChangeCodes: ('+changeCodes+') - '+changeCodes);
+
         //Account ID => Change Code Struct
         Map<ID,ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,ChangeCodeStruct> ();
 
@@ -272,8 +275,11 @@ public class AMS_ChangeCodesHelper {
             , Reason_Description__c = changeCode.reasonDesc
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
+            , To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
         );
 
+        System.debug( '[FM] changeCode.publishedOnEBulletin: '+changeCode.publishedOnEBulletin );
+        System.debug( '[FM] aacNEW: '+aacNEW );
         System.debug(loggingLevel.ERROR, 'Creating a new Agency Applied Change Code ('+aacNEW.Change_Code__c +') for Account ' + oscarAgency.Id + ' with flag active set to ' + aacNEW.Active__c);
         //insert aacNEW;
 
@@ -416,7 +422,12 @@ public class AMS_ChangeCodesHelper {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
-                if (accToUpdateStatus != null) {
+                //if (accToUpdateStatus != null) {
+
+                if (accToUpdateStatus != null 
+                    && !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
+                    (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
+                    ) {
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
                     changeCodes.add(changeCode);
 

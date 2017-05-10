@@ -32,7 +32,7 @@
             <criteriaItems>
                 <field>Case.ContactEmail</field>
                 <operation>notEqual</operation>
-                <value>coler@iata.org,grintchena@iata.org,mcbrideg@iata.org,rendlep@iata.org</value>
+                <value>grintchena@iata.org,mcbrideg@iata.org,rendlep@iata.org</value>
             </criteriaItems>
         </entryCriteria>
         <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
@@ -82,10 +82,6 @@
             </action>
         </approvalActions>
         <assignedApprover>
-            <approver>
-                <name>coler@iata.org</name>
-                <type>user</type>
-            </approver>
             <approver>
                 <name>mcbrideg@iata.org</name>
                 <type>user</type>
