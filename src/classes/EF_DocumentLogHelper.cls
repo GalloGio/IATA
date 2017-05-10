@@ -18,7 +18,7 @@ public with sharing class EF_DocumentLogHelper
     	AmazonFile__c amazonFile;
         try {
               amazonFile = new AmazonFile__c(
-                Name = fileName,
+                Name = fileName.substring(0,80),
                 sObject_Id__c = parentId,
                 Full_Name_Unique__c = amazonKey,
                 Category__c = dl.Category__c,
