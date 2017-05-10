@@ -24,9 +24,7 @@ public with sharing class AccountHierarchyController {
     public Integer recordsPerPage {get; set;}
     public List<SelectOption> getselectOptionItems() {
         List<SelectOption> options = new List<SelectOption>();
-        options.add(new SelectOption('1','1'));
-        options.add(new SelectOption('2','2'));
-        options.add(new SelectOption('3','3'));
+        options.add(new SelectOption('25','25'));
         options.add(new SelectOption('50','50'));
         options.add(new SelectOption('100','100'));
         options.add(new SelectOption('200','200'));
@@ -38,7 +36,8 @@ public with sharing class AccountHierarchyController {
 
     
     public AccountHierarchyController(ApexPages.StandardController stdController) {
-        stdController.addFields(new list<String>{'Name', 'Top_Parent__c'});
+        if (!Test.isRunningTest()) stdController.addFields(new list<String>{'Name', 'Top_Parent__c'});
+
         this.currentAccount = (Account)stdController.getRecord();
 
         topParentAccountId = currentAccount.Top_Parent__c == null ? currentAccount.Id : currentAccount.Top_Parent__c;
