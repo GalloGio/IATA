@@ -274,12 +274,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
         }
 
         String strSummary = (hasSuccesses ? summaryPos + '.\n' : '') + (hasErrors ? summaryNeg + '.' : '');
-        if (hasSuccesses) {
-            return new map<String,String>{'errorMessage' => '', 'summaryMessage' => strSummary};
-        } else {
-            return new map<String,String>{'errorMessage' => strSummary, 'summaryMessage' => ''};
-        }
         
+        return new map<String,String>{'errorMessage' => '', 'summaryMessage' => strSummary};
     }
 
     // Returns the describe information for the interface
