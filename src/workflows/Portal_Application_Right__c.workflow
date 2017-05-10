@@ -9,7 +9,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
@@ -21,7 +21,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_grantedVF_cns</template>
     </alerts>
     <alerts>
@@ -41,7 +41,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_TD_Manager_of_TD_request_VF</template>
     </alerts>
     <alerts>
@@ -53,7 +53,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_TD_Premium_request</template>
     </alerts>
     <alerts>
@@ -65,7 +65,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_TD_Premium_request_First</template>
     </alerts>
     <alerts>
@@ -77,7 +77,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_T_Dashboard_request</template>
     </alerts>
     <alerts>
@@ -89,7 +89,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/Kavi_Notify_contact_of_access_grantedVF</template>
     </alerts>
     <alerts>
@@ -101,7 +101,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_requestVF</template>
     </alerts>
     <alerts>
@@ -113,7 +113,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_requestVF_cns</template>
     </alerts>
     <alerts>
@@ -125,7 +125,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rejectedVF</template>
     </alerts>
     <alerts>
@@ -137,7 +137,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rejected_VF_ADM</template>
     </alerts>
     <alerts>
@@ -149,7 +149,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rej_VF_ADM_cns</template>
     </alerts>
     <alerts>
@@ -161,7 +161,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rejected_VF_INT</template>
     </alerts>
     <alerts>
@@ -173,7 +173,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_contact_of_access_rej_VF_INT_cns</template>
     </alerts>
     <alerts>
@@ -185,7 +185,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_TDpremium_granted</template>
     </alerts>
     <alerts>
@@ -197,7 +197,7 @@
             <type>contactLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_T_Dashboard_granted</template>
     </alerts>
     <alerts>
@@ -209,7 +209,7 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_Admin_of_app_requestVF</template>
     </alerts>
     <alerts>
@@ -221,7 +221,7 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Notify_Admin_of_app_requestVF_CNS</template>
     </alerts>
     <fieldUpdates>

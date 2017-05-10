@@ -23,7 +23,7 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org.testsandbox</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>
@@ -98,7 +98,7 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org.testsandbox</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
@@ -154,10 +154,6 @@
         </recipients>
         <recipients>
             <recipient>mckayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>seifeddinh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -257,7 +253,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>RCRM_Email_Notifications/Contract_Renewal_Reminder</template>
     </alerts>
     <rules>

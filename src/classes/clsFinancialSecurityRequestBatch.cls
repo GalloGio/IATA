@@ -1,41 +1,33 @@
-global class clsFinancialSecurityRequestBatch implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts{
+global class clsFinancialSecurityRequestBatch implements Database.Batchable<sObject>{
 
-	global List<Case> caseList = new List<Case>();
-	global String emailTemplate;
-	global Date deadLineDate;
-	global Boolean trackedEmail;
-	global List<Tracked_Email__c> trackedEmails = new List<Tracked_Email__c>();
-
-	global List<Case> start(Database.BatchableContext BC){
-		return caseList;
-	}
-
-	//changes case status to Financial Security requested
-	global void execute(Database.BatchableContext BC, List<Case> scope){
-		try{
-			for(Case c : scope){
-				c.Status = 'Financial Security Requested';
-				c.FS_EmailTemplate__c = emailTemplate;
-				c.FS_Deadline_Date__c = deadLineDate;
-				if(!trackedEmail){
-					c.FS_Request_Mass__c = true;
-				}
-				else{
-					c.FS_Letter_Sent__c = true;
-				}
-			}
-			Update scope;
-
-			if(trackedEmail){
-				trackedEmails.addAll(SignaturitUtils.createTrackedEmails(scope, 'IFAP_FS_Request', 'IATA Financial Review', 'noreply.ifap@iata.org'));								
-			}
-		}
-		catch(Exception e){}
-	}
+    global List<Case> caseList = new List<Case>();
+    global String emailTemplate;
+    global Date deadLineDate;
+   
+   
+    global List<Case> start(Database.BatchableContext BC){
+        return caseList;
+    }
+    
+    //changes case status to Financial Security requested
+    global void execute(Database.BatchableContext BC, List<Case> scope){
+       
+     try{   
+         for(Case c : scope)
+              {
+                c.Status = 'Financial Security Requested'; 
+                c.FS_EmailTemplate__c = emailTemplate;
+                c.FS_Deadline_Date__c = deadLineDate;
+                c.FS_Request_Mass__c = true;
+                
+               Update c; 
+              }
+     }
+     catch(Exception e){}
+         
+    }
  
-	global void finish(Database.BatchableContext BC){            
-    	if(!trackedEmails.isEmpty()){
-			SignaturitUtils.sendTrackedEmails(trackedEmails);
-		}
-	} 
+    global void finish(Database.BatchableContext BC){            
+    }
+     
 }

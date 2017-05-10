@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Used for Russia LO to manage different roles (CS, R&amp;S, AM or ARM) especially in the SIDRA &amp; SIDRA Lite cases</description>
-    <label>Russia LO case management</label>
-    <userLicense>Salesforce</userLicense>
-</PermissionSet>

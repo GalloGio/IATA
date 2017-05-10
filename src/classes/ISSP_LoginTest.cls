@@ -122,13 +122,13 @@ private class ISSP_LoginTest {
 	    	Apexpages.currentPage().getParameters().put('retURL', '/test');
 	    	ISSP_Login ctrl = new ISSP_Login();
 	    	ctrl.username = 'test';
-	    	//ctrl.login();
-	        //ctrl.username = 'issp_login_test_class@testclass.testclass';
-	        //ctrl.login();
+	    	ctrl.login();
+	        ctrl.username = 'issp_login_test_class@testclass.testclass';
+	        ctrl.login();
     	}
 
 	}
-	/*
+
 	public static testMethod void testISSP_Login_5() {
 
 		ApexPages.currentPage().getHeaders().put('X-Salesforce-SIP','10.10.10.10');
@@ -161,6 +161,5 @@ private class ISSP_LoginTest {
 
         ctrl.findLocationCaller();
 	}
-	*/
 
 }

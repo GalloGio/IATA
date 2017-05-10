@@ -12,7 +12,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/OI_Action_Plan_D_15_days</template>
     </alerts>
     <alerts>
@@ -27,7 +27,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/OI_Action_Plan_D_5_days</template>
     </alerts>
     <fieldUpdates>

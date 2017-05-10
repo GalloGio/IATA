@@ -83,23 +83,12 @@ public class IECAddress_Svc
 	{
 		String SAPVATNumber = '';
 		
-		if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode)){
-			// SPECIAL CASE FOR GREECE - SEND GR INSTEAD OF EL
-			system.debug('VATNumber : ' + VATNumber);
-			system.debug('isoCountryCode : ' + isoCountryCode);
-			if (!VATNumber.startsWithIgnoreCase(isoCountryCode) && VATNumber.contains('EL') && isoCountryCode.contains('GR')){
-				system.debug('VATNumber is EL && isoCountryCodeis GR');
-				SAPVATNumber = VATNumber.substring(isoCountryCode.length());
-			} else if (!VATNumber.startsWithIgnoreCase(isoCountryCode) && isoCountryCode.contains('GR')){
-				system.debug('isoCountryCode is GR');
-				SAPVATNumber = isoCountryCode + VATNumber;
-			}
-			// SPECIAL CASE FOR GREECE - SEND GR INSTEAD OF EL
-			else if (!VATNumber.startsWithIgnoreCase(isoCountryCode))
+		if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode))
+			if (!VATNumber.startsWithIgnoreCase(isoCountryCode))
 				SAPVATNumber = Utility.truncate(isoCountryCode + VATNumber, 20);
 			else
 				SAPVATNumber = Utility.truncate(VATNumber, 20);
-		}
+		
 		return SAPVATNumber;
 	} //*** end of "getSAPVATNumber"
 

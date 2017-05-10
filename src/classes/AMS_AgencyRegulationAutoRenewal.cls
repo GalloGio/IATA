@@ -29,38 +29,36 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		//if all the existing non expired regulations of the same type are going below a threshold
 		//only when this happens we should create a renewal
 		
-		Map<String, List<AMS_Agency_Regulation__c>> certificatesToRenewPerAccount = new Map<String, List<AMS_Agency_Regulation__c>>();
+		Map<Id, List<AMS_Agency_Regulation__c>> DGRToRenewPerAccount = new Map<Id, List<AMS_Agency_Regulation__c>>();
 
-		// Map<Account Id + Type certificate , List Certificates >
-		Map<String, List<AMS_Agency_Regulation__c>> allNonExpiredCertificatesPerAccount = new Map<String, List<AMS_Agency_Regulation__c>>();
+		Map<String, List<AMS_Agency_Regulation__c>> allNonExpiredDGRPerAccount = new Map<String, List<AMS_Agency_Regulation__c>>();
 
 		for(AMS_Agency_Regulation__c agReg : regulationsRequiringRenewal){
-			if(!certificatesToRenewPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
-				certificatesToRenewPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, new List<AMS_Agency_Regulation__c>());
-			certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).add(agReg);
+			if(!DGRToRenewPerAccount.containsKey(agReg.Account__c))
+				DGRToRenewPerAccount.put(agReg.Account__c, new List<AMS_Agency_Regulation__c>());
+			DGRToRenewPerAccount.get(agReg.Account__c).add(agReg);
 
 			//all the agregs in context should be put in this list as they should not be expired
-			if(!allNonExpiredCertificatesPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
-				allNonExpiredCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, new List<AMS_Agency_Regulation__c>());
-			allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).add(agReg);
+			if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+				allNonExpiredDGRPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, new List<AMS_Agency_Regulation__c>());
+			allNonExpiredDGRPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).add(agReg);
 
 			accts.add(agReg.Account__c);
 		}
 
-		//DGR, TSA and CATA
-		Map<Id, AMS_Agency_Regulation__c> allCertificates = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA' OR Type_of_Certificate__c = 'CATA')]);
+		Map<Id, AMS_Agency_Regulation__c> allDGR = new Map<Id, AMS_Agency_Regulation__c>([SELECT Id, Account__c, First_Name__c, Last_Name__c, Position__c, Type_of_Certificate__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, Expired__c, Notification_Sent__c FROM AMS_Agency_Regulation__c WHERE Account__c IN :accts AND (Type_of_Certificate__c = 'DGR' OR Type_of_Certificate__c = 'TSA')]);
 
-		system.debug('allCertificates: ' + allCertificates);
+		system.debug('allDGR ' + allDGR);
 
-		for(AMS_Agency_Regulation__c agReg : allCertificates.values()){
+		for(AMS_Agency_Regulation__c agReg : allDGR.values()){
 			if(!agReg.Expired__c && !agReg.Notification_Sent__c){
-				if(!allNonExpiredCertificatesPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
-					allNonExpiredCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, new List<AMS_Agency_Regulation__c>());
-				allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).add(agReg);
+				if(!allNonExpiredDGRPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+					allNonExpiredDGRPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, new List<AMS_Agency_Regulation__c>());
+				allNonExpiredDGRPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).add(agReg);
 			}
 		}
 
-		system.debug('allNonExpiredCertificatesPerAccount ' + allNonExpiredCertificatesPerAccount);
+		system.debug('allNonExpiredDGRPerAccount ' + allNonExpiredDGRPerAccount);
 		Map<Id, Account> accountData = new Map<Id, Account>([SELECT Abbreviated_address__c, Abbreviated_name__c, Name, BillingState, BillingCity, IATA_ISO_Country__c, 
 																   Email__c, Fax, Phone, BillingPostalCode, BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, 
 																   License_Number__c, VAT_Number__c, Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, 
@@ -92,8 +90,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates();
-        //OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress]; // in order to test we must use any other email since agencymanagement@iata.org doesn't exist on preprod
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
@@ -114,22 +111,22 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_DGR){
 				//only create renewal if account is going below DGR requirements
-				String key = allCertificates.get(agReg.Id).Account__r.IATA_ISO_Country__c + allCertificates.get(agReg.Id).Account__r.Location_Class__c;
+				String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
 				system.debug('key value ' + key);
 				Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
 				system.debug('minDgrHO ' + minDgrHO);
 				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
 				system.debug('minDgrBR ' + minDgrBR);
 
-				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer activeDGRInAccount = allNonExpiredDGRPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer dgrToRenewInAccount = DGRToRenewPerAccount.get(agReg.Account__c).size();
 				Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
 
 				system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
+				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
 					
 					system.debug('creating renewal for DGR');
-					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
+					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
 
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
 				}
@@ -137,39 +134,26 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){
 				system.debug('creating renewal for CATA');
 
-				
-				Integer activeCATAInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer cATAToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer numberOfRemainingCATAInAccountToExpire = activeCATAInAccount-cATAToRenewInAccount;
-
-				system.debug('creating renewal for CATA ' + numberOfRemainingCATAInAccountToExpire);
-
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingCATAInAccountToExpire, 0, 0,agReg.Type_Of_Certificate__c)){
-					
-					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
-
-					//sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
-				}					
-
+				AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
 			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_TSA){
 				//only create renewal if account is going below DGR requirements
-				String key = allCertificates.get(agReg.Id).Account__r.IATA_ISO_Country__c + allCertificates.get(agReg.Id).Account__r.Location_Class__c;
+				String key = allDGR.get(agReg.Id).Account__r.IATA_ISO_Country__c + allDGR.get(agReg.Id).Account__r.Location_Class__c;
 				system.debug('key value ' + key);
 				Integer minDgrHO = minimumHODgrRequirements.get(key) == null ? 0 : minimumHODgrRequirements.get(key);
 				system.debug('minDgrHO ' + minDgrHO);
 				Integer minDgrBR = minimumBRDgrRequirements.get(key) == null ? 0 : minimumBRDgrRequirements.get(key);
 				system.debug('minDgrBR ' + minDgrBR);
 
-				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer activeDGRInAccount = allNonExpiredDGRPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
+				Integer dgrToRenewInAccount = DGRToRenewPerAccount.get(agReg.Account__c).size();
 				Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
 
 				system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
+				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR)){
 					
 					system.debug('creating renewal for DGR');
-					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
+					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), DGRToRenewPerAccount.get(agReg.Account__c), comCasecontact);
 
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
 				}
@@ -177,28 +161,22 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
     }
 
-    private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveCertificates, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements,String typeOfCertificate){
+    private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveDGR, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements){
 
         if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
-            
-            //China
-            if(typeOfCertificate == AMS_Utils.CERT_CATA && accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveCertificates == 0)
-            	return true;
-            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveCertificates < 3) 
-            	return true;
+            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && accountData.Location_Class__c == 'C' && numberOfActiveDGR < 3) return true;
             //India has this particular exception to the normal behaviour, no check is to be done
-            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999) 
-            	return false;
+            else if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999) return false;
             else if(accountData.Location_Class__c == 'C'){
-                if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveCertificates < 2 )
+                if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveDGR < 2 )
                     return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates  < 1)
+                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR  < 1)
                     return true;
             }else if(accountData.Location_Class__c == 'R'){
                 //Only America is using DGR for Cass associate.
-                if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveCertificates < minimumHODgrRequirements )
+                if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveDGR < minimumHODgrRequirements )
                     return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates < minimumBRDgrRequirements){
+                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveDGR < minimumBRDgrRequirements){
                     return true;
                 }
             }

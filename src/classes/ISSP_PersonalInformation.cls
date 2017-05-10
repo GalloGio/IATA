@@ -125,7 +125,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c)) {
                 showIrregularities = True;
         }
         else {
@@ -416,24 +416,4 @@ public with sharing class ISSP_PersonalInformation {
         
     }
     
-    /**
-        If the account.Quality__c field contains the id of the verfied image then is a verified account
-    **/
-    public Boolean getIsVerifiedAccount() {
-        return this.con.Account!=null && this.con.Account.Quality__c!=null && this.con.Account.Quality__c.contains('015w0000001yCfW');
-    }
-    
-    /**
-        Return true if it is a Standard Account
-    **/
-    public Boolean getIsStandardAccount() {
-        return this.con.Account!=null && this.con.Account.RecordType.DeveloperName=='Standard_Account';
-    }
-    
-    /**
-        If is admin user, a standard account and non verified, then it has some special permissions in Company Page
-    **/
-    public Boolean getPermissionForStandardAccount() {
-        return this.bIsAdmin && getIsStandardAccount() && !getisVerifiedAccount();
-    }
 }

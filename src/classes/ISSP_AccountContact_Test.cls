@@ -48,6 +48,5 @@ private class ISSP_AccountContact_Test {
 		ctrl.AssignIFAPContact();
 		
 		ctrl.ChangePortalStatus();
-		ctrl.RelocateContact();
 	}
 }

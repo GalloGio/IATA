@@ -21,22 +21,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Billable_Location_Class__c</fullName>
-        <description>Location Class To include if the Change code is Billable
-Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
-Values must be Separated by &quot;;&quot;</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Location Class To include if the Change code is Billable
-Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
-Values must be Separated by &quot;;&quot;</inlineHelpText>
-        <label>Billable Location Class</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Billable__c</fullName>
         <defaultValue>false</defaultValue>
         <description>sets the change code to be sent for external systems for the emission of a sales order</description>

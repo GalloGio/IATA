@@ -230,7 +230,7 @@
         <filters>
             <field>Source__c</field>
             <operation>contains</operation>
-            <value>GSS,CAC,MDP</value>
+            <value>GSS,CAC</value>
         </filters>
         <filters>
             <field>Displayed_Message__c</field>

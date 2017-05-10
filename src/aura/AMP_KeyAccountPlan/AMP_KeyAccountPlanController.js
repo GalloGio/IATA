@@ -36,7 +36,7 @@
         var activities = component.get("v.activities");
         var newActivity = JSON.parse(JSON.stringify(component.get("v.newActivity")));
 
-        activities.unshift(newActivity);
+        activities.push(newActivity);
 
         component.set("v.activities", activities);
     },

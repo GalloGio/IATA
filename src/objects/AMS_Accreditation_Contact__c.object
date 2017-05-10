@@ -350,10 +350,6 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>3 years</fullName>
-                <default>false</default>
-            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -495,7 +491,7 @@
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
         <label>IATA code</label>
-        <length>11</length>
+        <length>8</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -525,15 +521,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Invoicing_Contact__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Job_title__c</fullName>
@@ -1007,10 +994,6 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>3 years</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1082,10 +1065,6 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1172,10 +1151,6 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>3 years</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1258,10 +1233,6 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1348,10 +1319,6 @@
                 <fullName>2 years</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>3 years</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Salutation__c</picklist>
@@ -1434,10 +1401,6 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1523,10 +1486,6 @@
             </values>
             <values>
                 <fullName>2 years</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3 years</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

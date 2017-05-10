@@ -2,25 +2,25 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>SARA_Automatic_Creation_of_Renewal_cases</fullName>
-        <ccEmails>info.sce@iata.org; garciam@iata.org.testsandbox</ccEmails>
+        <ccEmails>info.sce@iata.org; garciam@iata.org</ccEmails>
         <description>SARA Automatic Creation of Renewal cases</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>SARA/Automatic_Security_Renewal_Process</template>
     </alerts>
     <alerts>
         <fullName>SARA_Automatic_Creation_of_Renewal_cases_A1</fullName>
-        <ccEmails>agyrisksupport@iata.org.testsandbox</ccEmails>
+        <ccEmails>agyrisksupport@iata.org</ccEmails>
         <description>SARA Automatic Creation of Renewal cases A1</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>SARA/Automatic_Security_Renewal_Process</template>
     </alerts>
     <alerts>
         <fullName>SARA_Automatic_Creation_of_Renewal_cases_AME</fullName>
-        <ccEmails>ameaccreditation@iata.org.testsandbox</ccEmails>
+        <ccEmails>ameaccreditation@iata.org</ccEmails>
         <description>SARA Automatic Creation of Renewal cases - AME</description>
         <protected>false</protected>
         <recipients>
@@ -28,7 +28,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>SARA/Automatic_Security_Renewal_Process</template>
     </alerts>
     <fieldUpdates>

@@ -67,16 +67,6 @@ public class AMS_OSCAR_JSON {
         
         public String status{get;set;}
 
-        public boolean publishedOnEBulletin{
-        	get{
-        		Boolean bRes = true;
-        		if(publishedOnEBulletin != null){
-	            	bRes = publishedOnEBulletin;
-	            }
-	            return bRes;
-	        }
-	        set;}
-
 	}
 	 
 

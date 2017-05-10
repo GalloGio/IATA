@@ -2,25 +2,25 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>IW_Notify_user_when_status_is_9a_e</fullName>
-        <ccEmails>kupferm@iata.org.inactive.testsandbox</ccEmails>
+        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Notify user when status is 9a-e</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Work_Order_Email_Templates/Work_Order_Notification_status_9a_e</template>
     </alerts>
     <alerts>
         <fullName>IW_Notify_user_when_status_is_9f_10</fullName>
-        <ccEmails>kupferm@iata.org.inactive.testsandbox</ccEmails>
+        <ccEmails>kupferm@iata.org.inactive</ccEmails>
         <description>IW: Notify user when status is 9f - 10</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Work_Order_Email_Templates/Work_Order_Notification_status_9f</template>
     </alerts>
     <alerts>
         <fullName>InvoiceWorks_Work_Order_assignment_queue</fullName>
-        <ccEmails>levi.may@ipayables.com.testsandbox</ccEmails>
+        <ccEmails>levi.may@ipayables.com</ccEmails>
         <description>IW: Work Order assignment - queue</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -34,8 +34,12 @@
             <recipient>craftr@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>kupferm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Work_Order_Email_Templates/Work_Order_Notification</template>
     </alerts>
     <fieldUpdates>

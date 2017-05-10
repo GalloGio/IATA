@@ -75,7 +75,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>coler@iata.org.preprod</name>
+                <name>coler@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>

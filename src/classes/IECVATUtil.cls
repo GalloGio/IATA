@@ -37,13 +37,8 @@ public class IECVATUtil {
 	    String sErrorMessage = '';
 	    
 	    try
-
-	    {	sCountryCode = (sCountryCode.contains('GR') ? 'EL' : sCountryCode);
-	    	system.debug('Validate VAT # - sCountryCode : ' + sCountryCode);
-         	system.debug('Validate VAT # - sVATNumber : ' + sVATNumber);
+	    {
 	        VATResponse res = ws.ValidateVAT(sCountryCode, ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
-	        system.debug('Validate VAT # - VIES response : ' + res);
-
 	        if (!res.valid) 
 	            sErrorMessage = String.format(Label.IEC_Invalid_VAT, new List<String>{sVATNumber});
 	    }

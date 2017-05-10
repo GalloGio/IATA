@@ -28,7 +28,7 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, Id> mEmp_VS_Contact;
     public Map<Id, String> mAg_VS_Segment;
     public Map<Id, List<AMS_Account_Role__c>> mAg_VS_Employees;
-    public Map<Id, String> mAg_VS_DPCSystem;
+    
     public Map<Id, Id> mAg_VS_HO;
 
     public List<AMS_Agency_Updates__c> lAgencyUpdates;  
@@ -879,9 +879,6 @@ public with sharing class AMS_XML_Generator {
             }
         }
         
-
-        mAg_VS_DPCSystem = new Map<Id, String>();
-
         //Order the agencies in order to return on the same order they were asked!
         for(Integer i=0;i<orderedAgencyIds.size();i++){
 
@@ -892,10 +889,6 @@ public with sharing class AMS_XML_Generator {
                     List<Account> l = mAuxAgDPC.get(sDPC);
 
                     for(Account auxL: l){
-
-                        //Stores the DPC System info for the agencies
-                        mAg_VS_DPCSystem.put(auxL.Id, sDPC);
-
                         if(String.valueOf(auxL.Id).equalsIgnoreCase(orderedAgencyIds[i])){
                             List<Account> aux1 = new List<Account>();
                             aux1.add(auxL);
@@ -908,7 +901,6 @@ public with sharing class AMS_XML_Generator {
             }
         } 
 
-        System.debug('mAg_VS_DPCSystem : ' + mAg_VS_DPCSystem);
         //System.debug('bsp_dpc_ag: ' + bsp_dpc_ag);
         //System.debug('bsp_dpc_ag_Ordered: ' + bsp_dpc_ag_Ordered);
 
@@ -1139,12 +1131,6 @@ public with sharing class AMS_XML_Generator {
                         }
                             
 
-                        Datetime dtDefault_date = ag.Default_date__c == Null ? Null : Datetime.newInstance(ag.Default_date__c.year(), ag.Default_date__c.month(),ag.Default_date__c.day());
-                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtDefault_date == Null ? Null : String.valueOf(dtDefault_date.format('yyyyMMdd')));
-
-                        /* 
-                        //FM 19-04-2017 - removed by enhancement AMSU-18
-                        
                         Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
@@ -1183,7 +1169,7 @@ public with sharing class AMS_XML_Generator {
                             getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
                         }
-                        */
+
                     }
                    
                     Boolean bHier = False;
@@ -1320,15 +1306,6 @@ public with sharing class AMS_XML_Generator {
             parentAg = new Account();
         }
      
-        /*
-            AMSU-79 - 
-            IF DPC_System = MAESTRO we send the values...
-            IF NOT DPC_System = MAESTRO we send the fields empty
-        */
-        String sAgDPC = mAg_VS_DPCSystem.get(agency.Id);
-        
-
-
         //Get:
         // - "Manager" first and last name 
         // - "Lang"
@@ -1350,15 +1327,13 @@ public with sharing class AMS_XML_Generator {
                     } 
                 }
 
-                //Only fills Manager name when the DPC is "Maestro"
-                if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
                 //get Manager first and Last name, 1st record where Financial_Assessment_Contact__c is set to true is the one to be used
                 if( iQmp == null && auxContact.Financial_Assessment_Contact__c ){
                     iQmp = auxContact.Id;
                     sQmpf_name = auxContact.FirstName;
                     sQmpl_name = auxContact.LastName;
                 }
-                }
+
             }
 
         }
@@ -1395,9 +1370,6 @@ public with sharing class AMS_XML_Generator {
             }
         }
     
-        //Only fills Manager name when the DPC is "Maestro"
-        if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
-                
         //Get:
         // - Manager first and Last name, but only if no manager was found on the account contacts
         // - Ticketing agent first and Last name
@@ -1447,7 +1419,6 @@ public with sharing class AMS_XML_Generator {
                     }
                 }
             }
-        } 
         } 
         
         /*Agencies Section*/

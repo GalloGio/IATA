@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>EBC_Approval_Email</fullName>
-        <ccEmails>globaldata@iata.org.testsandbox</ccEmails>
+        <ccEmails>globaldata@iata.org</ccEmails>
         <description>Email client to notice of approval</description>
         <protected>false</protected>
         <recipients>
@@ -10,12 +10,12 @@
             <type>email</type>
         </recipients>
         <senderAddress>globaldata@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Approved</template>
     </alerts>
     <alerts>
         <fullName>EBC_Email_Confirmation_Status_Sent</fullName>
-        <ccEmails>globaldata@iata.org.testsandbox</ccEmails>
+        <ccEmails>globaldata@iata.org</ccEmails>
         <description>EBC Email Confirmation Status Sent</description>
         <protected>false</protected>
         <recipients>
@@ -23,7 +23,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>globaldata@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Sent</template>
     </alerts>
     <alerts>
@@ -35,7 +35,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>EBC/EBC_Campaign_Cancellation</template>
     </alerts>
     <fieldUpdates>

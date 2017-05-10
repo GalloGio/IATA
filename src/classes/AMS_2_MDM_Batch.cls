@@ -36,91 +36,30 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         system.debug('AMS_2_MDM_Batch: 1 - entrei - ' + scope);
 
-        SET<Id> setAccountKeys = new SET<Id>();
-        List<Account> lstAccount = new List<Account>();
-        Map<ID, Account> mAccountData = new Map<ID, Account>();
-        List<Agency_Applied_Change_code__c> scopeValidBillable = new List<Agency_Applied_Change_code__c>(); 
-        Map<String,AMS_ChangeCodes__c> mapChangeCodes = new Map<String,AMS_ChangeCodes__c>();
-        List<AMS_ChangeCodes__c> lBillableChangeCodes = [SELECT Change_Code__c, Billable_Location_Class__c FROM AMS_ChangeCodes__c where Billable__c = true];
-        List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c FROM AMS_Change_Codes_Billable_Setup__c];
+        //if(scope.size() > 0){
+        //    Agency_Applied_Change_code__c agUpd = scope.get(0);
 
+        //    ////By Country Iso code and record type (Passenger/Cargo)
+        //    //List<AMS_Agency__c> ag = [select Country__r.ISO_Code__c, RecordType.name from AMS_Agency__c where id = :agUpd.Agency__c limit 1 ];
+        //    //if(ag.size() > 0){
+        //    //  sCurrentGroupBy = ag[0].Country__r.ISO_Code__c;
+        //    //  sCurrentIndicator = ag[0].RecordType.name;
+        //    //}
 
-        system.debug('AMS_2_MDM_Batch: lBillableChangeCodes - ' + lBillableChangeCodes);
-
-        //Fetch agency data that's not comming in the "scope"
+        //    //sLogRecord = sCurrentGroupBy + '-' + sCurrentIndicator;
+        //    ////By Settlement
+        //    ////List<AMS_Agency_Operations__c> agOp = [select Operation__r.Settlement__r.Name from AMS_Agency_Operations__c where Agency__c = :agUpd.Agency__c limit 1 ];
+        //    ////if(agOp.size() > 0){
+        //    ////  sCurrentGroupBy = agOp[0].Operation__r.Settlement__r.Name;
+        //    ////}
+        //}
+        
         for(Agency_Applied_Change_code__c au :scope){
-            setAccountKeys.add(au.Account__c); 
-        }
-        lstAccount = [SELECT Id, Name, Location_Class__c,Country_ISO_Code__c FROM Account WHERE id in :setAccountKeys];
-        system.debug('AMS_2_MDM_Batch: lstAccount - ' + lstAccount);
-        for(Account auxAccount :lstAccount){
-            system.debug('AMS_2_MDM_Batch: auxAccount - ' + auxAccount);
-            mAccountData.put(auxAccount.Id, auxAccount);
-        }
-        //Map<ID, Account> mAccountData = new Map<ID, Account>([SELECT Id, Name, Location_Class__c,IATA_ISO_Country__r.Iso_code__c FROM Account WHERE id in :setAccountKeys]);
-
-        for(AMS_ChangeCodes__c auxCC :lBillableChangeCodes){
-            system.debug('AMS_2_MDM_Batch: auxCC - ' + auxCC);
-            if(auxCC.Billable_Location_Class__c == null){
-                auxCC.Billable_Location_Class__c = '';
-            }
-            mapChangeCodes.put(auxCC.Change_Code__c, auxCC);
-        }
-
-        system.debug('AMS_2_MDM_Batch: mapChangeCodes - ' + mapChangeCodes);
-
-        for(Agency_Applied_Change_code__c au :scope){
-           
-            system.debug('AMS_2_MDM_Batch: Agency_Applied_Change_code__c au - ' + au);
-
-            //FM 31-03-2017 - add validation and validated list to use data to send to SAP
-            AMS_ChangeCodes__c accToValidate = mapChangeCodes.get(au.Change_Code__c);
-            Account auxAccAccount = mAccountData.get(au.Account__c);
-            
-            system.debug('AMS_2_MDM_Batch: accToValidate - ' + accToValidate);
-            system.debug('AMS_2_MDM_Batch: auxAccAccount - ' + auxAccAccount);
-         //   system.debug('AMS_2_MDM_Batch: accToValidate.Billable_Countries_To_Exclude__c - ' + accToValidate.Billable_Countries_To_Exclude__c);
-          //  system.debug('AMS_2_MDM_Batch: accToValidate.Billable_Location_Class_To_Exclude__c - ' + accToValidate.Billable_Location_Class_To_Exclude__c);
-
-            /*
-            //Validates if Country and location class are billable for the give change code
-            if(accToValidate.Billable_Location_Class__c == null){
-                sLog += au.Account__r.IATACode__c + ',';
-                system.debug('AMS_2_MDM_Batch: Billable Countries && Location_Class Null - scopeValidBillable.add - ' + au);
-                scopeValidBillable.add(au);
-            }else if(!accToValidate.Billable_Location_Class__c.containsIgnoreCase(auxAccAccount.Location_Class__c) ){
-                system.debug('AMS_2_MDM_Batch: Billable Countries && Location_Class NOT Null - scopeValidBillable.add - ' + au);
-                sLog += au.Account__r.IATACode__c + ',';
-                scopeValidBillable.add(au);
-            }
-            */
-
-            //Check if account location class is included in the list setup for the change code
-            if(accToValidate.Billable_Location_Class__c.containsIgnoreCase(auxAccAccount.Location_Class__c) ){
-
-                Boolean bToSend = true;
-
-                //cycle throught the AMS_Change_Codes_Billable_Setup__c in order to check if it's valid to send the sales order
-                for(AMS_Change_Codes_Billable_Setup__c ccbs : lChangeCodesBillableSetup){
-                    //Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c
-                    if(au.Change_Code__c == ccbs.Change_Code__c 
-                        && auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
-                        && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c){
-                        
-                        bToSend = false;                            
-                    }
-                }
-
-                if(bToSend){
-                    sLog += au.Account__r.IATACode__c + ',';
-                    scopeValidBillable.add(au);
-                }
-
-            }
-            
+            //i++;
+            //ids.add(au.Account__c);
+            sLog += au.Account__r.IATACode__c + ',';
         }
        
-        system.debug('AMS_2_MDM_Batch: scopeValidBillable - ' + scopeValidBillable);
 
         String[] headerParams = new String[5];
         headerParams[0] = ''; //'PreviousID'
@@ -131,10 +70,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
         AMS_XML_Generator xmlGen = new AMS_XML_Generator();
         //String s = xmlGen.getAgencySalesOrder(ids);
-
-        //FM 31-03-2017 - Change from scope to validated list
-        //String s = xmlGen.getAgencySalesOrder(scope);
-        String s = xmlGen.getAgencySalesOrder(scopeValidBillable);
+        String s = xmlGen.getAgencySalesOrder(scope);
 
         //Decomment if XML is necessary on the Log entry
         sLog += 'XML Sent: '+s+'\n';
@@ -176,18 +112,10 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                 //for(AMS_Agency_Updates__c au :scope){
                 //    au.Update_Type__c = au.Update_Type__c + '_Sent';
                 //}
-                
-                //FM 31-03-2017 - Change from scope to validated list
-                //for(Agency_Applied_Change_code__c au :scope){
-                //    au.Sent_to_external_system__c = true;
-                //}
-                //update scope;
-                for(Agency_Applied_Change_code__c au :scopeValidBillable){
+                for(Agency_Applied_Change_code__c au :scope){
                     au.Sent_to_external_system__c = true;
                 }
-                update scopeValidBillable;
-
-                
+                update scope;
 
             }else{
                 system.debug('SAP Web Service - SI_SFDC_SalesOrder_OB - callout ERROR! ');

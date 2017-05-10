@@ -554,7 +554,7 @@ public with sharing class clsMassCaseCreationController {
 
   // Create case without sending Emails
   public PageReference MassCaseCreate() {
-    MassCaseCreation('no email');
+    MassCaseCreation(false);
     System.debug('**** MassCaseCreate');
 
     return null;
@@ -562,16 +562,8 @@ public with sharing class clsMassCaseCreationController {
 
   // Create cases (The case created by this function will be flagged as "Agent to be notified (Email)")
   public PageReference MassCaseCreateSendEmail() {
-    MassCaseCreation('email');
+    MassCaseCreation(true);
     System.debug('**** MassCaseCreateSendEmail');
-
-    return null;
-  }
-  
-  // Create cases (The case created by this function will be flagged as "Agent to be notified (Tracked Email)")
-  public PageReference MassCaseCreateSendTrackedEmail() {
-    MassCaseCreation('tracked email');
-    System.debug('**** MassCaseCreateSendTrackedEmail');
 
     return null;
   }
@@ -629,9 +621,9 @@ public with sharing class clsMassCaseCreationController {
     set{}
   }
 
-  private void MassCaseCreation(String sendEmail) {
+  private void MassCaseCreation(Boolean SendEmail) {
 
-    System.debug('**** Sendemail ' + sendEmail);
+    System.debug('**** Sendemail ' + SendEmail);
     refreshCheckMap();
     List<String> lstContactId = new List<String>();
     List<String> lstContactName = new List<String>();
@@ -657,23 +649,25 @@ public with sharing class clsMassCaseCreationController {
           EmailTemplate__c[] templates = [SELECT name, Id, IATA_ISO_Country__r.Id FROM EmailTemplate__c WHERE id = : caseParam.EmailTemplate__c and recordType.Name = 'IFAP' limit 1];
           if (templates.size() > 0 ) templateName = templates[0].name;
 
-          if(sendEmail == 'email'){
-            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Email)', CaseParameter.Subject, CaseParameter.Description,
-                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
-                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
-          }
-          else if(sendEmail == 'tracked email'){
-            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Tracked Email)', CaseParameter.Subject, CaseParameter.Description,
-                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
-                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
-          }
-          else {
+          if (!SendEmail) {
+
             IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent to be Notified', CaseParameter.Subject,
                                               CaseParameter.Description, CaseParameter.Financial_Review_Type__c,
                                               CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c,
                                               CaseParameter.IFAP_Financial_Year__c, CaseParameter.IFAP_Financial_Month__c,
                                               templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
+
           }
+
+
+          else {
+
+            IFAP_BusinessRules.massCreateCase(lstContactId, batch.Id, 'Agent Notified (Email)', CaseParameter.Subject, CaseParameter.Description,
+                                              CaseParameter.Financial_Review_Type__c, CaseParameter.Deadline_Date__c, CaseParameter.EmailTemplate__c, CaseParameter.IFAP_Financial_Year__c,
+                                              CaseParameter.IFAP_Financial_Month__c, templateName, openCasesReportURL, IFAP_CanCreateWhileClosedCase);
+
+          }
+
 
           batch = [Select Name From BatchNumber__c Where id = : batch.Id limit 1];
           isCreateCasesIsDisabled = true;

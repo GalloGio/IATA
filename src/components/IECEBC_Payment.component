@@ -164,15 +164,15 @@
                                             <th>Contact Name</th>
                                             <td >
                                                 <apex:outputField rendered="{!!editMode}" value="{!billingAccount.Contact__r.Name}" />                                               
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" required="true" styleClass="user-input text" html-placeholder="First name" />
-                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" required="true" styleClass="user-input text" html-placeholder="Last name"/>
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.FirstName}" styleClass="user-input text" html-placeholder="First name" />
+                                                <apex:inputField rendered="{!editMode}" value="{!oPaymentBillingContact.LastName}" styleClass="user-input text" html-placeholder="Last name"/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Job Title</th>
                                             <td >
                                                 <apex:outputText rendered="{!!editMode}" value="{!billingAccount.Contact__r.Title}" />                                           
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" required="true" styleClass="user-input text" />
+                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Title}" styleClass="user-input text" />
                                                 <!-- <input type="type" class="user-input text" value="Lorem ipsum dolor"> -->
                                             </td>
                                         </tr>
@@ -181,7 +181,7 @@
                                             <th>Phone</th>
                                             <td >
                                                 <apex:outputText rendered="{!!editMode}" value="{!oPaymentBillingContact.Phone}" />
-                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}" required="true" styleClass="user-input text" />
+                                                <apex:inputText rendered="{!editMode}" value="{!oPaymentBillingContact.Phone}" styleClass="user-input text" />
                                             </td>
                                         </tr>
                                         <tr>

@@ -14,7 +14,7 @@ var dyn_functions = {
                 var sResult = '';
                 if (r == true) {
                     
-					var argList = args.split(", ");
+                    var argList = args.split(", ");
 
                     // Query the database to check if the flags for :IATACODE, Copy Data to Account and send Data to SAP ECC 
                     var resultOscarData = sforce.connection.query("SELECT Flag_Data_to_Account__c,Flag_Data_to_SAPECC__c,ID, STEP10__c,STEP8__c,Process_Start_Date__c,recordTypeID,Process__c, Account__r.Due_Diligence_Status__c, AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Link_agent_name__c , AMS_Online_Accreditation__r.Branch_Office_Country__r.Due_diligence_mandatory__c,Account__r.Location_Class__c, Account__r.Sector__c , Account__r.Company_type__C FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
@@ -182,18 +182,18 @@ var dyn_functions = {
                 }
                 sforce.connection.update(records);
            },
-		   SubmitForApproval:function (argsList) {
-		   
+           SubmitForApproval:function (argsList) {
+           
                /*
-				var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
-				
+                var result = sforce.apex.execute("AMS_SALM_ApprovalEmailGenerator", "processApprovalEmail", {argsList: argsList});
+                
                 if(result == 'true'){
-                	alert('An email has been sent for your manager approval.');
+                    alert('An email has been sent for your manager approval.');
                 }
                 else{
-                	alert('An error has occurred.')
+                    alert('An error has occurred.')
                 }
-				*/
+                */
            },
            createIFAP:function(arg1){
                 var result = sforce.apex.execute("AMS_OSCAR_Webservice","createIFAPFromOSCAR", {oscarId: arg1}); 
@@ -310,7 +310,6 @@ var dyn_functions = {
            
            },
            checkAccountHierarchy:function (arg) {
-
                 var changeTab = function(result){
                     /*if(result.success == true){
                         alert('Tab opened sucessfully');
@@ -322,29 +321,10 @@ var dyn_functions = {
                {            
                     sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
                };
+
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
            
            },
-           checkAccountHierarchyCorrection:function (arg) {
-
-                var changeTab = function(result){
-                    /*if(result.success == true){
-                        alert('Tab opened sucessfully');
-                    }*/
-                };
-
-                // Use the results primary tab id and open a new subtab
-                var openSubtab = function(result)
-                {            
-                    sforce.console.openSubtab(result.id, '/apex/AMS_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
-                };
-
-                if(confirm('Selected corrections will be applied to the choosen agencies including legal name, address if changed, would you still like to proceed ?')){
-                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
-                }
-           
-           },
-
            createSIDRALite:function (arg) {
                 var result;
                 result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});

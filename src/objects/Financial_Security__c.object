@@ -514,10 +514,6 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>GDI</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Hong Kong Trust Fund</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2447,8 +2443,7 @@ NOT( ISPICKVAL(  Security_Type__c  , &quot;TAANZ Bonding Scheme&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Time Deposit Pledge&quot;) ),
 NOT( ISPICKVAL(  Security_Type__c  , &quot;Transit Account&quot;) ),
-NOT( ISPICKVAL( Security_Type__c , &quot;Financial Guarantee&quot;) ),
-NOT( ISPICKVAL( Security_Type__c , &quot;GDI&quot;) )
+NOT( ISPICKVAL(  Security_Type__c  , &quot;Financial Guarantee&quot;) )
 )</errorConditionFormula>
         <errorDisplayField>Security_Type__c</errorDisplayField>
         <errorMessage>Invalid Security Type</errorMessage>

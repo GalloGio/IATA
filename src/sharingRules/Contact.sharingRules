@@ -50,18 +50,4 @@
             <value>0</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>Old_RTs_to_E_F</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>Granting write access to E&amp;F so clean contacts in the old record types</description>
-        <label>Old RTs to E&amp;F</label>
-        <sharedTo>
-            <role>IDFSEFServices</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IDFS ACCA Contact,GDP Contact,MACS Sales,Senior,IATA Service Provider Contact,IATA SIS Contact,IATA Standard Contact,IATA TTBS Contact,New contact for iss portal</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
 </SharingRules>

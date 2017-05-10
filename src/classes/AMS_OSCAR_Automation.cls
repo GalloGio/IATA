@@ -577,14 +577,12 @@ public with sharing class AMS_OSCAR_Automation {
             system.debug('Start AUTOMATION AMS_OSCAR_Step2_succeeded.processWork');
             Boolean res = False;
 
-            if (oscar != null && oscar.STEP15__c == 'Passed') {
+            if (oscar != null) {
 
                 oscar.Approval_disapproval_date__c = Date.today();
                 oscar.Status__c = 'On Hold_Internal';
                 res = True;
 
-            } else {
-                oscar.addError('Approval can only be set after the Validation Qualification Criteria is passed');
             }
 
             return res;

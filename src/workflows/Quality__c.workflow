@@ -202,7 +202,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approval_Rejected</template>
     </alerts>
     <alerts>
@@ -385,7 +385,7 @@
     </alerts>
     <alerts>
         <fullName>Exception_Closed</fullName>
-        <ccEmails>salesforceidfs@iata.org.testsandbox</ccEmails>
+        <ccEmails>salesforceidfs@iata.org</ccEmails>
         <description>Exception Closed</description>
         <protected>false</protected>
         <recipients>
@@ -452,7 +452,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/CPC_Feedback_Not_Received</template>
     </alerts>
     <alerts>
@@ -463,7 +463,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/CPC_Feedback_Received</template>
     </alerts>
     <alerts>
@@ -475,7 +475,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/GPO_Approval</template>
     </alerts>
     <alerts>
@@ -490,7 +490,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approval_Rejected_CQT</template>
     </alerts>
     <alerts>
@@ -505,7 +505,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approved_by_Dir_of_Dist</template>
     </alerts>
     <alerts>
@@ -520,7 +520,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/CQT_Review</template>
     </alerts>
     <alerts>
@@ -532,7 +532,7 @@
             <type>role</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/CQT_Review</template>
     </alerts>
     <alerts>
@@ -555,7 +555,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approved_by_GPO</template>
     </alerts>
     <alerts>
@@ -574,7 +574,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approved_by_RD_AD</template>
     </alerts>
     <alerts>
@@ -611,7 +611,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/RD_AD_Approval</template>
     </alerts>
     <alerts>
@@ -623,7 +623,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/RPM_Approval</template>
     </alerts>
     <alerts>
@@ -638,7 +638,7 @@
             <type>userLookup</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/Approval_Rejected</template>
     </alerts>
     <alerts>
@@ -649,7 +649,7 @@
             <type>owner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Quality/RQM_Review</template>
     </alerts>
     <alerts>

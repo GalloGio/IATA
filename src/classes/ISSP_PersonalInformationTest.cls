@@ -66,9 +66,6 @@ private class ISSP_PersonalInformationTest {
 			ctrl.getBranchOffice();
 			ctrl.saveContact(); 
 			ctrl.saveAccount(); 
-			ctrl.getIsVerifiedAccount();
-			ctrl.getIsStandardAccount();
-			ctrl.getPermissionForStandardAccount();
 		}
 	}
 	
@@ -142,7 +139,6 @@ private class ISSP_PersonalInformationTest {
     	insert newIdCard;
     	
     	system.runAs(newUser){
-			ApexPages.currentPage().getParameters().put('confirm','yes');
     		ISSP_PersonalInformation ctrl = new ISSP_PersonalInformation();
     		ISSP_PersonalInformationWithoutSharing ctrlChild = new ISSP_PersonalInformationWithoutSharing(ctrl);
 			ctrl.iataCode = '132';
@@ -157,11 +153,6 @@ private class ISSP_PersonalInformationTest {
 			ctrl.saveAccount();
 			ctrl.saveAccountBR();
 			ctrl.AssignIFAPContact(); 
-			ctrl.getIsVerifiedAccount();
-			ctrl.getIsStandardAccount();
-			ctrl.getPermissionForStandardAccount();
-			ctrl.goToEmaDomVal();
-			ctrl.getAccountDomainValidRT();
 		}
 	}
 }

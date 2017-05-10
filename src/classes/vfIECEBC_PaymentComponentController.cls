@@ -1551,40 +1551,18 @@ public class vfIECEBC_PaymentComponentController extends vfIECEBC_Controller {
         
         ErrorMessage='';
         boolean result=false;
-        system.debug('### !IsLocationValid() : ' + !IsLocationValid());
-        system.debug('### validation customer fields : ' + (
-                 (String.isBlank(oPaymentBillingContact.FirstName))
-                || (String.isBlank(oPaymentBillingContact.LastName))
-                || (String.isBlank(oPaymentBillingContact.Title))
-                || (String.isBlank(oPaymentBillingContact.Email))
-                || (String.isBlank(oPaymentBillingContact.Phone))
-                || (String.isBlank(oBillingAddress.Street__c))
-                || (String.isBlank(oBillingAddress.ISO_Country__c))));
-        
-        if (!IsLocationValid() || (
-                 (String.isBlank(oPaymentBillingContact.FirstName))
-                || (String.isBlank(oPaymentBillingContact.LastName))
-                || (String.isBlank(oPaymentBillingContact.Title))
-                || (String.isBlank(oPaymentBillingContact.Email))
-                || (String.isBlank(oPaymentBillingContact.Phone))
-                || (String.isBlank(oBillingAddress.Street__c))
-                || (String.isBlank(oBillingAddress.ISO_Country__c)))){
-            if (!IsLocationValid())
-              ErrorMessage='Some of the Billing information is missing to calculate Taxes.';
-            else
-        ErrorMessage='Please fill in all the fields on Billing details section.';                
-                
+        if (!IsLocationValid()){
+            ErrorMessage='Some of the Billing information is missing to calculate Taxes.';
         }
         else
          result=EBCSubscribe(true);
         
-        system.debug('### ErrorMessage : ' + ErrorMessage);
-        system.debug('### result : ' + result);
         //TaxAmount=getSAP_Freight_Tax();
         showTaxButtons=false;
         //return null;
         ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,ErrorMessage);
         if (!result) {showTaxButtons=true; TaxAmount=0;ApexPages.addMessage(myMsg);}
+        
         return null;
     }
     /*

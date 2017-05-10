@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_New_comment_on_case_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn;accaisis2develop@acca.com.cn.testsandbox</ccEmails>
+        <ccEmails>accabspdevelop@acca.com.cn;accaisis2develop@acca.com.cn</ccEmails>
         <description>ACCA: New comment on case (ISIS2 &amp; ISIS2D)</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -10,7 +10,7 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Customer_Service_Request_Comment</fullName>
-        <ccEmails>rdpc.support@acca.com.cn.testsandbox</ccEmails>
+        <ccEmails>rdpc.support@acca.com.cn</ccEmails>
         <description>ACCA: Notification on new Customer Service Request Comment</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -64,7 +64,7 @@
     </alerts>
     <alerts>
         <fullName>New_comment_notification_on_ACR_ISIS2_D_to_IATA_migration_team</fullName>
-        <ccEmails>isis2@iata.org.testsandbox</ccEmails>
+        <ccEmails>isis2@iata.org</ccEmails>
         <description>New comment notification on ACR ISIS2-D to IATA migration team</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -72,7 +72,7 @@
     </alerts>
     <alerts>
         <fullName>New_comment_on_case</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn.testsandbox</ccEmails>
+        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
         <description>ACCA: New comment on case</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -91,7 +91,7 @@
             <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>SIS_Help_Desk/SIS_HD_New_Case_Comment</template>
     </alerts>
     <alerts>
@@ -103,7 +103,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>SIS_Help_Desk/SIS_HD_New_Case_Comment</template>
     </alerts>
     <alerts>
@@ -218,7 +218,7 @@
     <fieldUpdates>
         <fullName>SIDRA_CS_actions_provide_feedback_com</fullName>
         <field>CS_pending_actions__c</field>
-        <literalValue>Check email received</literalValue>
+        <literalValue>Provide feedback to agent</literalValue>
         <name>SIDRA CS actions - provide feedback com</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -637,15 +637,22 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>Used in SIDRA Cases when a comment is received from E2C to trigger CS Actions</description>
-        <formula>AND(
-CreatedDate=NOW(),CreatedById=&apos;00520000000h6AU&apos;,
-Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,
-  OR
-  (ISBLANK(Parent.Update_AIMS_DEF__c),
-  DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),
-  ISPICKVAL(Parent.Status,&quot;Closed&quot;),
-  CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
+        <criteriaItems>
+            <field>CaseComment.CommentBody</field>
+            <operation>startsWith</operation>
+            <value>@CS</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SIDRA</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Region__c</field>
+            <operation>equals</operation>
+            <value>Europe,Americas</value>
+        </criteriaItems>
+        <description>Used to updated CS Pending Action when new comment starts with @CS</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

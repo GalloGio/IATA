@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>FDS_CodingAOC</fullName>
-        <ccEmails>alvarengam@iata.org.testsandbox</ccEmails>
+        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
         <recipients>
@@ -18,12 +18,12 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
     </alerts>
     <alerts>
         <fullName>FDS_CodingAOC2</fullName>
-        <ccEmails>alvarengam@iata.org.testsandbox</ccEmails>
+        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
@@ -39,12 +39,12 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
     <alerts>
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
-        <ccEmails>airlinecoding@iata.org.testsandbox</ccEmails>
+        <ccEmails>airlinecoding@iata.org</ccEmails>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
         <recipients>
@@ -72,7 +72,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
     </alerts>
     <alerts>
@@ -83,7 +83,7 @@
             <type>accountOwner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
     </alerts>
     <fieldUpdates>

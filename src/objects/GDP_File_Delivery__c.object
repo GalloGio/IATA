@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -62,7 +62,6 @@
         <label>Delivery Date Text</label>
         <length>15</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -73,7 +72,6 @@
         <externalId>false</externalId>
         <label>Delivery Date</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -87,7 +85,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>Delivery Frequency</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -100,7 +97,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>File Name</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -118,7 +114,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -132,7 +127,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -146,7 +140,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -156,7 +149,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <formula>Subscription__r.Zuora__CustomerAccount__r.Contact__r.FirstName</formula>
         <label>First Name</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -170,7 +162,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -181,7 +172,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>List of files delivered (merged in email nofification)</inlineHelpText>
         <label>List of files delivered</label>
         <length>3276</length>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>10</visibleLines>
@@ -193,7 +183,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>Message in case there is a failure to delivery</inlineHelpText>
         <label>Message</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
     </fields>
@@ -223,7 +212,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -236,7 +224,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -261,7 +248,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -274,7 +260,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <relationshipLabel>GDP File Deliveries</relationshipLabel>
         <relationshipName>GDP_File_Deliveries</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -285,7 +270,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <inlineHelpText>For email nofitication</inlineHelpText>
         <label>Technical Contact Email</label>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Email</type>
         <unique>false</unique>
@@ -298,7 +282,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <label>Technical Contact Name</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -329,7 +312,6 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
     <nameField>
         <displayFormat>FD-{000000000}</displayFormat>
         <label>GDP File Delivery Name</label>
-        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>GDP File Deliveries</pluralLabel>

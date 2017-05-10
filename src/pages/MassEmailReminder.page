@@ -23,14 +23,11 @@
         }            
       }
       
-      function validateFA(type){
+      function validateFA(){
       
-          if(type == "tracked"){
-              MassSendTrackedEmail();
-          }
-          else{
-              MassSendEmail();
-          }
+      
+      MassSendEmail();
+      
        // var faLetterSent = document.getElementById("FALetterSent").value;
       //  var fsLetterSent = document.getElementById("FSLetterSent").value;
       
@@ -58,6 +55,7 @@
       }
     
     function openLookup(baseURL, width, modified, searchParam){
+   
    
     var originalbaseURL = baseURL;
     var originalwidth = width;
@@ -134,9 +132,6 @@
     <apex:actionFunction name="MassSendEmail" action="{!MassSendEmail}"  >
       </apex:actionFunction>
 
-    <apex:actionFunction name="MassSendTrackedEmail" action="{!MassSendTrackedEmail}"  >
-      </apex:actionFunction>
-
  
  
       <table cellpadding="2" cellspacing="2">
@@ -197,13 +192,10 @@
        <!--action="{!MassCaseCreate}"  action="{!MassCaseCreateSendEmail}" -->
             <apex:pageBlockButtons >
            
-                <apex:commandButton value="Send Emails"  onclick="validateFA('standard');"   rerender="results, errors" />                
-                <apex:commandButton value="Send Tracked Emails"  onclick="validateFA('tracked');"   rerender="results, errors" rendered="{!$Permission.Can_send_a_tracked_email}"/>                
+                <apex:commandButton value="Send Emails"  onclick="validateFA();"   rerender="results, errors" />                
             </apex:pageBlockButtons> 
         
-         <apex:PageBlock>
-                <input type="hidden" id="hiddenCountry" value="{!batchCountry}" />
-     </apex:PageBlock> 
+     
         
         <apex:pageBlockTable value="{!Cases}" var="c" id="cases" >
             

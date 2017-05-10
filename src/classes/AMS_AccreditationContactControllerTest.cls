@@ -24,7 +24,7 @@ private class AMS_AccreditationContactControllerTest
         List<Account> accs = new List<Account>();
 
         Account acc1 = new Account(Name='LegalName', Location_Type__c = 'HO', Email__c = 'test@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2', Legal_Name__c = 'LegalName', RecordTypeId = accRtId);
-        Account acc2 = new Account(Name='LegalName2', Location_Type__c = 'BR', Email__c = 'test2@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '12345672', AIMS_ID__c = '12345672', Source_System__c = 'AIMS2', Phone_Number__c = '638273481', RecordTypeId = accRtId);
+        Account acc2 = new Account(Name='LegalName2', Location_Type__c = 'BR', Email__c = 'test2@test.com', Type='CASS Associate', Sector__c = 'Travel Agent', IATA_ISO_Country__c = isoc.id, IATAcode__c = '123456782', AIMS_ID__c = '123456782', Source_System__c = 'AIMS2', Phone_Number__c = '638273481', RecordTypeId = accRtId);
         accs.add(acc1);
         accs.add(acc2);
         insert accs;

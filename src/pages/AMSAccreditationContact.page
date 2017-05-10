@@ -157,9 +157,7 @@
             var rowNumber = valueString.split(':')[1];
             var elementId = valueString.split(':')[0];
             var legalName = document.getElementById("page:form:" + elementId + ':' + rowNumber + ":legalName").value;
-            var iataCode = document.getElementById("page:form:" + elementId + ':' + rowNumber + ":accountIataCode").value;
-
-            var newWindow = window.open('/apex/AMSAccreditationContactLookup?fieldId=' + valueString + '&legalName=' + legalName+ '&object=account&iataCode=' + iataCode, "lookup", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",toolbar=no,status=no,directories=no,menubar=no,resizable=no,scrollable=no", true);
+            var newWindow = window.open('/apex/AMSAccreditationContactLookup?fieldId=' + valueString + '&legalName=' + legalName+ '&object=account', "lookup", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",toolbar=no,status=no,directories=no,menubar=no,resizable=no,scrollable=no", true);
 
             // Puts focus on the newWindow
             if (window.focus) {

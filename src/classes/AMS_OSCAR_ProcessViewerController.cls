@@ -26,7 +26,6 @@ public class AMS_OSCAR_ProcessViewerController {
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
-                && !(oscar.Process__c == AMS_Utils.BANKACCCHANGES && oscar.AMS_Online_Accreditation__c == null)
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }

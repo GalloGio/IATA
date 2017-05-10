@@ -13,7 +13,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>IEC_GDP/IEC_GDP_Replicate_Error</template>
     </alerts>
     <alerts>
@@ -25,7 +25,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>IEC_GDP/IEC_Order_Confirmation</template>
     </alerts>
     <fieldUpdates>

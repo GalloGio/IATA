@@ -29,13 +29,6 @@ public class AMS_AccountHierarchySelectionController {
 		}
 	}
 
-	//FM 01-03-2017 - Add Correction Process Check
-	private Boolean isCorrection{
-		get{
-			return (oscar.Process__c == AMS_Utils.COR);
-		}
-	}
-
 
 	private Set<String> oscarFields{
 		get{
@@ -253,12 +246,7 @@ public class AMS_AccountHierarchySelectionController {
 
 	public Boolean showTopPanel{
 		get{
-			//FM 01-03-2017 - Add Correction Process validation, adding to the existing Voluntary Relinquishment condition
-			boolean bRes = true;
-			if(isVoluntaryRelinquishment || isCorrection)
-				bRes = false;
-
-			return bRes;
+			return !(isVoluntaryRelinquishment);
 		}
 		private set;
 	}

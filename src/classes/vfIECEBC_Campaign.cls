@@ -37,8 +37,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
         3 => Page.IECEBC_CampaignTemplate,
         4 => Page.IECEBC_CampaignDesign,
         5 => Page.IECEBC_CampaignSchedule,
-        6 => Page.IECEBC_CampaignConfirm,
-        7 => Page.IECEBC_CampaignPayment
+        6 => Page.IECEBC_CampaignConfirm
     };
     
     public Integer currentStepNumber {
@@ -47,7 +46,7 @@ public class vfIECEBC_Campaign extends vfIECEBC_Controller {
                 PageReference currentPage = ApexPages.currentPage();
                 currentPage.getParameters().clear();
                 
-                for(Integer i = 1; i <= 7; i++) {
+                for(Integer i = 1; i <= 6; i++) {
                     if (currentPage.getUrl().toLowerCase() == getPRByStepNumber(i, false).getUrl().toLowerCase()) currentStepNumber = i;
                 }
             }

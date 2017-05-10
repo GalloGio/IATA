@@ -2,11 +2,11 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>IEC_Error_Log_Notification</fullName>
-        <ccEmails>debonol@iata.org.testsandbox</ccEmails>
+        <ccEmails>debonol@iata.org</ccEmails>
         <description>IEC_Error_Log_Notification</description>
         <protected>false</protected>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>IEC_GDP/IEC_Error_Log_Notification</template>
     </alerts>
     <rules>

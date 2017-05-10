@@ -436,7 +436,7 @@ E&amp;F CRM Project</description>
         <fullName>EF_Client_SIS_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Account.EF_SIS_Code__c</formula>
-        <label>E&amp;F Client SIS Accounting Code</label>
+        <label>E&amp;F Client SIS Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -1488,10 +1488,6 @@ IF(ISPICKVAL(Third_Party__c, &quot;Berlitz&quot;), 0.10,
         </picklistValues>
         <picklistValues>
             <picklist>Dunning_Procedure__c</picklist>
-            <values>
-                <fullName>0005</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>EF01</fullName>
                 <default>false</default>

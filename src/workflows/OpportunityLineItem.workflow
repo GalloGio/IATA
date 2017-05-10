@@ -12,13 +12,17 @@
             <recipient>siponenp@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>webbj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>MarketingPAX/AlertDeals</template>
     </alerts>
     <alerts>
         <fullName>PAX_IS_Has_Reached_Contract_Stage_PM_Check</fullName>
-        <ccEmails>siponenp@iata.org.testsandbox</ccEmails>
+        <ccEmails>siponenp@iata.org</ccEmails>
         <description>PAX IS Has Reached Contract Stage PM Check</description>
         <protected>false</protected>
         <recipients>
@@ -26,7 +30,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>CurrentUser</senderType>
+        <senderType>OrgWideEmailAddress</senderType>
         <template>MarketingPAX/PM_Alert_Contract_Stage_PAX_IS</template>
     </alerts>
     <fieldUpdates>
