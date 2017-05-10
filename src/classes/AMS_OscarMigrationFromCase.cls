@@ -55,6 +55,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
         String oscarId = null;
         String errorMessage = null;
+        String summaryMessage = null;
 
         boolean isFromPortal = false;
 
@@ -83,6 +84,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 	        result.put('oscarId',oscarId);
 	        result.put('errorMessage',errorMessage);
+            result.put('summaryMessage', '');
 	        result.put('caseNumber',oscarName);
 
 	        return new Process.PluginResult(result); 
@@ -99,6 +101,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 	        result.put('oscarId',oscarId);
 	        result.put('errorMessage',errorMessage);
+            result.put('summaryMessage', '');
 	        result.put('caseNumber',oscarName);
 
 	        System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage);
@@ -119,7 +122,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
 		System.debug('Migration completed.');
         
-        String childCasesErrors;
+        map<String, String> childCaseCreationResult = new map<String, String>();
 
         // CB - AMS enhancements / AMSU-3
         if (processType == AMS_Utils.BANKACCCHANGES && scopeOfChange != null) {
@@ -133,18 +136,19 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
             //Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
             if (scopeOfChange == 'HO - Selected Branches' || scopeOfChange == 'Selected Branches Only'){
-                childCasesErrors = createChildCases(concernedAgencyCodes, container.c, container.oscarCreated);
+                childCaseCreationResult = createChildCases(concernedAgencyCodes, container.c, container.oscarCreated);
             }
         }
         ////
 
-		if((container.errorMessage != null && container.errorMessage != '') || (childCasesErrors != null && childCasesErrors != '')){
+		if((container.errorMessage != null && container.errorMessage != '') || (childCaseCreationResult.get('errorMessage') != null && childCaseCreationResult.get('errorMessage') != '')){
 	        
 	        result.put('oscarId',oscarId);
-	        result.put('errorMessage',container.errorMessage + ' ' + childCasesErrors);
-	        result.put('caseNumber',oscarName);
+	        result.put('errorMessage',container.errorMessage + ' ' + childCaseCreationResult.get('errorMessage'));
+            result.put('summaryMessage', '');
+	        result.put('caseNumber', oscarName);
 
-	        System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage + ' ' + childCasesErrors);
+	        System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage + ' ' + childCaseCreationResult.get('errorMessage') + '; Summary: ' + childCaseCreationResult.get('summaryMessage'));
 
 	        return new Process.PluginResult(result); 
 
@@ -155,6 +159,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
         result.put('oscarId',oscarId);
         result.put('errorMessage',errorMessage);
+        result.put('summaryMessage', childCaseCreationResult.get('summaryMessage'));
         result.put('caseNumber',oscarName);
 
         System.debug('Finishing with oscarId ' + oscarId + ' and error message:' + errorMessage);
@@ -183,16 +188,21 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
     }
 
     // Used for processType == AMS_Utils.BANKACCCHANGES
-    private String createChildCases(String concernedAgencyCodes, Case parentCase, AMS_OSCAR__c hoOscar) {
+    private map<String, String> createChildCases(String concernedAgencyCodes, Case parentCase, AMS_OSCAR__c hoOscar) {
+
+        String summaryPos = 'Cases and OSCARs have been created for the following agencies: ';
+        Boolean hasSuccesses = false;
+        String summaryNeg = 'The agencies with the following IATA Codes could not be found: ';
+        Boolean hasErrors = false;
         
-        if(parentCase == null) return 'Invalid parent case: null';
-        if(hoOscar == null) return 'Invalid HO Oscar: null';
+        if(parentCase == null) return new map<String,String>{'errorMessage' => 'Invalid parent case: null'};
+        if(hoOscar == null) return new map<String,String>{'errorMessage' => 'Invalid HO Oscar: null'};
 
         List<String> agencySelectedBranches = concernedAgencyCodes.split(',');
 
         // determine the HO account
         Case tmpCase = [SELECT Id, AccountId, Account.Top_Parent__c FROM Case WHERE Id = :parentCase.Id];
-        if (tmpCase.AccountId == null) return 'Could not determine the top parent account. There is no account on the case.';
+        if (tmpCase.AccountId == null) return new map<String,String>{'errorMessage' => 'Could not determine the top parent account. There is no account on the case.'};
 
         Id TopParentId = tmpCase.Account.Top_Parent__c != null ? tmpCase.Account.Top_Parent__c : tmpCase.AccountId;
 
@@ -205,7 +215,7 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
             agencies.put(branch.IATACode__c, branch);
         }
 
-        if(agencies.isEmpty()) return 'Could not find any branches for the selected account.';
+        if(agencies.isEmpty()) return new map<String,String>{'errorMessage' => 'Could not find any branches for the selected account.'};
 
         Id auxId = null;
         map<Id, Case> mapChildCasesPerAccountConcernedId = new map<Id, Case>();
@@ -236,7 +246,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
                 childOscar.Account__c = accConcerned.Id;
 
                 mapOscarsPerAccountConcernedId.put(accConcerned.Id, childOscar);
-            }            
+
+                summaryPos += (hasSuccesses? ', ' : '') + iataCode.trim();
+                hasSuccesses = true;
+            } else if(accConcerned == null) {
+                summaryNeg += (hasErrors? ', ' : '') + iataCode.trim();
+                hasErrors = true;
+            }
         }
         
         if(!mapChildCasesPerAccountConcernedId.isEmpty()) {
@@ -257,7 +273,13 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
 
         }
 
-        return '';
+        String strSummary = (hasSuccesses ? summaryPos + '.\n' : '') + (hasErrors ? summaryNeg + '.' : '');
+        if (hasSuccesses) {
+            return new map<String,String>{'errorMessage' => '', 'summaryMessage' => strSummary};
+        } else {
+            return new map<String,String>{'errorMessage' => strSummary, 'summaryMessage' => ''};
+        }
+        
     }
 
     // Returns the describe information for the interface
@@ -281,6 +303,8 @@ global class AMS_OscarMigrationFromCase  implements Process.Plugin{
              new Process.PluginDescribeResult.OutputParameter('oscarId', 
                Process.PluginDescribeResult.ParameterType.STRING),
              new Process.PluginDescribeResult.OutputParameter('errorMessage', 
+               Process.PluginDescribeResult.ParameterType.STRING),
+             new Process.PluginDescribeResult.OutputParameter('summaryMessage', 
                Process.PluginDescribeResult.ParameterType.STRING),
 			new Process.PluginDescribeResult.OutputParameter('caseNumber', 
                Process.PluginDescribeResult.ParameterType.STRING)
