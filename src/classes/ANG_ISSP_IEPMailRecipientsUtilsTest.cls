@@ -9,7 +9,7 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
 				App_Picture_Url__c = '',
 				Connected_App_Description__c = '',
 				Connected_App_Provisioning_Name__c = 'IATA EasyPay (EDENRED)', 
-				Connected_App__c = '',
+				Connected_App__c = 'IATA EasyPay (EDENRED)',
 				Default_User_Role__c = true,
 				Description__c = '',
 				IsCommunity__c = true,
