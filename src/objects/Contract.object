@@ -436,7 +436,7 @@ E&amp;F CRM Project</description>
         <fullName>EF_Client_SIS_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Account.EF_SIS_Code__c</formula>
-        <label>E&amp;F Client SIS Code</label>
+        <label>E&amp;F Client SIS Accounting Code</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
