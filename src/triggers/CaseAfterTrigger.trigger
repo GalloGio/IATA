@@ -551,6 +551,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     }
   }
   /*trgCaseEscalationMailNotificationICH Trigger*/
+
+	/*Risk Event Management*/
+	if(Trigger.isInsert || Trigger.isUpdate){
+		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+	}
+	/*Risk Event Management*/
   
   /*Share trigger code*/
   
