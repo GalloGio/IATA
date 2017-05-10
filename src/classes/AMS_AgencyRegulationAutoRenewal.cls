@@ -169,7 +169,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
 
-					//sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+
+					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
 				}
 
 			}
@@ -184,12 +186,18 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 				Integer activeDGRInAccount = allNonExpiredCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
 				Integer dgrToRenewInAccount = certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c).size();
-				Integer numberOfRemainingDGRInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
+				Integer numberOfRemainingTSAInAccountToExpire = activeDGRInAccount-dgrToRenewInAccount;
 
-				system.debug('creating renewal for DGR ' + numberOfRemainingDGRInAccountToExpire);
-				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfRemainingDGRInAccountToExpire, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
 
-					system.debug('creating renewal for DGR');
+				if(renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) == -1){
+					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, numberOfRemainingTSAInAccountToExpire);
+				}
+
+				Integer numberOfActiveTSA = renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c);
+
+				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveTSA, minDgrHO, minDgrBR,agReg.Type_Of_Certificate__c)){
+
+					system.debug('creating renewal for TSA');
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
 
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0]);
