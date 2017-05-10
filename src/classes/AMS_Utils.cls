@@ -2236,12 +2236,12 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         if(types.size() > 1)
             rates.put(types.get(1).IsoCode, types.get(1).ConversionRate);
 
-        if(firstValue * rates.get(firstCurrencyISOCode) < secondvalue * rates.get(secondCurrencyISOCode)){
+        if(firstValue / rates.get(firstCurrencyISOCode) < secondvalue / rates.get(secondCurrencyISOCode)){
             System.debug('Returning 1');
             return 1;
         }
 
-        if(firstValue * rates.get(firstCurrencyISOCode) > secondvalue * rates.get(secondCurrencyISOCode)){
+        if(firstValue / rates.get(firstCurrencyISOCode) > secondvalue / rates.get(secondCurrencyISOCode)){
             System.debug('Returning 2');
             return 2;
         }
