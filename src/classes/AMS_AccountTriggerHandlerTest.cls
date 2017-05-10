@@ -275,5 +275,73 @@ private class AMS_AccountTriggerHandlerTest {
 
 		System.assertEquals('Passed', [SELECT Id, STEP17__c FROM AMS_OSCAR__c LIMIT 1].STEP17__c);
 	}
+
+	static testMethod void test_ICC_01() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name = 'Portugal',
+			ISO_Code__c = 'PT',
+			AIMS_Area_Name__c = 'Lisboa',
+			OSCAR_enabled__c = true,
+			CNS_Country__c = true
+		);
+
+		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(
+			Name = 'Spain',
+			ISO_Code__c = 'SP',
+			AIMS_Area_Name__c = 'Madrid',
+			OSCAR_enabled__c = true
+		);
+
+		insert country;
+		insert country2;
+
+		Account account = new Account(
+			Name = 'Test Account',
+			Type = 'IATA Cargo Agent',
+			Cass_Number__c = '000',
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			IATA_ISO_Country__c = country.Id,
+			IATACode__c = '001',
+			Accreditation_date__c = System.today(),
+			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId,
+			phone = '00351218145439'
+		);
+
+		Account account2 = new Account(
+			Name = 'Test Account',
+			Type = 'IATA Cargo Agent',
+			Cass_Number__c = null,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			Location_Type__c = 'HO',
+			IATA_ISO_Country__c = country.Id,
+			IATACode__c = '001',
+			Accreditation_date__c = System.today(),
+			RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Agency').RecordTypeId,
+			phone = '00351218145439'
+		);
+
+		insert account;
+		insert account2;
+
+		Agency_Applied_Change_code__c aacc = new Agency_Applied_Change_code__c(
+			Reason_Code__c = '',
+			Reason_Description__c = '',
+			Account__c = account.id,
+			Active__c = true
+		);
+
+		insert aacc;
+
+		account.Cass_Number__c = '999';
+		account.IATA_ISO_Country__c = country2.Id;
+
+		update account;
+
+		account.phone = '00351218145439';
+
+		update account;
+
+		Boolean bool = AMS_AccountTriggerHandler.verifyFieldChanges(account, account2);
+	}
 	
 }

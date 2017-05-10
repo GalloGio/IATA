@@ -45,58 +45,14 @@ global class WSSidraLite {
         ** Legacy code, will be removed **
     **/
     webservice static Case createCase(Id caseId){
-        Case cse = [
-            Select Id, RecordtypeId, Decision__c, Suspension_Date__c, Region__c, BSPCountry__c, AccountId, Bank_Guarantee_deadline__c, Reason1__c, ContactId,
-                Account.Id, Account.Type, Account.Accumulated_Irregularities__c, Account.Status__c, Account_Billing_Country__c, Comments__c,
-                OSCAR__r.Id, OSCAR__r.RPM_Approval__c, OSCAR__r.Step6__c, OSCAR__r.Step9__c, OSCAR__r.Step11__c, OSCAR__r.Step12__c, OSCAR__r.Step13__c, OSCAR__r.Step14__c,
-                (Select Id, CaseNumber, SIDRA_Lite_Reason__c from Cases where RecordtypeId = :SidraLiteManager.RECORDTYPE_SIDRA_LITE )
-            from Case
-            where id = :caseId];
-
-        if (cse.RecordtypeId == SidraLiteManager.RECORDTYPE_SMAP) {
-            return SidraLiteHelperForSMAP.createCase(cse);
-        }
-        if (cse.RecordtypeId == SidraLiteManager.RECORDTYPE_OSCAR) {
-            return SidraLiteHelperForOSCAR.createCase(cse);
-        }
-        throw new SidraLiteException('This case recordtype is not allowed');
+        return sidraLiteAction(caseId);
     }
-
     /**
         Check Sidra lite bussines Rules and returns a case with default values to set in the layout
         ** Legacy code, will be removed **
     **/
     webservice static Case checkBussinesRules(Id caseId){
-        try {
-            Case parentCase = queryCase(caseId);
-
-            if ( parentCase.account.Status__c == 'Terminated' ) {
-                throw new SidraLiteException('Account is Terminated, you cannot proceed with a Non-Compliance action');
-            }
-
-            // check default bussiness rules, for insert and update
-            SidraLiteManager.checkBussinessRules(parentCase);
-
-            // search for another SIDRA lite case related to current case
-            Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
-            // if another SidraLite case exists then we return this case
-            if( foundChildCase != null) {
-                // check bussines rules for update only
-                updateSidraLiteAndParent(parentCase, foundChildCase);
-                throwPopUpMessage(parentCase);
-                return null;
-            }
-            // if there is no case then we return a dummy case to prepopulate the new case layout
-            else {
-                // check bussines rules for insert only
-                SidraLiteManager.checkInsertBussinessRules(parentCase);
-                return createDummyCaseFirstNonCompliance(parentCase);
-            }
-        }catch (ShowConfirmationException e) {
-            throw e;
-        }catch (Exception e) {
-            throw new SidraLiteException(e.getMessage());
-        }
+        return sidraLiteAction(caseId);
     }
 
     /**
@@ -142,8 +98,16 @@ global class WSSidraLite {
             // repeat process for update, but this time do the update
             Case parentCase = queryCase(caseId);
             Case foundChildCase = SidraLiteManager.getRelatedCase(parentCase);
+            Case oldFoundChildCase = foundChildCase.clone();
             list<Case> listUpdate = updateSidraLiteAndParent(parentCase, foundChildCase);
-            update listUpdate;
+            // special case, If Reason for default has some special values then ONLY UPDATE Parent
+            // and put casecomments to in both parent and child to explain the situation
+            if (SidraLiteUtil.SidraLiteCaseMustNotBeUpdated(oldFoundChildCase)) {
+                update parentCase;
+                insertCommentsWhenNotUpdate(parentCase, foundChildCase);
+            } else {
+                update listUpdate;
+            }
             insertComments(listUpdate);
 
         } catch (Exception e) {
@@ -305,6 +269,27 @@ global class WSSidraLite {
             }
         }
         return listNewComments;
+    }
+
+    /**
+        Insert Comments when the sidra lite case is not updated
+    **/
+    public static void insertCommentsWhenNotUpdate(Case parentCase, Case childCase) {
+        try {
+            childCase = [Select Id, CaseNumber, Reason_for_Default__c from Case where Id = :childCase.Id ];
+            list<CaseComment> listComments = new list<CaseComment>();
+            listComments.add(new CaseComment(
+                ParentId = parentCase.Id,
+                CommentBody = 'Automated message: the actions were not triggered in SIDRA Lite case (' + childCase.caseNumber + ') because it’s being handled as Technical Default. No further action at this point.'
+            ));
+            listComments.add(new CaseComment(
+                ParentId = childCase.Id,
+                CommentBody = 'Automated message: The action was not triggered in this case since it’s being handled as a Technical Default case.'
+            ));
+            insert listComments;
+        }catch (Exception e) {
+            throw new SidraLiteException(e.getMessage());
+        }
     }
 
     /**
