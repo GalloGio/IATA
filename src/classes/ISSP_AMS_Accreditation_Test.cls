@@ -4484,7 +4484,7 @@ private class ISSP_AMS_Accreditation_Test
     }
 
     
-
+/*
     @isTest
     static void ISSP_AMS_Accreditation_Test_ICC_14() {
         Account childAccount;
@@ -4856,7 +4856,7 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();        
     }
     
-    
+    */
 
     private static Account icc_testAccount(IATA_ISO_Country__c country) {
 
@@ -4942,7 +4942,7 @@ private class ISSP_AMS_Accreditation_Test
         return newUser;
     }
 
-    
+    /*
     @isTest
     static void ISSP_AMS_Accreditation_Test_ICC_17() {
         Account childAccount;
@@ -7058,7 +7058,7 @@ private class ISSP_AMS_Accreditation_Test
         Test.stopTest();        
     }
 
-
+        */
 
 
 
