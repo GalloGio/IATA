@@ -4,11 +4,7 @@
     <tab>standard-Chatter</tab>
     <tab>standard-Account</tab>
     <tab>standard-Contact</tab>
+    <tab>LocalGovernance__c</tab>
     <tab>standard-report</tab>
     <tab>standard-Dashboard</tab>
-    <tab>standard-Document</tab>
-    <tab>Business_Unit__c</tab>
-    <tab>Licenses__c</tab>
-    <tab>CSS_Tracking__c</tab>
-    <tab>Operational_Improvements__c</tab>
 </CustomApplication>

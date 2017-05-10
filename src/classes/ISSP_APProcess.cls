@@ -845,10 +845,10 @@ public without sharing class ISSP_APProcess {
         options.add(new SelectOption('', '--None--'));
          if(strAreaType=='Airline Joining') {
             for(AP_Country_Requierment__c iso : isoListJoining){
-                    if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){
+            //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
                       sISOCode.add(iso.Country__r.ISO_Code__c);
                         options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-                    }
+            //        }
             }
             } else {
               for(Services_Rendered__c iso : isoListChange){
