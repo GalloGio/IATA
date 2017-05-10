@@ -141,7 +141,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>0012000000Imcmb</value>
+            <value>60698691</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -244,6 +244,24 @@
             <value>AMS 2 MDM - Sales Order</value>
         </filters>
         <label>AMS - Sales Order</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>DEFAULT_DATE_SCRIPT</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Operation__c</field>
+            <operation>contains</operation>
+            <value>DEFAULT DATE SCRIPT</value>
+        </filters>
+        <label>DEFAULT DATE SCRIPT</label>
         <language>en_US</language>
     </listViews>
     <nameField>

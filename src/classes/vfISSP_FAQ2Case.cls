@@ -66,6 +66,7 @@ public without sharing class vfISSP_FAQ2Case
 
     //Sector field of the Account
     public string Sector {get; set;}
+    public string AccountISOCountry {get; set;}
     public String labelSubTopic = '';
     public  boolean isComplain1 = false;
     public  boolean isCompliment1 = false;
@@ -132,7 +133,7 @@ public without sharing class vfISSP_FAQ2Case
         User user   = DAL_ISSP.getUser(Userinfo.getUserId());
         Contact con = DAL_ISSP.getContact(user.ContactId);
         Sector      = con.Account.Sector__c != null ? con.Account.Sector__c : '';
-
+        AccountISOCountry = con.Account.IATA_ISO_Country__r.ISO_Code__c != null ? con.Account.IATA_ISO_Country__r.ISO_Code__c : '';
 
         myTopic = ApexPages.currentPage().getParameters().get('topic');
         this.currentButtonsToShow = OnlyCancel;
@@ -671,9 +672,11 @@ public without sharing class vfISSP_FAQ2Case
 
         Boolean isCNS = ISSP_Utilities.isCNS();
         if(isCNS ) {
-            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1].ISO_Code__c;
-            this.newCase.IFAP_Country_ISO__c = usaId ;
-            this.newCase1.IFAP_Country_ISO__c = usaId ;
+            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            if(!lsIsoCountries.isEmpty()) {
+                this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+            }
         }
         
         return null;
@@ -755,9 +758,11 @@ public without sharing class vfISSP_FAQ2Case
         system.debug('JK this.currentButtonsToShow: ' + this.currentButtonsToShow);
 
         if(selectDataCategory.CategoryName.startsWith('CNS')) {
-            String USAid = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States'].ISO_Code__c;
-            this.newCase.IFAP_Country_ISO__c = usaId ;
-            this.newCase1.IFAP_Country_ISO__c = usaId ;
+            List<IATA_ISO_Country__c> lsIsoCountries = [SELECT Id, ISO_Code__c, Name FROM IATA_ISO_Country__c WHERE Name = 'United States' LIMIT 1];
+            if(!lsIsoCountries.isEmpty()) {
+                this.newCase.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+                this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
+            }
         }
     }
     /*
@@ -1336,6 +1341,7 @@ public without sharing class vfISSP_FAQ2Case
         return returnSetting_Lst;
     }
 
+    @TestVisible
     private boolean CheckCountryMatch(string inCountryCS , string inIFAPCountryISO){
         system.debug('KER0 START CheckCountryMatch ' );
         if(inCountryCS != null &&
@@ -1508,6 +1514,7 @@ public without sharing class vfISSP_FAQ2Case
 
     //Input : RecordTypeName
     //Output : record Type ID
+    @TestVisible
     private Id getCaseRecordTypeIdByName(String inRecordTypeName){
         SObjectType ObjType;
         map<String, Schema.RecordTypeInfo> TypeInfoMap;
@@ -1613,7 +1620,7 @@ public without sharing class vfISSP_FAQ2Case
         list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
 
         //Select Custom Setting to set permissions
-        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c
+        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c, ISO_Country__c
                                                             FROM ISSP_FAQ2Case_Permissions__c
                                                             Where Subtopic__c =: null
                                                             AND Topic__c != null
@@ -1643,9 +1650,12 @@ public without sharing class vfISSP_FAQ2Case
                     //Check if the topic has matched Custom setting record
                     if (per.topic__c != null && per.topic__c.contains(TopicinEnglish))
                     {
-                        if ((per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS'))||
+                    if ( per.Sector_Permission__c != null
+                        && ( (per.Sector_Permission__c.contains(Sector) && !isCNS && !per.Sector_Permission__c.startsWith('CNS')) ||
                             per.Sector_Permission__c.contains('All') ||
-                            (isCNS && per.Sector_Permission__c.startsWith('CNS')))
+                            (isCNS && per.Sector_Permission__c.startsWith('CNS')) )
+                        && per.ISO_Country__c != null
+                        && (per.ISO_Country__c.contains(AccountISOCountry) || per.ISO_Country__c.contains('All')) )
                         {
                             FoundExcludePermission = true ;
                         }
@@ -1677,7 +1687,7 @@ public without sharing class vfISSP_FAQ2Case
         list<SelectOption> tmpselectSubTopicsList = new list<SelectOption>();
 
         //Select Custom Setting to set permissions
-        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c
+        List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c, ISO_Country__c
                                                               FROM ISSP_FAQ2Case_Permissions__c
                                                               Where Subtopic__c != null];
         system.debug('SFI2 PermissionList: ' + PermissionList);
@@ -1690,13 +1700,13 @@ public without sharing class vfISSP_FAQ2Case
                 for (ISSP_FAQ2Case_Permissions__c  per : PermissionList)
                 {
                     //Check if the topic has matched Custom setting record
-                    if (per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal) &&
-                        (selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == ''))
+                    if ( per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector)
+                        && per.Subtopic__c != null && per.Subtopic__c.contains(subtopicVal)
+                        && (selectDataCategory.CategoryName == per.topic__c || per.topic__c == null || per.topic__c == '')
+                        && per.ISO_Country__c != null
+                        && (per.ISO_Country__c.contains(AccountISOCountry) || per.ISO_Country__c.contains('All')) )
                     {
-                        if (per.Sector_Permission__c != null && per.Sector_Permission__c.contains(Sector))
-                        {
-                            FoundExcludePermission = true ;
-                        }
+                        FoundExcludePermission = true ;
                     }
                 }
                 //If subtopic has permission add it to the display List

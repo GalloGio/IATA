@@ -9001,7 +9001,9 @@ IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&
 &amp;&quot; &quot;&amp; 
 IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -9584,9 +9586,9 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <description>Shows an image to represent a valid or invalid domain for current contact email, used for ISSP portal</description>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL(ValidContactDomainName__c, &quot;valid&quot;),
-  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 23, 152),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 16, 106),
 IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
-  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 23, 211),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 16, 147),
   &quot;&quot; )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

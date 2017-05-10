@@ -220,9 +220,10 @@ public class ISSP_PortalService_Test {
         ctrl3.getContacts();
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
-        ctrl3.CreateNewPortalAccess();
+        //ctrl3.CreateNewPortalAccess();
 	}
 	
+    /*
 	public static testMethod void unitTest5() {
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
@@ -353,6 +354,7 @@ public class ISSP_PortalService_Test {
 	    appReq.Right__c = 'Access Rejected';
 	    controller.saveUpdate();
 	}
+    */
 
 	public static void createTestData(){
 		

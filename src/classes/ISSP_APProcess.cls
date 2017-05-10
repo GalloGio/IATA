@@ -823,7 +823,7 @@ public without sharing class ISSP_APProcess {
             if(!isGSSAUser) {
               if(strLOB=='CASS' || dupLoB == 'CASS') {
                isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='CASS Participation' AND Services_Rendered_Status__c='Active'
+                            WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c LIKE '%CASS%' AND Services_Rendered_Status__c='Active'
                              ORDER BY ISO_Country_formula__c];   
             } else {
                isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
@@ -845,10 +845,10 @@ public without sharing class ISSP_APProcess {
         options.add(new SelectOption('', '--None--'));
          if(strAreaType=='Airline Joining') {
             for(AP_Country_Requierment__c iso : isoListJoining){
-                    if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){
+            //        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
                       sISOCode.add(iso.Country__r.ISO_Code__c);
                         options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-                    }
+            //        }
             }
             } else {
               for(Services_Rendered__c iso : isoListChange){
