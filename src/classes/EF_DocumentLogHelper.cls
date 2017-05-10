@@ -16,6 +16,7 @@ public with sharing class EF_DocumentLogHelper
     public static AmazonFile__c createAmazonFileRecord(String fileName, String amazonKey, Long filesize, String parentId, String recordType, EF_Document_Log__c dl)
     {
     	AmazonFile__c amazonFile;
+		if(fileName.length()>80) fileName = fileName.substring(0,80);
         try {
               amazonFile = new AmazonFile__c(
                 Name = fileName,
