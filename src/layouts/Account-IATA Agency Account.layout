@@ -91,6 +91,10 @@
                 <behavior>Readonly</behavior>
                 <field>Invoicing_and_Collection__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_CashCondition__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
