@@ -7335,6 +7335,18 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Detailed_Hierarchy_View__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(
+&quot;javascript:if(typeof(srcUp)==&apos;function&apos;){srcUp(&apos;/apex/AccountHierarchy?id=&quot; &amp; Id &amp; &quot;&amp;console=1&apos;);} else {window.location.href=&apos;/apex/AccountHierarchy?id=&quot; &amp; Id &amp; &quot;&apos;}&quot;, &quot;[View Hierarchy]&quot;,&quot;_self&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Detailed Hierarchy View</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Document_Std_Instruction__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Latest year expected.</inlineHelpText>

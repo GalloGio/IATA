@@ -67,6 +67,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Detailed_Hierarchy_View__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Quality__c</field>
             </layoutItems>
             <layoutItems>

@@ -4,6 +4,7 @@ public with sharing class AccountHierarchyController {
     public Id topParentAccountId {get; set;}
     public Boolean isExcludeTerminated {get; set;}
     public String searchString {get; set;}
+    public Boolean displayHeaderSidebar {get; set;}
 
     private list<Account> lstAccountsInHierarchy;
     private map<Id,Integer> mapHierarchyLevelPerAccountId;
@@ -39,6 +40,8 @@ public with sharing class AccountHierarchyController {
         if (!Test.isRunningTest()) stdController.addFields(new list<String>{'Name', 'Top_Parent__c'});
 
         this.currentAccount = (Account)stdController.getRecord();
+
+        displayHeaderSidebar = ApexPages.currentPage().getParameters().get('console') == '1' ? false : true;
 
         topParentAccountId = currentAccount.Top_Parent__c == null ? currentAccount.Id : currentAccount.Top_Parent__c;
 

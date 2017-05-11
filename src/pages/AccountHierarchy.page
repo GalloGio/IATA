@@ -1,4 +1,4 @@
-<apex:page standardcontroller="Account" extensions="AccountHierarchyController" showHeader="true" sidebar="true">
+<apex:page standardcontroller="Account" extensions="AccountHierarchyController" showHeader="{!displayHeaderSidebar}" sidebar="{!displayHeaderSidebar}">
 	<head>
 	<script type="text/javascript">
 		function handleSearchChange(){
