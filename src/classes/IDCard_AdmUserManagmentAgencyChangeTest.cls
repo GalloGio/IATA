@@ -211,7 +211,7 @@ public class IDCard_AdmUserManagmentAgencyChangeTest {
         system.assertEquals(a.IATACode__c, apps[0].IATA_Code__c);
         system.assertEquals(externalc.Salutation, apps[0].Title__c);
         system.assertEquals(externalc.Date_of_birth__c, apps[0].Date_of_birth__c);
-        system.assertEquals(externalc.Email, apps[0].Email_admin__c);
+        system.assertEquals('mr@idcardtest.com', apps[0].Email_admin__c);
         
         ctrl.complete();
         //ctrl.getImageLink();
