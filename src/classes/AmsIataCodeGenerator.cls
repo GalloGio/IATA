@@ -546,7 +546,7 @@ global class AmsIataCodeGenerator{
     Compare 2 codes. 
     @Return return the numeric value of code1 - code 2
     */
-    private static integer compare2Codes(String code1, String code2){
+    @TestVisible private static integer compare2Codes(String code1, String code2){
         String c1 = code1.replaceAll('[^0-9]', '');
         String c2 = code2.replaceAll('[^0-9]', '');
         return integer.valueof(c1)-integer.valueof(c2);
