@@ -103,8 +103,6 @@
         <inlineHelpText>EBC ExactTarget Username</inlineHelpText>
         <label>EBC ExactTarget Username</label>
         <length>100</length>
-        <label>EBC Send From Email</label>
-        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
