@@ -246,6 +246,24 @@
         <label>AMS - Sales Order</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>DEFAULT_DATE_SCRIPT</fullName>
+        <columns>NAME</columns>
+        <columns>Log__c</columns>
+        <columns>Operation__c</columns>
+        <columns>Record__c</columns>
+        <columns>Status__c</columns>
+        <columns>start_date__c</columns>
+        <columns>End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Operation__c</field>
+            <operation>contains</operation>
+            <value>DEFAULT DATE SCRIPT</value>
+        </filters>
+        <label>DEFAULT DATE SCRIPT</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>TL-{000000}</displayFormat>
         <label>Technical Logs Name</label>
