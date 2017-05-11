@@ -858,6 +858,13 @@
         <value>BCC</value>
     </labels>
     <labels>
+        <fullName>BR_Trade_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Trade Name</shortDescription>
+        <value>Branch Trade Name</value>
+    </labels>
+    <labels>
         <fullName>BSPLink_Description</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -1233,7 +1240,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -6568,18 +6575,18 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>SECTION 3 - Agency Contacts</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION3 New</shortDescription>
-        <value>SECTION 3 - Company Contacts</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1</shortDescription>
         <value>3.1 PEOPLE</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION3 New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION4</fullName>
@@ -7136,13 +7143,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>SECTION 3 - Agency Contacts</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</shortDescription>
-        <value>SECTION 3 - Company Contacts</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_1</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7197,6 +7197,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</shortDescription>
         <value>Select at least one Authorised Signatory and one CASS Contact.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4</fullName>
@@ -8418,14 +8425,6 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>2. Agency Location</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS LeftNav_Section2 New</shortDescription>
-        <value>2. Company Location</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2_Cargo_Agency</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8445,6 +8444,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section2_Cargo_Intermediary</shortDescription>
         <value>2. Intermediary Identification</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav_Section2 New</shortDescription>
+        <value>2. Company Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section3</fullName>
@@ -10396,20 +10403,20 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
-        <value>Welcome to the online CNS Agency Endorsement application.</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_New</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred New</shortDescription>
         <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
+        <value>Welcome to the online CNS Agency Endorsement application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_New</fullName>

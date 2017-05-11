@@ -949,6 +949,19 @@ or any kind of 3rd party for taxation issues?</inlineHelpText>
         <label>AP Country Requirements for BSP</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>AP_Country_Requirements_for_CASS</fullName>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Line_of_business__c</field>
+            <operation>equals</operation>
+            <value>CASS</value>
+        </filters>
+        <label>AP Country Requirements for CASS</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>AP Country  Requierment Name</label>
         <trackHistory>false</trackHistory>
