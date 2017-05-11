@@ -5,11 +5,15 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Every three days</fullName>
+        <fullName>Fortnightly</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Every five days</fullName>
+        <fullName>Every 10 days</fullName>
+        <default>false</default>
+    </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>4 times per month</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
@@ -17,15 +21,15 @@
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Four times per month</fullName>
+        <fullName>Every 3 days</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Every ten days</fullName>
+        <fullName>Every 5 days</fullName>
         <default>false</default>
     </globalPicklistValues>
     <globalPicklistValues>
-        <fullName>Fortnightly</fullName>
+        <fullName>Daily</fullName>
         <default>false</default>
     </globalPicklistValues>
     <masterLabel>Remittance Frequency</masterLabel>
