@@ -275,7 +275,7 @@ public class ISSP_AvailableServices_Test {
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
             
-            System.assertEquals(serviceList.size(), 3);
+            System.assertEquals(serviceList.size(), 7);
 
             Integer n = 0;
             for (ISSP_AvailableServices.ServiceWrapper line : serviceList) {
@@ -340,7 +340,7 @@ public class ISSP_AvailableServices_Test {
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
 
-            System.assertEquals(serviceList.size(), 3);
+            System.assertEquals(serviceList.size(), 6);
 
             Integer n = 0;
             for (ISSP_AvailableServices.ServiceWrapper line : serviceList) {
@@ -402,10 +402,10 @@ public class ISSP_AvailableServices_Test {
             cttr.setSortDirection('DESC');
             system.assertEquals('DESC', cttr.getSortDirection());
             cttr.sortExpression = 'ASC';
+            system.debug('aqui serviceList ' + serviceList);
+            System.assertEquals(serviceList.size(), 6);
 
-            System.assertEquals(serviceList.size(), 2);
-
-            System.assertEquals(serviceList.get(0).recordService.name, 'serviceTest');
+            System.assertEquals(serviceList.get(0).recordService.name, 'IATA EasyPay (EDENRED)');
 
         }        
     }
@@ -524,22 +524,27 @@ public class ISSP_AvailableServices_Test {
         Contact con = ISSP_ObjectFactory.createNewContact();
         insert con;
 
-        Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace'); 
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace',
+                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false,
+                Agency__c = true); 
         insert app;
 
         Portal_Applications__c easyPay1 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+                ANG_Accredited_Agents_Only__c = false                
             );
+        
 
         Portal_Applications__c easyPay2 = new Portal_Applications__c (
                 Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
-                ANG_Accredited_Agents_Only__c = false
+                //ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
+                ANG_Accredited_Agents_Only__c = false                
             );
 
-        insert new List<Portal_Applications__c>{easyPay1, easyPay2, app};
+
+        insert new List<Portal_Applications__c>{easyPay1, easyPay2};
         
         ISSP_AvailableServices cttr = new ISSP_AvailableServices();
 
