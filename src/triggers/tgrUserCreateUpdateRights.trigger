@@ -1,5 +1,7 @@
 trigger tgrUserCreateUpdateRights on User (before insert,before update) {
     
+    if(ANG_UserTriggerHandler.doNotRun) return;
+
     for(User user : trigger.new ){
         user.Contact_Unique_Id__c  =  user.ContactId;
     }
