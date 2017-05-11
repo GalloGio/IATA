@@ -48,7 +48,10 @@ public class ANG_PortalApplicationRightHandler {
 	private void checkMinimumUsersAllowedUpdate() {
 		Set<Id> parSet = new Set<Id>();
 		for(Portal_Application_Right__c access : triggerNew) {
-			if(access.Right__c == 'Access Denied') {
+			//
+			// Only take in consideration IEP services
+			//			
+			if(access.Right__c == 'Access Denied' && access.Application_Name__c.startsWith('IATA EasyPay')) {
 				parSet.add(access.id);	
 			}						
 		}
