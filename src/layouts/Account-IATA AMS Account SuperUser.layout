@@ -657,6 +657,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Exchange_Rate__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Year__c</fields>
+        <fields>Vouchers_Issued_Last_Year__c</fields>
+        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>AMS_Agency_Operations__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
