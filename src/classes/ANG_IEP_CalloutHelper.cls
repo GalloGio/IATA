@@ -1,25 +1,29 @@
 public  with sharing class ANG_IEP_CalloutHelper {
 	
-	public static final Integer STATUSOK = 200;
+	public static final Integer STATUSOKLOWER  = 199;
+	public static final Integer STATUSOKHIGHER = 300;
 
-	public static void invokeCustomImpl(String changeCode, Object obj) {
+    @InvocableMethod(label='Create a payload to be sent to mulesoft' description='Create a payload to be sent to mulesoft')
+    public static void invokeCustomImpl(List<Agency_Applied_Change_code__c> objList) {
 
 		List<ANG_CalloutMapping__c> calloutMappingList = ANG_CalloutMapping__c.getall().values();
 
-		List<ANG_CalloutMapping__c> changeCodeList = new List<ANG_CalloutMapping__c>();
+		Map<String,ANG_CalloutMapping__c> changeCodeList = new Map<String,ANG_CalloutMapping__c>();
 
 		for(ANG_CalloutMapping__c item: calloutMappingList){
-
-			if(item.Change_code__c == changeCode)
-				changeCodeList.add(item);
+			for(Agency_Applied_Change_code__c obj: objList)
+				if(item.Change_code__c == obj.Change_Code__c && obj.IEPPayload__c != null)
+					changeCodeList.put(obj.IEPPayload__c ,item);
 		}
 
 
 		System.debug('Custom Setting values:' + changeCodeList);
 
-		for(ANG_CalloutMapping__c item: changeCodeList){
+		Set<String> changeCodesIATACodes = changeCodeList.keySet();
 
-			invokeChangeCodeImpl(item,obj);
+		for(String item: changeCodesIATACodes){
+
+			invokeChangeCodeImpl(changeCodeList.get(item),item);
 
 		}
 		
@@ -37,4 +41,3 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	}
 
 }
-

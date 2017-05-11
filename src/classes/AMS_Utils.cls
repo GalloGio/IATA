@@ -2035,6 +2035,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     **/
     public static void startIntegration(List<Account> newAccs, Map<Id,Account> oldMap){
 
+        System.debug('startIntegration initiated.');
         // get the configurations for the change code
         Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = AMS_ChangeCodesHelper.fetchChangeCodeConfiguration(newAccs, oldMap);
 
@@ -2051,12 +2052,12 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 insert accChangeCodeMap.values();
         }
 
-            //do call only after the change codes are succesfully inserted
-            for(Account acc :accChangeCodeMap.keySet()){
+            //do call only after the change codes are succesfully inserted - commented since this is now handled via Process Builder.
+            /* for(Account acc :accChangeCodeMap.keySet()){
                 if(!Test.isRunningTest()){
                     ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
                 }
-           }
+           } */
         }
     }
 
