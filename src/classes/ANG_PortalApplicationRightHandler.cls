@@ -83,7 +83,7 @@ public class ANG_PortalApplicationRightHandler {
 		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
 
 		for(Portal_Application_Right__c par : errorList) {
-			oldMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg + ' ' +  par.ANG_Portal_Service_Role__c + ' ' + System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg2);
+			oldMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
 		}
 	}
 
@@ -101,7 +101,7 @@ public class ANG_PortalApplicationRightHandler {
 		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
 
 		for(Portal_Application_Right__c par : errorList) {
-			newMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg + ' ' +  par.ANG_Portal_Service_Role__c + ' ' + System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg2);
+			newMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
 		}
 	}	
 }
