@@ -57,7 +57,7 @@ public without sharing class AMS_AgencyUpdateHelper {
         Set<Id> agencyIds = new Set<Id>();
         for(SObject obj: updatedRecords){
             //only create update if the change code corresponding change code setting is not flagged to skip agency update;
-            if (!codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
+            if (obj.getSObjectType().getDescribe().getName() == 'Agency_Applied_Change_code__c' && !codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
                 if(obj.getSObjectType() != Schema.Account.getSObjectType()){
                     agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
                 }
