@@ -860,6 +860,16 @@ Name
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
+        <fullName>Restrict_by_Agency_Category</fullName>
+        <active>true</active>
+        <description>Only allow to save when Restrict by Agency Category is not empty IF Agency checkbox = TRUE</description>
+        <errorConditionFormula>AND(
+NOT(Agency__c),
+NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c))
+)</errorConditionFormula>
+        <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Category.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_by_Agency_Sector</fullName>
         <active>true</active>
         <description>Only allow to save when Restrict by Agency Sector is not empty IF Agency checkbox = TRUE</description>
