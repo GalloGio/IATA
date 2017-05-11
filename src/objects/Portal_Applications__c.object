@@ -77,7 +77,6 @@
         <label>ISSP Available Services</label>
     </fieldSets>
     <fields>
-    <fields>
         <fullName>ANG_Restrict_internal_selection__c</fullName>
         <defaultValue>false</defaultValue>
         <description>When checked prevents portal services from being subscribed from Salesforce.</description>
