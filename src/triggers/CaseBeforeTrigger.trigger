@@ -1380,7 +1380,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*AMS_OSCARCaseTrigger Trigger.isInsert*/
         if(AMS_OSCARCaseTrigger){
         	system.debug('AMS_OSCARCaseTrigger Trigger.isInsert');
-            if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){ 
+            if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseBeforeTrigger')){ 
                 AMS_OscarCaseTriggerHelper.removeOscarFromChild(trigger.New);
                 AMS_OscarCaseTriggerHelper.checkIrregularityThreshold();
                 AMS_OscarCaseTriggerHelper.copyDataFromOscar();
@@ -1994,7 +1994,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*AMS_OSCARCaseTrigger Trigger.isUpdate*/
         if(AMS_OSCARCaseTrigger){
         	system.debug('AMS_OSCARCaseTrigger Trigger.isUpdate');
-            if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){ 
+            if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseBeforeTrigger')){ 
                 AMS_OscarCaseTriggerHelper.blockForbbidenActions(trigger.New, trigger.oldMap);
                 AMS_OscarCaseTriggerHelper.copyDataFromOscar();
             }

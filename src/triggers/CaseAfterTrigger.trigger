@@ -654,7 +654,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*AMS_OSCARCaseTrigger Trigger.isInsert*/
 		if(AMS_OSCARCaseTrigger){
-			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){
+			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseAfterTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseCreationRules(trigger.New);
 	        	AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode(); 
@@ -848,7 +848,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
 		if(AMS_OSCARCaseTrigger){
-			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'AMS_OSCARCaseTrigger')){
+			if(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'CaseAfterTrigger')){
 				AMS_OscarCaseTriggerHelper.OSCARCaseUpdateRules(trigger.New, trigger.oldMap);
 	            AMS_OscarCaseTriggerHelper.populateOscarFields(trigger.New);
 				AMS_OscarCaseTriggerHelper.CreateRiskChangeCode();
