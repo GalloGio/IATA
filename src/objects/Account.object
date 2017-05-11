@@ -2685,7 +2685,6 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-    <fields>
         <fullName>ANG_Financial_Review__c</fullName>
         <externalId>false</externalId>
         <formula>IF(CONTAINS(Financial_Review_Result__c , &apos;Unsatisfactory&apos;),&apos;Failed&apos;,&apos;Passed&apos;)</formula>
@@ -2696,6 +2695,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
         <fullName>ANG_HE_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Risk_Status</globalPicklist>
