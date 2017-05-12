@@ -7,7 +7,7 @@ Please, do Not try this if you do not aware of the process
 public with sharing class AMS_AlignOwnersInHierarchy {
 
     public String parentAccountId { get; set; }
-    public String test { get; set; }
+    //public String test { get; set; }
     //public boolean isProfile { get; set; }
 
     public List<AMS_Account_Role__c> newOwners { get; set; }
@@ -49,7 +49,7 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         statusPooler = true;
 
         batchJobId = Database.executeBatch(new AMS_AlignOwnersInHierarchyBatch(parentAccountId), 50);
-
+    }
         
         /*   List<AMS_Agencies_relationhip__c> relationshipLst = new List<AMS_Agencies_relationhip__c>();
 
@@ -121,7 +121,6 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         if(!rolesToInsert.isEmpty())
             insert rolesToInsert;
             newOwners = rolesToInsert;
-*/
     }
 
     public static List<AMS_Account_Role__c> createRoles(List<Id> accountIds, List<AMS_Account_Role__c> rolesToClone){
@@ -139,6 +138,8 @@ public with sharing class AMS_AlignOwnersInHierarchy {
 
         return newRolesToReturn;
     }
+
+    */
 
     public void checkBatchStatus() {
 
@@ -161,6 +162,5 @@ public with sharing class AMS_AlignOwnersInHierarchy {
         }
 
     }
-
 
 }
