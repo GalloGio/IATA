@@ -240,6 +240,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
         idcapp.Photo__c = theChosenOne.photo;
         idcapp.Start_Date_Agency_Month__c = theChosenOne.startmonth;
         idcapp.Start_Date_Agency_Year__c = theChosenOne.startyear;
+        idcapp.Email_admin__c = theChosenOne.email;
         idcapp = IDCardApplicationFactory.applyApplicationFees(idcapp,keyContactAndDelegateForAccountList.get(theChosenOne.newIataCode).Account__r,null);
 		
 		database.Saveresult res = database.insert(idcapp,true);
