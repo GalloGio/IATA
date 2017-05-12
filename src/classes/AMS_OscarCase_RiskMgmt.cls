@@ -114,7 +114,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			*/
 			
-			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId, CNS_Agency__c
+			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId, CNS_Agency__c, Default_date__c
 							from Account 
 							where id in:mapAllHOs.keyset()]){
 				//setAllAccntsHiearchy.add(a.Id);
@@ -164,7 +164,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			//get latest reason code/description from latest change code or, in case is missing, from account
-			mapReasonAndStatus = new map<id, account>([select id, Status__c, Reason__c,Previous_Reason__c, PreviousStatus__c,
+			mapReasonAndStatus = new map<id, account>([select id, Status__c, Reason__c,Previous_Reason__c, PreviousStatus__c, Default_date__c,
 													 	(select id, change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, createddate, Created_Date_To_Show__c 
 													 	 from Agencies_Applied_Change_codes__r 
 													 	 where SIDRA_Case__c in:mapTrgNew.keyset() 
@@ -475,7 +475,7 @@ public class AMS_OscarCase_RiskMgmt {
 			accnt.Expiry_Date__c = null;
 			bAccntToUpd = true;
 		}
-		
+
 		//Set the billing period
 		if(!mapOperationalCalendar.isEmpty() && mapCases.get(idCase).External_ID__c != null && mapCases.get(idCase).External_ID__c != ''){
 			string sExtId = GetOpCalendarExtId(mapCases.get(idCase).External_ID__c);
@@ -488,46 +488,6 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 		}
 		
-		//Handles Reason code and description on both Account and Change Code
-		/*if(cc.Reason_Code__c!=null){
-			bAccntToUpd = true;
-			string sCurrReason = mapCases.get(idCase).Account.Reason__c;
-			if(cc.Reason_Code__c.toUpperCase()=='PREV' || cc.Reason_Code__c.toUpperCase()=='CURRENT'){
-				if(mapCases.get(idCase).Account.Previous_Reason__c!=null){
-					list<string> lsReason = (acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c).split('-');
-					AACC.Reason_Code__c = lsReason.get(0);
-					AACC.Reason_Description__c = lsReason.get(1);
-					
-					if(cc.Reason_Code__c.toUpperCase()=='PREV')
-						accnt.Reason__c = acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c;
-				}
-			}else{
-				AACC.Reason_Code__c = cc.Reason_Code__c;
-				AACC.Reason_Description__c = cc.Reason_Code_Description__c;
-				
-				accnt.Reason__c = AACC.Reason_Code__c + '-' + AACC.Reason_Description__c;
-			}
-			
-			if(cc.Reason_Code__c.toUpperCase()!='CURRENT')
-				accnt.Previous_Reason__c = sCurrReason;
-			
-			string sCurrentReason = mapReasonAndStatus.get(mapCases.get(idCase).Account).Agencies_Applied_Change_codes__r.isEmpty()?;
-			string sPreviousReason = '';
-			
-			
-		}
-		if(cc.Account_status_change__c != null){
-			bAccntToUpd = true;
-			string sCurrStatus = mapCases.get(idCase).Account.Status__c;
-			if(cc.Account_status_change__c.toUpperCase()=='PREV'){
-				if( (acc==null?(mapCases.get(idCase).Account.PreviousStatus__c):acc.PreviousStatus__c) != null )
-					accnt.Status__c = mapCases.get(idCase).Account.PreviousStatus__c;
-			}
-			else{
-				accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
-			}
-			accnt.PreviousStatus__c = sCurrStatus;
-		}*/
 		
 		string sCurrReason='';
 		string sPrevReason='';
@@ -586,6 +546,21 @@ public class AMS_OscarCase_RiskMgmt {
 			//bAccntToUpd = true;
 		}
 		
+		//FM 19-04-2017 - AMSU-18
+		//If status is changing to Changes processed (8) or Approved (9) clear the default date. 
+		if(AACC.AccountNewStatus__c == AMS_Utils.ACC_S8_CHANGESPROCESSED || AACC.AccountNewStatus__c == AMS_Utils.ACC_S9_APPROVED){
+			accnt.Default_date__c = null;
+			bAccntToUpd = true;
+		}
+
+		//FM 19-04-2017 - AMSU-18
+		//If status is changing to Cash basis/No commission (5) and default date is empty, set the default date field to current date
+		//If status is changing to Cash basis/No commission (5) and default date has a value, do nothing
+		if(AACC.AccountNewStatus__c == AMS_Utils.ACC_S5_CASHNOCOMMISSION && mapReasonAndStatus.get(AccountId).Default_date__c == null){
+			accnt.Default_date__c = Date.Today();
+			bAccntToUpd = true;	
+		}
+
 		string[] SplittedReason;
 		string sReasonDesc = '';
 		
