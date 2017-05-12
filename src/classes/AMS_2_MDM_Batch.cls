@@ -44,6 +44,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         Map<String,AMS_ChangeCodes__c> mapChangeCodes = new Map<String,AMS_ChangeCodes__c>();
         List<AMS_ChangeCodes__c> lBillableChangeCodes = [SELECT Change_Code__c, Billable_Location_Class__c FROM AMS_ChangeCodes__c where Billable__c = true];
        
+
         system.debug('AMS_2_MDM_Batch: lBillableChangeCodes - ' + lBillableChangeCodes);
 
         //Fetch agency data that's not comming in the "scope"
@@ -91,7 +92,6 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
             
             //system.debug('AMS_2_MDM_Batch: accToValidate - ' + accToValidate);
             //system.debug('AMS_2_MDM_Batch: auxAccAccount - ' + auxAccAccount);
-         
 
             //Check if account location class is included in the list setup for the change code
             if(accToValidate.Billable_Location_Class__c.containsIgnoreCase(auxAccAccount.Location_Class__c) ){
@@ -100,7 +100,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
 
                 //cycle throught the AMS_Change_Codes_Billable_Setup__c in order to check if it's valid to send the sales order
                 for(AMS_Change_Codes_Billable_Setup__c ccbs : lChangeCodesBillableSetup){
-                    //Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c
+
                     if(au.Change_Code__c == ccbs.Change_Code__c 
                         && auxAccAccount.Country_ISO_Code__c == ccbs.Country_To_Exclude__c 
                         && auxAccAccount.Location_Class__c == ccbs.Location_Class_To_Exclude__c){
@@ -129,14 +129,12 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
             headerParams[2] = String.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Batch_Size__c); //'ChunkSize'
             headerParams[3] = ''; //'ChunkKey'
             headerParams[4] = ''; //'ChunkTotal'
-
+    
             AMS_XML_Generator xmlGen = new AMS_XML_Generator();
-            //String s = xmlGen.getAgencySalesOrder(ids);
-
+    
             //FM 31-03-2017 - Change from scope to validated list
-            //String s = xmlGen.getAgencySalesOrder(scope);
             String s = xmlGen.getAgencySalesOrder(scopeValidBillable);
-
+    
             //Decomment if XML is necessary on the Log entry
             sLog += 'XML Sent: '+s+'\n';
             
@@ -151,52 +149,35 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
             
             Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
             String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
-
+    
             
             // set the timeout to maximum value (60 seconds)
             ws.timeout_x = 60000;        
-
                         
             try {
                 
                 String sRespStatusCode = '';
-
+    
                 if(!Test.isRunningTest()) {
                     // Call SAP web service
-                    //sRespStatusCode = ws.SI_SFDC_AgencyList_OB_Http(s,authorizationHeader);
                     sRespStatusCode = ws.SI_SFDC_SalesOrder_OB_Http(s,authorizationHeader);
                 }else{
                     sRespStatusCode = '200';
                 }
                 
                 sLog += 'Response Status Code: '+sRespStatusCode+'\n';
-                
-
+    
                 if(sRespStatusCode.equalsIgnoreCase('200')){
-
-                    //for(AMS_Agency_Updates__c au :scope){
-                    //    au.Update_Type__c = au.Update_Type__c + '_Sent';
-                    //}
-                    
-                    //FM 31-03-2017 - Change from scope to validated list
-                    //for(Agency_Applied_Change_code__c au :scope){
-                    //    au.Sent_to_external_system__c = true;
-                    //}
                     //update scope;
                     for(Agency_Applied_Change_code__c au :scopeValidBillable){
                         au.Sent_to_external_system__c = true;
                     }
                     update scopeValidBillable;
-
-                    
-
+    
                 }else{
                     system.debug('SAP Web Service - SI_SFDC_SalesOrder_OB - callout ERROR! ');
-                    
                     tlog.Status__c = 'Error';
-                    //TODO implement error handling
                 }
-
             }
             catch (Exception ex) {
                 system.debug('SAP Web Service callout error: ' + ex.getMessage());
@@ -204,14 +185,12 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
                 sLog += 'Exception: SAP Web Service callout error:'+ex.getMessage()+'\n';
                 sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
                 tlog.Status__c = 'Error';
-                //TODO implement error handling
             }
-            
         }else{
             //there were no records to send! adding info to the Log
             sLog += 'No change codes to send! \n No Communication sent to external system! \n';
         }
-
+        
         //write Log
         DateTime dtEnd = system.now();
         tlog.End_Date__c = dtEnd;
