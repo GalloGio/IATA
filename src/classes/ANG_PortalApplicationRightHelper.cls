@@ -1,13 +1,7 @@
 public class ANG_PortalApplicationRightHelper {
 
 	public static List<Portal_Application_Right__c> getCheckMinimumUsersAllowedErrorList(Set<id> parSet) {
-		List<Portal_Application_Right__c> parList = [Select id,
-															Application_Name__c,
-		                                                    contact__r.account.Top_Parent__c, 
-		                                                    contact__r.accountId,
-		                                                    ANG_Portal_Service_Role__c
-		                                               From Portal_Application_Right__c
-		                                              Where id in :parSet];
+		List<Portal_Application_Right__c> parList = [Select id, Application_Name__c, contact__r.account.Top_Parent__c, contact__r.accountId, ANG_Portal_Service_Role__c From Portal_Application_Right__c Where id in :parSet];
 
 		return checkMinimumUsersAllowed(parList);
 	}
@@ -46,9 +40,7 @@ public class ANG_PortalApplicationRightHelper {
 		System.debug('roles--->' + roles);
 
 		//no Connected app roles found
-		if(roles.isEmpty()) {
-			return errorList;
-		}
+		if(roles.isEmpty()) return errorList;
 
 		Map<Id,List<String>> parTopAccount = new Map<Id,List<String>>();
 		Set<Id> accountsTp = new Set<Id>();

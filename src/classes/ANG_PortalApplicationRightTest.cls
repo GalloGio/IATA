@@ -7,12 +7,21 @@ private class ANG_PortalApplicationRightTest {
 
 	@testSetup static void createData() {
 		Account acc = ISSP_ObjectFactory.createNewAccount();  
-		Account acc2 = ISSP_ObjectFactory.createNewAccount();
-		Account acc3 = ISSP_ObjectFactory.createNewAccount();
+		acc.Location_Type__c = 'HO';
+		acc.Location_Class__c = 'P';				
 
+		insert acc;
+
+
+		Account acc2 = ISSP_ObjectFactory.createNewAccount();
+		acc2.Location_Type__c = 'BR';
+		acc2.Location_Class__c = 'P';
+		acc2.ParentId = acc.id;
 		acc2.Top_Parent__c = acc.id;
 
-		insert new List<Account>{acc, acc2, acc3};
+		Account acc3 = ISSP_ObjectFactory.createNewAccount();
+
+		insert new List<Account>{acc2, acc3};
 		
 		Contact contact = ISSP_ObjectFactory.createNewContact();
 		Contact contact2 = ISSP_ObjectFactory.createNewContact();
@@ -36,7 +45,7 @@ private class ANG_PortalApplicationRightTest {
 			Connected_App__c = 'IATA EasyPay',
 			Permission_set_SSO__c = 'IATA EasyPay',
 			Role__c = 'IEP Admin',
-			Min_Users_With_Role__c = 1
+			Min_Users_With_Role__c = 2
 		);
 
 		Connected_App_Roles__c car3 = new Connected_App_Roles__c(
@@ -148,8 +157,6 @@ private class ANG_PortalApplicationRightTest {
 
 	static testMethod void test_checkMinimumUsersAllowedUpdateAndDelete() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'IEP Admin' AND Right__c = 'Access Requested'];
-		par.Right__c = 'Access Granted';
-		update par;
 
 		Test.startTest();
 
@@ -159,16 +166,15 @@ private class ANG_PortalApplicationRightTest {
 			update par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('This contact is the sole remaining'));
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
 		}
 
 		try {
 			delete par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('This contact is the sole remaining'));
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
 		}
-
 
 		Test.stopTest();
 	}
@@ -186,16 +192,40 @@ private class ANG_PortalApplicationRightTest {
 			update par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('This contact is the sole remaining'));
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
 		}
 
 		try {
 			delete par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('This contact is the sole remaining'));
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
 		}
 
 		Test.stopTest();
-	}	
+	}
+
+	static testMethod void test_checkMinimumUsersAllowedUpdateAndDelete3() {
+		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'IEP Admin' AND Right__c = 'Access Granted'];
+
+		Test.startTest();
+
+		par.Right__c = 'Access Denied';
+
+		try {
+			update par;	
+			System.assert(false);
+		} catch(Exception e) {
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+		}
+
+		try {
+			delete par;	
+			System.assert(false);
+		} catch(Exception e) {
+			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+		}
+
+		Test.stopTest();
+	}
 }
