@@ -305,6 +305,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Number_of_GDI_financial_securities__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Guaranteed_amount__c</field>
             </layoutItems>
         </layoutColumns>

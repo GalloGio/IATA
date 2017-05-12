@@ -1143,7 +1143,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     <fields>
         <fullName>Start_Date_Agency_Month__c</fullName>
         <externalId>false</externalId>
-        <label>Start Date Agency Month</label>
+        <label>Start Month in the Agency</label>
         <length>20</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1154,7 +1154,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     <fields>
         <fullName>Start_Date_Agency_Year__c</fullName>
         <externalId>false</externalId>
-        <label>Start Date Agency Year</label>
+        <label>Start Year in the Agency</label>
         <length>20</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1165,7 +1165,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     <fields>
         <fullName>Start_Date_Industry__c</fullName>
         <externalId>false</externalId>
-        <label>Start Date Industry</label>
+        <label>Start Year in the Industry</label>
         <length>20</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
