@@ -65,6 +65,11 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Simple_Account_name</fullName>
+        <fields>Name</fields>
+        <label>Simple Account name</label>
+    </compactLayouts>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -7317,6 +7322,15 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Default_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Default date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Description</fullName>
@@ -36325,6 +36339,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <recordTypes>
         <fullName>IATA_Airline</fullName>
         <active>true</active>
+        <compactLayoutAssignment>Simple_Account_name</compactLayoutAssignment>
         <description>The new record type for ALL Airlines, IATA members and non members - Headquaters Account - with NEW data model - Use this for all Airlines HQ</description>
         <label>Airline Headquarters</label>
         <picklistValues>
