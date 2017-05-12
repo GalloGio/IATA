@@ -826,9 +826,10 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
         <errorConditionFormula>AND(
 Portal_Application__r.ANG_Restrict_internal_selection__c = true,
-false
+NOT(BEGINS($Profile.Name, &apos;ISS Portal&apos;)),
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
 )</errorConditionFormula>
-        <errorMessage>Erro kaput</errorMessage>
+        <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SIS_cannot_be_approved_by_admin</fullName>
