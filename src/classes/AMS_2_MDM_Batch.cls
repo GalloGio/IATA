@@ -43,9 +43,7 @@ global class AMS_2_MDM_Batch implements Database.Batchable<sObject>, Database.Al
         List<Agency_Applied_Change_code__c> scopeValidBillable = new List<Agency_Applied_Change_code__c>(); 
         Map<String,AMS_ChangeCodes__c> mapChangeCodes = new Map<String,AMS_ChangeCodes__c>();
         List<AMS_ChangeCodes__c> lBillableChangeCodes = [SELECT Change_Code__c, Billable_Location_Class__c FROM AMS_ChangeCodes__c where Billable__c = true];
-        //List<AMS_Change_Codes_Billable_Setup__c> lChangeCodesBillableSetup = [SELECT Change_Code__c, Country_To_Exclude__c, Location_Class_To_Exclude__c FROM AMS_Change_Codes_Billable_Setup__c];
-
-
+       
         system.debug('AMS_2_MDM_Batch: lBillableChangeCodes - ' + lBillableChangeCodes);
 
         //Fetch agency data that's not comming in the "scope"
