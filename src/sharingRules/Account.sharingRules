@@ -147,7 +147,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>General Sales Agent Headquarters,Airline Branch,Airline Headquarters,Agency</value>
+            <value>Operator,General Sales Agent Headquarters,Airline Branch,Agency,Airline Headquarters</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
@@ -370,7 +370,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Standard Account,Others,General Sales Agent Headquarters,Airline Branch,Agency,Airline Headquarters</value>
+            <value>Operator,Standard Account,Others,General Sales Agent Headquarters,Agency,Airline Branch,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
@@ -507,7 +507,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+            <value>Operator,Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
@@ -592,7 +592,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
+            <value>Operator,Airline Branch,General Sales Agent Headquarters,Agency,Airline Headquarters</value>
         </criteriaItems>
         <criteriaItems>
             <field>Merged_Account__c</field>
