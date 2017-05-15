@@ -87,145 +87,170 @@
         <fullName>Affected_Process__c</fullName>
         <externalId>false</externalId>
         <label>Affected  Process</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Agency Management (AM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Agency Risk Management (ARM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Participation (AP)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Susp (AS) &amp; Funds Mgmt (FM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline Suspension (AS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Banking Services (BS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Billing &amp; Reporting (BR)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Card Payment Processing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Code Transfers &amp; Mergers (CTM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Customer Service (CS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Funds Management (FM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Governance - Cargo (GOV CGO)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Governance - Passenger (GOV PAX)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA-IATAN ID Cards (IDC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IBCS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Invoicing &amp; Collection (IC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISS Calendar</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISS Fee Management (IFM)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISS Life Cycle MGMT (ISSLC)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>New ISS Deployment (NID)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Post-Termination Recovery (PTR)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement Automated (RS-A)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement Manual (RS-M)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Airline &amp; Location Coding and MITA/BIETA</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Currency Clearance Services (ICCS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Clearing House (ICH)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Simplified Interline Settlement (SIS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>ISS Lifecycle Mgmt</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Currency Clearance Services</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Clearing House</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Simplified Interline Settlement</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Remittance &amp; Settlement (RS)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agency Management (AM)</fullName>
+                    <default>false</default>
+                    <label>Agency Management (AM)</label>
+                </value>
+                <value>
+                    <fullName>Agency Risk Management (ARM)</fullName>
+                    <default>false</default>
+                    <label>Agency Risk Management (ARM)</label>
+                </value>
+                <value>
+                    <fullName>Airline Participation (AP)</fullName>
+                    <default>false</default>
+                    <label>Airline Participation (AP)</label>
+                </value>
+                <value>
+                    <fullName>Airline Susp (AS) &amp; Funds Mgmt (FM)</fullName>
+                    <default>false</default>
+                    <label>Airline Susp (AS) &amp; Funds Mgmt (FM)</label>
+                </value>
+                <value>
+                    <fullName>Airline Suspension (AS)</fullName>
+                    <default>false</default>
+                    <label>Airline Suspension (AS)</label>
+                </value>
+                <value>
+                    <fullName>Banking Services (BS)</fullName>
+                    <default>false</default>
+                    <label>Banking Services (BS)</label>
+                </value>
+                <value>
+                    <fullName>Billing &amp; Reporting (BR)</fullName>
+                    <default>false</default>
+                    <label>Billing &amp; Reporting (BR)</label>
+                </value>
+                <value>
+                    <fullName>Card Payment Processing</fullName>
+                    <default>false</default>
+                    <label>Card Payment Processing</label>
+                </value>
+                <value>
+                    <fullName>Code Transfers &amp; Mergers (CTM)</fullName>
+                    <default>false</default>
+                    <label>Code Transfers &amp; Mergers (CTM)</label>
+                </value>
+                <value>
+                    <fullName>Customer Service (CS)</fullName>
+                    <default>false</default>
+                    <label>Customer Service (CS)</label>
+                </value>
+                <value>
+                    <fullName>Funds Management (FM)</fullName>
+                    <default>false</default>
+                    <label>Funds Management (FM)</label>
+                </value>
+                <value>
+                    <fullName>Governance - Cargo (GOV CGO)</fullName>
+                    <default>false</default>
+                    <label>Governance - Cargo (GOV CGO)</label>
+                </value>
+                <value>
+                    <fullName>Governance - Passenger (GOV PAX)</fullName>
+                    <default>false</default>
+                    <label>Governance - Passenger (GOV PAX)</label>
+                </value>
+                <value>
+                    <fullName>IATA-IATAN ID Cards (IDC)</fullName>
+                    <default>false</default>
+                    <label>IATA-IATAN ID Cards (IDC)</label>
+                </value>
+                <value>
+                    <fullName>IBCS</fullName>
+                    <default>false</default>
+                    <label>IBCS</label>
+                </value>
+                <value>
+                    <fullName>Invoicing &amp; Collection (IC)</fullName>
+                    <default>false</default>
+                    <label>Invoicing &amp; Collection (IC)</label>
+                </value>
+                <value>
+                    <fullName>ISS Calendar</fullName>
+                    <default>false</default>
+                    <label>ISS Calendar</label>
+                </value>
+                <value>
+                    <fullName>ISS Fee Management (IFM)</fullName>
+                    <default>false</default>
+                    <label>ISS Fee Management (IFM)</label>
+                </value>
+                <value>
+                    <fullName>ISS Life Cycle MGMT (ISSLC)</fullName>
+                    <default>false</default>
+                    <label>ISS Life Cycle MGMT (ISSLC)</label>
+                </value>
+                <value>
+                    <fullName>New ISS Deployment (NID)</fullName>
+                    <default>false</default>
+                    <label>New ISS Deployment (NID)</label>
+                </value>
+                <value>
+                    <fullName>Post-Termination Recovery (PTR)</fullName>
+                    <default>false</default>
+                    <label>Post-Termination Recovery (PTR)</label>
+                </value>
+                <value>
+                    <fullName>Airline &amp; Location Coding and MITA/BIETA</fullName>
+                    <default>false</default>
+                    <label>Airline &amp; Location Coding and MITA/BIETA</label>
+                </value>
+                <value>
+                    <fullName>IATA Currency Clearance Services (ICCS)</fullName>
+                    <default>false</default>
+                    <label>IATA Currency Clearance Services (ICCS)</label>
+                </value>
+                <value>
+                    <fullName>IATA Clearing House (ICH)</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing House (ICH)</label>
+                </value>
+                <value>
+                    <fullName>Simplified Interline Settlement (SIS)</fullName>
+                    <default>false</default>
+                    <label>Simplified Interline Settlement (SIS)</label>
+                </value>
+                <value>
+                    <fullName>ISS Lifecycle Mgmt</fullName>
+                    <default>false</default>
+                    <label>ISS Lifecycle Mgmt</label>
+                </value>
+                <value>
+                    <fullName>IATA Currency Clearance Services</fullName>
+                    <default>false</default>
+                    <label>IATA Currency Clearance Services</label>
+                </value>
+                <value>
+                    <fullName>IATA Clearing House</fullName>
+                    <default>false</default>
+                    <label>IATA Clearing House</label>
+                </value>
+                <value>
+                    <fullName>Simplified Interline Settlement</fullName>
+                    <default>false</default>
+                    <label>Simplified Interline Settlement</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Remittance &amp; Settlement (RS)</fullName>
+                    <default>false</default>
+                    <label>Remittance &amp; Settlement (RS)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Africa_MENA_Countries_Concerned__c</fullName>
@@ -1631,8 +1656,8 @@
         <fullName>OI_Status_auto__c</fullName>
         <externalId>false</externalId>
         <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, Pending_eff_validation_date__c&lt;=TODAY()),
-	&quot;Pending Effectiveness Validation&quot;,
-	SUBSTITUTE(OI_Status_WF__c,&quot;Delayed&quot;, IF(TODAY()&gt;Overall_Deadline__c,&quot;Delayed&quot;,&quot;&quot;))
+    &quot;Pending Effectiveness Validation&quot;,
+    SUBSTITUTE(OI_Status_WF__c,&quot; Delayed&quot;, IF(TODAY()&gt;Overall_Deadline__c,&quot; Delayed&quot;,&quot;&quot;))
 )</formula>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
         <label>OI Status</label>
@@ -2000,18 +2025,20 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <fields>
         <fullName>Status_Image__c</fullName>
         <externalId>false</externalId>
-        <formula>CASE(OI_Status_auto__c,
-	&quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1ex&quot;, &quot;C &quot;,40,620 ),
-	&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dz&quot;, &quot;E &quot;,40,620 ),
-	&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1df&quot;, &quot;OAP&quot;,40,620 ),
-	&quot;Delayed&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1e4&quot;, &quot;Delayed &quot;,40,620 ),
-	&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dB&quot;, &quot;PEA&quot;,40,620 ),
-	&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dV&quot;, &quot;PA&quot;,40,620 ),
-	&quot;Concluded&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1eY&quot;, &quot;CO&quot;,40,620 ),
-	&quot;Pending Effectiveness Validation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dQ&quot;, &quot;PEV &quot;,40,620 ),
-	&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dk&quot;, &quot;I&quot;,40,620 ),
-	&quot;Terminated&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1fC&quot;, &quot;T&quot;,40,620 ),
-	&quot;&quot;)</formula>
+        <formula>IF ( CONTAINS(OI_Status_auto__c, &quot;Delayed&quot;),
+  IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1e4&quot;, &quot;Delayed &quot;,40,620 ),
+  CASE(OI_Status_auto__c,
+    &quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1ex&quot;, &quot;C &quot;,40,620 ),
+    &quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dz&quot;, &quot;E &quot;,40,620 ),
+    &quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1df&quot;, &quot;OAP&quot;,40,620 ),
+    &quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dB&quot;, &quot;PEA&quot;,40,620 ),
+    &quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dV&quot;, &quot;PA&quot;,40,620 ),
+    &quot;Concluded&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1eY&quot;, &quot;CO&quot;,40,620 ),
+    &quot;Pending Effectiveness Validation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dQ&quot;, &quot;PEV &quot;,40,620 ),
+    &quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dk&quot;, &quot;I&quot;,40,620 ),
+    &quot;Terminated&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1fC&quot;, &quot;T&quot;,40,620 ),
+    &quot;&quot;)
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status Image</label>
         <required>false</required>
