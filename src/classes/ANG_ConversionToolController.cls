@@ -217,7 +217,11 @@ public with sharing class ANG_ConversionToolController {
 	}
 
 	public void getBatchStatus(){
-
+		
+        if(migrationBacthId == null){
+            pollerBool = true;
+        }
+        
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :migrationBacthId];
 
 		if(batchJob.status == 'Ended' || batchJob.status == 'Completed')

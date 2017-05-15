@@ -118,10 +118,15 @@ private class ANG_ConversionToolControllerTest {
 		
 		controller.runMigration(); //this method is not finished on the controller
 		
+		controller.getBatchStatus();
+
+		Set<String> notes = controller.notes;
 		
+		List<String> noteList = controller.noteList;
+
 		System.assertEquals(3,controller.finalStruct.totalInvalidHierarchies);
 		
-		
+
 		for (ANG_ConversionToolController.OverviewTableRow tblRow : controller.OverviewTable){
 			if (tblRow.detailCode != null){
 				controller.errorDetailCode = tblRow.detailCode;// -8;
