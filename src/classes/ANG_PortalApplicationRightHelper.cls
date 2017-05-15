@@ -82,12 +82,15 @@ public class ANG_PortalApplicationRightHelper {
 		//
 		List<Portal_application_right__c> related = [Select id, 
 															ANG_Portal_Service_Role__c,
-															contact__r.accountId
+															contact__r.accountId,
+															contact__c
 													   From Portal_application_right__c
 													  where contact__r.accountId in :accountsTp
 													    and contact__c not in : contacts];
 
 		for(Portal_Application_Right__c access : related) {
+			contacts.add(access.Contact__c);
+			
 			if(!parTopAccount.containsKey(access.contact__r.accountId)) {
 				parTopAccount.put(access.contact__r.accountId, new List<String>());
 				parAccount.put(access.id, access.contact__r.accountId);
