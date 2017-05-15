@@ -75,7 +75,7 @@ public class ANG_PortalApplicationRightHandler {
 			//
 			// Only take in consideration IEP services
 			//
-			if(access.Application_Name__c.startsWith('IATA EasyPay')) {
+			if(access.Application_Name__c.startsWith('IATA EasyPay') && access.Right__c == 'Access Granted') {
 				parSet.add(access.id);
 			}
 		}	
