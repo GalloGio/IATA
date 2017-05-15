@@ -71,6 +71,9 @@ public without sharing class ISSP_APProcess {
     
     public List<citySelection> cityList{get;set;}//TF
     public List<citySelection> cityListWithValue{get;set;}//TF
+
+    public String strOT{get;set;}
+    public String strOperationTypeAux{get;set;} 
     
     public ISSP_APProcess(){        
         //Set the Variables default values
@@ -175,6 +178,7 @@ public without sharing class ISSP_APProcess {
             
             isNewCase = false;
             strOperationType = newCase.Verification__c;
+            strOperationTypeAux = strOperationType;
             strAreaType = newCase.CaseArea__c;
             strChangeType = newCase.Reason1__c;
             
@@ -524,6 +528,7 @@ public without sharing class ISSP_APProcess {
             strLoB = 'CASS';
         }
         
+        SYSTEM.DEBUG('SAVE - strOperationType: ' + strOperationType);
         SYSTEM.DEBUG('SAVE - LOB: ' + strLoB);
         SYSTEM.DEBUG('SAVE - Country ISO Code: ' + apcountryisocode);
             
@@ -802,7 +807,15 @@ public without sharing class ISSP_APProcess {
         List <AP_Country_Requierment__c> isoListJoining;
         List <Services_Rendered__c> isoListChange;
         
-        strLoB = Apexpages.currentPage().getParameters().get('strLoB');
+        strOperationType = Apexpages.currentPage().getParameters().get('strOT');
+        strLOB = null;
+        if(strOperationType != null) {
+            strOperationTypeAux = strOperationType;
+            getLoB(strOperationType);
+        } else if (strOperationTypeAux != null) {
+            strOperationType = strOperationTypeAux;
+            getLoB(strOperationType);
+        }
         
         SYSTEM.DEBUG('Area Type: ' + strAreaType);
         SYSTEM.DEBUG('Operation Type: ' + strOperationType);
