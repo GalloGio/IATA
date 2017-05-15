@@ -478,7 +478,7 @@ function buildFunctionCall(func, argList){
                     <div id="{!sf}">                        
                         <apex:outputPanel rendered="{!$ObjectType.AMS_OSCAR__c.fields[stepFieldsData[sf].fieldApiName].Updateable}">
                             <apex:inputField value="{!oscar[sf]}" styleClass="inputElem" rendered="{!stepFieldsData[sf].picklistvalues == null}"/>
-                            <apex:selectList size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
+                            <apex:selectList disabled="{!NOT(isValidationCompleted) && step.name == 'STEP2'}" size="1" rendered="{!IF(stepFieldsData[sf].picklistvalues != null, true, false)}" styleClass="inputElem">
                                 <apex:selectOptions value="{!stepFieldsData[sf].picklistvalues}"/>
                             </apex:selectList>
                         </apex:outputPanel>
