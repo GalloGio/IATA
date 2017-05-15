@@ -49,17 +49,13 @@ public class ANG_PortalApplicationRightHelper {
 		if(roles.isEmpty()) return errorList;
 
 		Map<Id,List<String>> parTopAccount = new Map<Id,List<String>>();
-		Set<Id> accountsTp = new Set<Id>();
+		//Set<Id> accountsTp = new Set<Id>();
 		Set<Id> accounts = new Set<Id>();
 		Set<Id> contacts = new Set<Id>();
 		Map<Id,Id> parAccount = new Map<Id,Id>();
 
-		//   <-------------- FIRST PART ----------------><------ SECOND PART ---------->
-		//   PAR ----> Contact ----> Account -----> Top Parent <----- Contact <----- PAR
 		//
-
-		//
-		// GET the accounts of the first part
+		// GET the pivot accounts from the trigger list
 		//
 		for(Portal_Application_Right__c access : parList) {
 			contacts.add(access.Contact__c);
@@ -67,11 +63,11 @@ public class ANG_PortalApplicationRightHelper {
 			Id accountPivotId;
 			if(access.contact__r.account.Top_Parent__c != null) {
 				accountPivotId = access.contact__r.account.Top_Parent__c;
-				accountsTP.add(access.contact__r.account.Top_Parent__c);
+				//accountsTP.add(access.contact__r.account.Top_Parent__c);
 			} else { 
-				accountPivotId = access.contact__r.accountId;
-				accounts.add(access.contact__r.accountId);
+				accountPivotId = access.contact__r.accountId;				
 			}
+			accounts.add(accountPivotId);
 
 			if(!parTopAccount.containsKey(accountPivotId)) {
 				parTopAccount.put(accountPivotId, new List<String>());
@@ -83,50 +79,76 @@ public class ANG_PortalApplicationRightHelper {
 			lst.add(access.ANG_Portal_Service_Role__c);
 		}
 
+		System.debug('parTopAccount1--->' + parTopAccount);
+
 		//
-		// GET the accounts of the second part
+		// GET the HO accounts
 		//
 		List<Portal_application_right__c> related = [Select id, 
 															ANG_Portal_Service_Role__c,
+															contact__r.account.Top_Parent__c,
 															contact__r.accountId,
 															contact__c
 													   From Portal_application_right__c
-													  where contact__r.accountId in :accountsTp
+													  where contact__r.accountId in :accounts
 													    and Portal_application_right__c.right__c = 'Access Granted'
 													    and contact__c not in : contacts];
 
+		System.debug('related--->' + related);
+
 		for(Portal_Application_Right__c access : related) {
 			contacts.add(access.Contact__c);
-			
-			if(!parTopAccount.containsKey(access.contact__r.accountId)) {
-				parTopAccount.put(access.contact__r.accountId, new List<String>());
-				parAccount.put(access.id, access.contact__r.accountId);
+
+			Id accountPivotId;
+			if(access.contact__r.account.Top_Parent__c != null) {
+				accountPivotId = access.contact__r.account.Top_Parent__c;
+			} else { 
+				accountPivotId = access.contact__r.accountId;				
 			}
-			List<String> lst = parTopAccount.get(access.contact__r.accountId);
+			
+			if(!parTopAccount.containsKey(accountPivotId)) {
+				parTopAccount.put(accountPivotId, new List<String>());
+				parAccount.put(access.id, accountPivotId);
+			}
+			List<String> lst = parTopAccount.get(accountPivotId);
 
 			lst.add(access.ANG_Portal_Service_Role__c);
 		}
 
+		System.debug('parTopAccount2--->' + parTopAccount);
+		System.debug('accounts--->' + accounts);
+
 		//
-		// GET the accounts of the second part
+		// GET the BR accounts 
 		//
 		List<Portal_application_right__c> related2 = [Select id, 
-															ANG_Portal_Service_Role__c,
-															contact__r.account.Top_Parent__c
-													   From Portal_application_right__c
-													  where contact__r.account.Top_Parent__c in :accounts
-													    and Portal_application_right__c.right__c = 'Access Granted'
-													    and contact__c not in : contacts];		
+															 ANG_Portal_Service_Role__c,
+															 contact__r.account.Top_Parent__c,
+															 contact__r.accountId
+													    From Portal_application_right__c
+													   where contact__r.account.Top_Parent__c in :accounts
+													     and Portal_application_right__c.right__c = 'Access Granted'
+													     and contact__c not in : contacts];		
+
+		System.debug('related2--->' + related2);
 
 		for(Portal_Application_Right__c access : related2) {
-			if(!parTopAccount.containsKey(access.contact__r.account.Top_Parent__c)) {
-				parTopAccount.put(access.contact__r.account.Top_Parent__c, new List<String>());
-				parAccount.put(access.id, access.contact__r.account.Top_Parent__c);
+			Id accountPivotId;
+			if(access.contact__r.account.Top_Parent__c != null) {
+				accountPivotId = access.contact__r.account.Top_Parent__c;
+			} else { 
+				accountPivotId = access.contact__r.accountId;				
 			}
-			List<String> lst = parTopAccount.get(access.contact__r.account.Top_Parent__c);
+
+			if(!parTopAccount.containsKey(accountPivotId)) {
+				parTopAccount.put(accountPivotId, new List<String>());
+				parAccount.put(access.id, accountPivotId);
+			}
+			List<String> lst = parTopAccount.get(accountPivotId);
 
 			lst.add(access.ANG_Portal_Service_Role__c);
 		}
+
 
 		System.debug('parTopAccount--->' + parTopAccount);
 
