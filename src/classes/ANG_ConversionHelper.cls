@@ -298,7 +298,12 @@ global with sharing class ANG_ConversionHelper {
 
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
 
-    	Id conversionBatchId = Database.executeBatch(conversionBatch,1);	
+		Id conversionBatchId = null;
+
+		if(!Test.isRunningTest())
+    		conversionBatchId = Database.executeBatch(conversionBatch,1);	
+    	else
+    		conversionBatchId = Database.executeBatch(conversionBatch);	
 
     	return conversionBatchId;
 
@@ -309,7 +314,12 @@ global with sharing class ANG_ConversionHelper {
 
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(structuresToMigrate);
 
-    	Id conversionBatchId = Database.executeBatch(conversionBatch,1);	
+		Id conversionBatchId = null;
+
+		if(!Test.isRunningTest())
+	    	conversionBatchId= Database.executeBatch(conversionBatch,1);	
+	    else
+	    	conversionBatchId= Database.executeBatch(conversionBatch);
 
     	return conversionBatchId;
 
