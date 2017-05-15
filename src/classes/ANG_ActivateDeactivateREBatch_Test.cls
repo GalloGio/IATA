@@ -97,8 +97,8 @@
 	    TestMethod static void testBatch(){ // testing batch 3 records(one to be set active, one to be set inactive, one to ignore)
 			
 			Test.startTest();
-		     	ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'\'Europe\'','\'Americas\'','\'Asia\''});
-				bat.execute(null);
+				ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'\'Europe\'','\'Americas\'','\'Asia\''});
+			bat.execute(null);
 			test.StopTest();
 
 			ANG_Agency_Risk_Event__c resultRe1 = [select id,ANG_Event_Status__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.IATA_ISO_Country__r.Region__c='Europe' limit 1].get(0);
