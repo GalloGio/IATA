@@ -1,5 +1,20 @@
 <apex:page controller="ANG_ConversionToolController" showHeader="true">
 
+ <apex:includeScript value="/support/console/34.0/integration.js"/>
+    <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
+
+    <script type="text/javascript">
+        function openPrimaryTab(tabId,tabName) {
+            var changeTab = function(result){
+                if(result.success == false){
+                    sforce.console.focusPrimaryTabByName(tabId);
+                }
+            };
+            //Open a new agency primary tab
+            sforce.console.openPrimaryTab(null, tabId, true,tabName, changeTab, tabId);
+        }
+    </script>
+
 	<apex:sectionHeader title="Agencies migration tool: exception management" />   
 	<apex:form >
 	<apex:PageBlock id="pb"  >
@@ -31,7 +46,10 @@
 									<apex:inputCheckbox value="{!tbl.selected}" id="checkedone" />
 								</apex:column>
 								<apex:column headerValue="Hierarchy Top Parent">
-									<apex:outputLink value="/{!tbl.struct.topParentId}" id="accLink">{!tbl.struct.nameTopParent}</apex:outputLink>
+									<!--<apex:outputLink value="/{!tbl.struct.topParentId}" id="accLink">{!tbl.struct.nameTopParent}</apex:outputLink>-->
+								
+								<apex:outputLink value="#" onclick="openPrimaryTab('/{!tbl.struct.topParentId}?inContextPane=true','{!JSINHTMLENCODE(tbl.struct.nameTopParent)}');return false;" >{!tbl.struct.nameTopParent}</apex:outputLink>
+
 								</apex:column>
 								<apex:column value="{!tbl.struct.iataCodeTopParent}" headerValue="IATA Code Top Parent" />
 							</apex:pageBlockTable>
