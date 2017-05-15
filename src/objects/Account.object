@@ -7096,15 +7096,6 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Default_date__c</fullName>
-        <externalId>false</externalId>
-        <label>Default date</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>true</trackHistory>
-        <type>Date</type>
-    </fields>    
-    <fields>
         <fullName>DSE__DS_DataScout_Process__c</fullName>
         <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
