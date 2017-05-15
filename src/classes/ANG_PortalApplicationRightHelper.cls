@@ -1,7 +1,13 @@
 public class ANG_PortalApplicationRightHelper {
 
 	public static List<Portal_Application_Right__c> getCheckMinimumUsersAllowedErrorList(Set<id> parSet) {
-		List<Portal_Application_Right__c> parList = [Select id, Application_Name__c, contact__r.account.Top_Parent__c, contact__r.accountId, ANG_Portal_Service_Role__c From Portal_Application_Right__c Where id in :parSet];
+		List<Portal_Application_Right__c> parList = [Select id, 
+		                                                    Application_Name__c, 
+		                                                    contact__r.account.Top_Parent__c, 
+		                                                    contact__r.accountId, 
+		                                                    ANG_Portal_Service_Role__c 
+		                                               From Portal_Application_Right__c		                                              
+		                                              Where id in :parSet];
 
 		return checkMinimumUsersAllowed(parList);
 	}
@@ -86,6 +92,7 @@ public class ANG_PortalApplicationRightHelper {
 															contact__c
 													   From Portal_application_right__c
 													  where contact__r.accountId in :accountsTp
+													    and Portal_application_right__c.right__c = 'Access Granted'
 													    and contact__c not in : contacts];
 
 		for(Portal_Application_Right__c access : related) {
@@ -108,6 +115,7 @@ public class ANG_PortalApplicationRightHelper {
 															contact__r.account.Top_Parent__c
 													   From Portal_application_right__c
 													  where contact__r.account.Top_Parent__c in :accounts
+													    and Portal_application_right__c.right__c = 'Access Granted'
 													    and contact__c not in : contacts];		
 
 		for(Portal_Application_Right__c access : related2) {
