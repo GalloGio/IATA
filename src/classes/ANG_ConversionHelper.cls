@@ -298,12 +298,22 @@ global with sharing class ANG_ConversionHelper {
 
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
 
-    	Id conversionBatchId = Database.executeBatch(conversionBatch);	
+    	Id conversionBatchId = Database.executeBatch(conversionBatch,1);	
 
     	return conversionBatchId;
 
 	}
 
+
+	public static Id runSpecificMigration(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate){
+
+		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(structuresToMigrate);
+
+    	Id conversionBatchId = Database.executeBatch(conversionBatch,1);	
+
+    	return conversionBatchId;
+
+	}
 
 	public static ANG_ConversionHelper.StatisticGeneratorStructure fetchStatistics(Map<Id,ANG_ConversionHelper.HierarchyStructure> structure){
 
