@@ -323,12 +323,31 @@ public with sharing class ISSP_AvailableServices{
         public Boolean isEasyPayService {get; set;}
         public String portalServiceRole {get; set;} 
         public boolean useDefaultRole {get; set;}
+        public boolean addUsersEnable {get; set;}
+        public boolean accountNotOpenError {get; set;}
+        public String lineErrorMessage {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
             this.Status = getServiceStatus(inRecord);
             this.selected = false;
             this.recordService = inRecord;   
             this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
+            this.lineErrorMessage = '';
+
+            if(this.isEasyPayService) {
+                this.addUsersEnable = isAdmin;
+                this.accountNotOpenError = (IepStatus != ANG_ISSP_PortalServiceHelper.STATUS_OPEN);
+                if(this.accountNotOpenError) {
+                    this.lineErrorMessage = System.Label.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg;
+                }
+            } else {
+                this.addUsersEnable = !inRecord.Cannot_be_managed_by_portal_admin__c;             
+                this.accountNotOpenError = false;
+            }
+
+            System.debug('IepStatus--->' + IepStatus);
+            System.debug('this.accountNotOpenError--->' + this.accountNotOpenError);
+            System.debug('this.addUsersEnable--->' + this.addUsersEnable);
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
