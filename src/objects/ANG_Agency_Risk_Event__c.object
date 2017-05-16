@@ -397,8 +397,9 @@ PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
         <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Prevent_users_to_update_Risk_Event_Type</fullName>
+        <fullName>Prevent_users_from_updating_RE_Type</fullName>
         <active>true</active>
+        <description>Prevent users from changing the Risk Event Type after inserted</description>
         <errorConditionFormula>!ISNEW() &amp;&amp; ISCHANGED( ANG_Risk_Type__c )</errorConditionFormula>
         <errorDisplayField>ANG_Risk_Type__c</errorDisplayField>
         <errorMessage>You can&apos;t change the Risk Event Type</errorMessage>
