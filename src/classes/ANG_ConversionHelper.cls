@@ -84,6 +84,7 @@ global with sharing class ANG_ConversionHelper {
 
 		}
 
+
 		System.debug('All hierarchies:'+allHierarchies.size());
 		
 		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHO.size());
@@ -256,7 +257,7 @@ global with sharing class ANG_ConversionHelper {
 		System.debug('Total Hierarchies:'+struct.totalHierarchies);
 		System.debug('Total Valid Hierarchies:'+struct.totalValidHierarchies);
 		System.debug('Total Invalid Hierarchies:'+struct.totalInvalidHierarchies);
-		System.debug('Total Migrated Hierarchies:'+struct.totalMigratedHierarchies);
+		System.debug('Total Migrated Hierarchies (not included single agencies):'+struct.totalMigratedHierarchies);
 
 		System.debug('Valid Hierarchies');
 
