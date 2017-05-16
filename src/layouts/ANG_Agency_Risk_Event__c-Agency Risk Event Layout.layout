@@ -26,6 +26,10 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Event_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_Manual__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -44,8 +48,8 @@
                 <field>ANG_Issued_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Expiration_Date__c</field>
+                <behavior>Readonly</behavior>
+                <field>ANG_expiration_date_ff__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -59,10 +63,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_CaseId__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_OscarId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
