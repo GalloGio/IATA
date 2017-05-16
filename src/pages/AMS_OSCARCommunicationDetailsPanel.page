@@ -14,6 +14,6 @@
 
     </script>
 
-	<apex:iframe src="/apex/AMS_OSCAR_Attachment_List?Id={!Case.OSCAR__c}&readOnly=true&isEmbedded=true" height="200px;" />
+	<apex:iframe src="/apex/AMS_OSCAR_Attachment_List?Id={!Case.OSCAR__c}&readOnly=true&isEmbedded=true" height="200px;" scrolling="true"/>
 
 </apex:page>
