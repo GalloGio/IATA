@@ -19129,6 +19129,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>The following contact is the sole remaining $$ROLE$$ for this Agency and therefore cannot be deactivated.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_Abroad_Account_error_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Abroad_Account_error_msg</shortDescription>
+        <value>Since your Branch Office is in a different country than your Head Office you currently cannot open an IATA EasyPay Account in self-service mode. Please contact IATA Customer Support if you need any further information concerning this.</value>
+    </labels>    
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
