@@ -136,7 +136,7 @@ public class AMS_OscarCase_RiskMgmt {
 			//Get all previously generated change code from same sidra/sidra lite
 			list<Agency_Applied_Change_code__c> lsAACC = new list<Agency_applied_change_code__c>();
 			for(Agency_Applied_Change_code__c aa:[select id, createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, 
-												  Account__c, Account__r.Location_Class__c, Change_Code__c, SIDRA_Case__c 
+												  Account__c, Account__r.Location_Class__c, Account__r.ParentId, Change_Code__c, SIDRA_Case__c
 												  from Agency_Applied_Change_code__c 
 												  where SIDRA_Case__c in:mapTrgNew.keyset() 
 												  order by Account__c, CreatedDate desc]){
@@ -173,7 +173,7 @@ public class AMS_OscarCase_RiskMgmt {
 													  where Id in:setAllAccntsHiearchy]);
 			
 			//Get all financial securities related with accounts in the trigger. Used for generating bulletin memo text
-			for(Financial_Security__c fs:[select id, Account__c, Amount__c, CurrencyIsoCode 
+			for(Financial_Security__c fs:[select id, Account__c, Amount__c, CurrencyIsoCode, Account__r.parentId
 										  from Financial_Security__c 
 										  where Account__c in:setAllAccntsHiearchy and Security_Status__c in:setFSStatus]){
 				list<Financial_Security__c> lsFS;
@@ -276,6 +276,28 @@ public class AMS_OscarCase_RiskMgmt {
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 					
+    @TestVisible
+    private static string GenerateFinantialSecurity(List<Financial_Security__c> lsFS) {
+        string sTmpVal = '';
+        if(lsFS==null) {
+            sTmpVal = 'Nil';
+        } else { 
+            Map<string, decimal> mapFSperCurr = new Map<string, decimal>();
+            for (Financial_Security__c fs:lsFS) {
+                decimal dAmount = FS.Amount__c;
+                if (mapFSperCurr.containsKey(FS.CurrencyIsoCode)) {
+                    dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);
+                }
+                mapFSperCurr.put(FS.CurrencyIsoCode, dAmount);
+            }
+            
+            for(string sCur:mapFSperCurr.keySet())
+                sTmpVal = sTmpVal + ' ' + sCur + ' ' + doFormatting(mapFSperCurr.get(sCur), ',', '.') + ';';
+        }
+        
+        return sTmpVal;
+    }
+
 
                         
 					if(CCToBeGenerated){
@@ -374,6 +396,9 @@ public class AMS_OscarCase_RiskMgmt {
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
 														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
 		
+        // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the finantial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
+        AACC.Finantial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinantialSecurity(mapFinancialSecurity.get(AccountId)) : '';
+
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
@@ -851,7 +876,7 @@ public class AMS_OscarCase_RiskMgmt {
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
-			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c
+			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
 	
@@ -874,24 +899,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Financial Securities>')){
-				sTmpVal = '';
-				if(lsFS==null)	sTmpVal = 'Nil';
-				else{
-					map<string, decimal> mapFSperCurr = new map<string, decimal>();
-					for(Financial_Security__c fs:lsFS){
-						decimal dAmount = FS.Amount__c;
-						if(mapFSperCurr.containsKey(FS.CurrencyIsoCode))
-							dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);					
-						
-						mapFSperCurr.put(FS.CurrencyIsoCode, dAmount);
-						//sTmpVal = sTmpVal + FS.Amount__c + ', valid till ' + (fs.Unlimited_Security__c?'Unlimited':GenerateDateForBulletin(FS.Expiry_Date__c)) + '; ';
-					}
-					
-					for(string sCur:mapFSperCurr.keySet())
-						sTmpVal = sTmpVal + ' ' + sCur + ' ' + doFormatting(mapFSperCurr.get(sCur), ',', '.') + ';';
-				}
-				
-				sMemoText = sMemoText.replace('<Financial Securities>', sTmpVal);
+				sMemoText = sMemoText.replace('<Financial Securities>', GenerateFinantialSecurity(lsFS));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<DEF Withdrawal reason>')){
