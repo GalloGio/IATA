@@ -148,15 +148,16 @@
     <listViews>
         <fullName>Exclusion_Emails</fullName>
         <columns>NAME</columns>
-        <columns>ID_Card__c</columns>
-        <columns>GDP_Products_Account_View__c</columns>
-        <columns>Billing_Account__c</columns>
-        <columns>Is_Global__c</columns>
         <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
         <columns>External_Id__c</columns>
         <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>Exclusion Emails</label>
+        <label>All Email Exclusion Relations</label>
         <language>en_US</language>
     </listViews>
     <nameField>
