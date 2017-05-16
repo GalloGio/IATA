@@ -52,7 +52,6 @@
         </subtabComponents>
     </customConsoleComponents>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -657,11 +656,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Exchange_Rate__c</fields>
-        <fields>Number_Of_Vouchers__c</fields>
-        <fields>AmountLastYearSales__c</fields>
-        <fields>Year__c</fields>
-        <fields>Vouchers_Issued_Last_Year__c</fields>
         <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
