@@ -8285,6 +8285,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Invalid IATA Code: Please enter a valid code.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Invoicing_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Invoicing_Contact</shortDescription>
+        <value>Invoicing&lt;br/&gt;Contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Is_Applicant_Parent_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10092,7 +10099,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Portal Admin</shortDescription>
-        <value>Portal&lt;br/&gt;Administrator</value>
+        <value>Portal&lt;br/&gt;Admin.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Position</fullName>
@@ -13107,6 +13114,78 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOther</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CCOther</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Add</shortDescription>
+        <value>Add CC Others</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Help_Text</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Help Text</shortDescription>
+        <value>To add recipients to this case please insert emails separated by "," (example1@example.com,example2@example.com)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Include_Additional_Recipients</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Include Additional Recipients</shortDescription>
+        <value>Include additional recipients</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Not_Found</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Not Found</shortDescription>
+        <value>No contact found with email {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Wrong_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Wrong Emails</shortDescription>
+        <value>Couldn&apos;t find any recipient with this email in our database, please note that they need to register in the portal as a new user so you can include them in future communication. {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers</shortDescription>
+        <value>CC Others</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Email</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13247,6 +13326,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_CaseNumber</shortDescription>
         <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Closed_More_Than_2_Months</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Status_Resolved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Status Resolved</shortDescription>
+        <value>Resolved</value>
     </labels>
     <labels>
         <fullName>ISSP_Cases</fullName>
@@ -16284,7 +16379,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>IATA Code</value>
+        <value>Related Account</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_LASTNAME</fullName>
@@ -17621,6 +17716,54 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Related contacts</shortDescription>
         <value>Related contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Contact</fullName>
+        <categories>ISSP, IFAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Contact</shortDescription>
+        <value>Relocate under another account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Current_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Current Account</shortDescription>
+        <value>Current Account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Description</shortDescription>
+        <value>Move contact under another account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Failed</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Failed</shortDescription>
+        <value>Relocation failed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_No_Accounts</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate No Accounts</shortDescription>
+        <value>There is no other account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Select_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Select Account</shortDescription>
+        <value>Move To</value>
     </labels>
     <labels>
         <fullName>ISSP_Reopen</fullName>
@@ -20224,7 +20367,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>s</value>
+        <value>identity</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
@@ -20259,6 +20402,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_ForgotPassword</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ForgotPassword</shortDescription>
+        <value>Forgot your password?</value>
+    </labels>
+    <labels>
         <fullName>OneId_Help_Community</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -20273,6 +20424,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Help Community Link</shortDescription>
         <value>http://www.iata.org/</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Home_PendingRequests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Home_PendingRequests</shortDescription>
+        <value>Pending Requests</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Home_Requested</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Home_Requested</shortDescription>
+        <value>Requested</value>
     </labels>
     <labels>
         <fullName>OneId_IATA_Code</fullName>
@@ -20291,6 +20456,38 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Our mission is to represent, lead and serve the airline industry</value>
     </labels>
     <labels>
+        <fullName>OneId_ISAGO_App_Description</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId ISAGO App Description</shortDescription>
+        <value>The IATA Safety Audit for Ground Operations (ISAGO) application has been developed to improve the safety of ground operations and reduce ground damage and injuries</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_1</fullName>
+		<categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_1</shortDescription>
+        <value>I agree to the use of my profile information and any other information I provide for the purpose of completing the ISAGO auditor application, training and qualification process.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_2</fullName>
+		<categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
+        <value>N/A</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_3</fullName>
+		<categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_3</shortDescription>
+        <value>N/A</value>
+    </labels>
+    <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -20305,6 +20502,29 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_JobFunction_Help_Msg</shortDescription>
         <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Job_Function</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Job_Function</shortDescription>
+        <value>Job Function</value>
+    </labels>	
+    <labels>
+        <fullName>OneId_Login</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Login</shortDescription>
+        <value>Log in</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginFail</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginFail</shortDescription>
+        <value>Your login attempt has failed. Make sure the email and password are correct.</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>
@@ -20333,6 +20553,21 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>OneId_NoTermsFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NoTermsFound</shortDescription>
+        <value>No Terms and Conditions found, contact system administrator</value>
+    </labels>
+    <labels>
+        <fullName>OneId_No_Apps_Availablr_for_You</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId No Apps Availablr for You</shortDescription>
+        <value>There are no more services available for you to subscribe.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Nothing_found</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -20354,7 +20589,31 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>http://extranet.iata.org/registration/pages/loginproblem.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Password</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>OneId_PasswordResetFail</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_PasswordResetFail</shortDescription>
+        <value>Reset Password Failed. Please contact your System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Password_ErrorBlank</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Password_ErrorBlank</shortDescription>
+        <value>Enter a value in the Password field.</value>
     </labels>
     <labels>
         <fullName>OneId_Please_Wait</fullName>
@@ -20379,6 +20638,83 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Press to Validate</shortDescription>
         <value>Press to Validate</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingCity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingCity</shortDescription>
+        <value>Billing City</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingCountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingCountry</shortDescription>
+        <value>Billing Country</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingPostal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingPostal</shortDescription>
+        <value>Billing Zip/Postal</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingState</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingState</shortDescription>
+        <value>Billing State/Province</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingStreet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingStreet</shortDescription>
+        <value>Billing Street</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BusinessFax</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BusinessFax</shortDescription>
+        <value>Business Fax</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BusinessInformation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BusinessInformation</shortDescription>
+        <value>Business Information</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_ICAODesignator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_ICAODesignator</shortDescription>
+        <value>ICAO Designator</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_Information</shortDescription>
+        <value>Profile Information</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_OfficeEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_OfficeEmail</shortDescription>
+        <value>Office Email</value>
     </labels>
     <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
@@ -20413,12 +20749,35 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Search your company</value>
     </labels>
     <labels>
+        <fullName>OneId_SelfRegister</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_SelfRegister</shortDescription>
+        <value>Not a member?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_SendPasswordResetEmail</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_SendPasswordResetEmail</shortDescription>
+        <value>Send Password Reset Email</value>
+    </labels>
+    <labels>
         <fullName>OneId_Sign_In</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Sign In</shortDescription>
         <value>Sign In</value>
+    </labels>
+    <labels>
+        <fullName>OneId_TermsAndConditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_TermsAndConditions</shortDescription>
+        <value>Terms and Conditions</value>
     </labels>
     <labels>
         <fullName>OneId_Terms_of_Use</fullName>
@@ -20451,6 +20810,22 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Type</shortDescription>
         <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Username</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Username</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Username_ErrorBlank</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Username_ErrorBlank</shortDescription>
+        <value>Enter a value in the email field.</value>
     </labels>
     <labels>
         <fullName>OneId_You_will_be_notified_by_email_when_you_can_access_the_new_service</fullName>
@@ -22201,7 +22576,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SF Base URL</shortDescription>
-        <value>https://iata.my.salesforce.com</value>
+        <value>https://iata--preprod.cs85.my.salesforce.com</value>
     </labels>
     <labels>
         <fullName>SIDRA_Automated_Case_Message</fullName>
@@ -22512,7 +22887,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Signaturit Endpoint</shortDescription>
-        <value>https://api.signaturit.com/v2/</value>
+        <value>https://api.sandbox.signaturit.com/v3/</value>
     </labels>
     <labels>
         <fullName>SiteTitle</fullName>
@@ -22973,23 +23348,23 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_new_application</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>new application</shortDescription>
-        <value>New Application</value>
+        <value>New Service</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_request_new_application</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>request new application</shortDescription>
-        <value>Request a New Application</value>
+        <value>Request a New Service</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_select_role</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>select role</shortDescription>
