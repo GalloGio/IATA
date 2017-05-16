@@ -4401,6 +4401,18 @@
             "Name": "AMS_OSCAR_APP_FINALIZATION",
             "Steps": [
               {
+                "Name": "STEP37",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "Update_BSPLink__c",
+                  "Create_Agency_Authorization__c",
+                  "STEP37__c"
+                ],
+                "IsDependent": false
+              },
+              {
                 "Name": "STEP1",
                 "Required": [],
                 "Actions": [],

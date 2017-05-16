@@ -485,6 +485,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 //using an already existing method to send email aler to user.
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
 
+                if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
                 createAgencyAuthorizations(updatedOscar);
 
             }
