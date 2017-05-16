@@ -86,7 +86,6 @@ private class BtchGDPReplicateTerrTest {
 		oAccreditation1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'ACC1';
 		oAccreditation1.WebStar_ID__c = null;
 		
-		oAccreditation1.Endorsed_Accredited_By__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
 		oAccreditation1.Class__c = refTableClass.Id; // this is used for testing BtchGDPReplicateTerritories
 		
 		sObjList.add(oAccreditation1);
@@ -190,7 +189,7 @@ private class BtchGDPReplicateTerrTest {
 		
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By__c, Endorsed_Accredited_By__r.Code__c 
+												, Endorsed_Accredited_By__c 
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
 										   		order by Id];
@@ -224,7 +223,7 @@ private class BtchGDPReplicateTerrTest {
 			+ '		AND (AIMS_ID__c != null)'
 			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
 			+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE ' 
-					+ ' Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
+					+ ' Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
 					+ ' AND ' 
 					+ ' Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') '
 					+ ' AND '

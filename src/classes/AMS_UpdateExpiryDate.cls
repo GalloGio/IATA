@@ -22,7 +22,7 @@ global class AMS_UpdateExpiryDate implements Database.Batchable<sObject> {
         List<AMS_Inspection__c> inspections = [select id, Accreditation_Endorsement_organisation__c, Accreditation_Endorsement_Status_code__c, Agency__c, Date_Organisation_Status_attained__c
                                                 from AMS_Inspection__c where Accreditation_Endorsement_Status_code__c = '0'
                                                                         AND Agency__c IN :agencyIDS
-                                                                        AND (Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA' OR Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM')];
+                                                                        AND (Account__r.Main_Accreditation_Organization__c = 'IATA' OR Account__r.Main_Accreditation_Organization__c = 'DOM')];
 
         Map<String, AMS_Inspection__c> agencyToInspection = new Map<String, AMS_Inspection__c>();
         for(AMS_Inspection__c i:inspections){

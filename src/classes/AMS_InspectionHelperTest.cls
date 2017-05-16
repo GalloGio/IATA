@@ -42,7 +42,7 @@ private class AMS_InspectionHelperTest {
 		agencyInspectionList.add(ins5);
 		insert agencyInspectionList;
 		
-		List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM'];
+		List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'DOM'];
 		for(AMS_Inspection__c i:inspections)
 		{            
 			if(i.Accreditation_Endorsement_Status_code__c == '0')
@@ -83,7 +83,7 @@ private class AMS_InspectionHelperTest {
                 
 		update updateAll;
                 
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'DOM'];
         for(AMS_Inspection__c i:inspections)
         {
             
@@ -146,7 +146,7 @@ private class AMS_InspectionHelperTest {
         
         insert agencyInspectionList;
 
-        List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA'];
+        List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
         {            
         	if(i.Accreditation_Endorsement_Status_code__c == '0')
@@ -181,7 +181,7 @@ private class AMS_InspectionHelperTest {
         		
         update updateAll;
                 
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
         {
 	    	if(i.Accreditation_Endorsement_Status_code__c == '0')
@@ -234,7 +234,7 @@ private class AMS_InspectionHelperTest {
         
         insert agencyInspectionList;
 
-		inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN'];
+		inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
         for(AMS_Inspection__c i:inspections)
         {
         	if(i.Accreditation_Endorsement_Status_code__c == '0')
@@ -264,7 +264,7 @@ private class AMS_InspectionHelperTest {
         updateAll.add(ins5);
         update updateAll;
                 
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
         for(AMS_Inspection__c i:inspections)
         {
             	if(i.Accreditation_Endorsement_Status_code__c == '0')

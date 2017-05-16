@@ -796,7 +796,7 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
 				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.Name
-				, Airline_Code__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c
+				, Airline_Code__c = territory.Appointment__r.Account__r.Main_Accreditation_Organization__c
 				, Airline_Name__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name  
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
@@ -817,7 +817,7 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
 				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
-				, Airline_Code__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c
+				, Airline_Code__c = territory.Appointment__r.Account__r.Main_Accreditation_Organization__c
 				, Airline_Name__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name  
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
@@ -855,7 +855,7 @@ public class ams2gdp_BusinessLogic
 
 		for(AMS_Inspection__c inspection : inspections)
 		{
-			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
+			String air_code = inspection.Account__r.Main_Accreditation_Organization__c; 
 
 			location_class_codes.add(inspection.Account__r.Location_Class__c);
 			air_codes.add(air_code);
@@ -885,7 +885,7 @@ public class ams2gdp_BusinessLogic
 		{
 			//-- GDP External Key = {INSPECTION_ID} 1 Inspection generate 1 accreditation record
 			String key = inspection.Id;
-			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
+			String air_code = inspection.Account__r.Main_Accreditation_Organization__c; 
 
 			Integer rank = (rankByAccount.containsKey(inspection.Account__c)) ? rankByAccount.get(inspection.Account__c)+1 : 1;
 			rankByAccount.put(inspection.Account__c, rank);
@@ -903,8 +903,6 @@ public class ams2gdp_BusinessLogic
 
 			//Class field is a Lookup & Location Class on Account is a Picklist 
 			if(location_class_references.containsKey(inspection.Account__r.Location_Class__c)) accreditation.Class__c = location_class_references.get(inspection.Account__r.Location_Class__c).Id;
-			
-			if(air_code_references.containsKey(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c)) accreditation.Endorsed_Accredited_By__c = air_code_references.get(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c).Id;
 			
 			//if(status_references.containsKey(inspection.Accreditation_Endorsement_Status_code__c)) accreditation.Status__c = status_references.get(inspection.Accreditation_Endorsement_Status_code__c).Id;
 			

@@ -29,7 +29,7 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 		//-- Query conditions 
 		String accreditation_condition = 'SELECT Related_Account__c '
 			+	'FROM Accreditation__c '
-			+	'WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+			+	'WHERE Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\')'
 			+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
