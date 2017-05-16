@@ -484,9 +484,9 @@ AND(
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Finantial_Security__c</fullName>
+        <fullName>Financial_Security__c</fullName>
         <externalId>false</externalId>
-        <label>Finantial Security</label>
+        <label>Financial Security</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>

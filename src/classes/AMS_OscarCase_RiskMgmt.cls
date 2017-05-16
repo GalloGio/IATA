@@ -277,7 +277,7 @@ public class AMS_OscarCase_RiskMgmt {
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
 					
     @TestVisible
-    private static string GenerateFinantialSecurity(List<Financial_Security__c> lsFS) {
+    private static string GenerateFinancialSecurity(List<Financial_Security__c> lsFS) {
         string sTmpVal = '';
         if(lsFS==null) {
             sTmpVal = 'Nil';
@@ -396,8 +396,8 @@ public class AMS_OscarCase_RiskMgmt {
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
 														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
 		
-        // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the finantial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
-        AACC.Finantial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinantialSecurity(mapFinancialSecurity.get(AccountId)) : '';
+        // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
+        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
@@ -899,7 +899,7 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			
 			if(sMemoText.containsIgnoreCase('<Financial Securities>')){
-				sMemoText = sMemoText.replace('<Financial Securities>', GenerateFinantialSecurity(lsFS));
+				sMemoText = sMemoText.replace('<Financial Securities>', GenerateFinancialSecurity(lsFS));
 			}
 			
 			if(sMemoText.containsIgnoreCase('<DEF Withdrawal reason>')){
