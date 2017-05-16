@@ -207,6 +207,10 @@
                     </tr>
                     <tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','','none')}">
                         <td class="label" colspan="3" style="font-weight: bold">{!$Label.ISSP_AMS_Branch_Office_address_details}</td>
+                    </tr>
+                    <tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','','none')}">
+                        <td class="label">{!$Label.BR_Trade_Name}</td>
+                        <td colspan="2">{!newForm.Trade_Name__c}</td>                    
                     </tr>   
                     <tr style="display:{!IF(newCase.Reason1__c=='New BR Abroad','','none')}">
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}</td>
@@ -306,6 +310,10 @@
                     </apex:outputPanel>
                     <tr>
                         <td class="label" colspan="3" style="font-weight: bold">{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">{!$Label.BR_Trade_Name}</td>
+                        <td colspan="2">{!newForm.Trade_Name__c}</td>                    
                     </tr>   
                     <tr>
                         <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}</td>

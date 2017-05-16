@@ -31,6 +31,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, list<Account>> mapAccntValues = new map<id, list<Account>>();	//contains all the accounts associated with a HO.
     private static map<id, Account> mapAccntToUpdate = new map<id, account>();	//Stores account to be updated (Status and reason code)
 	private static set<id> setAccntIdIRRToClear = new set<id>();	//Account IDs for which a clear of irregularities is needed
+	private static set<id> setAccntIdToClearExpDate = new set<id>();	//Account IDs for which a clear of expiry date is needed
 	private static map<id, list<Agency_Applied_Change_code__c>> mapExistingChangeCodes = new map<id, list<Agency_Applied_Change_code__c>>();
 	private static map<string, operational_Calendar__c> mapOperationalCalendar = new map<string, operational_Calendar__c>();
     private static set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
@@ -340,6 +341,9 @@ public class AMS_OscarCase_RiskMgmt {
 					
 				if(!setAccntIdIRRToClear.isEmpty())
 					ClearIrregularities(setAccntIdIRRToClear);
+
+				if(!setAccntIdToClearExpDate.isEmpty())
+					ClearExpiryDate(setAccntIdToClearExpDate);
 			}
 		}
 	}
@@ -640,6 +644,9 @@ public class AMS_OscarCase_RiskMgmt {
 		
 		if(cc.Clear_Irregularities__c)
 			setAccntIdIRRToClear.add(AccountId);
+
+		if(cc.Clear_Expiry_Date__c)
+			setAccntIdToClearExpDate.add(AccountId);
 		
 		if(bAccntToUpd)
 			mapAccntToUpdate.put(AccountId, accnt);
@@ -672,6 +679,20 @@ public class AMS_OscarCase_RiskMgmt {
 					IRR.Irregularities_Expired__c = true;
 				
 				update lsIRRToClear;
+			}
+		}
+	}
+
+	//Method set to clear all expiry dates, if the change code foresee this.
+	private static void ClearExpiryDate(set<id> setAccntToClear){
+		if(!setAccntToClear.isEmpty()){
+			List<Account> lsAccToClear = [SELECT Id, Expiry_Date__c FROM Account WHERE Id IN :setAccntToClear];
+																 
+			if(!lsAccToClear.isEmpty()){
+				for(Account acc: lsAccToClear)
+					acc.Expiry_Date__c = null;
+				
+				update lsAccToClear;
 			}
 		}
 	}
@@ -850,7 +871,7 @@ public class AMS_OscarCase_RiskMgmt {
 	private static list<AMS_ChangeCodes__c> ReadConfiguration(){
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
-			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
+			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Clear_Expiry_Date__c, Integration_RecId__c,
 			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
