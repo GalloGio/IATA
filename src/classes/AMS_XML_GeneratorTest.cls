@@ -458,7 +458,7 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id =  :ag1.Id
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
 
@@ -502,7 +502,7 @@ AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name='Account.GDP_Opt_In__c',Ope
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id in :sAgIDs
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
         

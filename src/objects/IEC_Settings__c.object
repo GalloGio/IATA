@@ -75,7 +75,7 @@
     <fields>
         <fullName>EBC_ExactTarget_Password__c</fullName>
         <defaultValue>&quot;Alban2016%&quot;</defaultValue>
-        <description>EBC ExactTarget Password</description>
+        <description>EBC ExactTarget Password</description>        
         <externalId>false</externalId>
         <inlineHelpText>EBC ExactTarget Password</inlineHelpText>
         <label>EBC ExactTarget Password</label>
