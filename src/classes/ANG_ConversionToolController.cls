@@ -12,8 +12,39 @@ public with sharing class ANG_ConversionToolController {
 	public Account iataCountryName { get; set; }
 	public List<ANG_ConversionToolController.OverviewTableRow> OverviewTable { get; set; }
 	public ANG_ConversionHelper.ControllerLightStructure finalStruct;
-	public List<ANG_ConversionToolController.wrapperHierarchyStructure> wrStructure {get; set;}	
+	public List<ANG_ConversionToolController.wrapperHierarchyStructure> wrStructure {get; set;}
+	public Id migrationBacthId {get;set;}
+	public boolean batchStatusBool{get;set;}
+	public AsyncApexJob batchJob{get;set;}
+	public boolean pollerBool{get;set;}
+	public Integer getBatchStatus{get;set;}
 
+
+    public Set<String> notes{
+            get{
+                            
+                            notes = new Set<String>();
+                            notes.add('Use the Country Selection to select the desired country.');
+                            notes.add('All the valid Hierarchies will migrated once the "Run Migration" button is pushed.');
+                            notes.add('To navigate to the detail related with Invalid Hierarchies push the Detail link in front of each invalid type of hierarchies.');
+                            notes.add('The Migration Tool will do the following:');
+                            notes.add('    1) Change the Location Type from HO/AO->HE and BR/SA->AE');
+ 							notes.add('    2) Change the Level of Hierarchies from 3 levels to 2 levels if applicable.');
+ 							notes.add('    3) Change the Parent ID in case of BR-SA relation to HO->SA / HE->AE.');
+ 							notes.add('    4) Set the Hierarchy as "Migrated".');
+
+
+                    return notes;
+            }
+            set;
+	}
+
+    public List<String> noteList{
+        get{
+                return new List<String>(notes);
+        }
+        set;
+	}
 
 	public Integer errorDetailCode;
 	
@@ -37,6 +68,10 @@ public with sharing class ANG_ConversionToolController {
         if (selectedCountryName != null){
         	system.debug('----------------------selectedCountryName = '+selectedCountryName );
         }
+
+        batchStatusBool = false;
+        getBatchStatus = 0;
+
     }
     
 
@@ -47,10 +82,21 @@ public with sharing class ANG_ConversionToolController {
 		selectedCountryName = iataCountry.Name;
 		system.debug('----------------------iataCountryName.IATA_ISO_Country__c = '+iataCountryName.IATA_ISO_Country__c );
 		system.debug('----------------------selectedCountryName = '+selectedCountryName );
-		finalStruct = ANG_ConversionHelper.runFullAnalyses(selectedCountryName);
-		OverviewTable = createOverviewTable(finalStruct);
-		displayTable=true;
 
+		if(selectedCountryName == 'UNITED STATES OF AMERICA'){
+
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'The Country you have selected is not part of the scope. Please seletect another country.'));
+			finalStruct = null;
+			OverviewTable = null;
+			displayTable=false;
+
+		}else{
+
+			finalStruct = ANG_ConversionHelper.runFullAnalyses(selectedCountryName);
+			OverviewTable = createOverviewTable(finalStruct);
+			displayTable=true;
+		}
+		
 		return null;
 	} 
 
@@ -75,10 +121,15 @@ public with sharing class ANG_ConversionToolController {
 
 
 	public pageReference runMigration(){
-		/**
-		* runMigration(selectedCountryName); should be run here - to do in the future
-		*/
+		
+		migrationBacthId = ANG_ConversionHelper.runMigration(selectedCountryName);
+
+		batchStatusBool = true;
+		pollerBool = true;
+		//pollerBool = false;
+
 		return null;
+		
 	}
 
 
@@ -94,10 +145,18 @@ public with sharing class ANG_ConversionToolController {
 				selectedHierarchyStructs.add(wrStruct.struct);
 			}
 		}
-		System.debug('------------ These are the selected hierarchies... --------------');
-		for(ANG_ConversionHelper.HierarchyStructure struct: selectedHierarchyStructs) {
-			system.debug('----------------- struct: '+struct);
+
+		if(selectedHierarchyStructs.isEmpty()){
+			System.debug('migrateSelectedHierarchies:returning null!!');
+			return null;
 		}
+
+		migrationBacthId = ANG_ConversionHelper.runSpecificMigration(selectedHierarchyStructs);
+
+		batchStatusBool = true;
+		pollerBool = true;
+		//pollerBool = false;
+
 		return null;
 	}
 
@@ -125,7 +184,7 @@ public with sharing class ANG_ConversionToolController {
 		table.add(tblRow);
 
 		tblRow = new ANG_ConversionToolController.OverviewTableRow();
-		tblRow.messageText = 'Total Migrated Hierarchies';
+		tblRow.messageText = 'Total Hierarchies Using New Model (excluding single agencies)';
 		tblRow.count = finalStruct.totalMigratedHierarchies;
 		tblRow.isDetail = false;
 		table.add(tblRow);
@@ -155,6 +214,23 @@ public with sharing class ANG_ConversionToolController {
 		}
 
 		return table;
+	}
+
+	public void getBatchStatus(){
+		
+        if(migrationBacthId == null){
+            pollerBool = true;
+        }
+        
+		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :migrationBacthId];
+
+		if(batchJob.status == 'Ended' || batchJob.status == 'Completed')
+			pollerBool = false;
+		else
+			pollerBool = true;
+
+		getBatchStatus++;
+
 	}
 
 

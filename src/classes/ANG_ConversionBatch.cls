@@ -1,4 +1,4 @@
-global class ANG_ConversionBatch implements Database.Batchable<sObject> {
+global class ANG_ConversionBatch implements Database.Batchable<sObject>, Database.Stateful {
 
 	global List<ANG_ConversionHelper.HierarchyStructure> structures;
 	
@@ -27,8 +27,9 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject> {
    		if(Test.isRunningTest()){
 			ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>(structures));
    		}
-		else
+		else{
 			ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>{structures.get(this.run)});
+		}
 
    		this.run++;
 
@@ -41,6 +42,7 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject> {
 
 		//Below code will fetch the job Id
 		AsyncApexJob a = [Select a.TotalJobItems, a.Status, a.NumberOfErrors, a.JobType, a.JobItemsProcessed, a.ExtendedStatus, a.CreatedById, a.CompletedDate From AsyncApexJob a WHERE id = :BC.getJobId()];
+		
 		System.debug('$$$ Jobid is'+BC.getJobId());
 
 		String userName = UserInfo.getUserName();
@@ -51,7 +53,7 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject> {
 		mail.setToAddresses( new String[] {userEmail} );
 		mail.setSenderDisplayName('Apex Newgen Conversion Batch Processing Module');
 		mail.setSubject('Batch Processing '+a.Status);
-		mail.setPlainTextBody('The Batch Apex job processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed);
+		mail.setPlainTextBody('The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed );
 
 		 if(Test.isRunningTest()){
 		 	return;
