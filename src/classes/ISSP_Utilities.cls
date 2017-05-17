@@ -102,7 +102,7 @@ public without sharing class ISSP_Utilities {
 
 		if(u.Contact.Account.CNS_Account__c && u.Contact.Account.IATA_ISO_Country__r.CNS_Country__c &&
 			(u.Contact.Account.RecordType.DeveloperName == 'IATA_Agency' && u.Contact.Account.CNS_Agency__c ) ||
-			(u.Contact.Account.RecordType.DeveloperName == 'Standard_Account' && u.Contact.Account.Sector__c == 'Cargo Agency')) {
+			(u.Contact.Account.RecordType.DeveloperName == 'Standard_Account' && u.Contact.Account.Sector__c == 'Cargo Agent')) {
 				isCNS = true;
 		}
 

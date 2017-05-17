@@ -55,7 +55,7 @@ public with sharing class NewParticipantByEmailCtrl {
  			
             List<Participant__c> ps = [SELECT Id FROM Participant__c WHERE Local_Governance__c= :p.Local_Governance__c AND Contact__c = :p.Contact__c];
             if(ps.size()>0){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this local group.'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+contacts.values()[0].Id+'" target="_blank">'+contacts.values()[0].Name+'</a> is already a participant for this Reg/Div Group.'));
                 system.debug(LoggingLevel.ERROR,'####### participant duplicate'); 
                 return null;
             }
