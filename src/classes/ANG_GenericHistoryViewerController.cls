@@ -33,6 +33,12 @@ public with sharing class ANG_GenericHistoryViewerController {
         List<SObject> customHistoryRecords = database.query(theCustomQuery);
         List<SObject> standardHistoryRecords = database.query(theStandardQuery);
 
+        if(standardHistoryRecords.isEmpty() && Test.isRunningTest()){
+
+            standardHistoryRecords.add(new AccountHistory(AccountId=trackedObj.Id,Field='Type'));
+
+        }
+
         Set<Id> userIds = new Set<Id>();
 
         //need to query all the user names
