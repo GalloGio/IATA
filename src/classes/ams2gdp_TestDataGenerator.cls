@@ -568,7 +568,7 @@ public class ams2gdp_TestDataGenerator
 		return result;
 	}
 
-      // SELECT AMS_GDP_Key__c, RecordType.Name, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By__c
+      // SELECT AMS_GDP_Key__c, RecordType.Name, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By_Formula__c
 
 	public static List<Accreditation__c> generateAccreditations(Integer nb, Boolean doInsert)
 	{
@@ -586,7 +586,7 @@ public class ams2gdp_TestDataGenerator
 		//		AMS_GDP_Key__c = 'C'+x,
 		//		AIMS_Id__c=(Math.mod(x, 2)==0) ? null:'ABCD123' + x,
 		//		Webstar_Id__c=(Math.mod(x, 2)==0) ?'ABCD123'+x:null,
-		//		Endorsed_Accredited_By__c= refTable[x].Id,
+		//		Endorsed_Accredited_By_Formula__c= refTable[x].Id,
 		//		Related_Account__c=accounts[x].Id,
 		//		RecordTypeId=recordTypes.get('Live')
 		//	));

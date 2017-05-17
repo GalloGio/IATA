@@ -113,7 +113,7 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Endorsed_Accredited_By__c</fullName>
+        <fullName>Endorsed_Accredited_By_Formula__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISNULL(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

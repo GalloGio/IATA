@@ -189,7 +189,7 @@ private class BtchGDPReplicateTerrTest {
 		
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By__c 
+												, Endorsed_Accredited_By_Formula__c 
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
 										   		order by Id];
@@ -223,7 +223,7 @@ private class BtchGDPReplicateTerrTest {
 			+ '		AND (AIMS_ID__c != null)'
 			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
 			+ '		AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE ' 
-					+ ' Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
+					+ ' Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') ' 
 					+ ' AND ' 
 					+ ' Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') '
 					+ ' AND '

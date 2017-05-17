@@ -28,7 +28,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
         }
         else if(job == 'updateAccreditation')
         {
-            query = 'SELECT AMS_GDP_Key__c, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By__c  FROM Accreditation__c WHERE AMS_GDP_Key__c = null AND Related_GDP_Products_Account_View__c!=null AND Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') AND RecordType.DeveloperName = \'GDP\' ';
+            query = 'SELECT AMS_GDP_Key__c, RecordType.DeveloperName, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By_Formula__c  FROM Accreditation__c WHERE AMS_GDP_Key__c = null AND Related_GDP_Products_Account_View__c!=null AND Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') AND RecordType.DeveloperName = \'GDP\' ';
         }
         else if(job == 'updateGDPPhone')
         {
@@ -245,14 +245,14 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
             if(String.isNotBlank(acc.AIMS_Id__c))
             {
                 String aims_id = acc.AIMS_Id__c.removeEnd('ACC'+acc_id+'GDP');     
-                legacy_ids.add(aims_id+acc.Endorsed_Accredited_By__c);
+                legacy_ids.add(aims_id+acc.Endorsed_Accredited_By_Formula__c);
             }
 
             //{EXTERNAL_ID}{PHONE_TYPE}[GDP]
             if(String.isNotBlank(acc.Webstar_Id__c))
             {
                 String webstar_id = acc.Webstar_Id__c.removeEnd('ACC'+acc_id+'GDP');   
-                legacy_ids.add(webstar_id+acc.Endorsed_Accredited_By__c);
+                legacy_ids.add(webstar_id+acc.Endorsed_Accredited_By_Formula__c);
             }
         }
 
@@ -270,7 +270,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
             if(String.isNotBlank(acc.AIMS_Id__c))
             {
                 String aims_key = acc.AIMS_Id__c.removeEnd('ACC'+acc_id+'GDP');
-                    aims_key = aims_key+acc.Endorsed_Accredited_By__c;
+                    aims_key = aims_key+acc.Endorsed_Accredited_By_Formula__c;
 
                 if(inspectionsByLegacyId.containsKey(aims_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(aims_key)+'GDP';
                 
@@ -278,7 +278,7 @@ global class ams2gdp_Batch_Update implements Database.Batchable<sObject> , Datab
             else if(String.isNotBlank(acc.Webstar_Id__c))
             {
                 String webstar_key = acc.Webstar_Id__c.removeEnd('ACC'+acc_id+'GDP');
-                    webstar_key = webstar_key+acc.Endorsed_Accredited_By__c;
+                    webstar_key = webstar_key+acc.Endorsed_Accredited_By_Formula__c;
 
                 if(inspectionsByLegacyId.containsKey(webstar_key)) acc.AMS_GDP_Key__c = inspectionsByLegacyId.get(webstar_key)+'GDP'; 
             }

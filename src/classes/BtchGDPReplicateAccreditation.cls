@@ -42,7 +42,7 @@ global class BtchGDPReplicateAccreditation implements Database.Batchable<sObject
                  **/
                 gdpRecord.Accreditation_ID__c = liveRecord.Accreditation_ID__c;
                 gdpRecord.Class__c = liveRecord.Class__c;
-                // gdpRecord.Endorsed_Accredited_By__c = liveRecord.Endorsed_Accredited_By__c;
+                // gdpRecord.Endorsed_Accredited_By_Formula__c = liveRecord.Endorsed_Accredited_By_Formula__c;
                 gdpRecord.Last_change_date__c = liveRecord.Last_change_date__c;
                 gdpRecord.Last_re_inspection_date__c = liveRecord.Last_re_inspection_date__c;
                 gdpRecord.Original_approval_date__c = liveRecord.Original_approval_date__c;
@@ -141,7 +141,7 @@ global class BtchGDPReplicateAccreditation implements Database.Batchable<sObject
                     + '     AND LastModifiedDate < ' + btchRepAcc.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
                     + '     AND (AIMS_ID__c != null OR Webstar_ID__c != null)'
                     + '     AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('Adjacent_Airport__c', 'Live') + '\''
-                    + '     AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null)';                   
+                    + '     AND Related_Account__c IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null)';                   
                 
                 System.debug('SSS: SOQL Query: ' + btchProc.query);
     
