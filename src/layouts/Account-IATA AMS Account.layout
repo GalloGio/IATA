@@ -294,6 +294,10 @@
                 <field>Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Default_date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>License_Number__c</field>
             </layoutItems>
@@ -734,6 +738,18 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Year__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
+        <fields>IsAgencyEligibleForCountryAverage__c</fields>
+        <fields>IsAgencyEligible__c</fields>
+        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
+        <sortField>Year__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>AMS_Agency_Operations__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -792,18 +808,6 @@
         <fields>Child_Account__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>AmountLastYearSales__c</fields>
-        <fields>Amount_Currency__c</fields>
-        <fields>Year__c</fields>
-        <fields>Number_Of_Vouchers__c</fields>
-        <fields>IsAgencyEligibleForCountryAverage__c</fields>
-        <fields>IsAgencyEligible__c</fields>
-        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
-        <sortField>Year__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
