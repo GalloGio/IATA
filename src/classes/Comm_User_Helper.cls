@@ -4,6 +4,7 @@ global without sharing class Comm_User_Helper {
   public static final string ISSP ='ISSP';
   public static final string IEC = 'IEC';
   public static final string CNS = 'CNS';
+  public static final String ONEIDENTITY = 'IDENTITY';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
@@ -268,7 +269,8 @@ global without sharing class Comm_User_Helper {
             '{!Community_Name}' => portalName + ' Customer Portal',
             '{!Community_Url}' => link, 
             '{!$Label.ISSP_Email_Here}' => 'here',
-            '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply
+            '{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
+            '{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
         };
 
         return mapBodyParamsIssp;
@@ -521,8 +523,17 @@ global without sharing class Comm_User_Helper {
                   template = 'Communities_Forgot_Password_Email3_CNS';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');
               }
-               
+              else if(Community == ONEIDENTITY) {
+                  system.debug('prepare email body for: ' + ONEIDENTITY);
+                  string prefix = OneIdUtils.getSiteCompleteUrl();
+                  link = prefix + '/s/login?'+encodedPart;
+                  //template = 'Communities_Forgot_Password_Email3';
+                  template = 'Identity_Changed_Password_Email_Custom';
+                  //system.debug('basto1p: password='+password);
+                  emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, ONEIDENTITY);
+              }
 
+              system.debug('template used in email: '+template);
                 Comm_User_Helper.sendEmail( template ,emailWrap, con, bccCS, Community);
 
            
