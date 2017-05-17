@@ -78408,6 +78408,14 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Airline_HO_Name</fullName>
+        <active>true</active>
+        <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
+        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
         <active>true</active>
         <description>BR and SA Standard Account Parent Id must be filled.</description>
