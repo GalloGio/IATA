@@ -26,6 +26,15 @@ public class ANG_RiskEventGenerator {
 		}
 		set;
 	}
+    
+    
+    public static Boolean skipStatusAssignment{
+        get{
+            if(skipStatusAssignment == null) skipStatusAssignment = false;
+            return skipStatusAssignment;
+        }
+        set;
+    }
 
 	// ***************************************
 	// ********* config variables ************
@@ -203,7 +212,7 @@ public class ANG_RiskEventGenerator {
 			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
 
-			if(String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')){
+			if((String.isEmpty(re.ANG_Event_Status__c) || !re.ANG_Event_Status__c.contains('_')) && !skipStatusAssignment ){
 				if(re.ANG_Issued_Date__c > System.today() || re.ANG_Expiration_Date__c <= System.today()) re.ANG_Event_Status__c = 'Inactive';
 				else re.ANG_Event_Status__c = 'Active';
 				
