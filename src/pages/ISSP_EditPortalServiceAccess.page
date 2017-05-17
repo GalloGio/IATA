@@ -105,7 +105,12 @@
                             <div class="col-lg-2"><apex:commandButton onClick="showReasonModalDeny();" rerender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!OR(AND(Operation == 'IFAP', AccessStatus == 'Access Requested'), AND(Operation != 'IFAP', OR(AccessStatus == 'Access Granted', AccessStatus == 'Access Requested')))}" value="{!$Label.ISSP_Deny_Access}" id="DenyAccess"/></div>
                             <div class="col-lg-4"><apex:commandButton action="{!AssignIFAPContact}" styleclass="btn btn_iata_primary btn-block" rendered="{!(Operation == 'IFAP')}" value="{!$Label.ISSP_Assign_IFAP}" id="assignIFAP"/></div>
                         </apex:outputPanel>
-                            </div>
+
+                        <!--This div is for EASY PAY Denny Access button Logic-->
+                        <div class="col-lg-2">
+                          <apex:commandButton onclick="showReasonModalDeny();" reRender="pgBlock" styleclass="btn btn_iata_primary btn-block" rendered="{!CONTAINS(operation,'EasyPay') && (AccessStatus == 'Access Granted')}" value="{!$Label.ISSP_Deny_Access}"/></div>
+                         </div>
+
                         <table class="table table-condensed" style="margin-top:20px;">
                             <tr >
                                 <th class="col-md-3">{!$ObjectType.Contact.fields.Name.Label}</th>
@@ -114,7 +119,7 @@
                             
                             <tr>
                                 <th>{!$ObjectType.Portal_Applications__c.fields.Name.Label}</th>
-                                <td><apex:outputField id="outps" value="{!PSA.PortalServiceTranslatedName__c }"/>11</td>
+                                <td><apex:outputField id="outps" value="{!PSA.PortalServiceTranslatedName__c }"/></td>
                             </tr>
                             
                             <tr>
@@ -122,6 +127,13 @@
                                 <td>
                                     <apex:outputField id="outStatus" value="{!PSA.Right__c}"  styleClass="form-control" />
                                 </td>
+                            </tr>
+
+                            <tr style="{!IF(PSA.ANG_Portal_Service_Role__c == '','display:none','')}">                                                            
+                                <th>{!$ObjectType.Portal_Application_Right__c.fields.ANG_Portal_Service_Role__c.Label}</th>                                
+                                  <td>
+                                    <apex:outputField id="outPortalRole" value="{!PSA.ANG_Portal_Service_Role__c}" styleClass="form-control"/>
+                                  </td>                                                             
                             </tr>
                             
                             <tr>
