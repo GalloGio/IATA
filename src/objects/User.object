@@ -1716,6 +1716,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <operation>equals</operation>
             <value>S</value>
         </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
+        </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>
         <sharedTo>

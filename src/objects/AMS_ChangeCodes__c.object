@@ -112,6 +112,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Clear_Expiry_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Clear Expiry Date</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Clear_Irregularities__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

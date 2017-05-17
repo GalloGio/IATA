@@ -181,7 +181,9 @@ public class AMS_AccountTriggerHandler {
             }
 
             AccountChangesStruct struct = new AccountChangesStruct(accountChanges,acct);
+            if(acct.Source_System__c == null || String.isBlank(acct.Source_System__c) || acct.Source_System__c.toUpperCase() != 'WEBSTAR') {
             accountChangesList.add(struct);
+            }
         }
 
          if(!accountChangesList.isEmpty()){
