@@ -12,7 +12,9 @@ global class SCIMUserAttributeGeneratorPlugin extends UserProvisioning.UserProvi
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, Process.PluginDescribeResult.ParameterType.STRING, false),
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EXTERNALID, Process.PluginDescribeResult.ParameterType.STRING, false),
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EMAIL, Process.PluginDescribeResult.ParameterType.STRING, false),
-			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, Process.PluginDescribeResult.ParameterType.STRING, false)
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_LANGUAGE, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_PROJECT, Process.PluginDescribeResult.ParameterType.STRING, false)
             //new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_MOBILE, Process.PluginDescribeResult.ParameterType.STRING, false)
         };
 

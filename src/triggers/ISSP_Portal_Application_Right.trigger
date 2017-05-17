@@ -1,4 +1,4 @@
-trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after insert, after update) {
+trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after insert, after update, after delete) {
     
     if(PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
     
@@ -21,8 +21,12 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
     ANG_PortalApplicationRightHandler handler = new ANG_PortalApplicationRightHandler();
     if(Trigger.isAfter && Trigger.isInsert) handler.onAfterInsert();
     if(Trigger.isAfter && Trigger.isUpdate) handler.onAfterUpdate();
+    if(Trigger.isAfter && Trigger.isDelete) handler.onAfterDelete();
 	//end of ANG
     
+    if(Trigger.isDelete) return;
+    //methods below this line should not run for delete cases
+
     for(Portal_Application_Right__c access : trigger.new){
         system.debug('ONE RECORD');
         system.debug('APP NAME: ' + access.Application_Name__c);
