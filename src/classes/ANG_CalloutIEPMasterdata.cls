@@ -16,7 +16,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		
 		String body = serializeData(obj);
 
-		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, mappingObj.Credential__c,mappingObj.client_id__c,mappingObj.client_secret__c);
+		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c);
 
 	}
 
@@ -44,21 +44,6 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		else
 			System.debug('ANG_CalloutIEPMasterdata: Payload sent with success.');
 
-
-	}
-
-
-	private class IEPMasterDataPayload {
-
-		String  AccountIATACode;
-		Boolean AllHierarchy;
-
-		public IEPMasterDataPayload(String iataCode, Boolean allHierarchyb){
-			
-			this.AccountIATACode = iataCode;
-			this.allHierarchy = allHierarchyb;
-		
-		}
 
 	}
 
