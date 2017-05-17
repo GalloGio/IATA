@@ -21,7 +21,7 @@ public class ANG_PermissionSetHelper {
 
 	//constructor to use the managePermissions method with a single permission set (not in use right now)
 	/*public ANG_PermissionSetHelper(String permissionSet, Set<Id> contactsToAdd, Set<Id> contactsToRemove){
-		PermissionChange change = new PermissionChange(permissionSet);
+		PermissionChange change = new PermissionChange(permissionSet, false);
 		change.contactsToAdd.addAll(contactsToAdd);
 		change.contactsToRemove.addAll(contactsToRemove);
 
@@ -48,35 +48,61 @@ public class ANG_PermissionSetHelper {
 
 		//create fetch list of involved contacts
 		Map<Id, Id> users = new Map<Id, Id>();
+		Map<String, Id> connectedApps = new Map<String, Id>();
 		for(PermissionChange change : changes.values()){
 			for(Id contact : change.contactsToAdd) users.put(contact, null);
 			for(Id contact : change.contactsToRemove) users.put(contact, null);
+
+			if(String.isNotEmpty(change.provisioningAppName)) connectedApps.put(change.provisioningAppName, null);
 		}
 
 		//find the correct user for each contact
 		for(User u : [SELECT Id, ContactId FROM User WHERE ContactId IN :users.keySet() AND IsActive = true]) users.put(u.ContactId, u.Id);
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] users - ' + users);
 
 		//find assignments already in place
 		Map<String, PermissionSetAssignment> assignments = new Map<String, PermissionSetAssignment>();
 		for(PermissionSetAssignment a : [SELECT Id, AssigneeId, PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId IN :users.values() AND PermissionSetId IN :permissions.values()]){
 			assignments.put(''+a.AssigneeId+a.PermissionSetId, a);
 		}
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] assignments - ' + assignments);
 		
 		//apply changes
 		List<PermissionSetAssignment> newPermissions = new List<PermissionSetAssignment>();
 		List<PermissionSetAssignment> permissionsToDelete = new List<PermissionSetAssignment>();
+		List<UserProvisioningRequest> provRequests = new List<UserProvisioningRequest>();
 
 		for(PermissionChange change : changes.values()){
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] change - ' + change);
+
 			Id permissionSetId = permissions.get(change.permissionSetName);
 			for(Id contact : change.contactsToAdd){
 				//check if contact already has the permission set assigned
 				//if not, create a new assignment
 				String key = ''+users.get(contact)+permissionSetId;
-				if(!assignments.containsKey(key)) newPermissions.add(
-					new PermissionSetAssignment(
-						AssigneeId = users.get(contact)
-						, PermissionSetId = permissionSetId
-					));
+
+				System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] key - ' + key);
+				if(!assignments.containsKey(key)){
+					newPermissions.add(
+						new PermissionSetAssignment(
+							AssigneeId = users.get(contact)
+							, PermissionSetId = permissionSetId
+						)
+					);
+
+					if(change.needsProvisioning){
+						provRequests.add(
+							new UserProvisioningRequest(
+								AppName = change.provisioningAppName
+								, ConnectedAppId = change.provisioningAppId
+								, Operation = 'Create'
+								, ApprovalStatus = 'NotRequired'
+								, SalesforceUserId = users.get(contact)
+								, state = 'New'
+							)
+						);
+					}
+				}				
 			}
 			for(Id contact : change.contactsToRemove){
 				String key = ''+users.get(contact)+permissionSetId;
@@ -85,7 +111,12 @@ public class ANG_PermissionSetHelper {
 			}
 		}
 
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] newPermissions - ' + newPermissions);
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] provRequests - ' + provRequests);
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] permissionsToDelete - ' + permissionsToDelete);
+
 		if(!newPermissions.isEmpty()) insert newPermissions;
+		if(!provRequests.isEmpty()) insert provRequests;
 		if(!permissionsToDelete.isEmpty()) delete permissionsToDelete;
 	}
 
@@ -99,14 +130,24 @@ public class ANG_PermissionSetHelper {
 
 	public void addPermission(String permissionSet, Id contact) {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
-		changes.get(permissionSet).contactsToAdd.add(contact);
+
 		permissionsChanged = true;
+		changes.get(permissionSet).contactsToAdd.add(contact);
 	}
 
 	public void removePermission(String permissionSet, Id contact) {
 		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
-		changes.get(permissionSet).contactsToRemove.add(contact);
+
 		permissionsChanged = true;
+		changes.get(permissionSet).contactsToRemove.add(contact);
+	}
+
+	public void setProvisioning(String permissionSet, Connected_App_Roles__c role) {
+		if(!changes.containsKey(permissionSet)) changes.put(permissionSet, new PermissionChange(permissionSet));
+
+		changes.get(permissionSet).needsProvisioning = true;
+		changes.get(permissionSet).provisioningAppName = role.Connected_App_Provisioning_Name__c;
+		changes.get(permissionSet).provisioningAppId = role.Provisioning_Id__c;
 	}
 
 	public Boolean isChanged(){
@@ -115,6 +156,16 @@ public class ANG_PermissionSetHelper {
 
 	public class PermissionChange {
 		private String permissionSetName;
+		private String provisioningAppName;
+		private String provisioningAppId;
+
+		private Boolean needsProvisioning{
+			get{
+				if(needsProvisioning == null) needsProvisioning = false;
+				return needsProvisioning;
+			}
+			set;
+		}
 
 		public Set<Id> contactsToAdd{
 			get{

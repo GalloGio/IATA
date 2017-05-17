@@ -12,6 +12,7 @@ public class UserProvisioningUtils {
     public static final String PARAM_NEXT_RECON_OFFSET = 'nextReconOffset';
     public static final String PARAM_USERPAYLOAD = 'userPayload';
     public static final String PARAM_UPASTATUS = 'UPAStatus';
+    public static final String PARAM_CALLPARAMS = 'CallParams';
 
     private static final Integer MAX_LOG_LEN = 1300;
 

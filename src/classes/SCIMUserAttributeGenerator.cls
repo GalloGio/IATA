@@ -7,6 +7,8 @@ global class SCIMUserAttributeGenerator {
     public static final String PARAM_EXTERNALID = 'externalId';
     public static final String PARAM_ENTITLEMENT = 'entitlement';
     public static final String PARAM_MOBILE = 'mobile';
+    public static final String PARAM_LANGUAGE = 'language';
+    public static final String PARAM_PROJECT = 'project';
  
     global SCIMUser getMappedAttributes(Process.PluginRequest request){
         String userName = (String)request.inputParameters.get(PARAM_USERNAME);
@@ -15,9 +17,13 @@ global class SCIMUserAttributeGenerator {
         String externalid = (String)request.inputParameters.get(PARAM_EXTERNALID);
         String email = (String)request.inputParameters.get(PARAM_EMAIL);
         String entitlement = (String)request.inputParameters.get(PARAM_ENTITLEMENT);
-            
-        SCIMUser user = new SCIMUser(userName, lastName, firstName, externalid, email, entitlement);
-        //user.fillUpSCIMMessage();
+        String language = (String)request.inputParameters.get(PARAM_LANGUAGE);
+        String project = (String)request.inputParameters.get(PARAM_PROJECT);
+        
+        SCIMUser user;
+
+        if(project == 'NEWGEN') user =  new ANG_IEPSCIMUser(userName, lastName, firstName, externalid, email, entitlement, language);
+        else user = new GenericSCIMUser(userName, lastName, firstName, externalid, email, entitlement);
 
         return user;
     } 
