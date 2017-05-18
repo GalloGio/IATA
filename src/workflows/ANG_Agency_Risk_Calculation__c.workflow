@@ -10,6 +10,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>ANG_Risk_Calculation_UK_Assessment</fullName>
+        <field>ANG_UniqueKey__c</field>
+        <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(Financial_Review_Result__c) + &apos;_&apos; + TEXT(Risk_History__c) + &apos;_&apos; + TEXT(Risk_History_Assessment__c)</formula>
+        <name>ANG Risk Calculation UK Assessment</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>ANG_Risk_Calculation_UK_Rules</fullName>
         <field>ANG_UniqueKey__c</field>
         <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(ANG_Accreditation_Model__c) + &apos;_&apos; + ANG_Risk_Event_Type__r.Name+ &apos;_&apos; + TEXT(ANG_Adjusted__c)</formula>
@@ -31,6 +40,20 @@
             <value>Adjustment</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>ANG Risk Calculation UK Assessment</fullName>
+        <actions>
+            <name>ANG_Risk_Calculation_UK_Assessment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>ANG_Agency_Risk_Calculation__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Risk Status Assessment</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ANG Risk Calculation UK Rules</fullName>
