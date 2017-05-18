@@ -1956,7 +1956,9 @@ public class AMS_OSCARTriggerHandler {
 				else	
 					if(!validate100Ownership(oscar,allPercentages,isNewGenProcess)){
 						Double requiredOwnership = isNewGenProcess ? 99.99 : 100;
-						oscar.addError('Agency does not have '+ requiredOwnership + '% ownership. Please add the owners to the agency before passing the Sanity Check.');
+						String errorMessage = !isNewGenProcess ? 'Agency does not have 100% ownership. Please add the owners to the agency before passing the Sanity Check.'
+															 : 'Agency must have at least 99.99% ownership. Please add the owners to the agency before passing the Sanity Check.';
+						oscar.addError(errorMessage);
 					}
 
 			}
