@@ -29,7 +29,7 @@
         <!-- Import the Design System style sheet -->
         <apex:slds />
 
-        <link href="https://{!HostURL}/{!$Label.OneId_Community_Name}/s/OneIdResources/css/OneIdStyles.css" rel="stylesheet" type="text/css" />
+        <link href="https://{!HostURL}/{!CommunityName}/s/OneIdResources/css/OneIdStyles.css" rel="stylesheet" type="text/css" />
 
         <!--link href="https://oneidconde-customer-portal-iata.cs83.force.com/oneidentity/s/OneIdResources/css/OneIdStyles.css" rel="stylesheet" type="text/css" /-->
 

@@ -83,6 +83,7 @@ private  class LightningConnectedAppHelper_Test {
         LightningConnectedAppHelper.ConnectedAppsList();
         
         LightningConnectedAppHelper.getroles('Bundle');
+        LightningConnectedAppHelper.getAppTerms('Bundle');
         LightningConnectedAppHelper.submit('Bundle', 'Admin');
         LightningConnectedAppHelper.massAssignPermissionSets(userlist,idd);
         LightningConnectedAppHelper.massassignpermissionset(userlistst,idds);
