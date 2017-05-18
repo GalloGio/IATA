@@ -753,7 +753,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
       for(Case cse : cases) {
         if(cse.RecordTypeId == IFAPcaseRecordTypeID){
           caseRecType = true;
-          casesToConsider.add(cse);
+          //casesToConsider.add(cse);
           // Bellow logic used for Quality issue  
           Case OldCase =  Trigger.oldMap.get(cse.Id);
           // approval
