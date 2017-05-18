@@ -601,17 +601,14 @@ public with sharing class ISSP_AvailableServices{
 
         Portal_Application_Right__c app = new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
 
-        insert app;
-
         if (portalServiceRole != '' || flagUseDefaultRole) {
             if (flagUseDefaultRole) {
                 app.ANG_Portal_Service_Role__c = defaultPortalUserRole;                    
             } else {
                 app.ANG_Portal_Service_Role__c = portalServiceRole;                    
             }
-
-            update app;
         }
+        insert app;
 
         return 'ok';             
     }
