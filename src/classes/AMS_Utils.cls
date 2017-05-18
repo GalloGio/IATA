@@ -2256,8 +2256,9 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return [SELECT User_Portal_Status__c,
                        Account.Location_Type__c,
                        Account.Top_Parent__r.Location_Type__c, 
-                       Account.ANG_IEP_Status_FF__c
-                  FROM Contact WHERE Id = :conId limit 1];
+                       Account.ANG_IEP_Status_FF__c,
+                       Account.Is_Branch_Abroad__c
+                  FROM Contact WHERE Id = :conId limit 1];                  
     }
 
 }
