@@ -87,7 +87,7 @@ private class ANG_ConversionHelperTest {
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
 
 		ANG_ConversionHelper.printStatistics(finalStruct);
 
@@ -109,7 +109,7 @@ private class ANG_ConversionHelperTest {
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildSingleHierarchyStructure(hierarchy.Id);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
 
 		ANG_ConversionHelper.HierarchyStructure singleStruct = structure.values().get(0);
 
@@ -128,7 +128,7 @@ private class ANG_ConversionHelperTest {
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
 
 		Map<String,ANG_ConversionHelper.HierarchyStructure> validStruct = finalStruct.validHierarchies;
 
@@ -142,16 +142,16 @@ private class ANG_ConversionHelperTest {
 
 		newStructure = ANG_ConversionHelper.performValidationOnHierarchyStructure(newStructure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStructNew = ANG_ConversionHelper.fetchStatistics(newStructure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStructNew = ANG_ConversionHelper.fetchStatistics(newStructure,'US');
 
 		ANG_ConversionHelper.printStatistics(finalStructNew);
 
-		System.assertEquals(4,finalStructNew.totalHierarchies);
+		System.assertEquals(5,finalStructNew.totalHierarchies);
 		
 		// this finalStructNew.totalMigratedHierarchies is only 1 because one of the hierarchies envolved wasn't really an hierarchy, was just an HO that became HE. In the fetchStatistics method, we don't have a way to
 		// distinguish between regular HE or migrated HO. This is also why we only have 4 agencies when fetching statistics.
 
-		System.assertEquals(1,finalStructNew.totalMigratedHierarchies);
+		System.assertEquals(2,finalStructNew.totalMigratedHierarchies);
 		
 		System.assertEquals(0,finalStructNew.totalValidHierarchies);
 
@@ -199,7 +199,7 @@ private class ANG_ConversionHelperTest {
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,'US');
 
 		Map<String,ANG_ConversionHelper.HierarchyStructure> validStruct = finalStruct.validHierarchies;
 
@@ -222,16 +222,16 @@ private class ANG_ConversionHelperTest {
 
 		newStructure = ANG_ConversionHelper.performValidationOnHierarchyStructure(newStructure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStructNew = ANG_ConversionHelper.fetchStatistics(newStructure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStructNew = ANG_ConversionHelper.fetchStatistics(newStructure,'US');
 
 		ANG_ConversionHelper.printStatistics(finalStructNew);
 
-		System.assertEquals(4,finalStructNew.totalHierarchies);
+		System.assertEquals(5,finalStructNew.totalHierarchies);
 		
 		// this finalStructNew.totalMigratedHierarchies is only 1 because one of the hierarchies envolved wasn't really an hierarchy, was just an HO that became HE. In the fetchStatistics method, we don't have a way to
 		// distinguish between regular HE or migrated HO. This is also why we only have 4 agencies when fetching statistics.
 
-		System.assertEquals(1,finalStructNew.totalMigratedHierarchies);
+		System.assertEquals(2,finalStructNew.totalMigratedHierarchies);
 		
 		System.assertEquals(0,finalStructNew.totalValidHierarchies);
 

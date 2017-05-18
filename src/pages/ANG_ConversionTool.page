@@ -104,7 +104,7 @@
 
                 <apex:outputText styleClass="processText" value="Migration process status: {!batchJob.Status}"/>
 
-                <apex:outputText styleClass="processText" value="Hierarchies migrated: {!batchJob.JobItemsProcessed}"/>
+                <apex:outputText styleClass="processText" value="Hierarchies processed: {!batchJob.JobItemsProcessed}"/>
 
                 <apex:outputText styleClass="processText" value="Errors found: {!batchJob.NumberOfErrors}"/>
 

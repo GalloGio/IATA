@@ -39,7 +39,7 @@ global with sharing class ANG_ConversionHelper {
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure));
+		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure,countryName));
             
    }
     
@@ -295,7 +295,7 @@ global with sharing class ANG_ConversionHelper {
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
-		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure);
+		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
 
@@ -326,7 +326,7 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
-	public static ANG_ConversionHelper.StatisticGeneratorStructure fetchStatistics(Map<Id,ANG_ConversionHelper.HierarchyStructure> structure){
+	public static ANG_ConversionHelper.StatisticGeneratorStructure fetchStatistics(Map<Id,ANG_ConversionHelper.HierarchyStructure> structure,String countryName){
 
 
 		ANG_ConversionHelper.StatisticGeneratorStructure toReturn = new ANG_ConversionHelper.StatisticGeneratorStructure();
@@ -357,6 +357,22 @@ global with sharing class ANG_ConversionHelper {
 			toReturn.totalHierarchies++;
 
 		}
+
+		// now we need to fetch the already migrated hierarchies
+
+		Set<Id> accountsMigrated = new Set<Id>();
+
+		List<AMS_Agencies_relationhip__c> alreadyMigratedStructures = [Select Id, Child_Account__c, Parent_Account__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :countryName and Hierarchy__r.Migrated__c = true];
+
+		for(AMS_Agencies_relationhip__c rel: alreadyMigratedStructures){
+			accountsMigrated.add(rel.Child_Account__c);
+			accountsMigrated.add(rel.Parent_Account__c);
+		}
+
+		List<Account> allAccountsSingleHierarchyHO = [SELECT Id  from Account where Location_Type__c in :LOCATIONTYPESNEWGEN and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :countryName and Id not in:accountsMigrated];
+
+		toReturn.totalMigratedHierarchies+=allAccountsSingleHierarchyHO.size();
+		toReturn.totalHierarchies+=allAccountsSingleHierarchyHO.size();
 
 		return toReturn;
 
@@ -411,6 +427,7 @@ global with sharing class ANG_ConversionHelper {
 		}
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
+		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 
 		update new List<Account>(accountsToUpdate);
 
@@ -419,6 +436,9 @@ global with sharing class ANG_ConversionHelper {
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
+		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+
+		createAgencyAuthorizations(accountsToUpdate);
 		
 		return toReturn;
 
@@ -522,8 +542,10 @@ global with sharing class ANG_ConversionHelper {
 					rel.Parent_Account__c = struct.topParentId;
 					
 					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
+					allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
 
 					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
+					allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
 
 					if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
 						allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
@@ -546,6 +568,23 @@ global with sharing class ANG_ConversionHelper {
 		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,relationsToUpdate,hierarchy);
 
 	}
+
+	private static void createAgencyAuthorizations(Set<Account> accts){
+
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        
+        for(Account acct:accts){
+
+        	authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        	authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        	authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		}
+
+        insert authorizations;
+    }
+
 
 	public class MigrationContainer{
 
@@ -714,6 +753,51 @@ global with sharing class ANG_ConversionHelper {
 			this.totalInvalidHierarchies = struct.totalInvalidHierarchies;
 
 			this.inValidHierarchies = struct.inValidHierarchies;
+
+		}
+
+
+	}
+
+	global class ConversionBatchItem{
+
+		public String run;
+		public String iataCode;
+		public String hierarchyId;
+		public String batchId;
+		public String topParentId;
+		public boolean isError;
+		public String errorMessage;
+
+		public ConversionBatchItem(HierarchyStructure struct, Integer run, String batchId, boolean isError, String errorMessage){
+
+			this.run = String.valueOf(run);
+			this.hierarchyId = struct.hierarchyId;
+			this.iataCode = struct.iataCodeTopParent;
+			this.batchId = batchId;
+			this.topParentId = struct.topParentId;
+			this.isError = isError;
+			this.errorMessage = errorMessage;
+
+		}
+
+		public override String toString(){
+
+			String toReturn = '';
+
+			if(this.isError){
+
+				toReturn+='Run:' + this.run+'\n';
+				toReturn+='Hierarchy:'+this.hierarchyId+'\n';
+				toReturn+='Top Parent Id:'+this.topParentId+'\n';
+				toReturn+='IATA Code:'+this.iataCode+'\n';
+				toReturn+='Error:'+errorMessage+'\n';
+			}
+			else{
+				toReturn+='IATA Code:'+this.iataCode+'\n';
+			}
+
+			return toReturn;
 
 		}
 
