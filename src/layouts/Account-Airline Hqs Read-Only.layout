@@ -92,12 +92,16 @@
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ICAO_designator__c</field>
+                <behavior>Edit</behavior>
+                <field>Key_Customer_Reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Segmentation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Identify_as_Key_Customer__c</field>
+                <field>ICAO_designator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
