@@ -486,7 +486,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
 
                 if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
-                createAgencyAuthorizations(updatedOscar);
+                    createAgencyAuthorizations(updatedOscar);
 
             }
 
@@ -614,7 +614,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
-            updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Ticketing Authorities" stage status is not passed.');   
+            updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
         }
 
             // *****************************************************
@@ -623,7 +623,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
 
                 if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
-                    updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Risk Event" stage status is not passed.');   
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step will be completed.');   
                 }
 
             }
@@ -679,7 +679,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
         insert authorizations;
