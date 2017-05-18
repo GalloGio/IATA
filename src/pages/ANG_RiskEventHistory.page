@@ -2,7 +2,7 @@
 		
 		<apex:includeScript value="/support/console/30.0/integration.js"/>
 		<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
-		<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000IHjk'=Account.Name, 'CF00N6E000000IHjk_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
+		<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000Uy1x'=Account.Name, 'CF00N6E000000Uy1x_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
 		
 		<apex:form >
 			<div id="observed">
