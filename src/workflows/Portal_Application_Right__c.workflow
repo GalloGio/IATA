@@ -288,7 +288,7 @@
     <fieldUpdates>
         <fullName>Notify_Admin_of_contact_request</fullName>
         <field>Notification_Template__c</field>
-        <formula>&quot;NT-0684&quot;</formula>
+        <formula>&quot;NT-0742&quot;</formula>
         <name>Notify Admin of contact request</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -634,11 +634,14 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( TEXT(Right__c) = &apos;Access Requested&apos;,
-Portal_Application__r.Name != &apos;Treasury Dashboard&apos;, 
-OR( ISBLANK(Contact__r.Community__c), 
-NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;)) ), 
-Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot; )</formula>
+        <formula>AND( TEXT(Right__c) = &apos;Access Requested&apos;, 
+Portal_Application__r.Name != &apos;Treasury Dashboard&apos;,  
+OR( ISBLANK(Contact__r.Community__c),  NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;)) ), 
+OR( 
+AND(BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;), Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot;),
+NOT(BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;))
+)
+)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
