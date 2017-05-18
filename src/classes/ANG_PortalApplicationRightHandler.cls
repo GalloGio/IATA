@@ -18,6 +18,10 @@ public class ANG_PortalApplicationRightHandler {
 	}
 	public void onAfterUpdate(){
 		setConnectedAppsSSOPermission();
+		checkMinimumUsersAllowedUpdate();
+	}
+	public void onBeforeDelete(){
+		checkMinimumUsersAllowedDelete();
 	}
 
 	// ************************************************************
@@ -29,8 +33,9 @@ public class ANG_PortalApplicationRightHandler {
 		//fetch all connected app roles that need to grant a permission set
 		Map<String, Connected_App_Roles__c> roles = new Map<String, Connected_App_Roles__c>();
 
-		for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
-			if(role.Permission_set_SSO__c != null){
+
+		for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {
+			if(role.Permission_set_SSO__c != null) {
 				roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
 			}
 		}
@@ -65,4 +70,39 @@ public class ANG_PortalApplicationRightHandler {
 		if(helper.isChanged()) helper.enqueueJob(); 
 	}
 
+	private void checkMinimumUsersAllowedDelete() {
+		Set<Id> parSet = new Set<Id>();
+		for(Portal_Application_Right__c access : triggerOld) {
+			//
+			// Only take in consideration IEP services
+			//
+			if(access.Application_Name__c.startsWith('IATA EasyPay') && access.Right__c == 'Access Granted') {
+				parSet.add(access.id);
+			}
+		}	
+
+		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
+
+		for(Portal_Application_Right__c par : errorList) {
+			oldMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
+		}
+	}
+
+	private void checkMinimumUsersAllowedUpdate() {
+		Set<Id> parSet = new Set<Id>();
+		for(Portal_Application_Right__c access : triggerNew) {
+			//
+			// Only take in consideration IEP services
+			//			
+			if(access.Right__c == 'Access Denied' && access.Application_Name__c.startsWith('IATA EasyPay')) {
+				parSet.add(access.id);	
+			}						
+		}
+
+		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
+
+		for(Portal_Application_Right__c par : errorList) {
+			newMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
+		}
+	}	
 }

@@ -19121,6 +19121,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Portal Service Role</value>
     </labels>                
     <labels>
+        <fullName>ANG_ISSP_Min_Users_With_Role_Error_Msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Min_Users_With_Role_Error_Msg</shortDescription>
+        <value>The following contact is the sole remaining $$ROLE$$ for this Agency and therefore cannot be deactivated.</value>
+    </labels>
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
