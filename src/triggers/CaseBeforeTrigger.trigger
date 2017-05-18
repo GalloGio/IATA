@@ -223,7 +223,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         
         /*trgCheckBusinessHoursBeforeInsert Trigger
         if(trgCheckBusinessHoursBeforeInsert){//FLAG
-          system.debug('trgCheckBusinessHoursBeforeInsert');
+            system.debug('trgCheckBusinessHoursBeforeInsert');
+            List < Contact > ctcIdList = new List < Contact >();
             for (Case newCaseObj: trigger.new){
                 if (((newCaseObj.RecordTypeId != null) && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || ((newCaseObj.description != null) 
                     && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) || ((newCaseObj.CaseArea__c != null) 
@@ -243,7 +244,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
                 if(!AccountNames.isEmpty()){
-                    List < Contact > ctcIdList = [Select id, accountid, email, name from Contact where account.Name in : AccountNames order by accountid];
+                    ctcIdList = [Select id, accountid, email, name from Contact where account.Name in : AccountNames order by accountid];
                 }
                 if (!ctcIdList.isEmpty()){
                   system.debug('##ROW##');
