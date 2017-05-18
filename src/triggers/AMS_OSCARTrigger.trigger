@@ -102,7 +102,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -398,7 +398,9 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Release_FS_if_applicable__c'               => 'Financial_Security_released__c',
             'Reactivate_Agent_in_BSPlink_CASSlink__c'   => 'Reactivated_Agent_in_BSPlink_CASSlink__c',
             'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
-            'Send_Confirmation__c'                      => 'Confirmation_Sent__c'
+            'Send_Confirmation__c'                      => 'Confirmation_Sent__c',
+            'Update_BSPLink__c'                         => 'BSPLink_updated__c',
+            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -464,15 +466,27 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
+        if((updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
+
+            System.debug('Sending the email for the user to anounce approval of the oscar');
+
+            //using an already existing method to send email aler to user.
+            AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.SANITYCHECK, true);
+
+        }
+
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Approval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
 
                 System.debug('Sending the email for the user to anounce approval of the oscar');
 
                 //using an already existing method to send email aler to user.
-                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,true);
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
+
+                if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
+                createAgencyAuthorizations(updatedOscar);
 
             }
 
@@ -488,12 +502,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.RPM_Approval__c <> updatedOscar.RPM_Approval__c && updatedOscar.RPM_Approval__c == 'Authorize Disapproval') {
 
-            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE){
+            if(updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD){
 
                 System.debug('Sending the email for the user to anounce disapproval of the oscar');
 
                     //using an already existing method to send email aler to user.
-                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c,false);
+                AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, false);
 
             }
             
@@ -587,6 +601,34 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.Termination_Date__c = null;
         }
 
+        // ***************************************
+        // ********* NEWGEN VALIDATIONS ************
+        // ***************************************
+        if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
+
+            // ***************************************
+            // ********* GENERIC VALIDATIONS ************
+            // ***************************************
+        if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+            updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
+        }
+
+        if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+            updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Ticketing Authorities" stage status is not passed.');   
+        }
+
+            // *****************************************************
+            // ********* STANDARD WITH CASH VALIDATIONS ************
+            // *****************************************************
+            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
+
+                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
+                    updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Risk Event" stage status is not passed.');   
+                }
+
+            }
+        }
+
     }
 
     private void processFieldsTracking(AMS_OSCAR__c oldOscar, AMS_OSCAR__c updatedOSCAR) {
@@ -630,6 +672,17 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (!eventsToInsert.isEmpty())
             insert eventsToInsert;
 
+    }
+
+    private static void createAgencyAuthorizations(AMS_OSCAR__c oscar){
+        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+        ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+        insert authorizations;
     }
 
 

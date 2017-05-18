@@ -150,6 +150,13 @@
         <value>New Financial Security</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action15</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action15</shortDescription>
+        <value>Generate Risk Event</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -569,6 +576,20 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_STEP35</shortDescription>
         <value>Confirm financial security  received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP36</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP36</shortDescription>
+        <value>Risk Event</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP37</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP37</shortDescription>
+        <value>Ticketing Authority</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>

@@ -7,6 +7,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean saveAction { get; set; }
     public Boolean isCargoAgency{get;set;}
     public Boolean isCertificationOSCAR{get;set;}
+    public Boolean isNewGenProcess{get;set;}
 
     public Id objectId { get; set; }
 
@@ -92,6 +93,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isRendered(String fieldName){
         if(fieldName == 'Is_your_firm_handling_Dangerous_Goods__c') return isCargoAgency;
+        if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
 
         return true;
     }
@@ -137,6 +139,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
             this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
             this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
+            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c);
         }else{
             System.debug('Could not fetch any Oscar or does not have an accreditation object');
         }

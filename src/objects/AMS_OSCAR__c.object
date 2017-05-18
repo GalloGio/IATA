@@ -214,6 +214,16 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Agency_Authorization_created__c</fullName>
+        <externalId>false</externalId>
+        <label>Agency Authorization created</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Agency__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -367,6 +377,16 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>BSPLink_updated__c</fullName>
+        <externalId>false</externalId>
+        <label>BSPLink updated</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Bank_Guarantee_Currency__c</fullName>
@@ -1460,6 +1480,16 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Create_Agency_Authorization__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Create Agency Authorization</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Created_By_Role__c</fullName>
@@ -2578,6 +2608,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>ANG.NEW.HE.LITE.1.0</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>ANG.NEW.HE.STANDARD.1.0</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -2627,6 +2661,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklistValues>
                 <fullName>Authorize Approval</fullName>
                 <default>false</default>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.STANDARD.1.0</controllingFieldValues>
                 <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
                 <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
                 <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
@@ -2654,6 +2690,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklistValues>
                 <fullName>Authorize Disapproval</fullName>
                 <default>false</default>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.STANDARD.1.0</controllingFieldValues>
                 <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
                 <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
                 <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
@@ -2681,6 +2719,8 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             <picklistValues>
                 <fullName>Reprocess case</fullName>
                 <default>false</default>
+                <controllingFieldValues>ANG.NEW.HE.LITE.1.0</controllingFieldValues>
+                <controllingFieldValues>ANG.NEW.HE.STANDARD.1.0</controllingFieldValues>
                 <controllingFieldValues>BANK.ACCOUNT.CHANGES</controllingFieldValues>
                 <controllingFieldValues>CHANGE.1.0</controllingFieldValues>
                 <controllingFieldValues>CHANGE.CHINESE.1.1</controllingFieldValues>
@@ -4211,6 +4251,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Risk_event_creation_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Risk event creation date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Roll_back_account_data__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -5043,6 +5093,64 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>STEP36__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP36</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>STEP37__c</fullName>
+        <externalId>false</externalId>
+        <label>STEP37</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>STEP3__c</fullName>
         <externalId>false</externalId>
         <label>STEP3</label>
@@ -5639,6 +5747,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Update BSPLink / CASSLink</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Update_BSPLink__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Update BSPLink</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -8277,6 +8395,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>ANG%2ENEW%2EHE%2ESTANDARD%2E1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BANK%2EACCOUNT%2ECHANGES</fullName>
                 <default>false</default>
             </values>
@@ -8837,6 +8959,44 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklistValues>
         <picklistValues>
             <picklist>STEP35__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP36__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP37__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>

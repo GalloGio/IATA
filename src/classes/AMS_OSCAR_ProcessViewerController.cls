@@ -77,6 +77,15 @@ public class AMS_OSCAR_ProcessViewerController {
         return oscar.RecordType.DeveloperName == 'CHANGE';
     }
 
+    public Boolean isValidationCompleted {
+        get{
+            return (
+                oscar != null
+                && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED)
+            );
+        }
+    }
+
     public AMS_OSCAR_ProcessViewerController() {
         
         

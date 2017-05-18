@@ -130,6 +130,9 @@ public without sharing class AMS_Utils {
 
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
+    public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
+
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -975,11 +978,13 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c) {
                 oscar[0].Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                oscar[0].Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
                 mustUpdateOSCAR = true;
             }
 
             if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c) {
                 oscar[0].Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                oscar[0].Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
                 mustUpdateOSCAR = true;
             }
 
@@ -1164,8 +1169,12 @@ public without sharing class AMS_Utils {
 
         if(oscarProcess == NEWHELITE){
 
-            return 'Cashless';
+            return ACCREDITATIONMODEL_CASHLESS;
         
+        }else if(oscarProcess == NEWHESTANDARD){
+
+            return ACCREDITATIONMODEL_CASH;
+
         }
 
         return oldAccountValue;

@@ -23,6 +23,7 @@ public with sharing class AMS_AccreditationContactController {
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
     public boolean isChangeProcess {get; set;}
+    public boolean isNewGenProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -146,6 +147,7 @@ public with sharing class AMS_AccreditationContactController {
 
         isNewProcess = (aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW || aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEWHE)? true : false;
         isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
+        isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(aoa.SAAM_Case__r.OSCAR__r.Process__c) ? true : false;
     }
     
     public void addEmptyRow()
@@ -248,9 +250,15 @@ public with sharing class AMS_AccreditationContactController {
             
         }
 
-        if(!calculateTotalOwnership() && !isCertificationOSCAR)
+        if(!isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to 100% before saving.'));
+            return null;
+        }
+
+        if(isNewGenProcess && !calculateTotalOwnership() && !isCertificationOSCAR)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Total ownershiprate for all inserted contacts is ' + ownership + '%. Please set it to at least 99.99% before saving.'));
             return null;
         }
         
@@ -475,7 +483,8 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' &&
+         ((!isNewGenProcess && ownership != 100)||(isNewGenProcess && ownership < 99.99 )))
         {
             return false;
         } else
