@@ -289,9 +289,9 @@
                       </apex:outputPanel>
                       
                       <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
-                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c && isIEPAccountEnable}" />
+                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}" />
 
-                        <apex:outputLabel value="{!isIEPAccountEnableMsg}" rendered="{!!Serv.recordService.Confirm_Box__c && !isIEPAccountEnable}" />
+                        <apex:outputLabel value="{!modalErrorMessage}" rendered="{!!Serv.recordService.Confirm_Box__c && isModalErrorMessageEnable}" />
 
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
 
@@ -306,7 +306,7 @@
                     </a>
                   </span>
 
-                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && isIEPAccountEnable)}">
+                  <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
                     <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
                     <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
                       <apex:selectOptions value="{!availablePortalServiceRoles}"/>
@@ -369,7 +369,7 @@
                   </a>
                 </apex:outputPanel> 
 
-                <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && isIEPAccountEnable}" id="serviceSubmitButton2"> 
+                <apex:outputPanel rendered="{!Serv.recordService.Name!='Standards Setting Workspace' && CONTAINS(Serv.recordService.Name,'IATA EasyPay') && !isModalErrorMessageEnable}" id="serviceSubmitButton2"> 
                   <a onclick=" newAppReq2('{!Serv.recordService.Id}','{!Serv.recordService.Name}', '{!Serv.useDefaultRole}', '{!Serv.isEasyPayService}');"    class="btn_iata_success btn-block btn">
                      {!$Label.ISSP_Confirm}
                   </a>

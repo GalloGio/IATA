@@ -13,7 +13,9 @@ public with sharing class ISSP_AvailableServices{
     public String conId {get; set;}
     public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
     public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
-    public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    //public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    public String modalErrorMessage {get; set;}
+    public Boolean isModalErrorMessageEnable {get;set;}
     
     public ServiceWrapper Serv {get; set;}
     public String ServId {get; set;}
@@ -138,7 +140,6 @@ public with sharing class ISSP_AvailableServices{
                 conHOAccountLocType = '';
                 isIEPAccountEnable = false;
 
-
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
@@ -146,12 +147,19 @@ public with sharing class ISSP_AvailableServices{
                     isIEPAccountEnable = true;
                 else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
                     isIEPAccountEnable = true;
+                
+                isModalErrorMessageEnable = (!isIEPAccountEnable);                
 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
-                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
-                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
                 }
+
+                if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
+                    isModalErrorMessageEnable = true;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_Abroad_Account_error_msg;
+                }                
             }
             else
                 isAdmin = false;
@@ -409,7 +417,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Application_icon_URL__c, Application_URL__c,
                                                         Case_creation_record_type__c, Confirm_Box__c,
                                                         Confirm_Text__c, Description__c,
-                                                        GSA__c, GSSA__c, Hide_on_Homepage__c,
+                                                        GSSA__c, Hide_on_Homepage__c,
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
