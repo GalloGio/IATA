@@ -20322,7 +20322,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_1</fullName>
-		<categories>OneId</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_1</shortDescription>
@@ -20330,7 +20330,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_2</fullName>
-		<categories>OneId</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
@@ -20338,7 +20338,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_3</fullName>
-		<categories>OneId</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_3</shortDescription>
@@ -20366,7 +20366,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Job_Function</shortDescription>
         <value>Job Function</value>
-    </labels>	
+    </labels>
     <labels>
         <fullName>OneId_Login</fullName>
         <categories>OneId</categories>
