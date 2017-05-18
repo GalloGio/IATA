@@ -61,8 +61,7 @@ global class AMS_OSCAR_Attachments {
     public AMS_OSCAR_Attachments() {
 
         String sObjId = ApexPages.currentPage().getParameters().get('Id');
-        // CB - 6 APR 2017 - AMS Enhancements AMSU-2
-        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication']; // AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
+        cse = [Select Id, Status from Case where OSCAR__c = :sObjId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
         
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];

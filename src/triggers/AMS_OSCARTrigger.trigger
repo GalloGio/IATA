@@ -102,7 +102,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            
+
 
             if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
                 oscar.BSPLink_participation__c = true;
@@ -192,7 +192,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-        
         ID corrRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
         if (updatedOscar.recordTypeID == newRT){
             if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
@@ -264,10 +263,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
-                    //FM 10-03-2017 - removed CAD anc COR change codes since they go througth a different process on the AMS_OSCARTriggerHandler
-                    //FM 10-03-2017 - removed LET from this code also because it's created justr below, otherwise it would create 2 Let Change codes
-                    /*
-
 					if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -285,10 +280,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         changeCode.memoText = 'Minor Changes';
                     	}
 						// If the picklist is set create a LET change code.
-	                    / *else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
+	                    /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
 	                        changeCode.name = 'LET';
 	                        changeCode.memoText = '';
-                    	}* /
+                    	}*/
 
 						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
 
@@ -300,7 +295,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                         Account acct = new Account(Id = updatedOscar.Account__c);
                         AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, new List<Account> {acct}, true);
                     }
-                    */
                     if(updatedOscar.AMS_Correction_change_code__c == 'LET') {
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
@@ -425,8 +419,6 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
             if (currentApprovals.size() > 0) {
                 AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
-            
-
             }
             updatedOSCAR.STEP2__c = 'Passed';
         }
@@ -462,7 +454,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 if (currentApprovals.size() > 0) {
                     AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
                 }
-            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicable') {
+            } else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicaple') {
                 // Reject the approval process
                 if (currentApprovals.size() > 0)
                     AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);

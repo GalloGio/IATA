@@ -1139,6 +1139,12 @@ public with sharing class AMS_XML_Generator {
                         }
                             
 
+                        Datetime dtDefault_date = ag.Default_date__c == Null ? Null : Datetime.newInstance(ag.Default_date__c.year(), ag.Default_date__c.month(),ag.Default_date__c.day());
+                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtDefault_date == Null ? Null : String.valueOf(dtDefault_date.format('yyyyMMdd')));
+
+                        /* 
+                        //FM 19-04-2017 - removed by enhancement AMSU-18
+                        
                         Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
@@ -1177,7 +1183,7 @@ public with sharing class AMS_XML_Generator {
                             getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
                         }
-
+                        */
                     }
                    
                     Boolean bHier = False;

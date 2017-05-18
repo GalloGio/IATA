@@ -6523,30 +6523,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             agencySelectedBranches.addAll(agencies.keySet());
         }
 
-
-        //CB 07-03-2017 Create an OSCAR for every child case and link it to the account concerned; clone from the HO Oscar; no staging area
-        List<Case> parentCase = [SELECT Id, OSCAR__c  FROM Case WHERE Id = :newCase.Id AND OSCAR__c <> null];
-
-        if(parentCase == null || parentCase.size() == 0 ){
-            return;
-        }
-        List<AMS_OSCAR__c> hoOscars = [SELECT Id, Status__c, Account__c, Process__c, RecordTypeId, OwnerId, AMS_Online_Accreditation__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id = :parentCase.get(0).OSCAR__c];
-        if(parentCase == null || parentCase.size() == 0 ){
-            system.debug('Trying to retrieve HO Oscar - no OSCAR record found on parent case ' + parentCase.get(0).Id);
-            return;
-        }
-        AMS_OSCAR__c hoOscar = hoOscars[0];
-
         Id auxId = null;
-        map<Id, Case> mapChildCasesPerAccountConcernedId = new map<Id, Case>();
-        map<Id, AMS_OSCAR__c> mapOscarsPerAccountConcernedId = new map<Id, AMS_OSCAR__c>();
-
+        List<Case> childCases = new List<Case>();
         for(String iataCode : agencySelectedBranches){
             Account accConcerned =  agencies.get(iataCode);
             if(accConcerned.Id != newCase.Account_Concerned__c){
                 
                 Case child = newCase.clone(false, true);
-                
+                 
                 child.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accConcerned.IATACode__c + ' – ' + accConcerned.Name;
                 child.Account_Concerned__c = accConcerned.Id;
                 child.ParentId = newCase.Id;
@@ -6558,13 +6542,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 auxId = child.ContactId;
                 child.ContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c == null? null : ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
                 
-                mapChildCasesPerAccountConcernedId.put(accConcerned.Id, child);
-
-                AMS_OSCAR__c childOscar = hoOscar.clone(false, true);
-                childOscar.AMS_Online_Accreditation__c = null;
-                childOscar.Account__c = accConcerned.Id;
-
-                mapOscarsPerAccountConcernedId.put(accConcerned.Id, childOscar);
+                childCases.add(child);
             }            
         }
         
@@ -6573,23 +6551,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         dlo.EmailHeader.triggerAutoResponseEmail = false;
         if(!childCases.isEmpty()) database.insert(childCases, dlo);
         **/
-        if(!mapChildCasesPerAccountConcernedId.isEmpty()) {
-
-            insert mapOscarsPerAccountConcernedId.values();
-
-            for (Id AcctConcernedId : mapOscarsPerAccountConcernedId.keyset()) {
-                 mapChildCasesPerAccountConcernedId.get(AcctConcernedId).OSCAR__c = mapOscarsPerAccountConcernedId.get(AcctConcernedId).Id;
-            }
-
-            insert mapChildCasesPerAccountConcernedId.values();
-            //FM 31-10-2016 - Set IATA Country to the Country of the parent case (because of auto-response that was being sent for child cases)
-            for(Case auxCase :  mapChildCasesPerAccountConcernedId.values()){
-                auxCase.ContactId = auxId;
-            }
-            
-            update  mapChildCasesPerAccountConcernedId.values(); 
-
+        
+        if(!childCases.isEmpty()) insert childCases;
+        //FM 31-10-2016 - Set IATA Country to the Country of the parent case (because of auto-response that was being sent for child cases)
+        for(Case auxCase : childCases){
+            auxCase.ContactId = auxId;
         }
+        
+        if(!childCases.isEmpty()) update childCases; 
     }
 
     public void setOwners(String type){

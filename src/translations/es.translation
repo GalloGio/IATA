@@ -10752,12 +10752,24 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_ForgotPassword --></label>
+        <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Help Community --></label>
         <name>OneId_Help_Community</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Help Community Link --></label>
         <name>OneId_Help_Community_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Home_PendingRequests --></label>
+        <name>OneId_Home_PendingRequests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Home_Requested --></label>
+        <name>OneId_Home_Requested</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_IATA Code --></label>
@@ -10768,12 +10780,40 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_IATA_represent_lead_and_serve_the_airline_industry</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId ISAGO App Description --></label>
+        <name>OneId_ISAGO_App_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_1 --></label>
+        <name>OneId_ISAGO_Terms_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_2 --></label>
+        <name>OneId_ISAGO_Terms_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_3 --></label>
+        <name>OneId_ISAGO_Terms_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_International Air Transport Association (IATA) --></label>
         <name>OneId_International_Air_Transport_Association_IATA</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_JobFunction_Help_Msg --></label>
         <name>OneId_JobFunction_Help_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Job_Function --></label>
+        <name>OneId_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Login --></label>
+        <name>OneId_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginFail --></label>
+        <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_My available applications --></label>
@@ -10788,6 +10828,14 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NoTermsFound --></label>
+        <name>OneId_NoTermsFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId No Apps Availablr for You --></label>
+        <name>OneId_No_Apps_Availablr_for_You</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Nothing found --></label>
         <name>OneId_Nothing_found</name>
     </customLabels>
@@ -10800,6 +10848,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Password --></label>
+        <name>OneId_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_PasswordResetFail --></label>
+        <name>OneId_PasswordResetFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Password_ErrorBlank --></label>
+        <name>OneId_Password_ErrorBlank</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Please_Wait --></label>
         <name>OneId_Please_Wait</name>
     </customLabels>
@@ -10810,6 +10870,50 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- OneId_Press to Validate --></label>
         <name>OneId_Press_to_Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingCity --></label>
+        <name>OneId_Profile_BillingCity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingCountry --></label>
+        <name>OneId_Profile_BillingCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingPostal --></label>
+        <name>OneId_Profile_BillingPostal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingState --></label>
+        <name>OneId_Profile_BillingState</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingStreet --></label>
+        <name>OneId_Profile_BillingStreet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BusinessFax --></label>
+        <name>OneId_Profile_BusinessFax</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BusinessInformation --></label>
+        <name>OneId_Profile_BusinessInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_Edit --></label>
+        <name>OneId_Profile_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_ICAODesignator --></label>
+        <name>OneId_Profile_ICAODesignator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_Information --></label>
+        <name>OneId_Profile_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_OfficeEmail --></label>
+        <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Registration_Error_BusinessPhone --></label>
@@ -10828,8 +10932,20 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_SearchAccount</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_SelfRegister --></label>
+        <name>OneId_SelfRegister</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_SendPasswordResetEmail --></label>
+        <name>OneId_SendPasswordResetEmail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Sign In --></label>
         <name>OneId_Sign_In</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_TermsAndConditions --></label>
+        <name>OneId_TermsAndConditions</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Terms of Use --></label>
@@ -10846,6 +10962,14 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label><!-- OneId_Type --></label>
         <name>OneId_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Username --></label>
+        <name>OneId_Username</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Username_ErrorBlank --></label>
+        <name>OneId_Username_ErrorBlank</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_You will be notified by email when you can access the new service. --></label>
@@ -12703,21 +12827,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Allow_Billing_Agreements</name>
-        <picklistValues>
-            <masterLabel>Allowed</masterLabel>
-            <translation><!-- Allowed --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Allowed with Approval</masterLabel>
-            <translation><!-- Allowed with Approval --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Allowed</masterLabel>
-            <translation><!-- Not Allowed --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Manager_Approval</name>
         <picklistValues>
             <masterLabel>Approved</masterLabel>
@@ -12738,37 +12847,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <picklistValues>
             <masterLabel>Rejected</masterLabel>
             <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -12828,33 +12906,6 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <picklistValues>
             <masterLabel>Technical Support</masterLabel>
             <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13125,37 +13176,30 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>EF_Payment_Terms</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Frequency</name>
-        <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13874,6 +13918,60 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Invoice_Distribution</name>
         <picklistValues>
             <masterLabel>Electronic Via Email</masterLabel>
@@ -13893,34 +13991,18 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Method</name>
+        <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>Allowed</masterLabel>
+            <translation><!-- Allowed --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
+            <masterLabel>Allowed with Approval</masterLabel>
+            <translation><!-- Allowed with Approval --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
+            <masterLabel>Not Allowed</masterLabel>
+            <translation><!-- Not Allowed --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14528,6 +14610,48 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <picklistValues>
             <masterLabel>ZWD</masterLabel>
             <translation><!-- ZWD --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Method</name>
+        <picklistValues>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
