@@ -19142,6 +19142,30 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Portal Service Role</value>
     </labels>                
     <labels>
+        <fullName>ANG_ISSP_Min_Users_With_Role_Error_Msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Min_Users_With_Role_Error_Msg</shortDescription>
+        <value>The following contact is the sole remaining $$ROLE$$ for this Agency and therefore cannot be deactivated.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_Abroad_Account_error_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Abroad_Account_error_msg</shortDescription>
+        <value>Since your Branch Office is in a different country than your Head Office you currently cannot open an IATA EasyPay Account in self-service mode. Please contact IATA Customer Support if you need any further information concerning this.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</shortDescription>
+        <value>Users can only be added to open IATA EasyPay (IEP) Accounts. Please open your IEP Account before proceeding.</value>
+    </labels>
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
