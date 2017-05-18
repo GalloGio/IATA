@@ -184,7 +184,7 @@ public with sharing class ANG_ConversionToolController {
 		table.add(tblRow);
 
 		tblRow = new ANG_ConversionToolController.OverviewTableRow();
-		tblRow.messageText = 'Total Hierarchies Using New Model (excluding single agencies)';
+		tblRow.messageText = 'Total Hierarchies Using New Model';
 		tblRow.count = finalStruct.totalMigratedHierarchies;
 		tblRow.isDetail = false;
 		table.add(tblRow);

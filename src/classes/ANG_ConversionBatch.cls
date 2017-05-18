@@ -5,6 +5,8 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 	String query;
 
 	global Integer run;
+
+	global List<ANG_ConversionHelper.ConversionBatchItem> resultItems;
 	
 	global ANG_ConversionBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate) {
 		
@@ -14,7 +16,9 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 		this.query = 'SELECT Id from Account LIMIT ' + queryResults;
 		
-		this.run = 0;
+		this.run = -1;
+		
+		resultItems = new List<ANG_ConversionHelper.ConversionBatchItem>();
 	}
 	
 	global Database.QueryLocator start(Database.BatchableContext BC) {
@@ -24,14 +28,32 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
    	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 
-   		if(Test.isRunningTest()){
-			ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>(structures));
-   		}
-		else{
-			ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>{structures.get(this.run)});
+   		System.SavePoint sp;
+
+   		try{
+
+   			this.run++;
+   			
+   			sp = Database.setSavePoint();
+
+			if(Test.isRunningTest()){
+				ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>(structures));
+			}
+			else{
+				ANG_ConversionHelper.migrateStructures(new List<ANG_ConversionHelper.HierarchyStructure>{structures.get(this.run)});
+			}
+
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(structures.get(this.run), run, BC.getJobId(), false, null);
+			resultItems.add(item);
+
+		}catch(Exception e){
+			
+			ANG_ConversionHelper.ConversionBatchItem item = new ANG_ConversionHelper.ConversionBatchItem(structures.get(this.run), run, BC.getJobId(), true, e.getMessage());
+
+			System.debug(item);resultItems.add(item);Database.rollback(sp);throw e;
+
 		}
 
-   		this.run++;
 
 	}
 	
@@ -53,7 +75,23 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 		mail.setToAddresses( new String[] {userEmail} );
 		mail.setSenderDisplayName('Apex Newgen Conversion Batch Processing Module');
 		mail.setSubject('Batch Processing '+a.Status);
-		mail.setPlainTextBody('The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed );
+
+		String toReturnBody = 'The Batch Apex job ('+BC.getJobId()+')processed  '+a.TotalJobItems+' batches with '+a.NumberOfErrors+' failures.'+' Job Item processed are'+a.JobItemsProcessed+'\n\n';
+		
+		toReturnBody+= ':: Errors Found ::'+'\n';
+
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems)
+			if(item.isError)
+				toReturnBody+=item+'\n';
+		
+		toReturnBody+= '\n\n';
+		toReturnBody+= ':: Hierarchies Processed ::'+'\n';
+
+		for(ANG_ConversionHelper.ConversionBatchItem item:resultItems)
+			if(!item.isError)
+				toReturnBody+=item+'\n';
+
+		mail.setPlainTextBody(toReturnBody);
 
 		 if(Test.isRunningTest()){
 		 	return;
@@ -61,5 +99,7 @@ global class ANG_ConversionBatch implements Database.Batchable<sObject>, Databas
 
 		Messaging.sendEmail(new Messaging.Singleemailmessage [] {mail});
   	}
+
+
 	
 }
