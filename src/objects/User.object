@@ -1679,6 +1679,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <operation>equals</operation>
             <value>S</value>
         </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
+        </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>
         <sharedTo>
@@ -1699,6 +1704,28 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Company_community</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>Comments__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce platform</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Company community users</label>
         <language>en_US</language>
     </listViews>
     <listViews>

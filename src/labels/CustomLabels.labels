@@ -759,7 +759,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
+        <value>ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -856,6 +856,13 @@
         <protected>false</protected>
         <shortDescription>BCC</shortDescription>
         <value>BCC</value>
+    </labels>
+    <labels>
+        <fullName>BR_Trade_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Branch Trade Name</shortDescription>
+        <value>Branch Trade Name</value>
     </labels>
     <labels>
         <fullName>BSPLink_Description</fullName>
@@ -1233,7 +1240,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -6575,6 +6582,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>3.1 PEOPLE</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_BR_ReadOnly_SECTION3 New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_BR_ReadOnly_SECTION4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6869,6 +6883,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every IATA Cargo Agency Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the Agency Administrator shall be given prior notice of any changes to the information provided in those sections.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_T_Cs_TXT11_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_T_Cs_TXT11 New</shortDescription>
+        <value>It is hereby agreed that the sections of this application marked with an asterisk (*) shall become a part of every IFACP Forwarders Agreement signed with IATA Members for the sale and handling of international air cargo transportation and that the IFACP Program Secretariat shall be given prior notice of any changes to the information provided in those sections.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_T_Cs_TXT12</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6988,6 +7009,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>The undersigned applies for inclusion on the official IATA Cargo Agency List for</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_T_Cs_TXT4_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_T_Cs_TXT4 New</shortDescription>
+        <value>The undersigned applies for inclusion on the official IFACP Forwarders List for</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_T_Cs_TXT5</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7009,6 +7037,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Upon registration as an IATA Cargo Agent, the undersigned undertakes to pay to IATA annually not later than 1 December the agency fee requested by IATA for each succeeding calendar year, it being understood that credit shall be allowed for any overpaid portion of the initial annual payment, and it being further understood that refunds of any agency fees in respect of any office for which registration has once been given shall be made as prescribed in the IATA Cargo Agency Rules.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_CGO_T_Cs_TXT7_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_T_Cs_TXT7 New</shortDescription>
+        <value>Upon registration as an IFACP Forwarders, the undersigned undertakes to pay to IATA annually not later than 1 December the agency fee requested by IATA for each succeeding calendar year, it being understood that credit shall be allowed for any overpaid portion of the initial annual payment, and it being further understood that refunds of any agency fees in respect of any office for which registration has once been given shall be made as prescribed in the IFACP Forwarders Rules.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_CGO_T_Cs_TXT8</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7021,6 +7056,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_CGO_T_Cs_TXT9</shortDescription>
         <value>The applicant understands and agrees that any agency agreement between the applicant and an IATA Member shall be subject to the applicable IATA Cargo Agency Rules in</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_CGO_T_Cs_TXT9_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_CGO_T_Cs_TXT9 New</shortDescription>
+        <value>The applicant understands and agrees that any agency agreement between the applicant and an IATA Member shall be subject to the applicable IATA-FIATA Air Cargo Program Rules in</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_CGO_T_Cs_Title1</fullName>
@@ -7073,6 +7115,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>3. Agency Contacts</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_NAV3_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_NAV3_New</shortDescription>
+        <value>3. Company Contacts</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_NAV4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7122,6 +7171,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1 New</shortDescription>
+        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7129,11 +7185,25 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2 New</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</shortDescription>
         <value>Select at least one Authorised Signatory and one CASS Contact.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</shortDescription>
+        <value>SECTION 3 - Company Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION4</fullName>
@@ -7306,6 +7376,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         Select at least one Authorised Signatory and CASS Contact, and choose the and Portal Administrator.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1 New</shortDescription>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an &apos;over-the-counter&apos; market).
+                               Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.
+        Select at least one Authorised Signatory and CASS Contact, and choose the and Portal Administrator.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Cargo_Cass_SECTION_2_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7346,6 +7425,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label</shortDescription>
         <value>Date office opened as an Intermediary</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Cargo_Office_Open_Date_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS Cargo Office Open Date New</shortDescription>
+        <value>Date office opened as a Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Case_Attach</fullName>
@@ -8052,6 +8139,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Agency Type &amp; Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_First_Page_Summary_Header_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS First Page Summary Header_New</shortDescription>
+        <value>Company Type &amp; Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Form</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8351,6 +8446,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>2. Intermediary Identification</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav_Section2 New</shortDescription>
+        <value>2. Company Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section3</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8364,6 +8467,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section3_Cargo_Agency</shortDescription>
         <value>3. Agency Owners</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Agency_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS LeftNav_Section3_Cargo_Agency_New</shortDescription>
+        <value>3. Company Owners</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Cass_Ass</fullName>
@@ -8759,6 +8869,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Current Agency Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NOC_Current_Location_New</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Current Location New</shortDescription>
+        <value>Current Company Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NOC_Instructions</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8771,6 +8889,22 @@ For each section below either:&lt;br/&gt;
 &lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;Notify IATA of the Change and update your Agency Details&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NOC_Instructions_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NOC Instructions New</shortDescription>
+        <value>&lt;div&gt;
+For each section below either:&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;Confirm that the Company are correct&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div style=&quot;padding-left:80px;padding-bottom:10px&quot;&gt;OR&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Notify IATA of the Change and update your Company Details&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;</value>
     </labels>
@@ -8948,12 +9082,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>3. Agency Ownership / Shareholding and Legal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Change_Ownership_Shareholding_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Ownership_Shareholding New</shortDescription>
+        <value>3. Company Ownership / Shareholding and Legal Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Change_Type_and_Location</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_Type_and_Location</shortDescription>
         <value>Agency Type of Change &amp; Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_Type_and_Location_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Type_and_Location_New</shortDescription>
+        <value>Company Type of Change &amp; Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_for</fullName>
@@ -8972,12 +9122,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>1. Agency Legal Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Change_of_Legal_Name_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_of_Legal_Name New</shortDescription>
+        <value>1. Company Legal Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Change_of_Location</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Change_of_Location</shortDescription>
         <value>2. Agency Location</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Change_of_Location_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_of_Location New</shortDescription>
+        <value>2. Company Location</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Change_submitted_for</fullName>
@@ -9156,6 +9322,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Updated Agency Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Location_After_Change_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Location_After_Change New</shortDescription>
+        <value>Updated Company Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Location_Before_Change</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -9210,6 +9384,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC No Company Owners</shortDescription>
         <value>There are no companies listed as current owners of your Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_No_Company_Owners_New</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC No Company Owners New</shortDescription>
+        <value>There are no companies listed as current owners of your Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Notice_of_Change</fullName>
@@ -9282,6 +9464,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Q1</shortDescription>
         <value>* Will such change affect the premises that were investigated in the course of approving the Agent&apos;s application for registration?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Q1_New</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Q1 New</shortDescription>
+        <value>* Will such change affect the premises that were investigated in the course of approving the Company&apos;s application for registration?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Q2</fullName>
@@ -9436,12 +9626,36 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>In accordance with one of the requirements of the Cargo Agency Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Cargo Agency Agreement as at the date the transfer of ownership takes place.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO2_New</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO2 New</shortDescription>
+        <value>In accordance with one of the requirements of the IFACP Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its IFACP Agreement as at the date the transfer of ownership takes place.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_CGO3</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC TC Change CGO3</shortDescription>
         <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the Agent following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Cargo Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Cargo Agency Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO3_New</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO3 New</shortDescription>
+        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the Forwarder following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his IFACP Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s IFACP Agreement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_TC_Change_CGO_New</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC TC Change CGO New</shortDescription>
+        <value>The transferor has informed the Transferee of the need to comply the IFACP Rules if the Transferee wishes to be entered on the IFACP List as a Registered Forwarder.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_EACP</fullName>
@@ -9666,6 +9880,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>CNS Endorsed Cargo Agent - Branch Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_CGO_BRANCH_NEW</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION CGO BRANCH NEW</shortDescription>
+        <value>IATA Cargo Agent / IFACP Forwarder - Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_CGO_HO</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9680,6 +9902,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION CGO HO CNS</shortDescription>
         <value>CNS Endorsed Cargo Agent - New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_OPTION_CGO_HO_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION CGO HO New</shortDescription>
+        <value>IATA Cargo Agent / IFACP Forwarder – New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_COURIER_BRANCH</fullName>
@@ -9982,6 +10212,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>SECTION 1 - IATA Accredited Head Office Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Branch_Title_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS STEP 3_1 Branch Title New</shortDescription>
+        <value>SECTION 1 - IFACP Endorsed Head Office Details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_HO_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9995,6 +10233,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_2 Title</shortDescription>
         <value>SECTION 2 - Identification of Agency Location for which Approval Requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_2_Title_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS STEP 3_2 Title New</shortDescription>
+        <value>SECTION 2 - Identification of Company Location for which Approval Requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Sales_Instructions</fullName>
@@ -10078,6 +10324,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Apply for Agency Endorsement</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Agency_Accreditation_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Agency Accreditation New</shortDescription>
+        <value>Apply for Agency Accreditation / IFACP Endorsement</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Agency_Article</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10150,12 +10403,28 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>If you are not authorised to sign legal documents on behalf of the Agency, please request the appointed legal representative to register to the portal and submit the application.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Intro_Accred_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro Accred New</shortDescription>
+        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro CNS</shortDescription>
         <value>Welcome to the online CNS Agency Endorsement application.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Intro_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Intro New</shortDescription>
+        <value>Welcome to the online application.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Minor_Changes</fullName>
@@ -10180,6 +10449,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 New Application CNS</shortDescription>
         <value>New Endorsement Application</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_New_Application_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 New Application New</shortDescription>
+        <value>New Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Ongoing_Drafts</fullName>
@@ -10244,6 +10521,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 SAA</shortDescription>
         <value>CNS Online Agency Endorsement &amp; Changes</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_SAA_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 SAA New</shortDescription>
+        <value>IATA Online Agency Accreditation / IFACP Endorsement &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Specific_Sales_Activity</fullName>
@@ -10349,6 +10634,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>A. Select Agency Type &amp; Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step1_ProgressBar_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 ProgressBar New</shortDescription>
+        <value>A. Select Operation Type &amp; Location</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step1_Separate_Application</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10371,6 +10664,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Title</shortDescription>
         <value>Application for Approval as an CNS Passenger / Cargo Sales Agent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Title_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1 Title New</shortDescription>
+        <value>Application for Approval as an IATA Passenger / Cargo Sales Agent / IFACP Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Two_Weeks_Expiry</fullName>
@@ -10441,6 +10742,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>SECTION 3 - Agency Owners</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_3_Title_Cargo_Agency_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_3_Title_Cargo_Agency New</shortDescription>
+        <value>SECTION 3 - Company Owners</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_3_Title_Cargo_Intermediary</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10464,12 +10772,36 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>* Been director or had a financial interest or a position of management in an IATA Agent that was removed from the IATA Cargo Agency List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_20_Agency_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_20_Agency New</shortDescription>
+        <value>* Been director or had a financial interest or a position of management in an IATA Agent or IFACP Forwarder that was removed from the IATA Cargo Agency or IFACP Forwarder List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_20_Intermediary</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_20_Intermediary</shortDescription>
         <value>* Been director or had a financial interest or a position of management in an IATA Agent that was removed from the EACP Intermediary List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_20_Intermediary_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_20_Intermediary New</shortDescription>
+        <value>* Been director or had a financial interest or a position of management in an IATA Agent or IFACP Forwarder that was removed from the EACP Intermediary List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_20_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_20 New</shortDescription>
+        <value>* Been director or had a financial interest or a position of management in an IATA Agent or IFACP Forwarder that was removed from the {!IF(newForm.Agent_Type__c!=&apos;EACP Intermediary&apos;,&apos;IATA Cargo Agency or IFACP Forwarder&apos;, &apos;EACP Intermediary&apos;)} List, or which was under notice of default, and still has outstanding debts to IATA Members or in an IATA Agent whose debts to IATA Members were partially met by recourse to a financial bond or guarantee?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Branch_People</fullName>
@@ -10482,12 +10814,30 @@ You will be required to upload a scanned copy of this document in the next step 
 You can update you Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_Branch_People_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 Branch People New</shortDescription>
+        <value>Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company. &lt;br/&gt;Select at least one authorised signatory.
+ &lt;br/&gt;&lt;br/&gt;
+You can update you Ownership details at any time by following the &lt;i&gt;IATA Accreditation &amp; Changes&lt;/i&gt; link on the home page.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_Cargo_Agent_Title</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_Cargo_Agent_Title</shortDescription>
         <value>SECTION 4 - Additonal Cargo Agent Info</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Cargo_Agent_Title_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Cargo_Agent_Title New</shortDescription>
+        <value>SECTION 4 - Additonal Info</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Cargo_Intermediary_Title</fullName>
@@ -10504,6 +10854,14 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies</shortDescription>
         <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Companies_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 Companies New</shortDescription>
+        <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies_SubTitle</fullName>
@@ -10552,6 +10910,16 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <value>If your intermediary is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;
 Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the Intermediary. 
 Select at least one Authorized Signatory, and choose the Financial Assessment Contact and Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_People_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
+        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;
+Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
+Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_People_SubTitle</fullName>
@@ -10666,11 +11034,26 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA rules and regulations?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_4_Q19_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Q19 New</shortDescription>
+        <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a cargo agency which has been declared in default under the IATA or IFACP rules and regulations?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_4_Q19_intermediary</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_Q19_intermediary</shortDescription>
         <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a an intermediary which has been declared in default under the IATA rules and regulations?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Q19_intermediary_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Q19_intermediary New</shortDescription>
+        <value>* Been a sole proprietor, shareholder, partner, officer, director or manager of employee(s) of a an intermediary which has been declared in default under the IATA or IFACP rules and regulations?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Q1_Agency</fullName>
@@ -10679,6 +11062,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_4_Q1_Agency</shortDescription>
         <value>* Has your firm ever held a Cargo Agency Agreement executed by IATA?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_4_Q1_Agency_New</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_4_Q1_Agency New</shortDescription>
+        <value>* Has your firm ever previously held an IFACP Forwarder or an IATA Cargo Agency Agreement?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Q1_Intermediary</fullName>
@@ -11311,6 +11702,13 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <value>Application for approval as a CNS Endorsed Cargo Agent</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepsAll_Cargo_Title_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepsAll Cargo Title New</shortDescription>
+        <value>Application for Approval as an IATA Passenger / Cargo Sales Agent / IFACP Forwarder</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepsAll_Courier_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11330,6 +11728,13 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_StepsAll_Passenger_Title</shortDescription>
         <value>Application for Approval as an IATA Passenger Sales Agent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepsAll_Passenger_Title_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_StepsAll_Passenger_Title New</shortDescription>
+        <value>Application for Approval as an IATA Passenger Sales Agent / IFACP Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_StepsAll_Travel_Title</fullName>
@@ -11438,6 +11843,14 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <protected>false</protected>
         <shortDescription>ISSP AMS Update Agency</shortDescription>
         <value>Update Agency details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Update_Agency_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Update Agency New</shortDescription>
+        <value>Update Company details</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Update_HO_details</fullName>
@@ -12776,6 +13189,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Cargo Agent</shortDescription>
         <value>Cargo Agent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Cargo_Agent_New</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Cargo Agent New</shortDescription>
+        <value>Cargo Agent / IFACP Forwarder</value>
     </labels>
     <labels>
         <fullName>ISSP_CaseCommentEmail</fullName>
@@ -15170,6 +15591,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_MyProfile</shortDescription>
         <value>ID Card Valid to</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IFACP_Endorsement_Changes</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP IFACP Endorsement Changes</shortDescription>
+        <value>IFACP Endorsement &amp; Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_IFAP</fullName>
@@ -19795,7 +20224,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId Community Name</shortDescription>
-        <value>s</value>
+        <value>identity</value>
     </labels>
     <labels>
         <fullName>OneId_Contact_Association_Validation</fullName>
@@ -19830,6 +20259,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Registration Process</value>
     </labels>
     <labels>
+        <fullName>OneId_ForgotPassword</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ForgotPassword</shortDescription>
+        <value>Forgot your password?</value>
+    </labels>
+    <labels>
         <fullName>OneId_Help_Community</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -19844,6 +20281,20 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_Help Community Link</shortDescription>
         <value>http://www.iata.org/</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Home_PendingRequests</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Home_PendingRequests</shortDescription>
+        <value>Pending Requests</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Home_Requested</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Home_Requested</shortDescription>
+        <value>Requested</value>
     </labels>
     <labels>
         <fullName>OneId_IATA_Code</fullName>
@@ -19862,6 +20313,38 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Our mission is to represent, lead and serve the airline industry</value>
     </labels>
     <labels>
+        <fullName>OneId_ISAGO_App_Description</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId ISAGO App Description</shortDescription>
+        <value>The IATA Safety Audit for Ground Operations (ISAGO) application has been developed to improve the safety of ground operations and reduce ground damage and injuries</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_1</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_1</shortDescription>
+        <value>I agree to the use of my profile information and any other information I provide for the purpose of completing the ISAGO auditor application, training and qualification process.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_2</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
+        <value>N/A</value>
+    </labels>
+    <labels>
+        <fullName>OneId_ISAGO_Terms_3</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_ISAGO_Terms_3</shortDescription>
+        <value>N/A</value>
+    </labels>
+    <labels>
         <fullName>OneId_International_Air_Transport_Association_IATA</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -19876,6 +20359,29 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>OneId_JobFunction_Help_Msg</shortDescription>
         <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Job_Function</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Job_Function</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Login</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Login</shortDescription>
+        <value>Log in</value>
+    </labels>
+    <labels>
+        <fullName>OneId_LoginFail</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_LoginFail</shortDescription>
+        <value>Your login attempt has failed. Make sure the email and password are correct.</value>
     </labels>
     <labels>
         <fullName>OneId_My_available_applications</fullName>
@@ -19904,6 +20410,21 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>OneId_NoTermsFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_NoTermsFound</shortDescription>
+        <value>No Terms and Conditions found, contact system administrator</value>
+    </labels>
+    <labels>
+        <fullName>OneId_No_Apps_Availablr_for_You</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId No Apps Availablr for You</shortDescription>
+        <value>There are no more services available for you to subscribe.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Nothing_found</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -19925,7 +20446,31 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://www.iata.org/</value>
+        <value>http://extranet.iata.org/registration/pages/loginproblem.aspx</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Password</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>OneId_PasswordResetFail</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_PasswordResetFail</shortDescription>
+        <value>Reset Password Failed. Please contact your System Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Password_ErrorBlank</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Password_ErrorBlank</shortDescription>
+        <value>Enter a value in the Password field.</value>
     </labels>
     <labels>
         <fullName>OneId_Please_Wait</fullName>
@@ -19950,6 +20495,83 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Press to Validate</shortDescription>
         <value>Press to Validate</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingCity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingCity</shortDescription>
+        <value>Billing City</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingCountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingCountry</shortDescription>
+        <value>Billing Country</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingPostal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingPostal</shortDescription>
+        <value>Billing Zip/Postal</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingState</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingState</shortDescription>
+        <value>Billing State/Province</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BillingStreet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BillingStreet</shortDescription>
+        <value>Billing Street</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BusinessFax</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BusinessFax</shortDescription>
+        <value>Business Fax</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_BusinessInformation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_BusinessInformation</shortDescription>
+        <value>Business Information</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_ICAODesignator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_ICAODesignator</shortDescription>
+        <value>ICAO Designator</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_Information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_Information</shortDescription>
+        <value>Profile Information</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Profile_OfficeEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Profile_OfficeEmail</shortDescription>
+        <value>Office Email</value>
     </labels>
     <labels>
         <fullName>OneId_Registration_Error_BusinessPhone</fullName>
@@ -19984,12 +20606,35 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Search your company</value>
     </labels>
     <labels>
+        <fullName>OneId_SelfRegister</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_SelfRegister</shortDescription>
+        <value>Not a member?</value>
+    </labels>
+    <labels>
+        <fullName>OneId_SendPasswordResetEmail</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_SendPasswordResetEmail</shortDescription>
+        <value>Send Password Reset Email</value>
+    </labels>
+    <labels>
         <fullName>OneId_Sign_In</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Sign In</shortDescription>
         <value>Sign In</value>
+    </labels>
+    <labels>
+        <fullName>OneId_TermsAndConditions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_TermsAndConditions</shortDescription>
+        <value>Terms and Conditions</value>
     </labels>
     <labels>
         <fullName>OneId_Terms_of_Use</fullName>
@@ -20022,6 +20667,22 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Type</shortDescription>
         <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Username</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Username</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>OneId_Username_ErrorBlank</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Username_ErrorBlank</shortDescription>
+        <value>Enter a value in the email field.</value>
     </labels>
     <labels>
         <fullName>OneId_You_will_be_notified_by_email_when_you_can_access_the_new_service</fullName>
@@ -22544,23 +23205,23 @@ title,Title,Name</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_new_application</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>new application</shortDescription>
-        <value>New Application</value>
+        <value>New Service</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_request_new_application</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>request new application</shortDescription>
-        <value>Request a New Application</value>
+        <value>Request a New Service</value>
     </labels>
     <labels>
         <fullName>issp_apppicker_select_role</fullName>
-        <categories>ISSP</categories>
+        <categories>OneId</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>select role</shortDescription>

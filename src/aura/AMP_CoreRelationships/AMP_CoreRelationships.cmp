@@ -108,12 +108,12 @@
                 <tbody>
                     <aura:iteration items="{!v.ParticipantWrappers}" var="participant" indexVar="index">
                         <tr>
-                            <td><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
-                            <td><ui:outputText value="{!participant.Role}" /></td>
-                            <td><ui:outputText value="{!participant.Salutation}" /></td>
-                            <td><ui:outputText value="{!participant.FirstName}" /></td>
-                            <td><ui:outputText value="{!participant.LastName}" /></td>
-                            <td><ui:outputText value="{!participant.Title}" /></td>
+                            <td  style="white-space: normal;"><a href="{!'/'+participant.GroupId}" target="_blank">{!participant.GroupName}</a></td>
+                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Role}" /></td>
+                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Salutation}" /></td>
+                            <td  style="white-space: normal;"><ui:outputText value="{!participant.FirstName}" /></td>
+                            <td  style="white-space: normal;"><ui:outputText value="{!participant.LastName}" /></td>
+                            <td  style="white-space: normal;"><ui:outputText value="{!participant.Title}" /></td>
                         </tr>
                     </aura:iteration>
                 </tbody>

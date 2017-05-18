@@ -99,6 +99,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>EBC_Send_From_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>EBC Send From Email</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Encryption_Algorythm__c</fullName>
         <defaultValue>&quot;AES128&quot;</defaultValue>
         <description>AES128, AES192, or AES256</description>

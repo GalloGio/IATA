@@ -1768,7 +1768,7 @@ Record Type + Group Type + ISO_Country_Name</description>
         <availability>online</availability>
         <displayType>button</displayType>
         <linkType>javascript</linkType>
-        <masterLabel>Deacitvate</masterLabel>
+        <masterLabel>Deactivate</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
         <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)}
