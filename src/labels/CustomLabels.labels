@@ -19126,7 +19126,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
-        <value>Please wait. You'll be redirected to the Easy Pay Portal in a few moments.</value>
+        <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
     </labels>                    
     <labels>
         <fullName>Iata_service_request</fullName>
