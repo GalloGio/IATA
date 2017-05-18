@@ -95,9 +95,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
         Map<String, Id> countryTemplatesCATA = DGRemailTemplates('CATA');
-        //OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress]; // in order to test we must use any other email since agencymanagement@iata.org doesn't exist on preprod
-System.debug('Elias owea' + owea);
+        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
 			Contact comCasecontact;
@@ -168,7 +167,7 @@ System.debug('Elias owea' + owea);
 				system.debug('creating renewal for CATA ' + numberOfRemainingCATAInAccountToExpire);
 
 				if(isCountBelowThreshold(accountData.get(agReg.Account__c), numberOfActiveCATA, 0, 0,agReg.Type_Of_Certificate__c)){
-                    
+
                     System.debug('## enter isCountBelowThreshold CATA');
 
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
@@ -399,7 +398,7 @@ System.debug('Elias owea' + owea);
     private static Map<String, Id> DGRemailTemplates(String type){
 
         Map<String, Id> multilangTemplates = new Map<String, Id>();
-		
+
         String devNameLike = 'AMS_' + type + '_Renewal%';
         List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
         Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
@@ -412,7 +411,6 @@ System.debug('Elias owea' + owea);
 
         //map template Ids with their respective language
         List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
-		System.debug('Eliaslanguages' + prefLanguages);
         for(Schema.Picklistentry pe: prefLanguages){
             EmailTemplate langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_' + pe.getValue());
 
