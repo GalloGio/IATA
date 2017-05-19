@@ -7,17 +7,6 @@ global virtual class SCIMUser {
         public String location;
     }
 
-    public class Addresses {
-        public String streetAddress;
-        public String locality;
-        public String region;
-        public String postalCode;
-      
-        public String country;
-        public string type;
-        public Boolean primary;
-    }
-
     public class Roles {
         public String type;
         public String value;
@@ -64,8 +53,6 @@ global virtual class SCIMUser {
         public String value;
     }
 
-    //private String enterprise;
-
     // Public fields to serialize / deserialize
     public List<String> schemas;
     public String id;
@@ -86,17 +73,13 @@ global virtual class SCIMUser {
     public List<Groups> groups;
     public List<Roles> roles;
     public Meta meta;
-    public String timezone;
-
-    public List<Addresses> addresses;
-
+    
     public SCIMUser() {
         this(null, null, null, null, null, null);
     }
 
     public SCIMUser(String userName, String familyName, String givenName, String externalid, String email, String entitlement) {
-        schemas = new List<String>();
-        schemas.add('urn:scim:schemas:core:1.0');
+        schemas = new List<String> {'urn:scim:schemas:core:1.0'};
 
         if (userName != null) this.userName = userName;
 
@@ -109,7 +92,16 @@ global virtual class SCIMUser {
 
         if (externalid != null) this.externalId = externalid;
 
-        if (entitlement != null) {
+        if (email != null) { 
+            SCIMUser.Emails emails = new SCIMUser.Emails();
+            emails.value = email;
+            List<SCIMUser.Emails> emailsList = new List<SCIMUser.Emails>();
+            emailsList.add(emails);
+            this.emails = emailsList;
+        } 
+            
+       /* Manuel Conde: commented due to dynamic framework 
+       if (entitlement != null) { 
             SCIMUser.Entitlements entitlements = new SCIMUser.Entitlements();
             entitlements.value = entitlement;
             entitlements.primary = true;
@@ -117,18 +109,16 @@ global virtual class SCIMUser {
             entitlementsList.add(entitlements);
             this.entitlements = entitlementsList;
         }
-
-        if (email != null) { 
-            SCIMUser.Emails emails = new SCIMUser.Emails();
-            emails.value = email;
-            List<SCIMUser.Emails> emailsList = new List<SCIMUser.Emails>();
-            emailsList.add(emails);
-            this.emails = emailsList;
-        }
+        */
     }
 
     // Simple JSON deserialization
     public static SCIMUser parse(String json) {
         return (SCIMUser)System.JSON.deserialize(json, SCIMUser.class);
     }
+    
+    public List<String> getSchemas(){
+    	return schemas;
+    }
+    
 }
