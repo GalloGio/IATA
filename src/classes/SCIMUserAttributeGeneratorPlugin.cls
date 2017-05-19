@@ -12,7 +12,8 @@ global class SCIMUserAttributeGeneratorPlugin extends UserProvisioning.UserProvi
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, Process.PluginDescribeResult.ParameterType.STRING, false),
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EXTERNALID, Process.PluginDescribeResult.ParameterType.STRING, false),
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EMAIL, Process.PluginDescribeResult.ParameterType.STRING, false),
-			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, Process.PluginDescribeResult.ParameterType.STRING, false)
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_PROPERTIES, Process.PluginDescribeResult.ParameterType.STRING, false)
         }; 
 
         describeResult.outputParameters = new List<Process.PluginDescribeResult.OutputParameter>{

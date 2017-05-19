@@ -1,8 +1,6 @@
-public with sharing class COPASCIMMessageEnhancer extends SCIMMessageEnhancer{
-    
-    public COPASCIMMessageEnhancer(){}
-    
-    public COPASCIMMessageEnhancer(String messageType){
+public with sharing class ANG_IEPSCIMMessage extends SCIMMessageEnhancer{
+        
+    public ANG_IEPSCIMMessage(String messageType){
         
         super(messageType);
     } 
@@ -14,9 +12,8 @@ public with sharing class COPASCIMMessageEnhancer extends SCIMMessageEnhancer{
         String lastName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_LASTNAME);
         String externalid = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EXTERNALID);
         String email = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EMAIL);
+        String properties = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_PROPERTIES);
         
-        COPASCIMUser newSCIMUser = new COPASCIMUser(userName, lastName, firstName, externalId, email, '');
-        
-        return newSCIMUser;
+        return new ANG_IEPSCIMUser(userName, lastName, firstName, externalId, email, properties);
     }
 }

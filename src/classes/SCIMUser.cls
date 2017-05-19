@@ -99,17 +99,6 @@ global virtual class SCIMUser {
             emailsList.add(emails);
             this.emails = emailsList;
         } 
-            
-       /* Manuel Conde: commented due to dynamic framework 
-       if (entitlement != null) { 
-            SCIMUser.Entitlements entitlements = new SCIMUser.Entitlements();
-            entitlements.value = entitlement;
-            entitlements.primary = true;
-            List<SCIMUser.Entitlements> entitlementsList = new List<SCIMUser.Entitlements>();
-            entitlementsList.add(entitlements);
-            this.entitlements = entitlementsList;
-        }
-        */
     }
 
     // Simple JSON deserialization
