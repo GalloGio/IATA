@@ -292,9 +292,9 @@ global with sharing class ANG_ConversionHelper {
 	public static Id runMigration(String countryName){
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
-
+		       
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
-
+		        
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
@@ -332,9 +332,9 @@ global with sharing class ANG_ConversionHelper {
 		ANG_ConversionHelper.StatisticGeneratorStructure toReturn = new ANG_ConversionHelper.StatisticGeneratorStructure();
 
 		for(ANG_ConversionHelper.HierarchyStructure struct: structure.values()){
-
+			            
 			if(struct.migrated){
-
+				
 				toReturn.totalMigratedHierarchies ++;
 			
 			}
@@ -342,7 +342,7 @@ global with sharing class ANG_ConversionHelper {
 
 				toReturn.totalValidHierarchies++;
 
-				toReturn.validHierarchies.put(struct.iataCodeTopParent,struct);
+				toReturn.validHierarchies.put(struct.iataCodeTopParent + struct.hierarchyId,struct);
 
 			}else{
 
@@ -794,7 +794,7 @@ global with sharing class ANG_ConversionHelper {
 				toReturn+='Error:'+errorMessage+'\n';
 			}
 			else{
-				toReturn+='IATA Code:'+this.iataCode+'\n';
+				toReturn+='IATA Code:'+this.iataCode+' || Hierarchy: ' + hierarchyId +  '\n';
 			}
 
 			return toReturn;
