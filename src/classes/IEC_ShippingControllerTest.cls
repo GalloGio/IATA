@@ -496,22 +496,22 @@ private class IEC_ShippingControllerTest {
 				ctrl.vfOrder.orderTotalAmount = 1000;
 				ctrl.orderCreditCardId = '';
 				ctrl.processPayment();
-				system.assert(ApexPages.getMessages().size() == errCount + 5, 'Should have ' + (errCount + 5) + ' messages: ' + ApexPages.getMessages());
+				system.assert(ApexPages.getMessages().size() == errCount + 4, 'Should have ' + (errCount + 5) + ' messages: ' + ApexPages.getMessages());
 				//*** cover "processPayment" - payment with ICH - over threshold
 				ctrl.orderPaymentType = IECConstants.PaymentThresholdType_ICH;
 				ctrl.vfOrder.orderTotalAmount = -1;
 				ctrl.processPayment();
-				system.assert(ApexPages.getMessages().size() == errCount + 6, 'Should have ' + (errCount + 6) + ' messages: ' + ApexPages.getMessages());
+				system.assert(ApexPages.getMessages().size() == errCount + 5, 'Should have ' + (errCount + 6) + ' messages: ' + ApexPages.getMessages());
 				//*** cover "processPayment" - payment with Bank Transfer - over threshold
 				ctrl.orderPaymentType = IECConstants.PaymentThresholdType_BankTransfer;
 				ctrl.vfOrder.orderTotalAmount = -1;
 				ctrl.processPayment();
-				system.assert(ApexPages.getMessages().size() == errCount + 7, 'Should have ' + (errCount + 7) + ' messages: ' + ApexPages.getMessages());
+				system.assert(ApexPages.getMessages().size() == errCount + 6, 'Should have ' + (errCount + 7) + ' messages: ' + ApexPages.getMessages());
 				//*** cover "processPayment" - payment with Bank Transfer - auto renew forbidden
 				ctrl.vfOrder.orderTotalAmount = 1000;
 				ctrl.vfOrder.orderItems[0].isAutoRenew = true;
 				ctrl.processPayment();
-				system.assert(ApexPages.getMessages().size() == errCount + 8, 'Should have ' + (errCount + 8) + ' messages: ' + ApexPages.getMessages());
+				system.assert(ApexPages.getMessages().size() == errCount + 7, 'Should have ' + (errCount + 8) + ' messages: ' + ApexPages.getMessages());
 				//*** cover "processPayment" - success - could get error of # SOQL
 				ctrl.vfOrder.orderItems[0].isAutoRenew = false;
 				ctrl.processPayment();

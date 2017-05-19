@@ -5416,6 +5416,13 @@ and
         <value>You must select two travel professional courses.</value>
     </labels>
     <labels>
+        <fullName>IEC_BillingAddressLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_BillingAddressLimit</shortDescription>
+        <value>The billing address street has exceeded the 70-character maximum. Please enter an address using fewer than 70 characters.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Confirm_AddNewCard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5442,6 +5449,13 @@ and
         <protected>false</protected>
         <shortDescription>IEC_Confirm_SaveSuccessful</shortDescription>
         <value>Settings have been saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_DisableZipCodeMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_DisableZipCodeMsg</shortDescription>
+        <value>My shipping address doesn&amp;#39;t have zip/postal code.</value>
     </labels>
     <labels>
         <fullName>IEC_Error_AcceptTermAndCondition</fullName>
@@ -5836,6 +5850,34 @@ and
         <value>VAT number &quot;{0}&quot; is invalid.</value>
     </labels>
     <labels>
+        <fullName>IEC_LimitCharacters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_LimitCharacters</shortDescription>
+        <value>Maximum 70 characters allowed</value>
+    </labels>
+    <labels>
+        <fullName>IEC_NOGPAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_NOGPAccount</shortDescription>
+        <value>No General Public Account was found matching your country.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_PO_BOX_ERROR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_PO_BOX_ERROR</shortDescription>
+        <value>We are unable to ship to a Post Office Box. Please provide a different shipping address.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_PO_BOX_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_PO_BOX_MSG</shortDescription>
+        <value>Post Office Boxes are not allowed as Shipping Address.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Recaptcha_PrivateKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5876,6 +5918,13 @@ and
         <protected>false</protected>
         <shortDescription>SAP Customer Issue on Shipping Address</shortDescription>
         <value>There is an error with your shipping address.&lt;br/&gt;Please change shipping address or contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_ShippingAddressLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_ShippingAddressLimit</shortDescription>
+        <value>The shipping address street has exceeded the 70-character maximum. Please enter an address using fewer than 70 characters.</value>
     </labels>
     <labels>
         <fullName>IEC_Trial_RequestFail</fullName>

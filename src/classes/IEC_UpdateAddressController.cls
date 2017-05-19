@@ -307,6 +307,13 @@ public void cancelBillToAddress()
 } //*** end of "cancelBillToAddress"
 
 
+/*
+	TC 2017-05-17
+*/
+public Boolean isStreetAddressToLong(String street, Integer maxSize) {
+	return !String.isBlank(street) && street.length() > maxSize;
+}
+
 /****************************************************************************************************
     Created by CGI, Thai 2016-04-25
         Validate and save bill to address
@@ -336,6 +343,13 @@ public void saveBillToAddress()
     lstAddress = checkAddress(dtoBillToAddress, false);
     if (lstAddress == null)
         return;
+        
+	/*TC 2017-05-17*/
+	if(isStreetAddressToLong(dtoBillToAddress.street1, 70)) {
+		addErrorMessage(Label.IEC_BillingAddressLimit);
+		return;
+	}
+	/* end TC */
 
     //*** do nothing if address is not modified
     if (!isAddressModified(dtoBillToAddress, sourceAddress))
@@ -605,7 +619,6 @@ public void prepareNewShipToAddress()
     changeShipToCountry(false);
 } //*** end of "prepareNewShipToAddress"
 
-
 /****************************************************************************************************
     Created by CGI, Thai 2016-04-25
         Validate and save ship to address
@@ -640,6 +653,18 @@ public void saveShipToAddress()
     lstAddress = checkAddress(dtoShipToAddress, true);
     if (lstAddress == null)
         return;
+        
+    /*TC 2017-05-17*/
+	if(isStreetAddressToLong(dtoShipToAddress.street1, 70)) {
+		addErrorMessage(Label.IEC_ShippingAddressLimit);
+		return;
+	}
+	
+	if(IECUtil.isPostOfficeBox(dtoShipToAddress.street1)) {
+    	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+    	return;
+    }
+	/* end TC */
 
     //*** do nothing if address is not modified
     if (!isNewShipToAddress)

@@ -64,13 +64,16 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label text">{!labels['lblStreet']}</span>
-                                                <input type="text" id="billToStreet" name="billToStreet" value="{!dtoBillToAddress.street1}" maxlength="100" class="user-input text" onchange="validate('billToStreet')" onkeypress="autocompleteAddress('billToStreet')" />
+                                                <input type="text" id="billToStreet" name="billToStreet" value="{!dtoBillToAddress.street1}" maxlength="100" onkeydown="validateStreetSize(this.value, 'billing', 70);" class="user-input text" onchange="validate('billToStreet')" onkeypress="autocompleteAddress('billToStreet')" />
                                                 <apex:actionFunction name="getBillToAutoCompleteAddress" action="{!getBillToAutoCompleteAddress}" status="billToRunningStatus" rerender="billToAddress" >
                                                     <apex:param name="fullAddress" assignTo="{!autocompleteFullAddress}" value="" />
                                                 </apex:actionFunction>
                                             </label>
                                             <div id="required_billToStreet" class="input-aid">
                                                 <p>{!labels['msgNoStreet']}</p>
+                                            </div>
+                                            <div id="tooLong_billingStreet" class="input-aid">
+                                            	<p>{!$Label.IEC_LimitCharacters}</p>
                                             </div>
                                         </div>
 
@@ -216,13 +219,16 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label text">{!labels['lblStreet']}</span>
-                                                <input type="text" id="shipToStreet" name="shipToStreet" value="{!dtoShipToAddress.street1}" maxlength="100" class="user-input text" onchange="validate('shipToStreet')" onkeypress="autocompleteAddress('shipToStreet')" />
+                                                <input type="text" id="shipToStreet" name="shipToStreet" value="{!dtoShipToAddress.street1}" maxlength="100" class="user-input text" onkeydown="validateStreetSize(this.value, 'shipping', 70);" onchange="validate('shipToStreet')" onkeypress="autocompleteAddress('shipToStreet')" />
                                                 <apex:actionFunction name="getShipToAutoCompleteAddress" action="{!getShipToAutoCompleteAddress}" status="shipToRunningStatus" rerender="shipToAddress" >
                                                     <apex:param name="fullAddress" assignTo="{!autocompleteFullAddress}" value="" />
                                                 </apex:actionFunction>
                                             </label>
                                             <div id="required_shipToStreet" class="input-aid">
                                                 <p>{!labels['msgNoStreet']}</p>
+                                            </div>
+                                            <div id="tooLong_shippingStreet" class="input-aid">
+                                            	<p>{!$Label.IEC_LimitCharacters}</p>
                                             </div>
                                         </div>
 
@@ -347,6 +353,16 @@
         <script src="{!URLFOR($Resource.jQueryUI, 'jquery-ui.min.js')}"></script>   <!-- need for autocomplete -->
         <script type="text/javascript">
             var j = jQuery.noConflict();
+            
+            /* TC 2017-05-17 */
+            function validateStreetSize(value, type, limit) {
+            	if(value.length > limit) {
+            		j('#tooLong_'+type+'Street').show();
+            	} else {
+            		j('#tooLong_'+type+'Street').hide();
+            	}
+            }            
+            /* end */
             
             //*** validate input
             var validate = function(fieldName) {

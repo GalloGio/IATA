@@ -119,7 +119,7 @@
                                                 <!-- Start shipping address section -->
                                                 <section class="group-container shipping-address">
                                                     <h2 class="group-title">{!$Label.Shipping_address}</h2>
-
+						                        	
                                                     <div class="shipping-address-container">
                                                         <div class="field-group output inline">
                                                             <span class="input-label">{!$Label.Address_Line_1}</span>
@@ -452,7 +452,10 @@
                                             <div class="columns small-12 medium-6">
                                                 <!-- Billing Address -->
                                                 <section class="group-container billing-address">
-                                                    <h2 class="group-title">Billing address</h2>
+                                                    <h2 class="group-title">
+                                                    	Billing address
+                                                    	<p style="font-size: 11px; margin:0px;">&#8203;</p>
+                                                    </h2>
                                                     <div class="field-group output inline">
                                                         <span class="input-label">{!$Label.Address_Line_1}</span>
                                                         <span class="output-value">{!vfOrder.billToAddress.street1}</span>
@@ -491,7 +494,10 @@
                                                 <input type="hidden" id="hiddenShippingRegion" />
                                                 <!-- Shipping Address -->
                                                 <section class="group-container shipping-address">
-                                                    <h2 class="group-title">Shipping address</h2>
+                                                    <h2 class="group-title">
+                                                    	Shipping address
+                                                    	<p style="color: #C90435; font-size: 11px; margin: 0px;">{!$Label.IEC_PO_BOX_MSG}</p>	
+                                                    </h2>
                                                     
                                                     <div class="field-group radio inline">
                                                         <div class="radio-box">
@@ -555,14 +561,15 @@
                                                             <div class="field-group text inline">
                                                                 <label>
                                                                     <span class="input-label">{!$Label.Address_Line_1} <span class="required">*</span></span>
-                                                                    <apex:inputText styleClass="user-input text validate[required]" id="shippingAddress1" value="{!newShipToAddress.street1}" />
+                                                                    <apex:inputText styleClass="user-input text validate[required,maxSize[70]]" id="shippingAddress1" value="{!newShipToAddress.street1}" />
                                                                 </label>
                                                             </div>
                                                             <apex:outputPanel id="postalCode">
                                                             <div class="field-group text inline">
+                                                            	<apex:outputText value="{!unlockZipCode}"/>
                                                                 <label>
                                                                     <span class="input-label">{!$Label.Postal_code} <span style="{!if(newShipToAddress.isPostalCodeRequired,'','display: none;')}" class="required">*</span></span>
-                                                                    <apex:inputText styleClass="user-input text" id="shippingPostalCode" value="{!newShipToAddress.postalCode}" />{!newShipToAddress.isPostalCodeRequired}
+                                                                    <apex:inputText styleClass="user-input text" id="shippingPostalCode" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" value="{!newShipToAddress.postalCode}" />{!newShipToAddress.isPostalCodeRequired}
                                                                 </label>
                                                             </div>
                                                             </apex:outputPanel>
@@ -1236,8 +1243,7 @@
                 </script>
             </apex:outputPanel>
 
-            <script type="text/javascript">
-
+            <script type="text/javascript">            	
                 var setLabelFor = function(){
                     var total_items = $("#total_items").val();
                     for(i=1; i<=total_items; i++){

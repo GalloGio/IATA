@@ -54,6 +54,11 @@
 						        	<apex:pageMessages escape="false"/>
 					        	</apex:outputPanel>
 
+								<!-- Warning Message -->
+	        					<apex:outputPanel styleClass="alert primary" rendered="{!hasWarning}" layout="block">
+						        	<apex:pageMessages escape="false"/>
+					        	</apex:outputPanel>
+
 					        	<!-- Success Message -->
 					        	<apex:outputPanel styleClass="alert success" rendered="{!hasConfirm}" layout="block">
 						        	<apex:pageMessages escape="false"/>
