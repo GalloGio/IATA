@@ -238,15 +238,23 @@
         <picklistValues>
             <picklist>ANG_Remittance_Frequency</picklist>
             <values>
-                <fullName>Every five days</fullName>
+                <fullName>4 times per month</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every ten days</fullName>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every three days</fullName>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -254,11 +262,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Four times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
+                <fullName>Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -308,15 +312,23 @@
         <picklistValues>
             <picklist>ANG_Remittance_Frequency</picklist>
             <values>
-                <fullName>Every five days</fullName>
+                <fullName>4 times per month</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every ten days</fullName>
+                <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every three days</fullName>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -324,11 +336,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Four times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
+                <fullName>Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
