@@ -25,11 +25,16 @@ public with sharing class ISSP_AvailableServices{
     public String TOCdocumentId {get; set;}
     public list<String> errorMessage {get; set;}
     public boolean accept {get; set;}
+    public boolean pollerOn {get; set;}
+    public Map<String, String> iepRoles {get; set;}
+    public Boolean redirect {get; set;}
+
+    Integer count = 0;
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-	
-	public static User currentPortalUser {
+    
+    public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
@@ -82,6 +87,16 @@ public with sharing class ISSP_AvailableServices{
     
     public ISSP_AvailableServices(){
 
+        this.iepRoles = new Map<String, String>();
+
+        this.redirect = false;
+
+        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
+            if(role.Permission_set_SSO__c != null){
+                iepRoles.put(role.Connected_App__c + ' - ' + role.Role__c, role.Permission_set_SSO__c);   
+            }
+        }        
+    
         //User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c from User where id =: UserInfo.getUserId()];
 
         IepStatus = currentPortalUser.contact.account.ANG_IEP_Status_FF__c;        
@@ -103,6 +118,10 @@ public with sharing class ISSP_AvailableServices{
     
     public PageReference initialization() {
         try {
+
+            this.count = 0;
+            this.pollerOn = false;
+
             initFilters();
             initServiceListViewMap();
             String currentUserProfileId = UserInfo.getProfileId();
@@ -159,7 +178,7 @@ public with sharing class ISSP_AvailableServices{
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
                     isModalErrorMessageEnable = true;
                     modalErrorMessage = Label.ANG_ISSP_IEP_Abroad_Account_error_msg;
-                }                
+                }
             }
             else
                 isAdmin = false;
@@ -564,12 +583,17 @@ public with sharing class ISSP_AvailableServices{
     }
     
     public PageReference doRequest() {
-         system.debug('XXX START doRequest : ');
-         String Servid = Apexpages.currentPage().getParameters().get('servId');
-         system.debug('XXX Servid : '+Servid);
-        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c, Cannot_be_managed_by_portal_admin__c from Portal_Applications__c where Id =: Servid ]);
+
+        system.debug('XXX START doRequest : ');
+        String Servid = Apexpages.currentPage().getParameters().get('servId');
+        system.debug('XXX Servid : '+Servid);
+
+        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c, Cannot_be_managed_by_portal_admin__c, Application_URL__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
+
+        this.pollerOn = (Serv.recordService.Name.startsWith('IATA EasyPay') && Serv.useDefaultRole);
+
         system.debug('XXX Serv : '+Serv);
         return null ;
     }
@@ -597,19 +621,37 @@ public with sharing class ISSP_AvailableServices{
         String appRight = 'Access Requested';
         if(applicationName=='Standards Setting Workspace')
             appRight = 'Access Granted';
-        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
+
+        Portal_Application_Right__c app = new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = appRight);
 
         if (portalServiceRole != '' || flagUseDefaultRole) {
-            Portal_Application_Right__c app = [SELECT id, ANG_Portal_Service_Role__c FROM Portal_Application_Right__c Where Portal_Application__c =: applicationId AND contact__c =: contactId];
-
             if (flagUseDefaultRole) {
                 app.ANG_Portal_Service_Role__c = defaultPortalUserRole;                    
             } else {
                 app.ANG_Portal_Service_Role__c = portalServiceRole;                    
             }
+        }
+        insert app;
 
-            update app;
-        }        
         return 'ok';             
+    }
+
+    public PageReference setPollerOff() {
+        this.pollerOn = false;
+        return null;
+    }
+
+    public PageReference iepPermissionSetPoller() {
+
+        String permSetSSO = this.iepRoles.get(this.Serv.recordService.Name + ' - ' + this.defaultPortalUserRole);
+
+        List<PermissionSetAssignment> l = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSetId in (select id from PermissionSet Where name =: permSetSSO)];
+
+        if(l.size() != 0) {
+            this.pollerOn = false;
+            this.redirect = true;
+        }            
+                
+        return null;
     }
 }
