@@ -66,12 +66,14 @@ public without sharing class LightningConnectedAppHelper {
             System.debug('role ' + role);
             sp = Database.setSavepoint();
 
-            if(String.isNotBlank(role)) {
+            /*if(String.isNotBlank(role)) {
                 User usr = new User();
                 usr.id = UserInfo.getUserId();
                 usr.Portal_App_Role__c = role;
                 update usr;
-            }
+				
+                
+            }*/
 
             List<One_Id_App_Config_Detail__c> apps = OneIdProvisioningDAO.getAppPermissionSetListForAppicker(connectedapp);
 
@@ -87,6 +89,9 @@ public without sharing class LightningConnectedAppHelper {
                     anUserApp.One_Id_App_Bundle__c = app.One_Id_Service_Provider_Config__r.Service_Bundle__r.id;
                     anUserApp.One_Id_Service_Provider_Config__c = app.One_Id_Service_Provider_Config__r.id;
                     anUserApp.Provisioning_Status__c = 'Started';
+                    if(String.isNotBlank(role))
+                    	anUserApp.Selected_Role__c = role;
+                    
                     anUserApp.App_Key__c  = LightningConnectedAppHelper.OneIdBuildUserAppKey(anUserApp);
                     userAppsIn.add(anUserApp);
                 }
@@ -151,9 +156,25 @@ public without sharing class LightningConnectedAppHelper {
             List<One_Id_Service_Provider_Config__c> bundles = OneIdProvisioningDAO.getAppDescListForAppicker(connectedapp);
 
             if(!bundles.isEmpty()){
+				
+				String confCLabel = bundles.get(0).Description_Custom_Label__c;
+				
+				LabelTranslator translator = new LabelTranslator(); 
+				
+				String translatedString = translator.translate(confCLabel,UserInfo.getLanguage());				
+				 
+                description = translatedString;
 
-                description = bundles.get(0).Description__c;
-
+            }
+            else{
+				String confCLabelNo = 'OneId_No_Apps_Availablr_for_You';
+				
+				LabelTranslator translatorNo = new LabelTranslator(); 
+				
+				String translatedStringNo = translatorNo.translate(confCLabelNo,UserInfo.getLanguage());				
+				 
+                description = translatedStringNo;            	
+            	
             }
 
         }catch(Exception err){
@@ -162,7 +183,26 @@ public without sharing class LightningConnectedAppHelper {
 
     	return description;
     }
+    @AuraEnabled
+    public static String getAppTerms (String connectedapp) {
+        String termsText = '';
 
+        try {
+
+            List<One_Id_Service_Provider_Config__c> bundles = OneIdProvisioningDAO.getAppTermsForAppicker(connectedapp);
+
+            if(! bundles.isEmpty()) {
+
+                termsText = bundles.get(0).TermConditions__c;
+
+            }
+
+        } catch(Exception err) {
+            System.debug(err);
+        }
+
+        return termsText;
+    }
 /*
     //@future
     public static void assignpermissionset (String permissionsetid, String connectedappprovisioning) {
@@ -347,4 +387,5 @@ public without sharing class LightningConnectedAppHelper {
         HTTPResponse httpResponse = new Http().send(httpRequest);
     }
 */
+
 }

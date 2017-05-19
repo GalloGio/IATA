@@ -1,0 +1,11 @@
+<apex:page controller="LabelTranslatorController"
+ contentType="application/json" showHeader="false" sidebar="false"
+    language="{!label_lang}"      
+    standardStylesheets="false">
+    <apex:outputpanel id="translatorLabel">
+    	<apex:outputText value="<TAG>{!$Label[label]}<TAG>">
+    	</apex:outputText>
+    </apex:outputpanel>
+    
+    
+</apex:page>

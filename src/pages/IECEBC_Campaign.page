@@ -60,7 +60,7 @@
                                     <apex:outputPanel rendered="{!campaign.Id == null || campaign.Is_Step1_Writable__c}" styleClass="input-remaining">
                                         <span class="js-remaining-count" data-id="from-name">{!$ObjectType.EBC_Campaign__c.fields.From_Name__c.length}</span>
                                     </apex:outputPanel>
-                                    <p class="input-description">Use something recipients will instantly recognize, like your company name</p>
+                                    <p class="input-description">This is the default from name of your campaign</p>
                                 </div>
                             </div>
                             <div class="columns medium-6">
