@@ -1,4 +1,24 @@
 ({
+    jsLoaded:function(component, event, helper) {
+        console.log('Jquery Loaded...');
+        //jq$ = jQuery.noConflict();
+        
+        $(document).ready(function() {
+            //Configure events
+			$('#clientIpAddressAjax').change(function(){
+                console.log('Handle input Change: clientIpAddressAjax.change.'); 
+                
+                console.log('onChangeClientIpAddressAjax: call getSanctionCountry on assynchronous call back !!');
+                console.log('$("#clientIpAddressAjax").val='+$("#clientIpAddressAjax").val());
+                helper.getSanctionCountry(component, event, helper, $("#clientIpAddressAjax").val());
+                
+                console.log('After action: helper.getSanctionCountry'); 
+            })
+            console.log('JQuery EVENTS Configured...');
+         });
+         
+    },
+
     initialize: function(component, event, helper) {
         $A.get("e.siteforce:registerQueryEventMap").setParams({"qsToEvent" : helper.qsToEventMap}).fire();   
         
@@ -7,38 +27,39 @@
         helper.getCommunityForgotPasswordUrl(component, event, helper);
         helper.getCommunitySelfRegisterUrl(component, event, helper);
         helper.getSiteCompleteUrl(component, event, helper);
+
         
         //helper.getSanctionCountry(component, event, helper, getElementById("clientIpAddressAjax").value);
         //helper.getSanctionCountry(component, event, helper);
         helper.getShow90Days(component, event, helper);
     },
     
-    onChangeClientIpAddress: function (component, event, helpler) {
-        alert('Change ClientIpAddress');
-    },
-    
     getClientIpAddress: function(component, event, helper){
-        //For now ajax request is synchronous because the getSanctionCountry method needs the ip
-        ////TODO: change to use events in order to avoid synchornous deprecated ajax calls
-        helper.getClientIpAddressAjax(component, event, helper);
+        console.log('getClientIpAddress call getSanctionCountry on Synchronous ip adress get.');
         
-        helper.getSanctionCountry(component, event, helper, $("#clientIpAddressAjax").val());
+        helper.getClientIpAddressAjax(component, event, helper);
+        console.log('getClientIpAddress.AFTER AJAX CALL');
+        
+        //If ajax schyncronous
+        console.log('component.v.clientIpAddress='+component.get("v.clientIpAddress"));
+        helper.getSanctionCountry(component, event, helper, component.get("v.clientIpAddress"));
     },
     
-    handleLogin: function (component, event, helpler) {
-        helpler.handleLogin(component, event, helpler);
+    handleLogin: function (component, event, helper) {
+        console.log('handleLogin');
+        helper.handleLogin(component, event, helper);
     },
     
-    setStartUrl: function (component, event, helpler) {
+    setStartUrl: function (component, event, helper) {
         var startUrl = event.getParam('startURL');
         if(startUrl) {
             component.set("v.startUrl", startUrl);
         }
     },
-    onKeyUp: function(component, event, helpler){
+    onKeyUp: function(component, event, helper){
         //checks for "enter" key
-        if (event.getParam('keyCode')===13) {
-            helpler.handleLogin(component, event, helpler);
+        if(event.getParams().keyCode == 13){
+            helper.handleLogin(component, event, helper);
         }
     },
     
