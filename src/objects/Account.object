@@ -26003,7 +26003,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -29077,7 +29078,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -31517,7 +31519,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -35483,7 +35486,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -37659,7 +37663,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -43102,7 +43107,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -45669,7 +45675,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -50058,7 +50065,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -54358,7 +54366,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -57036,7 +57045,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -59397,7 +59407,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -61758,7 +61769,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -64493,7 +64505,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -69522,7 +69535,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -72097,7 +72111,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -76339,7 +76354,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -79421,7 +79437,8 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
