@@ -76,6 +76,11 @@ public with sharing class ISSP_EditPortalServiceAccess{
         if( PortalServiceAccess_List != null && PortalServiceAccess_List .size() > 0){
             PSA = PortalServiceAccess_List[0];
             Operation = PSA.Application_Name__c;
+            if(PSA.Application_Name__c.contains('EasyPay')){
+                 Operation = Label.ANG_ISSP_IATA_EasyPay;
+                 }else{
+                    Operation = PSA.Application_Name__c;        
+                 }
             AccessStatus = PSA.Right__c;
             AdminCannotManage = PSA.Portal_Application__r.Cannot_be_managed_by_portal_admin__c;
             
