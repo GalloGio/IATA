@@ -197,20 +197,21 @@ margin-top:50px;
     <apex:pageMessages />
   <div class="row"><!-- row 1 -->
       <!--<apex:pageBlockSection showHeader="false" columns="2" id="block1">-->
-       <div class="col-md-12">
-       <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
-       
-           <p>
-              <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
-              <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
-        
-    </p>
-         <p >
-              <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
-              <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
-           </p>
-       
-        </div>
+    <div class="col-md-12">
+        <h5 class="blueback">{!$Label.IDCard_CaseDetails}</h5>
+        <p>
+            <apex:outputText value="{!$Label.ISSP_Subject}: " /> 
+            <apex:outputField value="{!tmpCase.subject}"  id="Subject"/>
+        </p>
+        <p >
+            <apex:outputText value="{!$Label.ISSP_CCOthers}: " />
+            <apex:outputField value="{!tmpCase.E2CP__AdditionalCC__c}" id="aditionalCC"/>
+        </p>
+        <p >
+            <apex:outputText value="{!$Label.IDCard_Description}: " rendered="{!showDescription}" />
+            <apex:outputField value="{!tmpCase.Description}" id="Description" rendered="{!showDescription}"/>
+        </p>
+    </div>
      <div class="col-md-12">
            
                <h5 class="blueback">{!$Label.ISSP_Email_Comment}</h5>

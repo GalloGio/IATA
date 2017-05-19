@@ -13,7 +13,7 @@ public class ISSP_AddComment {
 
   public ISSP_AddComment() {
     CaseId  = ApexPages.currentPage().getParameters().get('Caseid');
-    List<Case> Case_lst = new List<Case>([select RecordType.Name, Id , description , subject, CaseNumber, New_interaction__c From Case where Id = : CaseId]);
+    List<Case> Case_lst = new List<Case>([select RecordType.Name, Id , description , subject, CaseNumber, New_interaction__c, E2CP__AdditionalCC__c From Case where Id = : CaseId]);
 
     if (Case_lst != null && Case_lst.size() > 0) {
       tmpCase = Case_Lst[0];

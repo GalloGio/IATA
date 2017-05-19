@@ -76,7 +76,6 @@ public without sharing class vfISSP_FAQ2Case
     public Boolean isTopicDefault = false; // INC263231
 
     public list<String> errorMessage {get; set;}
-    public String ccOthers {get;set;}
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -641,9 +640,9 @@ public without sharing class vfISSP_FAQ2Case
     **/
     public class CCOthersException extends Exception {}
     private list<Contact> validateCCOthers() {
-        if (this.ccOthers==null) this.ccOthers='';
+        if (this.newCase.E2CP__AdditionalCC__c==null) this.newCase.E2CP__AdditionalCC__c='';
         list<String> listEmail = new list<String>();
-        for (String ccemail: this.ccOthers.replace(';',',').split(',')) {
+        for (String ccemail: this.newCase.E2CP__AdditionalCC__c.replace(';',',').split(',')) {
             ccemail = ccemail.trim();
             if (ccemail!='') {
                 listEmail.add(ccemail);
@@ -1127,7 +1126,7 @@ public without sharing class vfISSP_FAQ2Case
         try {
             // find all parents for current account
             Account currentAccount = [
-                Select id, Name,
+                Select id, Name, IATAcode__c,
                     ParentId,
                     Parent.ParentId,
                     Parent.Parent.ParentId,
@@ -1151,7 +1150,7 @@ public without sharing class vfISSP_FAQ2Case
             } else {
                 parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
             }
-
+            
             // Get all account in the hierarchy
             for (Account acc: [
                 SELECT Id, IATAcode__c, Site, Location_type__c
@@ -1166,6 +1165,8 @@ public without sharing class vfISSP_FAQ2Case
                 ORDER BY IATAcode__c ASC]) {
                     IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c));
             }
+            // current account value as default
+            this.newCase.IATACode__c = currentAccount.IATAcode__c; 
         } catch (Exception e) {
             System.debug(e.getMessage());
         }
@@ -1529,7 +1530,6 @@ public without sharing class vfISSP_FAQ2Case
         //newCase     = new Case();
         newSection  = new sectionRecordWrapper();
         fullList    = new List<sectionRecordWrapper>();
-        this.ccOthers = '';
 
     if(ISSP_CaseFields_Lst != null && ISSP_CaseFields_Lst.size() > 0){
         for (ISSP_Case_Fields__c thisField : ISSP_CaseFields_Lst)

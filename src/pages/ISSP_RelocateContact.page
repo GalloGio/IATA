@@ -70,8 +70,17 @@
                             {!$Label.ISSP_Relocate_Current_Account}
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="row h4 text-center bg-primary" style="border-radius: 5px; padding: 10px; margin: 20px 25%;">
+                            {!$Label.ISSP_Relocate_Move_To}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6"></div>
                     <apex:outputPanel layout="block" rendered="{!NOT(IsMapAccountsEmpty)}" styleclass="col-md-6">
-                        <div class="row text-center" style="padding:10px; margin: 13px 0px; width:80%;">
+                        <div class="row text-center" style="padding: 0px 15% 20px 15%;">
                             <apex:selectList styleclass="form-control rec text-center" value="{!selectedAccountId}" multiselect="false" size="1">
                                 <apex:selectOptions value="{!listOptionAccount}"/>
                                 <apex:actionSupport event="onchange" action="{!selectAccount}" rerender="mainForm"/>

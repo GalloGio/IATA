@@ -1274,58 +1274,102 @@ public without sharing class ISSP_Case {
     }
 
     /**
-        Find all Team members and returnns a String with their emails
+        Add a new CC Other Contact to current Case
     **/
     public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-    public String getCCOthers() {
-        list<Id> listContactId = new list<Id>();
-        for (CaseTeamMember teamMember: [
-                SELECT Id, MemberId, Member.Email
-                FROM CaseTeamMember
-                WHERE ParentId = :newCase.Id
-                AND TeamRoleId = :PARTNER_USER_ROLE]) {
-            listContactId.add(teamMember.MemberId);
-        }
-        list<String> listEmails = new list<String>();
-        for (Contact contact: [
-                SELECT Id, Email
-                FROM Contact
-                WHERE id IN :listContactId
-                ORDER BY Email ASC]) {
-            if (contact.Email!=null && contact.Email!='') {
-                listEmails.add(contact.Email);
-            }
-        }
-        listEmails.sort();
-        return String.join(listEmails,'; ');
-    }
-    
-    /**
-        Add a new CC Other Contat to current Case
-    **/
     public String inputccotheremail{get; set;} 
-    public PageReference addCCOther() {
+    public void addCCOther() {
         String findEmail = this.inputccotheremail.trim();
         this.inputccotheremail = '';
-        if (findEmail==null||findEmail=='') return null;
+        if (findEmail==null||findEmail=='') return;
         // find contact with input email
-        list<Contact> listContact = [SELECT Id FROM Contact WHERE Email = :findEmail limit 1];
+        list<Contact> listContact = [SELECT Id,Email FROM Contact WHERE Email = :findEmail limit 1];
         if (listContact.size()!=1) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Not_Found.replace('{0}',findEmail)));
-            return null;
+            return;
         }
         // insert found contact as a team member of the case
+        Savepoint sp = Database.setSavepoint();
         try {
+            Contact contact = listContact.get(0);
             CaseTeamMember teammember = new CaseTeamMember(
                 ParentId = this.newCase.Id,
-                MemberId = listContact.get(0).Id,
+                MemberId = contact.Id,
                 TeamRoleId = PARTNER_USER_ROLE);
             insert teammember;
+            insertAddressInE2CP_CCOthers(this.newCase,contact.Email);
         } catch (DMLException e) {
             for (Integer i = 0; i < e.getNumDml(); i++) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
             }
+            Database.rollback(sp);
         }
-        return null;
+    }
+    
+    public String inputDelCCOther {get; set;} 
+    public void delCCOther() {
+        Savepoint sp = Database.setSavepoint();
+        try {
+            removeAddressInE2CP_CCOthers(this.newCase,this.inputDelCCOther);
+            list<Contact> listContact = [SELECT Id FROM Contact WHERE email = :this.inputDelCCOther];
+            list<CaseTeamMember> listMember = [
+                SELECT id
+                FROM CaseTeamMember 
+                WHERE ParentId = :this.newCase.Id
+                AND TeamRoleId = :PARTNER_USER_ROLE
+                AND MemberId IN :listContact];
+            if (!listMember.isEmpty()) {
+                delete listMember;
+            }
+        } catch (DMLException e) {
+            System.debug('ERROR delTeamMember ' + e.getMessage());
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, this.inputDelCCOther + ': ' + e.getDmlMessage(i)));
+            }
+            Database.rollback(sp);
+        }
+    }
+    
+    /**
+        Convert the cc emails string in a list
+    **/
+    public list<String> getListCCOther() {
+        if (this.newCase.E2CP__AdditionalCC__c==null) {
+            return new list<String>();
+        }
+        set<String> setString = new set<String>(this.newCase.E2CP__AdditionalCC__c.split(';'));
+        setString.remove('');
+        return new list<String>(setString);
+    }
+    /**
+        Inserts a new email in the field Case.E2CP__AdditionalCC__c which is a
+        list of emails in semi-colon separated string
+    **/
+    private static void insertAddressInE2CP_CCOthers(Case cse, String insertEmail) {
+        cse.E2CP__AdditionalCC__c = cse.E2CP__AdditionalCC__c==null? '': cse.E2CP__AdditionalCC__c;
+        set<String> setNews = new set<String>();
+        setNews.add(insertEmail);
+        for (String email: cse.E2CP__AdditionalCC__c.split(';')) {
+            setNews.add(email.trim());
+        }
+        cse.E2CP__AdditionalCC__c = String.join(new list<String>(setNews),';');
+        update cse;
+    }
+    
+    /**
+        Removes an email in the field Case.E2CP__AdditionalCC__c which is a
+        list of emails in semi-colon separated string
+    **/
+    private static void removeAddressInE2CP_CCOthers(Case cse, String address) {
+        cse.E2CP__AdditionalCC__c = cse.E2CP__AdditionalCC__c==null? '': cse.E2CP__AdditionalCC__c;
+        list<String> listNews = new list<String>();
+        for (String email: cse.E2CP__AdditionalCC__c.split(';')) {
+            String trimEmail = email.trim();
+            if (trimEmail!=address) {
+                listNews.add(trimEmail);
+            }
+        }
+        cse.E2CP__AdditionalCC__c = String.join(listNews,';');
+        update cse;
     }
 }

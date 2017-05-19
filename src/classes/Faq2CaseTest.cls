@@ -790,9 +790,9 @@ private class Faq2CaseTest {
 		  newCase.Description = 'test';
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-		  controller.ccOthers = 'fake@email.com';
+		  newCase.E2CP__AdditionalCC__c = 'fake@email.com';
 		  controller.save();
-		  controller.ccOthers = 'Test@test11.com';
+		  newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
 		  controller.save();
 		}
 		Test.stopTest();
@@ -860,9 +860,9 @@ private class Faq2CaseTest {
 		  newCase.Description = 'test';
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-            controller.ccOthers = 'fake@email.com';
+            newCase.E2CP__AdditionalCC__c = 'fake@email.com';
             controller.saveAttach();
-            controller.ccOthers = 'Test@test11.com';
+            newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
             controller.saveAttach();
 		}
 		Test.stopTest();

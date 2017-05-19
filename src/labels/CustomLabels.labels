@@ -13120,7 +13120,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP CCOther Add</shortDescription>
-        <value>Add CC Other</value>
+        <value>Add additional recipients</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOther_Help_Text</fullName>
@@ -13128,7 +13128,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP CCOther Help Text</shortDescription>
-        <value>To add recipients to this case please insert emails separated by "," (example1@example.com,example2@example.com)</value>
+        <value>To add recipients to this case please insert emails separated by ","</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOther_Include_Additional_Recipients</fullName>
@@ -13147,12 +13147,20 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>No contact found with email {0}</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOther_Remove</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Remove</shortDescription>
+        <value>Remove recipients</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CCOther_Wrong_Emails</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP CCOther Wrong Emails</shortDescription>
-        <value>Couldn&apos;t find any recipient with this email in our database, please note that they need to register in the portal as a new user so you can include them in future communication. {0}</value>
+        <value>No recipient found in our database for email {0}, please note that you can only include registered portal users.</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOthers</fullName>
@@ -13160,7 +13168,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP CCOthers</shortDescription>
-        <value>CC Others</value>
+        <value>Additional Recipients</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOthers_Add</fullName>
@@ -17799,6 +17807,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Relocation failed</value>
     </labels>
     <labels>
+        <fullName>ISSP_Relocate_Move_To</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Move To</shortDescription>
+        <value>Move To</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Relocate_No_Accounts</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -17812,7 +17828,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Relocate Select Account</shortDescription>
-        <value>Move To</value>
+        <value>Select Account</value>
     </labels>
     <labels>
         <fullName>ISSP_Reopen</fullName>

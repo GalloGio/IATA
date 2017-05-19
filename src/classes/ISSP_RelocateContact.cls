@@ -55,7 +55,7 @@ public class ISSP_RelocateContact {
         if (!this.mapRelatedAccount.isEmpty()) {
             listOption.add(new SelectOption('',Label.ISSP_Relocate_Select_Account));
             for (Account account: this.mapRelatedAccount.values()) {
-                String label = account.Name + ' ' + account.Site + ' ' + account.IATA_ISO_Country__r.Name;
+                String label = account.Site + ' ' + account.Name + ' ' + account.IATA_ISO_Country__r.Name;
                 listOption.add(new SelectOption(account.Id, label));
             }
         }

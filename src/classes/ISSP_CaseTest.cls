@@ -537,7 +537,7 @@ public class ISSP_CaseTest {
         contact.AccountId = account.Id;
         insert contact;
         Contact teamContact = ISSP_ObjectFactory.createNewContact();
-        teamContact.Email = 'teamContact@email.com';
+        teamContact.Email = 'teamcontact@email.com';
         insert teamContact;
         User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
         contact.OwnerId = thisUser.Id;
@@ -563,8 +563,8 @@ public class ISSP_CaseTest {
         system.runAs(thisUser){
             ISSP_Case cttr = new ISSP_Case();
             // test there are no cc others
-            String result1 = cttr.getCCOthers();
-            System.assert(result1=='');
+            list<String> result1 = cttr.getListCCOther();
+            System.assert(result1.isEmpty(),'wrong result ' + result1);
             
             //insert one cc other
             cttr.inputccotheremail = teamContact.Email;
@@ -574,8 +574,18 @@ public class ISSP_CaseTest {
             cttr.addCCOther();
             
             // check a cc other was inserted
-            String result2 = cttr.getCCOthers();
-            System.assert(result2==teamContact.Email);
+            set<String> result2 = new set<String>(cttr.getListCCOther());
+            System.assert(result2.contains(teamContact.Email),'wrong result ' + result2);
+            
+            //remove ccother
+            cttr.inputDelCCOther = teamContact.Email;
+            cttr.delCCOther();
+            // del one fake cc other
+            cttr.inputDelCCOther = 'noemail';
+            cttr.delCCOther();
+            
+            list<String> result3 = cttr.getListCCOther();
+            System.assert(result3.isEmpty(),'wrong result ' + result3);
         }
         Test.stopTest();
     }

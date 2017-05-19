@@ -269,7 +269,6 @@
                 </apex:facet>
                 <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
             </apex:column>
-            <apex:column value="{!item.recordContact.Portal_User_Frozen__c}" rendered="{!isAdmin}"/>
 
         </apex:pageBlockTable>
 
