@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>File_Upload_completed</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Request_Reassessment</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Cancel_Assessment</customButtons>
