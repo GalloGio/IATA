@@ -389,7 +389,7 @@
         <filters>
             <field>User__c</field>
             <operation>equals</operation>
-            <value>Aude Noerdinger,Marina Codazzi</value>
+            <value>Renuka Reddy</value>
         </filters>
         <label>. one user</label>
         <language>en_US</language>
