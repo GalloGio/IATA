@@ -1,4 +1,6 @@
 public with sharing class ANG_IEPSCIMMessage extends SCIMMessageEnhancer{
+            
+    public ANG_IEPSCIMMessage(){ }
         
     public ANG_IEPSCIMMessage(String messageType){
         
