@@ -23482,7 +23482,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-<<<<<<< HEAD
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>
