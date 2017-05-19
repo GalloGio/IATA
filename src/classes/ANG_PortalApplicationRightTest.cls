@@ -6,36 +6,13 @@ private class ANG_PortalApplicationRightTest {
 	}
 
 	@testSetup static void createData() {
-		Account acc = ISSP_ObjectFactory.createNewAccount();  
 
-		insert acc;
-		
-		Contact contact = ISSP_ObjectFactory.createNewContact();
-		contact.AccountId = acc.Id;
-		insert contact;
-
-		insert new Connected_App_Roles__c(
-			Name = 'ANG Test'
-			, Connected_App__c = 'ANG_App'
-			, Permission_set_SSO__c = 'ANG_App'
-			, Role__c = 'Tester'
-		);
-
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'ANG_App');
-		insert app;
-
-		insert new Portal_Application_Right__c(
-			Contact__c = contact.Id
-			, Portal_Application__c = app.Id
-			, Right__c = 'Access Requested'
-			, ANG_Portal_Service_Role__c = 'Tester'
-		);
+		Account acc = ISSP_ObjectFactory.createNewAccount();  		
 
 		acc.Location_Type__c = 'HO';
 		acc.Location_Class__c = 'P';				
 
 		insert acc;
-
 
 		Account acc2 = ISSP_ObjectFactory.createNewAccount();
 		acc2.Location_Type__c = 'BR';
