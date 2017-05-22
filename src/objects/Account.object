@@ -9056,11 +9056,11 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <label>Key Customer Reason</label>
         <picklist>
             <picklistValues>
-                <fullName>Big Buyer</fullName>
+                <fullName>Volume</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Volume</fullName>
+                <fullName>Volume (Local)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -9072,7 +9072,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Volume (Local)</fullName>
+                <fullName>Big Buyer</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
