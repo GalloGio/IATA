@@ -946,8 +946,10 @@ public without sharing class ISSP_Registration {
             // for CNS automatically check the checkbox
             if(communityName == 'CNS' && acc.Id == null) {
                 acc.CNS_Account__c = true;
-                acc.Location_Class__c = 'C';
                 con.CNS_Contact__c = true;
+                if(acc.Sector__c == 'Cargo Agent') {
+                    acc.Location_Class__c = 'C';
+                }
             }
 
             try {
@@ -1036,10 +1038,12 @@ public without sharing class ISSP_Registration {
 
                 ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
                 if (serviceIdInstance != null){
-                    if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null && serviceIdInstance.AgencyAccreditationCNS__c != '') {
-                        system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
-                        String appId = serviceIdInstance.AgencyAccreditationCNS__c;
-                        appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
+                    if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null
+                        && serviceIdInstance.AgencyAccreditationCNS__c != ''
+                        && acc.Sector__c == 'Cargo Agent') {
+                        // system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
+                        // String appId = serviceIdInstance.AgencyAccreditationCNS__c;
+                        // appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
                     }
                     else if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
                         system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditation__c);

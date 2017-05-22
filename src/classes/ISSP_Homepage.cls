@@ -65,13 +65,13 @@ public with sharing class ISSP_Homepage {
             coo = new Cookie('lang',user.languagelocalekey,null,100000000,false);
             ApexPages.currentPage().setCookies(new Cookie[]{coo});
         }
-        con = [select Id,Credit_Card_Payment_Link__c,User_Portal_Status__c,BSP_CASS_Payment_contact__c,Financial_Assessment_Contact__c,Account.Top_Parent__c,AccountId,Account.Industry,Account.Accumulated_Irregularities__c, Account.Category__c, Account.Status__c from Contact where Id=:user.ContactId];
-        //acct = [select Id,Industry,Accumulated_Irregularities__c from Account where Id=:con.AccountId];
+        con = [select Id,Credit_Card_Payment_Link__c,User_Portal_Status__c,BSP_CASS_Payment_contact__c,Financial_Assessment_Contact__c,Account.Top_Parent__c,AccountId,Account.Industry,Account.Accumulated_Irregularities__c, Account.Category__c, Account.Status__c, Account.CNS_Agency__c from Contact where Id=:user.ContactId];
+        // acct = [select Id,Industry,Accumulated_Irregularities__c from Account where Id=:con.AccountId];
         userMap = new map<string,integer> {'Pending approvals'=>0,'Portal Users'=>0,'Portal Delegates Administrators'=>0,'Regional Administrator'=>0};
         string topParentId = con.Account.Top_Parent__c==null?con.AccountId:con.Account.Top_Parent__c;
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         iataCertificatesVisible = DAL_ISSP.visibilityOnIATACertificate(con.Account.Category__c, con.Account.Status__c);
-
+        if(con.Account.CNS_Agency__c) iataCertificatesVisible = false;
 /* OLD IRREGULARITIES DISPLAY
         Irregularities_by_Agent_Type__c MaxCargo =  Irregularities_by_Agent_Type__c.getValues('Cargo');
         Irregularities_by_Agent_Type__c MaxTravel =  Irregularities_by_Agent_Type__c.getValues('Travel');
