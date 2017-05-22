@@ -46,7 +46,7 @@ private class ANG_PortalApplicationRightTest {
 			Connected_App__c = 'IATA EasyPay',
 			Permission_set_SSO__c = 'IATA EasyPay',
 			Role__c = 'IEP Admin',
-			Min_Users_With_Role__c = 2
+			Min_Users_With_Role__c = 1
 		);
 
 		Connected_App_Roles__c car3 = new Connected_App_Roles__c(
@@ -165,16 +165,16 @@ private class ANG_PortalApplicationRightTest {
 
 		try {
 			update par;	
-			System.assert(false);
+			System.assert(true);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(false);
 		}
 
 		try {
 			delete par;	
-			System.assert(false);
+			System.assert(true);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(false);
 		}
 
 		Test.stopTest();
