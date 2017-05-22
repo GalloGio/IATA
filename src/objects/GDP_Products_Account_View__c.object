@@ -1063,7 +1063,7 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <language>en_US</language>
     </listViews>
     <nameField>
-        <label>Legal Name</label>
+        <label>Name</label>
         <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
