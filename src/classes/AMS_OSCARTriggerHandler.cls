@@ -1874,18 +1874,12 @@ public class AMS_OSCARTriggerHandler {
 
         String templateId = '';
 
-        if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.SANITYCHECK)
-        	templateId = 'ANG_New_HE_SanityCheck_Passed';
-        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.SANITYCHECK)
-        	templateId = 'ANG_New_HE_Cash_SanityCheck_Passed';
-        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && wasApproved)
-        	templateId = 'ANG_New_HE_Accreditation_Decision_APP';
-        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && !wasApproved)
-        	templateId = 'ANG_New_HE_Accreditation_Decision_DIS';
-        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && wasApproved)
-        	templateId = 'ANG_New_HE_Cash_Accreditation_Decision_APP';
-        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && !wasApproved)
-        	templateId = 'ANG_New_HE_Cash_Accreditation_Decision_DIS';
+        if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.SANITYCHECK) templateId 						= 'ANG_New_HE_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.SANITYCHECK) templateId 				= 'ANG_New_HE_Cash_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_New_HE_Accreditation_Decision_APP';
+        else if(agencyType == AMS_Utils.NEWHELITE && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_New_HE_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && !wasApproved) templateId = 'ANG_New_HE_Cash_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NEWHESTANDARD && step == AMS_Utils.APPROVAL && wasApproved) templateId 	= 'ANG_New_HE_Cash_Accreditation_Decision_APP';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
