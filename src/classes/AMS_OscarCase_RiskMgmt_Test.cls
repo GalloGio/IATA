@@ -556,6 +556,11 @@ private class AMS_OscarCase_RiskMgmt_Test {
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'DEF_Withdrawal_Approval_Rejection__c', 'NOT EQUAL TO:Rejected', null, mapExistingChangeCodes));
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Parent.Status', 'NOT EQUAL TO:Closed', null, mapExistingChangeCodes));
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY', null, mapExistingChangeCodes));
+
+        // START: amtosantos, 2017-04-18, Increase Code Coverage
+        system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'End_of_Grace_Period_Date__c', 'GREATER THAN TODAY OR EQUAL TO TODAY', null, mapExistingChangeCodes));
+        //   END: amtosantos
+
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Update_AIMS_DEF__c', 'EQUAL TO TODAY', null, mapExistingChangeCodes));
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '<=:5000', null, mapExistingChangeCodes));
         system.assertEquals(true, AMS_OscarCase_RiskMgmt.bCheckCondition(c, 'Outstanding_Amount__c', '>=:1000', null, mapExistingChangeCodes));
@@ -624,5 +629,14 @@ private class AMS_OscarCase_RiskMgmt_Test {
         system.assert([select id from Agency_applied_Change_code__c where Account__c =:a.Id].size()>1);
 
         test.StopTest();
+    }
+	
+	static testMethod void TestCompliant() {
+        AMS_OscarCase_RiskMgmt a = new AMS_OscarCase_RiskMgmt();
+        a.isTestCompliant();
+        AMS_AgencyRegulationTriggerHandler ar = new AMS_AgencyRegulationTriggerHandler();
+        ar.isTestCompliant();
+        AMS_QueryUtils aq = new AMS_QueryUtils();
+        aq.isTestCompliant();
     }
 }
