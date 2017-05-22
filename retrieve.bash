@@ -2,7 +2,7 @@
 
 cd build
 
-ant getStaticResourceAndLayouts -Dsfdc.username=$PRODun -Dsfdc.password=$PRODpw -Dsfdc.serverurl=$PRODurl -Dbasedir=$BITBUCKET_CLONE_DIR
+ant getStaticResourceAndLayouts -Dsfdc.username=$SF_USERNAME -Dsfdc.password=$SF_PASSWORD -Dsfdc.serverurl=$SF_SERVER_URL -Dbasedir=$BITBUCKET_CLONE_DIR
 
 cd ..
 
