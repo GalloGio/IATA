@@ -209,6 +209,17 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 
      public void showPopup() {
         displayPopup = true;
+    }
+
+    public void closePopup() {
+        displayPopup = false;
     } 
+
+
+    public pagereference refresh() {
+        initialize();
+        displayPopup = false;
+        return null;
+    }
 
 }

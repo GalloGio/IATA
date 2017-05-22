@@ -320,7 +320,7 @@ public with sharing class AMS_AccountRoleCreator
         List<Id> accreditationAreaIdsLst= new List<Id>(accreditationAreaIds);
 
         List<AMS_Oscar__c> oscars = [SELECT Id, STEP10__c, STEP6__c, RecordType.DeveloperName,Account__c,Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, Process__c from AMS_Oscar__c where AMS_Online_Accreditation__c in :accreditationAreaIdsLst];
-
+        system.debug('### su' + oscars.size());
         Map<Id,String> accreditationAndOscars = new Map<Id,String>();
 
         String oscarProcess;
@@ -402,8 +402,9 @@ public with sharing class AMS_AccountRoleCreator
             List<AMS_Accreditation_Contact__c> accreditationContactsToInsertOnlyContacts = new List<AMS_Accreditation_Contact__c>();
 
             // let's find out which AMS_Account_roles are to deactivate.
-
+            system.debug('### su' + accreditationContactsToProcess.size());
             for(AMS_Accreditation_Contact__c aContact :accreditationContactsToProcess){
+                
 
                 //does is have a link to an AMS_Account_role ? If so, let's deactivate the Role and add it to the list of new Accreditation to Create.
                 if(aContact.AMS_Ownership_Role__c != null && !isCorrectionProcess){
@@ -413,7 +414,9 @@ public with sharing class AMS_AccountRoleCreator
                 
                 //does is have a link to an AMS_Account_role and is a correction or is
                 // second time this process runs for an Accreditation Contact ? let's mark for update.
-                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess){
+                //INC304974: verifies if the record type of AMS Accreditation Contact is not a Company (another account)
+                if(aContact.AMS_Ownership_Role__c != null && isCorrectionProcess && !recordTypesCompany.contains(aContact.RecordTypeId)){  
+                    system.debug('## SU runRoleCreatorForOnlineAccreditations : ' + aContact.AMS_Ownership_Role__c + ' ; '  +isCorrectionProcess+ ' ; ' + aContact.RecordTypeId);   
                     accreditationContactsToUpdate.add(aContact);
                     continue;
                 }
@@ -422,7 +425,7 @@ public with sharing class AMS_AccountRoleCreator
                 if(aContact.AMS_Ownership_Role__c == null && aContact.Agency_owner__c){
                     accreditationContactsToInsert.add(aContact);
                     continue;
-                }else{
+                }else if(!recordTypesCompany.contains(aContact.RecordTypeId)){
                     accreditationContactsToInsertOnlyContacts.add(aContact);
                     continue;
                 }
@@ -661,7 +664,10 @@ public with sharing class AMS_AccountRoleCreator
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c == null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
 
+                accreditationsAndContacts.put(ac,ac.Contact__c);
+
                 personsToDelete.add(ac.Person_AMS__c);
+
                 personsAndContacts.put(ac.Person_AMS__r.Id,ac.Contact__c);
 
                 continue;
@@ -680,6 +686,8 @@ public with sharing class AMS_AccountRoleCreator
             }
 
             if(ac.Person_AMS__c != null && ac.Person_AMS__r.Contact__c != null && ac.Contact__c != null){ // we dont have to create a new contact, just update the AC
+
+                accreditationsAndContacts.put(ac,ac.Contact__c);
 
                 personsToDelete.add(ac.Person_AMS__c);
 

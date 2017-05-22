@@ -16,7 +16,9 @@
                     
                     <div class="slds-media__figure">
                         <span class="slds-icon__container slds-icon-standard-account">
-                            <img src="/resource/AMP_logo" />
+                            <aura:if isTrue="{!v.account.Membership_status__c == 'IATA member'}" >
+                                <img src="/resource/AMP_logo" />                            
+                            </aura:if>    
                         </span>
                     </div>
                     

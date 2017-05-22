@@ -26,7 +26,11 @@ public with sharing class ISSP_CurrencyCenterCountryController {
     public Set<String> isChangedSet {get;set;}
 
     public String isChangedString {get{
-        return String.valueOf(isChangedSet);
+        String tmpString = '';
+        for(String s : isChangedSet) {
+           tmpString += (tmpString == '' ? '' : ',') + s;
+        }
+        return tmpString;
     }set;}
 
     public Boolean isGeneralInformationChanged{get{
@@ -294,12 +298,7 @@ public with sharing class ISSP_CurrencyCenterCountryController {
     }
 
     public PageReference checkAccess(){
-        //if user has service assigned, continue
-        if(ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService())
-            return null;
-        //else redirect to portal home page
-        else
-            return new PageReference('/ISSP_Homepage');
+        return ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
     }
 
     public class AttWrapper{

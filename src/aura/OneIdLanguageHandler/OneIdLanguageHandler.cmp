@@ -1,0 +1,19 @@
+<aura:component controller="OneIdLanguageHandlerController"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes"
+    access="global" 
+    >
+    <aura:attribute name="Languages" type="List" default="en_US"/>
+    <aura:attribute name="currentUser" type="User" />
+    <aura:attribute name="selectedValue" type="String" default="en_US"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!--  <aura:handler name="change" value="{!v.value}" action="{!c.onLanguageChange}"/> -->
+    <div class="">
+        <lightning:select label="{!$Label.c.LangHandlerSelectLanguage}" value="{!v.selectedValue}" name="InputSelectLanguage" aura:id="InputSelectLanguage"
+            onchange="{!c.onLanguageChange}" class="lanselect">
+            <aura:iteration items="{!v.Languages}" var="item">
+                <option text="{!item.MasterLabel}" value="{!item.DeveloperName}" selected="{!item.DeveloperName == v.selectedValue}"/>
+            </aura:iteration>
+        </lightning:select>
+    </div>
+</aura:component>

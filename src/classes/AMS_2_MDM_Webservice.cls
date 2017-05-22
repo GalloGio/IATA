@@ -83,7 +83,7 @@ global class AMS_2_MDM_Webservice {
                     Short_Name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id in :ids
                     ORDER BY Location_Type__c DESC, IATA_ISO_Country__r.ISO_Code__c, Sector__c, Id, IATA_ISO_Country__r.IATA_Regional_Office__c];
   
@@ -145,28 +145,39 @@ global class AMS_2_MDM_Webservice {
             r[5] = s;
 
             //Call WebService
-        // instantiate the web service proxy
-        AMS_2_MDM_WS_AgencyDetails.HTTP_Port ws = new AMS_2_MDM_WS_AgencyDetails.HTTP_Port();
-        
-        // set the credentials
-        String sPwd = '';
-        sPwd = Test.isRunningTest() ? '3ZNLPwqIDRC7auxG/fUWZ3VY5tdS7e+WUMECjAy4L54=' : AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Password__c;
-        
-        Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
-        String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
+            // instantiate the web service proxy
+            AMS_2_MDM_WS_AgencyDetails.HTTP_Port ws = new AMS_2_MDM_WS_AgencyDetails.HTTP_Port();
+            
+            // set the credentials
+            String sPwd = '';
+            sPwd = Test.isRunningTest() ? '3ZNLPwqIDRC7auxG/fUWZ3VY5tdS7e+WUMECjAy4L54=' : AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Password__c;
+            
+            Blob headerValue = Blob.valueOf(AMS_SAP_Settings__c.getOrgDefaults().Web_Service_Username__c + ':' + AMS_Utils.DecryptParameter(sPwd));
+            String authorizationHeader = 'Basic '+ EncodingUtil.base64Encode(headerValue);
 
-        
-        // set the timeout to maximum value (60 seconds)
-        ws.timeout_x = 60000;        
+            
+            // set the timeout to maximum value (60 seconds)
+            ws.timeout_x = 60000;        
 
-        if(!Test.isRunningTest()) {
-                    
+            
+                        
             try {
                 
                 String sRespStatusCode = '';
 
-                // Call SAP web service
-                sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
+                if(!Test.isRunningTest()) {
+                    // Call SAP web service
+                    sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
+                }else{
+                    if(GroupID.equalsIgnoreCase('exception')){
+                        String a;
+                        String b = a;
+                    }else if(GroupID.equalsIgnoreCase('error')){
+                        sRespStatusCode = '503';
+                    }else{
+                        sRespStatusCode = '200';    
+                    }
+                }
                 
                 sLog += 'Response Status Code: '+sRespStatusCode+'\n';
                 
@@ -187,7 +198,7 @@ global class AMS_2_MDM_Webservice {
                 //TODO implement error handling
                
             }
-        }
+        
 
         }catch(Exception e){
             sLog += 'Exception: general error:'+e.getMessage()+'\n';
@@ -257,7 +268,7 @@ global class AMS_2_MDM_Webservice {
                     Email__c,TTY__c,Website,Accreditation_date__c,
                     IATA_ISO_Country__r.Region__c,
                     Abbreviated_name__c, Abbreviated_address__c,Status__c,
-                    Top_Parent__c, Top_Parent__r.IATACode__c
+                    Top_Parent__c, Top_Parent__r.IATACode__c, Default_date__c
                     FROM Account where id = :agencyId];
             
  
@@ -316,40 +327,49 @@ global class AMS_2_MDM_Webservice {
                 // set the timeout to maximum value (60 seconds)
                 ws.timeout_x = 60000;        
 
-                if(!Test.isRunningTest()) {
-                            
-                    try {
-                        
-                        String sRespStatusCode = '';
-        
+                try {
+                    
+                    String sRespStatusCode = '';
+    
+                    
+                    if(!Test.isRunningTest()) {
                         // Call SAP web service
                         sRespStatusCode = ws.SI_SFDC_AgenciesData_OB_Http(s,authorizationHeader);
-                        
-                        sLog += 'Response Status Code: '+sRespStatusCode+'\n';
-
-                        if(!sRespStatusCode.equalsIgnoreCase('200')){
-        
-                            system.debug('SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ');
-                            bError = True;
-                            sError = 'SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ';
-
-                            tlog.Status__c = 'Error';
-        
+                    }else{
+                        if(ag.IATACode__c.equalsIgnoreCase('1000503')){
+                            String a;
+                            String b = a;
+                        }else if(ag.IATACode__c.equalsIgnoreCase('1000404')){
+                            sRespStatusCode = '404';
                         }else{
-                            system.debug('sendAgencyECC - SAP Web Service callout Resp Status Code: ' + sRespStatusCode);
+                            sRespStatusCode = '200';    
                         }
                     }
-                    catch (Exception ex) {
-                        system.debug('sendAgencyECC - SAP Web Service callout error: ' + ex.getMessage());
+                    
+                    sLog += 'Response Status Code: '+sRespStatusCode+'\n';
+
+                    if(!sRespStatusCode.equalsIgnoreCase('200')){
+    
+                        system.debug('SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ');
                         bError = True;
-                        sError = 'SAP Web Service callout error: ' + ex.getMessage();
+                        sError = 'SAP Web Service - SI_SFDC_AgenciesData_OB_OB - callout ERROR! ';
 
-
-                        sLog += 'Exception: general error:'+ex.getMessage()+'\n';
-                        sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
-                            
                         tlog.Status__c = 'Error';
+    
+                    }else{
+                        system.debug('sendAgencyECC - SAP Web Service callout Resp Status Code: ' + sRespStatusCode);
                     }
+                }
+                catch (Exception ex) {
+                    system.debug('sendAgencyECC - SAP Web Service callout error: ' + ex.getMessage());
+                    bError = True;
+                    sError = 'SAP Web Service callout error: ' + ex.getMessage();
+
+
+                    sLog += 'Exception: general error:'+ex.getMessage()+'\n';
+                    sLog += 'Exception StackTrace: '+ex.getStackTraceString() +'\n';
+                        
+                    tlog.Status__c = 'Error';
                 }
             }
         }catch(Exception e){

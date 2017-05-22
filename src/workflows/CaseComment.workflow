@@ -218,7 +218,7 @@
     <fieldUpdates>
         <fullName>SIDRA_CS_actions_provide_feedback_com</fullName>
         <field>CS_pending_actions__c</field>
-        <literalValue>Provide feedback to agent</literalValue>
+        <literalValue>Check email received</literalValue>
         <name>SIDRA CS actions - provide feedback com</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -508,7 +508,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Confirmation_moneys_not_received__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
+        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;SEDA&quot;, Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName = &quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;,Parent.RecordType.DeveloperName = &quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;)) ,NOT(ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -518,7 +518,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Confirmation_moneys_not_received__c))) ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName =&quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName =&quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, Parent.RecordType.DeveloperName =&quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), OR(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;) ,ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
+        <formula>AND(Parent.OwnerId &lt;&gt; CreatedById , OR( AND(Parent.RecordType.DeveloperName = &quot;SIDRA&quot;, NOT(ISNULL(Parent.Update_AIMS_DEF__c))) ,Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;, Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot; ,Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;, Parent.RecordType.DeveloperName =&quot;IDFS_Airline_Participation_Process&quot;, Parent.RecordType.DeveloperName =&quot;ID_Card_Application&quot;, Parent.RecordType.DeveloperName =&quot;IATA_Financial_Review&quot;, Parent.RecordType.DeveloperName =&quot;SIDRA_Lite&quot;,Parent.RecordType.DeveloperName = &quot;OSCAR_Communication&quot;), OR(ISPICKVAL(Parent.New_interaction__c ,&quot;New email&quot;) ,ISPICKVAL(Parent.New_interaction__c ,&quot;New email closed case&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -637,22 +637,15 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>CaseComment.CommentBody</field>
-            <operation>startsWith</operation>
-            <value>@CS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe,Americas</value>
-        </criteriaItems>
-        <description>Used to updated CS Pending Action when new comment starts with @CS</description>
+        <description>Used in SIDRA Cases when a comment is received from E2C to trigger CS Actions</description>
+        <formula>AND(
+CreatedDate=NOW(),CreatedById=&apos;00520000000h6AU&apos;,
+Parent.RecordType.DeveloperName=&quot;SIDRA&quot;,
+  OR
+  (ISBLANK(Parent.Update_AIMS_DEF__c),
+  DATEVALUE(Parent.Update_AIMS_DEF__c)&gt;(TODAY()-1),
+  ISPICKVAL(Parent.Status,&quot;Closed&quot;),
+  CONTAINS(Parent.Owner:Queue.QueueName,&quot;Cases&quot;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

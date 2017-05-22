@@ -137,10 +137,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Identify_as_Key_Customer__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Site</field>
             </layoutItems>
             <layoutItems>
@@ -150,6 +146,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Category__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Segmentation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Key_Customer_Reason__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -294,6 +298,10 @@
                 <field>Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Default_date__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>License_Number__c</field>
             </layoutItems>
@@ -333,6 +341,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Year_End__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Number_of_GDI_financial_securities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -402,6 +414,33 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Level_of_risk__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>ID Card Key Account Setting</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IDCard_Key_Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Card_Corporate_Validation_Date__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Card_KeyAccount_features__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Card_Key_Account_Discount__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -552,11 +591,11 @@
         <fields>CONTACT.TITLE</fields>
         <fields>Airline_Contact_Type__c</fields>
         <fields>Services__c</fields>
+        <fields>Status__c</fields>
         <fields>CONTACT.EMAIL</fields>
         <fields>CONTACT.PHONE1</fields>
         <fields>User_Portal_Status__c</fields>
         <fields>CONTACT.LAST_ACTIVITY</fields>
-        <fields>VER_Number_2__c</fields>
         <relatedList>RelatedContactList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -572,8 +611,8 @@
         <fields>Termination_Date__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
+        <sortField>Termination_Date__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -692,7 +731,26 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Contact.NAME</fields>
+        <fields>Contact.VER_Number_2__c</fields>
+        <fields>NAME</fields>
+        <fields>Delegate__c</fields>
+        <relatedList>Managed_agency__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>AmountLastYearSales__c</fields>
+        <fields>Amount_Currency__c</fields>
+        <fields>Year__c</fields>
+        <fields>Number_Of_Vouchers__c</fields>
+        <fields>IsAgencyEligibleForCountryAverage__c</fields>
+        <fields>IsAgencyEligible__c</fields>
+        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
+        <sortField>Year__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -757,19 +815,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>AmountLastYearSales__c</fields>
-        <fields>Amount_Currency__c</fields>
-        <fields>Year__c</fields>
-        <fields>Number_Of_Vouchers__c</fields>
-        <fields>IsAgencyEligibleForCountryAverage__c</fields>
-        <fields>IsAgencyEligible__c</fields>
-        <relatedList>AMS_Voucher_Information__c.Account__c</relatedList>
-        <sortField>Year__c</sortField>
-        <sortOrder>Asc</sortOrder>
+        <relatedList>Accreditation__c.Related_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Change_Code__c</fields>
+        <fields>CREATED_DATE</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>Update_Type__c</fields>
         <fields>UPDATEDBY_USER</fields>
@@ -777,10 +828,6 @@
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Accreditation__c.Related_Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

@@ -1,10 +1,10 @@
 <apex:page showHeader="false" controller="ISSP_BO_Report" action="{!pageLoad}" standardStylesheets="false"  sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
-<c:ISSP_Header ></c:ISSP_Header>    
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
  <body>
     <div class="container">
     
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     
     <apex:form id="reportListForm">
 

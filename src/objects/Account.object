@@ -65,6 +65,11 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Simple_Account_name</fullName>
+        <fields>Name</fields>
+        <label>Simple Account name</label>
+    </compactLayouts>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -4647,6 +4652,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the accounts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
         <formula>AND( 
@@ -7309,6 +7324,15 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Default_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Default date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7371,7 +7395,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
         <length>250</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7384,7 +7408,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Airline ID</label>
         <length>12</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7445,7 +7469,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <label>E&amp;F Status Change Date</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -7456,7 +7480,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Legacy Code</label>
         <length>20</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7495,7 +7519,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <externalId>false</externalId>
         <label>Liquidator/Administrator</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -7515,7 +7539,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <description>E&amp;F CRM Project. Used to verify if the E&amp;F SIS Code has been verified/provided by SIS team</description>
         <externalId>false</externalId>
         <label>SIS Verified</label>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7526,7 +7550,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS Accounting Code</label>
         <length>15</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7538,7 +7562,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <label>SIS Designator</label>
         <length>2</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7565,7 +7589,7 @@ when E&amp;F Status gets inactive, this field can hold information about why the
         <externalId>false</externalId>
         <label>E&amp;F Status Additional Information</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -7673,7 +7697,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -9027,10 +9051,63 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Key_Customer_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Key Customer Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Volume (Local)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Key_Customer__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( Identify_as_Key_Customer__c = True,IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011YZg&quot;,&quot;VIP Customers&quot;, 23, 23),&quot; &quot;)</formula>
+        <formula>IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXL&quot; ,&quot;&quot;,25,25),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume (Local)&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDWh&quot; ,&quot;&quot;,25,25),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Special Contacts&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDW8&quot; ,&quot;&quot;,25,25),&quot;&quot;) 
+&amp;&quot; &quot;&amp; 
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Other Reasons&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXB&quot; ,&quot;&quot;,25,25),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Big Buyer&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDVo &quot; ,&quot;&quot;,25,25),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Images shown depend on &quot;Key Customer Reason&quot; values:
+
+Green and white star = Volume
+
+Blue person (Speaker) = Special Contact
+
+Golden medal = Other Reasons
+
+Fuchsia coins = Big Buyer
+
+Green and white location pin = Volume (Local)</inlineHelpText>
         <label>Key Customer</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -9838,7 +9915,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>Name</fullName>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -10143,6 +10220,21 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Number_of_GDI_financial_securities__c</fullName>
+        <description>Counts the number of Financial security, security type = GDI</description>
+        <externalId>false</externalId>
+        <label>Number of GDI financial securities</label>
+        <summaryFilterItems>
+            <field>Financial_Security__c.Security_Type__c</field>
+            <operation>equals</operation>
+            <value>GDI</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Financial_Security__c.Account__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Number_of_GDP_Billing_accounts__c</fullName>
         <description>auto calculates the number of GDP billing accounts under the account</description>
         <externalId>false</externalId>
@@ -10279,7 +10371,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>OwnerId</fullName>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -10869,7 +10961,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <label>SAP Number</label>
         <length>12</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -11064,6 +11156,31 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Segmentation__c</fullName>
+        <externalId>false</externalId>
+        <label>Segmentation</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Small</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -24637,6 +24754,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -25021,6 +25161,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27443,6 +27598,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -27887,6 +28065,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30054,6 +30247,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -30263,6 +30479,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32586,6 +32817,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -32605,6 +32859,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32883,6 +33284,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35767,6 +36183,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -35878,6 +36317,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36153,6 +36607,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <recordTypes>
         <fullName>IATA_Airline</fullName>
         <active>true</active>
+        <compactLayoutAssignment>Simple_Account_name</compactLayoutAssignment>
         <description>The new record type for ALL Airlines, IATA members and non members - Headquaters Account - with NEW data model - Use this for all Airlines HQ</description>
         <label>Airline Headquarters</label>
         <picklistValues>
@@ -38813,6 +39268,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -39417,6 +39895,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43167,6 +43660,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -43547,6 +44063,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45794,6 +46325,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -46053,6 +46607,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49987,6 +50556,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -50197,6 +50789,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54205,6 +54812,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -54418,6 +55048,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56471,6 +57116,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -56620,6 +57288,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58672,6 +59355,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -58821,6 +59527,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60981,6 +61702,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -61425,6 +62169,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65968,6 +66727,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -66821,6 +67603,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71349,6 +72146,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -71867,6 +72687,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75606,6 +76441,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -75625,6 +76483,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -76226,6 +77231,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -78507,7 +79527,7 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <linkType>url</linkType>
-        <masterLabel>Key Account Plan</masterLabel>
+        <masterLabel>Account Plan</masterLabel>
         <openType>replace</openType>
         <protected>false</protected>
         <url>/apex/AMP_KeyAccountPlan?accountId={!Account.Id}</url>

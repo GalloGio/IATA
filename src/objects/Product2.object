@@ -481,6 +481,11 @@
                 <default>false</default>
                 <controllingFieldValues>publications</controllingFieldValues>
             </picklistValues>
+            <picklistValues>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+                <controllingFieldValues>publications</controllingFieldValues>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -4994,9 +4999,9 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>Product_Manager_lookup__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>PRODUCT2.FAMILY</field>
+            <field>Product_Section__c</field>
             <operation>equals</operation>
-            <value>GDP</value>
+            <value>DBP001</value>
         </filters>
         <filters>
             <field>IEC_Parent_Product__c</field>
@@ -5353,6 +5358,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
+            <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
@@ -8325,6 +8334,10 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
             <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
             </values>
@@ -11275,6 +11288,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
+            <values>
+                <fullName>Baggage</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cargo</fullName>
                 <default>false</default>
