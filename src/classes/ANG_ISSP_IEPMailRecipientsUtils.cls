@@ -1,18 +1,19 @@
 public class ANG_ISSP_IEPMailRecipientsUtils {
 
-	//
-	// NOTE: The set accountIDs needs the 15 digit ids.
-	//
+    //
+    // NOTE: The set accountIDs needs the 15 digit ids.
+    //
     public static Map<ID, Set<Id>> getRecipients(Set<String> accountIDs, Set<String> roles) {
 
-		//
+        //
         // Get all the top parents linked to the accounts.
         //
         List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
                                                          contact__r.accountId,
                                                          contact__r.account.ANG_IEP_Status_FF__c
-                                                    From Portal_Application_Right__c
-                                                   Where account__c in : accountIDs];
+                                                    From Portal_Application_Right__c                                                
+                                                   Where account__c in : accountIDs
+                                                     And right__c = 'Access Granted'];
 
         //
         // Set with all accountIds and top parent ids
@@ -33,6 +34,7 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
                                                      Contact__c
                                                 From Portal_Application_Right__c
                                                Where ANG_Portal_Service_Role__c in : roles
+                                                 And right__c = 'Access Granted'
                                                  And contact__r.accountId in : accountsSet];
 
         //
@@ -71,20 +73,20 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
         return accIdToUserIdMapIep;
     }
 
-	public static Set<String> getIEPDefaultRoles() {
+    public static Set<String> getIEPDefaultRoles() {
         List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                    FROM Connected_App_Roles__c 
                                                   WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
                                                     AND Default_User_Role__c = true];
-		
+        
         Set<String> roles = new Set<String>();
         for(Connected_App_Roles__c r : rolesAux) {
             roles.add(r.Role__c);
         }
         return roles;
-	}
+    }
 
-	public static Set<String> getIEPRolesManageUserAccess() {
+    public static Set<String> getIEPRolesManageUserAccess() {
         List<Connected_App_Roles__c> rolesAux = [SELECT Role__c 
                                                    FROM Connected_App_Roles__c 
                                                   WHERE Connected_App__c = 'IATA EasyPay (EDENRED)' 
