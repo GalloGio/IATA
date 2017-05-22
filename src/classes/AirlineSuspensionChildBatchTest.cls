@@ -70,6 +70,6 @@ private class AirlineSuspensionChildBatchTest {
             system.debug('Case ' + c.CaseNumber + '; RT: ' + c.RecordType.Name + '; Case Area: ' + c.CaseArea__c);
         }
         // the batch process should ave generated 4 child cases: 1 partipation X (1 case for Airline Participation + 1 case for Customer Service) + 1 general case for AP + 1 for Coding
-        system.assertEquals(5, lstAllCases.size());
+        system.assertEquals(6, lstAllCases.size());
     }
 }
