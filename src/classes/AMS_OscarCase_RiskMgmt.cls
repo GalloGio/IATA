@@ -19,15 +19,15 @@ public class AMS_OscarCase_RiskMgmt {
 			return run;
 	    }
     }
-    
+
     public static void EndRun(){
     	run=true;
     }
-    
+
     private static map<id, list<Agency_Applied_Change_code__c>> mapIRRS = new map<id, list<Agency_Applied_Change_code__c>>();	//Store all Irregularities previously created for agencies in the trigger. Used in the memo text
     private static map<id, list<Financial_Security__c>> mapFinancialSecurity = new map<id, list<Financial_security__c>>();		//Store all Financial Securities previously created for agencies in the trigger. Used in the memo text
     private static map<id, id> mapAllHOs = new map<id, id>();		//For each agencies in the trigger, stores their HO Id
-    private static set<id> setAllAccntsHiearchy = new set<id>();	//Store each Agencies ID (HO/BRs) retrieved from the HOId 
+    private static set<id> setAllAccntsHiearchy = new set<id>();	//Store each Agencies ID (HO/BRs) retrieved from the HOId
     private static map<id, list<Account>> mapAccntValues = new map<id, list<Account>>();	//contains all the accounts associated with a HO.
     private static map<id, Account> mapAccntToUpdate = new map<id, account>();	//Stores account to be updated (Status and reason code)
 	private static set<id> setAccntIdIRRToClear = new set<id>();	//Account IDs for which a clear of irregularities is needed
@@ -39,16 +39,16 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
-    
+
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
 		map<id, list<AMS_ChangeCodes__c>> mapChangeCodeToCreate = new map<id, list<AMS_ChangeCodes__c>>(); //index is the Id of the case
 		set<string> setFSStatus = new set<string>{'Close to Expiry Date', 'Active', 'Encashed', 'Encashment in progress'};	//Financial Security status to be included in the memo text
 		//map<id, Case> mapCasePerAccount = new map<id, case>();
-		
+
 		set<id> setAccntIdCase = new set<id>();
 		list<AMS_ChangeCodes__c> lsConf = ReadConfiguration();
-		
+
 		if(!lsConf.isEmpty()){
 			list<case> lsAPDToCreate = new list<case>();
 			//INC305031 changed the query from for to list;
@@ -57,24 +57,24 @@ public class AMS_OscarCase_RiskMgmt {
 				if(c.Hierarchy_Account_Selections__r.isEmpty())
 					lsAPDToCreate.add(c);
 			}
-			
+
 			if(!lsAPDToCreate.isempty()){
 				AMS_CaseTriggerHandler.SelectAgencyOnSidraCase(lsAPDToCreate);
 			}
-			
+
 			for(AMS_Process_Detail__c apd:[select id, HOId__c, Case__c, Account__c from AMS_Process_Detail__c where case__c in:mapTrgNew.keyset()])
 				mapAllHOs.put(apd.Account__c, apd.HOId__c);
-			
+
 			/*map<id, Account> mapAccnt = new map<id, Account>();
-			
+
 			//I'm getting all account IDs associated with the Cases in the trigger
 			for(ID i:mapTrgNew.keyset())
 				mapAccnt.put(mapTrgNew.get(i).AccountId, null);
-			
+
 			//For each account in the trigger, get its HO
 			for(Account a:[select id, Location_Class__c, Status__c, PreviousStatus__c, Previous_Reason__c, Reason__c, parentId, parent.ParentId from Account where id in:mapAccnt.keyset()]){
 				mapAccnt.put(a.id, a);
-				
+
 				if(a.Parent.ParentId != null)	//I'm a BR of a BR
 					mapAllHOs.put(a.id, a.Parent.ParentId);
 				else if(a.PArentId!=null)	//I'm a BR
@@ -82,11 +82,11 @@ public class AMS_OscarCase_RiskMgmt {
 				else	//I'm the HO!
 					mapAllHOs.put(a.id, a.id);
 			}*/
-			
+
 			//Get all Agencies IDs involved. Get all items in the hierarchy
 			//for(Account a:[select id from Account where id in:mapAllHOs.values() or parentId in:mapAllHOs.values()  or parent.parentId in:mapAllHOs.values()])
 			//	setAllAccntsHiearchy.add(a.Id);
-			
+
 			//For each HO, get its children
 			//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 			//for(Account a:[select id, Status__c, CNS_Agency__c, PreviousStatus__c, Reason__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId from Account where id in:mapAllHOs.values() or ParentId in:mapAllHOs.values() or parent.parentId in:mapAllHOs.values()]){
@@ -107,38 +107,38 @@ public class AMS_OscarCase_RiskMgmt {
 				if(HOID!=null){
 					if(mapAccntValues.containsKey(HOID))
 						lsAccnt = mapAccntValues.get(HOID);
-					
+
 					lsAccnt.add(a);
 					mapAccntValues.put(HOID, lsAccnt);
 				}
 			}
 			*/
-			
+
 			for(Account a:[select id, Status__c, PreviousStatus__c, Reason__c,Location_class__c, Previous_Reason__c, Accumulated_Irregularities__c, ParentId, Parent.ParentId, CNS_Agency__c
-							from Account 
+							from Account
 							where id in:mapAllHOs.keyset()]){
 				//setAllAccntsHiearchy.add(a.Id);
 				id HOID = mapAllHOs.get(a.ID);
 				list<Account> lsAccnt = new list<Account>();
 				//First Check: Parent.ParentID. I'm a BR of a BR
-				
+
 				if(HOID!=null){
 					if(mapAccntValues.containsKey(HOID))
 						lsAccnt = mapAccntValues.get(HOID);
-					
+
 					lsAccnt.add(a);
 					mapAccntValues.put(HOID, lsAccnt);
 				}
 			}
-			
+
 			setAllAccntsHiearchy = mapAllHOs.keyset();
-			
+
 			//Get all previously generated change code from same sidra/sidra lite
 			list<Agency_Applied_Change_code__c> lsAACC = new list<Agency_applied_change_code__c>();
-			for(Agency_Applied_Change_code__c aa:[select id, createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, 
+			for(Agency_Applied_Change_code__c aa:[select id, createddate, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c,
 												  Account__c, Account__r.Location_Class__c, Account__r.ParentId, Change_Code__c, SIDRA_Case__c
-												  from Agency_Applied_Change_code__c 
-												  where SIDRA_Case__c in:mapTrgNew.keyset() 
+												  from Agency_Applied_Change_code__c
+												  where SIDRA_Case__c in:mapTrgNew.keyset()
 												  order by Account__c, CreatedDate desc]){
 				//Populate map with existing change code per sidra case. This is used to get the previuos status/reason in case of withdrawn
 				map<string, Agency_Applied_Change_code__c> mapAACCTmp;
@@ -146,50 +146,50 @@ public class AMS_OscarCase_RiskMgmt {
 					mapAACCTmp = mapPrevReasonFromCC.get(aa.Account__c);
 				}else
 					mapAACCTmp = new map<string, Agency_Applied_Change_code__c>();
-				
+
 				mapAACCTmp.put(aa.Change_Code__c, aa);
-				
+
 				mapPrevReasonFromCC.put(aa.Account__c, mapAACCTmp);
-				
-				//Populate map with all existing change code per same account. 
+
+				//Populate map with all existing change code per same account.
 				list<Agency_Applied_Change_code__c> lsAACCtmp;
 				if(mapExistingChangeCodes.keyset().contains(aa.Account__c))
 					lsAACCtmp = mapExistingChangeCodes.get(aa.Account__c);
 				else
 					lsAACCtmp = new list<Agency_Applied_Change_code__c>();
-				
+
 				lsAACCtmp.add(aa);
-				
+
 				mapExistingChangeCodes.put(aa.Account__c, lsAACCtmp);
 			}
-			
+
 			//get latest reason code/description from latest change code or, in case is missing, from account
 			mapReasonAndStatus = new map<id, account>([select id, Status__c, Reason__c,Previous_Reason__c, PreviousStatus__c,
-													 	(select id, change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, createddate, Created_Date_To_Show__c 
-													 	 from Agencies_Applied_Change_codes__r 
-													 	 where SIDRA_Case__c in:mapTrgNew.keyset() 
+													 	(select id, change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, createddate, Created_Date_To_Show__c
+													 	 from Agencies_Applied_Change_codes__r
+													 	 where SIDRA_Case__c in:mapTrgNew.keyset()
 													 	 order by Created_Date_To_Show__c desc limit 1)
 													  from account
 													  where Id in:setAllAccntsHiearchy]);
-			
+
 			//Get all financial securities related with accounts in the trigger. Used for generating bulletin memo text
 			for(Financial_Security__c fs:[select id, Account__c, Amount__c, CurrencyIsoCode, Account__r.parentId
-										  from Financial_Security__c 
+										  from Financial_Security__c
 										  where Account__c in:setAllAccntsHiearchy and Security_Status__c in:setFSStatus]){
 				list<Financial_Security__c> lsFS;
 				if(mapFinancialSecurity.keyset().contains(fs.Account__c))
 					lsFS = mapFinancialSecurity.get(fs.Account__c);
 				else
 					lsFS = new list<Financial_Security__c>();
-				
+
 				lsFS.add(fs);
-				
+
 				mapFinancialSecurity.put(fs.Account__c, lsFS);
 			}
-			
+
 			//Get all irregularities that lead to default (raised during last year)
 			for(Agency_Applied_Change_code__c irr:[select id, Account__c, Change_Code__c, Effective_Date__c, Irregularities_Expired__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c
-												   from Agency_Applied_Change_code__c 
+												   from Agency_Applied_Change_code__c
 												   where Account__c in:setAllAccntsHiearchy and Change_Code__c in:setIRRCC and Irregularities_Expired__c=false
 												   order by Effective_Date__c desc]){
 				list<Agency_Applied_Change_code__c> lsIRRS;
@@ -197,109 +197,85 @@ public class AMS_OscarCase_RiskMgmt {
 					lsIRRS = mapIRRS.get(irr.Account__c);
 				else
 					lsIRRS = new list<Agency_Applied_Change_code__c>();
-				
+
 				lsIRRS.add(irr);
-				
+
 				mapIRRS.put(irr.Account__c, lsIRRS);
 			}
-			
-			
+
+
 			//Query the Cases and account info: from the trigger, I'm not getting all necessary lookup value. Trigger is always running AFTER
 			map<id, case> mapCases = new map<id, case>([
-			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c, 
-								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, NOT_Approval__c, 
-								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c, 
-								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c, 
+			select id, recordType.DeveloperName, DEF_Withdrawal_Approval_Rejection__c, DEF_Withdrawal_Reason__c, DEF_Approval_Rejection__c, End_of_Grace_Period_Date__c,
+								  Shut_Down_TKT_System_GDS_and_BSPlink__c, IRR_Approval_Rejection__c, IRR_Withdrawal_Approval_Rejection__c, IRR_Withdrawal_Reason__c, NOT_Date__c, NOT_Sent__c, NOT_Approval__c,
+								  Notify_Agreement_Approval_to_AG__c, Reason_for_Default__c, REI_ApprovalRejectin__c, Repayment_Schedule_Approval__c, SIDRA_Lite_Reason__c, TER_Approval_Rejection__c, Current_Outstanding_Amount_USD__c, Type_of_REI_WD__c,
+								  Termination_Reason__c, Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_REI_DEFWITH__c,
 								  Update_AIMS_Repayment_agreed__c, Update_AIMS_TER__c, Parent.OSCAR__r.Type_of_change__c, Parent.OSCAR__c, Parent.Status, IRR_Approval_Rejection_Date__c, IRR_Type__c,
-								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c, 
+								  Termination_date__c, Outstanding_Amount__c, Reason_of_REI_WD__c, External_ID__c,
 								  Account.Location_Class__c, AccountId, Account.Status__c, Account.PreviousStatus__c, Account.Previous_Reason__c, Account.Reason__c, Account.Accumulated_Irregularities__c
 								  , Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c, Account.AIMS_ID__c, Account.WebStar_ID__c, Account.IATACode__c
 								  //DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 								  , Account.CNS_Agency__c
 								  from case where id in:mapTrgNew.keySet()]);
-			
+
 			set<string> setOperationCalendarExtID = new set<string>();
-			
+
 			for(Case c: mapCases.values()){
 				setAccntIdCase.add(c.AccountId);
 				string sExtId = GetOpCalendarExtId(c.External_ID__c);
 				if(sExtId!='')	setOperationCalendarExtID.add(sExtId);
-				
+
 				//Pilot countries only!
 				if(!c.Account.IATA_ISO_Country__r.Enable_Risk_Change_Codes__c)
 					continue;
 				//string LocClass = mapAccnt.get(c.AccountId).Location_Class__c;
 				string LocClass = c.Account.Location_Class__c;
-				
+
 				if(LocClass==null || LocClass == '')
 					throw new transformationException('Account is missing Location Class!');
 				else
 					LocClass = LocClass.toUpperCase();
-				
+
 				string sRecordTypeName = c.recordType.DeveloperName;
-				
+
 				for(AMS_ChangeCodes__c conf:lsConf){
 					set<string> setLocClass = new set<string>(conf.Class_Type__c.toUpperCase().split(';'));
-					
+
 					if(!setLocClass.contains(LocClass))
 						continue;
-					
+
 					if(!sRecordTypeName.equalsIgnoreCase(conf.Record_Type__c))
 						continue;
-						
+
 					//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 					if(c.Account.CNS_Agency__c && !conf.Used_By_CNS__c)
 						continue;
-					
-					
+
+
 											  //Check that the same change code does not exists generated from the same SIDRA (Lite)
 					boolean CCToBeGenerated = bCheckCondition(c, null, 'NOT EXISTS:' + conf.Change_Code__c, null, mapExistingChangeCodes);
-					
+
 					if(conf.Field1__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field1__c, conf.Field1Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(conf.Field2__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field2__c, conf.Field2Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(conf.Field3__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field3__c, conf.Field3Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(conf.Field4__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field4__c, conf.Field4Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(conf.Field5__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field5__c, conf.Field5Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(conf.Field6__c!=null && CCToBeGenerated)
 						CCToBeGenerated = bCheckCondition(c, conf.Field6__c, conf.Field6Values__c.toUpperCase(), mapTrgOld.get(c.Id), mapExistingChangeCodes);
-					
+
 					if(CCToBeGenerated)
 						CCToBeGenerated = CheckOldNewValues(c,  mapTrgOld.get(c.Id), conf.Field1__c, conf.Field2__c, conf.Field3__c, conf.Field4__c, conf.Field5__c, conf.Field6__c);
-					
-    @TestVisible
-    private static string GenerateFinancialSecurity(List<Financial_Security__c> lsFS) {
-        string sTmpVal = '';
-        if(lsFS==null) {
-            sTmpVal = 'Nil';
-        } else { 
-            Map<string, decimal> mapFSperCurr = new Map<string, decimal>();
-            for (Financial_Security__c fs:lsFS) {
-                decimal dAmount = FS.Amount__c;
-                if (mapFSperCurr.containsKey(FS.CurrencyIsoCode)) {
-                    dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);
-                }
-                mapFSperCurr.put(FS.CurrencyIsoCode, dAmount);
-            }
-            
-            for(string sCur:mapFSperCurr.keySet())
-                sTmpVal = sTmpVal + ' ' + sCur + ' ' + doFormatting(mapFSperCurr.get(sCur), ',', '.') + ';';
-        }
-        
-        return sTmpVal;
-    }
 
-
-                        
 					if(CCToBeGenerated){
 						//mapCasePerAccount.put(c.AccountId, c);
 						list<AMS_ChangeCodes__c> ls;
@@ -307,21 +283,21 @@ public class AMS_OscarCase_RiskMgmt {
 							ls = mapChangeCodeToCreate.get(c.Id);
 						else
 							ls = new list<AMS_ChangeCodes__c>();
-						
+
 						ls.add(conf);
 						mapChangeCodeToCreate.put(c.Id, ls);
 					}
 				}
 			}
-			
+
 			system.debug(logginglevel.error, 'DTULLO 226 setOperationCalendarExtID --> ' + setOperationCalendarExtID);
 			if(!setOperationCalendarExtID.isEmpty()){
 				for(operational_Calendar__c oc:[select Operation_Period_code__c, First_Day__c, Last_Day__c from operational_Calendar__c where Operation_Period_code__c in:setOperationCalendarExtID])
 					mapOperationalCalendar.put(oc.Operation_Period_code__c, oc);
 			}
-			
+
 			system.debug(logginglevel.error, 'DTULLO 232 mapOperationalCalendar --> ' + mapOperationalCalendar.keySet());
-			
+
 			//Create the change codes!
 			if(!mapChangeCodeToCreate.isEmpty()){
 				lsAACC = new list<Agency_Applied_Change_code__c>();
@@ -333,7 +309,7 @@ public class AMS_OscarCase_RiskMgmt {
 						//Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null);
 						if(AACC!=null)
 							lsAACC.add(AACC);
-						
+
 						//Some change codes need to be created for the whole hierarchy...
 						if(cc.Apply_to_hierarchy__c){
 							id CurrAccntHOID = mapAllHOs.get(CurrAccntId);
@@ -353,34 +329,56 @@ public class AMS_OscarCase_RiskMgmt {
 						}
 					}
 				}
-				
+
 				if(!lsAACC.isEmpty())
 					insert lsAACC;
-				
+
 				if(!mapAccntToUpdate.isEmpty())
 					update mapAccntToUpdate.values();
-					
+
 				if(!setAccntIdIRRToClear.isEmpty())
 					ClearIrregularities(setAccntIdIRRToClear);
 			}
 		}
 	}
-	
+
+	@TestVisible
+	private static string GenerateFinancialSecurity(List<Financial_Security__c> lsFS) {
+		string sTmpVal = '';
+		if(lsFS==null) {
+			sTmpVal = 'Nil';
+		} else {
+			Map<string, decimal> mapFSperCurr = new Map<string, decimal>();
+			for (Financial_Security__c fs:lsFS) {
+				decimal dAmount = FS.Amount__c;
+				if (mapFSperCurr.containsKey(FS.CurrencyIsoCode)) {
+					dAmount = dAmount + mapFSperCurr.get(FS.CurrencyIsoCode);
+				}
+				mapFSperCurr.put(FS.CurrencyIsoCode, dAmount);
+			}
+
+			for(string sCur:mapFSperCurr.keySet())
+				sTmpVal = sTmpVal + ' ' + sCur + ' ' + doFormatting(mapFSperCurr.get(sCur), ',', '.') + ';';
+		}
+
+		return sTmpVal;
+	}
+
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		datetime dt = system.now();
-		
+
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
-		
+
 		id AccountId = (Acc==null?mapCases.get(idCase).AccountId:acc.id);
 		//if(acc==null)
 		//	AccountId = mapCases.get(idCase).AccountId;
 		//else
 		//	AccountId = acc.id;
-		
+
 		AACC.Account__c = AccountId;
-		
+
 		string sUniqueId = '';
 		if(mapCases.get(idCase).Account.WebStar_ID__c != '' && mapCases.get(idCase).Account.WebStar_ID__c != null)
 			sUniqueId = mapCases.get(idCase).Account.WebStar_ID__c;
@@ -388,14 +386,14 @@ public class AMS_OscarCase_RiskMgmt {
 			sUniqueId = mapCases.get(idCase).Account.AIMS_ID__c;
 		else
 			sUniqueId = mapCases.get(idCase).Account.IATACode__c;
-		
+
 		sUniqueId = sUniqueId + '_' + cc.Change_Code__c + '_' + dt.year() + dt.month() + dt.day() + dt.hour() + dt.second();
-		
+
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 		AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
 														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
-		
+
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
         AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 
@@ -403,7 +401,7 @@ public class AMS_OscarCase_RiskMgmt {
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
 		AACC.Change_Code__c = cc.Change_Code__c;
-		//AACC.Effective_Date__c = ; //get the effective date from the oscar attached to the 
+		//AACC.Effective_Date__c = ; //get the effective date from the oscar attached to the
 		//if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS' || cc.Change_Code__c == 'IRW'){
 		if(setIRRCC.contains(cc.Change_Code__c)){
   			if(mapCases.get(idCase).IRR_Type__c == 'Single Irregularity'){
@@ -450,57 +448,60 @@ public class AMS_OscarCase_RiskMgmt {
 			//AACC.Irregularity_Type__c = '';
 			AACC.Effective_Date__c = date.ValueOf(mapCases.get(idCase).IRR_Approval_Rejection_Date__c);
 		}
-					
+
 		if(cc.Change_Code__c == 'IRR' || cc.Change_Code__c == 'IRS'){
 			AACC.Operation__c = 'A';
 			sUniqueId = sUniqueId + '_A';
 		}
-		
+
 		//if((cc.Change_Code__c == 'DEF' || cc.Change_Code__c == 'DWD') && mapCases.get(idCase).recordtype.developername=='SIDRA'){
 		//	AACC.DEF_Non_Payment__c = true;
 		//}
-		
+
 		if(cc.Change_Code__c == 'IRW'){
 			AACC.Operation__c = 'W';
 			sUniqueId = sUniqueId + '_W';
 		}
-		
+
 		AACC.SIDRA_Case__c = idCase;
 		if(cc.Apply_to_hierarchy__c){
 			if(cc.Publish_HO_Only__c){
-				if(mapAllHOs.keyset().contains(AccountId))
+				// the HOs are the value on the map
+				if((new Set<ID>(mapAllHOs.values())).contains(AccountId))
 					AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
+				else
+					AACC.To_Publish_in_e_Bulletin__c = false;
 			}else
 				AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
 		}else
 			AACC.To_Publish_in_e_Bulletin__c = cc.Published_in_bulletin__c;
-	
+
 		AACC.Applied_Configuration__c = cc.id;
 		AACC.OSCAR__c = mapCases.get(idCase).Parent.OSCAR__c;
-		
+
 		//if(mapCases.get(idCase).Recordtype.DeveloperName=='SIDRA')
 		//	AACC.DEF_Non_Payment__c = true;
-		
+
 		//This was added for all change codes beeing created in AMS_ChangeCodesHelper
 		AACC.CreatedDate_User__c = GenerateDateForBulletin(system.today());
-		
+
 		AACC.AIMS_ID__C = sUniqueId;
 
 		//Handles update on account
 		boolean bAccntToUpd = false;
 		Account accnt = new Account();
 		accnt.Id = AccountId;
-		
+
 		if(setTERCC.contains(cc.Change_Code__c)){
 			accnt.Expiry_Date__c = Date.Today();
 			bAccntToUpd = true;
 		}
-		
+
 		if(setREICC.contains(cc.Change_Code__c)){
 			accnt.Expiry_Date__c = null;
 			bAccntToUpd = true;
 		}
-		
+
 		//Set the billing period
 		if(!mapOperationalCalendar.isEmpty() && mapCases.get(idCase).External_ID__c != null && mapCases.get(idCase).External_ID__c != ''){
 			string sExtId = GetOpCalendarExtId(mapCases.get(idCase).External_ID__c);
@@ -512,7 +513,7 @@ public class AMS_OscarCase_RiskMgmt {
 				}
 			}
 		}
-		
+
 		//Handles Reason code and description on both Account and Change Code
 		/*if(cc.Reason_Code__c!=null){
 			bAccntToUpd = true;
@@ -522,24 +523,24 @@ public class AMS_OscarCase_RiskMgmt {
 					list<string> lsReason = (acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c).split('-');
 					AACC.Reason_Code__c = lsReason.get(0);
 					AACC.Reason_Description__c = lsReason.get(1);
-					
+
 					if(cc.Reason_Code__c.toUpperCase()=='PREV')
 						accnt.Reason__c = acc==null?(mapCases.get(idCase).Account.Previous_Reason__c):Acc.Previous_Reason__c;
 				}
 			}else{
 				AACC.Reason_Code__c = cc.Reason_Code__c;
 				AACC.Reason_Description__c = cc.Reason_Code_Description__c;
-				
+
 				accnt.Reason__c = AACC.Reason_Code__c + '-' + AACC.Reason_Description__c;
 			}
-			
+
 			if(cc.Reason_Code__c.toUpperCase()!='CURRENT')
 				accnt.Previous_Reason__c = sCurrReason;
-			
+
 			string sCurrentReason = mapReasonAndStatus.get(mapCases.get(idCase).Account).Agencies_Applied_Change_codes__r.isEmpty()?;
 			string sPreviousReason = '';
-			
-			
+
+
 		}
 		if(cc.Account_status_change__c != null){
 			bAccntToUpd = true;
@@ -553,16 +554,16 @@ public class AMS_OscarCase_RiskMgmt {
 			}
 			accnt.PreviousStatus__c = sCurrStatus;
 		}*/
-		
+
 		string sCurrReason='';
 		string sPrevReason='';
 		string sCurrStatus='';
 		string sPrevStatus='';
-		
+
 		system.debug(logginglevel.ERROR, 'DTULLO --> 491: ' + AccountId);
 		system.debug(logginglevel.ERROR, 'DTULLO --> 492: ' + mapReasonAndStatus.get(AccountId));
 		system.debug(logginglevel.ERROR, 'DTULLO --> 493: ' + mapReasonAndStatus.keyset());
-		
+
 		if(mapReasonAndStatus.containsKey(AccountId)){
 			if(mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r == null || mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.isEmpty()){
 				sCurrReason = mapReasonAndStatus.get(AccountId).Reason__c;
@@ -576,7 +577,7 @@ public class AMS_OscarCase_RiskMgmt {
 				sPrevStatus = mapReasonAndStatus.get(AccountId).Agencies_Applied_Change_codes__r.get(0).AccountPreviousStatus__c;
 			}
 		}
-		
+
 		if(cc.Account_status_change__c == null || cc.Account_status_change__c.toUpperCase()=='CURRENT'){
 			AACC.AccountNewStatus__c = sCurrStatus;
 			AACC.AccountPreviousStatus__c = sPrevStatus;
@@ -590,7 +591,7 @@ public class AMS_OscarCase_RiskMgmt {
 			set<string> SplittedCC = new set<string>();
 			for(integer i=1;i<cc.Reason_Code__c.toUpperCase().split(';').size();i++)
 				SplittedCC.add(cc.Reason_Code__c.toUpperCase().split(';').get(i));
-			
+
 			if(!SplittedCC.isEmpty()){
 				for(string sCCToGet:SplittedCC){
 					if(mapPrevReasonFromCC.containsKey(AccountId)){
@@ -610,10 +611,10 @@ public class AMS_OscarCase_RiskMgmt {
 			//accnt.PreviousStatus__c= sCurrStatus;
 			//bAccntToUpd = true;
 		}
-		
+
 		string[] SplittedReason;
 		string sReasonDesc = '';
-		
+
 		if(cc.Reason_Code__c == null || cc.Reason_Code__c.toUpperCase()=='CURRENT'){
 			if(sCurrReason!=null && sCurrReason!='-'){
 				if(sCurrReason.IndexOf('-')>0){
@@ -641,7 +642,7 @@ public class AMS_OscarCase_RiskMgmt {
 			set<string> SplittedCC = new set<string>();
 			for(integer i=1;i<cc.Reason_Code__c.toUpperCase().split(';').size();i++)
 				SplittedCC.add(cc.Reason_Code__c.toUpperCase().split(';').get(i));
-			
+
 			if(!SplittedCC.isEmpty()){
 				for(string sCCToGet:SplittedCC){
 					if(mapPrevReasonFromCC.containsKey(AccountId)){
@@ -662,17 +663,17 @@ public class AMS_OscarCase_RiskMgmt {
 			AACC.Reason_Description__c = cc.Reason_Code_Description__c;
 			AACC.PreviousReason__c = sCurrReason;
 		}
-		
+
 		if(cc.Clear_Irregularities__c)
 			setAccntIdIRRToClear.add(AccountId);
-		
+
 		if(bAccntToUpd)
 			mapAccntToUpdate.put(AccountId, accnt);
-			
+
 		return AACC;
 	}
-	
-	
+
+
 	private static string sGetReasonDescriptionFromSplit(string[] SplittedReason){
 		string sReasonDesc = '';
 		if(SplittedReason==null || SplittedReason.isEmpty())	return '';
@@ -684,24 +685,24 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		return sReasonDesc;
 	}
-	
+
 	//Method set to expired all irregularities, if the change code foresee this.
 	private static void ClearIrregularities(set<id> setAccntToClear){
 		if(!setAccntToClear.isEmpty()){
 			list<Agency_applied_change_code__c> lsIRRToClear = ([select id, Irregularities_Expired__c, recordtype.developername, Account__c
-																 from Agency_Applied_change_code__c 
+																 from Agency_Applied_change_code__c
 																 where recordtype.developername =:'Irregularities' and Account__c in:setAccntToClear and Irregularities_Expired__c=:false]);
-																 
+
 			if(!lsIRRToClear.isEmpty()){
 				for(Agency_applied_change_code__c IRR: lsIRRToClear)
 					IRR.Irregularities_Expired__c = true;
-				
+
 				update lsIRRToClear;
 			}
 		}
 	}
-	
-	
+
+
 	/**********************************************************************************************************************
 		Method return true if condition is verified.
 		Most of the times, a simple text value need to be checked. However, there are some expections such as:
@@ -711,22 +712,22 @@ public class AMS_OscarCase_RiskMgmt {
 		- Equal to TODAY
 		- Greater than TODAY
 		- EXISTS <ChangeCodeToCheck>
-		
+
 		for above values, different check need to be done.
-		
+
 		Most of the time, field to check is taken directly from the SIDRA/SIDRA Lite case.
-	***********************************************************************************************************************/ 
+	***********************************************************************************************************************/
 	@TestVisible
 	private static boolean bCheckCondition(case NewCaseValues, string sFieldToCheck, string condition, case OldCaseValues, map<id, list<Agency_Applied_Change_code__c>> mapCC){
 		set<string> setValues = new set<string>();
-		
+
 		if(condition.startsWithIgnoreCase('VALUES:')){
 			string sValue = null;
 			if(sFieldToCheck=='Parent.Status')
 				sValue = NewCaseValues.Parent.Status;
 			else
 				sValue = (string)NewCaseValues.get(sFieldToCheck);
-			
+
 			//if((string)NewCaseValues.get(sFieldToCheck) == null) return false;
 			if(sValue==null)	 return false;
 			setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
@@ -735,45 +736,45 @@ public class AMS_OscarCase_RiskMgmt {
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.equals('NOT BLANK')){
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))!=null)
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.equals('BLANK')){
 			if(string.ValueOf(NewCaseValues.get(sFieldToCheck))==null)
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.startsWithIgnoreCase('NOT EQUAL TO:')){
 			string sValue = null;
 			if(sFieldToCheck=='Parent.Status')
 				sValue = NewCaseValues.Parent.Status;
 			else
 				sValue = (string)NewCaseValues.get(sFieldToCheck);
-			
+
 			setValues.addAll((condition.right(condition.length()-'NOT EQUAL TO:'.length())).split(';'));
 			//if((string)NewCaseValues.get(sFieldToCheck) == null || !setValues.contains(((string)NewCaseValues.get(sFieldToCheck)).toUpperCase()))
 			if(sValue == null || !setValues.contains(sValue.toUpperCase()))
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.equalsIgnoreCase('GREATER THAN TODAY')){
 			//if((date)NewCaseValues.get(sFieldToCheck)>system.today())
 			date d = date.valueOf(NewCaseValues.get(sFieldToCheck));
 			if(d==null)	return false;
 			date dToCheck = date.newinstance(d.year(), d.Month(), d.day());
-			
+
 			//if(date.valueOf(NewCaseValues.get(sFieldToCheck))>system.today())
 			if(dToCheck>system.today())
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.equalsIgnoreCase('GREATER THAN TODAY OR EQUAL TO TODAY')){
 			//if((date)NewCaseValues.get(sFieldToCheck)>system.today())
 			date d = date.valueOf(NewCaseValues.get(sFieldToCheck));
@@ -796,7 +797,7 @@ public class AMS_OscarCase_RiskMgmt {
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.startsWithIgnoreCase('<=:')){
 			if((double)NewCaseValues.get(sFieldToCheck)<=double.valueOf(condition.right(condition.length()-'<=:'.length()))){
                 if((double)NewCaseValues.get(sFieldToCheck)>0)
@@ -805,25 +806,25 @@ public class AMS_OscarCase_RiskMgmt {
             }
 			else return false;
 		}
-		
+
 		if(condition.startsWithIgnoreCase('>=:')){
 			if((double)NewCaseValues.get(sFieldToCheck)>=double.valueOf(condition.right(condition.length()-'>=:'.length())))
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.startsWithIgnoreCase('>:')){
 			if((double)NewCaseValues.get(sFieldToCheck)>double.valueOf(condition.right(condition.length()-'>:'.length())))
 				return true;
 			else return false;
 		}
-		
+
 		if(condition.startsWithIgnoreCase('<:')){
 			if((double)NewCaseValues.get(sFieldToCheck)<double.valueOf(condition.right(condition.length()-'<:'.length())))
 				return true;
 			else return false;
 		}
-		
+
 		//This condition is used to check if there is already a specific change code already generated by the sidra(lite) in the subject
 		if(condition.startsWithIgnoreCase('EXISTS:')){
 			if(mapCC.keyset().contains(NewCaseValues.AccountId)){
@@ -833,10 +834,10 @@ public class AMS_OscarCase_RiskMgmt {
 						return true;
 				}
 			}
-			
+
 			return false;
 		}
-		
+
 		//This is used to check if there is already an existing same change code generated from the same SIDRA (Lite): we don't want to have it generated twice.
 		if(condition.startsWithIgnoreCase('NOT EXISTS:')){
 			if(mapCC.keyset().contains(NewCaseValues.AccountId)){
@@ -846,17 +847,17 @@ public class AMS_OscarCase_RiskMgmt {
 						return false;
 				}
 			}
-			
+
 			return true;
 		}
-		
+
 		return false;
 	}
-    
-	
+
+
 	//Check if there all the fields that lead to generation of change code had a change
 	private static boolean CheckOldNewValues(case NewCaseValues, case OldCaseValues, string Field1, string Field2, string Field3, string Field4, string Field5, string Field6){
-		
+
 		if(OldCaseValues!=null){
 			if( ((Field1==null || Field1.toUpperCase() == 'PARENT.STATUS' || Field1.toUpperCase() ==  'CHANGECODE' || Field1.toUpperCase()== 'EXISTS') || (Field1 != null && NewCaseValues.get(Field1) == OldCaseValues.get(Field1))) &&
 				((Field2==null || Field2.toUpperCase() == 'PARENT.STATUS' || Field2.toUpperCase() ==  'CHANGECODE' || Field2.toUpperCase()== 'EXISTS') || (Field2 != null && NewCaseValues.get(Field2) == OldCaseValues.get(Field2))) &&
@@ -869,18 +870,18 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		return true;
 	}
-	
-	
+
+
 	//Retrieve configuration items, stored in custom setting AMS Change Codes
 	private static list<AMS_ChangeCodes__c> ReadConfiguration(){
-		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c, 
-			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c, 
+		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c,
+			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c,
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Integration_RecId__c,
 			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
-	
-	
+
+
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
 	@TestVisible
 	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS){
@@ -897,27 +898,27 @@ public class AMS_OscarCase_RiskMgmt {
 			if(sMemoText.containsIgnoreCase('<Termination Date>')){
 				sMemoText = sMemoText.replace('<Termination Date>', theCase.Termination_date__c==null?'Nil':GenerateDateForBulletin(theCase.Termination_date__c));
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Financial Securities>')){
 				sMemoText = sMemoText.replace('<Financial Securities>', GenerateFinancialSecurity(lsFS));
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<DEF Withdrawal reason>')){
 				sMemoText = sMemoText.replace('<DEF Withdrawal reason>', theCase.DEF_Withdrawal_Reason__c==null?'Nil':theCase.DEF_Withdrawal_Reason__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<SIDRA Lite Reason>')){
 				sMemoText = sMemoText.replace('<SIDRA Lite Reason>', theCase.SIDRA_Lite_Reason__c==null?'Nil':theCase.SIDRA_Lite_Reason__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<End Grace Period Date>')){
 				sMemoText = sMemoText.replace('<End Grace Period Date>', theCase.End_of_Grace_Period_Date__c==null?'Nil':GenerateDateForBulletin(theCase.End_of_Grace_Period_Date__c));
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<IRR Withdrawal Reason>')){
 				sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c==null?'Nil':theCase.IRR_Withdrawal_Reason__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
 				sTmpVal = '';
 				if(lsIrr==null)
@@ -930,46 +931,46 @@ public class AMS_OscarCase_RiskMgmt {
 						}else{
 							sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
 						}
-						
+
 						sPrevType = irr.Operation__c;
 					}
 					sTmpVal = sTmpVal + ' Total inst for 12 months: ' + theCase.Account.Accumulated_Irregularities__c +  '; ';
 				}
 				sMemoText = sMemoText.replace('<IRRS Sequence>', sTmpVal);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Outstanding Amount>')){
 				sMemoText = sMemoText.replace('<Outstanding Amount>', theCase.Outstanding_Amount__c==null?'Nil':string.valueOf(theCase.Outstanding_Amount__c));
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<OSCAR Type>')){
 				sMemoText = sMemoText.replace('<OSCAR Type>', theCase.Parent.OSCAR__r.Type_of_change__c==null?'Nil':theCase.Parent.OSCAR__r.Type_of_change__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Termination Reason>')){
 				sMemoText = sMemoText.replace('<Termination Reason>', theCase.Termination_Reason__c==null?'Nil':theCase.Termination_Reason__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Update AIMS-DEF>')){
 				sMemoText = sMemoText.replace('<Update AIMS-DEF>', theCase.Update_AIMS_DEF__c==null?'Nil':GenerateDateForBulletin(date.ValueOf(theCase.Update_AIMS_DEF__c)));
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Reason for default>')){
 				sMemoText = sMemoText.replace('<Reason for default>', theCase.Reason_for_Default__c==null?'Nil':theCase.Reason_for_Default__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Reason of REI/WD>')){
 				sMemoText = sMemoText.replace('<Reason of REI/WD>', theCase.Reason_of_REI_WD__c==null?'Nil':theCase.Reason_of_REI_WD__c);
 			}
-			
+
 			if(sMemoText.containsIgnoreCase('<Inform GDS to Shut Down TKT System>')){
 				sMemoText = sMemoText.replace('<Inform GDS to Shut Down TKT System>', theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c==null?'Nil':GenerateDateForBulletin(theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c));
 			}
 		}
 		return sMemoText;
 	}
-	
-	
+
+
 	private static string GetOpCalendarExtId(string sExtId){
 		string sRet = '';
 		if(sExtId != '' && sExtId!=null){
@@ -980,29 +981,29 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 		return sRet;
 	}
-	
-	
+
+
 	//Format the date in the eBulletin Format (dd-mmm-yyyy)
 	private static string GenerateDateForBulletin(date dValue){
 		if(dValue==null) return '';
 		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
 	}
-	
+
 	private static string GenerateDateForBulletin(datetime dValue){
 		if(dValue==null) return '';
 		list<string> lsMonthName = new list<string>{'-','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'};
 		return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
 	}
-	
+
 	public static String doFormatting(Decimal val, String osep, String nsep) {
 		String s, tmp;
 		Integer i = 6;
-		s = val.setScale(2).toPlainString().replace(osep, nsep); 
-		while(s.length() > i) { 
-			tmp = s.substring(0, s.length() - i) + osep + s.substring(s.length() - i); 
-			s = tmp; i += 4; 
-		} 
-		return s; 
+		s = val.setScale(2).toPlainString().replace(osep, nsep);
+		while(s.length() > i) {
+			tmp = s.substring(0, s.length() - i) + osep + s.substring(s.length() - i);
+			s = tmp; i += 4;
+		}
+		return s;
 	}
 }
