@@ -12685,6 +12685,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Notifications_Button</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Notifications Button</shortDescription>
+        <value>Receive remittance date reminders</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
