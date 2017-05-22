@@ -23,17 +23,26 @@ public without sharing class PortalServiceAccessTriggerHandler {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminOfAppRequestVF + ' not found');   
             return;
         }
+
+        Set<Id> ids = new Set<Id>();
+        for(Portal_Application_Right__c par : newPortalApplicationRightList) {
+            ids.add(par.id);
+        }
+
         Set<ID> accountIDs = new Set<ID>();
         Map<id, boolean> cannotManagedPortalAdminMap = new Map<id, boolean>();
         Set<String> accountIDsIepAux = new Set<String>();
 
-        for(Portal_Application_Right__c par : newPortalApplicationRightList) {
+        List<Portal_Application_Right__c> parListAux = [Select id, Right__c, Application_Name__c, Account__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c from Portal_Application_Right__c  where id in :ids];  
+
+        //for(Portal_Application_Right__c par : newPortalApplicationRightList) {
+        for(Portal_Application_Right__c par : parListAux) {
             if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
                 if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
                     accountIDsIepAux.add(par.Account__c);
                 } else {
                     accountIDs.add(par.Account__c);
-                }                
+                }
                 cannotManagedPortalAdminMap.put(par.Portal_Application__c, par.Portal_Application__r.Cannot_be_managed_by_portal_admin__c);
             } 
         }
@@ -77,7 +86,9 @@ public without sharing class PortalServiceAccessTriggerHandler {
                     continue;
                 }
 
-                Boolean cannotManagedPortalAdmin = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
+                Boolean cannotManagedPortalAdminFlag = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
+
+
                 
                 // The email to the Portal administrator can only be send when
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = false
@@ -85,13 +96,13 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = true && portal_application__c = IEP Service && 
                 //      IEP Account Status = open
                 //
-                if( (cannotManagedPortalAdmin == false) ||
-                    (cannotManagedPortalAdmin == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
+                if( (cannotManagedPortalAdminFlag == false) ||
+                    (cannotManagedPortalAdminFlag == true && ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c) &&
                      iepAccountStatusMap.get(par.Account__c) == ANG_ISSP_PortalServiceHelper.STATUS_OPEN) ) {
 
                     Set<ID> portalAdminUserIDs;
                     if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-                        System.debug(LoggingLevel.ERROR, 'EasyPay');        
+                        System.debug('--->EasyPay');
                         portalAdminUserIDs = accIdToUserIdMapIep.get(par.Account__c);
                     } else {
                         portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);                   
@@ -133,6 +144,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
         }
     
         if(!msgList.isEmpty()){
+            System.debug('Mails send : ' + msgList.size());
             Messaging.sendEmail(msgList);
         }
         else 
