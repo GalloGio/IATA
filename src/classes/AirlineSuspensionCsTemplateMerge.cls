@@ -9,7 +9,7 @@ public with sharing class AirlineSuspensionCsTemplateMerge {
     
 	public AirlineSuspensionCsTemplateMerge (ApexPages.StandardController controller) {
         if (controller.getRecord().Id != null ) {
-            c = [SELECT Id, Business_Justification__c, Business_Process_es_Affected__c, ParentId, Parent.RecordType.DeveloperName, RecordType.DeveloperName, BSPCountry__c, 
+            c = [SELECT Id, Business_Justification__c, Business_Process_es_Affected__c, ParentId, Parent.RecordType.DeveloperName, RecordType.DeveloperName, BSPCountry__c, CaseArea__c,
             		Account.Name, Account.Airline_designator__c, Account.IATACode__c, Account.Country_ISO_Code__c  
             		FROM Case 
             		WHERE Id = :controller.getRecord().Id];
@@ -44,7 +44,11 @@ public with sharing class AirlineSuspensionCsTemplateMerge {
             }
             
             
-            isAirlineSuspensionChildCSCase = c.RecordType.DeveloperName == 'InternalCasesEuropeSCE' && c.ParentId != null && (c.Parent.RecordType.DeveloperName == 'Airline_Suspension' || c.Parent.RecordType.DeveloperName == 'Airline_Deactivation');
+            isAirlineSuspensionChildCSCase = 
+                c.RecordType.DeveloperName == 'InternalCasesEuropeSCE' 
+                && c.ParentId != null 
+                && (c.Parent.RecordType.DeveloperName == 'Airline_Suspension' || c.Parent.RecordType.DeveloperName == 'Airline_Deactivation')
+                && c.CaseArea__c == 'Customer Service';
             
             isSecondLanguageConfigured = TemplateId2ndLanguage != null;
             
