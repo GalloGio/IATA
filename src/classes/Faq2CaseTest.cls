@@ -14,7 +14,6 @@ private class Faq2CaseTest {
         articleVL2.getPath();
         Test.stopTest();
     }
-
     static testMethod void testFaq2Case_Cases_a()
     {
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -738,7 +737,6 @@ private class Faq2CaseTest {
 		);
 		insert testAccount;
         Contact con = ISSP_ObjectFactory.createNewContact();
-
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'United States', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
 		insert country;
 
@@ -764,15 +762,10 @@ private class Faq2CaseTest {
 		  controller.topic = '2';
 		  //controller.refreshAirlineList();
 		  controller.setRecordType();
-
-
-
 		  controller.create();
 		  	  controller.back();
 		  controller.refreshTopicPickList();
 		  controller.refreshSubTopicPickList();
-
-
 		  controller.subtopic = ENV.SelectOptionDefaultValue;
 		  controller.refreshSubTopicPickList();
 		  controller.createSatisfiedRecord();
@@ -795,10 +788,82 @@ private class Faq2CaseTest {
 		  newCase.IFAP_Country_ISO__c ='t1';
 		  newCase.Subject = 'test';
 		  newCase.Description = 'test';
-
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
+		  newCase.E2CP__AdditionalCC__c = 'fake@email.com';
 		  controller.save();
+		  newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
+		  controller.save();
+		}
+		Test.stopTest();
+    }
+
+    static testMethod void testFaq2Case008() {
+        Id agencyRecordTypeId = [SELECT Id FROM RecordType WHERE SObjectType='Account' AND DeveloperName='IATA_Agency'].Id;
+        Account testAccount = new Account(
+            name= 'testAccount',
+            CNS_Account__c = true,
+            RecordTypeId = agencyRecordTypeId
+        );
+        insert testAccount;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'Spain', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
+        insert country;
+
+        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+        //
+        // Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id,Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
+        // insert c;
+        //
+        con.AccountId= testAccount.Id;
+        con.Email = 'Test@test11.com';
+        con.CNS_Contact__c = true;
+        insert con;
+        System.debug('con Id: ' + con.Id);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        System.debug('newUser Id: ' + newUser.Id);
+        con.OwnerId = newUser.Id;
+        update con;
+        Test.startTest();
+        System.runAs(newUser)
+        {
+            vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+            controller.pageLoad();
+            controller.topic = '2';
+            //controller.refreshAirlineList();
+            controller.setRecordType();
+		  controller.create();
+		  	  controller.back();
+		  controller.refreshTopicPickList();
+		  controller.refreshSubTopicPickList();
+		  controller.subtopic = ENV.SelectOptionDefaultValue;
+		  controller.refreshSubTopicPickList();
+		  controller.createSatisfiedRecord();
+		  controller.GeneralQueueMethod();
+		  controller.CheckNewCaseRecordType();
+		  controller.GenerateTopicHelpText();
+		  controller.GeneratesubTopicHelpText();
+		  Set<String> stString = controller.topicsToShowButton;
+		  Boolean b = controller.showButton;
+		  Boolean b2 = controller.isAllowedCode('test');
+		//   Boolean b3 = controller.isAllowedSector('test');
+		  PageReference pr = controller.getSelectArtical();
+		  PageReference pr2 = controller.create1();
+		  PageReference pr3 = controller.ComplimentGeneralQueueMethod();
+		  Boolean b4 = controller.isArticalSelected;
+		//   controller.refreshAirlineList();
+
+		  controller.isCompliment1 = true;
+		  Case newCase = controller.newCase;
+		  newCase.IFAP_Country_ISO__c ='t1';
+		  newCase.Subject = 'test';
+		  newCase.Description = 'test';
+		  controller.topic = '0';
+		  controller.subtopic = 'CGO_Bank_Guarantees__c';
+            newCase.E2CP__AdditionalCC__c = 'fake@email.com';
+            controller.saveAttach();
+            newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
+            controller.saveAttach();
 		}
 		Test.stopTest();
     }
@@ -824,5 +889,35 @@ private class Faq2CaseTest {
         }
 
         return 0;
+    }
+    
+    static testMethod void testinitIATACodeList() {
+        Account account1 = new Account(Name='test1', IATAcode__c = '1');
+        insert account1;
+        
+        Contact contact = new Contact(
+            Salutation = 'Mr.',
+            FirstName= 'first',
+            LastName= 'last',
+            AccountId = account1.id);
+        insert contact;
+
+        vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
+        
+        Test.StartTest();
+        ctrl.initIATACodeList(account1.id);
+        Account account2 = new Account(Name='test2', IATAcode__c = '2', ParentId=account1.Id);
+        insert account2;
+        ctrl.initIATACodeList(account2.id);
+        Account account3 = new Account(Name='test3', IATAcode__c = '3', ParentId=account2.Id);
+        insert account3;
+        ctrl.initIATACodeList(account3.id);
+        Account account4 = new Account(Name='test4', IATAcode__c = '4', ParentId=account3.Id);
+        insert account4;
+        ctrl.initIATACodeList(account4.id);
+        Account account5 = new Account(Name='test5', IATAcode__c = '5', ParentId=account4.Id);
+        insert account5;
+        ctrl.initIATACodeList(account5.id);
+        Test.StopTest();
     }
 }
