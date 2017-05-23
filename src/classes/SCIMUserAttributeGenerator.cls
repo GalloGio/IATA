@@ -8,19 +8,24 @@ global class SCIMUserAttributeGenerator {
 	public static final String PARAM_ENTITLEMENT = 'entitlement';
 	public static final String PARAM_PROPERTIES = 'properties';
 
+	public static final String PARAM_ID = 'id';
+	public static final String PARAM_DISPLAYNAME = 'displayName';
+	public static final String PARAM_NICKNAME = 'nickName';
+	public static final String PARAM_USERTYPE = 'userType';
+	public static final String PARAM_PREFERREDLANGUAGE = 'preferredLanguage';
+	public static final String PARAM_LOCALE = 'locale';
+	public static final String PARAM_TITLE = 'title';
+	public static final String PARAM_ACTIVE = 'active';
+
 	private static Map<String,String> ReplaceKeyMap = new Map<String,String>{
 		'enx' => 'urn:scim:schemas:extension:enterprise:1.0'
 		};
 
-	global SCIMUser getMappedAttributes(Process.PluginRequest request){
-		String userName = (String)request.inputParameters.get(PARAM_USERNAME);
-		String firstName = (String)request.inputParameters.get(PARAM_FIRSTNAME);
-		String lastName = (String)request.inputParameters.get(PARAM_LASTNAME);
-		String externalid = (String)request.inputParameters.get(PARAM_EXTERNALID);
-		String email = (String)request.inputParameters.get(PARAM_EMAIL);
-		String messageType = (String)request.inputParameters.get(PARAM_ENTITLEMENT);
+	/*global SCIMUser getMappedAttributes(Process.PluginRequest request){
 
-		SCIMUser user = new SCIMUser(userName, lastName, firstName, externalid, email, '');
+		SCIMUser user = new SCIMUser(request);
+		
+		String messageType = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT);
 
 		if(String.isNotBlank(messageType)){
 
@@ -41,7 +46,7 @@ global class SCIMUserAttributeGenerator {
 		}
 
 		return user;
-	}
+	}*/
 
 	global String getSerializedAttributes(SCIMUser user){
 

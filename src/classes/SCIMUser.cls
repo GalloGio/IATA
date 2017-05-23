@@ -75,10 +75,27 @@ global virtual class SCIMUser {
     public Meta meta;
     
     public SCIMUser() {
-        this(null, null, null, null, null, null);
+        this(null);
     }
 
-    public SCIMUser(String userName, String familyName, String givenName, String externalid, String email, String entitlement) {
+    public SCIMUser(Process.PluginRequest request) {
+
+        if(request == null) return;
+
+        String userName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_USERNAME);
+        String familyName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_FIRSTNAME);
+        String givenName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_LASTNAME);
+        String externalid = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EXTERNALID);
+        String email = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EMAIL);
+        String id = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ID);
+        String displayName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_DISPLAYNAME);
+        String nickName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_NICKNAME);
+        String userType = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_USERTYPE);
+        String preferredLanguage = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_PREFERREDLANGUAGE);
+        String locale = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_LOCALE);
+        String title = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_TITLE);
+        Boolean active = (Boolean)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ACTIVE);
+
         schemas = new List<String> {'urn:scim:schemas:core:1.0'};
 
         if (userName != null) this.userName = userName;
@@ -99,6 +116,15 @@ global virtual class SCIMUser {
             emailsList.add(emails);
             this.emails = emailsList;
         } 
+
+        if(id != null) this.id = id;
+        if(displayName != null) this.displayName = displayName;
+        if(nickName != null) this.nickName = nickName;
+        if(userType != null) this.userType = userType;
+        if(preferredLanguage != null) this.preferredLanguage = preferredLanguage;
+        if(locale != null) this.locale = locale;
+        if(title != null) this.title = title;
+        if(active != null) this.active = active;
     }
 
     // Simple JSON deserialization

@@ -13,7 +13,16 @@ global class SCIMUserAttributeGeneratorPlugin extends UserProvisioning.UserProvi
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EXTERNALID, Process.PluginDescribeResult.ParameterType.STRING, false),
 			new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_EMAIL, Process.PluginDescribeResult.ParameterType.STRING, false),
             new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT, Process.PluginDescribeResult.ParameterType.STRING, false),
-            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_PROPERTIES, Process.PluginDescribeResult.ParameterType.STRING, false)
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_PROPERTIES, Process.PluginDescribeResult.ParameterType.STRING, false),
+
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ID, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_DISPLAYNAME, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_NICKNAME, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_USERTYPE, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_PREFERREDLANGUAGE, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_LOCALE, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_TITLE, Process.PluginDescribeResult.ParameterType.STRING, false),
+            new Process.PluginDescribeResult.InputParameter(SCIMUserAttributeGenerator.PARAM_ACTIVE, Process.PluginDescribeResult.ParameterType.BOOLEAN, false)
         }; 
 
         describeResult.outputParameters = new List<Process.PluginDescribeResult.OutputParameter>{
