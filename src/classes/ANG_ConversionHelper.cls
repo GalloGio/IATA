@@ -48,7 +48,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Id> allAgencies = new Set<Id>();
 		Set<Id> allHierarchies = new Set<Id>();
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.ParentId, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Parent_Account__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.Top_Parent__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Top_Parent__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name = :country and Hierarchy__r.Migrated__c = false];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
@@ -66,12 +66,12 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+		List<Account> allAccountsSingleHierarchyHO = [SELECT Id, Name, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
 
 		for(Account acct: allAccountsSingleHierarchyHO)
 			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
 
-		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c ='BR' and ParentId  = null and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
+		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c from Account where Location_Type__c ='BR' and ParentId  = null and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES and IATA_ISO_Country__r.Name = :country and Id not in:allAgencies];
 
 		for(Account acct: allAccountsSingleHierarchyBR)
 			toReturn.put(acct.Id,createNewSoloHierarchyStructure(acct));
@@ -96,7 +96,7 @@ global with sharing class ANG_ConversionHelper {
 
 	public static Map<Id,ANG_ConversionHelper.HierarchyStructure> buildSingleHierarchyStructure(String hierarchyId){
 
-		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.Migrated__c, Hierarchy__r.RecordType.Name, Hierarchy__r.Name, Hierarchy__c, Child_Account__c, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c from AMS_Agencies_relationhip__c where Hierarchy__c = :hierarchyId];
+		List<AMS_Agencies_relationhip__c> allRelations = [SELECT Id, Hierarchy__r.Migrated__c, Hierarchy__r.RecordType.Name, Hierarchy__r.Name, Hierarchy__c, Child_Account__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.Location_Class__c, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c from AMS_Agencies_relationhip__c where Hierarchy__c = :hierarchyId];
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> toReturn = new Map<Id,ANG_ConversionHelper.HierarchyStructure>();
 
@@ -444,6 +444,7 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+
 	public static Map<Id,List<Account>> fetchAllAgenciesInvolved(List<ANG_ConversionHelper.HierarchyStructure> structs){
 
 		Set<Id> accountIdsToSearch = new Set<Id>();
@@ -528,13 +529,32 @@ global with sharing class ANG_ConversionHelper {
 	public static ANG_ConversionHelper.MigrationContainer changeStructure(ANG_ConversionHelper.HierarchyStructure struct, Map<Id,Account> allAgencies, AMS_Agencies_Hierarchy__c hierarchy){
 
 
+	
+					//TODO : Pick up all accounts to be updated and proccess them again in relation to Risk Status
+			/*
+			
+				1) Query ALL ANG_Agency_Risk_Calculation__c do record type Risk Status Assessment (with the fields Finantial Review Result and Risk History Assessement) (going to be a config table)
+				2) Loop all Agencies
+				 3) For each account
+				 	4) Find the ANG_Agency_Risk_Calculation__c with the same Finantial Review Result and Risk History Assessement in that account
+				 	5) Assign the risk status of this calculation to the account -> Risk Status
+			*/
+
+
+
 		Set<Account> accountsToUpdate = new Set<Account>();
 
 		Set<AMS_Agencies_relationhip__c> relationsToUpdate = new Set<AMS_Agencies_relationhip__c>();
 
 		if(struct.isSingleAgencyHierarchy){
-			allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
+			
+			allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+			allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
+			allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+			allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
+
 			accountsToUpdate.add(allAgencies.get(struct.topParentId));
+
 		}
 		else{
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
@@ -543,9 +563,13 @@ global with sharing class ANG_ConversionHelper {
 					
 					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
 					allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
+					allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+					allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
 
 					allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
 					allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
+					allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
+					allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
 
 					if(allAgencies.get(rel.Child_Account__c).ParentId != struct.topParentId)
 						allAgencies.get(rel.Child_Account__c).ParentId = struct.topParentId;
