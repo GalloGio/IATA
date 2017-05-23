@@ -24,12 +24,14 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
   //AMS triggers
   if(Trigger.isBefore && Trigger.isInsert){
     AMS_AccountTriggerHandler.handleBeforeInsert(Trigger.new);
+    ANG_AccountTriggerHandler.handleBeforeInsert(Trigger.new);
   } 
   else if (Trigger.isAfter && Trigger.isInsert){
     AMS_AccountTriggerHandler.handleAfterInsert(Trigger.new);
   }
   else if(Trigger.isBefore && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
+    ANG_AccountTriggerHandler.handleBeforeUpdate(Trigger.new, Trigger.oldMap);
   }
   else if(Trigger.isAfter && Trigger.isUpdate){
     AMS_AccountTriggerHandler.handleAfterUpdate(Trigger.new, Trigger.oldMap);
