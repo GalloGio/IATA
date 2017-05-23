@@ -40,15 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Branch_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>ICH_Member__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>InvoiceWorks_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -78,11 +70,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Identify_as_Key_Customer__c</field>
+                <field>Key_Customer_Reason__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>duplicate_flag_indicato__c</field>
+                <behavior>Edit</behavior>
+                <field>Segmentation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
