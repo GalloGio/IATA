@@ -414,6 +414,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>EBC_Email_Exclusion_Relation__c.GDP_Products_Account_View__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Agency_Code__c</fields>
         <fields>Legal_Name__c</fields>
         <fields>Location_Type_Name__c</fields>
