@@ -12,16 +12,16 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 	
-	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj){
+	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId){
 		
 		String body = serializeData(obj);
 
-		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c);
+		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId);
 
 	}
 
 	@future (callout=true)
-	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret){
+	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId){
 
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
@@ -39,10 +39,27 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		System.debug('ANG_CalloutIEPMasterdata: Request Status:'+res.getStatus());
 		System.debug('ANG_CalloutIEPMasterdata: Request Code:'+res.getStatusCode());
 
-		if(!(res.getStatusCode() > ANG_IEP_CalloutHelper.STATUSOKLOWER   && res.getStatusCode() < ANG_IEP_CalloutHelper.STATUSOKHIGHER ))
-			throw new AMS_ApplicationException('ANG_CalloutIEPMasterdata: The masterdata could not be sent to IEP. Status:' + res.getStatusCode() + ' - Reason:'+ res.getStatus());
-		else
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+
+		log.Agency_Applied_Change_code__c = changeCodeId;
+		log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+		log.Method__c = action;
+		log.Web_Service__c = String.valueOf(req);
+
+
+		if(!(res.getStatusCode() > ANG_IEP_CalloutHelper.STATUSOKLOWER   && res.getStatusCode() < ANG_IEP_CalloutHelper.STATUSOKHIGHER )){
+			System.debug('ANG_CalloutIEPMasterdata: Payload could not be sent with success.');
+			//throw new AMS_ApplicationException('ANG_CalloutIEPMasterdata: The masterdata could not be sent to IEP. Status:' + res.getStatusCode() + ' - Reason:'+ res.getStatus());
+			log.Error_Code__c = String.valueOf(res.getStatusCode());
+			log.Error_Message__c = res.getStatus();
+			log.Success__c = false;
+		}
+		else{
 			System.debug('ANG_CalloutIEPMasterdata: Payload sent with success.');
+			log.Success__c = true;
+		}
+
+		insert log;
 
 
 	}
