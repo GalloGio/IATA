@@ -49,8 +49,9 @@
     </apex:form>
 
 	<apex:form id="accountResult" styleClass="pos-relative">
-    	<apex:pageBlock >
-			<apex:pageBlockSection title="Owners Updated">
+		<apex:actionPoller interval="5" action="{!checkBatchStatus}" enabled="{!statusPooler}" reRender="owners"/>
+    	<apex:pageBlock id="owners" >
+			<apex:pageBlockSection title="Owners Updated" rendered="{!statusBatch}">
 				<apex:pageBlockTable value="{!newOwners}" var="a">
 					<apex:column value="{!a.RecordTypeId}"/>
 					<apex:column value="{!a.Account__c}"/>
