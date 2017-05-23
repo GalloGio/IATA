@@ -37,7 +37,6 @@ public class ANG_RiskAssessmentEngine{
                 for(account acc:[select id, remittance_frequency__c,(select id from All_Risk_Events__r where  ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c ='Yes' AND ANG_Event_Status__c='Active') counter from account where id in :accSet]){
                     accInfoMap.put(acc.id,acc);
                 }
-                system.debug(' PF accInfoMap'+accInfoMap);
             }
             
             return accInfoMap;
@@ -84,15 +83,12 @@ public class ANG_RiskAssessmentEngine{
     }
 
     public void Assessment(){
-        system.debug('PF START ASSESSMENT');
         list<account> AccUpdList= new list<account>();
-        system.debug('PF accCalcMap'+accCalcMap);
         for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
 
             Account updAcc=new Account(id=accKey,ANG_HE_RiskHistoryAssessment__c='Passed');
             Integer accParentOccs=0;
             map<id,integer> groupingMap = accCalcMap.get(accKey);
-            system.debug('PF groupingMap'+groupingMap);
             for(string reRec: groupingMap.keySet()){ // iterate groupings
                 accParentOccs=groupingMap.get(reRec);
                 if(risCalcMap.containsKey(reRec)){ //validate REC
@@ -132,7 +128,6 @@ public class ANG_RiskAssessmentEngine{
             }
             AccUpdList.add(updAcc);  
         }
-        system.debug('PF AccUpdList'+AccUpdList);
         update AccUpdList;
     }
 }
