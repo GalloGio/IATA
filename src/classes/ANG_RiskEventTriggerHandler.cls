@@ -17,6 +17,29 @@ public class ANG_RiskEventTriggerHandler {
     	loadInformationsUpdate();
     }
 
+    public void onAfterInsert(){
+        set<id> updAccSet = new Set<id>();
+        for(ANG_Agency_Risk_Event__c re : triggerNew){            
+                updAccSet.add(re.ANG_HE_AccountId__c);
+        }
+        doRiskAssessment(updAccSet);
+    }
+    public void onAfterUpdate(){        
+        set<id> updAccSet = new Set<id>();
+        for(ANG_Agency_Risk_Event__c re : triggerNew){            
+            ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
+            if(re.ANG_HE_AccountId__c ==null){
+                updAccSet.add(oldRe.ANG_HE_AccountId__c);
+            }else if(re.ANG_HE_AccountId__c ==oldRe.ANG_HE_AccountId__c ){                
+                updAccSet.add(re.ANG_HE_AccountId__c);
+                updAccSet.add(oldRe.ANG_HE_AccountId__c);
+            }else{
+                updAccSet.add(re.ANG_HE_AccountId__c);
+            }            
+        }
+        doRiskAssessment(updAccSet);
+    }
+
     // ************************************************************
     // ********************* action methods ***********************
     // ************************************************************
@@ -45,4 +68,9 @@ public class ANG_RiskEventTriggerHandler {
 
         new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
 	}
+
+    private void doRiskAssessment(set<id> updAccSet){
+        
+        new ANG_RiskAssessmentEngine(updAccSet).Assessment();
+    }
 }
