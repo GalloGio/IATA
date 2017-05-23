@@ -20614,6 +20614,14 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>International Air Transport Association (IATA)</value>
     </labels>
     <labels>
+        <fullName>OneId_InternetExplorer_NotSupported</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_InternetExplorer_NotSupported</shortDescription>
+        <value>The version of your browser is no longer supported. Upgrade to the latest version of your browser or try the latest version of a different browser.</value>
+    </labels>
+    <labels>
         <fullName>OneId_JobFunction_Help_Msg</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
