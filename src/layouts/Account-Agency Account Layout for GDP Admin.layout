@@ -80,6 +80,14 @@
                 <behavior>Readonly</behavior>
                 <field>Quality__c</field>
             </layoutItems>
+			<layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Main_Accreditation_Organization__c</field>
+            </layoutItems>
+			<layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Date_Organisation_Status_attained__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -97,6 +105,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CASS_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Organization_Last_Change_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -863,6 +875,17 @@
         <fields>CREATED_DATE</fields>
         <relatedList>Data_Quality_Feedback__c.Account__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Change_Code__c</fields>
+        <fields>Active__c</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -870,7 +893,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000Nrmf</masterLabel>
+        <masterLabel>00h4E000000KGmx</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
