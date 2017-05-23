@@ -38,8 +38,6 @@ public class ISSP_AvailableServices_Test {
                 Agency__c = true
             );
 
-        
-
         insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2};
 
         IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
@@ -122,7 +120,6 @@ public class ISSP_AvailableServices_Test {
                 accountId = a3.id
             );
 
-
         Contact c4 = new Contact (
                 LastName = 'ContactTest4',
                 accountId = a4.id
@@ -135,15 +132,24 @@ public class ISSP_AvailableServices_Test {
                 Right__c = 'Access Granted',
                 Contact__c = c.Id
         );
-        insert appRight;
 
         Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
                 Portal_Application__c = easyPay2.id,
                 Right__c = 'Access Granted',
                 Contact__c = c2.Id
         );
-        insert appRight2;
-            
+
+        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+        
+        Connected_App_Roles__c car = new Connected_App_Roles__c(
+            Name = 'ANG Test2',
+            Connected_App__c = 'IATA EasyPay (EDENRED)',
+            Permission_set_SSO__c = 'IEP_EdenRed',
+            Role__c = 'IEP Admin',
+            Default_User_Role__c = true,
+            Min_Users_With_Role__c = 2
+        );
+        insert car;
 
     }
 
@@ -556,5 +562,60 @@ public class ISSP_AvailableServices_Test {
 
         Test.stopTest();
 
+    }
+
+    public static testMethod void testPoolerMethods() {
+
+
+        Contact c3 = [select id from contact where lastName = 'ContactTest3'];
+
+        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency User (Partner)']; 
+
+        Portal_Applications__c easyPayServ = [Select id, name From Portal_Applications__c where name =: ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED Limit 1];
+
+        User testeUser3 = new User (
+                Alias = 'newUser2', 
+                Email='newuser@testorg.com', 
+                EmailEncodingKey='UTF-8', 
+                LastName='Testing3', 
+                LanguageLocaleKey='en_US', 
+                ContactId = c3.id,            
+                LocaleSidKey='en_US',
+                ProfileId = p.Id, 
+                TimeZoneSidKey='America/Los_Angeles', 
+                UserName='newuser2@testorg.com'
+            );
+
+        System.runAs(testeUser3) {
+            Test.startTest();
+
+            PermissionSet ps = [Select id From PermissionSet Where name = 'IEP_EdenRed' Limit 1];
+
+            System.debug('------------------->' + ps.id);
+/*
+        PermissionSet ps = new PermissionSet(
+            name = 'IEP_EdenRed'
+        );
+
+        insert ps;
+*/
+            PermissionSetAssignment psa = new PermissionSetAssignment(
+                AssigneeId = UserInfo.getUserId(),
+                PermissionSetId = ps.id
+            );
+
+            insert psa;
+
+            ISSP_AvailableServices cttr = new ISSP_AvailableServices();
+
+            ISSP_AvailableServices.ServiceWrapper sr = new ISSP_AvailableServices.ServiceWrapper(easyPayServ, 'Open', true);
+
+            cttr.Serv = sr;
+
+            PageReference page = cttr.setPollerOff();
+            page = cttr.iepPermissionSetPoller();
+
+            Test.stopTest();
+        }
     }    
 }
