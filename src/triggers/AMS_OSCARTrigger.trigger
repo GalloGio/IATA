@@ -115,13 +115,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
             }
 
-            if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)
-                oscar.BSPLink_participation__c = true;
+            if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP) oscar.BSPLink_participation__c = true;
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
-            if(oscar.Process__c == AMS_Utils.CERTIFICATION)
-                oscar.Sanity_check_deadline__c = Date.today()+90;
-
+            if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
 
             oscars.add(oscar);
 
@@ -263,8 +260,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                     //Remove TERMINATED Accounts from list
                     for(Account acc: [SELECT Id, Status__c FROM Account WHERE Id IN :allHierarchyAccountIds AND Status__c <> null]){
-                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED))
-                            allHierarchyAccountIds.remove(acc.Id);
+                        if(acc.Status__c.equalsIgnoreCase(AMS_Utils.ACC_S0_TERMINATED)) allHierarchyAccountIds.remove(acc.Id);
                     }
 
                     stagingToAccounts.put(updatedOscar.AMS_Online_Accreditation__c, allHierarchyAccountIds);
@@ -324,8 +320,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
                 } catch (Exception ex) {
                     System.debug('Exception: ' + ex);
-                    Database.rollback(sp);
-                    throw ex;
+                    Database.rollback(sp); throw ex;
                 }
 
 
@@ -342,15 +337,14 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
 
-        if(accountHierarchyRelationships.isEmpty())
-            return true;
+        if(accountHierarchyRelationships.isEmpty()) return true;
 
-        if(accountHierarchyRelationships.values().isEmpty())
-            return true;
+        if(accountHierarchyRelationships.values().isEmpty()) return true;
 
         for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-            if(!agency.isEmpty())
-                return false;
+            
+            if(!agency.isEmpty()) return false;
+                
         }
 
         return true;
@@ -486,7 +480,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 AMS_OSCARTriggerHandler.sendEmailAlert(updatedOscar.Id, updatedOscar.Oscar_Communication_Case_Id__c, updatedOscar.Process__c, AMS_Utils.APPROVAL, true);
 
                 if((updatedOscar.Process__c == AMS_Utils.NEWHELITE && updatedOscar.Is_using_credit_card__c) || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD)
-                createAgencyAuthorizations(updatedOscar);
+                    createAgencyAuthorizations(updatedOscar);
 
             }
 
@@ -597,9 +591,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
         }
 
-        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) {
-            updatedOSCAR.Termination_Date__c = null;
-        }
+        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
 
         // ***************************************
         // ********* NEWGEN VALIDATIONS ************
@@ -614,7 +606,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         }
 
         if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
-            updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Ticketing Authorities" stage status is not passed.');   
+            updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
         }
 
             // *****************************************************
@@ -623,7 +615,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
 
                 if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
-                    updatedOSCAR.addError('The OSCAR cannot be closed if "Manager Approval" = "Authorized Approval" and "Risk Event" stage status is not passed.');   
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step will be completed.');   
                 }
 
             }
@@ -679,7 +671,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         if(oscar.Process__c == AMS_Utils.NEWHESTANDARD)
-        authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+            authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
         insert authorizations;

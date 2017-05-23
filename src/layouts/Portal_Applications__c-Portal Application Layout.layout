@@ -49,17 +49,9 @@
                 <field>Cannot_be_managed_by_portal_admin__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Visible__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Critical_Service__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Accredited_Agents_Only__c</field>
-			</layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>VisibleCNS__c</field>
@@ -71,15 +63,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Not_ICH_Airline__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Restrict_by_Agency_Sector__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ICH_Airline__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Not_ICH_Airline__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -89,15 +77,23 @@
                 <field>Agency__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Restrict_by_Agency_Sector__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Restrict_by_Agency_Category__c</field>
+            </layoutItems>
+            <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GSA__c</field>
+                <field>GSSA__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GSSA__c</field>
+                <field>ANG_Accredited_Agents_Only__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -188,7 +184,6 @@
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <relatedLists>
-        <customButtons>Add_User_to_this_service</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
@@ -199,6 +194,7 @@
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>IATA_ISO_Country__c.ANG_Portal_Service__c</relatedList>
     </relatedLists>

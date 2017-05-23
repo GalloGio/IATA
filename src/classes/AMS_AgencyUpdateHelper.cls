@@ -100,9 +100,7 @@ public without sharing class AMS_AgencyUpdateHelper {
                     break;
                 }
             }
-            if(bAlreadyUpdated){
-                agenciesAlreadyUpdated.add(au.Id);
-            }
+            if(bAlreadyUpdated) agenciesAlreadyUpdated.add(au.Id);
 
             //Checks if there's a record on update status that needs to be rechecked
             for(AMS_Agency_Updates__c au2: au.AMS_Agency_Updates__r){
@@ -400,8 +398,7 @@ System.debug('au3: ' + au3);
             insert invalidAgencyUpdateToInsert;    
 
 
-        if(agencyUpdateToUpdate.size() > 0)
-            update agencyUpdateToUpdate;  
+        if(agencyUpdateToUpdate.size() > 0) update agencyUpdateToUpdate;  
 
         return;
     }

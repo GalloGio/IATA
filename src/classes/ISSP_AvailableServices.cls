@@ -13,7 +13,9 @@ public with sharing class ISSP_AvailableServices{
     public String conId {get; set;}
     public String conHOAccountLocType {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
     public Boolean isIEPAccountEnable {get;set;} //FM 17-03-2017 - check if IEC Account is available for User to request Access  
-    public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    //public String isIEPAccountEnableMsg {get; set;} //FM 17-03-2017 - Contains Locatiopn Type of Top Parent  
+    public String modalErrorMessage {get; set;}
+    public Boolean isModalErrorMessageEnable {get;set;}
     
     public ServiceWrapper Serv {get; set;}
     public String ServId {get; set;}
@@ -31,8 +33,8 @@ public with sharing class ISSP_AvailableServices{
 
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
-	
-	public static User currentPortalUser {
+    
+    public static User currentPortalUser {
         get {
             if(currentPortalUser == null){
                 currentPortalUser = [SELECT id, ANG_Sector__c, ANG_Is_Accredited_Agent__c, ANG_Customer_Country_ISO__c, 
@@ -157,7 +159,6 @@ public with sharing class ISSP_AvailableServices{
                 conHOAccountLocType = '';
                 isIEPAccountEnable = false;
 
-
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
@@ -171,9 +172,14 @@ public with sharing class ISSP_AvailableServices{
                 //
                 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
-                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
-                    isIEPAccountEnableMsg = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                }
+
+                if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
+                    isModalErrorMessageEnable = true;
+                    modalErrorMessage = Label.ANG_ISSP_IEP_Abroad_Account_error_msg;
                 }
             }
             else
@@ -338,12 +344,31 @@ public with sharing class ISSP_AvailableServices{
         public Boolean isEasyPayService {get; set;}
         public String portalServiceRole {get; set;} 
         public boolean useDefaultRole {get; set;}
+        public boolean addUsersEnable {get; set;}
+        public boolean accountNotOpenError {get; set;}
+        public String lineErrorMessage {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
             this.Status = getServiceStatus(inRecord);
             this.selected = false;
             this.recordService = inRecord;   
             this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
+            this.lineErrorMessage = '';
+
+            if(this.isEasyPayService) {
+                this.addUsersEnable = isAdmin;
+                this.accountNotOpenError = (IepStatus != ANG_ISSP_PortalServiceHelper.STATUS_OPEN);
+                if(this.accountNotOpenError) {
+                    this.lineErrorMessage = System.Label.ANG_ISSP_IEP_add_users_to_account_not_open_error_msg;
+                }
+            } else {
+                this.addUsersEnable = !inRecord.Cannot_be_managed_by_portal_admin__c;             
+                this.accountNotOpenError = false;
+            }
+
+            System.debug('IepStatus--->' + IepStatus);
+            System.debug('this.accountNotOpenError--->' + this.accountNotOpenError);
+            System.debug('this.addUsersEnable--->' + this.addUsersEnable);
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
@@ -432,7 +457,7 @@ public with sharing class ISSP_AvailableServices{
                                                         Application_icon_URL__c, Application_URL__c,
                                                         Case_creation_record_type__c, Confirm_Box__c,
                                                         Confirm_Text__c, Description__c,
-                                                        GSA__c, GSSA__c, Hide_on_Homepage__c,
+                                                        GSSA__c, Hide_on_Homepage__c,
                                                         ICH_Airline__c, New_Window__c,ServiceName__c,
                                                         Not_ICH_Airline__c, Record_type_for_App_Rigth__c,
                                                         Requestable__c, Restricted_App__c, Visible__c,
@@ -630,6 +655,5 @@ public with sharing class ISSP_AvailableServices{
         }            
                 
         return null;
-
     }
 }
