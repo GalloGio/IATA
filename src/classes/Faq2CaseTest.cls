@@ -14,7 +14,6 @@ private class Faq2CaseTest {
         articleVL2.getPath();
         Test.stopTest();
     }
-
     static testMethod void testFaq2Case_Cases_a()
     {
         Account parent = ISSP_ObjectFactory.createNewAccount();
@@ -738,7 +737,6 @@ private class Faq2CaseTest {
 		);
 		insert testAccount;
         Contact con = ISSP_ObjectFactory.createNewContact();
-
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'United States', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
 		insert country;
 
@@ -764,15 +762,10 @@ private class Faq2CaseTest {
 		  controller.topic = '2';
 		  //controller.refreshAirlineList();
 		  controller.setRecordType();
-
-
-
 		  controller.create();
 		  	  controller.back();
 		  controller.refreshTopicPickList();
 		  controller.refreshSubTopicPickList();
-
-
 		  controller.subtopic = ENV.SelectOptionDefaultValue;
 		  controller.refreshSubTopicPickList();
 		  controller.createSatisfiedRecord();
@@ -795,14 +788,12 @@ private class Faq2CaseTest {
 		  newCase.IFAP_Country_ISO__c ='t1';
 		  newCase.Subject = 'test';
 		  newCase.Description = 'test';
-
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
 		  controller.save();
 		}
 		Test.stopTest();
     }
-
     private static Integer getIndex(clsDataCategoryContainer cont) {
         //controller.DataCategoryContainer.lst_DataCategories[index]
         return 0;

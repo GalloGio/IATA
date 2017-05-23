@@ -13249,6 +13249,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Case Number</value>
     </labels>
     <labels>
+        <fullName>ISSP_Case_Closed_More_Than_2_Months</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>Disclaimer: this case has been closed for more than 2 weeks, Please create a new query if you would like to contact us</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Cases</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

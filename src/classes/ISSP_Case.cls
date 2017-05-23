@@ -1,6 +1,12 @@
 public without sharing class ISSP_Case {
     
     private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+    private static String AME_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
+    private static String AMERICAS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Americas').RecordTypeId;
+    private static String APAC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Asia & Pacific').RecordTypeId;
+    private static String CHINA_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - China & North Asia').RecordTypeId;
+    private static String EUROPE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId;
+    private static String IDFS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Complaint (IDFS ISS)').RecordTypeId;
     //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
     //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
@@ -114,8 +120,30 @@ public without sharing class ISSP_Case {
                 		return pr;
                     }
             }
+            
+            showAlertMessage();
+
         }
         return null;
+    }
+    
+    /**
+        Shows a disclaimer if current case was closed for more than 2 months
+    **/
+    public void showAlertMessage() {
+        if (getIsTwoMonthsClosedCase()) {
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
+            ApexPages.addMessage(myMsg);
+        }
+    }
+    
+    /**
+        Returns true if the input case has an specific RecordType
+        and is closed for more than 2 months
+    **/
+    public Boolean getIsTwoMonthsClosedCase() {
+        set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
+        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addMonths(-2));
     }
 
     public ISSP_Case() {
