@@ -47,7 +47,7 @@ public class ANG_RiskEventGenerator {
 		get{
 			return new Map<String, String>{
 				'Case' => 'AccountId',
-				'AMS_Oscar__c' => 'Account__c',
+				'AMS_OSCAR__c' => 'Account__c',
 				'Agency_Applied_Change_code__c' => 'Account__c'
 			};
 		}
@@ -59,7 +59,7 @@ public class ANG_RiskEventGenerator {
 		get{
 			return new Map<String, String>{
 				'Case' => 'ANG_CaseId__c',
-				'AMS_Oscar__c' => 'ANG_OscarId__c',
+				'AMS_OSCAR__c' => 'ANG_OscarId__c',
 				'Agency_Applied_Change_code__c' => 'ANG_ChangeCode__c'
 			};
 		}
@@ -188,6 +188,7 @@ public class ANG_RiskEventGenerator {
 	public void loadInitialInformations(){
 		Set<Id> riskTypes = new Set<Id>();
 		Set<Id> accountIds = new Set<Id>();
+		Map<Id, Id> oscars = new Map<Id, Id>();
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
 			//check list of objects to query
@@ -195,6 +196,7 @@ public class ANG_RiskEventGenerator {
 			accountIds.add(re.ANG_AccountId__c);
 
 			if(re.ANG_Issued_Date__c == null) re.ANG_Issued_Date__c = System.today();
+			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
 			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = Id.valueOf(re.ANG_Source_Id__c)+re.ANG_Risk_ID__c;
@@ -203,11 +205,15 @@ public class ANG_RiskEventGenerator {
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]);
 
+		for(Case c : [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscars.keySet() AND RecordType.DeveloperName = 'OSCAR_Communication']) oscars.put(c.OSCAR__c, c.Id);
+
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
 
 			//fetch HE account
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
 			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
+
+			if(re.ANG_OscarId__c != null) re.ANG_CaseId__c = oscars.get(re.ANG_OscarId__c);
 
 			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
