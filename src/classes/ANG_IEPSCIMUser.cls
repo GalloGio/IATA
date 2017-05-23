@@ -1,11 +1,9 @@
 public class ANG_IEPSCIMUser extends SCIMUser {
-	public ANG_IEPSCIMUser(String userName, String familyName, String givenName, String externalid, String email, String entitlement, String language) {
-		super(userName, familyName, givenName, externalid, email, entitlement);
+	public ANG_IEPSCIMUser(String userName, String familyName, String givenName, String externalid, String email, String properties) {
+		super(userName, familyName, givenName, externalid, email, '');
 		schemas.add('urn:scim:schemas:extension:enterprise:1.0');
 
 		if ((familyName != null) || (givenName != null))  this.displayName = givenName + ' ' + familyName;
-
-		if(language != null) this.preferredLanguage = language;
 
 		if (email != null) { 
 		    SCIMUser.Emails e = new SCIMUser.Emails();
@@ -16,20 +14,24 @@ public class ANG_IEPSCIMUser extends SCIMUser {
 		    this.emails = new List<SCIMUser.Emails>{e};
 		}
 
-		System.debug(loggingLevel.FINEST, '____ [cls ANG_IEPSCIMUser - constructor] entitlement - ' + entitlement);
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_IEPSCIMUser - constructor] properties - ' + properties);
 
-		if (entitlement != null) {
-		    Map<String, String> entitlements = (Map<String, String>)JSON.deserialize(entitlement, Map<String,String>.class);
-			System.debug(loggingLevel.FINEST, '____ [cls ANG_IEPSCIMUser - constructor] entitlements - ' + entitlements);
+		if (properties != null) {
+		    Map<String, String> propertyMap = (Map<String, String>)JSON.deserialize(properties, Map<String,String>.class);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_IEPSCIMUser - constructor] propertyMap - ' + propertyMap);
 
 			List<SCIMUser.Entitlements> entitlementsList = new List<SCIMUser.Entitlements>();
-		    for(String entitlementType : entitlements.keySet()){
-		    	SCIMUser.Entitlements e = new SCIMUser.Entitlements();
+		    for(String property : propertyMap.keySet()){
 
-		    	e.type = entitlementType;
-		    	e.value = entitlements.get(entitlementType);
+		    	if(property == 'language') this.preferredLanguage = propertyMap.get(property);
+		    	else{
+		    		SCIMUser.Entitlements e = new SCIMUser.Entitlements();
 
-		    	entitlementsList.add(e);
+		    		e.type = property;
+		    		e.value = propertyMap.get(property);
+
+		    		entitlementsList.add(e);
+		    	}
 		    }
 		    this.entitlements = entitlementsList;
 		}

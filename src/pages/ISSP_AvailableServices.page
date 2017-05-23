@@ -137,7 +137,6 @@
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
     <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
-
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
 

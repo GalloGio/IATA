@@ -1,0 +1,26 @@
+<aura:component controller="OneIdRequestNotificationList" implements="forceCommunity:availableForAllPageTypes,force:appHostable" access="global">
+
+	<aura:attribute name="requestlist" type="List"/>
+	<aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+	
+	<div class="pendingContainer">
+		<div class="pendingTitleDiv">
+			<h2 class="pendingTitle"> {!$Label.c.OneId_Home_PendingRequests} </h2> 
+		</div> 
+		<div class="appListRequestBox">
+			<aura:iteration items="{!v.requestlist}" var="request">
+				<div class="appListRequest">
+					<div class="appListRequestTitleDiv">
+						<h3> {!request.App_Name__c} </h3>
+					</div>
+					<div class="appListRequestStatusDiv">
+						<p> {!$Label.c.OneId_Home_Requested} </p>
+					</div>
+				</div>
+			</aura:iteration>
+			
+		</div>
+
+	</div>
+
+</aura:component>

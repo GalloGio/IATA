@@ -33,36 +33,77 @@ private class ANG_PortalApplicationRightTest {
 
 		insert new List<Contact>{contact, contact2, contact3};
 
-		Connected_App_Roles__c car = new Connected_App_Roles__c(
-			Name = 'ANG Test',
-			Connected_App__c = 'ANG_App',
-			Permission_set_SSO__c = 'ANG_App',
-			Role__c = 'Tester',
-			Min_Users_With_Role__c = 0
-		);
-
-		Connected_App_Roles__c car2 = new Connected_App_Roles__c(
-			Name = 'ANG Test2',
-			Connected_App__c = 'IATA EasyPay',
-			Permission_set_SSO__c = 'IATA EasyPay',
-			Role__c = 'IEP Admin',
-			Min_Users_With_Role__c = 1
-		);
-
-		Connected_App_Roles__c car3 = new Connected_App_Roles__c(
-			Name = 'ANG Test3',
-			Connected_App__c = 'IATA EasyPay',
-			Permission_set_SSO__c = 'IATA EasyPay',
-			Role__c = 'Wallet Gone',
-			Min_Users_With_Role__c = 1
-		);		
-
-		insert new List<Connected_App_Roles__c>{car, car2, car3};
-
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'ANG_App');
 		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'IATA EasyPay');
 		
 		insert new List<Portal_Applications__c>{app, app2};
+
+		ConnectedApplication capp;
+
+		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]){
+
+			capp = UserProvisioning.ConnectorTestUtil.createConnectedApp('ANG Provisioning App');
+
+			PermissionSet ang_ssoapp = new PermissionSet(
+				Name = 'ANG_SSOApp'
+				, Label = 'ANG_SSOApp'
+			);
+
+			PermissionSet ang_provapp = new PermissionSet(
+				Name = 'ANG_ProvApp'
+				, Label = 'ANG_ProvApp'
+			);
+
+			insert new List<PermissionSet>{ang_ssoapp, ang_provapp};
+
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_ssoapp - ' + ang_ssoapp);
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_provapp - ' + ang_provapp);
+			
+			insert new User(
+				Alias = 'dsfsdfds', 
+				Email = contact.email, 
+				Emailencodingkey = 'UTF-8', 
+				Firstname = contact.firstName, 
+				Lastname = contact.lastname, 
+				Languagelocalekey = 'en_US', 
+				Localesidkey = 'en_US', 
+				ContactId = contact.Id,
+				Timezonesidkey = 'Asia/Dubai',
+				Username = contact.email+'dfgdf',
+				PortalRole = 'Manager',
+				CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
+				ProfileId = ISSP_Constant.TEST_User_ProfileID,
+				IsActive = true
+			);
+
+			Connected_App_Roles__c car = new Connected_App_Roles__c(
+				Name = 'ANG Test'
+				, Connected_App__c = 'ANG_App'
+				, Permission_set_SSO__c = 'ANG_SSOApp'
+				, PermissionSet_Provisioning__c = 'ANG_ProvApp'
+				, Provisioning_Id__c = capp.Id
+				, Role__c = 'Tester'
+				, Min_Users_With_Role__c = 0
+			);
+
+			Connected_App_Roles__c car2 = new Connected_App_Roles__c(
+				Name = 'ANG Test2',
+				Connected_App__c = 'IATA EasyPay',
+				Permission_set_SSO__c = 'IATA EasyPay',
+				Role__c = 'IEP Admin',
+				Min_Users_With_Role__c = 1
+			);
+
+			Connected_App_Roles__c car3 = new Connected_App_Roles__c(
+				Name = 'ANG Test3',
+				Connected_App__c = 'IATA EasyPay',
+				Permission_set_SSO__c = 'IATA EasyPay',
+				Role__c = 'Wallet Gone',
+				Min_Users_With_Role__c = 1
+			);		
+
+			insert new List<Connected_App_Roles__c>{car, car2, car3};
+		}
 
 		Portal_Application_Right__c par = new Portal_Application_Right__c(
 			Contact__c = contact.Id, 
@@ -93,36 +134,13 @@ private class ANG_PortalApplicationRightTest {
 		);
 
 		insert new List<Portal_Application_Right__c>{par, par2, par3, par4};
-
-		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]){
-
-			insert new PermissionSet(
-				Name = 'ANG_App'
-				, Label = 'ANG_App'
-			);
-			
-			insert new User(
-				Alias = 'dsfsdfds', 
-				Email = contact.email, 
-				Emailencodingkey = 'UTF-8', 
-				Firstname = contact.firstName, 
-				Lastname = contact.lastname, 
-				Languagelocalekey = 'en_US', 
-				Localesidkey = 'en_US', 
-				ContactId = contact.Id,
-				Timezonesidkey = 'Asia/Dubai',
-				Username = contact.email+'dfgdf',
-				PortalRole = 'Manager',
-				CommunityNickname = contact.email.substring(0, contact.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-				ProfileId = ISSP_Constant.TEST_User_ProfileID,
-				IsActive = true
-			);
-			
-		}
 	}
 	
-	static testMethod void test_grantingRequest() {
+	static testMethod void test_grantingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
+
+		Integer provAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_ProvApp' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(1, provAssignments);
 
 		Test.startTest();
 
@@ -133,11 +151,28 @@ private class ANG_PortalApplicationRightTest {
 
 		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
 
-		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_App' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
-		System.assertEquals(1, assignments);
+		Integer ssoAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_SSOApp' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(1, ssoAssignments);
 	}
 	
-	static testMethod void test_removingRequest() {
+	static testMethod void test_removingAccess() {
+		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
+		par.Right__c = 'Access Granted';
+		update par;
+
+		Test.startTest();
+
+		delete par;
+
+		Test.stopTest();
+
+		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
+
+		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(0, assignments);
+	}
+	
+	static testMethod void test_denyingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
 
 		par.Right__c = 'Access Granted';
@@ -152,7 +187,7 @@ private class ANG_PortalApplicationRightTest {
 
 		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
 
-		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_App' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(0, assignments);
 	}
 

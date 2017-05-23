@@ -166,9 +166,11 @@ public with sharing class ISSP_AvailableServices{
                     isIEPAccountEnable = true;
                 else if(isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
                     isIEPAccountEnable = true;
-                
-                isModalErrorMessageEnable = (!isIEPAccountEnable);                
 
+                //
+                // The poller only sets on when the user is an admin
+                //
+                
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
@@ -588,7 +590,7 @@ public with sharing class ISSP_AvailableServices{
         String Servid = Apexpages.currentPage().getParameters().get('servId');
         system.debug('XXX Servid : '+Servid);
 
-        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c, Cannot_be_managed_by_portal_admin__c, Application_URL__c from Portal_Applications__c where Id =: Servid ]);
+        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
 
