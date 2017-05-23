@@ -525,7 +525,7 @@ public class ISSP_CaseTest {
         cttr.getCaseTypeItems();
         cttr.newCase.CaseArea__c = 'test';
         cttr.getCaseTypeItems();
-		List<SelectOption> selectOptions = cttr.getCaseClassifi
+        List<SelectOption> selectOptions = cttr.getCaseClassificationItems();
         Test.StopTest();
 	}
     
