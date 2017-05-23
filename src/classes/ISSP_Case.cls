@@ -1285,7 +1285,7 @@ public without sharing class ISSP_Case {
         // find contact with input email
         list<Contact> listContact = [SELECT Id,Email FROM Contact WHERE Email = :findEmail limit 1];
         if (listContact.size()!=1) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Not_Found.replace('{0}',findEmail)));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail)));
             return;
         }
         // insert found contact as a team member of the case

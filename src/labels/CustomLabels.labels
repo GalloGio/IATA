@@ -13107,14 +13107,6 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
-        <fullName>ISSP_CCOther</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_CCOther</shortDescription>
-        <value>Other</value>
-    </labels>
-    <labels>
         <fullName>ISSP_CCOther_Add</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13137,14 +13129,6 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP CCOther Include Additional Recipients</shortDescription>
         <value>Include additional recipients</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_CCOther_Not_Found</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP CCOther Not Found</shortDescription>
-        <value>No contact found with email {0}</value>
     </labels>
     <labels>
         <fullName>ISSP_CCOther_Remove</fullName>
