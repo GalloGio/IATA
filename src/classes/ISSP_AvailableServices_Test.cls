@@ -591,14 +591,6 @@ public class ISSP_AvailableServices_Test {
 
             PermissionSet ps = [Select id From PermissionSet Where name = 'IEP_EdenRed' Limit 1];
 
-            System.debug('------------------->' + ps.id);
-/*
-        PermissionSet ps = new PermissionSet(
-            name = 'IEP_EdenRed'
-        );
-
-        insert ps;
-*/
             PermissionSetAssignment psa = new PermissionSetAssignment(
                 AssigneeId = UserInfo.getUserId(),
                 PermissionSetId = ps.id
