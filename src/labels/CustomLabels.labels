@@ -801,7 +801,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
+        <value>ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -19141,6 +19141,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
         <value>Portal Service Role</value>
     </labels>                
+    <labels>
+        <fullName>ANG_ISSP_UserProvisioningWait</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
+        <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
+    </labels>                    
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>

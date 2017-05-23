@@ -17,45 +17,57 @@
     }       
        
     function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
-        var doInsert;
-        if (isEasyPayService == 'false') {
-          doInsert = 2;
+      var doInsert;
+      if (isEasyPayService == 'false') {
+        doInsert = 2;
+      } else {          
+        if (appPortalRole == '' && flagUseDefaultRole == "true") {
+          doInsert = 1;  
         } else {
-          if (appPortalRole == '' && flagUseDefaultRole == "true") {
-            doInsert = 1;  
+          if (appPortalRole == '' && flagUseDefaultRole == "false") {
+            doInsert = 0;  
           } else {
-            if (appPortalRole == '' && flagUseDefaultRole == "false") {
-              doInsert = 0;  
-            } else {
-              doInsert = 1;  
-            }
+            doInsert = 1;  
           }
         }
-
-        if (doInsert == 0) {
-            document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
-        } else {
-            if (appPortalRole != 'SKIP') {
-                closeDialog();
-            }
-            $('#ModalNewServiceRequest').modal('toggle');
-            if (doInsert == 1) {
-              if(appPortalRole == null  || appPortalRole == undefined) {
-                appPortalRole = '';
-              }                            
-              ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
-            } else {
-              ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
-            }            
-        }
-
-        //closeDialog();
-        //location.reload(true);
-        //refresh(); 
       }
+
+      if (doInsert == 0) {
+          document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
+      } else {
+          if (appPortalRole != 'SKIP') {
+              closeDialog();
+          }
+          if(isEasyPayService) {              
+            $('#ModalNewIepServiceRequest').modal('toggle');            
+          } else {
+            $('#ModalNewServiceRequest').modal('toggle');
+          }
+          
+          if (doInsert == 1) {
+            if(appPortalRole == null  || appPortalRole == undefined) {
+              appPortalRole = '';
+            }                            
+            ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
+          } else {
+            ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
+          }
+      }
+
+      //closeDialog();
+      //location.reload(true);
+      //refresh(); 
+    }
 
     function newAppReqCallback(res){
       
+    }
+
+    function onCompleteUserProvisioning(redirect, page){
+      if (redirect == 'true') {
+        $('#ModalNewIepServiceRequest').modal('toggle');
+        window.location.href = page;
+      }
     }
 
     function refreshPage() {
@@ -119,13 +131,14 @@
     <apex:actionFunction name="last" action="{!setCon.last}" rerender="Services" />
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
-    <apex:actionFunction name="paraFunction" action="{!doRequest}"  reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
+    <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
 
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
     <!-- <apex:pageMessages /> -->
-    
+
+    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}');"/>
     
     <img src="/s.gif" alt="Service" class="pageTitleIcon" title="Service"/>
     <!--
@@ -280,22 +293,6 @@
                   <!--span>
                       <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!Serv.recordService.Name}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
-                  </span-->
-
-                  <span>
-                      <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
-                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
-                        <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
-                      </apex:outputPanel>
-                      
-                      <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
-                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}" rendered="{!!Serv.recordService.Confirm_Box__c && isIEPAccountEnable}" />
-
-                        <apex:outputLabel value="{!isIEPAccountEnableMsg}" rendered="{!!Serv.recordService.Confirm_Box__c && !isIEPAccountEnable}" />
-
-                      <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
-
-                      </apex:outputPanel>  
                   </span>
                 </li>
 
@@ -375,9 +372,9 @@
                   </a>
                 </apex:outputPanel> 
 
-              </div>
-              <div class="col-md-6">
-                <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">
+ </div>
+                  <div class="col-md-6">
+              <a onclick="closeDialog()"   class="btn_iata_cancel btn-block btn">
                   {!$label.ISSP_Cancel}
                 </a>
               </div>
@@ -405,6 +402,26 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal New Service Request-->
+    <div class="modal" id="ModalNewIepServiceRequest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" href="#" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"> {!$Label.ANG_ISSP_Open_IATA_EasyPay_Account} </h4>
+          </div>
+          <div class="modal-body">
+            <div class="title">
+                <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
+                <b>{!$Label.ANG_ISSP_UserProvisioningWait}</b>
+            </div>   
+          </div>
+          <div class="modal-footer">
+          </div>          
+        </div>
+      </div>
+    </div>
+
 </apex:form>
     <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container-->

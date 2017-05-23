@@ -9402,16 +9402,27 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
     <fields>
         <fullName>Key_Customer__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(INCLUDES(Key_Customer_Reason__c,&quot;Big Buyer&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDVo &quot; ,&quot;&quot;,40,40),&quot;&quot;) 
+        <formula>IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXL&quot; ,&quot;&quot;,25,25),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXL&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume (Local)&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDWh&quot; ,&quot;&quot;,25,25),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Special Contacts&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDW8&quot; ,&quot;&quot;,40,40),&quot;&quot;) 
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Special Contacts&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDW8&quot; ,&quot;&quot;,25,25),&quot;&quot;) 
 &amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Other Reasons&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXB&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Other Reasons&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXB&quot; ,&quot;&quot;,25,25),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume (Local)&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDWh&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(INCLUDES(Key_Customer_Reason__c,&quot;Big Buyer&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDVo &quot; ,&quot;&quot;,25,25),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Images shown depend on &quot;Key Customer Reason&quot; values:
+
+Green and white star = Volume
+
+Blue person (Speaker) = Special Contact
+
+Golden medal = Other Reasons
+
+Fuchsia coins = Big Buyer
+
+Green and white location pin = Volume (Local)</inlineHelpText>
         <label>Key Customer</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -25167,6 +25178,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -28099,6 +28114,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -30836,6 +30855,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -33492,6 +33515,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36948,6 +36975,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -40111,6 +40142,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -44593,6 +44628,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -47344,6 +47383,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -51663,6 +51706,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56009,6 +56056,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -58401,6 +58452,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -60726,6 +60781,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63161,6 +63220,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68274,6 +68337,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73783,6 +73850,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -78164,6 +78235,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

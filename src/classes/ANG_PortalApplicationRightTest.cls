@@ -13,29 +13,29 @@ private class ANG_PortalApplicationRightTest {
 		contact.AccountId = acc.Id;
 		insert contact;
 
-		insert new Connected_App_Roles__c(
-			Name = 'ANG Test'
-			, Connected_App__c = 'ANG_App'
-			, Permission_set_SSO__c = 'ANG_App'
-			, Role__c = 'Tester'
-		);
-
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'ANG_App');
 		insert app;
 
-		insert new Portal_Application_Right__c(
-			Contact__c = contact.Id
-			, Portal_Application__c = app.Id
-			, Right__c = 'Access Requested'
-			, ANG_Portal_Service_Role__c = 'Tester'
-		);
+		ConnectedApplication capp;
 
 		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]){
 
-			insert new PermissionSet(
-				Name = 'ANG_App'
-				, Label = 'ANG_App'
+			capp = UserProvisioning.ConnectorTestUtil.createConnectedApp('ANG Provisioning App');
+
+			PermissionSet ang_ssoapp = new PermissionSet(
+				Name = 'ANG_SSOApp'
+				, Label = 'ANG_SSOApp'
 			);
+
+			PermissionSet ang_provapp = new PermissionSet(
+				Name = 'ANG_ProvApp'
+				, Label = 'ANG_ProvApp'
+			);
+
+			insert new List<PermissionSet>{ang_ssoapp, ang_provapp};
+
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_ssoapp - ' + ang_ssoapp);
+			System.debug(loggingLevel.ERROR, '____ [cls ANG_PortalApplicationRightTest - createData] ang_provapp - ' + ang_provapp);
 			
 			insert new User(
 				Alias = 'dsfsdfds', 
@@ -54,11 +54,30 @@ private class ANG_PortalApplicationRightTest {
 				IsActive = true
 			);
 			
+
+			insert new Connected_App_Roles__c(
+				Name = 'ANG Test'
+				, Connected_App__c = 'ANG_App'
+				, Permission_set_SSO__c = 'ANG_SSOApp'
+				, PermissionSet_Provisioning__c = 'ANG_ProvApp'
+				, Provisioning_Id__c = capp.Id
+				, Role__c = 'Tester'
+			);
 		}
+
+		insert new Portal_Application_Right__c(
+			Contact__c = contact.Id
+			, Portal_Application__c = app.Id
+			, Right__c = 'Access Requested'
+			, ANG_Portal_Service_Role__c = 'Tester'
+		);
 	}
 	
-	static testMethod void test_grantingRequest() {
+	static testMethod void test_grantingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c];
+
+		Integer provAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_ProvApp' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(1, provAssignments);
 
 		Test.startTest();
 
@@ -69,11 +88,28 @@ private class ANG_PortalApplicationRightTest {
 
 		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
 
-		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_App' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
-		System.assertEquals(1, assignments);
+		Integer ssoAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_SSOApp' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(1, ssoAssignments);
 	}
 	
-	static testMethod void test_removingRequest() {
+	static testMethod void test_removingAccess() {
+		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c];
+		par.Right__c = 'Access Granted';
+		update par;
+
+		Test.startTest();
+
+		delete par;
+
+		Test.stopTest();
+
+		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
+
+		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		System.assertEquals(0, assignments);
+	}
+	
+	static testMethod void test_denyingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c];
 		par.Right__c = 'Access Granted';
 		update par;
@@ -87,7 +123,7 @@ private class ANG_PortalApplicationRightTest {
 
 		User u = [SELECT Id FROM User WHERE ContactId = :par.Contact__c];
 
-		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_App' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
+		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(0, assignments);
 	}
 	
