@@ -198,6 +198,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
     }
 
+    /*Risk Event Management*/
+    if(Trigger.isAfter && (Trigger.isInsert || Trigger.isUpdate)){
+        new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+    }
+    /*Risk Event Management*/
+
     private static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar, Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships) {
         ID newRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();

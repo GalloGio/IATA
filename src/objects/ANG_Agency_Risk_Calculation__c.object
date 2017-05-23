@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -104,6 +104,16 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_Financial_Review_Result__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
+        <label>Financial Review Result</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_Occurrence_Num__c</fullName>
         <externalId>false</externalId>
         <label>Number of occurrence</label>
@@ -163,17 +173,24 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>ANG_Risk_Event_Type__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <fullName>ANG_Risk_History_Assessment__c</fullName>
         <externalId>false</externalId>
-        <label>Risk Event Type</label>
-        <referenceTo>ANG_Risk_Event_Type__c</referenceTo>
-        <relationshipLabel>Agency Risk Calculations</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculations</relationshipName>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_History__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <label>Risk History</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_UniqueKey__c</fullName>
@@ -186,19 +203,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
-    </fields>
-    <fields>
-        <fullName>Agency_Risk_Calculation_Model__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Agency Risk Calculation</label>
-        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
-        <relationshipLabel>Agency Risk Calculations (Agency Risk Calculation)</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculation_Model</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ANG_Financial_Review_Result__c</fullName>
@@ -234,7 +238,6 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>ANG_Risk_Event_Type__c</columns>
         <columns>ANG_Accreditation_Model__c</columns>
         <columns>ANG_Order__c</columns>
         <columns>ANG_Occurrence_Num__c</columns>
@@ -256,161 +259,6 @@
         <fullName>Adjustment</fullName>
         <active>true</active>
         <label>Adjustment</label>
-        <picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
-            <values>
-                <fullName>Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cashless</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Legacy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Multicountry</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Adjusted__c</picklist>
-            <values>
-                <fullName>Mixed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>No</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Financial_Review_Result</picklist>
-            <values>
-                <fullName>Satisfactory</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Satisfactory - New Financial Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Satisfactory - No Action</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Satisfactory - Release Financial Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Satisfactory - Update Financial Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unsatisfactory - New Financial Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unsatisfactory - No action</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unsatisfactory - Release Financial Security</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Unsatisfactory - Update Financial Security</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Model_Adjustment</fullName>
-        <active>false</active>
-        <label>Model Adjustment</label>
         <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
