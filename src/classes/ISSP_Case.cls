@@ -128,10 +128,10 @@ public without sharing class ISSP_Case {
     }
     
     /**
-        Shows a disclaimer if current case was closed for more than 2 months
+        Shows a disclaimer if current case was closed for more than 2 weeks
     **/
     public void showAlertMessage() {
-        if (getIsTwoMonthsClosedCase()) {
+        if (getHideForClosedCases()) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
             ApexPages.addMessage(myMsg);
         }
@@ -141,9 +141,9 @@ public without sharing class ISSP_Case {
         Returns true if the input case has an specific RecordType
         and is closed for more than 2 months
     **/
-    public Boolean getIsTwoMonthsClosedCase() {
+    public Boolean getHideForClosedCases() {
         set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
-        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addMonths(-2));
+        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
     public ISSP_Case() {
@@ -1271,5 +1271,61 @@ public without sharing class ISSP_Case {
       		}
   		}
          return false;
+    }
+
+    /**
+        Find all Team members and returnns a String with their emails
+    **/
+    public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+    public String getCCOthers() {
+        list<Id> listContactId = new list<Id>();
+        for (CaseTeamMember teamMember: [
+                SELECT Id, MemberId, Member.Email
+                FROM CaseTeamMember
+                WHERE ParentId = :newCase.Id
+                AND TeamRoleId = :PARTNER_USER_ROLE]) {
+            listContactId.add(teamMember.MemberId);
+        }
+        list<String> listEmails = new list<String>();
+        for (Contact contact: [
+                SELECT Id, Email
+                FROM Contact
+                WHERE id IN :listContactId
+                ORDER BY Email ASC]) {
+            if (contact.Email!=null && contact.Email!='') {
+                listEmails.add(contact.Email);
+            }
+        }
+        listEmails.sort();
+        return String.join(listEmails,'; ');
+    }
+    
+    /**
+        Add a new CC Other Contat to current Case
+    **/
+    public String inputccotheremail{get; set;} 
+    public PageReference addCCOther() {
+        String findEmail = this.inputccotheremail.trim();
+        this.inputccotheremail = '';
+        if (findEmail==null||findEmail=='') return null;
+        // find contact with input email
+        list<Contact> listContact = [SELECT Id FROM Contact WHERE Email = :findEmail limit 1];
+        if (listContact.size()!=1) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Not_Found.replace('{0}',findEmail)));
+            return null;
+        }
+        // insert found contact as a team member of the case
+        try {
+            CaseTeamMember teammember = new CaseTeamMember(
+                ParentId = this.newCase.Id,
+                MemberId = listContact.get(0).Id,
+                TeamRoleId = PARTNER_USER_ROLE);
+            insert teammember;
+        } catch (DMLException e) {
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
+            }
+        }
+        return null;
     }
 }

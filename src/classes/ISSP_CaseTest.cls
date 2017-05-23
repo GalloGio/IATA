@@ -528,5 +528,56 @@ public class ISSP_CaseTest {
 		List<SelectOption> selectOptions = cttr.getCaseClassifi
         Test.StopTest();
 	}
+    
+    public static testMethod void testCCOthers() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        Contact teamContact = ISSP_ObjectFactory.createNewContact();
+        teamContact.Email = 'teamContact@email.com';
+        insert teamContact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        insert c;
+
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+            ISSP_Case cttr = new ISSP_Case();
+            // test there are no cc others
+            String result1 = cttr.getCCOthers();
+            System.assert(result1=='');
+            
+            //insert one cc other
+            cttr.inputccotheremail = teamContact.Email;
+            cttr.addCCOther();
+            // insert one fake cc other
+            cttr.inputccotheremail = 'noemail';
+            cttr.addCCOther();
+            
+            // check a cc other was inserted
+            String result2 = cttr.getCCOthers();
+            System.assert(result2==teamContact.Email);
+        }
+        Test.stopTest();
+    }
 
  }
