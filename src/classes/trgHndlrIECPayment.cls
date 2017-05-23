@@ -168,7 +168,7 @@ public with sharing class trgHndlrIECPayment {
 		}
 
 		if (transactionNumberSet.isEmpty() == false) {
-			for (Order order : [SELECT Id, Payment_Transaction_Number__c FROM Order WHERE Payment_Transaction_Number__c IN : transactionNumberSet]) {
+			for (Order order : [SELECT Id, Payment_Transaction_Number__c FROM Order WHERE Payment_Transaction_Number__c != NULL AND Payment_Transaction_Number__c IN : transactionNumberSet]) {
 				orderIdMap.put(order.Payment_Transaction_Number__c, order.Id);
 
 				System.debug('Zuora Reference ID: ' + order.Payment_Transaction_Number__c + ', Order ID: ' + order.Id);

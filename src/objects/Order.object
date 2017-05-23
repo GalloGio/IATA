@@ -646,7 +646,7 @@
     </fields>
     <fields>
         <fullName>Payment_Transaction_Number__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Payment Transaction Number</label>
         <length>100</length>
         <required>false</required>
