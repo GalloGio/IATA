@@ -1,8 +1,9 @@
 public class ISSP_RelocateContact {
 
-    public static final Id RECORDTYPE_AGENCY = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
-    public static final Id RECORDTYPE_AIRLINE_BR = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Branch').getRecordTypeId();
-    public static final Id RECORDTYPE_AIRLINE_HQ = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+    private static final map<string,id> MAP_ACCOUNT_RT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account');
+    public static final Id RECORDTYPE_AGENCY = MAP_ACCOUNT_RT.get('IATA_Agency');
+    public static final Id RECORDTYPE_AIRLINE_BR = MAP_ACCOUNT_RT.get('IATA_Airline_BR');
+    public static final Id RECORDTYPE_AIRLINE_HQ = MAP_ACCOUNT_RT.get('IATA_Airline');
     public static final list<Id> VALID_ACCOUNT_RT = new list<String>{RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
     public list<String> errorMessage {get;set;}
