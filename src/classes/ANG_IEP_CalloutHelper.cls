@@ -10,10 +10,14 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		Map<String,ANG_CalloutMapping__c> changeCodeList = new Map<String,ANG_CalloutMapping__c>();
 
+		Map<String,Id> changeCodeIdMap = new Map<String,Id>();
+
 		for(ANG_CalloutMapping__c item: calloutMappingList){
 			for(Agency_Applied_Change_code__c obj: objList)
-				if(item.Change_code__c == obj.Change_Code__c && obj.IEPPayload__c != null)
+				if(item.Change_code__c == obj.Change_Code__c && obj.IEPPayload__c != null){
 					changeCodeList.put(obj.IEPPayload__c ,item);
+					changeCodeIdMap.put(obj.IEPPayload__c, obj.Id);
+				}
 		}
 
 
@@ -23,21 +27,21 @@ public  with sharing class ANG_IEP_CalloutHelper {
 
 		for(String item: changeCodesIATACodes){
 
-			invokeChangeCodeImpl(changeCodeList.get(item),item);
+			invokeChangeCodeImpl(changeCodeList.get(item),item,changeCodeIdMap.get(item));
 
 		}
 		
 	}
 
 
-	public static void invokeChangeCodeImpl(ANG_CalloutMapping__c calloutMapping, Object obj){
+	public static void invokeChangeCodeImpl(ANG_CalloutMapping__c calloutMapping, Object obj, String changeCodeId){
 
 		// Get the Type corresponding to the class name
 		Type t = Type.forName(calloutMapping.CalloutClass__c);
 
 		ANG_CalloutHelperInt callout = (ANG_CalloutHelperInt)t.newInstance();
 
-		callout.doCallOut(obj, calloutMapping);
+		callout.doCallOut(obj, calloutMapping, changeCodeId);
 	}
 
 }
