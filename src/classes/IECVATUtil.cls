@@ -31,14 +31,19 @@ public class IECVATUtil {
 		return (lstCountry.isEmpty()) ? null : new VATConfiguration(lstCountry.get(0));
 	}
 	
-	public static String Validate_VAT(String sCountryCode, String sVATNumber)
+public static String Validate_VAT(String sCountryCode, String sVATNumber)
 	{
 	    VATWebService ws = new VATWebService();
 	    String sErrorMessage = '';
 	    
 	    try
-	    {
+
+	    {	sCountryCode = (sCountryCode.contains('GR') ? 'EL' : sCountryCode);
+	    	system.debug('Validate VAT # - sCountryCode : ' + sCountryCode);
+         	system.debug('Validate VAT # - sVATNumber : ' + sVATNumber);
 	        VATResponse res = ws.ValidateVAT(sCountryCode, ((sVATNumber.startsWithIgnoreCase(sCountryCode)) ? sVATNumber.substring(sCountryCode.length()) : sVATNumber));
+	        system.debug('Validate VAT # - VIES response : ' + res);
+
 	        if (!res.valid) 
 	            sErrorMessage = String.format(Label.IEC_Invalid_VAT, new List<String>{sVATNumber});
 	    }

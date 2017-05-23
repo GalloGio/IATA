@@ -696,7 +696,11 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 
         else if (ProfileName.contains('FDS ICCS Administrator') || ProfileName.contains('FDS ICCS User')){
           template = templates.get('Clicktools_Contact_Email_CX_ICCS_EN2');
-        }
+        } 
+         //inc321684 verification for roleName = 'Staff - TIESS'
+        else if (RoleName.contains('Staff - TIESS')) {
+          template = templates.get('Clicktools_Contact_Email_CX_EN');   
+        } 
 
         else if (
           RoleName.contains('China & N. Asia Customer Service') &&
@@ -1014,7 +1018,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       String RoleName = c.WhoClosedCase__r.UserRole.Name != null ? c.WhoClosedCase__r.UserRole.Name : 'none';
       system.debug(LoggingLevel.error, '#### case ' + c.Subject + '; Region: ' + c.Region__c + '; c.RecordTypeId: ' + c.RecordTypeId + '; cond2: ' + mapComplaintQueueNamePerRegion.get(c.Region__c) + '; cond3: ' + mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)));
       // Only handle cases for the defined regions; if the case region is not mapped to a complaint queue then the case is out of scope
-      if (c.Region__c != null &&
+      if ( !RoleName.contains('Staff - TIESS') && c.Region__c != null &&
           mapComplaintQueueNamePerRegion.get(c.Region__c) != null &&
           mapComplaintQueuesPerName.get(mapComplaintQueueNamePerRegion.get(c.Region__c)) != null ) {
         system.debug(LoggingLevel.error, '################### updating fields on case ' + c.Subject);
