@@ -68,7 +68,7 @@ public with sharing class ISSP_EditPortalServiceAccess{
         PortalServiceAccess_List = new List<Portal_Application_Right__c>(
             [Select p.Name, p.Application_Name__c, p.Right__c, p.PortalServiceTranslatedName__c , p.Portal_Application__r.Description__c,p.Portal_Application__r.Cannot_be_managed_by_portal_admin__c, p.Portal_Application__r.Requestable__c, p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
                     p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c,p.Contact__r.Name, p.Contact__r.AccountId, p.Application_Start_URL__c ,
-                    p.Case_creation_record_Type__c,p.Access_Status_Reason__c, p.Contact__r.User_Portal_Status__c
+                    p.Case_creation_record_Type__c,p.Access_Status_Reason__c, p.Contact__r.User_Portal_Status__c,ANG_Portal_Service_Role__c
              From Portal_Application_Right__c p 
              where p.Id = : psaId]
         );
@@ -76,6 +76,11 @@ public with sharing class ISSP_EditPortalServiceAccess{
         if( PortalServiceAccess_List != null && PortalServiceAccess_List .size() > 0){
             PSA = PortalServiceAccess_List[0];
             Operation = PSA.Application_Name__c;
+            if(PSA.Application_Name__c.contains('EasyPay')){
+                 Operation = Label.ANG_ISSP_IATA_EasyPay;
+                 }else{
+                    Operation = PSA.Application_Name__c;        
+                 }
             AccessStatus = PSA.Right__c;
             AdminCannotManage = PSA.Portal_Application__r.Cannot_be_managed_by_portal_admin__c;
             

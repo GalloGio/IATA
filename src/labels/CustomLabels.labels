@@ -801,7 +801,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AirlineSuspensionEmailGDS</shortDescription>
-        <value> ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
+        <value>ncedmstkt@amadeus.com,gregory.tarrusson@amadeus.com,rsamson@amadeus.com,palexandre@amadeus.com,ncedmsgcd@amadeus.com,system.support@sabre.com,tim.powell@sabre.com,gabriel.licio@sabre.com,admbsp@kiusys.com,producto@kiusys.com,customer.support@der.de,christian.pohlig@der.net,HelpDesk@farelogix.com,pricing@farelogix.com,nmoore@farelogix.com,iata@ml.axess.co.jp,axset@ml.axess.co.jp,travelportairlinesupport@travelport.com,mike.walker@travelport.com,emyoon@topas.net,byyeom@topas.net,e-tkt@topas.net,cscall@topas.net,accreditation@ttinteractive.com,Hanao@elal.co.il,Shmuelp@elal.co.il,zpyu@travelsky.com,net_ncc@travelsky.com,net_mor@travelsky.com,jiajia@travelsky.com,iReq@abacus.com.sg,support@abacus.com.sg,sowfung_leong@abacus.com.sg,julio.delarosa@e-sav.net,iataprocesosaerolineas@e-sav.net,pasajetkt@iberia.es,resiberteam@iberia.es,pk@infini-trvl.co.jp,eisen@infini-trvl.co.jp,alvarengam@iata.org,szajkod@iata.org</value>
     </labels>
     <labels>
         <fullName>AirlineSuspensionEmailRecipientsAfricaMiddleEast</fullName>
@@ -924,9 +924,9 @@
 Payment required on receipt of this Payment Advice
 &lt;/p&gt;
 &lt;p&gt;
-	&lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
-	ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
-	Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
+    &lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
+    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
+    Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
 &lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;Tax Information&lt;/b&gt;&lt;/p&gt;
@@ -3982,7 +3982,7 @@ For returning agents who are looking to renew or re-issue their card due to loss
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LoginWithPInfo</shortDescription>
-        <value>&lt;h1&gt;&lt;b&gt;Login with Personal	Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
+        <value>&lt;h1&gt;&lt;b&gt;Login with Personal   Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
 For new applicants and returning agents who do not have their existing ID Card codes.</value>
     </labels>
     <labels>
@@ -19166,6 +19166,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Users can only be added to open IATA EasyPay (IEP) Accounts. Please open your IEP Account before proceeding.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_UserProvisioningWait</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
+        <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
+    </labels>                    
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -23827,7 +23835,7 @@ title,Title,Name</value>
         <shortDescription>regular price</shortDescription>
         <value>Regular Price</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_Previous_Default_2</fullName>        
         <language>en_US</language>
         <protected>false</protected>
@@ -23890,42 +23898,42 @@ title,Title,Name</value>
         <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription> 
         <value>SECTION 2 - General Information</value>
     </labels>
-	
-	<labels>
+    
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
         <value>1. Identification of Agency for which Approval Requested</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2_GenInfo</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section2_GenInfo</shortDescription>
         <value>2. General Info</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section3_AgencyContacts</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section3_AgencyContacts</shortDescription>
         <value>3. Agency Contacts</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</shortDescription>
         <value>4.Security of Electronic Tickets</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>        
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info </shortDescription>
         <value>5. Other Info</value>
-    </labels>	
+    </labels>   
     <labels>
         <fullName>ISSP_AMS_Step3_5_Other_Info</fullName>        
         <language>en_US</language>

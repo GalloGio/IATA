@@ -804,6 +804,7 @@
     doInit : function(component, event, helper) {
         //var vfOrigin = "https://oneidconde-customer-portal-iata.cs83.force.com";
         helper.getHostURL(component, event);
+        helper.getCommunityName(component, event);
 
         window.addEventListener("message", function(event) {
             var vfOrigin = component.get('v.vfHost');
