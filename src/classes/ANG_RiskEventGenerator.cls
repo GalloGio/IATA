@@ -185,7 +185,7 @@ public class ANG_RiskEventGenerator {
 		if(!riskEvents.isEmpty()) upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
 	}
 
-	public void loadInitialInformations(){
+	public void loadInitialInformations(){		
 		Set<Id> riskTypes = new Set<Id>();
 		Set<Id> accountIds = new Set<Id>();
 
@@ -207,7 +207,7 @@ public class ANG_RiskEventGenerator {
 
 			//fetch HE account
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
-			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
+			if(Trigger.isExecuting && Trigger.isInsert) re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;			
 
 			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
@@ -260,7 +260,7 @@ public class ANG_RiskEventGenerator {
 			else if(condition == '>=' && (Decimal)fieldValue >= Decimal.valueOf(checkValue))	configResult = true;
 			else if(condition == '<=' && (Decimal)fieldValue <= Decimal.valueOf(checkValue))	configResult = true;
 
-			else if(condition.containsIgnoreCase('today') && fieldValue != null){
+			else if(condition.containsIgnoreCase('today')){
 				//create a new instance so DateTime fields don't mess with the comparison
 				Date d = Date.valueOf(fieldValue);
 				Date dateToCheck = Date.newInstance(d.year(), d.month(), d.day());
