@@ -430,7 +430,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             updatedOSCAR.STEP35__c = 'In Progress';
         }
 
-        if(updatedOscar.Is_using_credit_card__c == true && oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
+        if(oldOSCAR.STEP35__c <> updatedOscar.STEP35__c && updatedOscar.STEP35__c == 'Passed'){
 
             Integer resultComparisson = AMS_Utils.compareRates(updatedOscar.Requested_Bank_Guarantee_currency__c,updatedOscar.Requested_Bank_Guarantee_amount__c,updatedOscar.Received_Bank_Guarantee_currency__c,updatedOscar.Received_Bank_Guarantee_amount__c);
         
