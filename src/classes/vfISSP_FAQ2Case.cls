@@ -1896,3 +1896,4 @@ public without sharing class vfISSP_FAQ2Case
 
         }
     }
+}
