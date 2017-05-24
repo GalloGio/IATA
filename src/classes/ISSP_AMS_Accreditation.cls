@@ -5095,6 +5095,20 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
+
+
+            if (newForm.Will_such_change_affect_locations__c == null) {
+                newForm.Will_such_change_affect_locations__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+
+            if (newform.Will_such_change_affect_locations__c == 'No' && newForm.Provide_explanation_for_change_locations__c == null) {
+                newForm.Provide_explanation_for_change_locations__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+
+
+
             if (newForm.Notify_Change_Ownership__c && newForm.ISSP_AMS_Legal_Status__c == null) {
                 newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
