@@ -15,7 +15,7 @@ public with sharing class COPASCIMMessageEnhancer extends SCIMMessageEnhancer{
         String externalid = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EXTERNALID);
         String email = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EMAIL);
         
-        COPASCIMUser newSCIMUser = new COPASCIMUser(userName, lastName, firstName, externalId, email, '');
+        COPASCIMUser newSCIMUser = new COPASCIMUser(userName, lastName, firstName, externalId, email);
         
         return newSCIMUser;
     }

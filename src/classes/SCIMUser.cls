@@ -75,26 +75,14 @@ global virtual class SCIMUser {
     public Meta meta;
     
     public SCIMUser() {
-        this(null);
+        this(null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    public SCIMUser(Process.PluginRequest request) {
+    public SCIMUser(String userName, String familyName, String givenName, String externalid, String email){
+        this(userName, familyName, givenName, externalid, email, null, null, null, null, null, null, null, null);
+    }
 
-        if(request == null) return;
-
-        String userName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_USERNAME);
-        String familyName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_FIRSTNAME);
-        String givenName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_LASTNAME);
-        String externalid = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EXTERNALID);
-        String email = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_EMAIL);
-        String id = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ID);
-        String displayName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_DISPLAYNAME);
-        String nickName = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_NICKNAME);
-        String userType = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_USERTYPE);
-        String preferredLanguage = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_PREFERREDLANGUAGE);
-        String locale = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_LOCALE);
-        String title = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_TITLE);
-        Boolean active = (Boolean)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ACTIVE);
+    public SCIMUser(String userName, String familyName, String givenName, String externalid, String email, String id, String displayName, String nickName, String userType, String preferredLanguage, String locale, String title, Boolean active){
 
         schemas = new List<String> {'urn:scim:schemas:core:1.0'};
 

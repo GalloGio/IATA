@@ -85,9 +85,9 @@ global with sharing class COPASCIMUser extends SCIMUser {
     public List<Addresses> addresses;
 
 
-    public COPASCIMUser(String userName, String familyName, String givenName, String externalid, String email, String entitlement) {
+    public COPASCIMUser(String userName, String familyName, String givenName, String externalid, String email) {
         
-        super(userName, familyName, givenName, externalid, email, entitlement);
+        super(userName, familyName, givenName, externalid, email);
         
         super.getSchemas().add('urn:scim:schemas:extension:enterprise:1.0');
  

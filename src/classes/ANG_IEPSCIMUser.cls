@@ -1,6 +1,6 @@
 public class ANG_IEPSCIMUser extends SCIMUser {
 	public ANG_IEPSCIMUser(String userName, String familyName, String givenName, String externalid, String email, String properties) {
-		super(userName, familyName, givenName, externalid, email, '');
+		super(userName, familyName, givenName, externalid, email);
 		schemas.add('urn:scim:schemas:extension:enterprise:1.0');
 
 		if ((familyName != null) || (givenName != null))  this.displayName = givenName + ' ' + familyName;
