@@ -21,10 +21,9 @@ global class SCIMUserAttributeGenerator {
 		'enx' => 'urn:scim:schemas:extension:enterprise:1.0'
 		};
 
-	/*global SCIMUser getMappedAttributes(Process.PluginRequest request){
-
-		SCIMUser user = new SCIMUser(request);
+	global SCIMUser getMappedAttributes(Process.PluginRequest request){
 		
+		SCIMUser user = new SCIMUser();
 		String messageType = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT);
 
 		if(String.isNotBlank(messageType)){
@@ -43,10 +42,13 @@ global class SCIMUserAttributeGenerator {
 					user = instance.enhanceMessage(request);
 				}
 			}
+		}else {
+			SCIMMessageEnhancer instance = new SCIMMessageEnhancer();
+			user = instance.enhanceMessage(request);
 		}
 
 		return user;
-	}*/
+	}
 
 	global String getSerializedAttributes(SCIMUser user){
 
