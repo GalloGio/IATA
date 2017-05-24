@@ -30,19 +30,10 @@ public class SCIMUserTest {
         );
         insert user;
 
-        Map<String,Object> inputParams = new Map<String,Object>();
-        inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, user.firstname);
-        inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, user.lastName);
-        inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, user.email);        
-        inputParams.put(SCIMUserAttributeGenerator.PARAM_USERNAME, user.userName);
-        inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, user.email);
-
-        SCIMUser anUser = new SCIMUser(new Process.PluginRequest(inputParams));
+        SCIMUser anUser = new SCIMUser(user.userName, user.lastName, user.firstname, user.email, user.email);
         SCIMUserAttributeGenerator attG = new SCIMUserAttributeGenerator();
         String payload = attG.getSerializedAttributes(anUser);
 
-
         System.debug(payload);
-
     }
 }
