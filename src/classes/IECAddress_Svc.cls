@@ -82,15 +82,30 @@ public class IECAddress_Svc
 	String getSAPVATNumber(String VATNumber, String isoCountryCode)
 	{
 		String SAPVATNumber = '';
+        system.debug('VATNumber : ' + VATNumber);
+		system.debug('isoCountryCode : ' + isoCountryCode);
 		
-		if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode))
-			if (!VATNumber.startsWithIgnoreCase(isoCountryCode))
-				SAPVATNumber = Utility.truncate(isoCountryCode + VATNumber, 20);
+		if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode) && isoCountryCode.contains('GR')){
+            
+            // SPECIAL CASE FOR GREECE - SEND isoCountryCode = EL
+            if (!VATNumber.startsWithIgnoreCase(isoCountryCode) && !VATNumber.contains('EL'))
+                SAPVATNumber = Utility.truncate('EL' + VATNumber, 20);
+			else // VATNumber.contains('EL')
+				SAPVATNumber = Utility.truncate(VATNumber, 20);
+            // SPECIAL CASE FOR GREECE - SEND isoCountryCode = EL
+        }
+        
+        if (!String.isBlank(VATNumber) && !String.isBlank(isoCountryCode) && !isoCountryCode.contains('GR')){
+            if (!VATNumber.startsWithIgnoreCase(isoCountryCode))
+                SAPVATNumber = Utility.truncate(isoCountryCode + VATNumber, 20);
 			else
 				SAPVATNumber = Utility.truncate(VATNumber, 20);
-		
+		}
+        system.debug('SAPVATNumber : ' + SAPVATNumber);
 		return SAPVATNumber;
+
 	} //*** end of "getSAPVATNumber"
+
 
 
 	/****************************************************************************************************
