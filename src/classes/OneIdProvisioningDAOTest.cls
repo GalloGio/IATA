@@ -37,8 +37,14 @@ private class OneIdProvisioningDAOTest {
         OneIdProvisioningDAO.getAppPicListForAppicker('xau');
 
         OneIdProvisioningDAO.getAppDescListForAppicker('vm');
+        
+        OneIdProvisioningDAO.getAppTermsForAppicker('vm');
+
+        OneIdProvisioningDAO.getAppInfo('Bundle');
 
         OneIdProvisioningDAO.getAppPermissionSetListForAppicker('vm1');
+
+        OneIdProvisioningDAO.getAppPermissionSetListForSSO();
         
         Test.stopTest();   
 
