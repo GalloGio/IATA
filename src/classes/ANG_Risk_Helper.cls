@@ -1,6 +1,6 @@
 public with sharing class ANG_Risk_Helper{
 	
-	public class changeAgencyRiskEvent implements Queueable, Database.AllowsCallouts{
+	public class changeAgencyRiskEvent implements Queueable{
 		private List<ANG_Agency_Risk_Event__c> riskList;
 		private Map<id,id> riskMap;
 		public boolean isAllHierarchy = false;
@@ -36,8 +36,7 @@ public with sharing class ANG_Risk_Helper{
 	}
 	
 	public static void changeOfHE(Map<Id,Id> mapToWork){
-		List<ANG_Agency_Risk_Event__c> updateHE = new List<ANG_Agency_Risk_Event__c>();
-		List<ANG_Agency_Risk_Event__c> agencyList = new List<ANG_Agency_Risk_Event__c>();			
+		List<ANG_Agency_Risk_Event__c> updateHE = new List<ANG_Agency_Risk_Event__c>();					
 		
 		for(ANG_Agency_Risk_Event__c risk : [Select id, ANG_HE_AccountId__c, ANG_AccountId__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c where ANG_HE_AccountId__c in :mapToWork.keySet()]){				
 			risk.ANG_HE_AccountId__c = mapToWork.get(risk.ANG_HE_AccountId__c);				
