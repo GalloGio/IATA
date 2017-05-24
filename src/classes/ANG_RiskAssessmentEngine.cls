@@ -82,7 +82,7 @@ public class ANG_RiskAssessmentEngine{
         accSet = accList;
     }
 
-    public void Assessment(){
+    public void assessment(){
         list<account> AccUpdList= new list<account>();
         for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
 
