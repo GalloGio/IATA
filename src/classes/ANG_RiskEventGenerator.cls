@@ -266,7 +266,7 @@ public class ANG_RiskEventGenerator {
 			else if(condition == '>=' && (Decimal)fieldValue >= Decimal.valueOf(checkValue))	configResult = true;
 			else if(condition == '<=' && (Decimal)fieldValue <= Decimal.valueOf(checkValue))	configResult = true;
 
-			else if(condition.containsIgnoreCase('today')){
+			else if(condition.containsIgnoreCase('today') && fieldValue != null){
 				//create a new instance so DateTime fields don't mess with the comparison
 				Date d = Date.valueOf(fieldValue);
 				Date dateToCheck = Date.newInstance(d.year(), d.month(), d.day());
