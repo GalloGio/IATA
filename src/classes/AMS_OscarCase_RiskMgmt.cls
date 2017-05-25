@@ -36,6 +36,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
     private static set<string> setTERCC = new set<string>{'TER'};		//Termination change codes: set expiry date on account
     private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Reinstatement change codes: clear expiry date on account
+	private static set<string> setReqValidStatus = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI', 'DFW'};		//Reinstatement + DFW: look for change code with valid status/reason
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
@@ -627,7 +628,7 @@ public class AMS_OscarCase_RiskMgmt {
                             isCCBellowEigthOrDiffFour = false;
 							//if sPrevStatus is bellow 8 and different from 4, we'll iterate the account's previous change codes until we find one = > 8 or == 4 and take the account status from that one
 
-							if (setREICC.contains(AACC.Change_Code__c) && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) < 8 && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) != 4) {
+							if (setReqValidStatus.contains(AACC.Change_Code__c) && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) < 8 && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) != 4) {
                                isCCBellowEigthOrDiffFour = true;
                                for (Agency_Applied_Change_code__c aaccLocal: aaccsPerAccount.get(AccountId)) {
                                    if (aaccLocal.AccountNewStatus__c != null &&

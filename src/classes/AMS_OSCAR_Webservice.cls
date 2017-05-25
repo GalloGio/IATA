@@ -219,26 +219,26 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c,  AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, Account__r.Sector__c, Process__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
             AMS_Utils.copyDataToAccount(oscar);
 
-            Set<Id> accIds = new Set<Id>();
-            for(AMS_OSCAR__c o :oscar){
-
-                if(o.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes' && (o.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO || o.Account__r.Sector__c == AMS_Utils.CATEGORY_CASSASSOCIATE)){
-                    accIds.add(o.Account__c);
-                }
-            }
-
-            List<AMS_Agency_Regulation__c> certs = [SELECT id, 	Is_your_firm_handling_Dangerous_Goods__c, Handling_Account__c, Account__r.Is_your_firm_handling_Dangerous_Goods__c FROM AMS_Agency_Regulation__c WHERE Account__c in :accIds];
-            System.debug('## certs:'+certs);
-
-            for(AMS_Agency_Regulation__c cert :certs){
-                if (cert.Account__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes' || cert.Handling_Account__c){
-                    cert.Is_your_firm_handling_Dangerous_Goods__c = 'Yes';//force run of workflow: AMS 90 days DGR Expiration Reminder
-                }
-            }
-
-            if(!certs.isEmpty()){
-                update certs;
-            }
+            // Set<Id> accIds = new Set<Id>();
+            // for(AMS_OSCAR__c o :oscar){
+            // 
+            //     if(o.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes' && (o.Account__r.Sector__c == AMS_Utils.SECTOR_CARGO || o.Account__r.Sector__c == AMS_Utils.CATEGORY_CASSASSOCIATE)){
+            //         accIds.add(o.Account__c);
+            //     }
+            // }
+            //
+            // List<AMS_Agency_Regulation__c> certs = [SELECT id, 	Is_your_firm_handling_Dangerous_Goods__c, Handling_Account__c, Account__r.Is_your_firm_handling_Dangerous_Goods__c FROM AMS_Agency_Regulation__c WHERE Account__c in :accIds];
+            // System.debug('## certs:'+certs);
+            //
+            // for(AMS_Agency_Regulation__c cert :certs){
+            //     if (cert.Account__r.Is_your_firm_handling_Dangerous_Goods__c == 'Yes' || cert.Handling_Account__c){
+            //         cert.Is_your_firm_handling_Dangerous_Goods__c = 'Yes';//force run of workflow: AMS 90 days DGR Expiration Reminder
+            //     }
+            // }
+            //
+            // if(!certs.isEmpty()){
+            //     update certs;
+            // }
 
             return 'OK';
         }catch (Exception ex) {
