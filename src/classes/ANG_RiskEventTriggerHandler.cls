@@ -18,27 +18,27 @@ public class ANG_RiskEventTriggerHandler {
     }
 
     public void onAfterInsert(){
-        set<id> updAccSet = new Set<id>();
+        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
-            if(re.ANG_HE_AccountId__c !=null) updAccSet.add(re.ANG_HE_AccountId__c);
+            if(re.ANG_HE_AccountId__c !=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
         }
-        if(updAccSet.isEmpty()) return;
-        new ANG_RiskAssessmentEngine(updAccSet).assessment();
+        if(updAccMap.isEmpty()) return;
+        new ANG_RiskAssessmentEngine(updAccMap).assessment();
     }
     public void onAfterUpdate(){     
-        
-        set<id> updAccSet = new Set<id>();        
+        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();        
         for(ANG_Agency_Risk_Event__c re : triggerNew){                  
             ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
             if(re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c){
-                if(re.ANG_HE_AccountId__c==null) updAccSet.add(re.ANG_HE_AccountId__c);
-                if(oldRe.ANG_HE_AccountId__c==null) updAccSet.add(oldRe.ANG_HE_AccountId__c);
+                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
+                if(oldRe.ANG_HE_AccountId__c!=null) updAccMap.put(oldRe.ANG_HE_AccountId__c,null);
             }else{
-                if(re.ANG_HE_AccountId__c==null) updAccSet.add(re.ANG_HE_AccountId__c);
+                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
             } 
         } 
-        if(updAccSet.isEmpty()) return;
-        new ANG_RiskAssessmentEngine(updAccSet).assessment();           
+        if(updAccMap.isEmpty()) return;
+        
+        new ANG_RiskAssessmentEngine(updAccMap).assessment();           
     }
 
     // ************************************************************

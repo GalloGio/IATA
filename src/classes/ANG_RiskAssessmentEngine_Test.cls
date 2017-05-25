@@ -241,5 +241,18 @@ public class ANG_RiskAssessmentEngine_Test{
 		Test.stopTest();
     }
 
+    TestMethod static void testUpdateRiskEventAndPassAssessment(){
+    	//Fails agency risk assessment with one occurence, after updating RE assessement Passes
+    	account acc= [select id from account where name ='acc1' limit 1];		
+		Test.startTest();
+			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.Today());
+			system.assertEquals('Failed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc1' limit 1].ANG_HE_RiskHistoryAssessment__c);
+			
+			ANG_Agency_Risk_Event__c are= [select id,ANG_Event_Status__c from ANG_Agency_Risk_Event__c where ANG_HE_AccountId__c=:acc.id];
+			are.ANG_Event_Status__c='Inactive_Withdrawn';
+			update are;
+			system.assertEquals('Passed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc1' limit 1].ANG_HE_RiskHistoryAssessment__c);
 
+		Test.stopTest();
+    }
 }
