@@ -847,7 +847,9 @@ Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c
 OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;), ISPICKVAL(Right__c, &apos;Access Requested&apos;)), 
 $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;, 
 $User.Profile_Name__c != &apos;Developer&apos;, 
-$User.Profile_Name__c != &apos;System Administrator&apos; 
+NOT(CONTAINS($Profile.Name,&quot;System Administrator&quot;)),
+NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
+NOT(CONTAINS($Profile.Name,&quot;System administrator&quot;))
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by a request coming from the external service.</errorMessage>
     </validationRules>
