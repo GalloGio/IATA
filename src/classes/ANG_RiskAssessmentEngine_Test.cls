@@ -118,7 +118,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	name='acc1',
         	Location_Type__c='HE',
         	Location_Class__c='P',
-        	Remittance_frequency__c='Monthly'
+        	Remittance_frequency__c='Monthly',
+        	ANG_Accreditation_Model__c ='Cash'
         	);
         insert acc;
     }
@@ -201,7 +202,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	name='acc2',
         	Location_Type__c='HE',
         	Location_Class__c='P',
-        	Remittance_frequency__c='Monthly'
+        	Remittance_frequency__c='Monthly',
+        	ANG_Accreditation_Model__c ='Cash'
         	);
         accList.add(acc2);
 
@@ -209,7 +211,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	name='acc3',
         	Location_Type__c='HE',
         	Location_Class__c='P',
-        	Remittance_frequency__c='Monthly'
+        	Remittance_frequency__c='Monthly',
+        	ANG_Accreditation_Model__c ='Cash'
         	);
         accList.add(acc3);
     	
