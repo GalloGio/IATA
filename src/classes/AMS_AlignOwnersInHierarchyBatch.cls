@@ -72,7 +72,8 @@ Please, do Not try this if you do not aware of the process
         //rerender to view if possible
 
         // now that we have divided HO and Child accounts, let's clean all the previous owners and create new ones.
-        List<AMS_Account_Role__c> accRoleList = [SELECT Id from AMS_Account_Role__c where Account__C in:accountsToDeleteRoles and active__c = true and Account__r.Status__c != 'Terminated'];
+        //List<AMS_Account_Role__c> accRoleList = [SELECT Id from AMS_Account_Role__c where Account__C in:accountsToDeleteRoles and active__c = true and Account__r.Status__c != 'Terminated'];
+        List<AMS_Account_Role__c> accRoleList = Database.query( AMS_QueryUtils.getAllFieldQuery('AMS_Account_Role__c',null, + 'Account__c in :accountsToDeleteRoles and active__c = true and Account__r.Status__c != \'Terminated\'', false) );
         
         System.debug('batch finish accountsToDeleteRoles: ' + accountsToDeleteRoles);
         System.debug('batch finish accRoleList: ' + accRoleList);
@@ -86,19 +87,28 @@ Please, do Not try this if you do not aware of the process
             
             for(Integer i=sizeList; accRoleList.size() > 0; i--) {
 
-                if(accRoleListAux.size() > 800){
+                if(accRoleListAux.size() < 800){
 
-                    accRoleListAux.add(accRoleList.get(sizeList-i));
-                    accRoleList.remove(sizeList-i);
+                    if(accRoleList.get(0) != null)
+                    {
+                        accRoleListAux.add(accRoleList.get(0));
+                        accRoleList.remove(0);
+
+                    } else {
+
+                        delete accRoleListAux;
+
+                    }
+                    
 
                 } else {
 
-                    System.debug('batch finish delete accRoleListAux: ' + accRoleListAux);
+                    System.debug('batch finish delete accRoleListAux: ' + accRoleListAux.size());
 
                     delete accRoleListAux;
                     accRoleListAux = new List<AMS_Account_Role__c>();
-
-                    System.debug('batch finish deleted accRoleListAux: ' + accRoleListAux);
+                    
+                    System.debug('batch finish deleted accRoleListAux: ' + accRoleListAux.size());
 
                 }
 
@@ -153,10 +163,18 @@ Please, do Not try this if you do not aware of the process
             
             for(Integer i=sizeInsertList; rolesToInsert.size() > 0; i--) {
 
-                if(rolesToInsertAux.size() > 800){
+                if(rolesToInsertAux.size() < 800){
 
-                    rolesToInsertAux.add(rolesToInsert.get(sizeInsertList-i));
-                    rolesToInsert.remove(sizeInsertList-i);
+                    if(rolesToInsert.get(0) != null)
+                    {
+                        rolesToInsertAux.add(rolesToInsert.get(0));
+                        rolesToInsert.remove(0);
+
+                    } else {
+
+                        insert rolesToInsertAux;
+
+                    }
 
                 } else {
 
@@ -164,8 +182,6 @@ Please, do Not try this if you do not aware of the process
 
                     insert rolesToInsertAux;
                     rolesToInsertAux = new List<AMS_Account_Role__c>();
-
-                    System.debug('batch finish inserted rolesToInsertAux: ' + rolesToInsertAux);
 
                 }
 
