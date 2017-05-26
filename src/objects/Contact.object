@@ -2809,7 +2809,9 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
 &amp;&quot; &quot;&amp;
 IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -27385,7 +27387,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <description>prevents flagging a contact as CEO CFO unless it is under an airline HQ account</description>
         <errorConditionFormula>Account_HQ_BO__c &lt;&gt; &quot;Headquarter&quot; &amp;&amp; not(ispickval(CEO_CFO__c,&quot;&quot;))</errorConditionFormula>
         <errorDisplayField>CEO_CFO__c</errorDisplayField>
-        <errorMessage>Airline CEO/CFO can only be flagged under the airline headquarter account. If this is the correct contact, please relocate it under the HQ by editing the &quot;Account&quot; field to the correct value.</errorMessage>
+        <errorMessage>Airline CEO/CFO/COO can only be flagged under the airline headquarter account. If this is the correct contact, please relocate it under the HQ by editing the &quot;Account&quot; field to the correct value.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Call_Update_Date_Must_be_Added</fullName>
@@ -27495,18 +27497,19 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorConditionFormula>AND(
 RecordType.DeveloperName = &apos;Standard_Contact&apos;,
 OR(
- TEXT(CEO_CFO__c)=&quot;CEO&quot;,
- TEXT(CEO_CFO__c)=&quot;CFO&quot;,
- TEXT(CEO_CFO__c)=&quot;COO&quot;,
- Membership_Main_Contact__c
+TEXT(CEO_CFO__c)=&quot;CEO&quot;,
+TEXT(CEO_CFO__c)=&quot;CFO&quot;,
+TEXT(CEO_CFO__c)=&quot;COO&quot;,
+NOT(ISBLANK (Function__c)),
+Membership_Main_Contact__c
 ),
 OR(
- ISBLANK(FirstName ) ,
- ISBLANK(LastName),
- ISBLANK(Title ) ,
- ISBLANK(Email) ,
- ISBLANK(AccountId ),
- ISBLANK(Membership_Function__c) ))</errorConditionFormula>
+ISBLANK(FirstName ) ,
+ISBLANK(LastName),
+ISBLANK(Title ) ,
+ISBLANK(Email) ,
+ISBLANK(AccountId ),
+ISBLANK(Membership_Function__c) ))</errorConditionFormula>
         <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>

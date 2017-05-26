@@ -199,7 +199,7 @@
         <relationshipName>OSCARs</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -2568,7 +2568,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -3877,6 +3877,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Sanity_Check_Passed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to validate if the sanity check had been already passed. If so, it should not be allowed to pass again.</description>
+        <externalId>false</externalId>
+        <label>Sanity_Check_Passed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sanity_check_deadline__c</fullName>
         <externalId>false</externalId>
         <label>Deadline Date</label>
@@ -4060,7 +4071,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -4200,7 +4211,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <visibleLines>4</visibleLines>
@@ -4464,6 +4475,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>AgencyManagementAP_AMS_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>Country__c</columns>
         <columns>Process__c</columns>
         <columns>Type_of_change__c</columns>
         <columns>Status__c</columns>
@@ -4473,6 +4485,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - A&amp;P</label>
+        <language>en_US</language>
         <queue>AgencyManagementAP</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -4482,6 +4495,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>AgencyManagementAfricaME_AMS_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>Country__c</columns>
         <columns>Process__c</columns>
         <columns>Type_of_change__c</columns>
         <columns>Status__c</columns>
@@ -4491,6 +4505,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Africa &amp; ME</label>
+        <language>en_US</language>
         <queue>AgencyManagementAfricaME</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -4500,6 +4515,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>AgencyManagementAmericas_AMS_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>Country__c</columns>
         <columns>Process__c</columns>
         <columns>Type_of_change__c</columns>
         <columns>Status__c</columns>
@@ -4509,6 +4525,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - Americas</label>
+        <language>en_US</language>
         <queue>AgencyManagementAmericas</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -4518,6 +4535,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>AgencyManagementChinaNAsia_AMS_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>Country__c</columns>
         <columns>Process__c</columns>
         <columns>Type_of_change__c</columns>
         <columns>Status__c</columns>
@@ -4527,6 +4545,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <columns>CREATED_DATE</columns>
         <filterScope>Queue</filterScope>
         <label>Agency Management - China &amp; N. Asia</label>
+        <language>en_US</language>
         <queue>AgencyManagementChinaNAsia</queue>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -4617,6 +4636,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>CasesACCEuropeOffOnshore_AMS_OSCAR</fullName>
         <columns>NAME</columns>
         <columns>Account__c</columns>
+        <columns>Country__c</columns>
         <columns>Process__c</columns>
         <columns>Type_of_change__c</columns>
         <columns>Status__c</columns>
@@ -15387,6 +15407,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
      Change_effective_as_of__c &gt; TODAY()
   ),
   RecordType.DeveloperName = &quot;CHANGE&quot;,
+  NOT(ISPICKVAL(Process__c, &quot;BANK.ACCOUNT.CHANGES&quot;)),
   ISCHANGED(STEP6__c), 
   ISPICKVAL(STEP6__c, &quot;Passed&quot;)
 )</errorConditionFormula>

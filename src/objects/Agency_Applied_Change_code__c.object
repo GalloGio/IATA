@@ -189,7 +189,7 @@
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -213,7 +213,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Checked if this code is Active. Agency can only have one Active code in same time.</inlineHelpText>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -648,6 +648,17 @@ AND(
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c),
@@ -699,7 +710,7 @@ AND(
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
         <externalId>false</externalId>
         <label>Irregularities_Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -830,7 +841,7 @@ AND(
         <label>PreviousReason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -1186,7 +1197,7 @@ AND(
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

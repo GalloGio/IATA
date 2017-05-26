@@ -9,17 +9,14 @@
 
     <script>
 
-    // To have no conflict with SFDC
-    j$ = jQuery.noConflict();
-
     // When document is ready
-    j$(document).ready(function() {
+    $(document).ready(function() {
         onready();
     });
 
     function onready() {
         // Color invalid domain in red
-        j$(".domainpartred").each(function(){
+        $(".domainpartred").each(function(){
             var inner = $(this).html();
             var innserSplited = inner.split('@');
             var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
@@ -28,7 +25,7 @@
         });
 
         // Color valid domain in green
-        j$(".domainpartgreen").each(function(){
+        $(".domainpartgreen").each(function(){
             var inner = $(this).html();
             var innserSplited = inner.split('@');
             var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
@@ -37,7 +34,7 @@
         });
 
         // Create Jquery tooltip only for the invalid email domain validation (cross)
-        j$(".emadomvalinvpopup").tooltip();
+        $(".emadomvalinvpopup").tooltip();
     }
 
     function selectAllCheckboxes(obj,receivedInputID){
@@ -266,6 +263,13 @@
 
                   </apex:column>
             </apex:repeat>
+
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
 
         </apex:pageBlockTable>
 

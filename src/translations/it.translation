@@ -589,6 +589,10 @@ la seguente procedura per completarlo :
         <name>BCC</name>
     </customLabels>
     <customLabels>
+        <label><!-- Branch Trade Name --></label>
+        <name>BR_Trade_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Questo servizio facilita l&apos;interazione e lo scambio di informazioni tra gli agenti di viaggio e le compagnie aeree che partecipano a IATA Billing and Settlement Plan (BSP).</label>
         <name>BSPLink_Description</name>
     </customLabels>
@@ -3708,6 +3712,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION3 New --></label>
+        <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION3_NEW</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_CGO_BR_ReadOnly_SECTION4 --></label>
         <name>ISSP_AMS_CGO_BR_ReadOnly_SECTION4</name>
     </customLabels>
@@ -3876,6 +3884,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_CGO_T_Cs_TXT11</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_CGO_T_Cs_TXT11 New --></label>
+        <name>ISSP_AMS_CGO_T_Cs_TXT11_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_TXT12 --></label>
         <name>ISSP_AMS_CGO_T_Cs_TXT12</name>
     </customLabels>
@@ -3944,6 +3956,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_CGO_T_Cs_TXT4</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_CGO_T_Cs_TXT4 New --></label>
+        <name>ISSP_AMS_CGO_T_Cs_TXT4_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_TXT5 --></label>
         <name>ISSP_AMS_CGO_T_Cs_TXT5</name>
     </customLabels>
@@ -3956,12 +3972,20 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_CGO_T_Cs_TXT7</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_CGO_T_Cs_TXT7 New --></label>
+        <name>ISSP_AMS_CGO_T_Cs_TXT7_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_TXT8 --></label>
         <name>ISSP_AMS_CGO_T_Cs_TXT8</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_TXT9 --></label>
         <name>ISSP_AMS_CGO_T_Cs_TXT9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CGO_T_Cs_TXT9 New --></label>
+        <name>ISSP_AMS_CGO_T_Cs_TXT9_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CGO_T_Cs_Title1 --></label>
@@ -3992,6 +4016,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Cargo_Branch_Form_NAV3</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_NAV3_New --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_NAV3_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_NAV4 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_NAV4</name>
     </customLabels>
@@ -4020,12 +4048,24 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1 New --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2 New --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_New --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION4 --></label>
@@ -4124,6 +4164,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1 New --></label>
+        <name>ISSP_AMS_Cargo_Cass_SECTION_2_1_text_1_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- shortDescription --></label>
         <name>ISSP_AMS_Cargo_Cass_SECTION_2_2</name>
     </customLabels>
@@ -4146,6 +4190,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label --></label>
         <name>ISSP_AMS_Cargo_Office_Open_Date_EACP_Intermediary_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS Cargo Office Open Date New --></label>
+        <name>ISSP_AMS_Cargo_Office_Open_Date_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Case Attach --></label>
@@ -4504,6 +4552,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_First_Page_Summary_Header</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS First Page Summary Header_New --></label>
+        <name>ISSP_AMS_First_Page_Summary_Header_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Form --></label>
         <name>ISSP_AMS_Form</name>
     </customLabels>
@@ -4660,12 +4712,20 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_LeftNav_Section2_Cargo_Intermediary</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section2 New --></label>
+        <name>ISSP_AMS_LeftNav_Section2_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3 --></label>
         <name>ISSP_AMS_LeftNav_Section3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section3_Cargo_Agency --></label>
         <name>ISSP_AMS_LeftNav_Section3_Cargo_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS LeftNav_Section3_Cargo_Agency_New --></label>
+        <name>ISSP_AMS_LeftNav_Section3_Cargo_Agency_New</name>
     </customLabels>
     <customLabels>
         <label><!-- shortDescription --></label>
@@ -4876,8 +4936,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NOC_Current_Location</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NOC Current Location New --></label>
+        <name>ISSP_AMS_NOC_Current_Location_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Instructions --></label>
         <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions New --></label>
+        <name>ISSP_AMS_NOC_Instructions_New</name>
     </customLabels>
     <customLabels>
         <label>D: Invio a IATA</label>
@@ -4968,8 +5036,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding New --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Shareholding_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Type_and_Location --></label>
         <name>ISSP_AMS_NoC_Change_Type_and_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Type_and_Location_New --></label>
+        <name>ISSP_AMS_NoC_Change_Type_and_Location_New</name>
     </customLabels>
     <customLabels>
         <label>*Il cambio è per</label>
@@ -4980,8 +5056,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NoC_Change_of_Legal_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_of_Legal_Name New --></label>
+        <name>ISSP_AMS_NoC_Change_of_Legal_Name_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_of_Location --></label>
         <name>ISSP_AMS_NoC_Change_of_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_of_Location New --></label>
+        <name>ISSP_AMS_NoC_Change_of_Location_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_submitted_for --></label>
@@ -5072,6 +5156,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NoC_Location_After_Change</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Location_After_Change New --></label>
+        <name>ISSP_AMS_NoC_Location_After_Change_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Location_Before_Change --></label>
         <name>ISSP_AMS_NoC_Location_Before_Change</name>
     </customLabels>
@@ -5098,6 +5186,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS NoC No Company Owners --></label>
         <name>ISSP_AMS_NoC_No_Company_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC No Company Owners New --></label>
+        <name>ISSP_AMS_NoC_No_Company_Owners_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Notice_of_Change --></label>
@@ -5134,6 +5226,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Q1 --></label>
         <name>ISSP_AMS_NoC_Q1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Q1 New --></label>
+        <name>ISSP_AMS_NoC_Q1_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Q2 --></label>
@@ -5212,8 +5308,20 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_NoC_TC_Change_CGO2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NoC TC Change CGO2 New --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CGO2_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change CGO3 --></label>
         <name>ISSP_AMS_NoC_TC_Change_CGO3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC TC Change CGO3 New --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CGO3_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC TC Change CGO New --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CGO_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP --></label>
@@ -5328,12 +5436,20 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_OPTION_CGO_BRANCH_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS OPTION CGO BRANCH NEW --></label>
+        <name>ISSP_AMS_OPTION_CGO_BRANCH_NEW</name>
+    </customLabels>
+    <customLabels>
         <label>Agente cargo IATA - Nuova sede centrale</label>
         <name>ISSP_AMS_OPTION_CGO_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS OPTION CGO HO CNS --></label>
         <name>ISSP_AMS_OPTION_CGO_HO_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS OPTION CGO HO New --></label>
+        <name>ISSP_AMS_OPTION_CGO_HO_New</name>
     </customLabels>
     <customLabels>
         <label>Corriere - Filiale</label>
@@ -5492,12 +5608,20 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Branch Title New --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_1 HO Title --></label>
         <name>ISSP_AMS_STEP_3_1_HO_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS STEP 3_2 Title --></label>
         <name>ISSP_AMS_STEP_3_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS STEP 3_2 Title New --></label>
+        <name>ISSP_AMS_STEP_3_2_Title_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Sales Instructions --></label>
@@ -5544,6 +5668,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step0_Agency_Accreditation_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Agency Accreditation New --></label>
+        <name>ISSP_AMS_Step0_Agency_Accreditation_New</name>
+    </customLabels>
+    <customLabels>
         <label>Non é sicuro del tipo di richiesta da dover presentare?&lt;br/&gt;Consulti le informazioni contenute nel seguente</label>
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
@@ -5580,8 +5708,16 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step0_Intro_Accred_Msg</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Intro Accred New --></label>
+        <name>ISSP_AMS_Step0_Intro_Accred_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step0 Intro CNS --></label>
         <name>ISSP_AMS_Step0_Intro_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Intro New --></label>
+        <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Minor Changes --></label>
@@ -5594,6 +5730,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Step0 New Application CNS --></label>
         <name>ISSP_AMS_Step0_New_Application_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 New Application New --></label>
+        <name>ISSP_AMS_Step0_New_Application_New</name>
     </customLabels>
     <customLabels>
         <label>Pratiche di Accreditamento o Variazione in corso</label>
@@ -5626,6 +5766,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Step0 SAA --></label>
         <name>ISSP_AMS_Step0_SAA_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 SAA New --></label>
+        <name>ISSP_AMS_Step0_SAA_New</name>
     </customLabels>
     <customLabels>
         <label>Specific Sales Activity</label>
@@ -5680,6 +5824,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step1_ProgressBar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 ProgressBar New --></label>
+        <name>ISSP_AMS_Step1_ProgressBar_New</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;strong&gt;NOTA:&lt;/strong&gt; una richiesta separata va inoltrata  per ogni agenzia con diversa location</label>
         <name>ISSP_AMS_Step1_Separate_Application</name>
     </customLabels>
@@ -5690,6 +5838,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Step1 Title --></label>
         <name>ISSP_AMS_Step1_Title_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title New --></label>
+        <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
     <customLabels>
         <label>Le bozze delle domande devono essere inviate entro 2 settimane; in caso contrario, si dovrà ricominciare il processo.</label>
@@ -5728,6 +5880,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step3_3_Title_Cargo_Agency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_3_Title_Cargo_Agency New --></label>
+        <name>ISSP_AMS_Step3_3_Title_Cargo_Agency_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_3_Title_Cargo_Intermediary --></label>
         <name>ISSP_AMS_Step3_3_Title_Cargo_Intermediary</name>
     </customLabels>
@@ -5740,16 +5896,36 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step3_4_20_Agency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20_Agency New --></label>
+        <name>ISSP_AMS_Step3_4_20_Agency_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_20_Intermediary --></label>
         <name>ISSP_AMS_Step3_4_20_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20_Intermediary New --></label>
+        <name>ISSP_AMS_Step3_4_20_Intermediary_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_20 New --></label>
+        <name>ISSP_AMS_Step3_4_20_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 Branch People --></label>
         <name>ISSP_AMS_Step3_4_Branch_People</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step3 4 Branch People New --></label>
+        <name>ISSP_AMS_Step3_4_Branch_People_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
         <name>ISSP_AMS_Step3_4_Cargo_Agent_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title New --></label>
+        <name>ISSP_AMS_Step3_4_Cargo_Agent_Title_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
@@ -5758,6 +5934,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 Companies --></label>
         <name>ISSP_AMS_Step3_4_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 4 Companies New --></label>
+        <name>ISSP_AMS_Step3_4_Companies_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 Companies SubTitle --></label>
@@ -5782,6 +5962,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People Intermediary --></label>
         <name>ISSP_AMS_Step3_4_People_Intermediary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 4 People New --></label>
+        <name>ISSP_AMS_Step3_4_People_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People SubTitle --></label>
@@ -5840,12 +6024,24 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_Step3_4_Q19</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19 New --></label>
+        <name>ISSP_AMS_Step3_4_Q19_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q19_intermediary --></label>
         <name>ISSP_AMS_Step3_4_Q19_intermediary</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19_intermediary New --></label>
+        <name>ISSP_AMS_Step3_4_Q19_intermediary_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Agency --></label>
         <name>ISSP_AMS_Step3_4_Q1_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q1_Agency New --></label>
+        <name>ISSP_AMS_Step3_4_Q1_Agency_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Intermediary --></label>
@@ -6176,6 +6372,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AMS_StepsAll_Cargo_Title_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo Title New --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_Title_New</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Courier_Title --></label>
         <name>ISSP_AMS_StepsAll_Courier_Title</name>
     </customLabels>
@@ -6186,6 +6386,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP_AMS_StepsAll_Passenger_Title --></label>
         <name>ISSP_AMS_StepsAll_Passenger_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_StepsAll_Passenger_Title New --></label>
+        <name>ISSP_AMS_StepsAll_Passenger_Title_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepsAll Travel Title --></label>
@@ -6242,6 +6446,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label><!-- ISSP AMS Update Agency --></label>
         <name>ISSP_AMS_Update_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Update Agency New --></label>
+        <name>ISSP_AMS_Update_Agency_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Update HO details --></label>
@@ -6950,6 +7158,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
     <customLabels>
         <label>Agente cargo</label>
         <name>ISSP_Cargo_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Cargo Agent New --></label>
+        <name>ISSP_Cargo_Agent_New</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_CaseCommentEmail --></label>
@@ -8156,6 +8368,10 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label><!-- ISSP_MyProfile --></label>
         <name>ISSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP IFACP Endorsement Changes --></label>
+        <name>ISSP_IFACP_Endorsement_Changes</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_IFAP --></label>
@@ -10512,12 +10728,24 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_ForgotPassword --></label>
+        <name>OneId_ForgotPassword</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Help Community --></label>
         <name>OneId_Help_Community</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Help Community Link --></label>
         <name>OneId_Help_Community_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Home_PendingRequests --></label>
+        <name>OneId_Home_PendingRequests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Home_Requested --></label>
+        <name>OneId_Home_Requested</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_IATA Code --></label>
@@ -10528,12 +10756,44 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_IATA_represent_lead_and_serve_the_airline_industry</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId ISAGO App Description --></label>
+        <name>OneId_ISAGO_App_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_1 --></label>
+        <name>OneId_ISAGO_Terms_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_2 --></label>
+        <name>OneId_ISAGO_Terms_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_ISAGO_Terms_3 --></label>
+        <name>OneId_ISAGO_Terms_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_International Air Transport Association (IATA) --></label>
         <name>OneId_International_Air_Transport_Association_IATA</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_InternetExplorer_NotSupported --></label>
+        <name>OneId_InternetExplorer_NotSupported</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_JobFunction_Help_Msg --></label>
         <name>OneId_JobFunction_Help_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Job_Function --></label>
+        <name>OneId_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Login --></label>
+        <name>OneId_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_LoginFail --></label>
+        <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_My available applications --></label>
@@ -10548,6 +10808,14 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_NoRecordsFoundGP</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_NoTermsFound --></label>
+        <name>OneId_NoTermsFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId No Apps Availablr for You --></label>
+        <name>OneId_No_Apps_Availablr_for_You</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Nothing found --></label>
         <name>OneId_Nothing_found</name>
     </customLabels>
@@ -10560,6 +10828,18 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_Password --></label>
+        <name>OneId_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_PasswordResetFail --></label>
+        <name>OneId_PasswordResetFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Password_ErrorBlank --></label>
+        <name>OneId_Password_ErrorBlank</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Please_Wait --></label>
         <name>OneId_Please_Wait</name>
     </customLabels>
@@ -10570,6 +10850,50 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_Press to Validate --></label>
         <name>OneId_Press_to_Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingCity --></label>
+        <name>OneId_Profile_BillingCity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingCountry --></label>
+        <name>OneId_Profile_BillingCountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingPostal --></label>
+        <name>OneId_Profile_BillingPostal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingState --></label>
+        <name>OneId_Profile_BillingState</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BillingStreet --></label>
+        <name>OneId_Profile_BillingStreet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BusinessFax --></label>
+        <name>OneId_Profile_BusinessFax</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_BusinessInformation --></label>
+        <name>OneId_Profile_BusinessInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_Edit --></label>
+        <name>OneId_Profile_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_ICAODesignator --></label>
+        <name>OneId_Profile_ICAODesignator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_Information --></label>
+        <name>OneId_Profile_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Profile_OfficeEmail --></label>
+        <name>OneId_Profile_OfficeEmail</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Registration_Error_BusinessPhone --></label>
@@ -10588,8 +10912,20 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_SearchAccount</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId_SelfRegister --></label>
+        <name>OneId_SelfRegister</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_SendPasswordResetEmail --></label>
+        <name>OneId_SendPasswordResetEmail</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId_Sign In --></label>
         <name>OneId_Sign_In</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_TermsAndConditions --></label>
+        <name>OneId_TermsAndConditions</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Terms of Use --></label>
@@ -10606,6 +10942,14 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
     <customLabels>
         <label><!-- OneId_Type --></label>
         <name>OneId_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Username --></label>
+        <name>OneId_Username</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId_Username_ErrorBlank --></label>
+        <name>OneId_Username_ErrorBlank</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_You will be notified by email when you can access the new service. --></label>
@@ -11580,6 +11924,10 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>SF_Base_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Automated Case Message --></label>
+        <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -12388,65 +12736,6 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Role</name>
-        <picklistValues>
-            <masterLabel>Account Manager</masterLabel>
-            <translation><!-- Account Manager --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Payable</masterLabel>
-            <translation><!-- Accounts Payable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Accounts Receivable</masterLabel>
-            <translation><!-- Accounts Receivable --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Debt Management</masterLabel>
-            <translation><!-- Debt Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Dispute Management</masterLabel>
-            <translation><!-- Dispute Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Finance (Other)</masterLabel>
-            <translation><!-- Finance (Other) --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>General Management</masterLabel>
-            <translation><!-- General Management --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Invoicing</masterLabel>
-            <translation><!-- Invoicing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Operations</masterLabel>
-            <translation><!-- Operations --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Other</masterLabel>
-            <translation><!-- Other --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Reporting</masterLabel>
-            <translation><!-- Reporting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Revenue Accounting</masterLabel>
-            <translation><!-- Revenue Accounting --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Sales &amp; Marketing</masterLabel>
-            <translation><!-- Sales &amp; Marketing --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Technical Support</masterLabel>
-            <translation><!-- Technical Support --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>Sector</name>
         <picklistValues>
             <masterLabel>Accommodation</masterLabel>
@@ -12518,22 +12807,34 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
+        <name>EF_Payment_Method</name>
         <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
+            <masterLabel>Bank transfer</masterLabel>
+            <translation><!-- Bank transfer --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
+            <masterLabel>Credit Card</masterLabel>
+            <translation><!-- Credit Card --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
+            <masterLabel>ICCS payments</masterLabel>
+            <translation><!-- ICCS payments --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
+            <masterLabel>ICH</masterLabel>
+            <translation><!-- ICH --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IRIS</masterLabel>
+            <translation><!-- IRIS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SPCR / SPDR</masterLabel>
+            <translation><!-- SPCR / SPDR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Virtual Account Payment</masterLabel>
+            <translation><!-- Virtual Account Payment --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13144,107 +13445,81 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Frequency</name>
+        <name>EF_Invoice_Distribution</name>
         <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Manager_Approval</name>
+        <name>EF_Role</name>
         <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
+            <masterLabel>Account Manager</masterLabel>
+            <translation><!-- Account Manager --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
+            <masterLabel>Accounts Payable</masterLabel>
+            <translation><!-- Accounts Payable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
+            <masterLabel>Accounts Receivable</masterLabel>
+            <translation><!-- Accounts Receivable --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
+            <masterLabel>Debt Management</masterLabel>
+            <translation><!-- Debt Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_Payment_Terms</name>
-        <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
+            <masterLabel>Dispute Management</masterLabel>
+            <translation><!-- Dispute Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
+            <masterLabel>Finance (Other)</masterLabel>
+            <translation><!-- Finance (Other) --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
+            <masterLabel>General Management</masterLabel>
+            <translation><!-- General Management --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
+            <masterLabel>Invoicing</masterLabel>
+            <translation><!-- Invoicing --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
+            <masterLabel>Operations</masterLabel>
+            <translation><!-- Operations --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
-        <name>EF_User_Role</name>
-        <picklistValues>
-            <masterLabel>Airline Services Specialists</masterLabel>
-            <translation><!-- Airline Services Specialists --></translation>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Client Services Specialists</masterLabel>
-            <translation><!-- Client Services Specialists --></translation>
+            <masterLabel>Reporting</masterLabel>
+            <translation><!-- Reporting --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>E&amp;F General Access</masterLabel>
-            <translation><!-- E&amp;F General Access --></translation>
+            <masterLabel>Revenue Accounting</masterLabel>
+            <translation><!-- Revenue Accounting --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Head, Client Services</masterLabel>
-            <translation><!-- Head, Client Services --></translation>
+            <masterLabel>Sales &amp; Marketing</masterLabel>
+            <translation><!-- Sales &amp; Marketing --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
-            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Business Development</masterLabel>
-            <translation><!-- Manager, Business Development --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
-            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+            <masterLabel>Technical Support</masterLabel>
+            <translation><!-- Technical Support --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13260,6 +13535,17 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <picklistValues>
             <masterLabel>Not Allowed</masterLabel>
             <translation><!-- Not Allowed --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Status</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13530,14 +13816,26 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>EF_Manager_Approval</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14256,34 +14554,84 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Method</name>
+        <name>EF_Frequency</name>
         <picklistValues>
-            <masterLabel>Bank transfer</masterLabel>
-            <translation><!-- Bank transfer --></translation>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Credit Card</masterLabel>
-            <translation><!-- Credit Card --></translation>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICCS payments</masterLabel>
-            <translation><!-- ICCS payments --></translation>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ICH</masterLabel>
-            <translation><!-- ICH --></translation>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IRIS</masterLabel>
-            <translation><!-- IRIS --></translation>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_User_Role</name>
+        <picklistValues>
+            <masterLabel>Airline Services Specialists</masterLabel>
+            <translation><!-- Airline Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>SPCR / SPDR</masterLabel>
-            <translation><!-- SPCR / SPDR --></translation>
+            <masterLabel>Client Services Specialists</masterLabel>
+            <translation><!-- Client Services Specialists --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Virtual Account Payment</masterLabel>
-            <translation><!-- Virtual Account Payment --></translation>
+            <masterLabel>E&amp;F General Access</masterLabel>
+            <translation><!-- E&amp;F General Access --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Head, Client Services</masterLabel>
+            <translation><!-- Head, Client Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Airline Services &amp; Head, Business Delivery</masterLabel>
+            <translation><!-- Manager, Airline Services &amp; Head, Business Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Business Development</masterLabel>
+            <translation><!-- Manager, Business Development --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
+            <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
