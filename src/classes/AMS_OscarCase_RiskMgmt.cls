@@ -429,7 +429,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
 
-		id AccountId = (acc == null ? mapCases.get(idCase).AccountId : acc.id);f
+		id AccountId = (acc == null ? mapCases.get(idCase).AccountId : acc.id);
 		//if(acc==null)
 		//	AccountId = mapCases.get(idCase).AccountId;
 		//else
