@@ -13,10 +13,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ANG_Order__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>ANG_Occurrence_Num__c</field>
             </layoutItems>
         </layoutColumns>
@@ -24,10 +20,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Adjusted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
