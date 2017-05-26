@@ -13,10 +13,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ANG_Risk_Event_Type__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>ANG_Order__c</field>
             </layoutItems>
             <layoutItems>
@@ -68,8 +64,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ANG_Remittance_Frequency__c</fields>
+        <fields>ANG_Parent_Occurences__c</fields>
         <fields>ANG_Occurrence_Num__c</fields>
-        <fields>ANG_Points__c</fields>
         <relatedList>ANG_Agency_Risk_Calculation__c.ANG_Calculation_Rule__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
