@@ -22,7 +22,7 @@ public class AMS_OSCAR_WebserviceTest {
         insert ctry ;
 
         Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
-        a1 = new Account(RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency', IATA_ISO_Country__c = ctry.id);
+        a1 = new Account(RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
         a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Name='Test1 Agency',Short_Name__c='Test1 Agency',BillingCountry='Brazil');
         a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
         a4 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234562',Location_Type__c='HO',Name='Test1 Agency',Short_Name__c='Test1 Agency',Type='IATA Cargo Agent',BillingCountry='Brazil');
@@ -98,47 +98,8 @@ public class AMS_OSCAR_WebserviceTest {
     }
 
     static testMethod void test_copyDataToAccount() {
-        
+
         setup();
-        
-        // cover regulation update on copyDataToAccount
-        Account a1 = [SELECT Id, IATA_ISO_Country__c FROM Account WHERE Name = 'Test1 Agency'][0];
-        a1.Sector__c = AMS_Utils.SECTOR_CARGO;
-        a1.Reason_for_creation__c = 'Account is missing';
-
-        update a1;
-
-        IATA_ISO_State__c amss = new IATA_ISO_State__c(ISO_Code__c='TS01', IATA_ISO_Country__c=a1.IATA_ISO_Country__c, Name='TestAMS');
-        insert amss;
-
-        AMS_Agency_Regulation__c reg1 = new AMS_Agency_Regulation__c(First_Name__c = 'Test1', Last_Name__c = 'test1', Type_of_Certificate__c = 'DGR', Expiry_Date__c = Date.today().addYears(2), Account__c = a1.Id);
-        AMS_Agency_Regulation__c reg2 = new AMS_Agency_Regulation__c(First_Name__c = 'Test2', Last_Name__c = 'test2', Type_of_Certificate__c = 'DGR', Expiry_Date__c = Date.today().addYears(2), Account__c = a1.Id);
-
-        insert new List<AMS_Agency_Regulation__c>{reg1, reg2};
-
-        Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
-
-        oscarCase.Financial_Assessment_requested__c = date.today();
-        oscarCase.Deadline_Date__c= date.today();
-        oscarCase.Assessment_Performed_Date__c= date.today();
-        oscarCase.Financial_Review_Result__c = 'Satisfactory';
-        oscarCase.Financial_Security_Amount__c = 1235;
-        oscarCase.Financial_Security_Currency__c = 'EUR';
-        oscarCase.FS_Deadline_Date__c = date.today();
-
-        insert oscarCase;
-
-        AMS_Pax_Accreditation_Form__c accr = new AMS_Pax_Accreditation_Form__c(Is_your_firm_handling_Dangerous_Goods__c = 'Yes', SAAM_Case__c = oscarCase.Id,  CASS_Number__c = '123', IATA_ISO_State__c = amss.Id, Location_Class__c = 'C',
-                                                                                Account_Name__c = 'Test', IATACode__c ='12345657', Branch_Office_Street_name_number__c = 'test',Branch_Office_Country__c= a1.IATA_ISO_Country__c,
-                                                                                Branch_Office_Phone__c = 'test@istes.test', ISSP_AMS_Legal_Status__c='Association');
-
-        insert accr;
-
-        oscar.Name= '12345';
-        oscar.Account__c = a1.Id;
-        oscar.AMS_Online_Accreditation__c = accr.id;
-
-        update oscar;
 
         Test.startTest();
 

@@ -216,7 +216,7 @@ global class AMS_OSCAR_Webservice {
     WebService static String copyDataToAccount(String oscarId){
 
         try{
-            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c,  AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c, Account__r.Sector__c, Process__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, AMS_Online_Accreditation__c, Account__r.Sector__c, Process__c, recordTypeID from AMS_OSCAR__c where Id =: oscarId];
             AMS_Utils.copyDataToAccount(oscar);
             return 'OK';
         }catch (Exception ex) {
