@@ -222,9 +222,9 @@ public class ISO_Country_State_Helper {
 		options.add(new SelectOption('',Label.Select_a_Country));
 		Map<String, Boolean> mapZipCodeApplicable = new Map<String, Boolean>();
 		
-		for(IATA_ISO_Country__c c : [SELECT Name, ISO_Code__c, IEC_Zip_Code_Applicable__c FROM IATA_ISO_Country__c WHERE ISO_Code__c != null and Name != 'All Countries' ORDER BY Name]) {
+		for(IATA_ISO_Country__c c : [SELECT Name, ISO_Code__c, IEC_Zip_Postal_Code_required__c FROM IATA_ISO_Country__c WHERE ISO_Code__c != null and Name != 'All Countries' ORDER BY Name]) {
 			options.add(new SelectOption(c.ISO_Code__c, c.Name));
-			mapZipCodeApplicable.put(c.ISO_Code__c, c.IEC_Zip_Code_Applicable__c);
+			mapZipCodeApplicable.put(c.ISO_Code__c, c.IEC_Zip_Postal_Code_required__c);
 		}
 		
 		return new Map<String, Object> {'options' => options, 'zipCodeApplicable' => mapZipCodeApplicable };

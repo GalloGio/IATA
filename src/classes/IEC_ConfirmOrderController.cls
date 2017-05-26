@@ -54,9 +54,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				//If the transaction was successfully created
 				if(sfOrder.Zuora_GatewayResponse__c == null && sfOrder.Payment_Transaction_Number__c != null) {
 					successMessage = Label.Order_Credit_Card_confirmation_message;
-					transactionNub = 'Your Transaction number is : ' + sfOrder.Payment_Transaction_Number__c + '<br />';
+					transactionNub = Label.IEC_CREDIT_CARD_TRANSACTION_NUMBER + ' ' + sfOrder.Payment_Transaction_Number__c + '.<br />';
 				} else {
-					addErrorMessage(Label.Order_transaction_failed_message, 'Zuora Gateway Response: ' + sfOrder.Zuora_GatewayResponse__c);
+					addErrorMessage(Label.Order_transaction_failed_message, Label.IEC_ZUORA_GATEWAY_RESPONSE + ' ' + sfOrder.Zuora_GatewayResponse__c);
 					isOrderConfirmed = true;
 					return;
 				}
@@ -301,9 +301,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				//If the transaction was successfully created
 				if(updatedOrder.Zuora_GatewayResponse__c == null && updatedOrder.Payment_Transaction_Number__c != null){
 					successMessage = Label.Order_Credit_Card_confirmation_message;
-					transactionNub = 'Your Transaction number is : ' + updatedOrder.Payment_Transaction_Number__c + '<br />';
+					transactionNub = Label.IEC_CREDIT_CARD_TRANSACTION_NUMBER + ' ' + updatedOrder.Payment_Transaction_Number__c + '.<br />';
 				} else {
-					addErrorMessage(Label.Order_transaction_failed_message, 'Zuora Gateway Response: ' + updatedOrder.Zuora_GatewayResponse__c);
+					addErrorMessage(Label.Order_transaction_failed_message, Label.IEC_ZUORA_GATEWAY_RESPONSE + ' ' + updatedOrder.Zuora_GatewayResponse__c);
 					return null;
 				}
 				successMessage = Label.Order_Credit_Card_confirmation_message;
@@ -432,9 +432,9 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 		
 		if (order.Payment_Type__c == 'Credit Card') {
 			if (order.Status == 'Pending Payment') {
-				addWarningMessage(messageHistory + '<br />' + 'Pending credit card payment charge');
+				addWarningMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PENDING_PAYMENT);
 			} else if (order.Status == 'Payment Failure') {
-				addErrorMessage(messageHistory + '<br />' + 'Credit card payment error: ' + order.Payment_Gateway_Response__c);				
+				addErrorMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_ERROR + ' ' + order.Payment_Gateway_Response__c + '.');				
 			} else {
 				List<Zuora__Payment__c> orderPaymentList = [SELECT Id, Zuora__Status__c, Zuora__PaymentMethod__c, Zuora__GatewayResponse__c FROM Zuora__Payment__c WHERE Order__c = :orderId ORDER BY LastModifiedDate DESC];
 				Zuora__Payment__c lastPayment;
@@ -444,15 +444,15 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				}
 
 				if (lastPayment != null) {
-					if (lastPayment.Zuora__PaymentMethod__c != null && lastPayment.Zuora__PaymentMethod__c.startsWith('Credit Card')) {
+					if (lastPayment.Zuora__PaymentMethod__c != null && lastPayment.Zuora__PaymentMethod__c.startsWith(IECConstants.ZUORA_PAYMENT_METHOD_PREFIX_CREDIT_CARD)) {
 						if (lastPayment.Zuora__Status__c == 'Error') {
-							addErrorMessage(messageHistory + '<br />' + 'Credit card payment error: ' + lastPayment.Zuora__GatewayResponse__c);
+							addErrorMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_ERROR + ' ' + lastPayment.Zuora__GatewayResponse__c + '.');
 						} else if (lastPayment.Zuora__Status__c == 'Processed') {
-							addConfirmMessage(messageHistory + '<br />' + 'Credit card payment successful');
+							addConfirmMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PAYMENT_SUCCESSFUL);
 						}
 					}					
 				} else {
-					addWarningMessage(messageHistory + '<br />' + 'Pending credit card payment charge');
+					addWarningMessage(messageHistory + '<br />' + Label.IEC_CREDIT_CARD_PENDING_PAYMENT);
 				}
 			}
 		} else {

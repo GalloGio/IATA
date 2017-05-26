@@ -167,9 +167,9 @@ public without sharing class ISSP_Registration {
 		get{
 			if(countriesNamesWithoutZipCode == null) {
 				Set<String> countriesNamesWithoutZipCodeLst = new Set<String>();
-				List<IATA_ISO_Country__c> lstCountries = [SELECT Name, IEC_Zip_Code_Applicable__c 
+				List<IATA_ISO_Country__c> lstCountries = [SELECT Name, IEC_Zip_Postal_Code_required__c 
 														  FROM IATA_ISO_Country__c
-														  WHERE IEC_Zip_Code_Applicable__c = false];
+														  WHERE IEC_Zip_Postal_Code_required__c = false];
 				
 				for(IATA_ISO_Country__c c : lstCountries) {
 					countriesNamesWithoutZipCodeLst.add(c.Name.toUpperCase().trim());
@@ -668,7 +668,11 @@ public without sharing class ISSP_Registration {
                         }
                     }
                     else{
-                        errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	if(sRefererCommunity == 'iec') {
+                        	errorMessage.add(Label.IEC_NoRecordsFoundGP);
+                    	} else {
+                    		errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	}
                     }
                 }
                 else{
@@ -1201,17 +1205,17 @@ public without sharing class ISSP_Registration {
         return null;
     }
 
-	//TC: added IEC_Zip_Code_Applicable__c to query and fill map
+	//TC: added IEC_Zip_Postal_Code_required__c to query and fill map
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();
         boolean countryMapEmpty = (countryMap == null);
         zipCodeApplicable = new Map<String,Boolean>();
         if (countryMapEmpty)
             countryMap = new Map<Id, String>();			
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Code_Applicable__c from IATA_ISO_Country__c order by Name]){
+        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
-                zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Code_Applicable__c);//TC
+                zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Postal_Code_required__c);//TC
                 if (countryMapEmpty) {
                     countryMap.put(iso.Id, iso.Name);
                 }
@@ -1324,6 +1328,10 @@ public without sharing class ISSP_Registration {
             //showSearchIataCode = true;
             //showSearchCountry = true;
             //doSearch = true;
+            if(sRefererCommunity == 'iec') {            	
+            	toSearchDesignatorCodeString = 'Yes';
+            	checkSearchDesignatorCode();
+            }
         }
         else if (selectedCustomerType == Agency){
             isAgency = true;
@@ -1569,7 +1577,7 @@ public without sharing class ISSP_Registration {
 		get{
 			if(shpCountry == null) {
 				List<SelectOption> options = new List<SelectOption>();
-				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Code_Applicable__c from IATA_ISO_Country__c order by Name]) {
+				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]) {
 					if (iso.Name != 'All Countries'){
 						options.add(new SelectOption(iso.Name,iso.Name));
 					}	

@@ -192,6 +192,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		billToAvailableStates = ISO_Country_State_Helper.getStatesSelectOption(vfOrder.billToAddress.countryCode);
+		vfOrder.billToAddress.postalCode = '';
 	}
 
 	public void regionChanged()

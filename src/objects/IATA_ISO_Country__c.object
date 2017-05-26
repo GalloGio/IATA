@@ -1883,15 +1883,6 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>IEC_Zip_Code_Applicable__c</fullName>
-        <defaultValue>true</defaultValue>
-        <externalId>false</externalId>
-        <label>Zip Code Applicable</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>IEC_Zip_Postal_Code_required__c</fullName>
         <defaultValue>false</defaultValue>
         <description>IEC - true means zip/postal code is required for an address</description>
@@ -2310,7 +2301,6 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <columns>UPDATEDBY_USER</columns>
         <columns>LAST_UPDATE</columns>
         <columns>IEC_Zip_Postal_Code_required__c</columns>
-        <columns>IEC_Zip_Code_Applicable__c</columns>
         <filterScope>Everything</filterScope>
         <label>All Countries</label>
         <language>en_US</language>
@@ -2504,10 +2494,4 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <searchResultsAdditionalFields>Country_Manager__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
-    <validationRules>
-        <fullName>Zip_code_required_must_be_applicable</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(IEC_Zip_Postal_Code_required__c, NOT(IEC_Zip_Code_Applicable__c))</errorConditionFormula>
-        <errorMessage>Zip code required must be applicable</errorMessage>
-    </validationRules>
 </CustomObject>

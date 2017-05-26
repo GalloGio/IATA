@@ -699,6 +699,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
   }
 
 
+
     /**************************************************************************************************************
      *  saveNewAddress: method calls when customer create a new Shipping address                                  *
      *  Author: David Daboué                                                                                      *  
@@ -706,24 +707,30 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public PageReference saveNewAddress()
     {
         showNewAddress = true;
-        
+        Boolean hError = false;
         //-- Validate Address
         if(!validateAddress(newShipToAddress)) {
             addErrorMessage('You must specify all the required fields for the new address');
-            return null;
+            hError = true;
+           // return null;
         }
         
         //TC 2017-05-16
         if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {
         	addErrorMessage(Label.IEC_ShippingAddressLimit);
-        	return null;	
+        	hError = true;
+        	//return null;	
         }      
         
         if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {
         	addErrorMessage(Label.IEC_PO_BOX_ERROR);
-        	return null;
+        	hError = true;
+        	//return null;
         }
         
+        if(hError) {        	
+        	return null;	
+        }
         
 
         try {

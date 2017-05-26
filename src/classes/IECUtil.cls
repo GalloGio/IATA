@@ -572,7 +572,7 @@ public without sharing class IECUtil {
 	}
 	
 	public static Boolean isPostOfficeBox(String streetAddress) {
-		Pattern p = Pattern.compile('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\b');
+		Pattern p = Pattern.compile('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');
 		Matcher m = p.matcher(streetAddress);
 		return m.find();						
 	}

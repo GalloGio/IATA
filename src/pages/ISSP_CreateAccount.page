@@ -16,6 +16,7 @@
  </head>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+ <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
  <script type="text/javascript">
     var $j = jQuery.noConflict();
     
@@ -30,10 +31,36 @@
    	
   	function addListeners() {
 		$j('#billingstreet textarea').on('keyup', function() {
-			validateAddressSize('billing', 70, this);
+			var value = $j('#billingstreet textarea').val();
+			if(value.length >= 70) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#billingstreet textarea'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}	
 		});
 		$j('#shippingstreet textarea').on('keyup', function() {
-			validateAddressSize('shipping', 70, this);
+			var value = $j('#shippingstreet textarea').val();
+			var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
+			var elem = $('#addressStreetMSG').detach();
+			elem.insertBefore($j('#shippingstreet textarea'));
+			if(value.length >= 70) {
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if(value.match(pattern)) {
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_PO_BOX_MSG}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+		});
+		$j('#billingstreet textarea').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
+		$j('#shippingstreet textarea').blur(function() {
+			$('#addressStreetMSG').hide();
 		});
 
 	}
@@ -58,20 +85,10 @@
 		return bstreet && sstreet; 
 	}
 	
-	function validateAddressSize(type, limit, element) {
-		var street = this.value;
-		if(element.value.length > limit) {
-			$j('#'+type+'AddressLimit').show();
-			$j(window).scrollTop(0);
-		} else {
-			$j('#'+type+'AddressLimit').hide();
-		}
-	}	
-	
 	function modifyUIForm() {
-		//$j('#shippingcountry input').hide();
+		$j('#billingstreet textarea').prop("maxlength","70");
+		$j('#shippingstreet textarea').prop("maxlength","70");
 		var elem = $j('#divToMove').detach();
-		//$j('#shippingcountry').insertAfter(elem);
 		elem.insertAfter("#shippingcountry");
 		$j('#shippingcountry').hide();
 		$j('[id*="drpdwnCountry"]').val($j('#shippingcountry input').val());
@@ -87,6 +104,17 @@
 	            $j('#shippingpostalcode input').prop('disabled', true);	 
 			}
 		});
+	}
+	
+	function replaceShippingTXT(node) {
+		if (node.nodeType == 3) {
+			node.data = node.data.replace(/Shipping/g, "Delivery");
+	  	}
+	  	if (node.nodeType == 1 && node.nodeName != "SCRIPT") {
+	    	for (var i = 0; i < node.childNodes.length; i++) {
+	      		replaceShippingTXT(node.childNodes[i]);
+	    	}
+	  	}
 	}
 	
 	/*iec functions - end*/
@@ -115,7 +143,7 @@
             
             //TC: remove address validation boxes
             if("{!sRefererCommunity}"=="iec") {
-            	disableAddressCorrection = false;
+            	replaceShippingTXT(document.body);
 	            $j(".elementBAddressToHide").hide();  
 	            $j(".elementSAddressToHide").hide();     
 	            $j(".elementToHide").hide(); 
@@ -187,24 +215,38 @@
                     </apex:repeat>
                 </div> 
                 
+                <div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -47px; display: none;">
+					<div class="formErrorContent"></div>
+					<div class="formErrorArrow">
+						<div class="line10"><!-- --></div>
+						<div class="line9"><!-- --></div>
+						<div class="line8"><!-- --></div>
+						<div class="line7"><!-- --></div>
+						<div class="line6"><!-- --></div>
+						<div class="line5"><!-- --></div>
+						<div class="line4"><!-- --></div>
+						<div class="line3"><!-- --></div>
+						<div class="line2"><!-- --></div>	
+						<div class="line1"><!-- --></div>
+					</div>
+				</div>
+                
                 
                 <div id="recFields" class="alert alert-danger" style="display:none">
                     <strong>{!$Label.ISSP_fill_required_fields}</strong>
                     <span></span>
                 </div>
                 
-                <div id="poBoxError" class="alert alert-danger" style="display:none">
-                	<strong>{!$Label.IEC_PO_BOX_ERROR}</strong>
-                	<span></span>
-                </div>
-                
-                <div id="billingAddressLimit" class="alert alert-danger" style="display:none">
-                	<strong>{!$Label.IEC_BillingAddressLimit}</strong>
-                	<span></span>
-                </div>
-                
-                <div id="shippingAddressLimit" class="alert alert-danger" style="display:none">
-                	<strong>{!$Label.IEC_ShippingAddressLimit}</strong>
+                <div id="iec_div_errors" class="alert alert-danger" style="display:none">
+                	<strong>{!$Label.ISSP_Error} </strong>
+                	<div>
+                		<div id="iec_pobox_error">
+                			<li>{!$Label.IEC_PO_BOX_ERROR}</li>
+                		</div>
+                		<div id="iec_rec_fields">
+                			<li>{!$Label.IEC_fill_required_fields}</li>
+                		</div>
+                	</div>
                 	<span></span>
                 </div>
         
@@ -242,7 +284,7 @@
                     </div>
                     
                     <!-- TF - SP10 - If airline, ask if has Airline Designator --> 
-                    <div class="form-group" style="display:{!IF(isAirline,'','none')}">
+                    <div class="form-group" style="display:{!IF(AND(isAirline, sRefererCommunity != 'iec'),'','none')}">
                         <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Designator_Code_Question}</label>
                         <apex:selectRadio style="width:15%" value="{!toSearchDesignatorCodeString}" onchange="checkSearchDesignatorCode()" >
                             <apex:selectOptions value="{!iataCodeQuestion}"/>
@@ -252,21 +294,27 @@
                     <!-- TF - SP10 - If airline, search for Airline Designator -->
                     <div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
                         <label class="control-label" for="inputError">{!$Label.ISSP_Designator_Code}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control" value="{!searchDesignatorCode}"/>
                     </div>
                     
                     <!-- TF - SP10 - If airline, search for IATA Code -->
                     <div class="form-group" style="display:{!IF(toSearchDesignatorCode,'','none')}">
                         <label class="" for="inputError">{!$ObjectType.Account.fields.IATACode__c.Label}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACodeAirline" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACodeAirline" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control" value="{!searchIATACodeAirline}" id="iataCodeInputAirline" />
                     </div>
                     
                     <!-- TF - SP10 - If airline, search for Country -->
                     <div class="form-group" style="display:{!IF(toSearchDesignatorCode,'','none')}"> 
                         <label class="control-label"  for="inputError"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="CountryAirline" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="CountryAirline" />
+                        </apex:outputPanel>
                         <apex:selectList styleclass="form-control {!IF(toSearchDesignatorCode,'recSearch','')}" value="{!searchCountryAirline}" size="1" >
                             <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
                             <apex:selectOptions value="{!ISOCountry}"/>
@@ -292,7 +340,9 @@
                     <div class="form-group" style="display:{!IF(showSearchCountry,'','none')}"> 
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'display:none;','')}"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'','display:none;')}"><span class="required">*</span>{!$Label.GeneralPublicLocation}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="Country" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="Country" />
+                        </apex:outputPanel>
                         <apex:selectList styleclass="form-control {!IF(showSearchCountry,'recSearch','')} searchCountry" value="{!searchCountry}" size="1" > <!-- onchange="saveCountryName()"> -->
                             <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
                             <apex:selectOptions value="{!ISOCountry}"/>
@@ -301,7 +351,9 @@
                     </div>
                     <div class="form-group" style="display:{!IF(showSearchIataCode,'','none')}">
                         <label class="" for="inputError"><span class="required">*</span>{!$ObjectType.Account.fields.IATACode__c.Label}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACode" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACode" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control {!IF(showSearchIataCode,'recSearch','')}" value="{!searchIATACode}" id="iataCodeInput" />
                     </div>
                     <div class="form-group" id="CompanyName" style="display:{!IF(showSearchCompName,'','none')}">
@@ -830,7 +882,7 @@
         var totAddress = sstreet.val() + scity.val() + scode.val() + (stateReq ? sstate.val() : '');
         var isValid = true;  
         var isPoBox = false;   
-        var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\b');   
+        var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');   
         $j('#poBoxError').hide();
     	if(!isBlank(totAddress)) {
     		$j(sstreet.parents('.form-group')[0]).removeClass('has-error');
@@ -861,11 +913,13 @@
     	}
     	
     	if(!isValid) {
-    		$j('#recFields').show();
+    		$j('#iec_div_errors').show();
+    		$j('#iec_rec_fields').show();
     	}   
     	
     	if(isPoBox) {
-    		$j('#poBoxError').show();
+    		$j('#iec_div_errors').show(); 		
+    		$j('#iec_pobox_error').show();
     	}
     	
     	return isValid && !isPoBox; 	
@@ -877,7 +931,9 @@
         //alert("Country: " +country);
        
         var flag = true;
-        $j('#recFields').hide();
+       	$j('#iec_div_errors').hide();
+       	$j('#iec_pobox_error').hide();
+       	$j('#iec_rec_fields').hide();
         
         var shippingAddressValid = checkShippingAddress();
         
@@ -927,7 +983,8 @@
             flag = false;
         */
         if(flag == false){
-            $j('#recFields').show();
+            $j('#iec_div_errors').show();
+            $j('#iec_rec_fields').show();
         }
         return flag && shippingAddressValid && isValidAddressStreet();
     }

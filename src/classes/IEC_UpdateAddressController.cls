@@ -650,18 +650,23 @@ public void saveShipToAddress()
     dtoShipToAddress.street1 = ApexPages.currentPage().getParameters().get('shipToStreet');
     
     //*** check if address enterred is valid and is already in system
+    Boolean hasError = false;
     lstAddress = checkAddress(dtoShipToAddress, true);
     if (lstAddress == null)
-        return;
+        hasError = true;
         
     /*TC 2017-05-17*/
 	if(isStreetAddressToLong(dtoShipToAddress.street1, 70)) {
 		addErrorMessage(Label.IEC_ShippingAddressLimit);
-		return;
+		hasError = true;
 	}
 	
 	if(IECUtil.isPostOfficeBox(dtoShipToAddress.street1)) {
     	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+    	hasError = true;
+    }
+    
+    if(hasError) {
     	return;
     }
 	/* end TC */
