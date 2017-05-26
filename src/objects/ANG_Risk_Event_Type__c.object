@@ -118,6 +118,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_nr_occurence_ff__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(!ISBLANK(ANG_Agency_Risk_Calculation__c) &amp;&amp; !ISPICKVAL(ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,&apos;Yes&apos;),TEXT(ANG_Agency_Risk_Calculation__r.ANG_Occurrence_Num__c),&apos;Adjusted&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nr Occurences</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Limit_Cash_conditions__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -133,6 +145,8 @@
         <columns>NAME</columns>
         <columns>ANG_Expiration__c</columns>
         <columns>Limit_Cash_conditions__c</columns>
+        <columns>ANG_Description__c</columns>
+        <columns>ANG_nr_occurence_ff__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -149,6 +163,7 @@
         <customTabListAdditionalFields>ANG_Expiration__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Description__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_nr_occurence_ff__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Expiration__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ANG_Description__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ANG_Risk_ID__c</lookupPhoneDialogsAdditionalFields>
