@@ -126,7 +126,7 @@
                                         <div class="field-group text inline mandatory" data-placement="right">
                                             <label>
                                                 <span class="input-label">{!labels['lblEmail']}</span>
-                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" disabled="true" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
+                                                <apex:inputText id="billToEmail" value="{!dtoBillToAddress.email}" disabled="{!dtoBillToAddress.email != ''}" styleClass="user-input text" onchange="validateEmail('billToEmail')" />
                                             </label>
                                             <div id="required_billToEmail" class="input-aid">
                                                 <p>{!labels['msgNoEmail']}</p>

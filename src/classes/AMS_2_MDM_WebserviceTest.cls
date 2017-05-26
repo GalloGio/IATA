@@ -8,7 +8,7 @@ public class AMS_2_MDM_WebserviceTest {
     it's basicly to keep the code coverage in order to keep the code, in case it should be necessary in the future
     */
     public static testmethod void test_getAgencyList() {
-		 
+         
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
         insert isoc;
             
@@ -132,7 +132,7 @@ public class AMS_2_MDM_WebserviceTest {
         agencyContentA1.ShippingCountry = 'WrongTest';
         update agencyContentA1;
         agencyContentR = AMS_2_MDM_Webservice.getAgenciesContent('GroupID','3','ChunkKey','1', new List<String> {agencyContentA1.Id } );
-
+        
         Test.stopTest();
     }
 
@@ -150,6 +150,9 @@ public class AMS_2_MDM_WebserviceTest {
         agencyContentA1.IATACode__c = '1000123';
         update agencyContentA1;
         agencyContentR = AMS_2_MDM_Webservice.getAgenciesContent('GroupID','3','ChunkKey','1', new List<String> {agencyContentA1.Id } );
+
+        agencyContentR = AMS_2_MDM_Webservice.getAgenciesContent('error','3','ChunkKey','1', new List<String> {agencyContentA1.Id } );
+        agencyContentR = AMS_2_MDM_Webservice.getAgenciesContent('exception','3','ChunkKey','1', new List<String> {agencyContentA1.Id } );
 
         agencyContentR = AMS_2_MDM_Webservice.getAgenciesContent('GroupID','3','ChunkKey','1', new List<String> {isos.Id } );
 
@@ -201,7 +204,14 @@ public class AMS_2_MDM_WebserviceTest {
         update a1;
 
         r = AMS_2_MDM_Webservice.sendAgencyECC(a1.Id , oscar.Id);
-       
+
+        //to Generate error
+        a1.IATACode__c = '1000404';
+        update a1;
+        r = AMS_2_MDM_Webservice.sendAgencyECC(a1.Id , oscar.Id);
+        
+        
+
         Test.stopTest();
     }   
 
@@ -236,6 +246,11 @@ public class AMS_2_MDM_WebserviceTest {
         String r = AMS_2_MDM_Webservice.sendAgencyECC(agencyContentA1.Id , oscar.Id );
 
         r = AMS_2_MDM_Webservice.sendAgencyECC(oscar.Id , oscar.Id );
+
+        //to Generate exception
+        agencyContentA1.IATACode__c = '1000503';
+        update agencyContentA1;
+        r = AMS_2_MDM_Webservice.sendAgencyECC(agencyContentA1.Id , oscar.Id);
 
         Test.stopTest();
     }

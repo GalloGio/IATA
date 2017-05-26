@@ -1041,9 +1041,9 @@ public without sharing class ISSP_Registration {
                     if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null
                         && serviceIdInstance.AgencyAccreditationCNS__c != ''
                         && acc.Sector__c == 'Cargo Agent') {
-                        system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
-                        String appId = serviceIdInstance.AgencyAccreditationCNS__c;
-                        appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
+                        // system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
+                        // String appId = serviceIdInstance.AgencyAccreditationCNS__c;
+                        // appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
                     }
                     else if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
                         system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditation__c);
