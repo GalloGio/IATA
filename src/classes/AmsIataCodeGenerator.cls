@@ -407,7 +407,7 @@ global class AmsIataCodeGenerator{
                             String iatacodeToValidate = generateIATACodeWithCheckDigit(theAccreditation, theAccount);
 
                             if(iatacodeToValidate == null){
-                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class and category are correct';
+                                returnedValues[1] = 'Couldn\'t generate IATA Code, please make sure the location class "' + theAccreditation.Location_Class__c + '", sector "' + theAccount.Sector__c + '" and category "' + theAccount.Category__c + '" are correct';
                                 returnedValues[0] = '4';
                                 return returnedValues;
                             }
