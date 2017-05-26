@@ -14,17 +14,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Risk_History_Assessment__c</field>
+                <field>Risk_History_Assessment__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Risk_History__c</field>
+                <field>Financial_Review_Result__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Financial_Review_Result__c</field>
+                <field>ANG_Risk_History__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
