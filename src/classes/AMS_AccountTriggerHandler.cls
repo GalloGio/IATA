@@ -85,15 +85,14 @@ public class AMS_AccountTriggerHandler {
             System.debug('Not Handling minor changes');
        }
 
-       // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
-       copyHandlingInformationToRegulations(accs, oldMap);
-
     }
 
     public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap){
         
         handleAgenciesOperations(accs,oldMap);
         handleDDUpdates(accs, oldMap);
+        // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
+        copyHandlingInformationToRegulations(accs, oldMap);
 
     }
 
