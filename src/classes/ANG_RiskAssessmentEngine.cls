@@ -62,8 +62,8 @@ public class ANG_RiskAssessmentEngine{
         if(AccMap ==null) return;
         accCalcMap.putAll(AccMap);
         string accId=null;
-        map<id,integer> calcTempMap= new map<id,integer>();
-        for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :AccMap.keySet() AND ANG_Event_Status__c='Active' group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
+        map<id,integer> calcTempMap= new map<id,integer>();                                                                                                                                                                                                 //TEMPORAY FIX TO PREVENT AGENCIES THAT ARENT CASH FROM BEING ASSESSED                                                                          
+        for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :AccMap.keySet() AND ANG_Event_Status__c='Active' and ang_HE_accountid__r.ANG_Accreditation_Model__c ='Cash' group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
             if(accId==null)accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
             else if(accId!=reRec.get('ang_HE_accountid__c')){
                 accCalcMap.remove(accId);
