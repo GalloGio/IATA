@@ -133,6 +133,18 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Is_your_firm_handling_Dangerous_Goods__c</fullName>
+        <defaultValue>&quot;No&quot;</defaultValue>
+        <description>Used by AMS 90 days DGR Expiration Reminder</description>
+        <externalId>false</externalId>
+        <label>Is your firm handling Dangerous Goods</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Issued_on__c</fullName>
         <externalId>false</externalId>
         <label>Certificate Issued On</label>
@@ -155,7 +167,7 @@
         <externalId>false</externalId>
         <label>Last Name</label>
         <length>80</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
