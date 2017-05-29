@@ -118,7 +118,7 @@
         <externalId>false</externalId>
         <label>Number of occurrence</label>
         <precision>5</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -740,7 +740,12 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields xsi:nil="true"/>
+        <searchResultsAdditionalFields>ANG_Occurrence_Num__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Parent_Occurences__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Remittance_Frequency__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>ANG_Occurrence_Num_cant_be_negative</fullName>
