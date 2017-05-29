@@ -1,4 +1,4 @@
-trigger ANG_RiskEventTrigger on ANG_Agency_Risk_Event__c (before insert, before update) {
+trigger ANG_RiskEventTrigger on ANG_Agency_Risk_Event__c (before insert, before update, after insert, after update) {
 
 	if(!AMS_TriggerExecutionManager.checkExecution(ANG_Agency_Risk_Event__c.getSObjectType(), 'ANG_RiskEventTrigger')) { return; }
 
