@@ -217,17 +217,6 @@
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
-    
-    <fields>
-        <fullName>ANG_Risk_History__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Risk_Status</globalPicklist>
-        <label>Risk History</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
         <fullName>Risk_Assessment</fullName>
