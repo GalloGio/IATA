@@ -172,6 +172,10 @@
         <recipients>
             <type>owner</type>
         </recipients>
+        <recipients>
+            <field>Product_Manager_ACR__c</field>
+            <type>userLookup</type>
+        </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>unfiled$public/New_Case_Comment_BSPlink_CSR</template>
