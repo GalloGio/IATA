@@ -214,8 +214,8 @@
 			var controlledId = $j(this).data('controls');
 			var $form = $j('.'+controlledId);
 
-			if($j(this).prop('checked')) $form.show();//.removeClass('invisible');
-			else $form.hide();//addClass('invisible');
+			if($j(this).prop('checked')) $form.removeClass('invisible');
+			else $form.addClass('invisible');
 		});
 	} 
 
