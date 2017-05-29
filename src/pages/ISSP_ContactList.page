@@ -264,6 +264,13 @@
                   </apex:column>
             </apex:repeat>
 
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
+
         </apex:pageBlockTable>
 
         <div class="bottomNav" id="j_id0:YourListViewId_bottomNav">
