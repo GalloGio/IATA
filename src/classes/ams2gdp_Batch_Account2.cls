@@ -10,6 +10,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
+	Set<String> locationsSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -27,8 +28,8 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
 		} else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
-			Set<String> locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
-			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\')) AND Location_Class__c IN: ' + locationsSet;
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Related_Account__r.Location_Class__c IN:  locationsSet  AND  Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))' ;
 		} else {
 			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
 		}
@@ -92,7 +93,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		totalRecords = 0;
 		failed_records = new List<String>();
 		syncStartedDate =Datetime.now();
-
+		System.debug(query);
 		return Database.getQueryLocator(query);
 	}
 
