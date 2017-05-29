@@ -70,8 +70,4 @@ public class ANG_RiskEventTriggerHandler {
         new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
 	}
 
-    private void doRiskAssessment(set<id> updAccSet){
-        
-        new ANG_RiskAssessmentEngine(updAccSet).Assessment();
-    }
 }
