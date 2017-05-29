@@ -20,6 +20,10 @@
         <fullName>Inactive_Migrated</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Inactive_CHO</fullName>
+        <default>false</default>
+    </globalPicklistValues>
     <masterLabel>Risk Status</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>

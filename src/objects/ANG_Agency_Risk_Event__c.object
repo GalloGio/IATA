@@ -349,6 +349,10 @@ Id
                 <default>true</default>
             </values>
             <values>
+                <fullName>Inactive_CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inactive_Migrated</fullName>
                 <default>false</default>
             </values>
