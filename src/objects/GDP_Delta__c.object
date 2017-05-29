@@ -141,9 +141,9 @@ Records in this object holds the nature of the modification ( A=Added, C=Changed
         <filters>
             <field>DeltaLastModifiedDate__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>YESTERDAY</value>
         </filters>
-        <label>All - TODAY</label>
+        <label>All - YESTERDAY</label>
         <language>en_US</language>
     </listViews>
     <nameField>
