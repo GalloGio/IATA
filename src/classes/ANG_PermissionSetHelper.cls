@@ -76,6 +76,9 @@ public class ANG_PermissionSetHelper {
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_PermissionSetHelper - managePermissions] change - ' + change);
 
 			Id permissionSetId = permissions.get(change.permissionSetName);
+
+			if(permissionSetId == null) continue;
+
 			for(Id contact : change.contactsToAdd){
 				//check if contact already has the permission set assigned
 				//if not, create a new assignment
