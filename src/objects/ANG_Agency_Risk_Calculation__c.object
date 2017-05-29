@@ -61,7 +61,7 @@
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -86,7 +86,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -99,7 +99,7 @@
         <relationshipLabel>Adjustments</relationshipLabel>
         <relationshipName>ANG_Adjustments</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -109,7 +109,7 @@
         <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
         <label>Financial Review Result</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -120,7 +120,7 @@
         <precision>5</precision>
         <required>true</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -145,7 +145,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -168,7 +168,17 @@
         <globalPicklist>ANG_Remittance_Frequency</globalPicklist>
         <label>Remittance Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Risk_History_Assessment__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -178,7 +188,7 @@
         <globalPicklist>ANG_Risk_Status</globalPicklist>
         <label>Risk History</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -195,15 +205,29 @@
         <unique>true</unique>
     </fields>   
     <fields>
-        <fullName>ANG_Risk_History_Assessment__c</fullName>
+        <fullName>Agency_Risk_Calculation_Model__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
-        <label>Risk History Assessment</label>
+        <label>Agency Risk Calculation</label>
+        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
+        <relationshipLabel>Agency Risk Calculations (Agency Risk Calculation)</relationshipLabel>
+        <relationshipName>Agency_Risk_Calculation_Model</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>    
+        <type>Lookup</type>
+    </fields>
+    
+    <fields>
+        <fullName>ANG_Risk_History__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <label>Risk History</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
         <fullName>All</fullName>
@@ -217,10 +241,23 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>TD</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Accreditation_Model__c</columns>
+        <columns>ANG_Order__c</columns>
+        <columns>ANG_Occurrence_Num__c</columns>
+        <columns>ANG_Adjusted__c</columns>
+        <columns>ANG_Calculation_Rule__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>TD</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>ARC-{00000000}</displayFormat>
         <label>Agency Risk Calculation Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agency Risk Calculations</pluralLabel>
@@ -709,9 +746,7 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>ANG_Risk_Event_Type__c</lookupDialogsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>ANG_Occurrence_Num_cant_be_negative</fullName>

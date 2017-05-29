@@ -1,7 +1,5 @@
 public class ANG_RiskAssessmentEngine{
     
-
-    private set<id> accSet;
     private map<id,ang_agency_risk_calculation__c> risCalcMap{ // map risk event Calculations
         get{
             if(risCalcMap==null) setMaps();
@@ -34,7 +32,7 @@ public class ANG_RiskAssessmentEngine{
         get{
             if(accInfoMap==null){
                 accInfoMap = new map<id,account>();
-                for(account acc:[select id, remittance_frequency__c,(select id from All_Risk_Events__r where  ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c ='Yes' AND ANG_Event_Status__c='Active') counter from account where id in :accSet]){
+                for(account acc:[select id,name, remittance_frequency__c,ANG_Accreditation_Model__c ,(select id from All_Risk_Events__r where  ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c ='Yes' AND ANG_Event_Status__c='Active') counter from account where id in :accCalcMap.keySet()]){
                     accInfoMap.put(acc.id,acc);
                 }
             }
@@ -46,27 +44,10 @@ public class ANG_RiskAssessmentEngine{
 
     private map<id,Map<id,integer>> accCalcMap{ //map containning accounts RE occurences for assessment
         get{
-            if(accCalcMap==null){
-                accCalcMap = new Map<id,Map<id,integer>>();
-                string accId=null;
-                map<id,integer> calcTempMap= new map<id,integer>();
-                for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :accSet AND ANG_Event_Status__c='Active' group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
-                    if(accId==null)accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
-                    else if(accId!=reRec.get('ang_HE_accountid__c')){
-                        accCalcMap.put(accId,calcTempMap);
-                        calcTempMap= new map<id,integer>();
-                        accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
-                    }
-                    calcTempMap.put((id)reRec.get('calcId'),Integer.valueOf(reRec.get('counter')));
-                }
-                if(accId !=null){
-                    accCalcMap.put(accId,calcTempMap);
-                }
-            }
-            
+            if(accCalcMap ==null) accCalcMap= new map<id,Map<id,integer>>();
             return accCalcMap;
         }
-        set;
+        private set;
     }
 
     private boolean breakCicle{
@@ -77,20 +58,40 @@ public class ANG_RiskAssessmentEngine{
         set;
     } // assist variable to skip cicle
 
-  
-    public ANG_RiskAssessmentEngine(set<id> accList){
-        accSet = accList;
+    public ANG_RiskAssessmentEngine(map<id,Map<id,integer>> AccMap){
+        if(AccMap ==null) return;
+        accCalcMap.putAll(AccMap);
+        string accId=null;
+        map<id,integer> calcTempMap= new map<id,integer>();                                                                                                                                                                                                                                                                      
+        for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :AccMap.keySet() AND ANG_Event_Status__c='Active' group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
+            if(accId==null)accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
+            else if(accId!=reRec.get('ang_HE_accountid__c')){
+                accCalcMap.remove(accId);
+                accCalcMap.put(accId,calcTempMap);
+                calcTempMap= new map<id,integer>();
+                accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
+            }
+            calcTempMap.put((id)reRec.get('calcId'),Integer.valueOf(reRec.get('counter')));
+        }
+        if(accId !=null){
+            accCalcMap.remove(accId);
+            accCalcMap.put(accId,calcTempMap);
+        }
     }
 
-    public void Assessment(){
+    public void assessment(){
         list<account> AccUpdList= new list<account>();
         for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
-
             Account updAcc=new Account(id=accKey,ANG_HE_RiskHistoryAssessment__c='Passed');
             Integer accParentOccs=0;
             map<id,integer> groupingMap = accCalcMap.get(accKey);
+            
+            if(groupingMap==null){
+                if(accInfoMap.containsKey(accKey) && accInfoMap.get(accKey).get('ANG_Accreditation_Model__c')=='Cash')AccUpdList.add(updAcc);
+                break;
+            }
             for(string reRec: groupingMap.keySet()){ // iterate groupings
-                accParentOccs=groupingMap.get(reRec);
+                accParentOccs=groupingMap.get(reRec);                
                 if(risCalcMap.containsKey(reRec)){ //validate REC
                     if( accParentOccs>=risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
                         updAcc.ANG_HE_RiskHistoryAssessment__c='Failed';

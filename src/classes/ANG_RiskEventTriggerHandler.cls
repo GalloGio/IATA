@@ -18,26 +18,27 @@ public class ANG_RiskEventTriggerHandler {
     }
 
     public void onAfterInsert(){
-        set<id> updAccSet = new Set<id>();
-        for(ANG_Agency_Risk_Event__c re : triggerNew){            
-                updAccSet.add(re.ANG_HE_AccountId__c);
+        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();
+        for(ANG_Agency_Risk_Event__c re : triggerNew){  
+            if(re.ANG_HE_AccountId__c !=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
         }
-        doRiskAssessment(updAccSet);
+        if(updAccMap.isEmpty()) return;
+        new ANG_RiskAssessmentEngine(updAccMap).assessment();
     }
-    public void onAfterUpdate(){        
-        set<id> updAccSet = new Set<id>();
-        for(ANG_Agency_Risk_Event__c re : triggerNew){            
+    public void onAfterUpdate(){     
+        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();        
+        for(ANG_Agency_Risk_Event__c re : triggerNew){                  
             ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
-            if(re.ANG_HE_AccountId__c ==null){
-                updAccSet.add(oldRe.ANG_HE_AccountId__c);
-            }else if(re.ANG_HE_AccountId__c ==oldRe.ANG_HE_AccountId__c ){                
-                updAccSet.add(re.ANG_HE_AccountId__c);
-                updAccSet.add(oldRe.ANG_HE_AccountId__c);
+            if(re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c){
+                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
+                if(oldRe.ANG_HE_AccountId__c!=null) updAccMap.put(oldRe.ANG_HE_AccountId__c,null);
             }else{
-                updAccSet.add(re.ANG_HE_AccountId__c);
-            }            
-        }
-        doRiskAssessment(updAccSet);
+                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
+            } 
+        } 
+        if(updAccMap.isEmpty()) return;
+        
+        new ANG_RiskAssessmentEngine(updAccMap).assessment();           
     }
 
     // ************************************************************
