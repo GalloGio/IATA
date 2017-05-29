@@ -118,7 +118,7 @@
         <externalId>false</externalId>
         <label>Number of occurrence</label>
         <precision>5</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -230,28 +230,33 @@
     </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Risk_Assessment</fullName>
         <columns>NAME</columns>
-        <columns>ANG_Accreditation_Model__c</columns>
-        <columns>ANG_Order__c</columns>
-        <columns>ANG_Occurrence_Num__c</columns>
-        <columns>ANG_Adjusted__c</columns>
-        <columns>ANG_Calculation_Rule__c</columns>
+        <columns>ANG_Financial_Review_Result__c</columns>
+        <columns>ANG_Risk_History_Assessment__c</columns>
+        <columns>ANG_Risk_History__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Risk_Status_Assessment</value>
+        </filters>
+        <label>Risk Assessment</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>TD</fullName>
+        <fullName>Rules</fullName>
         <columns>NAME</columns>
         <columns>ANG_Accreditation_Model__c</columns>
-        <columns>ANG_Order__c</columns>
         <columns>ANG_Occurrence_Num__c</columns>
         <columns>ANG_Adjusted__c</columns>
-        <columns>ANG_Calculation_Rule__c</columns>
-        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
-        <label>TD</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Rules</value>
+        </filters>
+        <label>Rules</label>
         <language>en_US</language>
     </listViews>
     <nameField>
@@ -746,7 +751,12 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields xsi:nil="true"/>
+        <searchResultsAdditionalFields>ANG_Occurrence_Num__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Parent_Occurences__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Remittance_Frequency__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>ANG_Occurrence_Num_cant_be_negative</fullName>
