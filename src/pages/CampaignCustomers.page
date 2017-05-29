@@ -150,7 +150,7 @@
 				                            </apex:column>
 				                            <apex:column >
 				                                <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label} </apex:facet>
-				                                {!availableProducts[product].Name} - {!availableProducts[product].id}
+				                                {!availableProducts[product].Name}
 				                            </apex:column>
 				                            <apex:column >
 				                                <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
