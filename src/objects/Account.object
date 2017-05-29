@@ -8547,7 +8547,6 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                 <default>false</default>
                 <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>

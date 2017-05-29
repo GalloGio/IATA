@@ -180,6 +180,26 @@
         <label>All Email Exclusion Relations</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>IDC_Email_Exclusion_Relations</fullName>
+        <columns>NAME</columns>
+        <columns>EBC_Email_Exclusion__c</columns>
+        <columns>GDP_Products_Account_View__c</columns>
+        <columns>ID_Card__c</columns>
+        <columns>Is_Global__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>External_Id__c</columns>
+        <columns>Is_Email_Changed__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ID_Card__c</field>
+            <operation>contains</operation>
+            <value>IDC</value>
+        </filters>
+        <label>IDC - Email Exclusion Relations</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Email Exclusion Relation Name</label>
         <type>Text</type>
