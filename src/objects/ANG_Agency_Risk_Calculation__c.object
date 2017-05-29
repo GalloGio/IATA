@@ -95,6 +95,16 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Rule</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>You can only select an Agency Risk Calculation with Rules record type.</errorMessage>
+            <filterItems>
+                <field>ANG_Agency_Risk_Calculation__c.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>Rules</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
         <relationshipLabel>Adjustments</relationshipLabel>
         <relationshipName>ANG_Adjustments</relationshipName>
