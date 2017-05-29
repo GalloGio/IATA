@@ -53,7 +53,10 @@
 	    					return false;
 	    				}, false);
 	    			}else{
-	    				el.target = "_blank";
+	    				el.href = el.getAttribute("href").replace(/(retURL=)[^&]+/i, '$1'+'{!accountLink}');
+	    				el.href += '&saveURL={!accountLink}';
+
+	    				el.target = "_top";
 	    			}
 	    		});
 
