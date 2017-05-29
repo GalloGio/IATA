@@ -202,9 +202,9 @@ public class ANG_RiskEventGenerator {
 
 			//fetch HE account
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
-			re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
 
 			if(re.ANG_OscarId__c != null) re.ANG_CaseId__c = oscars.get(re.ANG_OscarId__c);
+			if(Trigger.isExecuting && Trigger.isInsert) re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;			
 
 			//correct expiration date
 			re.ANG_Expiration_Date__c = re.ANG_Issued_Date__c.addMonths(Integer.valueOf(types.get(re.ANG_Risk_Type__c).ANG_Expiration__c));
