@@ -661,7 +661,7 @@ public void saveShipToAddress()
 		hasError = true;
 	}
 	
-	if(IECUtil.isPostOfficeBox(dtoShipToAddress.street1)) {
+	if(dtoShipToAddress != null && !String.isBlank(dtoShipToAddress.street1) && IECUtil.isPostOfficeBox(dtoShipToAddress.street1)) {
     	addErrorMessage(Label.IEC_PO_BOX_ERROR);
     	hasError = true;
     }
