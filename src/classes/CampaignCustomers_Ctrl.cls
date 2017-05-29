@@ -41,7 +41,6 @@ public class CampaignCustomers_Ctrl
     {
 
         String strFilter;
-      //  availableProducts = new List<List<Product2>>();
       availableProducts = new Map<Integer, Product2>();
         //-- Init data 
 
@@ -53,10 +52,8 @@ public class CampaignCustomers_Ctrl
             campaigns.add(new SelectOption(c.Id, c.Name));
         
         //Products
-        //Product_Sel pSelector = new Product_Sel();
         strFilter = Utility.getSeqTextSetting('Product Filter for Renewal', ' ');
         List<Product2> availableProducts1 = Database.query('SELECT Id, Name, SAP_Material_Number__c, Product_Segment__c FROM Product2 WHERE (SAP_Material_Number__c != null) ' + strFilter + 'order By name');
-        //availableProducts.add(availableProducts1);
         for(Integer index = 0 ; index < availableProducts1.size() ; index++) {
             availableProducts.put(index,availableProducts1[index]);
        }
@@ -125,17 +122,14 @@ public class CampaignCustomers_Ctrl
             }*/
 
             //-- Find selected products last ersions 
-            Set<Id> productsOrdered = new Set<Id>(); 
-            //for(Product2 p : selectedProducts)
+            Set<Id> productsOrdered = new Set<Id>();             
              for(Integer id : selectedProducts.keySet())
                 productsOrdered.add(selectedProducts.get(id).Id);
-
             Map<Id, Product2> productLastVersion = new Product_Sel().getProductLastVersions(productsOrdered);
 
-            //for(Product2 p : selectedProducts)
+            
             for(Integer id : selectedProducts.keySet())
-            {
-                //selectedProductNumbers.add(p.SAP_Material_Number__c);
+            {                
                 Product2 lastVersion = productLastVersion.get(selectedProducts.get(id).Id);
                 campaignProducts2Save.add(new Campaign_Product__c(
                     Campaign__c = campaignId, 
