@@ -20682,7 +20682,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId URL javaScript</shortDescription>
-        <value>https://identity.iata.org</value>
+        <value>https://preprod-customer-portal-iata.cs85.force.com/identity</value>
     </labels>	
     <labels>
         <fullName>OneId_Username</fullName>
