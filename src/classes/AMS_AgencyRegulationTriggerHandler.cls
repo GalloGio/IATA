@@ -33,7 +33,7 @@ public class AMS_AgencyRegulationTriggerHandler {
             List<Account> allAccounts = new List<Account>([SELECT Id, Top_Parent__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
 
             Set<Id> accountIdsHOs = new Set<Id>();
-            Map<Id, Id> parentPerBR = new Map<Id, Id>();
+            Map<Id, Set<Id>> parentPerBR = new Map<Id, Set<Id>>();
 
             //check if the account is an AO or HO to get the contacts of TopParent
             for(Account ac: allAccounts){
@@ -41,7 +41,9 @@ public class AMS_AgencyRegulationTriggerHandler {
                     accountIds.remove(ac.Id);
                     accountIdsHOs.add(ac.Top_Parent__c);
                     if(!parentPerBR.containsKey(ac.Top_Parent__c))
-                        parentPerBR.put(ac.Top_Parent__c, ac.Id);
+                        parentPerBR.put(ac.Top_Parent__c, new Set<Id>());
+                    
+                    parentPerBR.get(ac.Top_Parent__c).add(ac.Id);
                 }
             }
 
@@ -62,10 +64,18 @@ public class AMS_AgencyRegulationTriggerHandler {
                 List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
                 for(Contact cHO: allContactsHOs){
-                    if(!keyContactsPerAccount.containsKey(parentPerBR.get(cHO.AccountId)))
-                        keyContactsPerAccount.put(parentPerBR.get(cHO.AccountId), new List<Contact>());
 
-                    keyContactsPerAccount.get(parentPerBR.get(cHO.AccountId)).add(cHO);
+                    if(parentPerBR.containsKey(cHO.AccountId)){
+
+                        for(Id idBR : parentPerBR.get(cHO.AccountId)){
+
+                            if(!keyContactsPerAccount.containsKey(idBR))
+                                keyContactsPerAccount.put(idBR, new List<Contact>());
+
+                            keyContactsPerAccount.get(idBR).add(cHO);
+                            
+                        }
+                    }
                 }
             }
 

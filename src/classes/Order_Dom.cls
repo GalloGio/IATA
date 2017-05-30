@@ -89,6 +89,9 @@ public without sharing class Order_Dom {
 
         //Email notification when the Order is sold
         Order_Svc.sendEmailWhenOrderIsSold(newMap, oldMap);
+
+        //Email notification when the Order is Payment Error
+        Order_Svc.sendEmailWhenPaymentDeclined(newMap, oldMap);
         
         //-- Call SAP SalesOrder Interface if status become Ready for SAP or PAID
         Order_Sel orderSelector = new Order_Sel(); 
