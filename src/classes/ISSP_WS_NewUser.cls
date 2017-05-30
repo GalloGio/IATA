@@ -204,7 +204,7 @@ global class ISSP_WS_NewUser {
                 }
                 else if (app.toUpperCase() == 'CASS04'){
                     //app = 'CASSLink Analytics';
-                    serviceId = serviceIdInstance.CASSLinkExport__c;
+                    serviceId = serviceIdInstance.CNS_CassLink__c;
                     isCNS = true;
                 }
                 else if (app.toUpperCase() == 'SIS'){
