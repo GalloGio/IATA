@@ -43,6 +43,7 @@ private class LightningRegistrationProcess_Test {
         LightningRegistrationProcess.createContactAndAccount(oContact, oAccount, 'Airline');
         LightningRegistrationProcess.getHostURL();
         LightningRegistrationProcess.setFederationId(anUser.id, anUser.email);
+        LightningRegistrationProcess.getCommunityName();
 
         
     }
