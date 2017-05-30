@@ -1,5 +1,0 @@
-<messaging:emailTemplate subject="Credit card payment not accepted for Order {!relatedTo.OrderNumber}" recipientType="Contact" relatedToType="Order">
-    <messaging:htmlEmailBody >
-        <c:CreditCardPaymentErrorNotification inputOrderId="{!relatedTo.Id}" />
-    </messaging:htmlEmailBody>
-</messaging:emailTemplate>
