@@ -21,6 +21,7 @@ public class ams2gdp_TestDataGenerator
                 BillingCountry='Canada',
                 ShippingStreet ='42 Edmond',
                 ShippingCity= 'Montreal',
+				Status__c = 'Terminated',
                 ShippingPostalCode ='h1v1f8',
                 ShippingState='Quebec',
                 ShippingCountry='Canada',
