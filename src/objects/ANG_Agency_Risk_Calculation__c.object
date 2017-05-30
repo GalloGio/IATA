@@ -201,7 +201,7 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Financial_Review_Result__c</fullName>
+        <fullName>ANG_Financial_Review_Result__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
         <label>Financial Review Result</label>
@@ -211,7 +211,7 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Risk_History_Assessment__c</fullName>
+        <fullName>ANG_Risk_History_Assessment__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
         <label>Risk History Assessment</label>
@@ -221,7 +221,7 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Risk_History__c</fullName>
+        <fullName>ANG_Risk_History__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Risk History</label>

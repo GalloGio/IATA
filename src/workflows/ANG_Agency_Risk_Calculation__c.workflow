@@ -13,7 +13,7 @@
     <fieldUpdates>
         <fullName>ANG_Risk_Calculation_UK_Assessment</fullName>
         <field>ANG_UniqueKey__c</field>
-        <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(Financial_Review_Result__c) + &apos;_&apos; + TEXT(Risk_History__c) + &apos;_&apos; + TEXT(Risk_History_Assessment__c)</formula>
+        <formula>RecordType.DeveloperName + &apos;_&apos; + TEXT(ANG_Financial_Review_Result__c) + &apos;_&apos; + TEXT(ANG_Risk_History__c) + &apos;_&apos; + TEXT(ANG_Risk_History_Assessment__c)</formula>
         <name>ANG Risk Calculation UK Assessment</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
