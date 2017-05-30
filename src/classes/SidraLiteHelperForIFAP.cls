@@ -64,7 +64,7 @@ public with sharing class SidraLiteHelperForIFAP {
                     returnCase.SIDRA_Lite_Default_Date__c = Date.today();
                     //returnCase.IRR_Approval_Rejection__c = 'Approved';
                     //returnCase.Propose_Irregularity__c = DateTime.now();
-                    returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+                    //returnCase.IRR_Approval_Rejection_Date__c = DateTime.now();
                     //returnCase.IRR_Type__c =  'Double Irregularity';
                     returnCase.Reason_for_Default__c =  'Suspension - FS Non Compliance';
                 } else {

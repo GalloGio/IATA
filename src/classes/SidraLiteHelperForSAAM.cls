@@ -130,7 +130,7 @@ parentCase.Documentation_Complete__c.format() + ')');
           if (SidraLiteUtil.isAccountActive(parentCase.account)) {
               //newCase.Propose_Irregularity__c = DateTime.now();
               //newCase.IRR_Approval_Rejection__c = 'Approved';
-              newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
+              //newCase.IRR_Approval_Rejection_Date__c = DateTime.now();
               /*if (SidraLiteUtil.isPassenger(parentCase.account)) {
                   newCase.IRR_Type__c = 'Double Irregularity';
               } else {
