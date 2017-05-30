@@ -202,8 +202,7 @@ global class ISSP_WS_NewUser {
                     //app = 'CASSLink Analytics';
                     serviceId = serviceIdInstance.CASSLinkRouteAnalyzer__c;
                 }
-                else if (app.toUpperCase() == 'CASS04'){
-                    //app = 'CASSLink Analytics';
+                else if (app.toUpperCase() == 'CASS04'){                    
                     serviceId = serviceIdInstance.CNS_CassLink__c;
                     isCNS = true;
                 }
