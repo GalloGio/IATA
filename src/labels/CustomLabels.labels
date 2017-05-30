@@ -20829,6 +20829,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>Type</value>
     </labels>
     <labels>
+        <fullName>OneId_URL_javaScript</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId URL javaScript</shortDescription>
+        <value>https://identity.iata.org</value>
+    </labels>
+    <labels>
         <fullName>OneId_Username</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
