@@ -10,59 +10,61 @@
 			</div>
 		</apex:form>
 
-	    <!-- <c:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
-	    <c:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" /> -->
+		<!-- <c:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
+		<c:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" /> -->
 
-	    <script>	    		 
-    		// check if table is rerendered
-    		var observer = new MutationObserver(function(mutations) {
+		<script>	    		 
+			// check if table is rerendered
+			var observer = new MutationObserver(function(mutations) {
 				bindLinks(); 
-    		});
+			});
 
-    		function observeBody() {
-    			observer.observe(document.getElementById('observed'), { attributes: false, childList: true, characterData: false, subtree: true });
-    		}
+			function observeBody() {
+				observer.observe(document.getElementById('observed'), { attributes: false, childList: true, characterData: false, subtree: true });
+			}
 
-	    	function navigateOnConsole(url, title) {
-	    		sforce.console.getEnclosingPrimaryTabId(function (result) {
+			function navigateOnConsole(url, title) {
+				sforce.console.getEnclosingPrimaryTabId(function (result) {
 					sforce.console.openSubtab(result.id , url, true, title, null);
 				});
-	    	}
+			}
 
-	    	//Record links on the table should open on a new page/tab (except for deleted ones)
-	    	function bindLinks(){
-	    		var newButton = document.querySelector('.newButton');
-	    		if(newButton != null){
-	    			newButton.onclick = function(){
-	    				if(sforce.console.isInConsole()) navigateOnConsole('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');
-	    				else redirectNew();
-	    				return false;
-	    			}
-	    		}
-	    		
-	    		var links = [].slice.call(document.querySelectorAll(".targetTable a"));
-	    		links.forEach(function(el){
-	    			if(el.innerHTML == 'Del') el.target = "_self";
-	    			else if (sforce.console.isInConsole()){
-	    				var linkURL = el.getAttribute("href");
-	    				el.href = '';
-	    				el.addEventListener('click', function(e){
-	    					e.preventDefault();
-	    					e.stopPropagation();
-	    					navigateOnConsole(linkURL, el.innerText)
-	    					return false;
-	    				}, false);
-	    			}else{
-	    				el.href = el.getAttribute("href").replace(/(retURL=)[^&]+/i, '$1'+'{!accountLink}');
-	    				el.href += '&saveURL={!accountLink}';
+			//Record links on the table should open on a new page/tab (except for deleted ones)
+			function bindLinks(){
+				var newButton = document.querySelector('.newButton');
+				if(newButton != null){
+					newButton.onclick = function(){
+						if(sforce.console.isInConsole()) navigateOnConsole('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');
+						else redirectNew();
+						return false;
+					}
+				}
+				
+				var links = [].slice.call(document.querySelectorAll(".targetTable a"));
+				links.forEach(function(el){
+					if(el.innerHTML == 'Del') el.target = "_self";
+					else if (sforce.console.isInConsole()){
+						var linkURL = el.getAttribute("href");
+						el.href = '';
+						el.addEventListener('click', function(e){
+							e.preventDefault();
+							e.stopPropagation();
+							navigateOnConsole(linkURL, el.innerText)
+							return false;
+						}, false);
+					}else{
+						el.target = "_top";
 
-	    				el.target = "_top";
-	    			}
-	    		});
+						if((el.innerHTML == 'Edit')){
+							el.href = el.getAttribute("href").replace(/(retURL=)[^&]+/i, '$1'+'{!accountLink}');
+							el.href += '&saveURL={!accountLink}';
+						}
+					}
+				});
 
-	    		observeBody();  
-	    	}
+				observeBody(); 
+			}
 
-	    	bindLinks();	    	
-	    </script>
+			bindLinks();
+		</script>
 </apex:page>
