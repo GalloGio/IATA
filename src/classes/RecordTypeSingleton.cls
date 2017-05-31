@@ -4,7 +4,7 @@ public class RecordTypeSingleton {
         public  map<string,map<string,id>> RtIDsPerDeveloperNamePerObj {get;private set;}
     
         private RecordTypeSingleton(){
-                    RtIDsPerDeveloperNamePerObj = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account','Contact','Case','Opportunity','Contract','ID_Card_Application__c','EmailTemplate__c','AMS_Country_Specific_Attribute__c'});
+                    RtIDsPerDeveloperNamePerObj = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string>{'Account','Contact','Case','Opportunity','Contract','ID_Card_Application__c','EmailTemplate__c','AMS_Country_Specific_Attribute__c','ANG_Agency_Risk_Calculation__c'});
                         
         }
             

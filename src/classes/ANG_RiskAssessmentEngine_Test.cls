@@ -11,7 +11,8 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=1,
 			ANG_Adjusted__c='No',
 			ANG_Accreditation_Model__c='Cash',
-			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules')
+			
 			);
 		ruleList.add(arc1);
 
@@ -20,7 +21,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=2,
 			ANG_Adjusted__c='No',
 			ANG_Accreditation_Model__c='Cash',
-			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules')
 			);
 		ruleList.add(arc2);
 		
@@ -29,7 +30,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=2,
 			ANG_Adjusted__c='Mixed',
 			ANG_Accreditation_Model__c='Cash',
-			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules')
 			);
 		ruleList.add(arc3);
 		ANG_Agency_Risk_Calculation__c arc4= new ANG_Agency_Risk_Calculation__c( // risk event that fails according  the adjustments
@@ -37,7 +38,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=0,
 			ANG_Adjusted__c='Yes',
 			ANG_Accreditation_Model__c='Cash',
-			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Rules')
 			);
 		ruleList.add(arc4);
 
@@ -50,7 +51,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=1,
 			ANG_Parent_Occurences__c=1,
 			ANG_Calculation_Rule__c=arc3.id,	
-			recordtypeId =Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Adjustment').RecordTypeId
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment')
 			);
 		adjustmentList.add(adj1);
 
@@ -59,7 +60,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=1,
 			ANG_Parent_Occurences__c=0,
 			ANG_Calculation_Rule__c=arc3.id,
-			recordtypeId =Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Adjustment').RecordTypeId		
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment')		
 			);
 		adjustmentList.add(adj2);
 
@@ -68,7 +69,7 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Occurrence_Num__c=2,
 			ANG_Parent_Occurences__c=0,
 			ANG_Calculation_Rule__c=arc4.id,
-			recordtypeId =Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Adjustment').RecordTypeId			
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('ANG_Agency_Risk_Calculation__c').get('Adjustment')			
 			);
 		adjustmentList.add(adj3);
 
