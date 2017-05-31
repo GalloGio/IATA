@@ -82,7 +82,12 @@
 			                        </td>
 			                        <td class="details js-toggle-details is-hidden">
 			                            <div class="quote-details-container">
-			                                <div class="caption"><apex:outputText value="{!ord.OrderNumber}" /></div>
+			                                <div class="caption">
+												<!-- <apex:outputText value="{!ord.OrderNumber}" /> -->
+												<apex:outputLink value="{!$Site.BaseUrl}/IEC_ConfirmOrder?orderId={!ord.Id}">{!ord.OrderNumber}</apex:outputLink>
+												&nbsp;
+												<apex:outputText value="{!ord.Status}" />
+											</div>
 			                                <div class="dates">
 			                                    <div class="box">
 			                                        <strong>{!$Label.Date}: </strong>

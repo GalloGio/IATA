@@ -13,6 +13,8 @@
      <script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}"></script>
      <script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript"> </script> --> 
 
+<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" type="text/css" />
+<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" type="text/javascript" > </script> 
 
   <div class="container">
    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
@@ -377,6 +379,19 @@
                                                             <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" size="1">
                                                                 <apex:selectoptions value="{!airlines}" />
                                                             </apex:selectlist>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
+                                                            <apex:inputText styleclass="form-control" value="{!newCase[field.fieldValue]}" />
+                                                            <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
+                                                            <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!newCase[field.fieldValue]}" required="false" size="1" rendered="{!field.listOptions!=null}">
+                                                                <apex:selectoptions value="{!field.listOptions}" />
+                                                            </apex:selectlist>
+                                                            <script>
+                                                                $('.selectpicker').selectpicker();
+                                                                $('.bootstrap-select').find('button').removeClass('btn-default').removeClass('btn').addClass('form-control').addClass('mandatory');
+                                                            </script>
                                                         </apex:outputpanel>
                                                         <div class="hiddenerror" style="display: none;">
                                                             <p class="errormsg" style="line-height: 26px;">ERROR</p>
