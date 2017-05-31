@@ -65,7 +65,7 @@ public class ANG_RiskAssessmentEngine_Test{
 
 		ANG_Agency_Risk_Calculation__c adj3= new ANG_Agency_Risk_Calculation__c( // risk event that fails with 1 adjusted occ  fpr monthly 
 			ANG_Remittance_Frequency__c='Monthly',
-			ANG_Occurrence_Num__c=1,
+			ANG_Occurrence_Num__c=2,
 			ANG_Parent_Occurences__c=0,
 			ANG_Calculation_Rule__c=arc4.id,
 			recordtypeId =Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Adjustment').RecordTypeId			
@@ -184,8 +184,8 @@ public class ANG_RiskAssessmentEngine_Test{
     	account acc= [select id from account where name ='acc1' limit 1];    	
 		Test.startTest();
 			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
-	    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 3 Mixed'].id, system.Today());
-	    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
+			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
+	    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 3 Mixed'].id, system.Today());	    	
 			system.assertEquals('Failed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc1' limit 1].ANG_HE_RiskHistoryAssessment__c);
 		Test.stopTest();
     }
@@ -194,6 +194,7 @@ public class ANG_RiskAssessmentEngine_Test{
     	//fails agency risk assessment due an adjusted risk event
     	account acc= [select id from account where name ='acc1' limit 1]; 	
 		Test.startTest();
+			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
 			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
 			system.assertEquals('Failed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc1' limit 1].ANG_HE_RiskHistoryAssessment__c);
 		Test.stopTest();

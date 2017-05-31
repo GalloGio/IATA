@@ -79,7 +79,7 @@ public class ANG_RiskAssessmentEngine{
         }
 
         for(id accountId:accInfoMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && accInfoMap.get(accountId).get('ANG_Accreditation_Model__c')=='Cashless'){
+            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).get('ANG_Accreditation_Model__c')=='Legacy' ||  accInfoMap.get(accountId).get('ANG_Accreditation_Model__c')=='Cashless')){
                 accCalcMap.remove(accountId);
             }
 
@@ -94,8 +94,7 @@ public class ANG_RiskAssessmentEngine{
             map<id,integer> groupingMap = accCalcMap.get(accKey);
             
             if(groupingMap==null){
-                if(accInfoMap.containsKey(accKey) && accInfoMap.get(accKey).get('ANG_Accreditation_Model__c')=='Cash') AccUpdList.add(updAcc);
-                
+                AccUpdList.add(updAcc);
                 continue;
             }
             for(string reRec: groupingMap.keySet()){ // iterate groupings
