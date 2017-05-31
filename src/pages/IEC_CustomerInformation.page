@@ -125,14 +125,14 @@
                                                         <label>
                                                             <span class="input-label text">{!$Label.Address_Line_1}</span>
                                                             {!vfOrder.billToAddress}
-                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required]"/>
+                                                            <apex:inputText id="billingAddress1" value="{!vfOrder.billToAddress.street1}" styleClass="billingAddress1 user-input text validate[required,maxSize[70]]"/>
                                                         </label>
                                                     </div>
 
                                                     <apex:outputPanel id="postalCodeBlock" styleClass="field-group text inline mandatory {!IF(errors['postalCode']!='false', ' error','')}" layout="block" html-data-placement="right">
                                                         <label>
                                                             <span class="input-label text">{!$Label.Postal_code}</span>
-                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
+                                                            <apex:inputText id="billingPostalCode" value="{!vfOrder.billToAddress.postalCode}" html-placeholder="{!IF(unlockZipCode, '', 'N/A')}" disabled="{!IF(unlockZipCode, 'false', 'true')}" styleClass="billingPostalCode user-input text {!IF(vfOrder.billToAddress.isPostalCodeRequired,'validate[required]','')}"/>
                                                         </label>
                                                     </apex:outputPanel>
 
@@ -286,6 +286,11 @@
                     });
 
                     $("form").validationEngine();
+                    $("select[id*='billingCountry']").on("change", function(){
+						$("input[id*='billingAddress1']").val("");
+						$("input[id*='billingPostalCode']").val("");
+						$("input[id*='billingCity']").val("");
+					});
                 });
             </script>
 

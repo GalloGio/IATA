@@ -5,13 +5,33 @@
 global without sharing class IEC_CustomerInformationController extends IEC_PageController
 {
 	public String quoteNumberToConvert{get;set;}
+	
+	//TC map to know which countries don't have zip code
+	public Map<String, Boolean> zipCodeApplicableMap {
+		get{
+			return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
+		}
+		set;
+	}
 
 	public List<SelectOption> availableCountries{get{
 		if(availableCountries == null){
-			availableCountries = ISO_Country_State_Helper.getCountriesSelectOption();
+			//TC get options and fill map zipCodeApplicable
+			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+			availableCountries = (List<SelectOption>) countries.get('options');
+			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
 		}
 		return availableCountries;
 	}set;}
+	
+	//TC 
+	public Boolean unlockZipCode {
+		get{
+			return vfOrder != null && vfOrder.billToAddress != null && !String.isBlank(vfOrder.billToAddress.countryCode) && 
+				zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode) != null && zipCodeApplicableMap.get(vfOrder.billToAddress.countryCode);
+		}
+		set;
+	}
 
 	public List<SelectOption> billToAvailableStates{get;set;}
 
@@ -172,6 +192,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		billToAvailableStates = ISO_Country_State_Helper.getStatesSelectOption(vfOrder.billToAddress.countryCode);
+		vfOrder.billToAddress.postalCode = '';
 	}
 
 	public void regionChanged()
@@ -242,6 +263,9 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		{
 			errors.put('street1',Label.InputRequiredMessage + ' ' + Label.Address_Line_1);
 			isValid = false;
+		} else if(isStreetAddressToLong(vfOrder.billToAddress.street1, 70)) {
+			errors.put('street1',Label.IEC_BillingAddressLimit);
+			isValid = false;
 		}
 	
 		if(vfOrder.billToAddress.isPostalCodeRequired != null && vfOrder.billToAddress.isPostalCodeRequired && (vfOrder.billToAddress.postalCode == null || vfOrder.billToAddress.postalCode == '')) //String.isBlank(vfOrder.billToAddress.postalCode)
@@ -269,8 +293,13 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 		}
 
 		return isValid;
+	}	
+	
+	/* TC 2017-05-17 */
+	public Boolean isStreetAddressToLong(String street, Integer maxSize) {
+		return !String.isBlank(street) && street.length() > maxSize;
 	}
-
+	/* end TC */
 
 	/**************************************************************************************************************
      *  saveCustomerInformation: method calls when customer clicks on "Continue" button to save customer Info     * 
@@ -287,7 +316,7 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 
 			return null;
 		}
-
+		
 		//-- Validate compliance 
 		validateCountryCompliance();
 
