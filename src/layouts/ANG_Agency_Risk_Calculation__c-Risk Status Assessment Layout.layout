@@ -9,22 +9,18 @@
         <label>Fields</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>ANG_Occurrence_Num__c</field>
+                <behavior>Edit</behavior>
+                <field>ANG_Risk_History_Assessment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Risk_History_Assessment__c</field>
+                <field>ANG_Financial_Review_Result__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Risk_History__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_Financial_Review_Result__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

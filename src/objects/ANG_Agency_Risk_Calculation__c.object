@@ -219,28 +219,33 @@
     </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Risk_Assessment</fullName>
         <columns>NAME</columns>
-        <columns>ANG_Accreditation_Model__c</columns>
-        <columns>ANG_Order__c</columns>
-        <columns>ANG_Occurrence_Num__c</columns>
-        <columns>ANG_Adjusted__c</columns>
-        <columns>ANG_Calculation_Rule__c</columns>
+        <columns>ANG_Financial_Review_Result__c</columns>
+        <columns>ANG_Risk_History_Assessment__c</columns>
+        <columns>ANG_Risk_History__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Risk_Status_Assessment</value>
+        </filters>
+        <label>Risk Assessment</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>TD</fullName>
+        <fullName>Rules</fullName>
         <columns>NAME</columns>
         <columns>ANG_Accreditation_Model__c</columns>
-        <columns>ANG_Order__c</columns>
         <columns>ANG_Occurrence_Num__c</columns>
         <columns>ANG_Adjusted__c</columns>
-        <columns>ANG_Calculation_Rule__c</columns>
-        <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
-        <label>TD</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Rules</value>
+        </filters>
+        <label>Rules</label>
         <language>en_US</language>
     </listViews>
     <nameField>
