@@ -16,50 +16,48 @@
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = true; //GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;
-    boolean trgCaseLastSIDRADate = true; //GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;
-	boolean trgCase_ContactLastSurveyUpdate = true; //GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;
-	boolean trgParentCaseUpdate = true; //GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;										//33333333333333
-	boolean trgICCSManageProductAssignment = true; //GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;					//33333333333333
-	boolean trgICCS_ASP_CaseClosed = true; //GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;
-	boolean trgCreateUpdateServiceRenderedRecord = true; //GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;			
-	boolean trgCaseEscalationMailNotificationICH = true; //GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;
-	boolean trgCheckSISCaseRecycleBinAfterInsert = true; //GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;				//22222222222222
-	boolean CaseBeforInsert = true; //GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;												//33333333333333
-	boolean AMS_OSCARCaseTrigger = true; //GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
-	boolean trgAccelyaRequestSetCountry = true; //GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;						//33333333333333
-	boolean trgCase = true; //GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;							
+     boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = true;//GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;
+    boolean trgCaseLastSIDRADate = true;//GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;
+    boolean trgCase_ContactLastSurveyUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;               //44444444444444
+    boolean trgParentCaseUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;                                       //33333333333333
+    boolean trgICCSManageProductAssignment = true;//GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;
+    boolean trgICCS_ASP_CaseClosed = true;//GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;                                 //44444444444444
+    boolean trgCreateUpdateServiceRenderedRecord = true;//GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;           //44444444444444
+    boolean trgCaseEscalationMailNotificationICH = true;//GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;                    //44444444444444
+    boolean trgCheckSISCaseRecycleBinAfterInsert = true;//GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;                //22222222222222
+    boolean CaseBeforInsert = true;//GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;                                               //33333333333333
+    boolean AMS_OSCARCaseTrigger = true;//GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
+    boolean trgAccelyaRequestSetCountry = true;//GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
+    boolean trgCase = true;//GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333 
     /**********************************************************************************************************************************/
     
     /*Record type*/
-    ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
-    Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
-    ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
-    Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
-    Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
-    Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
-    Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
-    ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
-    ID caseRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
-    Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
-    Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
-    Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
-    Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
-    ID AccelyacaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
-    ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+  ID IFAPcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Review');
+  Id sidraRecordTypeId = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+  ID FSMcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('IATA Financial Security Monitoring');
+  Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
+  Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
+  Id RT_ICCS_ASP_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('FDS ASP Management') ;
+  Id RT_ICC_Id = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Invoicing Collection Cases') ;
+  ID RecId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
+  Id RT_AirlineSuspension_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Suspension');
+  Id RT_AirlineDeactivation_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
+  Id RT_FundsManagement_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Funds_Management');
+  Id RT_DIP_Review_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('DIP_Review_Process');
+  ID SISHelpDeskRecordtype = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - SIS Help Desk');
+  ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
+  Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
     /*Record type*/  
     
     /*Variables*/
     Boolean caseRecType = false;
-    String CPCcaseRecType;
-    Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
+  Boolean isSidraCasesAccountsInit = false; // This variable checks if the sidraCasesAccounts have been already initialized.
     Boolean isIFAPCase = false;
   Integer futureLimit = Limits.getFutureCalls();
   Boolean ThereAreICCSProductManagementCases = false;
   Boolean ThereAreICCSBankAccountManagementCases = false;
   List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
   boolean hasEmail = false;
-  BusinessHours bHourObj = new BusinessHours();
   Boolean isAccelya = false;
   /*Variables*/
      
@@ -67,14 +65,10 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     set<string> casesIds = new set<string>();
     Set<Id> CaseIdsNew = new Set<Id>();
     Set<Id> accountNotificationIdSet = new Set <Id>(); //TF
-    
-    Set<Id> UserIds = new Set<Id>();
     Set<Id> setASCaseIds = new Set<Id>();
   Set<Id> setDIPCaseIds = new Set<Id>();
-  list<User> lstUsers = new List<User>();
   list<Case> cases = new list<Case>();
   list<Case> ICHcases = new list<Case>();
-  list<QueueSobject> lstQueue = new List<QueueSobject>();
     list<Case> IFAPcases = new list<Case>(); 
   list<Case> casesToConsider = new list<Case>();
     list<IFAP_Quality_Issue__c> issues = new list<IFAP_Quality_Issue__c>();
@@ -88,71 +82,80 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger
-    if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && CaseChildHelper.noValidationsOnTrgCAseIFAP){
-		if (Trigger.isDelete) 
-			cases = Trigger.old;
-		else
-			cases = Trigger.new;
+  if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && CaseChildHelper.noValidationsOnTrgCAseIFAP){
+    if (Trigger.isDelete) 
+      cases = Trigger.old;
+    else
+      cases = Trigger.new;
 
-		for(Case cse : cases) {
-			if(cse.RecordTypeId == IFAPcaseRecordTypeID){
-				caseRecType = true;
-				casesToConsider.add(cse);
-				sCaseIds.add(cse.Id);
-			} 
-		}
-
-		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
-		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
-			list<Case> casesToUdpateTheAccts = new list<Case>();
-			for(Case c: CasesToConsider)
-				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
-						(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
-						|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-						|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
-					casesToUdpateTheAccts.add(c);
-				}
-			if(!casesToUdpateTheAccts.isEmpty())  {              
-				AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-			}
-		} 
-
-		if(!casesToConsider.isEmpty()){
-			Set<ID> acctIds = new Set<ID>();
-			for (Case cse : casesToConsider) {
-				acctIds.add(cse.AccountId);
-			}
-			Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
-			Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id, Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
-			List<Account> accountUpdated = new List<Account>();
-
-			for (Account acct : acctsToUpdate.values()) {
-				Set<ID> caseIds = new Set<ID>();
-				for (Case cse : casesForAccounts.values()) {
-					if (cse.AccountId == acct.Id)
-						caseIds.add(cse.Id);
-				}
-				if (acct.Number_of_open_Financial_Review_Cases__c != caseIds.size()){
-					acct.Number_of_open_Financial_Review_Cases__c = caseIds.size();
-					if (caseIds.size() > 0){
-						acct.Has_Financial_Review_Open_Cases__c = true;
-					}else{
-						acct.Has_Financial_Review_Open_Cases__c = false;
-					}if(AcctToBeUpdatedPerId.get(acct.id) == null){
-						AcctToBeUpdatedPerId.put(acct.id, acct);
-					}else{
-						acctToBeUpdatedPerId.get(acct.id).Has_Financial_Review_Open_Cases__c = acct.Has_Financial_Review_Open_Cases__c;
-					}
-				}
-			}        
-			if(!acctToBeUpdatedPerId.isEmpty() && !acctToBeUpdatedPerId.values().isEmpty()) {
-				update acctToBeUpdatedPerId.values();
-			}
-			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
-		}	
-	}
-    /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
-    
+    for(Case cse : cases) {
+      if(cse.RecordTypeId == IFAPcaseRecordTypeID){
+        caseRecType = true;
+        casesToConsider.add(cse);
+        sCaseIds.add(cse.Id);
+      } 
+    }
+    //IFAP P5 start   
+    map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
+    if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
+      list<Case> casesToUdpateTheAccts = new list<Case>();
+      for(Case c: CasesToConsider){
+        if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+            (trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
+            || trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
+            || trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
+          casesToUdpateTheAccts.add(c);
+        }
+      }
+      if(!casesToUdpateTheAccts.isEmpty())  {              
+        // throw new transformationException();
+        AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+      }         
+    } 
+    System.debug('***After checking record type ' + caseRecType);
+    if(!casesToConsider.isEmpty()){
+      //if(caseRecType)
+      System.debug('***Do blah blah blah only for IFAP case related accounts ');
+      Set<ID> acctIds = new Set<ID>();
+      for (Case cse : casesToConsider) {
+      //for (Case cse : cases) 
+        acctIds.add(cse.AccountId);
+      }
+      //Re-open/ed is not considered as Closed Status anymore.
+      Map<ID, Case> casesForAccounts = new Map<ID, Case>([select Id, AccountId from Case where RecordTypeID =: IFAPcaseRecordTypeID AND (status != 'Closed' and status != 'Assessment Cancelled') AND  AccountId in :acctIds]);
+      Map<ID, Account> acctsToUpdate = new Map<ID, Account>([select Id,Number_of_open_Financial_Review_Cases__c from Account where Id in :acctIds]);
+      List<Account> accountUpdated = new List<Account>();
+      for (Account acct : acctsToUpdate.values()) {
+        Set<ID> caseIds = new Set<ID>();
+        for (Case cse : casesForAccounts.values()) {
+          if (cse.AccountId == acct.Id)
+            caseIds.add(cse.Id);
+        }
+        if (acct.Number_of_open_Financial_Review_Cases__c != caseIds.size()){
+          acct.Number_of_open_Financial_Review_Cases__c = caseIds.size();
+          if (caseIds.size() > 0){
+            acct.Has_Financial_Review_Open_Cases__c = true;
+          }else{
+            acct.Has_Financial_Review_Open_Cases__c = false;
+          }
+          if(AcctToBeUpdatedPerId.get(acct.id) == null){
+            AcctToBeUpdatedPerId.put(acct.id, acct);
+            }else{
+            acctToBeUpdatedPerId.get(acct.id).Has_Financial_Review_Open_Cases__c = acct.Has_Financial_Review_Open_Cases__c;
+           }
+        }
+      }
+      if(!acctToBeUpdatedPerId.isEmpty() && !acctToBeUpdatedPerId.values().isEmpty()) {
+        update acctToBeUpdatedPerId.values();
+      }
+    //IFAP P5 end  
+    //Case child creation if Status = Assessment performed
+    CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
+    }  
+  }
+  /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
+  
+  if(trigger.isInsert || trigger.isUpdate){  
   /*trgICCSManageProductAssignment Trigger*/
   /*@author: Constantin BUZDUGA, blue-infinity
   * @description: This trigger only handles ICCS Cases with the "FDS ICCS Product Management" or "FDS ICCS Bank Account Management" record types
@@ -162,8 +165,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   *    "ICCS – Update Payment Instructions", the ICCS Bank Account field at PA level is updated with the info entered in the same field
   *    at Case level. If the case area is "ICCS – Delete Bank Account", the Bank Account record's status is set to "Inactive". For the "ICCS – Update Bank Account"
   *    Case Area, the Bank Account currency is updated.
-  if(trgICCSManageProductAssignment){  
-    if(trigger.isInsert || trigger.isUpdate){
+    if(trgICCSManageProductAssignment){  
       for (Case c : Trigger.new) {
           // only interested in cases being closed
           if ( c.Status == 'Closed' && (Trigger.isInsert || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed') ) ) {
@@ -355,17 +357,14 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
       } // if there are iccs cases
       // Send the custom email notifications if the case is (re)assigned to a queue which has custom notifications configured
       CustomQueueNotifications.SendEmailNotifications (trigger.new, trigger.OldMap, trigger.isInsert, trigger.isUpdate);
-    }  
-  }
-  /*trgICCSManageProductAssignment Trigger*/
+    }
+    /*trgICCSManageProductAssignment Trigger*/
     
-  /*trgICCS_ASP_CaseClosed Trigger*/
-  /*@author: Constantin BUZDUGA, blue-infinity
-   * @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
-   * and Collection Case Indicator at Account level when the case is closed.
-   //RICORDARSI CHE IL TRIGGER E SOLO ISINSERT E ISUPDATE
-  if(trgICCS_ASP_CaseClosed){ 
-    if(trigger.isInsert || trigger.isUpdate){
+    /*trgICCS_ASP_CaseClosed Trigger*/
+    //@author: Constantin BUZDUGA, blue-infinity
+    // @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to update the fields Authorized Signatories, Ongoing Request for Documents
+    // and Collection Case Indicator at Account level when the case is closed.
+    if(trgICCS_ASP_CaseClosed){ 
       for (Case c : Trigger.new) {
           if (c.AccountId != null){
               // If the Case has just been closed
@@ -433,14 +432,12 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
             }//---TF
         }
     }
-  }
-  /*trgICCS_ASP_CaseClosed Trigger*/
+    /*trgICCS_ASP_CaseClosed Trigger*/
   
-  /*trgCreateUpdateServiceRenderedRecord Trigger*/
-  /*Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, 
-   *the case record type is "IDFS Airline Participation Process" and the case is approved
-  if(trgCreateUpdateServiceRenderedRecord){ 
-    if(trigger.isInsert || trigger.isUpdate){
+    /*trgCreateUpdateServiceRenderedRecord Trigger*/
+    /*Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, 
+     *the case record type is "IDFS Airline Participation Process" and the case is approved*/
+    if(trgCreateUpdateServiceRenderedRecord){ 
       system.debug('trgCreateUpdateServiceRenderedRecord');
       string airlineLeaving = 'Airline Leaving';
       string airlineJoining = 'Airline Joining';
@@ -504,13 +501,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
                 }
         } 
       }
-    } //trigger.isinsert trigger.isupdate
-  } //if trgCreateUpdateServiceRenderedRecord
-  /*trgCreateUpdateServiceRenderedRecord Trigger*/ 
+    } //if trgCreateUpdateServiceRenderedRecord
+    /*trgCreateUpdateServiceRenderedRecord Trigger*/ 
   
-  /*trgCaseEscalationMailNotificationICH Trigger
-  if(trgCaseEscalationMailNotificationICH){
-    if(trigger.isInsert || trigger.isUpdate){
+    /*trgCaseEscalationMailNotificationICH Trigger*/
+    if(trgCaseEscalationMailNotificationICH){
       for (Case c : trigger.new){
         if(c.recordtypeId == RecId)
             ICHcases.add(c);
@@ -529,7 +524,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
                   CaseNotificationmail.setTemplateId(et.id);
                   CaseNotificationmail.setWhatId(c.Id);
                   if(Trigger.isInsert){
-                      if (c.CaseArea__c == 'ICH' && (  c.priority == 'Priority 1 (Showstopper)'  )){
+                      if (c.CaseArea__c == 'ICH' && c.priority == 'Priority 1 (Showstopper)'){
                           mails.add(CaseNotificationmail);
                           hasEmail = true;            
                       }
@@ -537,7 +532,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
                       String oldStatus = trigger.oldMap.get(c.id).status;
                       String oldPriority = trigger.oldMap.get(c.id).priority;
                       String oldTeam = trigger.oldMap.get(c.id).assigned_to__c;        
-                      if (c.CaseArea__c == 'ICH'&&(((c.status != oldStatus||c.assigned_to__c!=oldTeam) && c.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' 
+                      if (c.CaseArea__c == 'ICH' &&(((c.status != oldStatus||c.assigned_to__c!=oldTeam) && c.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' 
                           && c.assigned_to__c == 'ICH Application Support')||(  oldPriority != c.priority && c.priority == 'Priority 1 (Showstopper)' 
                           && !(oldStatus == 'Escalated' && c.assigned_to__c == 'ICH Application Support' )))){
                           mails.add(CaseNotificationmail);
@@ -549,8 +544,8 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
          }
       }
     }
+    /*trgCaseEscalationMailNotificationICH Trigger*/
   }
-  /*trgCaseEscalationMailNotificationICH Trigger*/
 
 	/*Risk Event Management*/
 	if(Trigger.isInsert || Trigger.isUpdate){
@@ -701,7 +696,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
       list<Case> caseListtoValidate = new List<Case>{};
       list<Case> caseList = new List<Case>{};
       for (Case aCase: trigger.New){
-          if (aCase.RecordTypeId == caseRecordTypeID) {
+          if (aCase.RecordTypeId == CSRcaseRecordTypeID) {
               isAccelya = true;
               AccelyacaseIds.add(acase.Id);
           }else{
@@ -741,39 +736,60 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
   /****************************************************************************************************************************************************/    
     /*Trigger.isUpdate*/
   else if (Trigger.isUpdate) {
-    /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate
+        /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate
     if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
-			if (caseRecType){
-				List<IFAP_Quality_Issue__c> QIs = [Select Status__c , Approved_Date__c, Related_Case__c from IFAP_Quality_Issue__c where Related_Case__r.Id IN: sCaseIds and Status__c = 'Pending approval'];
-				if (!QIs.isEmpty()){
-					for(IFAP_Quality_Issue__c issue : QIs){
-						RelatedQualityIssues.put(issue.Related_Case__c, issue);
-					}
-				}
-			}
-
-			for(Case cse : cases){
-				if(cse.RecordTypeId == IFAPcaseRecordTypeID){
-					Case OldCase =  Trigger.oldMap.get(cse.Id);
-					if(cse.Status == 'Quality Issue Request Approved' && OldCase.Status == 'Quality Issue Request Pending Approval'){
-						IFAP_Quality_Issue__c QI = RelatedQualityIssues.get(cse.id);
-						if (QI <> null){
-							QI.Status__c = 'Approved';
-							QI.Approved_Date__c = system.now();
-							update QI;
-						}
-					}if(cse.Status == 'Quality Issue Rejected' && OldCase.Status == 'Quality Issue Request Pending Approval'){
-						IFAP_Quality_Issue__c QI = RelatedQualityIssues.get(cse.id);
-						if (QI <> null){
-							QI.Status__c = 'Rejected';
-							QI.Approved_Date__c = system.now();
-							issues.add(QI);
-						}
-					}
-				}
-			}
-			update issues;
-		}
+      Set<Id> sCaseIds = new Set<Id>();
+      // Check if received cases are IFAP Cases
+      for(Case cse : cases){
+        if(cse.RecordTypeId == IFAPcaseRecordTypeID){
+          caseRecType = true;
+        }else{
+          break;
+        }
+        sCaseIds.add(cse.Id);
+      }
+      if (caseRecType){
+        List<IFAP_Quality_Issue__c> QIs = [Select Status__c , Approved_Date__c, Related_Case__c from IFAP_Quality_Issue__c where Related_Case__r.Id IN: sCaseIds and Status__c = 'Pending approval'];
+        // Create the map containing the quality issue 
+        if (!QIs.isEmpty()){
+          for(IFAP_Quality_Issue__c issue : QIs){
+            RelatedQualityIssues.put(issue.Related_Case__c, issue);
+          }
+        }
+      }
+      for(Case cse : cases) {
+        if(cse.RecordTypeId == IFAPcaseRecordTypeID){
+          caseRecType = true;
+          //casesToConsider.add(cse);
+          // Bellow logic used for Quality issue  
+          Case OldCase =  Trigger.oldMap.get(cse.Id);
+          // approval
+          if(cse.Status == 'Quality Issue Request Approved' && OldCase.Status == 'Quality Issue Request Pending Approval'){
+            IFAP_Quality_Issue__c QI = RelatedQualityIssues.get(cse.id);
+            //IFAP_Quality_Issue__c QI = [Select Status__c , Approved_Date__c from IFAP_Quality_Issue__c where Related_Case__r.Id =: cse.Id and Status__c = 'Pending approval' limit 1];
+            if (QI <> null){
+              //update Quality issue status to Approved
+              QI.Status__c = 'Approved';
+              //set approval date
+              QI.Approved_Date__c = system.now();
+              update QI;
+            }
+          }
+          if(cse.Status == 'Quality Issue Rejected' && OldCase.Status == 'Quality Issue Request Pending Approval'){
+            IFAP_Quality_Issue__c QI = RelatedQualityIssues.get(cse.id);
+            //IFAP_Quality_Issue__c QI = [ Select Status__c , Approved_Date__c from IFAP_Quality_Issue__c where Related_Case__r.Id =: cse.Id and Status__c = 'Pending approval' limit 1];
+            if (QI <> null){
+              //update Quality issue status to rejected
+              QI.Status__c = 'Rejected';
+              QI.Approved_Date__c = system.now();
+              issues.add(QI);
+              //update QI;
+            }
+          }
+        }
+      }
+      update issues;
+    }
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
     
     /*trgCaseLastSIDRADate Trigger.isUpdate
@@ -822,7 +838,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
         }
     /*trgCaseLastSIDRADate Trigger.isUpdate*/
     
-    /*trgCase_ContactLastSurveyUpdate Trigger.isUpdate
+    /*trgCase_ContactLastSurveyUpdate Trigger.isUpdate*/
     if(trgCase_ContactLastSurveyUpdate){
       // This part of the code update a Case's Contact field Instant_Survey_Last_survey_sent__c, if the Case field Instant_Survey_Last_survey_sent__c is updated            
             // Get all Cases' contact and put it in a Map.
@@ -851,16 +867,15 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     }
     /*trgCase_ContactLastSurveyUpdate Trigger.isUpdate*/
     
-    /*trgICCS_ASP_CaseClosed Trigger.isUpdate
+    /*trgICCS_ASP_CaseClosed Trigger.isUpdate*/
     if(trgICCS_ASP_CaseClosed){
       //Hold list of IEC_Subscription_History record to be inserted
       List<IEC_Subscription_History__c> IEC_SubHistory_Lst_ToInsert = new List<IEC_Subscription_History__c>();
       //Hold list of Cases record to be Updated
       List<Case> CaseToUpdate_Lst = new List<Case>();
       for (Case c : Trigger.new) {
-        Id CaseSAAMId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SAAM').getRecordTypeId();
         //If the case is Closed and Matches the following cretiria
-            if (c.RecordTypeId == CaseSAAMId  && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
+            if (c.RecordTypeId == CaseSAAMId && c.Status == 'Closed' &&  Trigger.oldMap.get(c.Id).Status != 'Closed' && c.CaseArea__c == 'Accreditation Products' 
             && c.Reason1__c == 'PAX/CARGO Certificate' && c.Product_Category_ID__c != null && !c.Product_Category_ID__c.contains('Triggered') && Integer.valueOf(c.QuantityProduct__c) > 0){
           //Creates new IEC_Subscription_History
           IEC_Subscription_History__c  IEC_SubHistory  = new IEC_Subscription_History__c  () ;

@@ -1051,7 +1051,7 @@ public void CancelAddressOrderReadOnly(){
 
 //Verified if a VAT number is valid
 public String verifiedVATNumer(String currentVatNumber, String selectedCountryIsoCode){
-
+    /*
     String returnVal = 'true';
 
     //Check if the VAT number is valid
@@ -1063,7 +1063,8 @@ public String verifiedVATNumer(String currentVatNumber, String selectedCountryIs
         if (!res.valid){ returnVal = 'Invalid VAT number'; }
     }
     catch (System.CalloutException ex) { returnVal = Label.IEC_Error_VATWSBusy; }
-
+    */
+    String returnVal = IECVATUtil.Validate_VAT(selectedCountryIsoCode, currentVatNumber);
     return returnVal;
 }
 
