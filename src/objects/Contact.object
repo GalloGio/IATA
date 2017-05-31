@@ -7274,6 +7274,7 @@ TotalRows-Successes-Errors</description>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Shows that this person is the one main point of contact for IATA</inlineHelpText>
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
