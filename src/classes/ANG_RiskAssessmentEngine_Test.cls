@@ -10,7 +10,8 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Order__c=1,
 			ANG_Occurrence_Num__c=1,
 			ANG_Adjusted__c='No',
-			ANG_Accreditation_Model__c='Cash'
+			ANG_Accreditation_Model__c='Cash',
+			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
 			);
 		ruleList.add(arc1);
 
@@ -18,7 +19,8 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Order__c=2,
 			ANG_Occurrence_Num__c=2,
 			ANG_Adjusted__c='No',
-			ANG_Accreditation_Model__c='Cash'
+			ANG_Accreditation_Model__c='Cash',
+			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
 			);
 		ruleList.add(arc2);
 		
@@ -26,14 +28,16 @@ public class ANG_RiskAssessmentEngine_Test{
 			ANG_Order__c=3,
 			ANG_Occurrence_Num__c=2,
 			ANG_Adjusted__c='Mixed',
-			ANG_Accreditation_Model__c='Cash'
+			ANG_Accreditation_Model__c='Cash',
+			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
 			);
 		ruleList.add(arc3);
 		ANG_Agency_Risk_Calculation__c arc4= new ANG_Agency_Risk_Calculation__c( // risk event that fails according  the adjustments
 			ANG_Order__c=4,
 			ANG_Occurrence_Num__c=0,
 			ANG_Adjusted__c='Yes',
-			ANG_Accreditation_Model__c='Cash'
+			ANG_Accreditation_Model__c='Cash',
+			recordtypeId=Schema.SObjectType.ANG_Agency_Risk_Calculation__c.RecordTypeInfosByName.get('Rules').RecordTypeId
 			);
 		ruleList.add(arc4);
 
@@ -259,7 +263,7 @@ public class ANG_RiskAssessmentEngine_Test{
 		Test.stopTest();
     }
     TestMethod static void testInsertREnotTriggeringAssessment(){
-    	//Fails agency risk assessment with one occurence, after updating RE assessement Passes
+    	//Passes agency risk assessment with one occurence because assessment shouldnt be runned
     	Account acc = new Account(
         	name='acc4',
         	Location_Type__c='HE',
