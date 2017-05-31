@@ -2540,7 +2540,7 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>English Alphabet</shortDescription>
-        <value>Please type only in the English alphabet</value>
+        <value>(Please type only in the English alphabet)</value>
     </labels>
     <labels>
         <fullName>ErrMsg_Shipping_Tax_General_Error</fullName>
@@ -5458,6 +5458,45 @@ and
         <value>You must select two travel professional courses.</value>
     </labels>
     <labels>
+        <fullName>IEC_BillingAddressLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_BillingAddressLimit</shortDescription>
+        <value>The billing address street has exceeded the 70-character maximum. Please enter an address using fewer than 70 characters.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_CREDIT_CARD_PAYMENT_ERROR</fullName>
+        <categories>IEC,Credit Card,Payment,Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Credit card payment error</shortDescription>
+        <value>Credit card payment error:</value>
+    </labels>
+    <labels>
+        <fullName>IEC_CREDIT_CARD_PAYMENT_SUCCESSFUL</fullName>
+        <categories>IEC,Credit Card,Payment,Success</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Credit card payment successful</shortDescription>
+        <value>Credit card payment successful.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_CREDIT_CARD_PENDING_PAYMENT</fullName>
+        <categories>IEC,Credit Card,Payment,Pending</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Pending credit card payment charge</shortDescription>
+        <value>Pending credit card payment charge.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_CREDIT_CARD_TRANSACTION_NUMBER</fullName>
+        <categories>IEC,Credit Card,Info</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Transaction Number</shortDescription>
+        <value>Your Transaction number is:</value>
+    </labels>
+    <labels>
         <fullName>IEC_Confirm_AddNewCard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5484,6 +5523,13 @@ and
         <protected>false</protected>
         <shortDescription>IEC_Confirm_SaveSuccessful</shortDescription>
         <value>Settings have been saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_DisableZipCodeMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_DisableZipCodeMsg</shortDescription>
+        <value>My shipping address doesn&amp;#39;t have zip/postal code.</value>
     </labels>
     <labels>
         <fullName>IEC_Error_AcceptTermAndCondition</fullName>
@@ -5878,6 +5924,44 @@ and
         <value>VAT number &quot;{0}&quot; is invalid.</value>
     </labels>
     <labels>
+        <fullName>IEC_LimitCharacters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_LimitCharacters</shortDescription>
+        <value>You have reached the 70 character limit for the field.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_NOGPAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_NOGPAccount</shortDescription>
+        <value>No General Public Account was found matching your country.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_NoRecordsFoundGP</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_NoRecordsFoundGP</shortDescription>
+        <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as Other Company or General Public or modify your search criteria and try again.
+&lt;br/&gt;&lt;br/&gt;
+If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IEC_PO_BOX_ERROR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_PO_BOX_ERROR</shortDescription>
+        <value>We are unable to deliver to a Post Office Box. Please provide a different delivery address.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_PO_BOX_MSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_PO_BOX_MSG</shortDescription>
+        <value>Post Office Boxes are not allowed as Delivery Address.</value>
+    </labels>
+    <labels>
         <fullName>IEC_Recaptcha_PrivateKey</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5917,7 +6001,14 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>SAP Customer Issue on Shipping Address</shortDescription>
-        <value>There is an error with your shipping address.&lt;br/&gt;Please change shipping address or contact CSR for assistance!</value>
+        <value>There is an error with your delivery address.&lt;br/&gt;Please change delivery address or contact CSR for assistance!</value>
+    </labels>
+    <labels>
+        <fullName>IEC_ShippingAddressLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_ShippingAddressLimit</shortDescription>
+        <value>The delivery address street has exceeded the 70-character maximum. Please enter an address using fewer than 70 characters.</value>
     </labels>
     <labels>
         <fullName>IEC_Trial_RequestFail</fullName>
@@ -5940,7 +6031,7 @@ and
         <protected>false</protected>
         <shortDescription>Labels &amp; Messages for VF page IEC_UpdateAddress</shortDescription>
         <value>lblSectionBillTo:Billing address
-lblSectionShipTo:Shipping address
+lblSectionShipTo:Delivery address
 lblStreet:Street Address
 lblCity:City
 lblState:State / Province
@@ -5955,7 +6046,7 @@ lblOptional:optional
 lblAddrNameOptional:(i.e work, home)
 lblAddrName:Address nickname
 lblAddrNameDef:Work
-lblMakeDef:Make default shipping address
+lblMakeDef:Make default delivery address
 btnCancel:Cancel
 btnSave:Save
 btnAdd:Add a new address
@@ -5978,7 +6069,7 @@ msgNoPhone:Please fill in your phone.
 msgWarnVAT:Provide us with your VAT # for faster processing of your order.
 msgInvalidEmail:Email address is invalid.
 msgSaved: is saved.
-msgAddrExist:Shipping address is already in system.
+msgAddrExist:Delivery address is already in system.
 msgConfirmDelete:Are you sure to delete address?
 msgDeleted: is deleted.</value>
     </labels>
@@ -5987,7 +6078,7 @@ msgDeleted: is deleted.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC Update Address PageTitle</shortDescription>
-        <value>Billing and Shipping addresses</value>
+        <value>Billing and Delivery addresses</value>
     </labels>
     <labels>
         <fullName>IEC_Warning_Must_Login</fullName>
@@ -5995,6 +6086,22 @@ msgDeleted: is deleted.</value>
         <protected>false</protected>
         <shortDescription>IEC Warning Must Login</shortDescription>
         <value>You must be logged in to access this page</value>
+    </labels>
+    <labels>
+        <fullName>IEC_ZUORA_GATEWAY_RESPONSE</fullName>
+        <categories>IEC,Zuora,Gateway,Response</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Zuora Gateway Response</shortDescription>
+        <value>Zuora Gateway Response:</value>
+    </labels>
+    <labels>
+        <fullName>IEC_fill_required_fields</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_fill_required_fields</shortDescription>
+        <value>Please fill required fields with the correct format</value>
     </labels>
     <labels>
         <fullName>IFAPAllFilesCheck</fullName>
@@ -13163,6 +13270,86 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>CASSLink Import</value>
     </labels>
     <labels>
+        <fullName>ISSP_CCOther</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_CCOther</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Add</shortDescription>
+        <value>Add additional recipients</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Help_Text</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Help Text</shortDescription>
+        <value>To add recipients to this case please insert emails separated by &quot;,&quot;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Include_Additional_Recipients</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Include Additional Recipients</shortDescription>
+        <value>Include additional recipients</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Not_Found</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Not Found</shortDescription>
+        <value>No contact found with email {0}</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Remove</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Remove</shortDescription>
+        <value>Remove recipients</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOther_Wrong_Emails</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOther Wrong Emails</shortDescription>
+        <value>No recipient found in our database for email {0}, please note that you can only include registered portal users.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers</shortDescription>
+        <value>Additional Recipients</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Add</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Add</shortDescription>
+        <value>Add</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_CCOthers_Email</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP CCOthers Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
         <fullName>ISSP_CNS_Documents</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13303,6 +13490,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_CaseNumber</shortDescription>
         <value>Case Number</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Closed_More_Than_2_Months</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For More Than 2 Months</shortDescription>
+        <value>This case has been resolved for more than 2 weeks, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Case_Status_Resolved</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Case Status Resolved</shortDescription>
+        <value>Resolved</value>
     </labels>
     <labels>
         <fullName>ISSP_Cases</fullName>
@@ -16340,7 +16543,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP</shortDescription>
-        <value>IATA Code</value>
+        <value>Related Account</value>
     </labels>
     <labels>
         <fullName>ISSP_MyProfile_LASTNAME</fullName>
@@ -17677,6 +17880,62 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Related contacts</shortDescription>
         <value>Related contacts</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Contact</fullName>
+        <categories>ISSP, IFAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Contact</shortDescription>
+        <value>Relocate under another account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Current_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Current Account</shortDescription>
+        <value>Current Account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Description</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Description</shortDescription>
+        <value>Move contact under another account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Failed</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Failed</shortDescription>
+        <value>Relocation failed</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Move_To</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Move To</shortDescription>
+        <value>Move To</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_No_Accounts</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate No Accounts</shortDescription>
+        <value>There is no other account in the hierarchy</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Relocate_Select_Account</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Relocate Select Account</shortDescription>
+        <value>Select Account</value>
     </labels>
     <labels>
         <fullName>ISSP_Reopen</fullName>
@@ -22209,7 +22468,7 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>PageTitleShippingPayment</shortDescription>
-        <value>Shipping &amp; payment</value>
+        <value>Delivery &amp; payment</value>
     </labels>
     <labels>
         <fullName>PageTitleShoppingCart</fullName>
@@ -22959,7 +23218,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Shipping address</shortDescription>
-        <value>Shipping address</value>
+        <value>Delivery address</value>
     </labels>
     <labels>
         <fullName>Shipping_and_handling</fullName>
@@ -22973,7 +23232,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Shipping instructions</shortDescription>
-        <value>Shipping instructions</value>
+        <value>Delivery instructions</value>
     </labels>
     <labels>
         <fullName>ShoppingCartCurrencyMsg</fullName>
