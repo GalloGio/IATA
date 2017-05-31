@@ -258,4 +258,22 @@ public class ANG_RiskAssessmentEngine_Test{
 
 		Test.stopTest();
     }
+    TestMethod static void testInsertREnotTriggeringAssessment(){
+    	//Fails agency risk assessment with one occurence, after updating RE assessement Passes
+    	Account acc = new Account(
+        	name='acc4',
+        	Location_Type__c='HE',
+        	Location_Class__c='P',
+        	Remittance_frequency__c='Monthly',
+        	ANG_Accreditation_Model__c ='Cashless',
+        	ANG_HE_RiskHistoryAssessment__c='Passed'
+        	);	
+
+        insert acc;	
+		Test.startTest();
+			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.Today());
+			system.assertEquals('Passed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc4' limit 1].ANG_HE_RiskHistoryAssessment__c);
+			
+		Test.stopTest();
+    }
 }
