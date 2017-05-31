@@ -214,19 +214,6 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
-    <fields>
-        <fullName>Agency_Risk_Calculation_Model__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Agency Risk Calculation</label>
-        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
-        <relationshipLabel>Agency Risk Calculations (Agency Risk Calculation)</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculation_Model</relationshipName>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
         <fullName>Risk_Assessment</fullName>
@@ -301,33 +288,6 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -456,33 +416,6 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -634,33 +567,6 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>ANG_Financial_Review_Result</picklist>
             <values>
                 <fullName>Satisfactory</fullName>
@@ -751,7 +657,6 @@
         </picklistValues>
     </recordTypes>
     <searchLayouts>
-        <searchResultsAdditionalFields xsi:nil="true"/>
         <searchResultsAdditionalFields>ANG_Occurrence_Num__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ANG_Parent_Occurences__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ANG_Remittance_Frequency__c</searchResultsAdditionalFields>
