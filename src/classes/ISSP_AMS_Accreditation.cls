@@ -1890,6 +1890,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (!contactSaved)
                     return;
             }
+
+            if (isNoticeOfChange) {                
+                if (newContact.AddressCountry__c == null) {
+                    newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
+                    contactSaved = false;
+                }
+            }
             
             SYSTEM.DEBUG('NoC Agency Owner: ' + contactToUpsert.Agency_owner__c);
             SYSTEM.DEBUG('NoC Agency Manager: ' + contactToUpsert.Agency_role__c);
@@ -3323,7 +3330,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         get{
             List<AMS_Accreditation_Contact__c> prevOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
+                Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c 
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
                 ORDER BY Name ASC
@@ -3339,7 +3347,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         get{
             List<AMS_Accreditation_Contact__c> currOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
-                Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c
+                Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
+                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c 
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
                 ORDER BY Name ASC
@@ -5085,6 +5094,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
+            /*
             if (newForm.Will_such_change_affect_the_premises__c == null) {
                 newForm.Will_such_change_affect_the_premises__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
@@ -5094,8 +5104,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 newForm.Please_provide_details_for_the_change__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
-
-
+            */
 
             if (newForm.Will_such_change_affect_locations__c == null) {
                 newForm.Will_such_change_affect_locations__c.addError(Label.ISSP_YouMustEnter);

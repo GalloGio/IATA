@@ -349,8 +349,13 @@
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
                                 <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
-                                <span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>
+                                <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
+                                
+                                {!$Label.ISSP_AMS_Address}<br/>
+                                {!agencycon.AddressStreet__c}<br/>
+                                {!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>
+                                {!agencycon.AddressCountry__c}
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%"  styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
@@ -370,8 +375,13 @@
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
                                 <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
-                                <span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>
+                                <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
+                                
+                                {!$Label.ISSP_AMS_Address}<br/>
+                                {!agencycon.AddressStreet__c}<br/>
+                                {!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>
+                                {!agencycon.AddressCountry__c}
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%"  styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>

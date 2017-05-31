@@ -1237,12 +1237,18 @@
 							<apex:pageBlockSection columns="1">								
 								<apex:pageBlockSectionItem labelStyle="width:44%">
 									<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
-									<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+									<apex:outputPanel >
+										<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+										<apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>	
+									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 								
 								<apex:pageBlockSectionItem labelStyle="width:44%">
 									<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
-									<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+									<apex:outputPanel >
+										<apex:inputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+										<apex:outputText id="y2CurrencyCode" value=" {!newForm.CurrencyIsoCode}"/>	
+									</apex:outputPanel>
 								</apex:pageBlockSectionItem>
 
 							</apex:pageBlockSection>
@@ -1518,10 +1524,10 @@
                                 <apex:outputText value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}"/><br/>
                                 <apex:inputField value="{!newContact.Time_devoted_to_Agency_business__c}" id="contactTimeToBusiness" />
                                 </td></tr>
-							<tr id="corporatefield2" style="display:none"><td class="modalrow">
+							<!--<tr id="corporatefield2" style="display:none"><td class="modalrow">
 								<apex:outputText value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}"/><br/>
 								<apex:inputField value="{!newContact.Number_Of_Shares__c}" id="contactNumOfShares"/>
-								</td></tr>						
+								</td></tr>-->
 							<tr id="personEmail" style="display:none"><td class="modalrow">
 								<apex:outputText value="{!$ObjectType.Contact.fields.Email.Label}" /><br/>
 								<apex:inputField value="{!newContact.Email__c}" required="true" rendered="{!newContact.Contact__c == null}"/>
@@ -1532,6 +1538,12 @@
                                 <apex:outputText value="{!$ObjectType.Contact.fields.Phone.Label}" /><br/>
                                 <apex:inputField id="contactphoneinput" html-placeholder="" value="{!newContact.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');" required="true"/>
                                 </td></tr>
+                            <tr id="personFax"><td class="modalrow">
+                                <apex:outputText value="{!$ObjectType.Contact.fields.Fax.Label}" /><br/>
+                                <apex:inputField id="contactfaxinput" html-placeholder="" value="{!newContact.FAX__c}"  required="false"/>
+                                </td></tr>
+
+                                FAX__c
 						</table>
 						</td>
 
@@ -1539,11 +1551,11 @@
 	                        <table>
 	                            <tr><td class="modalrow">&nbsp;</td></tr>
 	                            <tr><td class="modalrow">
-	                            	{!$Label.ISSP_AMS_Address}<br/>
-	                                <apex:inputField value="{!newContact.AddressStreet__c}" id="contactStreet" html-placeholder="{!$Label.ISSP_AMS_Street}"/>
+	                            	{!CASE(ownerLabelTypeAfterChange, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)} /&nbsp;<apex:outputText value="{!CASE(roleLabelTypeAfterChange, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}" escape="false"/>&nbsp;{!$Label.ISSP_AMS_Address}<br/>
+	                                <apex:inputField value="{!newContact.AddressStreet__c}" id="contactStreet" required="true" html-placeholder="{!$Label.ISSP_AMS_Street}"/>
 	                                </td></tr>
 	                            <tr><td class="modalrow">
-	                                <apex:inputField value="{!newContact.AddressCity__c}" id="contactCity"  html-placeholder="{!$Label.ISSP_AMS_City}"/>
+	                                <apex:inputField value="{!newContact.AddressCity__c}" id="contactCity"  required="true" html-placeholder="{!$Label.ISSP_AMS_City}"/>
 	                                </td></tr>
 	                            <tr><td class="modalrow">
 	                                <apex:inputField value="{!newContact.AddressPostcode__c}" id="contactPostalCode" html-placeholder="{!$Label.ISSP_AMS_PostCode}"/>
