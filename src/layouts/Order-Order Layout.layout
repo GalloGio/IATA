@@ -114,6 +114,10 @@
                 <behavior>Readonly</behavior>
                 <field>Payment_Gateway_Response__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Zuora_Credit_Card_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
