@@ -10,13 +10,20 @@
 
     <!---------------------------------------------------------------------->
        <script type="text/javascript">
+     
+    var redirected = false;
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
+        
+      if(redirected) return false;
+        
       var appPortalRole = $('[id$="portalRoles"]').val();
       newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService);
     }       
        
-    function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){
+    function newAppReq(appId,appName, appPortalRole, flagUseDefaultRole, isEasyPayService){       
+      if(redirected) return false;        
+        
       var doInsert;
       if (isEasyPayService == 'false') {
         doInsert = 2;
@@ -43,7 +50,7 @@
           } else {
             $('#ModalNewServiceRequest').modal('toggle');
           }
-          
+                    
           if (doInsert == 1) {
             if(appPortalRole == null  || appPortalRole == undefined) {
               appPortalRole = '';
@@ -51,7 +58,7 @@
             ISSP_AvailableServices.newAppsRequest2(appId,appName,'{!conId}', appPortalRole, flagUseDefaultRole, '{!defaultPortalUserRole}', newAppReqCallback);
           } else {
             ISSP_AvailableServices.newAppsRequest(appId,appName,'{!conId}', newAppReqCallback);
-          }
+          }         
       }
 
       //closeDialog();
@@ -64,12 +71,18 @@
     }
 
     function onCompleteUserProvisioning(redirect, page){
-      if (redirect == 'true') {
+      if (redirect == 'true' && !redirected) {
         $('#ModalNewIepServiceRequest').modal('toggle');
-
-        window.open(page, '_blank');
-        
-        refreshPage();        
+          
+        var win = window.open(page, '_blank');
+        if (win) {
+            //Browser has allowed it to be opened
+            win.focus();
+        } else {
+            //Browser has blocked it
+            alert('Please allow popups for this website');            
+        }          
+        redirected = true;          
       }
     }
 
@@ -82,6 +95,12 @@
     }
 
     function doRequest(servId) {
+      if(redirected) {
+          location.reload(true);
+          return false;        
+      }        
+      //obj.style.display = "none";        
+      //obj.style.visibility = "hidden";
       paraFunction(servId);
     }
 
@@ -140,6 +159,7 @@
     <apex:actionFunction name="refresh" action="{!refresh}" rerender="ServiceListForm" />
 
     <apex:actionFunction name="paraFunction" action="{!doRequest}" reRender="contactListForm,Services,myModalContent,ModalNewServiceRequest" oncomplete="javascript:dopopup();" immediate="true">      
+
       <apex:param id="servId" name="servId"  value="" />
     </apex:actionFunction>
 
@@ -340,7 +360,6 @@
                   </apex:outputPanel>
                 </li>
 
-
                 <script> 
                   if('{!JSENCODE(Serv.recordService.Description__c)}'!=''){ 
                     var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(Serv.recordService.Description__c)}'+'</div>';
@@ -378,15 +397,13 @@
                   
               <div class="col-md-6">
 
-                <apex:commandButton 
-                  rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
+                <apex:commandButton rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}" 
                   value="{!$Label.ISSP_Confirm}" 
                   styleClass="btn_iata_success btn-block btn" action="{!submitRequest}" 
                   oncomplete="if ({!accept}) {closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');}" 
                   rerender="display_messages"/>
             
-                <apex:outputPanel 
-                  rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}"
+                <apex:outputPanel rendered="{!Serv.recordService.Name<>'Standards Setting Workspace' && NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}"
                   id="serviceSubmitButton">
                   <a onclick="closeDialog();newAppReq('{!Serv.recordService.Id}','{!Serv.recordService.Name}', 'SKIP', '', 'false');"
                      class="btn_iata_success btn-block btn">
@@ -430,7 +447,6 @@
         </div>
       </div>
     </div>
-
 
     <!-- Modal New Service Request-->
     <div class="modal" id="ModalErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
