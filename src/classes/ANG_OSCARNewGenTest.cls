@@ -7,6 +7,7 @@ private class ANG_OSCARNewGenTest {
 
 		AMS_OSCAR__c oscar = [SELECT Id, RPM_Approval__c, Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c limit 1];
 
+		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 
 		update oscar;
