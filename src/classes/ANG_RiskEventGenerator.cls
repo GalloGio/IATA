@@ -165,24 +165,64 @@ public class ANG_RiskEventGenerator {
 
 
 		// for each object on the list, verify that it matches a config and create a risk event
-		List<ANG_Agency_Risk_Event__c> riskEvents = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> riskEvents  = new List<ANG_Agency_Risk_Event__c>();
+		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if(checkRequisites(o, config)){
-					
-					ANG_Agency_Risk_Event__c risk = new ANG_Agency_Risk_Event__c();
-					risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
-					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
-					risk.ANG_Created_from__c = objectName;
-					risk.put(sourceFields.get(objectName), o.Id);
-					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+					String uniqueKey = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
-					riskEvents.add(risk);
+					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
+					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
+
+					if(config.ANG_IsUpdateOnly__c){
+						riskEventsToUpdate.put(uniqueKey, config.ANG_Risk_Event_Status__c);
+					}else{
+						ANG_Agency_Risk_Event__c risk = new ANG_Agency_Risk_Event__c();
+						risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
+						risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
+						risk.ANG_Created_from__c = objectName;
+						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
+						risk.put(sourceFields.get(objectName), o.Id);
+						risk.ANG_UniqueKey__c = uniqueKey;
+
+						riskEvents .add(risk);
+					}
+					
 				}
 			}
 		}
 
-		if(!riskEvents.isEmpty()) upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
+		//insert new risk events and check for duplicate errors
+		if(!riskEvents .isEmpty()){
+
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
+			List<Database.SaveResult> insertResults = Database.insert(riskEvents, false);
+
+			for(Database.SaveResult result : insertResults){
+
+				System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] result - ' + result);
+
+				if(!result.isSuccess()){
+					for(Database.Error e : result.getErrors()){
+						//if error is for duplicate records do nothing, for other cases, throw error
+						if(e.getStatusCode() != StatusCode.DUPLICATE_VALUE) throw new RiskEventGeneratorException(e.getMessage());
+					}
+				}
+			}
+		}
+
+		riskEvents.clear();
+		//check if risk events to update already exists and apply new status
+		for(ANG_Agency_Risk_Event__c risk : [SELECT Id, ANG_UniqueKey__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_UniqueKey__c IN :riskEventsToUpdate.keySet()]){
+			String status = riskEventsToUpdate.get(risk.ANG_UniqueKey__c);
+			if(risk.ANG_Event_Status__c != status){
+				risk.ANG_Event_Status__c = status;
+				riskEvents.add(risk);
+			}
+		}
+
+		if(!riskEvents.isEmpty()) update riskEvents;
 	}
 
 	public void loadInitialInformations(){		
