@@ -143,8 +143,7 @@
                 <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onClick="if(!validateNewUser())return false;" action="{!submitContact}" value="{!$Label.ISSP_Next}" id="next" />
               </div>
         </apex:form>
-
-
+		
         <script>
         //in create contact page
         // description popups
@@ -241,10 +240,20 @@
         }
     </script>
     <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+    <input type="hidden" name="geoCode" id="geoCode" value=""/>
     <script>
+    	function getGeoCode() {
+    		if(typeof localStorage !== "undefined") {
+    			return localStorage.getItem("geoCode");
+    		} else {
+    			return "auto";
+    		}
+    	}
+    
+    
         var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
         var phone = $("input[name='{!$Component.newContact.businessphone}']");
-        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}";
+        var countryCode = "{!communityName}" == "CNS" ? "us" : "{!country}" == "" ?  getGeoCode() : "{!country}";        
 
         natphone.intlTelInput({
             defaultCountry: countryCode,
@@ -256,61 +265,61 @@
 
         /*
         natphone.intlTelInput({
-        defaultCountry: "{!country}",
-        nationalMode: true,
-        preferredCountries: [""],
-        numberType: "FIXED_LINE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
-    */
+	        defaultCountry: "{!country}",
+	        nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "FIXED_LINE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+    	});
+    	*/
 
-    var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
-    var mobile = $("input[name='{!$Component.newContact.businessmobile}']");
+		var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
+		var mobile = $("input[name='{!$Component.newContact.businessmobile}']");
 
-    natmobile.intlTelInput({
-        defaultCountry: countryCode,
-        //nationalMode: true,
-        preferredCountries: [""],
-        numberType: "MOBILE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
+	    natmobile.intlTelInput({
+	        defaultCountry: countryCode,
+	        //nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "MOBILE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+	    });
 
-    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
-    var fax = $("input[name='{!$Component.newContact.businessfax}']");
+	    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
+	    var fax = $("input[name='{!$Component.newContact.businessfax}']");
 
-    natfax.intlTelInput({
-        defaultCountry: countryCode,
-        //nationalMode: true,
-        preferredCountries: [""],
-        numberType: "FIXED_LINE",
-        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-    });
+	    natfax.intlTelInput({
+	        defaultCountry: countryCode,
+	        //nationalMode: true,
+	        preferredCountries: [""],
+	        numberType: "FIXED_LINE",
+	        utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+	    });
 
-    function setInternationalPhoneNo(p) {
-        if(p=='phone') {
-            phone.val(natphone.intlTelInput("getNumber"));
-        } else if(p=='mobile') {
-            mobile.val(natmobile.intlTelInput("getNumber"));
-        } else {
-            fax.val(natfax.intlTelInput("getNumber"));
-        }
-    }
-
-
-    //Fix EM: If user goes back we need to set again the country code/ country already selected
-
-    var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
-    var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
-    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
+	    function setInternationalPhoneNo(p) {
+	        if(p=='phone') {
+	            phone.val(natphone.intlTelInput("getNumber"));
+	        } else if(p=='mobile') {
+	            mobile.val(natmobile.intlTelInput("getNumber"));
+	        } else {
+	            fax.val(natfax.intlTelInput("getNumber"));
+	        }
+	    }
 
 
+	    //Fix EM: If user goes back we need to set again the country code/ country already selected
+	
+	    var natphone = $("input[name='{!$Component.newContact.businessphoneinput}']");
+	    var natmobile = $("input[name='{!$Component.newContact.businessmobileinput}']");
+	    var natfax = $("input[name='{!$Component.newContact.businessfaxinput}']");
 
-    var phonenat = "{!con.Phone}";
-    var phonemobile = "{!con.MobilePhone}";
-    var phonefax = "{!con.Fax}";
-    //alert(phonenat);
-    //alert(phonefax );
-    if (phonenat != "") {
+
+
+	    var phonenat = "{!con.Phone}";
+	    var phonemobile = "{!con.MobilePhone}";
+	    var phonefax = "{!con.Fax}";
+	    //alert(phonenat);
+	    //alert(phonefax );
+	    if (phonenat != "") {
 
 
         natphone.intlTelInput("setNumber", phonenat);

@@ -1,16 +1,129 @@
 <apex:page controller="ISSP_Registration"  showHeader="false" sidebar="false" standardStylesheets="false" language="{!lang}">
+	<style>
+		.errorMessage {
+			font-size: 10px;
+			margin: 0px;
+		}
+		
+		.errorBox {
+			border-color: #d00;
+			box-shadow: 0 0 0 3px rgba(221,0,0,.1) inset;
+		}
+	</style>
+
 <head>
     <title>{!IF(communityName=='CNS','CNS','IATA')}</title>
  </head>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+ <apex:stylesheet value="{!URLFOR($Resource.ValidationEngine, 'css/validationEngine.jquery.css')}" />
  <script type="text/javascript">
-    var $j = jQuery;
+    var $j = jQuery.noConflict();
     
+ 	/*iec functions - start*/	
+	function isStateRequired(country) {
+    	return country == 'Canada' || country == 'United States' || country == 'Venezuela' || country == 'Australia' || country == 'Brazil';
+   	}
+   	
+	function isZipCodeApplicable(country) {    	
+   		return !countriesWithoutZipCode.has(country.toUpperCase());
+   	}
+   	
+  	function addListeners() {
+		$j('#billingstreet textarea').on('keyup', function() {
+			var value = $j('#billingstreet textarea').val();
+			if(value.length >= 70) {
+				var elem = $('#addressStreetMSG').detach();
+				elem.insertBefore($j('#billingstreet textarea'));
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}	
+		});
+		$j('#shippingstreet textarea').on('keyup', function() {
+			var value = $j('#shippingstreet textarea').val();
+			var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');  
+			var elem = $('#addressStreetMSG').detach();
+			elem.insertBefore($j('#shippingstreet textarea'));
+			if(value.length >= 70) {
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_LimitCharacters}');						
+				$('#addressStreetMSG').show();
+			} else if(value.match(pattern)) {
+				$('#addressStreetMSG .formErrorContent').text('{!$Label.IEC_PO_BOX_MSG}');						
+				$('#addressStreetMSG').show();
+			} else if($('#addressStreetMSG').css('display') != 'none') {
+				$('#addressStreetMSG').hide();
+			}
+		});
+		$j('#billingstreet textarea').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
+		$j('#shippingstreet textarea').blur(function() {
+			$('#addressStreetMSG').hide();
+		});
 
+	}
+   	
+	function isValidAddressStreet() {
+		var bstreet = $j('#billingstreet textarea').val();
+		var sstreet = $j('#shippingstreet textarea').val();
+		var bstreetValid = (isBlank(bstreet) || bstreet.length <= 70);
+		var sstreetValid = (isBlank(sstreet) || sstreet.length <= 70);
+		if(!bstreetValid) {
+			$j('#billingAddressLimit').show();
+			$j(window).scrollTop(0);
+		} else {
+			$j('#billingAddressLimit').hide();
+		}
+		if(!sstreetValid) {
+			$j('#shippingAddressLimit').show();
+			$j(window).scrollTop(0);
+		} else {
+			$j('#shippingAddressLimit').hide();
+		}
+		return bstreet && sstreet; 
+	}
+	
+	function modifyUIForm() {
+		$j('#billingstreet textarea').prop("maxlength","70");
+		$j('#shippingstreet textarea').prop("maxlength","70");
+		var elem = $j('#divToMove').detach();
+		elem.insertAfter("#shippingcountry");
+		$j('#shippingcountry').hide();
+		$j('[id*="drpdwnCountry"]').val($j('#shippingcountry input').val());
+		$j('[id*="drpdwnCountry"]').on("change", function() {
+			$j('#shippingcountry input').val($j('[id*="drpdwnCountry"]').val());
+			var country = this.value;
+			if(isZipCodeApplicable(country)) {
+				$j('#shippingpostalcode input').removeAttr('placeholder', 'N/A');
+	            $j('#shippingpostalcode input').removeAttr('disabled', true);	 
+			} else {
+				$j('#shippingpostalcode input').val('');
+				$j('#shippingpostalcode input').prop('placeholder', 'N/A');
+	            $j('#shippingpostalcode input').prop('disabled', true);	 
+			}
+		});
+	}
+	
+	function replaceShippingTXT(node) {
+		if (node.nodeType == 3) {
+			node.data = node.data.replace(/Shipping/g, "Delivery");
+	  	}
+	  	if (node.nodeType == 1 && node.nodeName != "SCRIPT") {
+	    	for (var i = 0; i < node.childNodes.length; i++) {
+	      		replaceShippingTXT(node.childNodes[i]);
+	    	}
+	  	}
+	}
+	
+	/*iec functions - end*/
+	
+	var countriesWithoutZipCode;
+	var defCountry;
     $j(document).ready(function() {
         console.log('fsd '+'{!preventAddressDoctorService}');
-        if('{!preventAddressDoctorService}'=='false'){
+        if('{!preventAddressDoctorService}'=='false') {
             $j("#shippingcountry").find("input").val("{!searchCountryName}");
             $j("#shippingcountry").find("input").attr('readonly', true);
             $j("#billingcountry").find("input").val("{!searchCountryName}");
@@ -28,7 +141,39 @@
             $j(".labelText").hide();
             $j("#phone").hide();
             
-            
+            //TC: remove address validation boxes
+            if("{!sRefererCommunity}"=="iec") {
+            	replaceShippingTXT(document.body);
+	            $j(".elementBAddressToHide").hide();  
+	            $j(".elementSAddressToHide").hide();     
+	            $j(".elementToHide").hide(); 
+	            $j(".elementEmailToHide").hide();
+	            $j('#shippingcountry input').removeAttr("readonly");
+	            
+	            countriesWithoutZipCode = new Set({!countriesNamesWithoutZipCode});
+	            defCountry = $j('#billingcountry input').val();
+	            addListeners();  
+	            
+	            modifyUIForm();
+	            
+	            //TC: set mandatory fields by country 
+	            var country = "{!searchCountryName}";     
+
+	            if(country && "{!requiredZipCode}" == "false") {
+	            	$j('#billingpostalcode input').prop('placeholder', 'N/A');
+	            	$j('#billingpostalcode input').prop('disabled', true);	       
+	            	$j('#shippingpostalcode input').prop('placeholder', 'N/A');
+	            	$j('#shippingpostalcode input').prop('disabled', true);	     	
+	            } else {                   
+		            $j("#billingpostalcode").parent().siblings('.col-lg-5').find("label").append( "<span class='required'>*</span>" );	            
+		            $j(".billingpostalcode").addClass('rec');		            	            
+	            }
+	            
+	            if(country == 'Canada' || country == 'United States' || country == 'Venezuela' || country == 'Australia' || country == 'Brazil') {
+	            	$j("#billingstate").parent().siblings('.col-lg-5').find("label").append( "<span class='required'>*</span>" );
+	         	    $j(".billingstate").addClass('rec');            	
+	            }
+            }
         }
 
 
@@ -70,10 +215,39 @@
                     </apex:repeat>
                 </div> 
                 
+                <div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -47px; display: none;">
+					<div class="formErrorContent"></div>
+					<div class="formErrorArrow">
+						<div class="line10"><!-- --></div>
+						<div class="line9"><!-- --></div>
+						<div class="line8"><!-- --></div>
+						<div class="line7"><!-- --></div>
+						<div class="line6"><!-- --></div>
+						<div class="line5"><!-- --></div>
+						<div class="line4"><!-- --></div>
+						<div class="line3"><!-- --></div>
+						<div class="line2"><!-- --></div>	
+						<div class="line1"><!-- --></div>
+					</div>
+				</div>
+                
                 
                 <div id="recFields" class="alert alert-danger" style="display:none">
                     <strong>{!$Label.ISSP_fill_required_fields}</strong>
                     <span></span>
+                </div>
+                
+                <div id="iec_div_errors" class="alert alert-danger" style="display:none">
+                	<strong>{!$Label.ISSP_Error} </strong>
+                	<div>
+                		<div id="iec_pobox_error">
+                			<li>{!$Label.IEC_PO_BOX_ERROR}</li>
+                		</div>
+                		<div id="iec_rec_fields">
+                			<li>{!$Label.IEC_fill_required_fields}</li>
+                		</div>
+                	</div>
+                	<span></span>
                 </div>
         
                 <div class="panel panel-default row" id="searchForm">
@@ -85,6 +259,9 @@
                     <apex:actionFunction action="{!checkSearchIataCode}" name="checkSearchIataCode" reRender="searchPanel" status="changeData" />
                     <apex:actionFunction action="{!checkAgencyType}" name="checkAgencyType" reRender="searchPanel" status="changeData" />
                     <apex:actionFunction action="{!checkSearchDesignatorCode}" name="checkSearchDesignatorCode" status="changeData" />
+                    <apex:actionFunction action="{!changeShippingCountry}" reRender="ShippingAddress" name="changeShippingCountry" status="changeData">
+                    	<apex:param id="param_s_country" name="param_s_country" value=""/>
+                    </apex:actionFunction>
                     
                     <div class="form-group" id="TypeOfCustomer">
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$Label.ISSP_Type_of_Customer}</label>
@@ -107,7 +284,7 @@
                     </div>
                     
                     <!-- TF - SP10 - If airline, ask if has Airline Designator --> 
-                    <div class="form-group" style="display:{!IF(isAirline,'','none')}">
+                    <div class="form-group" style="display:{!IF(AND(isAirline, sRefererCommunity != 'iec'),'','none')}">
                         <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Designator_Code_Question}</label>
                         <apex:selectRadio style="width:15%" value="{!toSearchDesignatorCodeString}" onchange="checkSearchDesignatorCode()" >
                             <apex:selectOptions value="{!iataCodeQuestion}"/>
@@ -117,21 +294,27 @@
                     <!-- TF - SP10 - If airline, search for Airline Designator -->
                     <div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
                         <label class="control-label" for="inputError">{!$Label.ISSP_Designator_Code}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control" value="{!searchDesignatorCode}"/>
                     </div>
                     
                     <!-- TF - SP10 - If airline, search for IATA Code -->
                     <div class="form-group" style="display:{!IF(toSearchDesignatorCode,'','none')}">
                         <label class="" for="inputError">{!$ObjectType.Account.fields.IATACode__c.Label}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACodeAirline" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACodeAirline" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control" value="{!searchIATACodeAirline}" id="iataCodeInputAirline" />
                     </div>
                     
                     <!-- TF - SP10 - If airline, search for Country -->
                     <div class="form-group" style="display:{!IF(toSearchDesignatorCode,'','none')}"> 
                         <label class="control-label"  for="inputError"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="CountryAirline" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="CountryAirline" />
+                        </apex:outputPanel>
                         <apex:selectList styleclass="form-control {!IF(toSearchDesignatorCode,'recSearch','')}" value="{!searchCountryAirline}" size="1" >
                             <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
                             <apex:selectOptions value="{!ISOCountry}"/>
@@ -157,7 +340,9 @@
                     <div class="form-group" style="display:{!IF(showSearchCountry,'','none')}"> 
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'display:none;','')}"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'','display:none;')}"><span class="required">*</span>{!$Label.GeneralPublicLocation}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="Country" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="Country" />
+                        </apex:outputPanel>
                         <apex:selectList styleclass="form-control {!IF(showSearchCountry,'recSearch','')} searchCountry" value="{!searchCountry}" size="1" > <!-- onchange="saveCountryName()"> -->
                             <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Registration_CountryNone}"/>
                             <apex:selectOptions value="{!ISOCountry}"/>
@@ -166,7 +351,9 @@
                     </div>
                     <div class="form-group" style="display:{!IF(showSearchIataCode,'','none')}">
                         <label class="" for="inputError"><span class="required">*</span>{!$ObjectType.Account.fields.IATACode__c.Label}</label>
-                        <img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACode" />
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACode" />
+                        </apex:outputPanel>
                         <apex:inputText styleclass="form-control {!IF(showSearchIataCode,'recSearch','')}" value="{!searchIATACode}" id="iataCodeInput" />
                     </div>
                     <div class="form-group" id="CompanyName" style="display:{!IF(showSearchCompName,'','none')}">
@@ -291,7 +478,7 @@
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitExistAccount" onClick="blockme2();" action="{!register}" value="{!$Label.site.submit}" style="display:none" rendered="{!accountFound}" />
                             <!-- <apex:param name="selectedAccId" value="{!selectedAccId}" assignTo="{!selectedAccId}" />
                         </apex:commandButton> -->
-                        <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 nextAsGP" onClick="blockme2();" action="{!nextAsGP}" value="{!$Label.ISSP_Next}" rendered="{!showNextAsGP}"/>
+                        <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 nextAsGP" onClick="if(!validateGPForm()){return false;} blockme2();" action="{!nextAsGP}" value="{!$Label.ISSP_Next}" rendered="{!showNextAsGP}"/>
                     </div>
                 </div> 
     
@@ -388,13 +575,16 @@
                         <h3 class="panel-title">{!$Label.ISSP_CompanyAddressInformation}</h3>
                         
                       </div>
-                       <h3 id="addressmessage" class="panel-heading" style="background-color:white;font-size:14px;font-weight:bold;"><apex:outputText value="{!$Label.AddressDoctorValidate}" escape="false" /></h3>
+<!--                        <h3 id="addressmessage" class="panel-heading" style="background-color:white;font-size:14px;font-weight:bold;"><apex:outputText value="{!$Label.AddressDoctorValidate}" escape="false" /></h3> -->
                        <!-- <p><apex:outputText value="{!validateaddresserror}" escape="false" /></p> -->
-                       <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
-                       </div>
+                      <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
+                      </div>
                       <div class="form-group col-lg-6" style="display:{!IF(preventAddressDoctorService==false,'','none')}">
                         <input type="checkbox" name="vehicle" id="copyCheckBox" onChange="copyBillingAddress()"/>
                         <label for="exampleInputEmail1">{!$Label.ISSP_CopyBillingAddress}</label> 
+                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
+                        	<p style="color: #C90435; font-size: 11px;">{!$Label.IEC_PO_BOX_MSG}</p>
+                        </apex:outputPanel>
                       </div>
                       <div class="form-group col-lg-6">
                       <DSE:DS_DataQuality id="BillingAddress"
@@ -405,22 +595,31 @@
                         RowStyle="row"
                         LabelStyle="col-lg-5"
                         InputStyle="col-lg-6"
-                        StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
                         FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
                       </DSE:DS_DataQuality>
                       </div>
                       <div class="form-group col-lg-6">
-                      <DSE:DS_DataQuality id="ShippingAddress"
-                        RecordRef="{!acc}"
-                        FieldGroupName="Shipping Address"
-                        Edit="true"
-                        FormGroupStyle="form-group"
-                        RowStyle="row"
-                        LabelStyle="col-lg-5"
-                        InputStyle="col-lg-6"
-                        StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
-                        FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
-                      </DSE:DS_DataQuality>
+	                      <apex:outputPanel id="shippingAddressArea" layout="none">                 
+		                      <DSE:DS_DataQuality id="ShippingAddress"
+		                        RecordRef="{!acc}"
+		                        FieldGroupName="Shipping Address"
+		                        Edit="true"
+		                        FormGroupStyle="form-group"
+		                        RowStyle="row"
+		                        LabelStyle="col-lg-5"
+		                        InputStyle="col-lg-6"
+		                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementSAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"                        
+		                        FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
+		                      </DSE:DS_DataQuality>
+		                      	<apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
+		                      		<div id="divToMove" class="col-lg-6">
+				                      	<apex:selectList styleclass="form-control" id="drpdwnCountry" value="{!acc.ShippingCountry}" size="1" >	                            	
+			                            	<apex:selectOptions value="{!shpCountry}"/>	
+			                        	</apex:selectList>
+		                        	</div>
+	                        	</apex:outputPanel>		                                       
+	                      </apex:outputPanel>
                       </div>
                         <apex:inputHidden value="{!acc.Phone}" id="businessphone"/>
                         <apex:inputHidden value="{!acc.Mobile__c}" id="businessmobile"/>
@@ -438,7 +637,7 @@
                                 RowStyle="row"
                                 LabelStyle="col-lg-6 labelText"
                                 InputStyle="col-lg-9"
-                                StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox"
+                                StatusStyle="{!IF(sRefererCommunity == 'iec','elementToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1 statusBox')}"
                                 FormControlStyle="form-control national" rendered="{!preventAddressDoctorService==false}">
                               </DSE:DS_DataQuality>
                       </div>
@@ -446,9 +645,7 @@
                       
                       <div class="form-group col-lg-7" id="Phonetwo">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Mobile}</label><span class="required"></span><br/>
-                            <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
-
-
+                        <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
                       </div>
 
                       <!-- <div class="form-group col-lg-6" id="DSEPhone">
@@ -486,7 +683,7 @@
                             RowStyle="row"
                             LabelStyle="col-lg-6"
                             InputStyle="col-lg-11"
-                            StatusStyle="col-lg-1 col-md-1 col-sm-1 col-xs-1"
+                            StatusStyle="{!IF(sRefererCommunity == 'iec','elementEmailToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
                             FormControlStyle="form-control" rendered="{!preventAddressDoctorService==false}">
                           </DSE:DS_DataQuality>
                       </div>
@@ -606,9 +803,14 @@
         }
         
         
+        function validateGPForm() {
+        	if("{!sRefererCommunity}" == "iec") {
+        		return validateSearch();
+        	} else {
+        		return true;
+        	}
+        }
 
-
-         
         function selectAccId(theAccId){
             
             var accId = $j('input[name="group1"]:checked').val();
@@ -668,9 +870,126 @@
                 return false;
             }
         }
-                          
-    function validateNewAccount(categoryField){
+        
+    function checkShippingAddress() {
+    	var country = $j('#shippingcountry input').val() ? $j('#shippingcountry input').val().toUpperCase() : "";
+    	var stateReq = country == 'CANADA' || country == 'UNITED STATES' || country == 'VENEZUELA' || country == 'AUSTRALIA' || country == 'BRAZIL';
+    	var postalCodeReq = isZipCodeApplicable(country);
+    	var sstreet = $j("#shippingstreet").find("textarea");
+    	var scity = $j("#shippingcity").find("input");
+    	var sstate = $j("#shippingstate").find("input");
+        var scode = $j("#shippingpostalcode").find("input");
+        var totAddress = sstreet.val() + scity.val() + scode.val() + (stateReq ? sstate.val() : '');
+        var isValid = true;  
+        var isPoBox = false;   
+        var pattern = new RegExp('\\b[P|p]*(OST|ost)*\\.*\\s*[O|o|0]*(ffice|FFICE)*\\.*\\s*[B|b][O|o|0][X|x]\\s*\\d*\\b');   
+        $j('#poBoxError').hide();
+    	if(!isBlank(totAddress)) {
+    		$j(sstreet.parents('.form-group')[0]).removeClass('has-error');
+    		if(isBlank(sstreet.val())) {
+    			isValid = false;
+    			$j(sstreet.parents('.form-group')[0]).addClass('has-error');    			
+    		} else {
+    			if(sstreet.val().match(pattern)) {    				
+    				$j(sstreet.parents('.form-group')[0]).addClass('has-error');
+    				isPoBox = true;
+    			}
+    		}
+    		$j(scity.parents('.form-group')[0]).removeClass('has-error');
+    		if(isBlank(scity.val())) {
+    			isValid = false;
+    			$j(scity.parents('.form-group')[0]).addClass('has-error');   
+    		}   
+    		$j(scode.parents('.form-group')[0]).removeClass('has-error');
+    		if(isBlank(scode.val()) && postalCodeReq) {
+    			isValid = false;
+    			$j(scode.parents('.form-group')[0]).addClass('has-error');   
+    		}
+    		$j(sstate.parents('.form-group')[0]).removeClass('has-error');
+    		if(isBlank(sstate.val()) && stateReq) {
+    			isValid = false;
+    			$j(sstate.parents('.form-group')[0]).addClass('has-error');   	
+    		}	
+    	}
+    	
+    	if(!isValid) {
+    		$j('#iec_div_errors').show();
+    		$j('#iec_rec_fields').show();
+    	}   
+    	
+    	if(isPoBox) {
+    		$j('#iec_div_errors').show(); 		
+    		$j('#iec_pobox_error').show();
+    	}
+    	
+    	return isValid && !isPoBox; 	
+    }
     
+    function validateNewAccount_iec(categoryField) {
+    	//EM: If state empty for those 5 countries
+        var country = "{!searchCountryName}";
+        //alert("Country: " +country);
+       
+        var flag = true;
+       	$j('#iec_div_errors').hide();
+       	$j('#iec_pobox_error').hide();
+       	$j('#iec_rec_fields').hide();
+        
+        var shippingAddressValid = checkShippingAddress();
+        
+        var myCategoryField = document.getElementById(categoryField);
+        if (myCategoryField == null){
+            //alert("is null");
+        }
+        else
+        {
+            if (myCategoryField.value == '' || myCategoryField.value == null){
+                flag = false;
+                $j('#theCategoryMainDiv').addClass('has-error');
+            }
+            else{
+                $j('#theCategoryMainDiv').removeClass('has-error');
+            }
+        }
+        
+        
+        if ({!accountFound} ) {
+            //Do nothing: exception
+            if ("{!isOther}" == "true") {}
+        
+            else if ($j('.accId').val()!='') {
+                //alert("return 1");
+                return true;
+            }
+            else {
+                //alert("return 2");
+                $j('.accId').parents('.form-group').addClass('has-error');
+                return false;
+            }
+        }
+        $j('.rec').each(function (){
+            $j(this).parents('.form-group').removeClass('has-error');
+            if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
+                if($j(this).css('display') != 'none'){
+                    flag = false;
+                    $j(this).parents('.form-group').addClass('has-error');
+                }
+            }
+        }
+        )
+        
+        /*
+        if (myCategoryField.value == '')
+            flag = false;
+        */
+        if(flag == false){
+            $j('#iec_div_errors').show();
+            $j('#iec_rec_fields').show();
+        }
+        return flag && shippingAddressValid && isValidAddressStreet();
+    }
+    
+    function validateNewAccount_non_iec() {    	    
         //EM: Validate Billing Address before saving
         var all = $j("div[id=recordstatuscontainer]");
         var box = all[0];
@@ -779,6 +1098,11 @@
         return flag;
     }
     
+                          
+    function validateNewAccount(categoryField) {            
+		return "{!sRefererCommunity}" == "iec" ? validateNewAccount_iec(categoryField) : validateNewAccount_non_iec(categoryField);  
+    }
+    
     function changeicon () {
     
     var all = $j("div[id=recordstatuscontainer]");
@@ -851,8 +1175,8 @@
         
         var all = $j("div[id=recordstatuscontainer]");
         var box = all[0];
-        var pict = box.childNodes[0];
-        if (pict != null)    pict.src = '{!urlpicture}';
+        //var pict = box.childNodes[0];
+        //if (pict != null)    pict.src = '{!urlpicture}';
         
         
         
@@ -877,9 +1201,9 @@
         var country = "{!searchCountryName}";
         //alert("Country: " +country);
         if (country == 'Canada' || country == 'United States' || country == 'Venezuela' || country == 'Australia' || country == 'Brazil') {
-            $j("#shippingstate").find("input").attr('readonly', true);
-            $j("#billingstate").find("input").attr('readonly', true);
-        
+            //$j("#shippingstate").find("input").attr('readonly', true);
+            //$j("#billingstate").find("input").attr('readonly', true);
+        	//$j("#billingstate").addClass("rec");
             var scity = $j("#shippingcity").find("input").val();
             var sstate = $j("#shippingstate").find("input").val();
             $j("#shippingcity").change(function() {
@@ -912,11 +1236,19 @@
                    
     function copyBillingAddress() {
         var checkBox = document.getElementById('copyCheckBox');
+        var isIEC = "{!sRefererCommunity}"=="iec";
         if (checkBox.checked){
             $j("#shippingstreet").find("textarea").val($j("#billingstreet").find("textarea").val());
             $j("#shippingcity").find("input").val($j("#billingcity").find("input").val());
             $j("#shippingstate").find("input").val($j("#billingstate").find("input").val());
             $j("#shippingpostalcode").find("input").val($j("#billingpostalcode").find("input").val());
+            if(isIEC) {          	
+            	$j('[id*="drpdwnCountry"]').attr('disabled', 'disabled');
+            	$j("#shippingcountry").find("input").val(defCountry);
+            	$j('[id*="drpdwnCountry"]').val(defCountry);
+            }
+        } else if(!checkBox.checked && isIEC) {
+        	$j('[id*="drpdwnCountry"]').removeAttr('disabled');
         }
     }
     
@@ -987,8 +1319,7 @@
         }
     }
                   
-</Script>                           
-                        
+</Script>                 
 
      </apex:define>
   </apex:composition>
