@@ -19,6 +19,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.IATACode__c
                 , AMS_Pax_Accreditation_Form__c.ISSP_AMS_Legal_Status__c
                 , AMS_Pax_Accreditation_Form__c.CASS_Number__c
+                , AMS_Pax_Accreditation_Form__c.SAAM_Case__c
                 , AMS_Pax_Accreditation_Form__c.Short_Name__c
                 , AMS_Pax_Accreditation_Form__c.Location_Class__c
                 , AMS_Pax_Accreditation_Form__c.Location_Type__c
@@ -94,6 +95,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isRendered(String fieldName){
         if(fieldName == 'Is_your_firm_handling_Dangerous_Goods__c') return isCargoAgency;
         if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
+        if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
 
         return true;
     }
