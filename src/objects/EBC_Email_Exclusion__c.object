@@ -211,6 +211,23 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Exclusion_Search_By_Source_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>Travel MarketPlace</value>
+        </filters>
+        <label>Exclusion Search By Source Campaign</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Exclusions_other_than_List_Detective</fullName>
         <columns>NAME</columns>
         <columns>Email__c</columns>
@@ -223,6 +240,11 @@
             <field>Type__c</field>
             <operation>notEqual</operation>
             <value>LISTDETECTIVE</value>
+        </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>notContain</operation>
+            <value>Banana Island</value>
         </filters>
         <label>Exclusions other than List Detective</label>
         <language>en_US</language>
