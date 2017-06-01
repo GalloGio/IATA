@@ -592,6 +592,7 @@
             }
             else{
 
+            oscarT.Validation_Status__c = AMS_Utils.PASSED;
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -968,6 +969,7 @@
 
         oscarList[2].First_Step_Completed__c = true;
         oscarList[2].STEP2__c = 'Failed';
+        oscarList[2].Validation_Status__c = AMS_Utils.FAILED;
         oscarList[2].RPM_Approval__c = 'Authorize Disapproval';
         oscarList[2].RecordTypeId = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NEW').getRecordTypeId();
         
