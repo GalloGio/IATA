@@ -13,6 +13,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Legal_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Trading_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -22,10 +26,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Last_Date_of_Update__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Profit_Center__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -44,6 +44,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CASS_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Profit_Center__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

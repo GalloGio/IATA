@@ -2031,6 +2031,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </picklistValues>
@@ -6720,6 +6724,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </values>
@@ -9703,6 +9711,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </values>
@@ -12639,6 +12651,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>

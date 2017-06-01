@@ -5,21 +5,38 @@
     },
 
     handleLogin: function (component, event, helpler) {
+        console.log('helper handleLogin');
+
         //Get parameters
-        var username = component.find("username").get("v.value");
-        var password = component.find("password").get("v.value");
+        var username = '';
+        username = component.find("username").get("v.value");
+        var password = '';
+        password = component.find("password").get("v.value");
         var startUrl = component.get("v.startUrl");
         
-        if(username==''){
+        console.log('username ' + username);
+        console.log('password ' + password);
+        
+        component.set("v.errorMessage",'');
+        component.set("v.showError",false);
+        
+        if(username == ''){
             component.set("v.errorMessage",$A.get("$Label.c.OneId_Username_ErrorBlank"));
             component.set("v.showError",true);
+            
             return;
     	}
-        else if (password==''){
+        else if (password == ''){
             component.set("v.errorMessage",$A.get("$Label.c.OneId_Password_ErrorBlank"));
             component.set("v.showError",true);
+            
             return;
         }
+        
+        console.log('helper handleLogin1');
+        component.set("v.errorMessage",'');
+        component.set("v.showError",false);
+        
         
         //Configure apex controller action function
         var action = component.get("c.login");
@@ -52,7 +69,8 @@
        $.ajax({
             url: url,
             type: 'GET',
-            async: false,
+            //async: true,//Asynchronous
+            async: false,//Synchronous
             //dataType: 'json',
             //crossDomain: true,
             beforeSend: function (request)
@@ -64,14 +82,14 @@
             {
                 //process the result
                 console.log('In AJAX success: '+result);
-//$("#clientIpAddressAjax").val(result);
-//FAZER SET DE HIDEN PARA DEPOIS IR BUSCAR QUANDO FIZER LOGIN
-//component.set("v.clientIpAddress",result);
-				$("#clientIpAddressAjax").val(result).trigger('change');
-//$("#clientIpAddressAjax").val(result).change();
-//$('#clientIpAddressAjax').trigger('onchange');
-				//document.getElementById('clientIpAddressAjax').onchange();
-                console.log('ajax succes GET after SET component: '+$("#clientIpAddressAjax").val());
+                
+                //For Assynchronous mode
+				//$("#clientIpAddressAjax").val(result).trigger('change');
+                //console.log('ajax succes GET after SET html INPUT - clientIpAddressAjax='+$("#clientIpAddressAjax").val());
+                
+                //If ajax schyncronous componetn context exists here so can be used
+				component.set('v.clientIpAddress',result);
+                console.log('ajax succes GET after SET component val - component.v.clientIpAddress='+component.get('v.clientIpAddress'));
             },
             error : function(jqXHR, textStatus, errorThrown) {
                 console.log('error');
@@ -82,7 +100,7 @@
 	},
     
     getSanctionCountry : function (component, event, helpler, clientIpAddress) {
-        
+
         //Configure apex controller action function
         var action = component.get("c.getSanctionCountry");
         
@@ -91,9 +109,11 @@
         
         action.setCallback(this, function(a){
         	var rtnValue = a.getReturnValue();
-            console.log('getSanctionCountry.Calback getSanctionCountry='+JSON.stringify(rtnValue));
+            console.log('getSanctionCountry.Callback getSanctionCountry='+JSON.stringify(rtnValue));
             if (rtnValue !== null) {
                 component.set('v.sanctionCountry',rtnValue);
+            }else{
+                console.log('getSanctionCountry.Callback is null');
             }
         });
         $A.enqueueAction(action);
