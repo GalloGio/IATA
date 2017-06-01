@@ -497,6 +497,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>EmailForSSO__c</fullName>
+        <description>This is a copy of the standard email field. Required for SSO and the connected app configuration.</description>
+        <externalId>false</externalId>
+        <formula>Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EmailForSSO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Employee_Number_PPD__c</fullName>
         <description>IATA Employee Number</description>
         <externalId>false</externalId>
@@ -1678,6 +1689,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <field>CORE.PROFILE.USERTYPE</field>
             <operation>equals</operation>
             <value>S</value>
+        </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
         </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>

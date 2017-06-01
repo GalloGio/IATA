@@ -73,7 +73,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Identify_as_Key_Customer__c</field>
+                <field>Key_Customer_Reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Segmentation__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -302,6 +306,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Active_Guarantees__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Number_of_GDI_financial_securities__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -775,6 +783,13 @@
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
         <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <relatedList>Account_Domain__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

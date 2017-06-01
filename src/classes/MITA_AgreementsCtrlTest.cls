@@ -128,19 +128,19 @@ private class MITA_AgreementsCtrlTest {
 	static void Test_saveAccount_OK() {
 		loadData();
 		MITA_AgreementsCtrl controller = new MITA_AgreementsCtrl();
-		Account account1 = [Select Id,Name from Account where Name = 'Air France'];
+		Account account1 = [Select Id,Name,Website from Account where Name = 'Air France'];
 		controller.accountid = account1.Id;
 		controller.selectAccount();
 
 		Test.startTest();
 		controller.editAccount();
 		controller.resetAccount();
-		controller.acc.Name = 'Air France 2';
+		controller.acc.Website = 'www.acme.com';
 		controller.saveAccount();
 		Test.stopTest();
 
-		Account result = [Select Id,Name from Account where Id = :controller.acc.Id];
-		System.assertEquals(result.Name, 'Air France 2');
+		Account result = [Select Id,Name,Website from Account where Id = :controller.acc.Id];
+		System.assertEquals(result.Website, 'www.acme.com');
 	}
 
 	@isTest

@@ -210,6 +210,131 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Exclusion_Search_By_Source_Campaign</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>Travel MarketPlace</value>
+        </filters>
+        <label>Exclusion Search By Source Campaign</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Exclusions_other_than_List_Detective</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>notEqual</operation>
+            <value>LISTDETECTIVE</value>
+        </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>notContain</operation>
+            <value>Banana Island</value>
+        </filters>
+        <label>Exclusions other than List Detective</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Hard_Bounce_Exclusions</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>HARDBOUNCE</value>
+        </filters>
+        <label>Hard Bounce Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>List_detective_Exclusions</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>LISTDETECTIVE</value>
+        </filters>
+        <label>List Detective Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Opt_Out_Exclusions</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Unsubscribe_From__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>OPTOUT</value>
+        </filters>
+        <label>Opt Out Exclusions</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Solo_Email_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Type__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <columns>Event_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Email__c</field>
+            <operation>equals</operation>
+            <value>ptscanada@aexp.com</value>
+        </filters>
+        <label>Solo Email Search</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Use_for_Search_by_Specific_Email_Address</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Type__c</columns>
+        <columns>Event_Date_Timestamp__c</columns>
+        <columns>Source_Campaign__c</columns>
+        <columns>Is_Relation_Created__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Email__c</field>
+            <operation>contains</operation>
+            <value>gm-tour@hanmail.net</value>
+        </filters>
+        <label>Use for Search by Specific Email Address</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Exclusion Name</label>
         <trackHistory>false</trackHistory>

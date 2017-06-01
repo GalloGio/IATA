@@ -154,6 +154,32 @@ public without sharing class ISSP_Registration {
     public String urlpicture {get;set;}
 	public boolean isChina {get;set;}
 	public String whichcountry {get;set;}
+	
+	//TC
+	public Map<String, Boolean> zipCodeApplicable {get;set;}
+	public Boolean requiredZipCode {
+		get{
+			return zipCodeApplicable != null && !String.isBlank(searchCountryName) ? zipCodeApplicable.get(searchCountryName) : true;
+		}
+		set;
+	}
+	public String countriesNamesWithoutZipCode {
+		get{
+			if(countriesNamesWithoutZipCode == null) {
+				Set<String> countriesNamesWithoutZipCodeLst = new Set<String>();
+				List<IATA_ISO_Country__c> lstCountries = [SELECT Name, IEC_Zip_Postal_Code_required__c 
+														  FROM IATA_ISO_Country__c
+														  WHERE IEC_Zip_Postal_Code_required__c = false];
+				
+				for(IATA_ISO_Country__c c : lstCountries) {
+					countriesNamesWithoutZipCodeLst.add(c.Name.toUpperCase().trim());
+				}
+				
+				countriesNamesWithoutZipCode = JSON.serialize(countriesNamesWithoutZipCodeLst);
+			}
+			return countriesNamesWithoutZipCode;
+		}set;
+	}
 
 
     public ISSP_Registration(){
@@ -642,7 +668,11 @@ public without sharing class ISSP_Registration {
                         }
                     }
                     else{
-                        errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	if(sRefererCommunity == 'iec') {
+                        	errorMessage.add(Label.IEC_NoRecordsFoundGP);
+                    	} else {
+                    		errorMessage.add(Label.ISSP_NoRecordsFoundGP);
+                    	}
                     }
                 }
                 else{
@@ -732,12 +762,39 @@ public without sharing class ISSP_Registration {
         return null;
     }
 
+	//TC 2017-05-16
+	public Boolean isGPSearchValid() {
+		try {
+			Set<String> recordTypesSet = ISSP_Constant.accountRecordTypeByUserType.get(selectedCustomerType);
+			accList = [SELECT Id,IATACode__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry, IATA_ISO_Country__r.Name, 
+							  RecordType.DeveloperName, RecordType.Name, Airline_designator__c, Airline_Prefix__c 
+					   FROM Account 
+					   WHERE RecordType.DeveloperName IN :recordTypesSet AND Sector__c = 'General Public' AND IATA_ISO_Country__c = :searchCountry]; 
+			accountFound = !accList.isEmpty();
+			return !accList.isEmpty();	
+		} catch(Exception e) {
+			log(e);
+			return false;	
+		}					
+	}
+	
+	
 
     /*
      * Back to Contact page - as General Public
      */
     public PageReference nextAsGP() {
         system.debug('nextAsGP: ' + accList);
+        
+        //TC 2017-05-16
+        if(sRefererCommunity == 'iec'){
+         	Boolean isValidSearch = isGPSearchValid();
+         	if(!isValidSearch) {
+         		errorMessage.add(Label.IEC_NOGPAccount);
+         		return null;
+         	}
+        }
+                
         if (!accList.isEmpty()){
             selectedAccId = accList[0].id;
             system.debug('selectedAccId: ' + selectedAccId);
@@ -1041,9 +1098,9 @@ public without sharing class ISSP_Registration {
                     if(communityName == 'CNS' && serviceIdInstance.AgencyAccreditationCNS__c != null
                         && serviceIdInstance.AgencyAccreditationCNS__c != ''
                         && acc.Sector__c == 'Cargo Agent') {
-                        system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
-                        String appId = serviceIdInstance.AgencyAccreditationCNS__c;
-                        appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
+                        // system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditationCNS__c);
+                        // String appId = serviceIdInstance.AgencyAccreditationCNS__c;
+                        // appList = [SELECT Id FROM Portal_Applications__c WHERE Id = :appId];
                     }
                     else if (serviceIdInstance.AgencyAccreditation__c != null && serviceIdInstance.AgencyAccreditation__c != ''){
                         system.debug('THE ID: ' + serviceIdInstance.AgencyAccreditation__c);
@@ -1148,15 +1205,17 @@ public without sharing class ISSP_Registration {
         return null;
     }
 
+	//TC: added IEC_Zip_Postal_Code_required__c to query and fill map
     public List<SelectOption> getISOCountry() {
         List<SelectOption> options = new List<SelectOption>();
         boolean countryMapEmpty = (countryMap == null);
+        zipCodeApplicable = new Map<String,Boolean>();
         if (countryMapEmpty)
-            countryMap = new Map<Id, String>();
-
-        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c from IATA_ISO_Country__c order by Name]){
+            countryMap = new Map<Id, String>();			
+        for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]){
             if (iso.Name != 'All Countries'){
                 options.add(new SelectOption(iso.Id,iso.Name));
+                zipCodeApplicable.put(iso.Name, iso.IEC_Zip_Postal_Code_required__c);//TC
                 if (countryMapEmpty) {
                     countryMap.put(iso.Id, iso.Name);
                 }
@@ -1269,6 +1328,10 @@ public without sharing class ISSP_Registration {
             //showSearchIataCode = true;
             //showSearchCountry = true;
             //doSearch = true;
+            if(sRefererCommunity == 'iec') {            	
+            	toSearchDesignatorCodeString = 'Yes';
+            	checkSearchDesignatorCode();
+            }
         }
         else if (selectedCustomerType == Agency){
             isAgency = true;
@@ -1302,6 +1365,11 @@ public without sharing class ISSP_Registration {
             isGeneral = true;
             showSearchCountry = true;
             doSearch = true;
+            //TC 2017-05-11
+            if(sRefererCommunity == 'iec'){
+            	doSearch = false;
+            	showNextAsGP = true;      	
+            }
         }
 
 
@@ -1319,14 +1387,23 @@ public without sharing class ISSP_Registration {
         system.debug('getting getCustomerTypeList');
         List<SelectOption> types = new List<SelectOption>();
         types.add(new SelectOption('',Label.ISSP_Select_Type_of_Company));
-        types.add(new SelectOption(Airline,Label.ISSP_Airline));
-        types.add(new SelectOption(GSA,Label.ISSP_GSSA));
-        types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
-        //types.add(new SelectOption(Agency,'IATA Accredited Agent'));
-        //types.add(new SelectOption(NonIATA,'Non IATA Agent'));
-        //types.add(new SelectOption(TIESS,'TIESS'));
-        types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
-        types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
+        //TC 2017-05-16
+        if(sRefererCommunity == 'iec'){
+        	types.add(new SelectOption(Airline,Label.ISSP_Airline));
+        	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
+        	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));   
+        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));     	
+        } else {
+        	types.add(new SelectOption(Airline,Label.ISSP_Airline));
+        	types.add(new SelectOption(GSA,Label.ISSP_GSSA));
+        	types.add(new SelectOption(Agency,Label.IDCard_ka_agency));
+        	//types.add(new SelectOption(Agency,'IATA Accredited Agent'));
+        	//types.add(new SelectOption(NonIATA,'Non IATA Agent'));
+        	//types.add(new SelectOption(TIESS,'TIESS'));
+        	types.add(new SelectOption(OtherCompany,Label.ISSP_Other_Company));
+        	types.add(new SelectOption(GeneralPublic,Label.ISSP_General_Public));
+        }
+        
         return types;
     }
 
@@ -1495,8 +1572,22 @@ public without sharing class ISSP_Registration {
 
     }
 
-
-
+	//TC 2017-0516
+	public List<SelectOption> shpCountry {
+		get{
+			if(shpCountry == null) {
+				List<SelectOption> options = new List<SelectOption>();
+				for(IATA_ISO_Country__c iso:[select Id,Name,ISO_Code__c, IEC_Zip_Postal_Code_required__c from IATA_ISO_Country__c order by Name]) {
+					if (iso.Name != 'All Countries'){
+						options.add(new SelectOption(iso.Name,iso.Name));
+					}	
+				}
+				shpCountry = options;
+			}
+			return shpCountry;					
+		}
+		set;
+	}
 
     //TF-SP08 - for first agency user, give access to custom permission set
     @Future
@@ -1511,5 +1602,5 @@ public without sharing class ISSP_Registration {
             }
         }
     }
-
+    
 }
