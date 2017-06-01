@@ -32,6 +32,7 @@
  
  <script>
     var portalRoleEmpty = false;
+    var isEasyPayService = false;
 
     function askReason(myReasonId) {
         var thisReason = prompt("Do you want to provide a reason?");
@@ -45,6 +46,7 @@
     }
 
     function iepContinue() {
+      isEasyPayService = true;
       var appPortalRole = $('[id$="portalRoles"]').val();
       if (appPortalRole == "") {
         portalRoleEmpty = true;
@@ -52,6 +54,9 @@
       } else {
         portalRoleEmpty = false;
         document.querySelector("[Id$='portalRoleErrorMessage']").style.display = 'none';      
+        //confirmContacts();
+        //alert("1");
+        //showUserListModal();
       }
     }
     
@@ -86,15 +91,26 @@
     
     function showUserListModal(){
       if(!portalRoleEmpty) {
-        $('#userListModal').modal('show');
+        if(isEasyPayService) {
+          $('#iataIepRequestAccessModal').modal('show');  
+        } else {
+          $('#userListModal').modal('show');  
+        }
+        
       }
     }
     
     function closeUserListModal(){
         $('#userListModal').modal('hide');
     }
+
+    function closeIataIepRequestAccessModal(){
+        $('#iataIepRequestAccessModal').modal('hide');
+    }
     
 </script>
+
+ 
        
  <body>
   <div class="container">
@@ -239,6 +255,8 @@
                   </apex:form>
                   
                   <apex:form rendered="{!isAddUser == true}">
+                      <apex:actionFunction name="confirmContacts" action="{!confirmContacts}" reRender=""/>
+
                       <apex:pageBlock id="addUserBlock" >
                            <table class="table table-condensed" style="margin-top:20px;">
                        
@@ -299,15 +317,15 @@
                           <div class="row">
                               <div class="col-md-4 pull-right">
                                   
-                              
+                            <!--onComplete="showUserListModal();"-->  
                           <!-- <apex:commandButton action="{!CreateNewPortalAccess}" styleclass="btn btn_iata_success"  value="{!$Label.site.save}"  id="btn-Save"/>&nbsp; -->
-                          <apex:commandButton 
+                          <apex:commandButton action="{!confirmContacts}"
                             onclick="iepContinue();"                          
                             rendered="{! isEasyPayService}"
                             styleclass="btn btn_iata_success"
-                            value="{!$Label.ISSP_PCI_Stay}"
+                            value="{!$Label.ISSP_PCI_Stay}"                            
                             id="btn-Continue"
-                            onComplete="showUserListModal();"
+                            onComplete="showUserListModal();"              
                             rerender="userListPanel" />&nbsp;
 
                           <apex:commandButton action="{!confirmContacts}"
@@ -357,6 +375,27 @@
                           </div>
                         </div>
                         </apex:outputPanel>
+
+                        <apex:outputPanel id="iataIepRequestAccess" >
+                        <div class="modal fade" id="iataIepRequestAccessModal">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <!-- <apex:inputText value="{!denyReason}" StyleClass="form-control"   /> -->
+                                {!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}
+                                <br/>
+                                <apex:outputText value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
+                                <br/>
+                              </div>
+                              <div class="modal-footer">
+                                <apex:commandButton action="{!CreateNewPortalAccess}" onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" rerender="pgBlock" StyleClass="btn btn-primary"/>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </apex:outputPanel>
+
+
                       </apex:pageBlock>
                   </apex:form>
                   
