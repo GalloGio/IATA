@@ -47,7 +47,7 @@ private class EF_DocumentLogHelperTest
 				AmazonFile__c af = EF_DocumentLogHelper.createAmazonFileRecord('String fileName', 'String amazonKey', 1000, 'String parentId', efFileRtId, lsDocumentLogs[0]);
 
 				EF_DocumentLogHelper dlh = new EF_DocumentLogHelper();
-				dlh.coverage();
+				dlh.isTestCompliant();
 			Test.stopTest();
 
 			List<Attachment> lsAttachments = [SELECT Id FROM Attachment WHERE ParentId = :customer.Id];
