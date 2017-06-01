@@ -6,15 +6,24 @@ public class SidraLiteUtilTest {
         UserRole role = new USerRole(Name='Africa & ME');
         insert role;
         
-        User user = [Select Id, UserRoleId from User where id = :UserInfo.getUserId()];
-        user.UserRoleId = role.Id;
-        update user;
-        
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id, UserRoleId = role.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
+        string result;
         Test.startTest();
-        String result = SidraLiteUtil.getDefaultRegion();
+        System.RunAs(testUser){
+            result = SidraLiteUtil.getDefaultRegion();
+        }
         Test.stopTest();
-        
+           
         System.assertEquals('Africa & Middle East', result);
+        
     }
     
     @isTest
@@ -22,15 +31,25 @@ public class SidraLiteUtilTest {
         UserRole role = new USerRole(Name='Americas');
         insert role;
         
-        User user = [Select Id, UserRoleId from User where id = :UserInfo.getUserId()];
-        user.UserRoleId = role.Id;
-        update user;
+       Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id, UserRoleId = role.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
         
+        string result;
         Test.startTest();
-        String result = SidraLiteUtil.getDefaultRegion();
+        System.RunAs(testUser){
+            result = SidraLiteUtil.getDefaultRegion();
+        }
         Test.stopTest();
         
         System.assertEquals('Americas', result);
+        
     }
     
     @isTest
@@ -38,15 +57,26 @@ public class SidraLiteUtilTest {
         UserRole role = new USerRole(Name='A&P');
         insert role;
         
-        User user = [Select Id, UserRoleId from User where id = :UserInfo.getUserId()];
-        user.UserRoleId = role.Id;
-        update user;
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id, UserRoleId = role.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
         
+        string result;
         Test.startTest();
-        String result = SidraLiteUtil.getDefaultRegion();
+        System.RunAs(testUser){
+            result = SidraLiteUtil.getDefaultRegion();
+        }
         Test.stopTest();
         
         System.assertEquals('Asia & Pacific', result);
+        
+        
     }
     
     @isTest
@@ -54,15 +84,25 @@ public class SidraLiteUtilTest {
         UserRole role = new USerRole(Name='China');
         insert role;
         
-        User user = [Select Id, UserRoleId from User where id = :UserInfo.getUserId()];
-        user.UserRoleId = role.Id;
-        update user;
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id, UserRoleId = role.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
         
+        string result;
         Test.startTest();
-        String result = SidraLiteUtil.getDefaultRegion();
+        System.RunAs(testUser){
+            result = SidraLiteUtil.getDefaultRegion();
+        }
         Test.stopTest();
         
         System.assertEquals('China & North Asia', result);
+        
     }
     
     @isTest
@@ -70,15 +110,24 @@ public class SidraLiteUtilTest {
         UserRole role = new USerRole(Name='MAD');
         insert role;
         
-        User user = [Select Id, UserRoleId from User where id = :UserInfo.getUserId()];
-        user.UserRoleId = role.Id;
-        update user;
+        Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+        User testUser = New User(
+            Alias = 'standt', Email='standarduser@testorg.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+            LocaleSidKey='en_US', ProfileId = testProfile.Id, UserRoleId = role.Id,
+            TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+            License_Cost_Center__c = 'ISF005CH01'
+        );
+        insert testUser;
         
+        string result;
         Test.startTest();
-        String result = SidraLiteUtil.getDefaultRegion();
+        System.RunAs(testUser){
+            result = SidraLiteUtil.getDefaultRegion();
+        }
         Test.stopTest();
-        
         System.assertEquals('Europe', result);
+        
     }
 
     @isTest

@@ -57,20 +57,20 @@
 		                    <apex:repeat var="payment" value="{!lstPaymentsToDisplay}" rendered="{!lstPaymentsToDisplay != null && lstPaymentsToDisplay.size > 0}" rows="{!iNbrRowsDisplayed}">
 		                    <tr class="listing-item">
 		                        <td class="payment-id" data-label="Payment ID">
-		                            <apex:outputText value="{!payment.Name}" />
+		                            <apex:outputText value="{!payment.paymentID}" />
 		                        </td>
 		                        <td class="payment-date" data-label="Payment date">
 		                            <apex:outputText value="{0,date,yyyy'/'MM'/'dd}">
-		                            	<apex:param value="{!payment.Zuora__EffectiveDate__c}" />
+		                            	<apex:param value="{!payment.effectiveDate}" />
 		                            </apex:outputText>
 		                        </td>
 		                        <td class="payment-amount" data-label="Payment amount">
 		                            <apex:outputText value="${0, number,###,###,##0.00}">
-		                            	<apex:param value="{!payment.Zuora__Amount__c}"/>
+		                            	<apex:param value="{!payment.amount}"/>
 		                            </apex:outputText>
 		                        </td>
 		                        <td class="status" data-label="Status">
-		                            <span class="status-label processed"><apex:outputText value="{!payment.Zuora__Status__c}" /></span>
+		                            <span class="status-label processed"><apex:outputText value="{!payment.status}" /></span>
 		                        </td>
 		                        <td class="action js-toggle-table">
 		                            <a class="js-toggle-switch" href="#">
@@ -86,7 +86,7 @@
 		                        </td>
 		                        <td class="details js-toggle-details is-hidden">
 		                            <table class="data-table table-history-details">
-		                                <caption><apex:outputText value="{!payment.Name}" /></caption>
+		                                <caption><apex:outputText value="{!payment.paymentID}" /></caption>
 		                                <tr class="heading">
 		                                    <th class="date">{!$Label.Date}</th>
 		                                    <th class="status">{!$Label.Status}</th>
@@ -98,25 +98,25 @@
 		                                <tr class="listing-item">
 		                                    <td class="date" data-label="Date">
 		                                        <apex:outputText value="{0,date,yyyy'/'MM'/'dd}">
-		                                        	<apex:param value="{!payment.Zuora__EffectiveDate__c}" />
+		                                        	<apex:param value="{!payment.effectiveDate}" />
 		                                        </apex:outputText>
 		                                    </td>
 		                                    <td class="status" data-label="Status">
-		                                        <span class="status-label processed"><apex:outputText value="{!payment.Zuora__Status__c}" /></span>
+		                                        <span class="status-label processed"><apex:outputText value="{!payment.status}" /></span>
 		                                    </td>
 		                                    <td class="amount" data-label="Amount">
 		                                        <apex:outputText value="${0, number,###,###,##0.00}">
-		                                        	<apex:param value="{!payment.Zuora__Amount__c}"/>
+		                                        	<apex:param value="{!payment.amount}"/>
 		                                        </apex:outputText>
 		                                    </td>
 		                                    <td class="method" data-label="Payment method">
-		                                    	{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(payment.Zuora__PaymentMethod__c, 'Other', 'IATA Clearing House'), 'Credit Card', ''), 'ACH', 'IATA Clearing House')}
+		                                    	{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(payment.paymentMethod, 'Other', 'IATA Clearing House'), 'Credit Card', ''), 'ACH', 'IATA Clearing House')}
 		                                    </td>
 		                                    <td class="reference" data-label="Reference number">
-		                                        <apex:outputText value="{!payment.Zuora__ReferenceId__c}" />
+		                                        <apex:outputText value="{!payment.referenceID}" />
 		                                    </td>
 		                                    <td class="invoices" data-label="Related invoices">
-												<apex:repeat value="{!payment.Zuora__PaymentInvoices__r}" var="inv" rendered="{! legacyInvoiceDate != null && payment.Zuora__EffectiveDate__c < legacyInvoiceDate}">
+												<apex:repeat value="{!payment.invoiceList}" var="inv" rendered="{! legacyInvoiceDate != null && payment.effectiveDate < legacyInvoiceDate}">
 													<!-- {!inv.Zuora__Invoice__r.Name}<br /> -->
 													<apex:form >
 														<apex:commandLink value="{!inv.Zuora__Invoice__r.Name}" action="{!selectInvoice}">
@@ -124,8 +124,11 @@
 	                                                    </apex:commandLink>
                                                     </apex:form>
 												</apex:repeat>
-												<apex:outputPanel rendered="{! legacyInvoiceDate != null && payment.Zuora__EffectiveDate__c >= legacyInvoiceDate}">
+												<apex:outputPanel rendered="{! legacyInvoiceDate != null && payment.effectiveDate >= legacyInvoiceDate}">
+													<!--
 													<a href="IEC_OrderHistory">In Order</a>
+													-->
+													<a href="{!$Site.BaseUrl}/{!IF(ISNULL(payment.orderID),'IEC_OrderHistory','IEC_ConfirmOrder?orderId=')}{!payment.orderID}">In Order</a>
 												</apex:outputPanel>
 		                                    </td>
 		                                </tr>
