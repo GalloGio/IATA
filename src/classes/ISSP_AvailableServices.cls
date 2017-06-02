@@ -590,7 +590,7 @@ public with sharing class ISSP_AvailableServices{
         String Servid = Apexpages.currentPage().getParameters().get('servId');
         system.debug('XXX Servid : '+Servid);
 
-        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c from Portal_Applications__c where Id =: Servid ]);
+        List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([select id ,Application_icon__c , Application_URL__c, Confirm_Box__c, Confirm_Text__c, Description__c,Name, ServiceName__c,Cannot_be_managed_by_portal_admin__c from Portal_Applications__c where Id =: Servid ]);
         system.debug('XXX Servicetmp_List : '+Servicetmp_List);
         Serv = new ServiceWrapper (Servicetmp_List[0], IepStatus, isAdmin);
 
