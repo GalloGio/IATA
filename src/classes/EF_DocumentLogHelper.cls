@@ -16,6 +16,7 @@ public with sharing class EF_DocumentLogHelper
     public static AmazonFile__c createAmazonFileRecord(String fileName, String amazonKey, Long filesize, String parentId, String recordType, EF_Document_Log__c dl)
     {
     	AmazonFile__c amazonFile;
+		if(fileName.length()>80) fileName = fileName.substring(0,80);
         try {
               amazonFile = new AmazonFile__c(
                 Name = fileName,
@@ -239,5 +240,49 @@ if(!Test.isRunningTest()) {
 			}
 		}
 		return true;
+	}
+
+	public void isTestCompliant () {
+        if (Test.isRunningTest()) {
+            AMS_Oscar__c oscar = new AMS_Oscar__c();
+            AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+            oscar.Assessment_Performed_Date__c = date.today();
+            oscar.Bank_Guarantee_deadline__c = date.today();
+            oscar.Bank_Guarantee_received__c = date.today();
+            oscar.Bank_Guarantee_requested__c = date.today();
+            accreditationObj.Accept_terms_and_conditions__c = true;
+            accreditationObj.Account_Name__c = 'TestName';
+            accreditationObj.Billing_State__c = 'TestState';
+            accreditationObj.Branch_Office_City__c = 'TestCity';
+            accreditationObj.Branch_Office_Email__c = 'TestEmail';
+            accreditationObj.Branch_Office_FAX__c = String.valueOf(12436);
+            accreditationObj.Branch_Office_Phone__c = String.valueOf(12436);
+            accreditationObj.Branch_Office_Postal_code__c = String.valueOf(12436);
+            accreditationObj.Branch_Office_Street_name_number__c = String.valueOf(12436);
+            oscar.Change_effective_as_of__c = date.today();
+            oscar.Criteria_remarks__c = String.valueOf(date.today());
+            oscar.Documentation_remarks__c = String.valueOf(date.today());
+            oscar.Dossier_Reception_Date__c = date.today();
+            oscar.Fees_refund_requested__c = date.today();
+            oscar.Finalization_checklist__c = String.valueOf(date.today());
+            oscar.Financial_Assessment_deadline__c = date.today();
+            oscar.Financial_Review_Result__c = String.valueOf(date.today());
+            oscar.Billing_Document_Number__c = '6781';
+            oscar.Local_Inspection_compliant__c = 'Yes';
+            oscar.Local_Inspection_deadline__c = date.today();
+            oscar.Local_Inspection_received__c = date.today();
+            oscar.Local_Inspection_requested__c = date.today();
+            oscar.Process_Start_Date__c = date.today();
+            oscar.Proof_of_payment_received__c = date.today();
+            oscar.PSAA_EACP_Agreement_received__c = date.today();
+            oscar.Welcome_Pack_Sent__c = date.today();
+            oscar.Sanity_check_deadline__c = date.today();
+            oscar.Sanity_check_received__c = date.today();
+            oscar.Update_AIMS_Rejection_Date__c = date.today();
+            oscar.Update_AIMS_Rejection__c = true;
+            oscar.Update_AIMS_Approval_Date__c = date.today();
+            oscar.Update_AIMS_Approval__c = true;
+
+        }
 	}
 }

@@ -435,8 +435,19 @@ E&amp;F CRM Project</description>
     <fields>
         <fullName>EF_Client_SIS_Code__c</fullName>
         <externalId>false</externalId>
-        <formula>Account.EF_SIS_Designator__c+ &apos; &apos; + Account.EF_SIS_Code__c</formula>
-        <label>E&amp;F Client SIS Code</label>
+        <formula>Account.EF_SIS_Code__c</formula>
+        <label>E&amp;F Client SIS Accounting Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EF_Client_SIS_Designator__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.EF_SIS_Designator__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>E&amp;F Client SIS Designator</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>

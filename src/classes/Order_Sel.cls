@@ -103,7 +103,8 @@ public without sharing class Order_Sel extends Selector{
             Order.IEC_Zuora_ST_InvoiceId__c,
             Order.IEC_Zuora_ST_InvoiceNumber__c,
             Order.IEC_Zuora_ST_SubscriptionId__c,
-            Order.IEC_Zuora_ST_SubscriptionNumber__c
+            Order.IEC_Zuora_ST_SubscriptionNumber__c,
+            Order.Payment_Gateway_Response__c
         };
     }
 
@@ -197,7 +198,8 @@ public without sharing class Order_Sel extends Selector{
                     ActivatedDate,EffectiveDate, IEC_Event_Subscription__c,ShipToAccount_Name__c,
                     Payment_Type__c,Nb_Payment_Failure__c
                     , BillToAccount_Name__c, BillToContact_Name__c, OrderNumber, Is_Paid__c
-                    ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c
+                    ,SubTotal_Amount__c, Discount_Amount__c, Taxes__c, Total_Freight_Charge__c, Total_handling_charges__c, Total_Amount__c,
+                    Payment_Gateway_Response__c
                 From Order 
                 Where id in :orderIds
                ];
@@ -250,7 +252,8 @@ public without sharing class Order_Sel extends Selector{
                      , ShipTo_Address__r.Street__c, ShipTo_Address__r.City__c, ShipTo_Address__r.Country__c,ShipTo_Address__r.ISO_Country_Code__c, ShipTo_Address__c 
                      , ShipTo_Address__r.State__c,ShipTo_Address__r.ISO_State_Code__c, ShipTo_Address__r.ZipCode__c, ShipTo_Address__r.ISO_Country__r.Name
                      , ShipTo_Address__r.ISO_Country_Name__c,ShipTo_Address__r.ISO_Country__r.ISO_Code__c,ShipTo_Address__r.ISO_State__r.ISO_Code__c
-                     , ShipTo_Address__r.ISO_Country__c, ShipTo_Address__r.ISO_State__r.Name,ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State__c 
+                     , ShipTo_Address__r.ISO_Country__c, ShipTo_Address__r.ISO_State__r.Name,ShipTo_Address__r.ISO_State_Name__c, ShipTo_Address__r.ISO_State__c
+                     , Payment_Gateway_Response__c
                      //, BillTo_VAT_Number__c, ShipTo_VAT_Number__c
                 from Order 
                 where Id = :orderId limit 1];
@@ -265,7 +268,7 @@ public without sharing class Order_Sel extends Selector{
                 SoldTo_Location__c, SoldToAccount_Partner_Number__c, SoldToAccount_Name__c,
                 // IEC_Shipping_Instruction_attention__c, IEC_Shipping_Instruction_email__c, IEC_Shipping_Instruction_phone__c,
                 TotalAmount,Total_Amount__c,SubTotal_Amount__c,Taxes__c,Total_Freight_Charge__c,Total_handling_charges__c,Sales_Volume__c, 
-                Payment_Type__c, Payment_Transaction_Number__c,Zuora_Transaction_Id__c, Zuora_GatewayResponse__c, Zuora_Credit_Card_Id__c,
+                Payment_Type__c, Payment_Transaction_Number__c,Zuora_Transaction_Id__c, Zuora_GatewayResponse__c, Zuora_Credit_Card_Id__c, Payment_Gateway_Response__c, 
                 (
                     Select Id, Quantity, UnitPrice, ListPrice, OrderItemNumber, 
                         Zuora_InvoiceId__c, Accepted_Term_Condition__c, Charge_Shipping__c, Division__c, Zuora_InvoiceNumber__c, 

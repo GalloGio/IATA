@@ -833,7 +833,8 @@
                     //if(confirm("my text here")){
                     setTimeout(function(){
                         urlEvent.setParams({
-                            "url": vfOrigin + '/' + commName + '/s/login/'
+                            //"url": vfOrigin + '/' + commName + '/s/login/'
+							"url": $A.get("$Label.c.OneId_URL_javaScript") + '/s/login/'
                         });
                         urlEvent.fire();
                     },  5000);
