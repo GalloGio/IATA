@@ -614,7 +614,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval');
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -634,7 +634,7 @@ public class WSSidraLiteTest {
 
     @isTest
     public static void testCreateCaseOSCAR_NoValidReason() {
-        AMS_Oscar__c oscar = new AMS_Oscar__c( RPM_Approval__c = 'Authorize Disapproval');
+        AMS_Oscar__c oscar = new AMS_Oscar__c( Validation_Status__c = AMS_Utils.FAILED, RPM_Approval__c = 'Authorize Disapproval');
         insert oscar;
 
         Case oscarCase = SidraLiteManagerTest.createOSCARPassenger();
@@ -783,6 +783,7 @@ public class WSSidraLiteTest {
         oscarCase.OSCAR__c = oscar.Id;
         insert oscarCase;
 
+        oscar.Validation_Status__c = AMS_Utils.FAILED;
         oscar.RPM_Approval__c = 'Authorize Disapproval';
         update oscar;
 
