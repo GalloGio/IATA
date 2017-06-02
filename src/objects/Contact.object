@@ -10239,6 +10239,58 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>E_F_Client_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </filters>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>E&amp;F Client Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Operator_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </filters>
+        <label>E&amp;F Operator Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>E_F_Services_customers</fullName>
         <columns>FULL_NAME</columns>
         <columns>ACCOUNT.NAME</columns>
