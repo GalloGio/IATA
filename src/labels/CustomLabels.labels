@@ -19431,7 +19431,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
         <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
-    </labels>                    
+    </labels>  
+    <labels>
+        <fullName>ANG_ISSP_UserProvisioningError</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_UserProvisioningError</shortDescription>
+        <value>Sorry, there was an issue setting up your IATA EasyPay access. Try again and if the issue persists please contact Customer Support</value>
+    </labels>
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
