@@ -417,6 +417,17 @@ public without sharing class ISSP_Registration {
 
 	public PageReference backToAccountPage () {
 		showCreateAccount = false;
+		if(sRefererCommunity == 'iec') {
+			isAgency = selectedCustomerType == Agency;
+			isAirline = selectedCustomerType == Airline;
+			selectType();
+			/*
+			showcreateother = false;
+			showSearchIataCode = isAgency;
+			showSearchCompName = isAgency;
+			toSearchDesignatorCode = isAirline;
+			*/
+		}
 		return null;
 	}
 
@@ -450,6 +461,32 @@ public without sharing class ISSP_Registration {
         showCreateAccount = false;
         showNextAsGP = false;
         createAgency = false;
+        
+        /* TC 2017-05-29 iec enhancements */
+        if(isAirline && sRefererCommunity == constIEC) {
+        	try {
+        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountryAirline, 'Airline');
+        		handleSearchResults();
+        	} catch(Exception e) {
+        		log(e);
+        	}
+        	return null;
+        }
+        
+        if(isAgency && sRefererCommunity == constIEC) {
+        	try {
+        		if (!String.isBlank(searchIATACode) && searchIATACode.length() != 8 && searchIATACode.length() != 11) {
+                	errorMessage.add(Label.ISSP_IATA_Code_Agency);
+                	return null;
+        		}
+        		accList = searchCompany(searchIATACodeAirline, companyName, searchCountry, 'Agency');    
+        		handleSearchResults();
+        	} catch(Exception e) {
+        		log(e);
+        	}    	
+        	return null;
+        }
+        /* end */
 
         //check IATA Code format
         decimal iataCodeInput;
@@ -1336,6 +1373,11 @@ public without sharing class ISSP_Registration {
         else if (selectedCustomerType == Agency){
             isAgency = true;
             //showSearchIataCode = true;
+            if(sRefererCommunity == 'iec') {
+            	showSearchIataCode = true;
+            	showSearchCountry = true;
+            	doSearch = true;
+            }
         }
         else if (selectedCustomerType == GSA){
             isGSA = true;
@@ -1602,5 +1644,86 @@ public without sharing class ISSP_Registration {
             }
         }
     }
+    
+    /* TC 2017-05-29 iec enhancements */
+    public String companyName {get;set;}
+    
+    public List<Account> searchCompany(String searchTerm, String companyName, String companyLocation, String companyType) {
+    	Set<String> recordTypes = new Set<String>();
+    	if(companyType == 'Airline') {
+    		recordTypes.addAll(new Set<String>{'IATA_Airline_BR', 'IATA_Airline'});
+    	} else if(companyType == 'Agency') {
+    		recordTypes.add('IATA_Agency');
+    	}
+    	String queryStr = 'SELECT Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, RecordType.DeveloperName, RecordType.Name, '+
+    					  'Airline_designator__c, Airline_Prefix__c FROM Account ';
+    	String whereClause = 'WHERE RecordType.DeveloperName IN :recordTypes AND '+
+    								'IATA_ISO_Country__c = \''+companyLocation+'\' ';
+    	
+    	if(!String.isBlank(searchTerm) && companyType == 'Airline') {
+    		whereClause += 'AND Airline_Search_Field__c LIKE \''+buildSearchExpression(searchTerm)+'\' ';
+    	}
+    	if(!String.isBlank(searchTerm) && companyType == 'Agency') {
+    		whereClause += 'AND (IATACode__c = \''+ searchTerm +'\' OR Airline_Prefix__c = \''+ searchTerm +'\') ';
+    	}
+    	if(!String.isBlank(companyName)) {
+    		whereClause += 'AND Name LIKE \''+buildSearchNameExpression(companyName)+'\' ';
+    	}
+    	
+    	return Database.query(queryStr + whereClause);
+    }
+    
+    private String buildSearchExpression(String searchTerm) {
+    	List<String> temp1 = searchTerm.split('(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)');
+    	List<String> temp2 = new List<String>();
+    	for(String s1 : temp1) {
+    		for(String s2 : s1.split(' ')) {
+    			if(!String.isBlank(s2)) {
+    				temp2.add(s2.replaceAll('[^A-Za-z0-9]', ''));
+    			}
+    		}
+    	}
+    	String res = '';
+    	for(String s3 : temp2) {
+    		res += s3+'%';
+    	}
+    	
+    	return '%'+res;
+    }
+    
+    private String buildSearchNameExpression(String name) {
+    	String res = '';
+    	for(String s : name.split(' ')){
+    		if(!String.isBlank(s)) {
+    			res += s + '%';
+    		}
+    	}
+    	return '%'+res;
+    }
+    
+    public void handleSearchResults() { 	
+    	if(accList != null) {
+    		accountFound = !accList.isEmpty();
+    		if (!accList.isEmpty()) {
+		    	accListRadio = new List<SelectOption>();
+				for (Account thisAccount : accList) {
+		    		accListRadio.add(new SelectOption(thisAccount.Id,thisAccount.Name));
+				}
+				if(accList.size() == 1) {
+					selectedAccId = accList[0].Id;
+				}
+    		} else {
+    			searchCountryISOCode = isAirline ? countryISOCodeMap.get(searchCountryAirline) : countryISOCodeMap.get(searchCountry);	
+    			searchCountryName = isAirline ?	countryMap.get(searchCountryAirline) : countryMap.get(searchCountry);
+    			searchCountry = isAirline ? searchCountryAirline : searchCountry;
+    			showCreateAccount = true;
+    			showcreateother = true;
+    			isOther = true;
+    			infoMessage.add(Label.IEC_NoRecordsFoundCreateAccount);
+    		}
+    	}
+    }
+    
+    /* end */
     
 }
