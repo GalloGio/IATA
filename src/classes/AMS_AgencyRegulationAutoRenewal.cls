@@ -411,6 +411,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
         //map template Ids with their respective language
         List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+
         for(Schema.Picklistentry pe: prefLanguages){
             EmailTemplate langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_' + pe.getValue());
 

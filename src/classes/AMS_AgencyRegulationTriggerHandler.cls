@@ -1,27 +1,32 @@
 public class AMS_AgencyRegulationTriggerHandler {
 
     public static void handleBeforeInsert() {
-        
+
     }
 
     public static void handleBeforeUpdate() {
 
         processPostNotifSentActions((List<AMS_Agency_Regulation__c>)Trigger.New, (Map<Id,AMS_Agency_Regulation__c>)Trigger.oldMap);
-        
+
     }
 
     //Create renewals and send notifications for expiring DGRs
     public static void processPostNotifSentActions(List<AMS_Agency_Regulation__c> agencyRegulations, Map<Id,AMS_Agency_Regulation__c> oldAgRegulationValues){
 
         List<AMS_Agency_Regulation__c> dgrRegulationsExpiringIn90Days = new List<AMS_Agency_Regulation__c>();
+        Map<Id,String> regulationTypePesAccount = new Map<Id,String>();
+        Map<String,Integer> renewalCertPerAccount = new Map<String,Integer>();
 
         Set<Id> accountIds = new Set<Id>();
+        Set<String> regulationPerAccount = new Set<String>();
 
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
             accountIds.add(agReg.Account__c);
 
             if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
                 dgrRegulationsExpiringIn90Days.add(agReg);
+                if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+                    renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
         }
 
         if(!dgrRegulationsExpiringIn90Days.isEmpty()){
@@ -31,6 +36,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             //get all accounts
             List<Account> allAccounts = new List<Account>([SELECT Id, Top_Parent__c, Location_Type__c FROM Account WHERE Id IN :accountIds]);
+
 
             Set<Id> accountIdsHOs = new Set<Id>();
             Map<Id, Id> parentPerBR = new Map<Id, Id>();
@@ -69,11 +75,11 @@ public class AMS_AgencyRegulationTriggerHandler {
                 }
             }
 
-            AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount); 
+            AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount, renewalCertPerAccount);
             database.executebatch(b,1);
         }
     }
-	
+
 	 public void isTestCompliant () {
         if (Test.isRunningTest()) {
             AMS_Oscar__c oscar = new AMS_Oscar__c();
