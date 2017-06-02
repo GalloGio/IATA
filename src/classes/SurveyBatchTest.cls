@@ -683,6 +683,7 @@ public class SurveyBatchTest {
         listUser.add(u2);
         insert listUser;
 
+        test.startTest();
         System.runAs (u2) {
             //List ISO Country
             List<IATA_ISO_Country__c> isoList = new List<IATA_ISO_Country__c>();
@@ -970,7 +971,6 @@ public class SurveyBatchTest {
         TransformationHelper.CalculateBusinessHoursAges = false;
         CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 
-        test.startTest();
             //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
             SurveyBatch batch = new SurveyBatch();
             batch.ClosedDate = date.today();
@@ -991,6 +991,7 @@ public class SurveyBatchTest {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
 System.runAS(u) {
 
 
@@ -1102,7 +1103,6 @@ System.runAS(u) {
    TransformationHelper.CalculateBusinessHoursAges = false;
    CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 }
-   test.startTest();
    //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
@@ -1127,6 +1127,7 @@ System.runAS(u) {
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+    test.startTest();
 System.runAS(u) {
 
 
@@ -1238,7 +1239,6 @@ System.runAS(u) {
    TransformationHelper.CalculateBusinessHoursAges = false;
    CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 }
-   test.startTest();
    //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
