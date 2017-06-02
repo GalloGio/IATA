@@ -8547,7 +8547,6 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                 <default>false</default>
                 <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -80409,6 +80408,7 @@ newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
 newmsoagency.Location_Class__c = &quot;M&quot;;
 newmsoagency.Location_Type__c = &quot;HO&quot;;
 newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+newmsoagency.IATA_ISO_Country__c = &apos;{!Account.IATA_ISO_CountryId__c}&apos;;
 
 result = sforce.connection.create([newmsoagency]);
 var accId = result[0].id;

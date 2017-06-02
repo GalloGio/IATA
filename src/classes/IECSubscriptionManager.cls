@@ -1473,7 +1473,8 @@ public with sharing class IECSubscriptionManager {
              List<Zuora__Payment__c> lstPayments = 
                 [SELECT Zuora__Status__c, Zuora__ReferenceId__c, Zuora__PaymentMethod__c, Zuora__GatewayStatus__c, Zuora__GatewayResponse__c
                  , Zuora__GatewayResponseCode__c, Zuora__EffectiveDate__c, Zuora__CreatedDate__c, Zuora__CancelledOn__c, Zuora__AppliedInvoiceAmount__c
-                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c,
+                 , Zuora__AppliedCreditBalanceAmount__c, Zuora__Amount__c, Name, Id, SISInvoiceNumber__c
+                 , Order__c,
                  (SELECT Zuora__Payment__r.Zuora__PaymentMethod__c, Zuora__Payment__r.Zuora__InvoiceNumber__c
                     , Zuora__Payment__r.Zuora__CreatedDate__c, Zuora__Payment__r.Zuora__Amount__c, Zuora__Payment__c
                     , Zuora__Payment__r.Id, Zuora__Payment__r.Name, Zuora__Invoice__c, Zuora__Invoice__r.Name, Name 
