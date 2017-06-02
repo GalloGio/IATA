@@ -589,7 +589,10 @@ public class ISSP_AvailableServices_Test {
         System.runAs(testeUser3) {
             Test.startTest();
 
-            PermissionSet ps = [Select id From PermissionSet Where name = 'IEP_EdenRed' Limit 1];
+            PermissionSet pSet = new PermissionSet(Name = 'IEP_EdenRed_test', Label='IEP_EdenRed_test');
+            insert pSet;
+            
+            PermissionSet ps = [Select id From PermissionSet Where name = 'IEP_EdenRed_test' Limit 1];
 
             PermissionSetAssignment psa = new PermissionSetAssignment(
                 AssigneeId = UserInfo.getUserId(),
