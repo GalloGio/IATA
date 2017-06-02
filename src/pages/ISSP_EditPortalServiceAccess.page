@@ -380,10 +380,12 @@
                         <div class="modal fade" id="iataIepRequestAccessModal">
                           <div class="modal-dialog">
                             <div class="modal-content">
-                              <div class="modal-body">
-                                <!-- <apex:inputText value="{!denyReason}" StyleClass="form-control"   /> -->
-                                {!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}
+                              <div class="modal-header">
                                 <br/>
+                                  {!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}
+                                <br/>
+                              </div>
+                              <div class="modal-body">
                                 <apex:outputText value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
                                 <br/>
                               </div>
@@ -394,8 +396,6 @@
                           </div>
                         </div>
                         </apex:outputPanel>
-
-
                       </apex:pageBlock>
                   </apex:form>
                   
