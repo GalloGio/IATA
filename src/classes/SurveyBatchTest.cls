@@ -67,6 +67,7 @@ public class SurveyBatchTest {
                 LanguageLocaleKey='en_US');
 
         insert u1;
+        
 
     }
 
@@ -993,6 +994,7 @@ public class SurveyBatchTest {
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
 System.runAS(u) {
 
+test.startTest();
 
        list<IATA_ISO_Country__c> listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT 5];
        Integer i = 0;
@@ -1102,7 +1104,7 @@ System.runAS(u) {
    TransformationHelper.CalculateBusinessHoursAges = false;
    CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 }
-   test.startTest();
+   
    //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
@@ -1129,6 +1131,7 @@ System.runAS(u) {
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
 System.runAS(u) {
 
+      test.startTest();
 
        list<IATA_ISO_Country__c> listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT 5 OFFSET 5];
        Integer i = 0;
@@ -1238,7 +1241,7 @@ System.runAS(u) {
    TransformationHelper.CalculateBusinessHoursAges = false;
    CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 }
-   test.startTest();
+   
    //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
