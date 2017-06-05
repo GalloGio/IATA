@@ -142,7 +142,7 @@
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -152,7 +152,7 @@
         <label>Created from</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -237,7 +237,7 @@
         <relationshipLabel>Agency Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -261,7 +261,7 @@
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>true</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -305,7 +305,7 @@ Id
         <label>Unique Key</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -329,7 +329,7 @@ Id
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
         <label>Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agency Risk Events</pluralLabel>
