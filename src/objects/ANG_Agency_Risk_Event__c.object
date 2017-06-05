@@ -388,6 +388,13 @@ Id
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Prevent_RE_in_Not_Accreditated_Agencies</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_HE_AccountId__r.RecordType.Name!=&apos;Agency&apos;</errorConditionFormula>
+        <errorDisplayField>ANG_HE_AccountId__c</errorDisplayField>
+        <errorMessage>You can only create risk events for Accredited Agencies</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Prevent_users_from_changing_issued_date</fullName>
         <active>true</active>
         <description>Prevent users from changing RE&apos;s issue date if the event status is &quot;Active&quot; or &quot;Inactive_Withdrawn&quot; or &quot;Inactive_Revoked&quot; or if RE is &quot;Inactive&quot; and has Expired= true</description>
