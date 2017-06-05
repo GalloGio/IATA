@@ -142,24 +142,25 @@
 							<apex:outputPanel id="productBlock" styleClass="row" layout="block">
 								<!-- Available Products -->
 					  			<div class="col-md-7">
-					  				<apex:dataTable id="availableProducts" value="{!availableProducts}" var="product" styleClass="table table-striped aTable">
-			                            <apex:column >
-			                            	<apex:facet name="header"><input type="checkbox" id="available_select_all" /></apex:facet>
-			                                <input type="checkbox" />
-			                            </apex:column>
-			                            <apex:column >
-			                                <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
-			                                {!product.Name}
-			                            </apex:column>
-			                            <apex:column >
-			                                <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
-			                                {!product.SAP_Material_Number__c}
-			                            </apex:column>
-			                            <apex:column >
-			                                <apex:facet name="header">{!$ObjectType.Product2.fields.Product_Segment__c.Label}</apex:facet>
-			                                {!product.Product_Segment__c}
-			                            </apex:column>
-			                        </apex:dataTable>
+						  		<!--	<apex:repeat id='lsAP' value="{!availableProducts}" var="products"> -->
+						  				<apex:dataTable id="availableProducts" value="{!availableProducts}" var="product" styleClass="table table-striped aTable">
+				                            <apex:column >
+				                            	<apex:facet name="header"><input type="checkbox" id="available_select_all" /></apex:facet>
+				                                <input type="checkbox" />
+				                            </apex:column>
+				                            <apex:column >
+				                                <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label} </apex:facet>
+				                                {!availableProducts[product].Name}
+				                            </apex:column>
+				                            <apex:column >
+				                                <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
+				                                {!availableProducts[product].SAP_Material_Number__c}
+				                            </apex:column>
+				                            <apex:column >
+				                                <apex:facet name="header">{!$ObjectType.Product2.fields.Product_Segment__c.Label}</apex:facet>
+				                                {!availableProducts[product].Product_Segment__c}
+				                            </apex:column>
+				                        </apex:dataTable>
 					  			</div>
 								
 					  			<div class="col-md-1" id="addRemoveButtons">
@@ -186,11 +187,11 @@
 		                                </apex:column>
 		                                <apex:column >
 		                                    <apex:facet name="header">{!$ObjectType.Product2.fields.Name.Label}</apex:facet>
-		                                    {!product.Name}
+		                                    {!selectedProducts[product].Name}
 		                                </apex:column>
 		                                <apex:column >
 		                                    <apex:facet name="header">{!$ObjectType.Product2.fields.SAP_Material_Number__c.Label}</apex:facet>
-		                                   {!product.SAP_Material_Number__c}
+		                                   {!selectedProducts[product].SAP_Material_Number__c}
 		                                </apex:column>                                
 		                            </apex:dataTable>
 					  			</div>
