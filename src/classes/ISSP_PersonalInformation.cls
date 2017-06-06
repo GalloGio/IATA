@@ -31,6 +31,7 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isHOAccredited {get;set;}
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
+    public boolean isCNSAccount {get; set;}
     private Id vHQAccountId;
 
      //CNS
@@ -88,6 +89,7 @@ public with sharing class ISSP_PersonalInformation {
         isIATAAgencyAcctBR = false;
         isTerminatedAgent = false;
         isTerminatedAgentBR = false;
+        isCNSAccount = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -112,6 +114,10 @@ public with sharing class ISSP_PersonalInformation {
             vHQAccountId = con.Account.Top_Parent__c;
         }
 
+        if (communityName=='CNS') { //It is a CNS contact
+            isCNSAccount = true;
+        }
+
         //Is this user's account accredited
         if(con.Account.IATACode__c!=null && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
         	isHOAccredited = true; //This is an accredited Agency Account    
@@ -125,7 +131,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
                 showIrregularities = True;
         }
         else {
