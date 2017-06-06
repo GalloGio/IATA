@@ -18,10 +18,10 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, Legacy_External_ID__c '
+		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, AIMS_ID__c, Webstar_ID__c '
 			+', Location_Class__c, Check_Digit__c, IATACode__c, Status__c' 
-			+', Organization_Last_Change_Date__c, Verification_Date__c,  Original_Approval_DAte__c '
-			+', Main_Accreditation_Organization__c, '
+			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c '
+			+', Main_Accreditation_Organization__c '
 			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
 		//-- Query conditions 
@@ -77,6 +77,8 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			+	'ORDER BY IATACode__c ', 
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
+        
+        system.debug(LOGGINGLEVEL.ERROR, 'LF: QUERY: '+query);
 	}
 
 	global ams2gdp_Batch_Inspection() 
@@ -101,7 +103,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		errorsCount = 0;
 		totalRecords = 0;	
 		failed_records = new List<String>();	
-
+		system.debug(LOGGINGLEVEL.ERROR, 'LF: QUERY: '+query);
 		return Database.getQueryLocator(query);
 	}
 
