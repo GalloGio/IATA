@@ -272,6 +272,24 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Preferred_Language_Table</fullName>
+        <columns>NAME</columns>
+        <columns>Definition__c</columns>
+        <columns>System__c</columns>
+        <columns>Table__c</columns>
+        <columns>Code__c</columns>
+        <columns>System_ID__c</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Table__c</field>
+            <operation>equals</operation>
+            <value>PREFLANG</value>
+        </filters>
+        <label>Preferred Language Table</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Status_Table</fullName>
         <columns>NAME</columns>
         <columns>Definition__c</columns>
