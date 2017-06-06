@@ -40,6 +40,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
+    private static final String NO_IRR_FOUND = ' No Irregularities Found!';
 
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -393,13 +394,26 @@ public class AMS_OscarCase_RiskMgmt {
 
 		sUniqueId = sUniqueId + '_' + cc.Change_Code__c + '_' + dt.year() + dt.month() + dt.day() + dt.hour() + dt.second();
 
+        String extraMemoText = '';
+        if (mapAllHOs.containsKey(AccountId) && mapAllHOs.get(AccountId) == AccountId) {
+            Set<Id> childs = new Set<Id>();
+            for (Id childIds: mapAllHOs.keySet()) {
+                if (mapAllHOs.get(childIds) == AccountId) {
+                    childs.add(childIds);
+                }
+            }
+        	extraMemoText = childs.size() > 1 ? cc.Extra_memo_text_for_HO__c : '';
+        }
+		Boolean isHO = (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null));
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 		AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
-														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
+														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId), extraMemoText, isHO).toUpperCase();
+
+
 
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
-        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
+        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
@@ -872,14 +886,14 @@ public class AMS_OscarCase_RiskMgmt {
 		return [select id, Billable__c, Change_Code__c, Published_in_bulletin__c, Reason_Code__c, Reason_Code_Description__c, Record_Type__c, Risk_ChangeCode__c,
 			    Field1__c, Field1Values__c, Field2__c, Field2Values__c, Field3__c, Field3Values__c, Field4__c, Field4Values__c, Field5__c, Field5Values__c, Field6__c, Field6Values__c,
 			    Account_status_change__c, Class_Type__c, Bulletin_Memo_Text__c, Bulletin_Memo_Text2__c, Bulletin_Memo_Text3__c, Apply_to_hierarchy__c, Clear_Irregularities__c, Clear_Expiry_Date__c, Integration_RecId__c,
-			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c
+			    Used_By_CNS__c, CNS_Bulletin_Memo_Text__c, CNS_Bulletin_Memo_Text2__c, CNS_Bulletin_Memo_Text3__c, Publish_HO_Only__c, Calculate_BG_to_HO__c, Extra_memo_text_for_HO__c
 			    from AMS_ChangeCodes__c where Risk_ChangeCode__c=true];
 	}
 
 
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
 	@TestVisible
-	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS){
+	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS, String extraMemoText, Boolean isHO){
 		string sMemoText  = '';
 		if(sMemo1!=null)	sMemoText = sMemoText + sMemo1;
 		if(sMemo2!=null)	sMemoText = sMemoText + sMemo2;
@@ -914,25 +928,31 @@ public class AMS_OscarCase_RiskMgmt {
 				sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c==null?'Nil':theCase.IRR_Withdrawal_Reason__c);
 			}
 
-			if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
-				sTmpVal = '';
-				if(lsIrr==null)
-					sTmpVal = ' No Irregularities Found!';
-				else{
-					string sPrevType = '';
-					for(Agency_Applied_Change_code__c irr:lsIrr){
-						if(sPrevType=='W' || sPrevType=='D' || irr.Operation__c=='W' || irr.Operation__c=='D'){
-							sPrevType = irr.Operation__c;
-						}else{
-							sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
-						}
+            if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
+                if (isHO) {
+                    sTmpVal = '';
+                    if(lsIrr==null)
+                        sTmpVal = NO_IRR_FOUND;
+                    else{
+                        string sPrevType = '';
+                        for(Agency_Applied_Change_code__c irr:lsIrr){
+                            if(sPrevType=='W' || sPrevType=='D' || irr.Operation__c=='W' || irr.Operation__c=='D'){
+                                sPrevType = irr.Operation__c;
+                            }else{
+                                sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
+                            }
 
-						sPrevType = irr.Operation__c;
-					}
-					sTmpVal = sTmpVal + ' Total inst for 12 months: ' + theCase.Account.Accumulated_Irregularities__c +  '; ';
-				}
-				sMemoText = sMemoText.replace('<IRRS Sequence>', sTmpVal);
-			}
+                            sPrevType = irr.Operation__c;
+                        }
+                        sTmpVal = sTmpVal + ' Total inst for 12 months: ' + theCase.Account.Accumulated_Irregularities__c +  '; ';
+                    }
+                    sMemoText = sMemoText.replace('<IRRS Sequence>', sTmpVal);
+
+                } else {
+                    sMemoText = sMemoText.replace('<IRRS Sequence>\n', '');
+                }
+
+            }
 
 			if(sMemoText.containsIgnoreCase('<Outstanding Amount>')){
 				sMemoText = sMemoText.replace('<Outstanding Amount>', theCase.Outstanding_Amount__c==null?'Nil':string.valueOf(theCase.Outstanding_Amount__c));
@@ -962,6 +982,8 @@ public class AMS_OscarCase_RiskMgmt {
 				sMemoText = sMemoText.replace('<Inform GDS to Shut Down TKT System>', theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c==null?'Nil':GenerateDateForBulletin(theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c));
 			}
 		}
+
+		sMemoText = extraMemoText != null ? (sMemoText + ' ' + extraMemoText) : sMemoText;
 		return sMemoText;
 	}
 
