@@ -796,7 +796,7 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
 				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.Name
-				, Airline_Code__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c
+				, Airline_Code__c = territory.Appointment__r.Account__r.Main_Accreditation_Organization__c
 				, Airline_Name__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name  
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
@@ -817,7 +817,7 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
 				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
-				, Airline_Code__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c
+				, Airline_Code__c = territory.Appointment__r.Account__r.Main_Accreditation_Organization__c
 				, Airline_Name__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name  
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
@@ -838,7 +838,7 @@ public class ams2gdp_BusinessLogic
  	 * @return List<Accreditation__c>
  	 * @author David Daboué <david.daboue@cgi.com>
  	 */
- 	public static List<Accreditation__c> formatInspection2Accreditation(List<AMS_Inspection__c> inspections)
+ 	public static List<Accreditation__c> formatInspection2Accreditation(List<Account> accounts)
  	{
  		//-- What the function would return
  		List<Accreditation__c> result = new List<Accreditation__c>();
@@ -853,20 +853,20 @@ public class ams2gdp_BusinessLogic
 
  		Set<String> accountIds = new Set<String>();
 
-		for(AMS_Inspection__c inspection : inspections)
+		for(Account acc : accounts)
 		{
-			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
+			String air_code = acc.Main_Accreditation_Organization__c; 
 
-			location_class_codes.add(inspection.Account__r.Location_Class__c);
+			location_class_codes.add(acc.Location_Class__c);
 			air_codes.add(air_code);
 
 			if(air_code.equalsIgnoreCase('IATAN')) 
-			iatan_status.add(inspection.Account__r.Status__c);
-			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(inspection.Account__r.Status__c);
+			iatan_status.add(acc.Status__c);
+			else if(air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) iata_status.add(acc.Status__c);
 			//status_codes.add(inspection.Accreditation_Endorsement_Status_code__c);
 
-			if(inspection.Account__c != null)
-				accountIds.add(inspection.Account__c);
+			if(acc.Id != null)
+				accountIds.add(acc.Id);
 		}
 		
 		Map<String, GDP_Reference_Table__c> location_class_references 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(location_class_codes, 'ORGCLASS'); 
@@ -881,44 +881,42 @@ public class ams2gdp_BusinessLogic
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Accreditation__c');
 
 		//-- Build Accredition records for each AMS_Inspection record
-		for(AMS_Inspection__c inspection : inspections)
+		for(Account acc : accounts)
 		{
 			//-- GDP External Key = {INSPECTION_ID} 1 Inspection generate 1 accreditation record
-			String key = inspection.Id;
-			String air_code = inspection.Accreditation_Endorsement_organisation__r.Air_Code__c; 
+			String key = acc.Id;
+			String air_code = acc.Main_Accreditation_Organization__c; 
 
-			Integer rank = (rankByAccount.containsKey(inspection.Account__c)) ? rankByAccount.get(inspection.Account__c)+1 : 1;
-			rankByAccount.put(inspection.Account__c, rank);
+			Integer rank = (rankByAccount.containsKey(acc.Id)) ? rankByAccount.get(acc.Id)+1 : 1;
+			rankByAccount.put(acc.Id, rank);
 
 			Accreditation__c accreditation = new Accreditation__c(AMS_GDP_Key__c = key
 				, Accreditation_ID__c = rank 
-				, Last_change_date__c = inspection.Account__r.Organization_Last_Change_Date__c
-				, Last_re_inspection_date__c = inspection.Account__r.Verification_Date__c
-				, Original_approval_date__c = inspection.Account__r.Original_Approval_DAte__c
-				, Related_Account__c = inspection.Account__c
-				, Date__c = inspection.Date_Organisation_Status_attained__c
+				, Last_change_date__c = acc.Organization_Last_Change_Date__c
+				//, Last_re_inspection_date__c = acc.Verification_Date__c
+				, Original_approval_date__c = acc.Original_Approval_DAte__c
+				, Related_Account__c = acc.Id
+				, Date__c = acc.Date_Organisation_Status_attained__c
 			); 
 
 
 
 			//Class field is a Lookup & Location Class on Account is a Picklist 
-			if(location_class_references.containsKey(inspection.Account__r.Location_Class__c)) accreditation.Class__c = location_class_references.get(inspection.Account__r.Location_Class__c).Id;
-			
-			if(air_code_references.containsKey(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c)) accreditation.Endorsed_Accredited_By__c = air_code_references.get(inspection.Accreditation_Endorsement_organisation__r.Air_Code__c).Id;
+			if(location_class_references.containsKey(acc.Location_Class__c)) accreditation.Class__c = location_class_references.get(acc.Location_Class__c).Id;
 			
 			//if(status_references.containsKey(inspection.Accreditation_Endorsement_Status_code__c)) accreditation.Status__c = status_references.get(inspection.Accreditation_Endorsement_Status_code__c).Id;
 			
-			if((air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) && iata_status_references.containsKey(inspection.Account__r.Status__c)) 
+			if((air_code.equalsIgnoreCase('IATA') || air_code.equalsIgnoreCase('DOM')) && iata_status_references.containsKey(acc.Status__c)) 
 			{
 				
-				accreditation.Status__c = iata_status_references.get(inspection.Account__r.Status__c).Id;
+				accreditation.Status__c = iata_status_references.get(acc.Status__c).Id;
 			
 			}
-			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(inspection.Account__r.Status__c)) 
+			else if(air_code.equalsIgnoreCase('IATAN') && iatan_status_references.containsKey(acc.Status__c)) 
 
 			{
                
-				accreditation.Status__c = iatan_status_references.get(inspection.Account__r.Status__c).Id;
+				accreditation.Status__c = iatan_status_references.get(acc.Status__c).Id;
 			}
 			
 			//-- Set default record Type 			
@@ -932,7 +930,7 @@ public class ams2gdp_BusinessLogic
 			gdpAccreditation.AMS_GDP_Key__c+='GDP';
 			gdpAccreditation.RecordTypeId= recordTypes.get('GDP');
 			//gdpAccreditation.Related_Account__c=null;
-			gdpAccreditation.Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(inspection.Account__c);
+			gdpAccreditation.Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(acc.Id);
 
 			result.add(gdpAccreditation);
 		}
