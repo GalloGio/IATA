@@ -81,9 +81,11 @@ public with sharing class ams2gdp_SchedulerPageController
 	            jobIds.add(Database.executeBatch(batch));
 
 	            //Start Job 2
-	            List<String> ids2 = ams2gdp_Selector.getAMS_InspectionIdsByAccountIds(specificRecordIds);
+	            //New version of inspection batches runs receiving directly from a list of accounts
+	            List<String> ids2 = specificRecordIds;
 	            if(ids2.isEmpty()) ids2.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Inspection(false,ids2)));
+
 
 	            //Start Job 3
 	            List<String> ids3 = ams2gdp_Selector.getAMS_TerritoryIdsByAccountIds(specificRecordIds);
