@@ -18,18 +18,18 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = ' Id, Name, Account__c, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c, Legacy_External_ID__c '
-			+', Account__r.Location_Class__c, Account__r.Check_Digit__c, Account__r.IATACode__c, Account__r.Status__c' 
-			+', Account__r.Organization_Last_Change_Date__c, Account__r.Verification_Date__c,  Account__r.Original_Approval_DAte__c '
-			+', Accreditation_Endorsement_organisation__r.Air_Code__c, Accreditation_Endorsement_organisation__r.Name  '
-			+', Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.ISO_Code__c, Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c,Account__r.CNS_Agency__c' ;
+		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, Legacy_External_ID__c '
+			+', Location_Class__c, Check_Digit__c, IATACode__c, Status__c' 
+			+', Organization_Last_Change_Date__c, Verification_Date__c,  Original_Approval_DAte__c '
+			+', Main_Accreditation_Organization__c, '
+			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
-			,	'Account__r.IATACode__c != null'
-			,	'Account__r.Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
-			,	'Accreditation_Endorsement_organisation__r.Air_Code__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-			,	'Account__r.CNS_Agency__c = false'
+			,	'IATACode__c != null'
+			,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
+			,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+			,	'CNS_Agency__c = false'
 		}; 
 		
 		if(extraIds!=null && extraIds.size() > 0) {
@@ -72,9 +72,9 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		System.debug('conditions::'+conditions);
 
 		query = String.format('SELECT {0} '
-			+	'FROM AMS_Inspection__c '
+			+	'FROM Account '
 			+ 	'WHERE {1} '
-			+	'ORDER BY Account__c, AMS_GDP_Sort_By__c', 
+			+	'ORDER BY IATACode__c ', 
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 	}
@@ -105,10 +105,10 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Inspection__c> inscpections) 
+   	global void execute(Database.BatchableContext BC, List<Account> accounts) 
    	{
    		//-- Total records to be processed
-   		totalRecords += inscpections.size();
+   		totalRecords += accounts.size();
 
    		// Process Errors 
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
@@ -116,7 +116,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
    		List<Accreditation__c> accreditations_to_save = new List<Accreditation__c>(); 
    		try
 		{
-			accreditations_to_save 	= ams2gdp_BusinessLogic.formatInspection2Accreditation(inscpections);
+			accreditations_to_save 	= ams2gdp_BusinessLogic.formatInspection2Accreditation(accounts);
 
 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();			 
@@ -138,7 +138,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		}
 
 		// Process Errors 
-		errors.addAll(ams2gdp_Error.formatUpsertResult(accreditations_to_save, accreditations_save_results, 'Appointment (AMS) => Accreditation', 'AMS_GDP_Key__c'));
+		errors.addAll(ams2gdp_Error.formatUpsertResult(accreditations_to_save, accreditations_save_results, 'Accounts (AMS) => Accreditation', 'AMS_GDP_Key__c'));
 		
 
 		//Log the current Errors
