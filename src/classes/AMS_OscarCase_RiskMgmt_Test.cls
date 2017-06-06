@@ -36,6 +36,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
         lsConf.add(new AMS_ChangeCodes__c(Name='IRR', CHANGE_CODE__C='IRR', REASON_CODE__C='CURRENT', REASON_CODE_DESCRIPTION__C='CURRENT', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance', FIELD2__C='IRR_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='Update_AIMS_IRR__c', FIELD3VALUES__C='NOT Blank', FIELD4__C=null, FIELD4VALUES__C=null, FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C=null, CLASS_TYPE__C='P;D;C', BULLETIN_MEMO_TEXT__C='Agent is served Notice of Irregularity due to <SIDRA Lite Reason> , agent is given 30 days to submit the required documents.  No monies outstanding', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
         lsConf.add(new AMS_ChangeCodes__c(Name='IRW', CHANGE_CODE__C='IRW', REASON_CODE__C='PREV', REASON_CODE_DESCRIPTION__C='PREV', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='SIDRA_Lite_Reason__c', FIELD1VALUES__C='VALUES:Financial Review Non-compliance;Financial Security Non-compliance;Annual fees', FIELD2__C='IRR_Withdrawal_Approval_Rejection__c', FIELD2VALUES__C='VALUES:Approved', FIELD3__C='IRR_Withdrawal_Reason__c', FIELD3VALUES__C='VALUES:Exception raised', FIELD4__C='Update_AIMS_IRRWITH__c', FIELD4VALUES__C='NOT Blank', FIELD5__C=null, FIELD5VALUES__C=null, FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV', CLASS_TYPE__C='P;D;C;R;Q;I', BULLETIN_MEMO_TEXT__C='Withdrawal of Irregularity due to Agency Administrator\'s decision', BULLETIN_MEMO_TEXT2__C=null, BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=FALSE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE));
         lsConf.add(new AMS_ChangeCodes__c(Name='DWD', CHANGE_CODE__C='DWD', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='NOT Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
+		lsConf.add(new AMS_ChangeCodes__c(Name='REI', CHANGE_CODE__C='REI', REASON_CODE__C='PREV;DEF;DFE', REASON_CODE_DESCRIPTION__C='PREV;DEF;DFE', RECORD_TYPE__C='SIDRA_Lite', FIELD1__C='DEF_Withdrawal_Approval_Rejection__c', FIELD1VALUES__C='VALUES:Approved', FIELD2__C='DEF_Withdrawal_Reason__c', FIELD2VALUES__C='VALUES:Matching Error;Master Data Error;Administrative error;Other;Billing Error', FIELD3__C='Update_AIMS_REI_DEFWITH__c', FIELD3VALUES__C='Blank', FIELD4__C='REI_ApprovalRejectin__c', FIELD4VALUES__C='VALUES:Approved', FIELD5__C='NOT_Sent__c', FIELD5VALUES__C='Blank', FIELD6__C=null, FIELD6VALUES__C=null, ACCOUNT_STATUS_CHANGE__C='PREV;DEF;DFE', CLASS_TYPE__C='P;D', BULLETIN_MEMO_TEXT__C='blabla', BULLETIN_MEMO_TEXT2__C='', BULLETIN_MEMO_TEXT3__C=null, INTEGRATION_RECID__C='C', BILLABLE__C=FALSE, PUBLISHED_IN_BULLETIN__C=TRUE, RISK_CHANGECODE__C=TRUE, APPLY_TO_HIERARCHY__C=TRUE, CLEAR_IRREGULARITIES__C=FALSE, USED_BY_CNS__C=FALSE, Publish_HO_Only__c=TRUE));
+
         insert lsConf;
 
         //Create Operational Calendar
@@ -412,7 +414,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS, '', true);
+        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, sMemo2, sMemo3, null, lsFS);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 6 --> Query issued: ' + Limits.getQueries());
 
@@ -478,7 +481,8 @@ private class AMS_OscarCase_RiskMgmt_Test {
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 4 --> Query issued: ' + Limits.getQueries());
 
-        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null);
+        string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null, '', true);
+        //string s = AMS_OscarCase_RiskMgmt.GenerateMemoText(lsCase.get(0), null, sMemo1, null, null, lsCC, null);
 
         system.debug(Logginglevel.ERROR, 'DTULLO AMS OscarCase Risk Mgmt TEST 5 --> Query issued: ' + Limits.getQueries());
 

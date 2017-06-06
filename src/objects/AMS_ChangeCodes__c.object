@@ -129,6 +129,18 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Extra_memo_text_for_HO__c</fullName>
+        <description>Message to be added to memo text if Account is Parent and has active childs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Message to be added to memo text if Account is Parent and has active childs</inlineHelpText>
+        <label>Extra memo text for HO</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Field1Values__c</fullName>
         <description>Values to check on the first field</description>
         <externalId>false</externalId>
