@@ -473,7 +473,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -935,7 +935,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - Branch reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -2044,7 +2044,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -2369,7 +2369,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - TIDS reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -2721,7 +2721,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - GSA reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -2985,7 +2985,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - GSSA reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -3294,7 +3294,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - AHA reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -3746,7 +3746,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - SA reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -4568,7 +4568,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
@@ -5108,7 +5108,7 @@
                       "Name": "REC",
                       "ReasonCode": "22",
                       "MemoText": "New application - Head Office reconsidered",
-                      "ReasonDesc": "ACCREDITED-MEET STANDARDS",
+                      "ReasonDesc": "APPLICATION BEING RECONSIDERED",
                       "Status": "2"
                     }
                   },
