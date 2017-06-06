@@ -40,6 +40,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
+    private static final String NO_IRR_FOUND = ' No Irregularities Found!';
 
     //Main Method
 	public static void CreateRiskChangeCode(map<id, case> mapTrgOld, map<id, case> mapTrgNew){
@@ -403,13 +404,16 @@ public class AMS_OscarCase_RiskMgmt {
             }
         	extraMemoText = childs.size() > 1 ? cc.Extra_memo_text_for_HO__c : '';
         }
+		Boolean isHO = (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null));
 		//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
 		AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 														, bIsCNS?cc.CNS_Bulletin_Memo_Text__c:cc.Bulletin_Memo_Text__c, bIsCNS?cc.CNS_Bulletin_Memo_Text2__c:cc.Bulletin_Memo_Text2__c, bIsCNS?cc.CNS_Bulletin_Memo_Text3__c:cc.Bulletin_Memo_Text3__c
-														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId), extraMemoText).toUpperCase();
+														, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId), extraMemoText, isHO).toUpperCase();
+        
+        
 
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
-        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && (acc != null ? (acc.parentId == null) : (!mapFinancialSecurity.isEmpty() && mapFinancialSecurity.get(AccountId)[0].Account__r.ParentId == null))) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
+        AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
@@ -889,7 +893,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 	//Method generates the bulletin memo text. It reads the stored values and replace all <xxxxxx> value with corresponding real value
 	@TestVisible
-	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS, String extraMemoText){
+	private static string GenerateMemoText(case theCase, Agency_Applied_Change_code__c CC, string sMemo1, string sMemo2, string sMemo3, list<Agency_Applied_Change_code__c> lsIrr, list<Financial_Security__c> lsFS, String extraMemoText, Boolean isHO){
 		string sMemoText  = '';
 		if(sMemo1!=null)	sMemoText = sMemoText + sMemo1;
 		if(sMemo2!=null)	sMemoText = sMemoText + sMemo2;
@@ -924,25 +928,31 @@ public class AMS_OscarCase_RiskMgmt {
 				sMemoText = sMemoText.replace('<IRR Withdrawal Reason>', theCase.IRR_Withdrawal_Reason__c==null?'Nil':theCase.IRR_Withdrawal_Reason__c);
 			}
 
-			if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
-				sTmpVal = '';
-				if(lsIrr==null)
-					sTmpVal = ' No Irregularities Found!';
-				else{
-					string sPrevType = '';
-					for(Agency_Applied_Change_code__c irr:lsIrr){
-						if(sPrevType=='W' || sPrevType=='D' || irr.Operation__c=='W' || irr.Operation__c=='D'){
-							sPrevType = irr.Operation__c;
-						}else{
-							sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
-						}
-
-						sPrevType = irr.Operation__c;
-					}
-					sTmpVal = sTmpVal + ' Total inst for 12 months: ' + theCase.Account.Accumulated_Irregularities__c +  '; ';
-				}
-				sMemoText = sMemoText.replace('<IRRS Sequence>', sTmpVal);
-			}
+            if(sMemoText.containsIgnoreCase('<IRRS Sequence>')){
+                if (isHO) {
+                    sTmpVal = '';
+                    if(lsIrr==null)
+                        sTmpVal = NO_IRR_FOUND;
+                    else{
+                        string sPrevType = '';
+                        for(Agency_Applied_Change_code__c irr:lsIrr){
+                            if(sPrevType=='W' || sPrevType=='D' || irr.Operation__c=='W' || irr.Operation__c=='D'){
+                                sPrevType = irr.Operation__c;
+                            }else{
+                                sTmpVal = sTmpVal + GenerateDateForBulletin(irr.Effective_Date__c) + ' due to ' + irr.Irregularity_Type__c + '. inst.: ' + integer.valueOf(irr.Irregularities_Points__c) + ';';
+                            }
+                            
+                            sPrevType = irr.Operation__c;
+                        }
+                        sTmpVal = sTmpVal + ' Total inst for 12 months: ' + theCase.Account.Accumulated_Irregularities__c +  '; ';
+                    }
+                    sMemoText = sMemoText.replace('<IRRS Sequence>', sTmpVal);
+                    
+                } else {
+                    sMemoText = sMemoText.replace('<IRRS Sequence>\n', '');
+                }
+                
+            }
 
 			if(sMemoText.containsIgnoreCase('<Outstanding Amount>')){
 				sMemoText = sMemoText.replace('<Outstanding Amount>', theCase.Outstanding_Amount__c==null?'Nil':string.valueOf(theCase.Outstanding_Amount__c));
@@ -972,7 +982,8 @@ public class AMS_OscarCase_RiskMgmt {
 				sMemoText = sMemoText.replace('<Inform GDS to Shut Down TKT System>', theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c==null?'Nil':GenerateDateForBulletin(theCase.Shut_Down_TKT_System_GDS_and_BSPlink__c));
 			}
 		}
-        sMemoText = extraMemoText != null ? (sMemoText + ' ' + extraMemoText) : sMemoText;
+        
+		sMemoText = extraMemoText != null ? (sMemoText + ' ' + extraMemoText) : sMemoText;
 		return sMemoText;
 	}
 
