@@ -656,13 +656,7 @@ public with sharing class ISSP_AvailableServices{
             this.pollerOn = false;
             this.redirect = true;
         } else {
-            System.debug('Servid-->' + Serv.recordService.id);
-            System.debug('conId-->' + conId);
-
-            System.debug('-->Select poller');
             List<Portal_Application_Right__c> l2 = [SELECT Id FROM Portal_Application_Right__c WHERE Portal_Application__c =: Serv.recordService.id AND Contact__c =: conId];
-
-            System.debug('l2-->' + l2.size());
 
             if(l2.size() == 0) {
                 this.pollerOn = false;
