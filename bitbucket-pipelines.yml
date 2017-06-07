@@ -30,7 +30,7 @@ pipelines:
     branches: # pipelines that run automatically on branch commit
 
              
-    NewGen/Release1:
+    Release1:
       - step:
           script:
              - bash ./deploy_master.bash
