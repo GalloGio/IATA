@@ -20,7 +20,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		String fields = ' Id, Name, Comments__c, Appointment__c, Appointment__r.Account__c, Appointment__r.Accreditation_Endorsement_Status_code__c, Appointment__r.Date_Organisation_Status_attained__c, Appointment__r.Legacy_External_ID__c '
 			+', Appointment__r.Account__r.Location_Class__c, Appointment__r.Account__r.Check_Digit__c, Appointment__r.Account__r.IATACode__c, Appointment__r.AMS_Appointment_Type__c ' 
 			+', Appointment__r.Account__r.Organization_Last_Change_Date__c, Appointment__r.Account__r.Verification_Date__c,  Appointment__r.Account__r.Original_Approval_DAte__c '
-			+', Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c, Appointment__r.Accreditation_Endorsement_organisation__r.Name  '
+			+', Appointment__r.Account__r.Main_Accreditation_Organization__c, Appointment__r.Accreditation_Endorsement_organisation__r.Name  '
 			+',  ISO_Country__r.ISO_Code__c,  ISO_Country__r.Name, ISO_Country__r.ISO_Country_Short_Name__c,  ISO_State__r.ISO_Code__c '
 			+', Appointment__r.Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.Name, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c, Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c' 
 			+', Appointment__r.Account__r.state_numeric_code__c';
@@ -73,7 +73,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		query = String.format('SELECT {0} '
 			+	'FROM AMS_Territory__c '
 			+ 	'WHERE {1} '
-			+	'ORDER BY Appointment__r.Account__c, Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c', 
+			+	'ORDER BY Appointment__r.Account__c, Appointment__r.Account__r.Main_Accreditation_Organization__c', 
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 	}

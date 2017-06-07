@@ -494,7 +494,7 @@ public with sharing class AMS_XML_Generator {
 
         
         //MAIN
-        lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Accreditation_Endorsement_organisation__r.Air_Code__c,
+        lInspection = [SELECT Accreditation_Endorsement_Status_code__c, Account__r.Main_Accreditation_Organization__c,
                         Date_Organisation_Status_attained__c,Id,Name,
                         Account__c,
                         Account__r.Organization_Last_Change_Date__c, 
@@ -1942,7 +1942,7 @@ public with sharing class AMS_XML_Generator {
 
                                     Dom.Xmlnode auxInspectionNode = auxParentNode.addChildElement(displayFieldName, null, null);
                                     AMS_Inspection__c x = (AMS_Inspection__c)obj;
-                                    String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
+                                    String sAuxValue = (String)x.Account__r.Main_Accreditation_Organization__c;
                                     auxInspectionNode.addTextNode(sAuxValue);
 
                                 }else if(f.equalsIgnoreCase('Parent_Account__c')){ //Special threatment for the Parent agencies on the Hierarchy data
@@ -2005,7 +2005,7 @@ public with sharing class AMS_XML_Generator {
             //Sprint 12 - workaround while fields are not created on SFDC
             if(sObjectName.equalsIgnoreCase('AMS_Inspection__c') ){
                 AMS_Inspection__c x = (AMS_Inspection__c)obj;
-                String sAuxValue = (String)x.Accreditation_Endorsement_organisation__r.Air_Code__c;
+                String sAuxValue = (String)x.Account__r.Main_Accreditation_Organization__c;
                 
                 Account ag = (Account)msObject.get(x.Account__c);
 

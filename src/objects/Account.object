@@ -7285,6 +7285,15 @@ V - Co-operative</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Date_Organisation_Status_attained__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Organisation Status attained</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
         <externalId>false</externalId>
         <label>Date of most recent name change</label>
@@ -9468,6 +9477,10 @@ J-Joint Vent</inlineHelpText>
                 <fullName>J</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>W</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -9694,6 +9707,16 @@ J-Joint Vent</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Main_Accreditation_Organization__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;,  IF( ISPICKVAL(Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;,  IF(   NOT(ISNULL(WebStar_ID__c))  , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <label>Main Accreditation Organization</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Manager_First_Name__c</fullName>
@@ -32848,6 +32871,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -76015,6 +76042,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -9,6 +9,8 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
+	Set<String> locationsSet;
+
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -16,7 +18,7 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		processNextBatch = runNext;
 		extraIds = ids; 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
-
+		
 		//-- Fields used for Sync
 		String fields = ' Id, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Check_Digit__c, Company_Type__c, Email__c, GDP_Location_Type__c, GDP_Opt_In__c, IATACode__c, Incorporation_Type__c, GDS__c'
 			+	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
@@ -26,8 +28,11 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		String idsCondition;
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
-		}else{
-			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
+		}else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
+		} else {
+			idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
 		}
 
 		//-- Query conditions 

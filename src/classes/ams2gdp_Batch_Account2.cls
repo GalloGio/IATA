@@ -10,6 +10,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
+	Set<String> locationsSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -26,10 +27,11 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		String idsCondition;
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
-		}else{
-			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
-
-			
+		} else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
+		} else {
+			idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
 		}
 
 		//-- Query conditions 
@@ -91,7 +93,6 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		totalRecords = 0;
 		failed_records = new List<String>();
 		syncStartedDate =Datetime.now();
-
 		return Database.getQueryLocator(query);
 	}
 
