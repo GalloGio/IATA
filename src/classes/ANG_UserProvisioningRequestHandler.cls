@@ -8,12 +8,10 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 	public ANG_UserProvisioningRequestHandler() {}
 
 	public void onAfterUpdate() {
-		System.debug('----------->onAfterUpdate');
 		checkIataEasyPayUserProvisioning();
 	}
 
 	public void onAfterInsert() {
-		System.debug('----------->onAfterInsert');
 		checkIataEasyPayUserProvisioning();
 	}
 
@@ -21,8 +19,6 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 	// Find all failing EasyPay Provisioning request and delete their portal service access requests (Status = "Access requested")
 	//
 	public void checkIataEasyPayUserProvisioning() {
-
-		System.debug('----------->checkIataEasyPayUserProvisioning');
 
 		Set<String> connectedAppRoles = new Set<String>();
 		Set<String> iepNames = new Set<String>();
@@ -34,19 +30,12 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 			}
         }
 
-        System.debug('----------->checkIataEasyPayUserProvisioning ---- connectedAppRoles ->' + connectedAppRoles);
-        System.debug('----------->checkIataEasyPayUserProvisioning ---- iepNames ->' + iepNames);
-
         Set<Id> usersIds = new Set<Id>();
         for(UserProvisioningRequest newUp : triggerNew) {
         	usersIds.add(newUp.SalesforceUserId);
         }
 
-        System.debug('----------->checkIataEasyPayUserProvisioning ---- usersIds ->' + usersIds);
-       
         List<User> users = [Select id, ContactId from User where id in : usersIds];
-
-        System.debug('----------->checkIataEasyPayUserProvisioning ---- users ->' + users);
 
 		Set<Id> contactsIds = new Set<Id>();
 		Map<id, id> userContact = new Map<id, id>();
@@ -54,8 +43,6 @@ public with sharing class ANG_UserProvisioningRequestHandler {
         	contactsIds.add(user.ContactId);
         	userContact.put(user.Id, user.ContactId);
         }
-
-		System.debug('----------->checkIataEasyPayUserProvisioning ---- contactsIds ->' + contactsIds);
 
         List<Portal_Application_Right__c> parList = [Select id,
         												    contact__c 
@@ -66,15 +53,11 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 
 		if(!parList.isEmpty()) {
 
-			System.debug('----------->checkIataEasyPayUserProvisioning ---- parList ->' + parList);
-
 			Map<Id, Portal_Application_Right__c> parMap = new Map<Id, Portal_Application_Right__c>();
 
 			for(Portal_Application_Right__c par : parList) {
 				parMap.put(par.Contact__c, par);
 			}
-
-			System.debug('----------->checkIataEasyPayUserProvisioning ---- parMap ->' + parMap);
 
 			List<Portal_Application_Right__c> parToDelete = new List<Portal_Application_Right__c>();
 
@@ -83,8 +66,6 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)));
 				}
 			}
-
-			System.debug('----------->checkIataEasyPayUserProvisioning ---- parToDelete ->' + parToDelete);
 
 			delete parToDelete;
 		}
