@@ -421,14 +421,14 @@ public with sharing class SidraLiteManager {
             cse.Subject = 'SIDRA Lite – Financial Security Non-compliance';
             cse.SIDRA_Lite_Reason__c = 'Financial Security Non-compliance';
             if (SidraLiteUtil.isAccountActive(account)) {
-                cse.Propose_Irregularity__c = DateTime.now();
-                cse.IRR_Approval_Rejection__c = 'Approved';
-                cse.IRR_Approval_Rejection_Date__c = DateTime.now();
-                if (SidraLiteUtil.isPassenger(account)) {
+                //cse.Propose_Irregularity__c = DateTime.now();
+                //cse.IRR_Approval_Rejection__c = 'Approved';
+                //cse.IRR_Approval_Rejection_Date__c = DateTime.now();
+                /*if (SidraLiteUtil.isPassenger(account)) {
                     cse.IRR_Type__c = 'Double Irregularity';
                 } else {
                     cse.IRR_Type__c = 'Single Irregularity';
-                }
+                }*/
                 cse.SIDRA_Lite_Default_Date__c = Date.Today();
                 cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
             } else {
@@ -519,7 +519,7 @@ public with sharing class SidraLiteManager {
             if (SidraLiteUtil.isPassenger(account)) {
                 parentCase.FS_Second_Deadline_Date__c = parentCase.firstFSnonComplianceDate__c.addDays(31);
                 if (SidraLiteUtil.isAccountActive(account)) {
-                    cse.Propose_Irregularity__c = Date.today();
+                    //cse.Propose_Irregularity__c = Date.today();
                     cse.SIDRA_Lite_Default_Date__c = Date.today();
                     cse.Reason_for_Default__c = 'Suspension - FS Non Compliance';
                 }
