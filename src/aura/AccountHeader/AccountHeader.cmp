@@ -1,14 +1,29 @@
-<aura:component >
+<aura:component controller="AccountHeaderController">
     <aura:attribute name="account" type="Account"/>
-    
+    <aura:attribute name="SanctionNotice" type="String"/>
+    <aura:attribute name="SanctionNotice2" type="String"/>
+    <aura:attribute name="isEditMode" type="Boolean" default="false"/>
+    <aura:attribute name="isEditMode2" type="Boolean" default="false"/>
+    <aura:attribute name="canEdit" type="Boolean" default="false"/>
+    <aura:attribute name="canEdit2" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <style>
+        .text-align label {
+        max-width: 100%;
+    display: block;
+    word-break: break-word;
+    WHITE-SPACE: normal;
+        }        
+    </style>
     <!-- PAGE HEADER -->
     <div class="slds-page-header" role="banner">
         
         <!-- PAGE HEADER TOP ROW -->
-        <div class="slds-grid">
+        <div class="slds-grid ">
             
             <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-col">
+            <div class="slds-size_1-of-4">
                 
                 <!-- HEADING AREA -->
                 <!-- MEDIA OBJECT = FIGURE + BODY -->
@@ -22,24 +37,117 @@
                         </span>
                     </div>
                     
-                    <div class="slds-media__body">
+                    <div class="slds-media__body" >
                         <p class="slds-text-heading--label">Account</p>
                         <h1 class="slds-text-heading--medium">{!v.account.Name}</h1>
                     </div>
-                    
+      
                 </div>
                 <!-- / MEDIA OBJECT -->
                 <!-- HEADING AREA -->
                 
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            
+            <div class="slds-media__body">
+                <table class="slds-table  slds-table--fixed-layout slds-table--striped" style="background-color:#f4f6f9">
+                    <thead> 
+                        <tr class="slds-text-heading--label">
+                             <th scope="col" class="actionColumn" style="width:11rem;">
+                                        
+                                </th>
+                                <th scope="col" >
+                                       <p class="slds-text-heading--label">Sanction Notice</p>
+                                </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>                                   
+                                    <aura:renderIf isTrue="{!v.canEdit}">
+                                    <aura:renderIf isTrue="{!v.isEditMode}">
+                                        
+                                        <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel1" title="Cancel">
+                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Cancel</span>
+                                        </button>
+                                        <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save1">
+                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Save</span>
+                                        </button>
+                                    </aura:renderIf> 
+                                    <aura:renderIf isTrue="{!!v.isEditMode}">
+                                        <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit1"> 
+                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Edit</span>
+                                        </button>
+                                    </aura:renderIf>
+                                    </aura:renderIf>
+                                </td>
+                                <td>
+                                    <aura:renderIf isTrue="{!v.isEditMode}">
+                                        <ui:inputTextArea  value="{!v.account.SanctionNotice__c}" class="slds-input "/>                                        
+                                    </aura:renderIf>
+                                    <aura:renderIf isTrue="{!!v.isEditMode}">                                    
+                                        <span  class="alignText">    {!v.account.SanctionNotice__c}   </span>
+                                    </aura:renderIf>                                    
+                                </td>
+                            </tr>
+                    </tbody>
+                 </table>    
+            </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
-            <div class="slds-col slds-align-middle">
+            <div class="slds-size_1-of-4 slds-align-middle">
                 <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
-            
+            <div class="slds-media__body">
+                <table class="slds-table  slds-table--fixed-layout slds-table--striped" style="background-color:#f4f6f9">
+                    <thead> 
+                        <tr class="slds-text-heading--label">
+                             <th scope="col" class="actionColumn">
+                                        <span class="slds-truncate"></span>
+                                </th>
+                                <th scope="col" >
+                                       <p class="slds-text-heading--label">Sanction Notice</p>
+                                </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td> 
+                                    <aura:renderIf isTrue="{!v.canEdit2}">
+                                    <aura:renderIf isTrue="{!v.isEditMode2}">
+                                        <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Cancel</span>
+                                        </button>
+                                        <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save2" >
+                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Save</span>
+                                        </button>
+                                            <!--<c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon cancel2" />
+                                            <span class="slds-assistive-text">Cancel</span> -->
+                                        
+                                    </aura:renderIf> 
+                                    <aura:renderIf isTrue="{!!v.isEditMode2}">
+                                        <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit2">
+                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon" />
+                                            <span class="slds-assistive-text">Edit</span>
+                                        </button>
+                                    </aura:renderIf>
+                                    </aura:renderIf>
+                                </td>
+                                <td>
+                                    <aura:renderIf isTrue="{!v.isEditMode2}">
+                                        <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-input"/>                                        
+                                    </aura:renderIf>
+                                    <aura:renderIf isTrue="{!!v.isEditMode2}">
+                                        <span  class="alignText" >    {!v.account.SanctionNotice2__c}   </span>          
+                                    </aura:renderIf>                                    
+                                </td>
+                            </tr>
+                    </tbody>
+                 </table>    
+            </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
             <div class="slds-col slds-no-flex slds-align-middle">
                 <div class="slds-button-group" role="group">
@@ -81,7 +189,7 @@
             </div>
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-5"> 
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Country</p>
@@ -107,6 +215,16 @@
                         <p class="slds-text-heading--label slds-truncate">Category</p>
                     </dt>
                     <dd>{!v.account.Category__c}</dd>
+                </dl>
+            </div>
+
+            <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
+            <div class="slds-col--padded slds-size--1-of-5">
+                <dl>
+                    <dt>
+                        <p class="slds-text-heading--label slds-truncate">IATA Membership Status</p>
+                    </dt>
+                    <dd>{!v.account.Membership_status__c}</dd>
                 </dl>
             </div>
             
