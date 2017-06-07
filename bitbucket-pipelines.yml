@@ -27,7 +27,13 @@ pipelines:
           script:
              - bash ./runAllTest.bash
 
+    branches: # pipelines that run automatically on branch commit
 
+             
+    NewGen/Release1:
+      - step:
+          script:
+             - bash ./deploy_master.bash
 
 
              
