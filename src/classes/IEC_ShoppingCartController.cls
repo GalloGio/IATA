@@ -45,8 +45,8 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			Location_Svc.initializeDefaultLocations(new List<Id>{loggedCustomer.sfContact.Id});
 
 		if(pageParams.containsKey('order'))
-		{
-			String orderNumber = pageParams.get('order');
+		{			
+			String orderNumber = pageParams.get('order');			
 			//orderId = pageParams.get('order');
 
 			//-- Customer come from Auto-Renewal link 
@@ -60,7 +60,7 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
 			//--Validate customer has access to the order
 			//-- Change pendding Order to renewal 
-			List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{orderNumber});
+			List<Order> lstOrders = (List<Order>) new Order_Sel().selectSObjectByField('OrderNumber',new Set<String>{orderNumber});			
 			if(lstOrders.size() > 0)
 			{
 				orderId = lstOrders[0].Id;
@@ -90,16 +90,22 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 			String errorType = pageParams.get('msg');
 			addErrorMessage((errorType == 'siblingInCart') ? Label.Itemalready_in_cart : Label.Only_one_subscription_can_be_purchased);
 		}
-		
+
 		//-- Build Cart Items to display
 		buildOrderItemFromCookie();
+
+		//-- Customer was forced to login when click on proceed to checkout button
+		//1-->ADDED TO: 
+		if(pageParams.get('action') == 'checkout'){
+		 return startCheckout();
+		}
 
 		//-- Validate country compliance 
 		validateCountryCompliance();
 		if (! bAreProductsCompliant) addErrorMessage(labels.get('msgErrorCartNotCompliant'));
 		
 		//-- Customer was forced to login when click on proceed to checkout button
-		if(pageParams.get('action') == 'checkout') return startCheckout();	
+		//1--> REMOVED FROM: if(pageParams.get('action') == 'checkout') return startCheckout();	
 		
 
 		//-- Existing product added again  ?
@@ -201,28 +207,56 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 
     public void updateOrderItems()
     {
+
     	Map<String, Decimal> itemsInCookie = Order_Svc.getItemsInCookie();
+
     	List<OrderItem> orderItems2update = new List<OrderItem>();
 		//-- Update OrderItem in Database
 		Order pendingOrder =  IECOrder_Svc.getPenddingOrder(orderId);
-
 		//-- Find OrderItems of pendingOrder with ProductOCde in items.keySet()
 		Map<Id, List<OrderItem>> mapOrderItems =  new OrderItem_Sel().getOrderItems(new Set<Id>{pendingOrder.Id});
+
+
 		if(mapOrderItems != null && mapOrderItems.size() > 0)
 		{
 			List<OrderItem> items = mapOrderItems.get(pendingOrder.Id);
 			for(OrderItem item : items)
 			{
-				if(itemsInCookie.keySet().contains(item.Product_Number__c))
-				{	
+				if(itemsInCookie.keySet().contains(item.Product_Number__c)){	
 					item.Quantity = (item.IEC_Static_Cart_Quantity__c != null && item.IEC_Static_Cart_Quantity__c > 0) ? item.IEC_Static_Cart_Quantity__c :	itemsInCookie.get(item.Product_Number__c);					
 					orderItems2update.add(item);
 				}
 			}				
 		}
 
+
 		if(orderItems2update.size() > 0) update orderItems2update;
     }
+
+    /**************************************************************************************************************
+     *  upsertOrderItemsFromVfOrder: method called to insert item in the vfOrder, needed when the user adds items *
+     *                               to cart before login                                                         *
+     *  Author: Ângela Lázaro                                                                                     *  
+     **************************************************************************************************************/
+    public void insertOrderItemsFromVfOrder(){
+
+		List<OrderItem> orderItems2upsert = new List<OrderItem>();
+
+		Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+
+		for (OrderItem_DTO oi : vfOrder.orderItems){
+			Map<Id, PricebookEntry> pricebookEntryByProductId = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, oi.ProductId);
+
+           	orderItems2upsert.add(new OrderItem(OrderId = orderId, Freight_Charge__c=oi.shippingAmount, Handling_charges__c=oi.handlingCharges,
+           						 Tax__c=oi.taxAmount, UnitPrice = oi.UnitPrice, PricebookEntryId = pricebookEntryByProductId.get(oi.ProductId).Id, Quantity = oi.Quantity));
+        }
+
+        if(orderItems2upsert.size() > 0){
+        	insert orderItems2upsert;
+        }
+
+
+	}
 
     /**************************************************************************************************************
      *  startCheckout: method calls when customer clicks on "Proceed to checkout" button                          *
@@ -251,6 +285,8 @@ public without sharing class IEC_ShoppingCartController extends IEC_PageControll
 		//-- Update Database with cookie info
 		updateOrderItems();
 
+		//-- Insert items with vfOrder items, in case there is any
+		insertOrderItemsFromVfOrder();
 
 		//-- Get Tax & Shipping 
 		Order_Svc.getSAP_Freight_Tax(orderId);
