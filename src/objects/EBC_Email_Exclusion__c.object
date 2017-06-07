@@ -225,7 +225,7 @@
         <filters>
             <field>Source_Campaign__c</field>
             <operation>contains</operation>
-            <value>Travel MarketPlace</value>
+            <value>Silvercar</value>
         </filters>
         <label>Exclusion Search By Source Campaign</label>
         <language>en_US</language>
