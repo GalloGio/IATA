@@ -19,13 +19,13 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
 		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, AIMS_ID__c, Webstar_ID__c '
-			+', Location_Class__c, Check_Digit__c, IATACode__c, Status__c' 
+			+', Location_Class__c, Check_Digit__c, IATACode__c ' 
 			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c '
 			+', Main_Accreditation_Organization__c '
 			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 
 		//-- Query conditions 
-		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
+		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'IATACode__c != null'
 			,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
 			,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
