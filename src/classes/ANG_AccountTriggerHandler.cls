@@ -1,22 +1,22 @@
 public class ANG_AccountTriggerHandler {
 
-	public static void handleBeforeInsert(List<Account> accs){
+    public static void handleBeforeInsert(List<Account> accs){
 
-		updateRiskStatus(accs, new Map<Id,Account>(), true);
+        updateRiskStatus(accs, new Map<Id,Account>(), true);
 
-	}
+    }
 
-	public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
+    public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
 
-		updateRiskStatus(accs,oldMap,false);
+        updateRiskStatus(accs,oldMap,false);
 
-	}
+    }
 
 
 
-	public static void updateRiskStatus(List<Account> accs, Map<Id,Account> oldMap, Boolean isInsert){
+    public static void updateRiskStatus(List<Account> accs, Map<Id,Account> oldMap, Boolean isInsert){
 
-		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+        Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
         ID riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
 
         List<ANG_Agency_Risk_Calculation__c> arcList = [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT];
@@ -28,8 +28,8 @@ public class ANG_AccountTriggerHandler {
 
         for(Account acct: accs){
 
-        	if(!topLocationTypes.contains(acct.Location_Type__c))
-        		continue;
+            if(!topLocationTypes.contains(acct.Location_Type__c))
+                continue;
 
             if(isInsert || hasChangedValuesAccount(oldMap.get(acct.Id), acct) )
                 acct.ANG_HE_RiskStatus__c = calculationTable.get(acct.Financial_Review_Result__c + acct.ANG_HE_RiskHistoryAssessment__c);
