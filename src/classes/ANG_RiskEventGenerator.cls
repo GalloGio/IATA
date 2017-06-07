@@ -295,8 +295,8 @@ public class ANG_RiskEventGenerator {
 			Boolean configResult = false;
 
 			//check if values match conditions
-			if(condition.equalsIgnoreCase('Equal to') && new Set<String>(checkValue.split(';')).contains(String.valueOf(fieldValue))) 			configResult = true;
-			else if(condition.equalsIgnoreCase('Not equal to') && !new Set<String>(checkValue.split(';')).contains(String.valueOf(fieldValue)))	configResult = true;
+			if(condition.equalsIgnoreCase('Equal to') && new Set<String>(checkValue.split('\\s*[;,]\\s*')).contains(String.valueOf(fieldValue))) 			configResult = true;
+			else if(condition.equalsIgnoreCase('Not equal to') && !new Set<String>(checkValue.split('\\s*[;,]\\s*')).contains(String.valueOf(fieldValue)))	configResult = true;
 
 			else if(condition.equalsIgnoreCase('Blank') && fieldValue == null)					configResult = true;
 			else if(condition.equalsIgnoreCase('Not blank') && fieldValue != null)				configResult = true;
