@@ -1896,6 +1896,13 @@ public without sharing class ISSP_AMS_Accreditation {
                     newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
                     contactSaved = false;
                 }
+
+                if (contactType == 'Current Owner' && (newContact.Agency_owner__c == true || newContact.Agency_role__c == true)  && (newContact.Time_devoted_to_Agency_business__c <= 0 || newContact.Time_devoted_to_Agency_business__c == null))  {
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Step3_ErrMsg_Time_Devoted);
+                    ApexPages.addMessage(myMsg);
+                    contactSaved = false;
+                    return;
+                }
             }
             
             SYSTEM.DEBUG('NoC Agency Owner: ' + contactToUpsert.Agency_owner__c);
@@ -3331,7 +3338,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             List<AMS_Accreditation_Contact__c> prevOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                 Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c 
+                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c 
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Previous_Owner'
                 ORDER BY Name ASC
@@ -3348,7 +3355,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             List<AMS_Accreditation_Contact__c> currOwner = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c,Phone__c,
                 Financial_interest__c, Contact_Id__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c,
-                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c 
+                AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c 
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Current_Owner'
                 ORDER BY Name ASC

@@ -10,6 +10,7 @@
     <style>
      .col1{
         width:45%;
+        padding-right: 15px;
         font-weight: normal;
       }
         
@@ -285,12 +286,12 @@
                                 <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
                             </apex:outputpanel>                    
                 </apex:facet>
-            <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">    
+            <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col1" columns="2">    
                 <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Legal_Status}</apex:outputPanel>
                 <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Legal_Status_After_Change}</apex:outputPanel>   
                 
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" /><!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}-->
                     <apex:outputText ><img src="{!IF(newForm.Confirm_Ownership_details_are_correct__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                         
@@ -312,15 +313,15 @@
                 
                 <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}"><!-- LHS --></apex:outputPanel>
                     <apex:outputPanel rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
-                        <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                        <!--<apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                             <apex:outputlabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" />
                             <apex:outputfield value="{!newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c}"/> 
-                        </apex:panelGrid>
-                    <apex:panelGrid width="100%" cellpadding="10%" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+                        </apex:panelGrid>-->
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
                         <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Issued_share_capital__c.Label}" />
                         <apex:outputfield value="{!newForm.Issued_share_capital__c}"/>                             
                     </apex:panelGrid>
-                    <apex:panelGrid width="100%" cellpadding="10%" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
+                    <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2" rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
                         <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Paidup_capital__c.Label}" />
                         <apex:outputfield value="{!newForm.ISSP_AMS_Paidup_capital__c}"/>                             
                     </apex:panelGrid>
@@ -329,7 +330,7 @@
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
                 <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$Label.ISSP_Registration_Online_Agency}"/>
+                    <apex:outputLabel value="{!$Label.ISSP_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
                   </apex:panelGrid>
 
@@ -337,6 +338,31 @@
                     <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Online_Agency_URL__c.Label}" />
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>                             
                   </apex:panelGrid>
+
+                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}</apex:outputPanel>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
+                    <apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
+                  </apex:panelGrid>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}"/>
+                    <apex:outputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
+                  </apex:panelGrid>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}"/>
+                    <apex:outputfield value="{!newForm.ISSP_AMS_License_No__c}" />
+                  </apex:panelGrid>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}"/>
+                    <apex:outputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
+                  </apex:panelGrid>
+
+                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                    <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent_Code}"/>
+                    <apex:outputfield value="{!newForm.IATA_Cargo_Code__c}" />
+                  </apex:panelGrid>
+
                 </apex:outputPanel>
                     
                 <apex:outputPanel >
@@ -355,7 +381,9 @@
                                 {!$Label.ISSP_AMS_Address}<br/>
                                 {!agencycon.AddressStreet__c}<br/>
                                 {!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>
-                                {!agencycon.AddressCountry__c}
+                                {!agencycon.AddressCountry__c}<br/>
+                                {!$ObjectType.Contact.fields.Phone.Label}:&nbsp;{!agencycon.Phone__c}<br/>
+                                {!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}:&nbsp;{!agencycon.Time_devoted_to_Agency_business__c}%
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%"  styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
@@ -381,7 +409,9 @@
                                 {!$Label.ISSP_AMS_Address}<br/>
                                 {!agencycon.AddressStreet__c}<br/>
                                 {!agencycon.AddressPostcode__c}&nbsp;{!agencycon.AddressCity__c}<br/>
-                                {!agencycon.AddressCountry__c}
+                                {!agencycon.AddressCountry__c}<br/>
+                                {!$ObjectType.Contact.fields.Phone.Label}:&nbsp;{!agencycon.Phone__c}<br/>
+                                {!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}:&nbsp;{!agencycon.Time_devoted_to_Agency_business__c}%
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%"  styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Roles_and_Responsabilities}</apex:facet>
@@ -403,19 +433,20 @@
                  </apex:outputPanel>
                 <apex:outputPanel rendered="{!hqAccount.Company_Type__c=='S'}"></apex:outputPanel>
                 
-                        <apex:outputPanel style="display:{!IF(AND(newform.Notify_Change_Ownership__c, newForm.ISSP_AMS_Legal_Status__c!='S'),'','none')}" rendered="{!AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0)}">                
+                    <apex:outputPanel style="display:{!IF(AND(newform.Notify_Change_Ownership__c, newForm.ISSP_AMS_Legal_Status__c!='S'),'','none')}" rendered="{!AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0)}">                
                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Updated_Companies}</apex:outputPanel>
-                    <apex:dataTable styleClass="summary-table" value="{!List_CurrentCompanies}" var="agencycon" width="100%" columnsWidth="25%,25%,25%,25%">
-                        <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
-                        <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
-                        <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
-                        <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
-                    </apex:dataTable>
+                        <apex:dataTable styleClass="summary-table" value="{!List_CurrentCompanies}" var="agencycon" width="100%" columnsWidth="25%,25%,25%,25%">
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                        </apex:dataTable>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>
 
-                    <apex:outputPanel id="newOwnerQuestions" rendered="{!List_CurrentCompanies.size > 0}">
-                        <div class="col-md-12">
-                          <apex:outputText value="{!$Label.ISSP_AMS_NoC_Other_Owner}" escape="false"/>
-                        </div>
+                    <apex:outputPanel><!-- LHS--></apex:outputPanel>
+                    <apex:outputPanel>
+                        <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
                         <apex:pageBlockSection columns="1">               
                           <apex:pageBlockSectionItem labelStyle="width:44%">
@@ -429,7 +460,10 @@
                           </apex:pageBlockSectionItem>
 
                         </apex:pageBlockSection>
+                    </apex:outputPanel>
 
+                    <apex:outputPanel><!-- LHS--></apex:outputPanel>
+                    <apex:outputPanel id="newOwnerQuestions" rendered="{!List_CurrentCompanies.size > 0}">
                         <!-- Section 6 - Sales estimates for non-IATA owners -->
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Title}</apex:outputPanel>
                         <div class="col-md-12">
@@ -487,9 +521,9 @@
                             </apex:pageBlockTable>
                         </div>
                         
-                      </apex:outputPanel>
+                    </apex:outputPanel>
 
-                </apex:outputPanel>
+                
                 <apex:outputPanel rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"/>              
                 
              </apex:panelGrid>
@@ -520,8 +554,8 @@
                             -->
 
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations}" />
-                            <apex:outputText value="{!newForm.Will_such_change_affect_the_premises__c}"/>
-                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Provide_explanation_for_change_locations__c.Label}" />
+                            <apex:outputText value="{!newForm.Will_such_change_affect_locations__c}"/>
+                            <apex:outputlabel value="{!$Label.ISSP_AMS_NoC_If_Not_Provide_Explanation}" />
                             <apex:outputfield value="{!newForm.Provide_explanation_for_change_locations__c}" />
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Q3}" />

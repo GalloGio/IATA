@@ -3015,7 +3015,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>Issued_share_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Current Issued Share Capital</label>
+        <label>Current Issued Shared Capital</label>
         <precision>13</precision>
         <required>false</required>
         <scale>0</scale>

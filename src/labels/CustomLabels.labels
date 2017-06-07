@@ -9276,6 +9276,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Accredited Branch Offices</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_Ownership_details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_Ownership_details</shortDescription>
+        <value>Confirm Type of entity and Ownership details are correct</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Confirm_details</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -9386,6 +9394,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC IATA Only</shortDescription>
         <value>IATA Internal User Only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_If_Not_Provide_Explanation</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_If_Not_Provide_Explanation</shortDescription>
+        <value>If not, please provide detailed explanation</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Legal_Name_After_Change</fullName>
@@ -9530,11 +9546,18 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Notice Of Change</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Online_Agency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoC_Online_Agency</shortDescription>
+        <value>Will the company operate as an Online Agency under the new status?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Other_Owner</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Other_Owner</shortDescription>
-        <value>If your travel agency is owned by an organization other than the head office, answer the following with respect to the parent organization:</value>
+        <value>If your travel agency is owned by an organization other than the head office, answer the following with respect to the parent organization</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Ownership_Shareholding</fullName>
@@ -9550,7 +9573,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC PDF Title</shortDescription>
-        <value>NOTICE OF CHANGE&lt;br/&gt;APPLICATION</value>
+        <value>NOTICE OF CHANGE</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Percent_Ownership</fullName>
@@ -9591,6 +9614,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Previous_Owners_Managers</shortDescription>
         <value>Previous Owner(s)/Manager(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Provide_Registeration_Or_License</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoC_Provide_Registeration_Or_License</shortDescription>
+        <value>If registration and/or license is required by law in your country give the below information after the change/under new ownership</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Q1</fullName>
@@ -9647,6 +9677,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Q5</shortDescription>
         <value>* Will the change of ownership cause direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Registered_Cargo_Agent</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Registered_Cargo_Agent</shortDescription>
+        <value>Is your agency IATA registered Cargo agent? If so, please state the IATA code under which it is registered</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Registered_Cargo_Agent_Code</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Registered_Cargo_Agent_Code</shortDescription>
+        <value>IATA Cargo numeric code if applicable:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Request_for_Change</fullName>
@@ -9852,7 +9898,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</shortDescription>
-        <value>* Will this change affect all approved locations ? If not, please provide detailed explanation.</value>
+        <value>* Will this change affect all approved locations ?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Witness</fullName>
@@ -11578,6 +11624,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 ErrMsg Sole Owner Exists</shortDescription>
         <value>There is already an owner defined for this Sole Proprietorship.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_ErrMsg_Time_Devoted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted</shortDescription>
+        <value>Please enter the % of time devoted to Agency Business</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_HO_Full_Address</fullName>
