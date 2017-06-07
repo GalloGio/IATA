@@ -484,6 +484,17 @@
              }
     }
 
+    //NEWGEN - 663
+    function toggleIATACodeITAN(myValue){
+        
+        if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+            document.getElementById('iatacodeITAN').style.display='block';
+         } else {
+            document.getElementById('iatacodeITAN').style.display='none';
+            cleanInputsInDiv('iatacodeITAN');
+         }
+    }
+
     function togglePrevIATACode(cb, iatacode, employername, employeraddress, cbid) {
         if(cb==null) {
             cb = document.getElementById(cbid);
@@ -1239,25 +1250,37 @@
 
 
             <span id="nav_six"></span>
-                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
-                        <apex:facet name="header">
-                            <apex:outputpanel >
-                                {!$Label.ISSP_AMS_Step3_5_Other_Info}
-                            </apex:outputpanel>
-                        </apex:facet>                    
-                       <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
-                           <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
-                           <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
-                               <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
-                               <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
-                           </apex:selectradio>
-                       </apex:pageblocksectionitem>                     
+                <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails,cargoaccountname">
+                        <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
+                        <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
+                        <apex:param name="AccountType" assignTo="{!accountType}" value="IATA Passenger Sales Agent"/>
+                        <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value=""/>
+                </apex:actionFunction>
+                <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchAgentDetails}" reRender="iatantravelagen,iatanaccountname">
+                        <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
+                        <apex:param name="AgentSector" assignTo="{!agentsector}" value="Travel Agent"/>
+                        <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="IATAN Passenger Agent"/>
+                </apex:actionFunction>
+                    
+                <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
+                    <apex:facet name="header">
+                        <apex:outputpanel >
+                            {!$Label.ISSP_AMS_Step3_5_Other_Info}
+                        </apex:outputpanel>
+                    </apex:facet>                    
+                   <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
+                       <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
+                       <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
+                           <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
+                           <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
+                       </apex:selectradio>
+                   </apex:pageblocksectionitem>                    
                 </apex:pageBlockSection>
-
                 <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
                     <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
+                        <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value=""/>
                     </apex:actionFunction>
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
@@ -1270,16 +1293,52 @@
                                     {!$Label.ISSP_Loading_Cargo_Agency_Details}
                                 </apex:facet>
                             </apex:actionStatus>
-                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(cargoAgentAccount.Name=='', iatacode!='')}"/>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(CargoAgentAccount.Name=='', iatacode!='')}"/>
                         <apex:outputText escape="false" value="
-                            <strong>{!cargoAgentAccount.Name}</strong><br>
-                            {!cargoAgentAccount.BillingStreet}<br/>
-                            {!cargoAgentAccount.BillingCity} {!cargoAgentAccount.BillingPostalCode}<br/>
-                            {!cargoAgentAccount.BillingState}, {!cargoAgentAccount.BillingCountry}
+                            <strong>{!CargoAgentAccount.Name}</strong><br>
+                            {!CargoAgentAccount.BillingStreet}<br/>
+                            {!CargoAgentAccount.BillingCity} {!CargoAgentAccount.BillingPostalCode}<br/>
+                            {!CargoAgentAccount.BillingState}, {!CargoAgentAccount.BillingCountry}
                         "/>
                     </apex:outputPanel>
                 </apex:pageBlockSection>
                 </div>
+
+                <!--NG-663 START -->
+                <apex:pageBlockSection>
+                    <apex:pageblocksectionitem rendered="{!amsOfficeType=='HO'}">
+                       <apex:outputlabel value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
+                       <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
+                           <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
+                           <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
+                       </apex:selectradio>
+                    </apex:pageblocksectionitem>
+                </apex:pageBlockSection>
+                       
+                <div id="iatacodeIATAN" style="{!IF(newForm.IATA_Registered_IATAN_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSectionItem dataStyle="width:20%">
+                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
+                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchCargoAgent1(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
+                    </apex:pageBlockSectionItem>        
+                    <apex:outputPanel id="iatantravelagen">
+                        <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
+                                <apex:facet name="start" >
+                                    {!$Label.ISSP_Loading_IATAN_Agency_Details}
+                                </apex:facet>
+                            </apex:actionStatus>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATAN_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(IATANAgentAccount.Name=='', iatacode!='')}"/>
+                        <apex:outputText escape="false" value="
+                            <strong>{!IATANAgentAccount.Name}</strong><br>
+                            {!IATANAgentAccount.BillingStreet}<br/>
+                            {!IATANAgentAccount.BillingCity} {!IATANAgentAccount.BillingPostalCode}<br/>
+                            {!IATANAgentAccount.BillingState}, {!IATANAgentAccount.BillingCountry}"/>
+                    </apex:outputPanel>                                                       
+                </apex:pageBlockSection>
+
+                </div>
+                <!-- NG-663 END -->
+
                 <apex:pageblocksection columns="1" rendered="{!amsOfficeType=='HO'}">
                     <apex:pageblocksectionitem >
                         <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />

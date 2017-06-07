@@ -1863,6 +1863,17 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IATAN_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>* IATAN Code</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IATA_Agents_Numeric_Code__c</fullName>
         <description>* IATA Agents Numeric Code</description>
         <externalId>false</externalId>

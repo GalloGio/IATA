@@ -3731,6 +3731,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public PageReference fetchAgentDetails() {
         String qCargoCode;
         CargoAgentAccount = new Account();
+        IATANAgentAccount = new Account();
         TravelAgentPrevAccount = new Account();
         Account generalAccount = null;
         companyModalAddress = '';
@@ -3759,8 +3760,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         qCargoCode = iatacode + '%';
 
         List <Account> agentaccounts = null;
+        List <Account> agentaccountITAN = null;
         system.debug('agentsector:' + agentsector);
         system.debug('accountType:' + accountType);
+        system.debug('amsOfficeType:' + amsOfficeType);
+        system.debug('iatanAccount:' + iatanAccount);
         if (agentsector == 'Cargo Agent' && amsOfficeType == 'Branch') {
             agentaccounts = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                              BillingCountry, Name
@@ -3783,6 +3787,19 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                              WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode AND Type = : accountType
                             ];
             system.debug('agentaccounts:' + agentaccounts);
+        
+        //NEWGEN-663 start
+
+        } else if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT){
+            system.debug('aqui agentsector ' + agentsector + ' iata ' + qCargoCode );
+            agentaccountITAN = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
+                             BillingCountry, Name
+                             FROM Account
+                             WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode 
+                            ];
+            system.debug('agentaccountITAN ' + agentaccountITAN);
+        //NEWGEN-663 end
+
         } else {
             agentaccounts = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                              BillingCountry, Name
@@ -3802,13 +3819,17 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                           ' \r\n' + notNull(generalAccount.BillingCountry);
                     companyModalNameOfEmployer = notNull(generalAccount.Name);
                 }
-            } else if (agentsector == 'Cargo Agent') {
-                CargoAgentAccount = agentaccounts[0];
+            } else if (agentsector == 'Cargo Agent'){
+                system.debug('aqui cargo ' + agentaccounts[0]);
+                    CargoAgentAccount = agentaccounts[0];
                 if (accountType == 'IATA Cargo Agent')
                     newForm.Name_under_which_it_was_issued__c = CargoAgentAccount.Name;
                 else if (accountType == 'CASS Associates')
-                    newForm.CASS_Name_under_which_it_was_issued__c = CargoAgentAccount.Name;
-            } else {
+                    newForm.CASS_Name_under_which_it_was_issued__c = CargoAgentAccount.Name;               
+                                    
+            }else if (iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT ){
+                        IATANAgentAccount = agentaccountITAN[0];
+            }else{
                 TravelAgentPrevAccount = agentaccounts[0];
                 System.Debug('Travel Agent name:' + TravelAgentPrevAccount.Name);
 
