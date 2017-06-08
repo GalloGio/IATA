@@ -35,15 +35,11 @@
         <label>System Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
@@ -65,7 +61,11 @@
         <fields>NAME</fields>
         <fields>ANG_Object_Type__c</fields>
         <fields>ANG_Object_Record_Type__c</fields>
+        <fields>ANG_Risk_Event_Status__c</fields>
+        <fields>ANG_isUpdateOnly__c</fields>
         <relatedList>ANG_Risk_Event_Configuration__c.ANG_Risk_Event_Type__c</relatedList>
+        <sortField>ANG_Risk_Event_Status__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
