@@ -264,20 +264,16 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
                     
-                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) ) {
+                    if(vOfficeType.substring(idx + 3).trim() == 'IATA Passenger Sales Agent') {
                         operationType = 'Travel_Agent';
                     } else {
                         operationType = 'Cargo_Agent';
                     }
 
-                    // NHO - 
-                    console.log('vOfficeType.substring(0, idx) ' + operationType+'-'+vOfficeType.substring(0, idx));
-                    
-                    var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
-                    
-                    console.log('countryList ' + countryList);     
+                   
+                    var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];     
                     var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
-                    console.log('isAllowedCountry ' + isAllowedCountry);
+                    
                     ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
@@ -524,9 +520,9 @@
                     </div>
 
                     <div class="form-group"> 
-                    <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label> 
+                        <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</label>
                         <div class="col-lg-9">
-                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
+                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
                             </apex:selectList>                           
                         </div>
@@ -947,14 +943,14 @@
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
-                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
+                        <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
                         <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm"/>
-                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
-                 	</apex:outputPanel></apex:facet>
+                        <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
+                    </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                         <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
                         <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
-                    	<apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                        <apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
                     </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>
