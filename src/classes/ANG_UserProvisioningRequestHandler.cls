@@ -60,14 +60,32 @@ public with sharing class ANG_UserProvisioningRequestHandler {
 			}
 
 			List<Portal_Application_Right__c> parToDelete = new List<Portal_Application_Right__c>();
+			List<ISSP_Web_Service_Log__c> logs = new List<ISSP_Web_Service_Log__c>();
 
 			for(UserProvisioningRequest newUp : triggerNew) {
-				if(connectedAppRoles.contains(newUp.AppName) && newUp.state == 'Failed') {
+				if(connectedAppRoles.contains(newUp.AppName) && newUp.State == 'Failed') {
+
+					logs.add(getErrorLogEntry(userContact.get(newUp.SalesforceUserId),
+											  newUp.ConnectedAppId,
+											  newUp.State));
+
 					parToDelete.add(parMap.get(userContact.get(newUp.SalesforceUserId)));
 				}
 			}
-
 			delete parToDelete;
+			insert logs;
 		}
+	}
+
+	private static ISSP_Web_Service_Log__c getErrorLogEntry(Id contactId, Id connectedAppId, String state) {
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c(
+			Contact__c = contactId,
+			Web_Service__c = connectedAppId,
+			Method__c = 'User Provisioning',
+			Error_Code__c = state,
+			Error_Message__c = 'Error provisioning user',
+			Success__c = false
+		);
+		return log;
 	}
 }
