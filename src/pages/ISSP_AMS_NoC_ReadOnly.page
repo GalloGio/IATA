@@ -330,7 +330,7 @@
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
                 <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$Label.ISSP_NoC_Online_Agency}"/>
+                    <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
                   </apex:panelGrid>
 
