@@ -382,7 +382,7 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <br/>
-                                  {!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}
+                                <b>{!$Label.ANG_ISSP_Request_Access_IATA_EasyPay}</b>
                                 <br/>
                               </div>
                               <div class="modal-body">
