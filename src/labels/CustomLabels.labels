@@ -9579,7 +9579,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <fullName>ISSP_AMS_NoC_Online_Agency</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_NoC_Online_Agency</shortDescription>
+        <shortDescription>ISSP_AMS_NoC_Online_Agency</shortDescription>
         <value>Will the company operate as an Online Agency under the new status?</value>
     </labels>
     <labels>

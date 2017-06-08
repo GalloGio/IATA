@@ -1051,7 +1051,7 @@
 					<apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent">
 						<apex:pageBlockSection columns="1">
 							<apex:pageBlockSectionItem labelStyle="width:44%">
-								<apex:outputLabel value="{!$Label.ISSP_NoC_Online_Agency}"/>
+								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.ISSP_AMS_Online_Agency_Application__c==null), 'border:2px red solid;', '')}" value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" onchange="togglePageItem(this.value, '{!$Component.onlineAgencyURL}');">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
