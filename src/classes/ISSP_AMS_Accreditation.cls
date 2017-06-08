@@ -250,11 +250,9 @@ public without sharing class ISSP_AMS_Accreditation {
         getPilotCountries();
         getCountriesMap();
 
-        system.debug('aqui isocode ' + con.Account.IATA_ISO_Country__r.ISO_Code__c);
         newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
-        system.debug('aqui isocountry ' + newCase.IFAP_Country_ISO__c);
         isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-        system.debug('aqui isocountry ' + isocountry);
+        
         //newCase.IFAP_Country_ISO__c = hqCountryISOCode;
         //isocountry = fetchISOCountry(hqCountryISOCode);
 
@@ -389,10 +387,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
             //Retrieve information linked to the case Id
             vSAAMCaseId = ApexPages.currentPage().getParameters().get('caseId');
-            system.debug('URL vSAAMCaseId: ' + vSAAMCaseId);
-            system.debug('aqui isocountry 3' + newCase.IFAP_Country_ISO__c);
-            fetchCase(vSAAMCaseId);
-            system.debug('aqui isocountry 4' + newCase.IFAP_Country_ISO__c);
+            system.debug('URL vSAAMCaseId: ' + vSAAMCaseId);            
+            fetchCase(vSAAMCaseId);            
 
             if (newCase != null) {
                 system.debug('newCase.IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
@@ -516,22 +512,19 @@ public without sharing class ISSP_AMS_Accreditation {
 
                     newForm.Submitted_to_IATA__c = FALSE;
 
-                    //Retrieve Cargo Agent if user has entered IATA  Code
-                    system.debug('aqui cargo ' + newForm.IATA_Cargo_Code__c + ' iatan ' + newForm.IATAN_Code__c);
+                    //Retrieve Cargo Agent if user has entered IATA  Code                    
                     if(newForm.IATA_Cargo_Code__c != null){                        
                         iatacode = newForm.IATA_Cargo_Code__c;
                         agentsector = 'Cargo Agent';                        
                         fetchAgentDetails();                            
                     }
 
-                    if(newform.IATAN_Code__c != null){
-                        system.debug('aqui iatan ...');
+                    if(newform.IATAN_Code__c != null){                        
                         iatacode = newForm.IATAN_Code__c;
                         agentsector = 'Travel Agent';
                         iatanAccount = AMS_UTILS.IATAN_PASSENGER_AGENT;                        
                         fetchIATANDetails();                            
-                    }
-                    
+                    }                    
 
                     if (newCase.IFAP_Country_ISO__c == null) {
                         //If case created internally by IATA, for user, then set country from the contact's Account
@@ -1155,8 +1148,8 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
             system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
             system.debug('agentType ' + agentType);
-            system.debug('aqui amsOfficeType ' + amsOfficeType);
-            system.debug('aqui 5 IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
+            system.debug('amsOfficeType ' + amsOfficeType);
+            system.debug('5 IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
 
             if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith('Travel_Agent')) {
                 if (newCase.Reason1__c == 'New HO') {
@@ -1193,8 +1186,7 @@ public without sharing class ISSP_AMS_Accreditation {
             newcase.Case_Language__c = applyLanguage;
             newCase.Visible_on_ISS_Portal__c = true;
 
-            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-            system.debug('aqui isoCOuntry 2 ' + isocountry);
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);            
             if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
                                                 (newForm.Agent_Type__c != 'CASS Associate' && newForm.Agent_Type__c != 'Import Agent' && newForm.Agent_Type__c != 'Courier')))
                 RECORD_TYPE_ID = OSCAR_RECORD_TYPE_ID;
@@ -1217,8 +1209,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 String newIsoCountry = newCase.IFAP_Country_ISO__c;
                 if ((draftHQCaseExists && !isHOAccredited) || isDupeSAAMCase) {
                     agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
-                    newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();
-                    system.debug('aqui newCase.IFAP_Country_ISO__c 6 ' + newCase.IFAP_Country_ISO__c);
+                    newCase.Reason1__c = amsLocationType.left(amsLocationType.indexOf('-')).trim();                    
                     newCase.Case_Language__c = applyLanguage;
                     newCase.IFAP_Country_ISO__c = newIsoCountry;
                     isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
@@ -1591,6 +1582,10 @@ public without sharing class ISSP_AMS_Accreditation {
         if (cargoAgentAccount != null) {
             system.debug('cargoAgentAccount.Id: ' + cargoAgentAccount.Id);
             newForm.Cargo_Agent_Account__c = cargoAgentAccount.Id;
+        }
+
+        if(IATANAgentAccount != null){
+            newForm.IATAN_Agent_Account__c = IATANAgentAccount.id;
         }
 
         try {
@@ -2739,7 +2734,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private void accountStagingFieldMapping(Account sourceAccount, String strReason, Boolean alreadyAccredited) {  //Field mapping to be used when updating staging area from HO Account for HO Applications
         Map<String, String> mapAccountToAccrFormFields;
-        system.debug('aqui strReason ' + strReason + ' alreadyAccredited ' + alreadyAccredited );
+        system.debug('strReason ' + strReason + ' alreadyAccredited ' + alreadyAccredited );
         if((strReason == 'New HO' || strReason == AMS_UTILS.CASE_REASON_HE_LITE || strReason == AMS_UTILS.CASE_REASON_HE_STANDARD) && !alreadyAccredited) {
             mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
                 'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
@@ -3088,8 +3083,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
-        if (newCases.size() > 0) {
-            system.debug('aqui newcases > 0 ' + newCases[0].IFAP_Country_ISO__c);
+        if (newCases.size() > 0) {            
             isNewCase = false;
             newCase = newCases[0];
             if (newCase.Status != 'Draft') {
@@ -3337,7 +3331,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,IATAN_Agent_Account__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -3770,7 +3764,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         return null;
     }
 
-    public Pagereference fetchIATANDetails(){
+    public Pagereference fetchIATANDetails(){ //NEWGEN - 663
            String qCargoCode; 
            IATANAgentAccount = new Account();
            List <Account> agentaccountITAN = null;
@@ -3784,8 +3778,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             system.debug('amsOfficeType:' + amsOfficeType);
             system.debug('iatanAccount:' + iatanAccount);
 
-            if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT){
-                system.debug('aqui agentsector ' + agentsector + ' iata ' + qCargoCode );
+            if(iatanAccount == AMS_UTILS.IATAN_PASSENGER_AGENT){                
                 agentaccountITAN = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                                  BillingCountry, Name
                                  FROM Account
@@ -5312,8 +5305,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
 **/
 
-        } else if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {
-            system.debug('aqui amsOfficeType ' + amsOfficeType + ' newForm.Agent_Type__c ' + newForm.Agent_Type__c);
+        } else if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {            
             if (amsOfficeType == 'HO') {
                 if (includeErrorMsgs) {
                     
@@ -5396,8 +5388,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
-                    if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes') {
-                        newForm.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
+                    if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
+                        newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
                         errorFound = true;
                     }
                     //NEWGEN - 663 END
