@@ -3395,6 +3395,22 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Airline_Search_Field__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATACode__c&amp;Airline_designator__c&amp;Site &amp; &apos; &apos; &amp;
+IATACode__c&amp;Site&amp;Airline_designator__c &amp; &apos; &apos; &amp;
+Site&amp;IATACode__c&amp;Airline_designator__c &amp; &apos; &apos; &amp;
+Site&amp;Airline_designator__c &amp;IATACode__c&amp; &apos; &apos; &amp;
+Airline_designator__c &amp;Site&amp;IATACode__c&amp; &apos; &apos; &amp;
+Airline_designator__c &amp;IATACode__c&amp;Site</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Search Field</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_designator__c</fullName>
         <description>Field used for the airline designator code e.g. BA</description>
         <externalId>false</externalId>
