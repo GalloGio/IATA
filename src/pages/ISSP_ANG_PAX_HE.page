@@ -485,13 +485,13 @@
     }
 
     //NEWGEN - 663
-    function toggleIATACodeITAN(myValue){
+    function toggleIATACodeIATAN(myValue){
         
         if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
-            document.getElementById('iatacodeITAN').style.display='block';
+            document.getElementById('iatacodeIATAN').style.display='block';
          } else {
-            document.getElementById('iatacodeITAN').style.display='none';
-            cleanInputsInDiv('iatacodeITAN');
+            document.getElementById('iatacodeIATAN').style.display='none';
+            cleanInputsInDiv('iatacodeIATAN');
          }
     }
 
@@ -1256,7 +1256,7 @@
                         <apex:param name="AccountType" assignTo="{!accountType}" value="IATA Passenger Sales Agent"/>
                         <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value=""/>
                 </apex:actionFunction>
-                <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchAgentDetails}" reRender="iatantravelagen,iatanaccountname">
+                <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Travel Agent"/>
                         <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="IATAN Passenger Agent"/>
