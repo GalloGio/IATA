@@ -179,6 +179,25 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>SENDS</fullName>
+        <columns>NAME</columns>
+        <columns>Activity_Date_Time__c</columns>
+        <columns>Activity_Type__c</columns>
+        <columns>EBC_Campaign__c</columns>
+        <columns>Related_Billing_Account__c</columns>
+        <columns>Total_Count__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>New_Balance__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Activity_Type__c</field>
+            <operation>equals</operation>
+            <value>Send</value>
+        </filters>
+        <label>SENDS</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>EBC Activity Name</label>
         <type>Text</type>
