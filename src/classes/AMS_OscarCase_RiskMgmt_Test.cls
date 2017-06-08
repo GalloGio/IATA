@@ -643,4 +643,179 @@ private class AMS_OscarCase_RiskMgmt_Test {
         AMS_QueryUtils aq = new AMS_QueryUtils();
         aq.isTestCompliant();
     }
+
+    static testMethod void checkPrevStatusReasonUpdated(){
+        Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
+
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
+        insert parent;
+
+        Case SidraLiteCase4 = new Case();
+            SidraLiteCase4.AccountId = a.Id;
+            SidraLiteCase4.recordtypeId = SIDRALiteRTId;
+            SidraLiteCase4.ParentId = parent.Id;
+            SidraLiteCase4.SIDRA_Lite_Reason__c = 'Bankruptcy';
+            SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        insert SidraLiteCase4;
+
+
+        Agency_applied_change_code__c ap = new Agency_applied_change_code__c();
+		ap.Account__c = a.Id;
+        ap.AccountPreviousStatus__c = 'Cash basis/no commission';
+        ap.PreviousReason__c = '51-DEFAULT-OVERDUE REMITTANCE';
+        ap.AccountNewStatus__c = '';
+        ap.Change_Code__c = 'DEF';
+        ap.Reason_Description__c = 'NON COMPLIANCE TO CRITERIA';
+        ap.Reason_Code__c = '00';
+        ap.SIDRA_Case__c = SidraLiteCase4.Id;
+        ap.Date_time_of_change__c = system.now().addDays(-1);
+		insert ap;
+
+
+
+        Agency_applied_change_code__c apa = new Agency_applied_change_code__c();
+        apa.Account__c = a.Id;
+        apa.AccountNewStatus__c = AMS_Utils.ACC_S8_CHANGESPROCESSED;
+        apa.Change_Code__c = 'TER';
+        apa.Reason_code__c = '81';
+        apa.Reason_Description__c = 'TEST';
+        apa.Date_time_of_change__c = system.now().addDays(-50);
+
+		insert apa;
+
+        test.StartTest();
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Matching Error';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = null;
+        SidraLiteCase4.NOT_Sent__c = null;
+
+		AMS_OscarCase_RiskMgmt.EndRun();
+        update SidraLiteCase4;
+
+        System.debug('## account status: '+[select status__C from Account where id =:a.Id]);
+        System.debug('## account change codes: '+[select change_code__c, Date_time_of_change__c, AccountPreviousStatus__c, PreviousReason__c from agency_applied_change_code__c where account__c = :a.Id order by Date_time_of_change__c desc]);
+        System.assertEquals(1, [select id from  Agency_applied_change_code__c where account__c = :a.Id and change_code__c ='REI' and AccountNewStatus__c = :AMS_Utils.ACC_S8_CHANGESPROCESSED].size(), 'REI change code should be generated and have accountnewstatus field = '+AMS_Utils.ACC_S8_CHANGESPROCESSED);
+
+        test.StopTest();
+    }
+
+    static testMethod void checkPrevStatusReasonUpdatedB(){
+        Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
+
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
+        insert parent;
+
+        Case SidraLiteCase4 = new Case();
+            SidraLiteCase4.AccountId = a.Id;
+            SidraLiteCase4.recordtypeId = SIDRALiteRTId;
+            SidraLiteCase4.ParentId = parent.Id;
+            SidraLiteCase4.SIDRA_Lite_Reason__c = 'Bankruptcy';
+            SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        insert SidraLiteCase4;
+
+
+        Agency_applied_change_code__c ap = new Agency_applied_change_code__c();
+		ap.Account__c = a.Id;
+        ap.AccountPreviousStatus__c = 'Cash basis/no commission';
+        ap.PreviousReason__c = '51-DEFAULT-OVERDUE REMITTANCE';
+        ap.AccountNewStatus__c = '';
+        ap.Change_Code__c = 'DEF';
+        ap.Reason_Description__c = 'NON COMPLIANCE TO CRITERIA';
+        ap.Reason_Code__c = '00';
+        ap.SIDRA_Case__c = SidraLiteCase4.Id;
+        ap.Date_time_of_change__c = system.now().addDays(-1);
+		insert ap;
+
+
+
+        Agency_applied_change_code__c apa = new Agency_applied_change_code__c();
+        apa.Account__c = a.Id;
+        apa.AccountNewStatus__c = AMS_Utils.ACC_S7_UNDERREVIEW;
+        apa.Change_Code__c = 'TER';
+        apa.Reason_code__c = '';
+        apa.Reason_Description__c = 'TEST';
+        apa.Date_time_of_change__c = system.now().addDays(-50);
+
+		insert apa;
+
+        test.StartTest();
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Matching Error';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = null;
+        SidraLiteCase4.NOT_Sent__c = null;
+
+		AMS_OscarCase_RiskMgmt.EndRun();
+        update SidraLiteCase4;
+
+        System.debug('## account status: '+[select status__C from Account where id =:a.Id]);
+        System.debug('## account change codes: '+[select change_code__c, Date_time_of_change__c, AccountPreviousStatus__c, PreviousReason__c from agency_applied_change_code__c where account__c = :a.Id order by Date_time_of_change__c desc]);
+        //should be ACC_S9_APPROVED because the fallback system. The RiskManagement will not find one greater than 8 and not 4 and will fallback to 91-MEETS STANDARDS
+        System.assertEquals(1, [select id from  Agency_applied_change_code__c where account__c = :a.Id and change_code__c ='REI' and AccountNewStatus__c = :AMS_Utils.ACC_S9_APPROVED].size(), 'REI change code should be generated and have accountnewstatus field = '+AMS_Utils.ACC_S9_APPROVED);
+
+        test.StopTest();
+    }
+
+    static testMethod void checkPrevStatusReasonUpdatedC(){
+        Account a = [select id, Name, IATA_ISO_Country__r.Enable_Risk_Change_Codes__c from Account where name='Accnt3'];
+
+        Case parent = new Case(RecordtypeId = RTOSCAR, AccountId = a.Id, status='Open');
+        insert parent;
+
+        Case SidraLiteCase4 = new Case();
+            SidraLiteCase4.AccountId = a.Id;
+            SidraLiteCase4.recordtypeId = SIDRALiteRTId;
+            SidraLiteCase4.ParentId = parent.Id;
+            SidraLiteCase4.SIDRA_Lite_Reason__c = 'Bankruptcy';
+            SidraLiteCase4.CS_Rep_Acc_DEF__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_REI__c = userinfo.getUserId();
+            SidraLiteCase4.CS_Rep_Acc_IRR_DEF__c = userinfo.getUserId();
+        insert SidraLiteCase4;
+
+
+        Agency_applied_change_code__c ap = new Agency_applied_change_code__c();
+		ap.Account__c = a.Id;
+        ap.AccountPreviousStatus__c = 'Cash basis/no commission';
+        ap.PreviousReason__c = '51-DEFAULT-OVERDUE REMITTANCE';
+        ap.AccountNewStatus__c = '';
+        ap.Change_Code__c = 'DEF';
+        ap.Reason_Description__c = 'NON COMPLIANCE TO CRITERIA';
+        ap.Reason_Code__c = '00';
+        ap.SIDRA_Case__c = SidraLiteCase4.Id;
+        ap.Date_time_of_change__c = system.now().addDays(-1);
+		insert ap;
+
+
+
+        Agency_applied_change_code__c apa = new Agency_applied_change_code__c();
+        apa.Account__c = a.Id;
+        apa.AccountNewStatus__c = AMS_Utils.ACC_S8_CHANGESPROCESSED;
+        apa.Change_Code__c = 'TER';
+        apa.Reason_code__c = '';
+        apa.Reason_Description__c = 'TEST';
+        apa.Date_time_of_change__c = system.now().addDays(-50);
+
+		insert apa;
+
+        test.StartTest();
+        SidraLiteCase4.DEF_Withdrawal_Approval_Rejection__c = 'Approved';
+        SidraLiteCase4.DEF_Withdrawal_Reason__c = 'Matching Error';
+        SidraLiteCase4.REI_ApprovalRejectin__c = 'Approved';
+        SidraLiteCase4.Update_AIMS_REI_DEFWITH__c = null;
+        SidraLiteCase4.NOT_Sent__c = null;
+
+		AMS_OscarCase_RiskMgmt.EndRun();
+        update SidraLiteCase4;
+
+        System.debug('## account status: '+[select status__C from Account where id =:a.Id]);
+        System.debug('## account change codes: '+[select change_code__c, Date_time_of_change__c, AccountPreviousStatus__c, PreviousReason__c from agency_applied_change_code__c where account__c = :a.Id order by Date_time_of_change__c desc]);
+        System.assertEquals(1, [select id from  Agency_applied_change_code__c where account__c = :a.Id and change_code__c ='REI' and AccountNewStatus__c = :AMS_Utils.ACC_S8_CHANGESPROCESSED].size(), 'REI change code should be generated and have accountnewstatus field = '+AMS_Utils.ACC_S8_CHANGESPROCESSED);
+
+        test.StopTest();
+    }
 }

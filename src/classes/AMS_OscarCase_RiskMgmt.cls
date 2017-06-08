@@ -37,6 +37,7 @@ public class AMS_OscarCase_RiskMgmt {
     private static set<string> setIRRCC = new set<string>{'IRR', 'IRS', 'IRW'};		//Irregularities change code
     private static set<string> setTERCC = new set<string>{'TER'};		//Termination change codes: set expiry date on account
     private static set<string> setREICC = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI'};		//Reinstatement change codes: clear expiry date on account
+	private static set<string> setReqValidStatus = new set<string>{'SDR', 'RCR', 'STR', 'RTR', 'RTE', 'REI', 'DFW'};		//Reinstatement + DFW: look for change code with valid status/reason
     private static map<id, account> mapReasonAndStatus = new map<id, account>();	//map containing latest reason and status
     private static set<string> setTidsChangeCode = new set<string>{'REI','TER','RTE'};
     private static map<id, map<string, Agency_Applied_Change_code__c>> mapPrevReasonFromCC = new map<id, map<string, Agency_Applied_Change_code__c>>();
@@ -303,12 +304,51 @@ public class AMS_OscarCase_RiskMgmt {
 			//Create the change codes!
 			if(!mapChangeCodeToCreate.isEmpty()){
 				lsAACC = new list<Agency_Applied_Change_code__c>();
+                Set<Id> accountIds = new Set<ID>();
+
+                for(ID idCase:mapChangeCodeToCreate.keyset()){
+					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
+						id CurrAccntId = mapCases.get(idCase).AccountId;
+						accountIds.add(CurrAccntId);
+						//Some change codes need to be created for the whole hierarchy...
+						if(cc.Apply_to_hierarchy__c){
+							id CurrAccntHOID = mapAllHOs.get(CurrAccntId);
+							if(mapAccntValues.containsKey(CurrAccntHOID)){
+								for(Account HIERAccnt:mapAccntValues.get(CurrAccntHOID)){
+									if(HierAccnt.id!=CurrAccntId){
+										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
+											accountIds.add(HIERAccnt.Id);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+                List<Agency_Applied_Change_code__c> aaccs = [Select id, Created_Date_To_Show__c, Account__c, AccountNewStatus__c, Reason_Description__c, Reason_Code__c, Change_Code__c from Agency_Applied_Change_code__c Where Account__c in: accountIds ORDER BY Created_Date_To_Show__c DESC ];
+
+                Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount = new Map<Id, List<Agency_Applied_Change_code__c>>();
+                for (Agency_Applied_Change_code__c aaccLocal: aaccs) {
+                    if (aaccsPerAccount.containsKey(aaccLocal.Account__c)) {
+                        List<Agency_Applied_Change_code__c> aaccsLocal= aaccsPerAccount.get(aaccLocal.Account__c);
+                        aaccsLocal.add(aaccLocal);
+                        aaccsPerAccount.put(aaccLocal.Account__c, aaccsLocal);
+                    } else {
+                        List<Agency_Applied_Change_code__c> aaccsLocal= new List<Agency_Applied_Change_code__c>();
+                        aaccsLocal.add(aaccLocal);
+                        aaccsPerAccount.put(aaccLocal.Account__c, aaccsLocal);
+                    }
+                }
+
 				for(ID idCase:mapChangeCodeToCreate.keyset()){
 					for(AMS_ChangeCodes__c cc :mapChangeCodeToCreate.get(idCase)){
 						id CurrAccntId = mapCases.get(idCase).AccountId;
 						//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-						Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c);
-						//Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null);
+
+
+                        Agency_Applied_Change_code__c AACC = CreateChangeCode(mapCases, idCase, cc, null, mapCases.get(idCase).Account.CNS_Agency__c, aaccsPerAccount);
+
+
 						if(AACC!=null)
 							lsAACC.add(AACC);
 
@@ -320,7 +360,7 @@ public class AMS_OscarCase_RiskMgmt {
 									if(HierAccnt.id!=CurrAccntId){
 										if(HIERAccnt.Location_Class__c != 'T' || (HIERAccnt.Location_Class__c == 'T' && setTidsChangeCode.contains(cc.Change_Code__c))){
 											//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c);
+											Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt, HierAccnt.CNS_Agency__c, aaccsPerAccount);
 											//Agency_Applied_Change_code__c AACCHier = CreateChangeCode(mapCases, idCase, cc, HIERAccnt);
 											if(AACCHier!=null)
 												lsAACC.add(AACCHier);
@@ -347,6 +387,7 @@ public class AMS_OscarCase_RiskMgmt {
 		}
 	}
 
+
 	@TestVisible
 	private static string GenerateFinancialSecurity(List<Financial_Security__c> lsFS) {
 		string sTmpVal = '';
@@ -369,14 +410,27 @@ public class AMS_OscarCase_RiskMgmt {
 		return sTmpVal;
 	}
 
+    private static string getFallbackReason(string statusNumber) {
+        if (statusNumber == '9') {
+            return '91-ACCREDITED - MEETS CRITERIA';
+        }
+        if (statusNumber == '8') {
+            return '81-CHANGE IN PROCESS';
+        }
+        if (statusNumber == '4') {
+            return '41-ADMINISTRATIVE OFFICES';
+        }
+        return '';
+    }
+
 	//DTULLO UNCOMMENT FOR CNS, COMMENT/DELETE SIMILAR LINES AFTER
-	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS){
+	private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc, boolean bIsCNS, Map<Id, List<Agency_Applied_Change_code__c>> aaccsPerAccount){
 	//private static Agency_Applied_Change_code__c CreateChangeCode(map<id, case> mapCases, id idCase, AMS_ChangeCodes__c cc, Account acc){
 		datetime dt = system.now();
 
 		Agency_Applied_Change_code__c AACC = new Agency_Applied_Change_code__c();
 
-		id AccountId = (Acc==null?mapCases.get(idCase).AccountId:acc.id);
+		id AccountId = (acc == null ? mapCases.get(idCase).AccountId : acc.id);
 		//if(acc==null)
 		//	AccountId = mapCases.get(idCase).AccountId;
 		//else
@@ -536,6 +590,8 @@ public class AMS_OscarCase_RiskMgmt {
 		string sPrevReason='';
 		string sCurrStatus='';
 		string sPrevStatus='';
+		Boolean isCCBellowEigthOrDiffFour = false;
+        string previousReasonAux = null;
 
 		system.debug(logginglevel.ERROR, 'DTULLO --> 491: ' + AccountId);
 		system.debug(logginglevel.ERROR, 'DTULLO --> 492: ' + mapReasonAndStatus.get(AccountId));
@@ -561,32 +617,48 @@ public class AMS_OscarCase_RiskMgmt {
 		}else if(cc.Account_status_change__c.toUpperCase()=='PREV'){
 			AACC.AccountNewStatus__c = sPrevStatus;
 			AACC.AccountPreviousStatus__c = sCurrStatus;
-			//accnt.Status__c = sPrevStatus;
-			//accnt.PreviousStatus__c= sCurrStatus;
-			//bAccntToUpd = true;
-		}else if(cc.Reason_Code__c.toUpperCase().startsWithIgnoreCase('PREV;')){
-			set<string> SplittedCC = new set<string>();
-			for(integer i=1;i<cc.Reason_Code__c.toUpperCase().split(';').size();i++)
-				SplittedCC.add(cc.Reason_Code__c.toUpperCase().split(';').get(i));
+		}else if (cc.Account_status_change__c.toUpperCase().startsWithIgnoreCase('PREV;')) {
+			Set<string> SplittedCC = new set<string>();
 
-			if(!SplittedCC.isEmpty()){
-				for(string sCCToGet:SplittedCC){
-					if(mapPrevReasonFromCC.containsKey(AccountId)){
-						if(mapPrevReasonFromCC.get(AccountId).containsKey(sCCToGet)){
+			for(integer i=1;i<cc.Account_status_change__c.toUpperCase().split(';').size();i++)
+				SplittedCC.add(cc.Account_status_change__c.toUpperCase().split(';').get(i));
+
+			if (!SplittedCC.isEmpty()) {
+				for (string sCCToGet:SplittedCC) {
+					if (mapPrevReasonFromCC.containsKey(AccountId)) {
+
+						if (mapPrevReasonFromCC.get(AccountId).containsKey(sCCToGet)) {
 							sPrevStatus = mapPrevReasonFromCC.get(AccountId).get(sCCToGet).AccountPreviousStatus__c;
-							AACC.AccountNewStatus__c = sPrevStatus;
-							AACC.AccountPreviousStatus__c = sCurrStatus;
+                            boolean canAddStatus = false;
+                            isCCBellowEigthOrDiffFour = false;
+
+							//if sPrevStatus is bellow 8 and different from 4, we'll iterate the account's previous change codes until we find one = > 8 or == 4 and take the account status from that one
+							if (setReqValidStatus.contains(AACC.Change_Code__c) && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) < 8 && Integer.valueOf( AMS_utils.getIATANumericStatus(sPrevStatus)) != 4) {
+                               isCCBellowEigthOrDiffFour = true;
+                               for (Agency_Applied_Change_code__c aaccLocal: aaccsPerAccount.get(AccountId)) {
+                                   if (aaccLocal.AccountNewStatus__c != null &&
+                                       aaccLocal.AccountNewStatus__c != '' &&
+                                       AMS_utils.getIATANumericStatus(aaccLocal.AccountNewStatus__c) != null &&
+                                       (Integer.valueOf(AMS_utils.getIATANumericStatus(aaccLocal.AccountNewStatus__c)) >= 8 ||
+                                        Integer.valueOf(AMS_utils.getIATANumericStatus(aaccLocal.AccountNewStatus__c)) == 4)) {
+
+                                       canAddStatus = true;
+                                       sPrevStatus = aaccLocal.AccountNewStatus__c;
+                                       previousReasonAux = (aaccLocal.Reason_Code__C == null || aaccLocal.Reason_Code__C == '') ? 'forcefallback' : aaccLocal.Reason_Code__C + '-' + aaccLocal.Reason_description__c;
+                                       break;
+                                   }
+                               }
+                            }
+                            sPrevStatus = !canAddStatus &&  isCCBellowEigthOrDiffFour ? AMS_Utils.ACC_S9_APPROVED : sPrevStatus;
+                            AACC.AccountNewStatus__c = sPrevStatus;
+                            AACC.AccountPreviousStatus__c = sCurrStatus;
 						}
 					}
 				}
 			}
-		}
-		else{
+		} else {
 			AACC.AccountNewStatus__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
 			AACC.AccountPreviousStatus__c = sCurrStatus;
-			//accnt.Status__c = AMS_Utils.getIATAReadableStatus(cc.Account_status_change__c);
-			//accnt.PreviousStatus__c= sCurrStatus;
-			//bAccntToUpd = true;
 		}
 
 		//FM 19-04-2017 - AMSU-18
@@ -640,12 +712,16 @@ public class AMS_OscarCase_RiskMgmt {
 					if(mapPrevReasonFromCC.containsKey(AccountId)){
 						if(mapPrevReasonFromCC.get(AccountId).containsKey(sCCToGet)){
 							sPrevReason = mapPrevReasonFromCC.get(AccountId).get(sCCToGet).PreviousReason__c;
-							if(sPrevReason.IndexOf('-')>0){
-								SplittedReason = sPrevReason.split('-');
-								AACC.Reason_Code__c = SplittedReason.get(0);
-								AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
-								AACC.PreviousReason__c = sCurrReason;
-							}
+							// use previousResonAux if we had also used the status from a previous change code. If no change change code with acceptable status (8,9 or 4) was found will get the reason from a fallback
+                            sPrevReason = (previousReasonAux != null) ? previousReasonAux :  isCCBellowEigthOrDiffFour ? getFallbackReason(AMS_Utils.getIATANumericStatus(sPrevStatus)) : sPrevReason;
+
+							if(sPrevReason.IndexOf('-')<0){
+                               sPrevReason = getFallbackReason(AMS_utils.getIATANumericStatus(sPrevStatus));
+                            }
+                            SplittedReason = sPrevReason.split('-');
+                            AACC.Reason_Code__c = SplittedReason.get(0);
+                            AACC.Reason_Description__c = sGetReasonDescriptionFromSplit(SplittedReason);
+                            AACC.PreviousReason__c = sCurrReason;
 						}
 					}
 				}
