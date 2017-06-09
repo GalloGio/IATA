@@ -417,6 +417,11 @@
             <operation>equals</operation>
             <value>THIS_MONTH</value>
         </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>weekly</value>
+        </filters>
         <label>Customer Service - Phone Calls</label>
         <language>en_US</language>
         <sharedTo>
@@ -742,6 +747,11 @@
             <field>Deadline__c</field>
             <operation>equals</operation>
             <value>THIS_MONTH</value>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>notContain</operation>
+            <value>weekly</value>
         </filters>
         <label>RET Management</label>
         <language>en_US</language>
