@@ -169,7 +169,7 @@ public class ANG_RiskEventGenerator {
 		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
-				if(checkRequisites(o, config)){
+				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
 					String uniqueKey = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
@@ -192,6 +192,9 @@ public class ANG_RiskEventGenerator {
 				}
 			}
 		}
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEvents - ' + riskEvents);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEventsToUpdate - ' + riskEventsToUpdate);
 
 		//insert new risk events and check for duplicate errors
 		if(!riskEvents .isEmpty()){
@@ -221,6 +224,9 @@ public class ANG_RiskEventGenerator {
 				riskEvents.add(risk);
 			}
 		}
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEventsToUpdate - ' + riskEventsToUpdate);
 
 		if(!riskEvents.isEmpty()) update riskEvents;
 	}
@@ -283,6 +289,8 @@ public class ANG_RiskEventGenerator {
 
 		SObject oldObject = objMap == null ? null : objMap.get(newObject.Id);
 
+		System.debug(loggingLevel.FINEST, '\n____ [cls ANG_RiskEventGenerator - checkRequisites] New condition for an '+config.ANG_Risk_Event_Status__c+' Risk Id ' + config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c + (config.ANG_isUpdateOnly__c ? ' (Update Only)':''));
+
 		//make checks against configs
 		for(ANG_RiskEventConfigurationFields f : ANG_RiskEventConfigurationFields.getList()){
 			String fieldName = (String)config.get(f.fieldName);
@@ -294,9 +302,15 @@ public class ANG_RiskEventGenerator {
 
 			Boolean configResult = false;
 
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] fieldName - ' + fieldName);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] fieldValue - ' + fieldValue);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] condition - ' + condition);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] checkValue - ' + checkValue);
+
 			//check if values match conditions
-			if(condition.equalsIgnoreCase('Equal to') && new Set<String>(checkValue.split('\\s*[;,]\\s*')).contains(String.valueOf(fieldValue))) 			configResult = true;
-			else if(condition.equalsIgnoreCase('Not equal to') && !new Set<String>(checkValue.split('\\s*[;,]\\s*')).contains(String.valueOf(fieldValue)))	configResult = true;
+			//split possible values by commas or semi-colons ignoring whitespaces (trim is to check for whitespaces at the beggining or end)
+			if(condition.equalsIgnoreCase('Equal to')) for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			else if(condition.equalsIgnoreCase('Not equal to')) for(String vv : checkValue.split('\\s*[;,]\\s*')) if(!vv.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
 
 			else if(condition.equalsIgnoreCase('Blank') && fieldValue == null)					configResult = true;
 			else if(condition.equalsIgnoreCase('Not blank') && fieldValue != null)				configResult = true;
@@ -316,6 +330,7 @@ public class ANG_RiskEventGenerator {
 				if(condition.equalsIgnoreCase('Less than today') && dateToCheck < System.today())		configResult = true;
 			}
 
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] configResult - ' + configResult);
 			if(!configResult) return false; //means that the conditions didn't match, no need to check others
 
 			//check to see if field was updated (for relationship fields we check if the relationship has changed)
@@ -332,6 +347,7 @@ public class ANG_RiskEventGenerator {
 			if(configResult) conditionsChecked++;
 		}
 
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] conditionsChecked - ' + conditionsChecked);
 		if(conditionsChecked == 0) return false;
 
 		return true;
