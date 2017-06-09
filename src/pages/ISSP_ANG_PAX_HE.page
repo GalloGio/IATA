@@ -1211,7 +1211,7 @@
                         </apex:actionFunction>
                   </apex:pageBlockSection>
                 <apex:pageBlockSection columns="1">
-                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Step3_4_Ownership_SubTitle}</strong></div>
+                    <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_3}</strong></div>
                     <div class="col-md-12">
                            <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Ownership}" escape="false"/>
                        </div>

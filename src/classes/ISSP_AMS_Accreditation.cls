@@ -1066,7 +1066,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         options.add(new SelectOption('New HE standard - Standard with Cash', Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
                         options.add(new SelectOption('New HE lite - Standard no Cash', Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
                     }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
-                         options.add(new SelectOption('New HO - Legacy Accreditation', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
+                         options.add(new SelectOption('New HO - Legacy', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
                     }
             }
         }
@@ -5383,7 +5383,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     }
 
                     //NEWGEN - 663 STARTS                    
-                    if(newForm.IATA_Registered_IATAN_Agent__c == null){
+                    if(newForm.IATA_Registered_IATAN_Agent__c == null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)){
                         newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
                         errorFound = true;
                     }
