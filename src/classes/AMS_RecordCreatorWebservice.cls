@@ -19,6 +19,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWMSO_PV = 'NEW.MSO.1.0';
     public static String NEWSA_PV = 'NEW.SA.1.0';
     public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
+    public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
 
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -232,6 +233,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 
         if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
             return oscarRT.get('ANG_New_HE');
+
+        if(typeOfProcess.equalsIgnoreCase(NEWNSTANDARD))
+            return oscarRT.get('NG_New_Standard');
 
         return null;
     
