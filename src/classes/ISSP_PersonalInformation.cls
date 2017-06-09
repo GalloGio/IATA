@@ -357,7 +357,7 @@ public with sharing class ISSP_PersonalInformation {
         List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
                                       WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') 
-                                        //AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+                                      AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
                                               ORDER BY Name, IATACode__c
                                      ];
        
