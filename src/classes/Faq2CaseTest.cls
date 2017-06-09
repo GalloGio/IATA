@@ -790,10 +790,10 @@ private class Faq2CaseTest {
 		  newCase.Description = 'test';
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-		  newCase.E2CP__AdditionalCC__c = 'fake@email.com';
-		  controller.save();
-		  newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
-		  controller.save();
+          setCCOthersEmail(controller,'fake@email.com');
+          controller.save();
+          setCCOthersEmail(controller,'Test@test11.com');
+          controller.save();
 		}
 		Test.stopTest();
     }
@@ -860,10 +860,10 @@ private class Faq2CaseTest {
 		  newCase.Description = 'test';
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-            newCase.E2CP__AdditionalCC__c = 'fake@email.com';
-            controller.saveAttach();
-            newCase.E2CP__AdditionalCC__c = 'Test@test11.com';
-            controller.saveAttach();
+          setCCOthersEmail(controller,'fake@email.com');
+          controller.saveAttach();
+          setCCOthersEmail(controller,'Test@test11.com');
+          controller.saveAttach();
 		}
 		Test.stopTest();
     }
@@ -919,5 +919,15 @@ private class Faq2CaseTest {
         insert account5;
         ctrl.initIATACodeList(account5.id);
         Test.StopTest();
+    }
+
+    private static void setCCOthersEmail(vfISSP_FAQ2Case controller, String email) {
+      for (vfISSP_FAQ2Case.sectionRecordWrapper section : controller.fullList) {
+          for (vfISSP_FAQ2Case.fieldRecordWrapper thisField : section.fieldList) {
+              if (thisField.fieldType == 'ccothers') {
+                  thisField.fieldValueEntered = email;
+              }
+          }
+      }
     }
 }
