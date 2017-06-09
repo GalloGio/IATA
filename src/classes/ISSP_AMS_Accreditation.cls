@@ -6636,6 +6636,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 Position__c,RecordTypeId,Title__c,Valid__c, 
                 Person__c,Person__r.First_Name__c,Person__r.Lastname__c,Person__r.Email__c,
                 Contact__c,Contact__r.FirstName,Contact__r.LastName,Contact__r.Email,Contact__r.Phone,
+                Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
                 where Account__c = :vHQAccountId 
@@ -6698,6 +6699,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             auxAccreditCont.Email__c = accRole.Contact__r.Email;
             auxAccreditCont.Phone__c = accRole.Contact__r.Phone;
             auxAccreditCont.Contact__c = accRole.Contact__c;
+            auxAccreditCont.AddressStreet__c = accRole.Contact__r.OtherStreet;
+            auxAccreditCont.AddressCity__c = accRole.Contact__r.OtherCity;
+            auxAccreditCont.AddressPostcode__c = accRole.Contact__r.OtherPostalCode;
+            auxAccreditCont.AddressCountry__c = accRole.Contact__r.OtherCountry;
+
         }else
         //Check if owner is PERSON
         if(accRole.Person__c != null){
