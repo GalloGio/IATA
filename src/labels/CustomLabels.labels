@@ -2374,7 +2374,7 @@ Case description: {!Case.Description}
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>EBulletin More than 8 owners message</shortDescription>
-        <value>. The Agent has more than 8 owners, please contact IATA for full details.</value>
+        <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
     </labels>
     <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
