@@ -390,7 +390,7 @@ Id
     <validationRules>
         <fullName>Prevent_RE_in_Not_Accreditated_Agencies</fullName>
         <active>true</active>
-        <errorConditionFormula>ANG_Manual__c &amp;&amp; ANG_AccountId__r.RecordType.Name!=&apos;Agency&apos;</errorConditionFormula>
+        <errorConditionFormula>ANG_Manual__c &amp;&amp; ANG_AccountId__r.RecordType.DeveloperName!=&apos;IATA_Agency&apos;</errorConditionFormula>
         <errorMessage>You can only create risk events for Accredited Agencies</errorMessage>
     </validationRules>
     <validationRules>
