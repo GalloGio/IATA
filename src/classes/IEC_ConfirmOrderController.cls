@@ -168,12 +168,14 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			return null;
 		}
 
-		//*** check if has a payment method -> check again in method "submitOrder"
-		if (String.isBlank(sfOrder.Payment_Type__c) || (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && card == null))
-		{
-			stopProcess = true;
-			addErrorMessage(Label.IEC_Error_PleaseSelectPaymentMethod);
-			return null;
+		if (isOrderConfirmed == false) {
+			//*** check if has a payment method -> check again in method "submitOrder"
+			if (String.isBlank(sfOrder.Payment_Type__c) || (sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && card == null))
+			{
+				stopProcess = true;
+				addErrorMessage(Label.IEC_Error_PleaseSelectPaymentMethod);
+				return null;
+			}
 		}
 
 		if (order == null || orderDto == null) {

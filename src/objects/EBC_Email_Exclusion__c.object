@@ -225,7 +225,7 @@
         <filters>
             <field>Source_Campaign__c</field>
             <operation>contains</operation>
-            <value>Silvercar</value>
+            <value>TRAVEL AGENT FAMS NEW</value>
         </filters>
         <label>Exclusion Search By Source Campaign</label>
         <language>en_US</language>
@@ -332,6 +332,11 @@
             <field>Type__c</field>
             <operation>equals</operation>
             <value>OPTOUT</value>
+        </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>silver</value>
         </filters>
         <label>Opt Out Exclusions</label>
         <language>en_US</language>

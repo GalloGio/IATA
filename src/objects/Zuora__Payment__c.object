@@ -59,6 +59,15 @@ The Payment object holds all of the information about an individual payment, inc
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Bypass_Trigger_Logic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>When set to true, the trigger logic is bypassed for the object. On commit the field will be always set to false.</inlineHelpText>
+        <label>Bypass Trigger Logic?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ICH_Code__c</fullName>
         <externalId>false</externalId>
         <formula>IF(Payment_Method__c = &apos;ICH&apos;, Zuora__BillingAccount__r.ICHCode__c, &apos;&apos;)</formula>
@@ -632,6 +641,21 @@ The Payment object holds all of the information about an individual payment, inc
         <type>DateTime</type>
     </fields>
     <label>Payment</label>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Zuora__Account__c</columns>
+        <columns>Zuora__Amount__c</columns>
+        <columns>Zuora__BillingAccount__c</columns>
+        <columns>Bypass_Trigger_Logic__c</columns>
+        <columns>Order__c</columns>
+        <columns>Zuora__ReferenceId__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Payment Number</label>
         <type>Text</type>
