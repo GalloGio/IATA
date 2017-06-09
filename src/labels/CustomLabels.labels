@@ -2370,6 +2370,13 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EBulletin_More_than_8_owners_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EBulletin More than 8 owners message</shortDescription>
+        <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
