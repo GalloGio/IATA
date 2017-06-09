@@ -151,7 +151,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -309,8 +309,12 @@ public class ANG_RiskEventGenerator {
 
 			//check if values match conditions
 			//split possible values by commas or semi-colons ignoring whitespaces (trim is to check for whitespaces at the beggining or end)
-			if(condition.equalsIgnoreCase('Equal to')) for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
-			else if(condition.equalsIgnoreCase('Not equal to')) for(String vv : checkValue.split('\\s*[;,]\\s*')) if(!vv.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			if(condition.equalsIgnoreCase('Equal to')){
+				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			}
+			else if(condition.equalsIgnoreCase('Not equal to')){
+				for(String v : checkValue.split('\\s*[;,]\\s*')) if(!v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			}
 
 			else if(condition.equalsIgnoreCase('Blank') && fieldValue == null)					configResult = true;
 			else if(condition.equalsIgnoreCase('Not blank') && fieldValue != null)				configResult = true;
