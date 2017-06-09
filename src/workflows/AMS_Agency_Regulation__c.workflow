@@ -19,7 +19,7 @@
             <value>DGR,CATA</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Account.Is_your_firm_handling_Dangerous_Goods__c</field>
+            <field>AMS_Agency_Regulation__c.Is_your_firm_handling_Dangerous_Goods__c</field>
             <operation>equals</operation>
             <value>Yes</value>
         </criteriaItems>

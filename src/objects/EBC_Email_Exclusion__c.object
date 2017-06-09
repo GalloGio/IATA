@@ -333,6 +333,11 @@
             <operation>equals</operation>
             <value>OPTOUT</value>
         </filters>
+        <filters>
+            <field>Source_Campaign__c</field>
+            <operation>contains</operation>
+            <value>silver</value>
+        </filters>
         <label>Opt Out Exclusions</label>
         <language>en_US</language>
     </listViews>
