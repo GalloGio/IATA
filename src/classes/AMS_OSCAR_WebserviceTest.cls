@@ -98,9 +98,9 @@ public class AMS_OSCAR_WebserviceTest {
     }
 
     static testMethod void test_copyDataToAccount() {
-        
+
         setup();
-        
+
         Test.startTest();
 
         String resultcopyDataToAccount = AMS_OSCAR_Webservice.copyDataToAccount(oscar.Id);

@@ -50,6 +50,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
     <fields>
         <fullName>ActualCost</fullName>
     </fields>
@@ -258,6 +259,9 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CurrencyIsoCode</fullName>
     </fields>
     <fields>
         <fullName>Description</fullName>

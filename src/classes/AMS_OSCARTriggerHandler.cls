@@ -1536,8 +1536,9 @@ public class AMS_OSCARTriggerHandler {
 					
 					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
 
-					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
-						if(trainedStaffToRemove.Type_Of_Certificate__c == 'DGR' && trainedStaffToRemove.Valid_until__c != null){
+					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {
+						system.debug('DDD trainedStaffToRemove:'  + trainedStaffToRemove);				
+						if( (trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_DGR || trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)  && trainedStaffToRemove.Valid_until__c != null){
 							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
 							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
 						}
@@ -1557,23 +1558,27 @@ public class AMS_OSCARTriggerHandler {
 
 		Integer numberDGR = 0;
 		Integer numberDGA = 0;
+		Integer numberCATA = 0;
 
 		if(trainedStaff != null)
 			for(AMS_Accreditation_Contact__c tStaff :trainedStaff){
 				if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGR)
 					numberDGR++;
+				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)
+					numberCATA++;
 				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGA)
 					numberDGA++;
 		}
 
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGR ' + numberDGR);
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
+		System.debug('OSCARTriggerHandler -> checkCertifications: number of CATA ' + numberDGA);
 
 		System.debug('CHECK VALUES countryCode' + countryCode + ' locationClass ' + locationClass + ' accountLocationType ' + accountLocationType + ' cassNumber ' + cassNumber);
 
 		if(handling){
-			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3){
-				throw new AMSException('##This agency must have at least 3 DGR that are not expired.##');
+			if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
+				throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.##');
 
 			}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
 				 //India has this particular exception to the normal behaviour, no check is to be done
