@@ -81,7 +81,8 @@ public class AMS_OSCAR_ProcessViewerController {
         get{
             return (
                 oscar != null
-                && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED)
+                && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED
+                ||oscar.STEP25__c == AMS_Utils.PASSED || oscar.STEP25__c == AMS_Utils.FAILED)
             );
         }
     }
