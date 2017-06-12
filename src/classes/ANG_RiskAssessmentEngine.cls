@@ -1,8 +1,5 @@
 public class ANG_RiskAssessmentEngine{
     
-
-    private class RiskAssessmentEngineException extends Exception {}
-
     private map<id,ang_agency_risk_calculation__c> risCalcMap{ // map risk event Calculations
         get{
             if(risCalcMap==null) setMaps();
@@ -71,7 +68,7 @@ public class ANG_RiskAssessmentEngine{
             if(reTypeId2CalcMap==null){
                 reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
                 reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
-                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_nr_occurence_ff__c from ang_risk_event_type__c]){
+                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
                     reTypeId2CalcMap.put(ret.id,ret);
                     reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
                 }
@@ -86,7 +83,7 @@ public class ANG_RiskAssessmentEngine{
             if(reTypeKeyId2CalcMap==null){
                 reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
                 reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
-                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_nr_occurence_ff__c from ang_risk_event_type__c]){
+                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
                     reTypeId2CalcMap.put(ret.id,ret);
                     reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
                 }
@@ -142,14 +139,13 @@ public class ANG_RiskAssessmentEngine{
     }
 
     public ANG_RiskAssessmentEngine(list<ANG_Agency_Risk_Event__c> reList, Account acc, list<String> newReKeyIdList){
-        integer nrAdjusted=0;
+        nrAdjustedRe=0;
 
         forecastAccount=acc;
 
         forecastCalcMap = new map<id,integer>();
 
         //MAP <config ID; integer>
-        system.debug('PF reList'+reList);
         for(ANG_Agency_Risk_Event__c are:reList){
             if(are.ANG_Risk_Type__c==null || are.ANG_Event_Status__c!='Active')continue;
             ang_risk_event_type__c ret=(ang_risk_event_type__c)reTypeId2CalcMap.get(are.ANG_Risk_Type__c);
@@ -161,9 +157,8 @@ public class ANG_RiskAssessmentEngine{
             }else{
                 forecastCalcMap.put(calcId,1);
             }
-
-            if(ret.ANG_nr_occurence_ff__c=='Adjusted'){
-                nrAdjusted+=1;
+            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                nrAdjustedRe+=1;
             }
         }
 
@@ -178,8 +173,8 @@ public class ANG_RiskAssessmentEngine{
             }else{
                 forecastCalcMap.put(calcId,1);
             }
-            if(ret.ANG_nr_occurence_ff__c=='Adjusted'){
-                nrAdjusted+=1;
+            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                nrAdjustedRe+=1;
             }
         }
 
