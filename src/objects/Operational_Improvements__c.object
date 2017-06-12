@@ -712,6 +712,27 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Approval_process_selector__c</fullName>
+        <externalId>false</externalId>
+        <label>Approval process selector</label>
+        <picklist>
+            <picklistValues>
+                <fullName>OI Approval Process</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Asia_Pacific_Countries_Concerned__c</fullName>
         <externalId>false</externalId>
         <label>Asia &amp; Pacific - Countries Concerned</label>
@@ -1232,6 +1253,16 @@
         <label>Extension approved date</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Extension_rejected_date__c</fullName>
+        <description>Date when the approval extension process was rejected</description>
+        <externalId>false</externalId>
+        <label>Extension rejected date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -2995,6 +3026,17 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Approval_process_selector__c</picklist>
+            <values>
+                <fullName>OI Approval Process</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Asia_Pacific_Countries_Concerned__c</picklist>
             <values>
                 <fullName>All Regional Office - Asia %26 Pacific</fullName>
@@ -3959,6 +4001,24 @@ sforce.connection.update([improvement ]);
 window.location.reload();</url>
     </webLinks>
     <webLinks>
+        <fullName>Submit_for_Approval</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Submit for Approval</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/33.0/connection.js&quot;)}
+
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Approval_process_selector__c = &quot;OI Approval Process&quot;;
+sforce.connection.update([improvement ]); 
+
+
+window.location.href = &quot;{!URLFOR( $Action.Operational_Improvements__c.Submit,  Operational_Improvements__c.Id  )}&quot;;</url>
+    </webLinks>
+    <webLinks>
         <fullName>Submit_for_extension</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -3966,28 +4026,15 @@ window.location.reload();</url>
         <masterLabel>Submit for extension</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!requireScript(&quot;/soap/ajax/33.0/connection.js&quot;)}
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/33.0/connection.js&quot;)}
 
-function htmlDecode(input){
-  var e = document.createElement(&apos;div&apos;);
-  e.innerHTML = input;
-  return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
-}
+var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
+improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
+improvement.Approval_process_selector__c = &quot;OI Extension Process&quot;;
+sforce.connection.update([improvement ]); 
 
-if ({!ISNULL(Operational_Improvements__c.Submission_for_extension_date__c)}) {
-  var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
-  improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-  improvement.Submission_for_extension_date__c = new Date(&apos;{!TODAY()}&apos;);
-  var result = sforce.connection.update([improvement ]); 
 
-  if(result[0].getBoolean(&apos;success&apos;)) {
-    location.reload();
-  } else {
-    alert(htmlDecode(result[0].errors.message));
-  }
-} else {
-  alert(&quot;OI already submitted for extension&quot;);
-}</url>
+window.location.href = &quot;{!URLFOR( $Action.Operational_Improvements__c.Submit,  Operational_Improvements__c.Id  )}&quot;;</url>
     </webLinks>
     <webLinks>
         <fullName>Terminate_OI</fullName>
