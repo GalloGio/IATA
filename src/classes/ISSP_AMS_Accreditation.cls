@@ -1892,7 +1892,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
 
             if (isNoticeOfChange) {                
-                if (newContact.AddressCountry__c == null) {
+                if (newContact.AddressCountry__c == null && contactType == 'Current Owner') {
                     newContact.AddressCountry__c.addError(Label.ISSP_YouMustEnter);
                     contactSaved = false;
                 }

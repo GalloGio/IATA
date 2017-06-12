@@ -339,24 +339,6 @@
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>                             
                   </apex:panelGrid>
 
-                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}</apex:outputPanel>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
-                    <apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-                  </apex:panelGrid>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}"/>
-                    <apex:outputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
-                  </apex:panelGrid>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}"/>
-                    <apex:outputfield value="{!newForm.ISSP_AMS_License_No__c}" />
-                  </apex:panelGrid>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}"/>
-                    <apex:outputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
-                  </apex:panelGrid>
-
                   <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent_Code}"/>
@@ -448,18 +430,15 @@
                     <apex:outputPanel>
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
-                        <apex:pageBlockSection columns="1">               
-                          <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.label}"/>
-                            <apex:outputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" />
-                          </apex:pageBlockSectionItem>
-                          
-                          <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.label}"/>
-                            <apex:outputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" />
-                          </apex:pageBlockSectionItem>
+                        <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" />
+                            <apex:outputfield value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}"/>                             
+                        </apex:panelGrid>
+                        <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
+                            <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" />
+                            <apex:outputfield value="{!newForm.ISSP_AMS_Principal_business_Org__c}"/>                             
+                        </apex:panelGrid>
 
-                        </apex:pageBlockSection>
                     </apex:outputPanel>
 
                     <apex:outputPanel><!-- LHS--></apex:outputPanel>
@@ -470,27 +449,25 @@
                           <apex:outputText value="{!$Label.ISSP_AMS_NoC_Non_IATA_Owner_Estimates}" escape="false"/>
                         </div>
 
-                        <apex:pageBlockSection columns="1">               
-                          <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.label}"/>
-                            <apex:outputField value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
-                          </apex:pageBlockSectionItem>
-                          
-                          <apex:pageBlockSectionItem labelStyle="width:44%">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.label}"/>
-                            <apex:outputField value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
-                          </apex:pageBlockSectionItem>
-
+                        <apex:pageBlockSection columns="1">   
+                          <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
+                              <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" />
+                              <apex:outputfield value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>                             
+                          </apex:panelGrid>
+                          <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
+                              <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" />
+                              <apex:outputfield value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>                             
+                          </apex:panelGrid>
                         </apex:pageBlockSection>
                         
                         <!-- Section 7 - Statement of International Sales -->
                         <apex:pageBlockSection id="sectionSeven" collapsible="false" columns="1" rendered="{!countryCheckList.Statement_of_International_Sales__c}">
                           <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Statement_International_Sales}</apex:outputPanel>
                                     
-                          <apex:pageBlockSectionItem labelStyle="width:44%">
-                             <apex:outputLabel value="{!$Label.ISSP_AMS_Sales_Last_Year}"/>
-                             <apex:outputField value="{!newForm.International_Sales_in_last_Year__c}" />
-                          </apex:pageBlockSectionItem>
+                          <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
+                              <apex:outputlabel value="{!$Label.ISSP_AMS_Sales_Last_Year}" />
+                              <apex:outputfield value="{!newForm.International_Sales_in_last_Year__c}"/>                             
+                          </apex:panelGrid>
                         </apex:pageBlockSection>
 
                         <div id="InternationalSales" style="{!IF(OR(newForm.International_Sales_in_last_Year__c == '', newForm.International_Sales_in_last_Year__c == 'No'), 'display:none', 'border: 0px !important;')}">
@@ -499,7 +476,7 @@
                                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.Fields.Sales_Period_From__c.Label}"/>
                                     <apex:outputField value="{!newForm.Sales_Period_From__c}" style="margin-left:5px"/>
                                 </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem labelStyle="padding-right:3px;">
+                                <apex:pageBlockSectionItem labelStyle="padding-right:3px;padding-left:5px;">
                                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.Fields.Sales_Period_To__c.Label}"/>
                                     <apex:outputField value="{!newForm.Sales_Period_To__c}" style="margin-left:5px"/>
                                 </apex:pageBlockSectionItem>
@@ -572,6 +549,17 @@
                             <apex:outputText value="{!newForm.Will_the_change_of_ownership_cause__c}"/>
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Give_details_for_the_change_of_ownership__c.Label}" />
                             <apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" />
+                            
+                            <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
+                            
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
+                            <apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}"/>
+                            <apex:outputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}"/>
+                            <apex:outputfield value="{!newForm.ISSP_AMS_License_No__c}" />
+                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}"/>
+                            <apex:outputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
                             
                             <apex:outputlabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Effective_Date_Of_Change__c.Label}"/>
                             <apex:outputfield value="{!newForm.Effective_Date_Of_Change__c}" />

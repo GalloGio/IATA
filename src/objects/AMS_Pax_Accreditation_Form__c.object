@@ -1867,7 +1867,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>IATA_Cargo_Code__c</fullName>
         <externalId>false</externalId>
         <label>* IATA Code</label>
-        <length>8</length>
+        <length>11</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
