@@ -172,7 +172,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					AMS_OSCAR__c oscar = createStagingArea(agReg, accountData.get(agReg.Account__c), certificatesToRenewPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c), comCasecontact);
 
-					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplatesCATA, oscar.Oscar_Communication_Case_Id__c, owea[0]);
+					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplatesCATA, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
 					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
 				}
