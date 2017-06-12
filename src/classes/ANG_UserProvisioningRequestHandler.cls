@@ -1,4 +1,4 @@
-public with sharing class ANG_UserProvisioningRequestHandler {
+public class ANG_UserProvisioningRequestHandler {
 	public List<UserProvisioningRequest> triggerNew = (List<UserProvisioningRequest>) Trigger.new;
 	public List<UserProvisioningRequest> triggerOld = (List<UserProvisioningRequest>) Trigger.old;
 
