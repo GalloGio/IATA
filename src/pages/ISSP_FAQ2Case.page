@@ -381,7 +381,7 @@
                                                             </apex:selectlist>
                                                         </apex:outputpanel>
                                                         <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
-                                                            <apex:inputText styleclass="form-control" value="{!newCase[field.fieldValue]}" />
+                                                            <apex:inputText styleclass="form-control" value="{!field.fieldValueEntered}" />
                                                             <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
                                                         </apex:outputpanel>
                                                         <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
