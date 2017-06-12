@@ -28,6 +28,7 @@ public with sharing class ISSP_AvailableServices{
     public boolean pollerOn {get; set;}
     public Map<String, String> iepRoles {get; set;}
     public Boolean redirect {get; set;}
+    public Boolean provError {get; set;}
 
     Integer count = 0;
 
@@ -90,6 +91,7 @@ public with sharing class ISSP_AvailableServices{
         this.iepRoles = new Map<String, String>();
 
         this.redirect = false;
+        this.provError = false;
 
         for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()){
             if(role.Permission_set_SSO__c != null){
@@ -633,6 +635,7 @@ public with sharing class ISSP_AvailableServices{
                 app.ANG_Portal_Service_Role__c = portalServiceRole;                    
             }
         }
+        System.debug('-->Insert');
         insert app;
 
         return 'ok';             
@@ -652,8 +655,14 @@ public with sharing class ISSP_AvailableServices{
         if(l.size() != 0) {
             this.pollerOn = false;
             this.redirect = true;
-        }            
-                
+        } else {
+            List<Portal_Application_Right__c> l2 = [SELECT Id FROM Portal_Application_Right__c WHERE Portal_Application__c =: Serv.recordService.id AND Contact__c =: conId];
+
+            if(l2.size() == 0) {
+                this.pollerOn = false;
+                this.provError = true;
+            }            
+        }                
         return null;
     }
 }

@@ -70,19 +70,24 @@
       
     }
 
-    function onCompleteUserProvisioning(redirect, page){
-      if (redirect == 'true' && !redirected) {
+    function onCompleteUserProvisioning(redirect, page, provError) {
+      if(provError == 'true') {
         $('#ModalNewIepServiceRequest').modal('toggle');
-          
-        var win = window.open(page, '_blank');
-        if (win) {
-            //Browser has allowed it to be opened
-            win.focus();
-        } else {
-            //Browser has blocked it
-            alert('Please allow popups for this website');            
-        }          
-        redirected = true;          
+        errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
+      } else {
+        if (redirect == 'true' && !redirected) {
+          $('#ModalNewIepServiceRequest').modal('toggle');
+            
+          var win = window.open(page, '_blank');
+          if (win) {
+              //Browser has allowed it to be opened
+              win.focus();
+          } else {
+              //Browser has blocked it
+              alert('Please allow popups for this website');            
+          }          
+          redirected = true;          
+        }
       }
     }
 
@@ -107,6 +112,10 @@
     function errorMessageModal(errorMsg) {
       $('[id$="errorMessage"]').text(errorMsg);
       $('[id$="ModalErrorMessage"]').modal('toggle');
+    }
+
+    function errorMessageModalClose() {
+      location.reload(true);
     }
 
     function dopopup(){
@@ -166,7 +175,7 @@
     <apex:inputHidden value="{!selectedList}" id="selectedItemHidden"/> 
     <!-- <apex:pageMessages /> -->
 
-    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}');"/>
+    <apex:actionPoller id="poller" action="{!iepPermissionSetPoller}" reRender="counter" interval="5" enabled="{!pollerOn}" oncomplete="onCompleteUserProvisioning('{!redirect}', '{!Serv.recordService.Application_URL__c}', '{!provError}');"/>
     
     <img src="/s.gif" alt="Service" class="pageTitleIcon" title="Service"/>
     <!--
@@ -469,7 +478,7 @@
           <div class="modal-footer">
             <div class="row">
               <div class="col-md-12">
-                <a onclick="errorMessageModal()" class="btn_iata_cancel btn-block btn">
+                <a onclick="errorMessageModalClose()" class="btn_iata_cancel btn-block btn">
                   {!$label.ISSP_Cancel}
                 </a>
               </div>
