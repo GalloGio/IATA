@@ -109,6 +109,10 @@
                 <field>EF_Client_SIS_Code__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EF_Client_SIS_Designator__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EF_Trading_Partner__c</field>
             </layoutItems>

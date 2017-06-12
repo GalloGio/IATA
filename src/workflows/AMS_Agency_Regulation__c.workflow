@@ -12,14 +12,14 @@
     <rules>
         <fullName>AMS 90 days DGR Expiration Reminder</fullName>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>AMS_Agency_Regulation__c.Type_Of_Certificate__c</field>
             <operation>equals</operation>
             <value>DGR,CATA</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Account.Is_your_firm_handling_Dangerous_Goods__c</field>
+            <field>AMS_Agency_Regulation__c.Is_your_firm_handling_Dangerous_Goods__c</field>
             <operation>equals</operation>
             <value>Yes</value>
         </criteriaItems>
@@ -27,11 +27,6 @@
             <field>Account.CNS_Agency__c</field>
             <operation>equals</operation>
             <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>AMS_Agency_Regulation__c.Type_Of_Certificate__c</field>
-            <operation>equals</operation>
-            <value>TSA</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>

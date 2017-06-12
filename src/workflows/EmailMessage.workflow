@@ -505,48 +505,8 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND (2 OR 3 or 8) AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.TextBody</field>
-            <operation>contains</operation>
-            <value>ref:</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.Subject</field>
-            <operation>contains</operation>
-            <value>ref:</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.FromAddress</field>
-            <operation>notContain</operation>
-            <value>acca,accelya</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),SIDRA,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),Process,SEDA,Invoicing Collection Cases,FDS ICCS Generic Request Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific,Africa,China &amp; North Asia,Europe,Americas,Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.HtmlBody</field>
-            <operation>contains</operation>
-            <value>ref:</value>
-        </criteriaItems>
         <description>case gets reopened when an email enters the case</description>
+        <formula>AND(  OR( Parent.RecordType.DeveloperName == &apos;External_Cases_ACCA&apos;, Parent.RecordType.DeveloperName == &apos;CS_Process_IDFS_ISS&apos;, Parent.RecordType.DeveloperName == &apos;SEDA&apos;, Parent.RecordType.DeveloperName == &apos;Invoicing_Collection_Cases&apos;, Parent.RecordType.DeveloperName == &apos;FDS_ICCS_Email_to_Case&apos;, Parent.RecordType.DeveloperName == &apos;SIDRA&apos;,  AND(OR( Parent.RecordType.DeveloperName == &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName == &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName == &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName == &apos;CasesEurope&apos;, Parent.RecordType.DeveloperName == &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName == &apos;ComplaintIDFS&apos;), DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)),  OR( NOT(CONTAINS(FromAddress,&quot;acca&quot;)), NOT(CONTAINS(FromAddress,&quot;accelya&quot;)) ),  OR( CONTAINS(HtmlBody,&quot;ref:&quot;), CONTAINS(Subject,&quot;ref:&quot;), CONTAINS(TextBody,&quot;ref:&quot;) ),  Incoming=TRUE, Parent.IsClosed=TRUE )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

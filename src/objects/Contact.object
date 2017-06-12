@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>AddToCampaign</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -7274,6 +7278,7 @@ TotalRows-Successes-Errors</description>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Shows that this person is the one main point of contact for IATA</inlineHelpText>
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -10235,6 +10240,58 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <language>en_US</language>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Client_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </filters>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>E&amp;F Client Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Operator_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </filters>
+        <label>E&amp;F Operator Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
         </sharedTo>
     </listViews>
     <listViews>
