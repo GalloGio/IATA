@@ -640,9 +640,18 @@ public without sharing class vfISSP_FAQ2Case
     **/
     public class CCOthersException extends Exception {}
     private list<Contact> validateCCOthers() {
-        if (this.newCase.E2CP__AdditionalCC__c==null) this.newCase.E2CP__AdditionalCC__c='';
+        // get ccother value entered by user
+        String additionalCCField = '';
+        for (sectionRecordWrapper section : this.fullList) {
+            for (fieldRecordWrapper thisField : section.fieldList) {
+                if (thisField.fieldType == 'ccothers' && thisField.fieldValueEntered!=null) {
+                    additionalCCField = thisField.fieldValueEntered;
+                }
+            }
+        }
+        // separate input string in a list of emails
         list<String> listEmail = new list<String>();
-        for (String ccemail: this.newCase.E2CP__AdditionalCC__c.replace(';',',').split(',')) {
+        for (String ccemail: additionalCCField.replace(';',',').split(',')) {
             ccemail = ccemail.trim();
             if (ccemail!='') {
                 listEmail.add(ccemail);
@@ -681,14 +690,19 @@ public without sharing class vfISSP_FAQ2Case
     private void addCaseTeamContacts(Case cse, list<Contact> listContact) {
         if (listContact.isEmpty()) return;
         list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
+        list<String> listEmail = new list<String>();
         for (Contact contact: listContact) {
             listCaseTeam.add(new CaseTeamMember(
                 ParentId = cse.Id,
                 MemberId = contact.Id,
                 TeamRoleId = PARTNER_USER_ROLE
             ));
+            listEmail.add(contact.Email);
         }
         insert listCaseTeam;
+        // update case.E2CP__AdditionalCC__c field with helper class to ignore permissions
+        String stringEmails = String.join(listEmail,',');
+        new E2CPFieldAccess(cse.Id).setAdditionalCC(stringEmails);
     }
 
     public   PageReference IwishtoComplain()
@@ -1555,7 +1569,7 @@ public without sharing class vfISSP_FAQ2Case
                 if (newField.fieldType == 'bootstrap-select' && newField.fieldValue=='IATAcode__c') {
                     newField.listOptions = initIATACodeList(this.parentAccountId);
                 }
-
+                
                 if (thisField.Profile_Id_List__c != '' && thisField.Profile_Id_List__c != null && clickedService == false)
                 {
                     List<String> profileList =  thisField.Profile_Id_List__c.split(';');

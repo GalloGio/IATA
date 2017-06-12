@@ -3,6 +3,7 @@
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -624,6 +625,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ORDERS.ORDER_NUMBER</fields>
+        <fields>ORDERS.STATUS</fields>
+        <fields>ORDERS.EFFECTIVE_DATE</fields>
+        <fields>CONTRACT.CONTRACT_NUMBER</fields>
+        <fields>ORDERS.TOTAL_AMOUNT</fields>
+        <fields>Payment_Type__c</fields>
+        <fields>Payment_Transaction_Number__c</fields>
+        <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
