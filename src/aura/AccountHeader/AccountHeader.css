@@ -1,3 +1,9 @@
-.THIS img{
-    max-height: 100px;
+.THIS .alignText{
+    max-width: 100%;
+    display: block;
+    word-break: break-word;
+    WHITE-SPACE: normal;  
+}
+.THIS .float-right{
+    float: right;
 }
