@@ -103,8 +103,8 @@ public class ams2gdp_Utils
     	if(body != '')	{
     		message.plainTextBody = body;
     		try{
-				System.debug('aaaaaa ' + message);
-				Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
+				// System.debug('aaaaaa ' + message);
+				// Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{message});
     	}
     		catch(Exception ex){}}
     }
