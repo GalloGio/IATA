@@ -68,7 +68,7 @@ public class AMS_InspectionHelper {
 
     private static String getDecodedStatus(String inspectionStatusCode, String airlineCode){
 
-        if(airlineCode.equalsIgnoreCase('IATAN'))
+        if(airlineCode.equalsIgnoreCase('IATAN') || airlineCode.equalsIgnoreCase('Airlines Reporting Corp'))
             return AMS_Utils.getIATANReadableStatus(inspectionStatusCode);
 
         if(airlineCode.equalsIgnoreCase('DOM') || airlineCode.equalsIgnoreCase('IATA'))
