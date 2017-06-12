@@ -388,7 +388,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
             for(Contact recipient: recipents){
 
-                if(recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c){
+                if(recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
 
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.saveAsActivity = true;
