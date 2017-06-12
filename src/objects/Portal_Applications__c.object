@@ -84,15 +84,15 @@
         <inlineHelpText>Restrict portal visibility to accredited Agents with Agency Status=Active OR Changes processed.</inlineHelpText>
         <label>Accredited Agents Only</label>
         <trackTrending>false</trackTrending>
-        <type>Checkbox</type>        
+        <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Restrict_internal_selection__c</fullName>
+        <fullName>ANG_Cannot_move_contact_between_Agencies__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>When checked prevents portal services from being subscribed from Salesforce.</description>
+        <description>If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another.</description>
         <externalId>false</externalId>
-        <inlineHelpText>Enabling this option prevents internal users from granting this portal service to contacts.</inlineHelpText>
-        <label>Cannot be granted internally</label>
+        <inlineHelpText>If enabled then contacts with Access Granted or Requested to this portal service cannot be moved from one Agency hierarchy to another.</inlineHelpText>
+        <label>Cannot move contact between Agencies</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -283,6 +283,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Restrict_internal_selection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked prevents portal services from being subscribed from Salesforce.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enabling this option prevents internal users from granting this portal service to contacts.</inlineHelpText>
+        <label>Cannot be granted internally</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Agency__c</fullName>
