@@ -3,7 +3,7 @@
     <fieldUpdates>
         <fullName>ANG_RiskEvent_Set_Unique_Key</fullName>
         <field>ANG_UniqueKey__c</field>
-        <formula>CASESAFEID(ANG_Source_Id__c)+CASESAFEID(ANG_AccountId__c)+ANG_Risk_ID__c</formula>
+        <formula>CASESAFEID(ANG_Source_Id__c)+IF(ANG_Risk_Type__r.ANG_isMultiple__c,CASESAFEID(ANG_AccountId__c),&apos;&apos;)+ANG_Risk_ID__c</formula>
         <name>Set Unique Key</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
