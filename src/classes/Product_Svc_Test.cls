@@ -6,7 +6,7 @@ private class Product_Svc_Test
     public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
     @isTest(seeAllData=true)
-    static void test_saveZProducts() 
+static void test_saveZProducts() 
     {
         delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         // create Zuora product
@@ -35,6 +35,11 @@ private class Product_Svc_Test
                                and Is_Triable__c = false)
                      from Product_Information__c
                      where Id = :oProdInfo.Id];
+		if (pi.Product_Rate_Plans_Information__r.size() > 0)
+            {
+                oProdInfo = pi;
+                break;
+            }
 
         Test.startTest();
         //-- Generate Test Data
@@ -73,7 +78,7 @@ private class Product_Svc_Test
         // Call Method 
         String result = Product_Svc.saveZProducts(productIds);
 
-        test.stopTest();
+		test.stopTest();
 
         // Assert
     }
@@ -221,13 +226,13 @@ private class Product_Svc_Test
             Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
             List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
            //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
-            
+			
         }
         
         
         
         Test.StopTest();
-            
+			
     }
     /****************************************************************************************************
     Created by CGI, Kevin 2015-08-26
@@ -376,36 +381,36 @@ private class Product_Svc_Test
 
         //-- Send it to Zuora by clicking the Send To Zuora button 
         Product_Soap.send2Zuora(products[0].Id);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest(seeAllData=true)
-    static void test_IsProductAndCountryCompliant()
-    {
-        Map<Id, Boolean> mapCheck;
-        List<Product2> lstProduct = TestDataGenerator.generateProducts(2,true);
-        List<IATA_ISO_Country__c> lstCountry = TestDataGenerator.generateISOCountryState();
-        lstCountry[0].Is_Non_Compliant__c = false;
-        lstCountry[1].Is_Non_Compliant__c = true;
-        update lstCountry;
-        insert new Non_Compliant_Country__c(Product__c=lstProduct[1].Id, IATA_ISO_Country__c=lstCountry[0].Id);
-        
-        system.assertEquals(Product_Svc.IsProductAndCountryCompliant(lstProduct[0].Id, null), true);
-        
-        mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[0].ISO_Code__c});
-        system.assertEquals(mapCheck.get(lstProduct[0].Id), true);
-        system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
-        
-        mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[1].ISO_Code__c});
-        system.assertEquals(mapCheck.get(lstProduct[0].Id), false);
-        system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
-    } //*** end of "test_IsProductAndCountryCompliant"
+	@isTest(seeAllData=true)
+	static void test_IsProductAndCountryCompliant()
+	{
+		Map<Id, Boolean> mapCheck;
+		List<Product2> lstProduct = [select Id from Product2 limit 2];
+		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
+		lstCountry[0].Is_Non_Compliant__c = false;
+		lstCountry[1].Is_Non_Compliant__c = true;
+		update lstCountry;
+		insert new Non_Compliant_Country__c(Product__c=lstProduct[1].Id, IATA_ISO_Country__c=lstCountry[0].Id);
+		
+		system.assertEquals(Product_Svc.IsProductAndCountryCompliant(lstProduct[0].Id, null), true);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[0].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), true);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[1].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), false);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+	} //*** end of "test_IsProductAndCountryCompliant"
 
-    @isTest(seeAllData=false)
-    static void test_Miscellaneous()
-    {
-        TestDataGenerator.generateProducts(1, true);
-        system.assert(Product_Svc.getAllProducts().size() > 0, 'Wrong count');
-    } //*** end of "test_Miscellaneous"
+	@isTest(seeAllData=false)
+	static void test_Miscellaneous()
+	{
+		TestDataGenerator.generateProducts(1, true);
+		system.assert(Product_Svc.getAllProducts().size() > 0, 'Wrong count');
+	} //*** end of "test_Miscellaneous"
 
 }
