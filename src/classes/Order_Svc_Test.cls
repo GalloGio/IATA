@@ -325,333 +325,333 @@ private class Order_Svc_Test
     } //*** end of "test_createSAPContracts"
 
 
-	/***************************************************************************************************
-	    Created by Thai 2017-02-02
-	        Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
-	        cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
-	              "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
-	              "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
-	              "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
-	              "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
-	              "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
-	***************************************************************************************************/
-	@isTest (seeAllData=true)
-	static void test_zuoraSubscribeWithNewCustomer(){
-		//*** gererate Zuora products
-		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
+    /***************************************************************************************************
+        Created by Thai 2017-02-02
+            Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
+            cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
+                  "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
+                  "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
+                  "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
+                  "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
+                  "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
+    ***************************************************************************************************/
+    @isTest (seeAllData=true)
+    static void test_zuoraSubscribeWithNewCustomer(){
+        //*** gererate Zuora products
+        List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
 
-		//*** generate Zuora rate plans
-		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
-		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
+        //*** generate Zuora rate plans
+        zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
+        zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
+        zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+        insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
 
-		//*** generate Zuora rate plan charges - charge 0 is for discount
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
-		lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
-		lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
-		lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
-		lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
-		insert lstZChargeForUnitPrice;
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
-		lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
-		lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
-		lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
-		lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
-		insert lstZChargeForSetupFee;
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
-		lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
-		lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
-		lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
-		lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
-		insert lstZChargeForUnitPriceAndSetupFee;
+        //*** generate Zuora rate plan charges - charge 0 is for discount
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
+        lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
+        lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
+        lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
+        lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
+        insert lstZChargeForUnitPrice;
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
+        lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
+        lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
+        lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
+        lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
+        insert lstZChargeForSetupFee;
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
+        lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
+        lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
+        lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
+        lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
+        insert lstZChargeForUnitPriceAndSetupFee;
 
-		//*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
-		//ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
+        //*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
+        //ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
 
-		//*** generate Account
-		Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
+        //*** generate Account
+        Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
 
-		//*** generate Contact
-		Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
+        //*** generate Contact
+        Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
 
-		//*** cover getAccountIdByContactId in "Contact_Sel"
-		//Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
+        //*** cover getAccountIdByContactId in "Contact_Sel"
+        //Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
 
-		//*** generate order
-		Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
-		oOrder.BillToContact_Email__c = oContact.Email;
-		oOrder.ShipToContactId = null;
-		oOrder.ShipToContact_Email__c = oContact.Email;
-		insert oOrder;
+        //*** generate order
+        Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
+        oOrder.BillToContact_Email__c = oContact.Email;
+        oOrder.ShipToContactId = null;
+        oOrder.ShipToContact_Email__c = oContact.Email;
+        insert oOrder;
 
-		//*** generate order items
-		List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
-		lstOrderItem[0].Freight_Charge__c = 1;
-		lstOrderItem[0].Handling_charges__c = 2;
-		lstOrderItem[0].Tax__c = 3;
-		lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
-		lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
-		lstOrderItem[0].ServiceDate = system.today();
-		lstOrderItem[1].Freight_Charge__c = 1;
-		lstOrderItem[1].Handling_charges__c = 2;
-		lstOrderItem[1].Tax__c = 3;
-		lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
-		lstOrderItem[1].ServiceDate = system.today().addDays(1);
-		lstOrderItem[2].Freight_Charge__c = 1;
-		lstOrderItem[2].Handling_charges__c = 2;
-		lstOrderItem[2].Tax__c = 3;
-		lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
-		lstOrderItem[2].ServiceDate = system.today().addDays(2);
-		insert lstOrderItem;
+        //*** generate order items
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
+        lstOrderItem[0].Freight_Charge__c = 1;
+        lstOrderItem[0].Handling_charges__c = 2;
+        lstOrderItem[0].Tax__c = 3;
+        lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
+        lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
+        lstOrderItem[0].ServiceDate = system.today();
+        lstOrderItem[1].Freight_Charge__c = 1;
+        lstOrderItem[1].Handling_charges__c = 2;
+        lstOrderItem[1].Tax__c = 3;
+        lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
+        lstOrderItem[1].ServiceDate = system.today().addDays(1);
+        lstOrderItem[2].Freight_Charge__c = 1;
+        lstOrderItem[2].Handling_charges__c = 2;
+        lstOrderItem[2].Tax__c = 3;
+        lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
+        lstOrderItem[2].ServiceDate = system.today().addDays(2);
+        insert lstOrderItem;
 
-		//*** generate order item charges for discounts
-		List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
-		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
-		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
-		//lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
-		insert lstOrderItemCharge;
+        //*** generate order item charges for discounts
+        List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
+        lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
+        lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
+        //lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
+        insert lstOrderItemCharge;
 
-		//*** link SFDC products with Zuora products and make them available for purchase
-		List<Product2> lstProduct = new List<Product2>();
-		for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
-			lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
-			                            //*** make product electronic and available for E-Commerce
-			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
-			                            //*** force to subscribe product to Zuora no matter of payment method
-			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
-			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
-		update lstProduct;
+        //*** link SFDC products with Zuora products and make them available for purchase
+        List<Product2> lstProduct = new List<Product2>();
+        for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
+            lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
+                                        //*** make product electronic and available for E-Commerce
+                                      , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
+                                        //*** force to subscribe product to Zuora no matter of payment method
+                                      , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
+                                      , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+        update lstProduct;
 
-		//*** generate payment information for credit card
-		String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
-		Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
-		zPaymentMethod.setValue('Id', strCreditCard);
-		IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
-		Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
-		ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
-		zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
-		zPaymentMethodForParse.zPaymentMethod = strCreditCard;
-		Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
+        //*** generate payment information for credit card
+        String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
+        Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
+        zPaymentMethod.setValue('Id', strCreditCard);
+        IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
+        Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
+        ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
+        zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
+        zPaymentMethodForParse.zPaymentMethod = strCreditCard;
+        Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
 
-		Test.startTest();
-			//*** cover case of customer does not have Zuora account
-			//*** -> always failed because second pass for new customer is not performed due to call out to Zuora
-			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
-			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
-			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
-			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
-			oOrder.ShipToContactId = oContact.Id;
-			update oOrder;
-			Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
-			system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
-		Test.stopTest();
+        Test.startTest();
+            //*** cover case of customer does not have Zuora account
+            //*** -> always failed because second pass for new customer is not performed due to call out to Zuora
+            Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
+            system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+            Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
+            system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+            oOrder.ShipToContactId = oContact.Id;
+            update oOrder;
+            Order_Svc.orderSubscription(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
+            system.assertEquals(0, [select count() from Order where Id = :oOrder.Id and IEC_Zuora_ST_InvoiceId__c != null]);
+        Test.stopTest();
 
-		//*** cover payment methods
-		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentMethod_ICH_ZuoraID);
-		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentMethod_BankTransfer_ZuoraID);
-		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentMethod_Check_ZuoraID);
-		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentMethod_Other_ZuoraID);
-		system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentMethod_Other_ZuoraID);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentType.CREDIT_CARD);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentType.BANK_TRANSFER);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentType.CHECK);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentType.ICH);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentType.OTHER);
-		system.assertEquals(Order_Svc.parsePaymentMethodToEnum('not found'), null);
+        //*** cover payment methods
+        system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentMethod_ICH_ZuoraID);
+        system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentMethod_BankTransfer_ZuoraID);
+        system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentMethod_Check_ZuoraID);
+        system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentMethod_Other_ZuoraID);
+        system.assertEquals(Order_Svc.zuoraPaymentId(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentMethod_Other_ZuoraID);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_CreditCard), IECConstants.PaymentType.CREDIT_CARD);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BankTransfer), IECConstants.PaymentType.BANK_TRANSFER);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.ORDER_STATUS_CHECK), IECConstants.PaymentType.CHECK);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_ICH), IECConstants.PaymentType.ICH);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum(IECConstants.PaymentThresholdType_BillMeLater), IECConstants.PaymentType.OTHER);
+        system.assertEquals(Order_Svc.parsePaymentMethodToEnum('not found'), null);
 
-		//*** cover "getSubString"
-		system.assert(Order_Svc.getSubString(new Set<String>{'aaa'}).contains('aaa'), 'Wrong value');
-	} //*** end of "test_zuoraSubscribeWithNewCustomer"
+        //*** cover "getSubString"
+        system.assert(Order_Svc.getSubString(new Set<String>{'aaa'}).contains('aaa'), 'Wrong value');
+    } //*** end of "test_zuoraSubscribeWithNewCustomer"
 
 
-	/***************************************************************************************************
-	    Created by Thai 2017-02-02
-	        Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
-	        cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
-	              "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
-	              "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
-	              "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
-	              "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
-	              "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
-	***************************************************************************************************/
-	@isTest (seeAllData=true)
-	static void test_zuoraSubscribeWithExistingCustomer(){
-		//*** gererate Zuora products
-		List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
+    /***************************************************************************************************
+        Created by Thai 2017-02-02
+            Test methods "test_zuoraSubscribeWithNewCustomer" and "test_zuoraSubscribeWithExistingCustomer"
+            cover "orderSubscription", "zuoraPaymentId", "parsePaymentMethodToEnum", "subscribe",
+                  "setPaymentMethod", "setPaymentMethodWithWrp", "parseSubscribeResult2UpdateItems",
+                  "parsePaymentResult", "getZuoraInvoices", "getInvoiceString", "getZuoraPayments",
+                  "getPaymentString", "createZuoraPayment", "deleteZuoraSubscription", "deleteZuoraSubscriptionNow",
+                  "getZuoraAccounts", "getZaccountQuery", "getZaccountById", "getRatePlanData",
+                  "orderItemsToUpdateInZuora", "updateZsubscriptions", "getSubString"
+    ***************************************************************************************************/
+    @isTest (seeAllData=true)
+    static void test_zuoraSubscribeWithExistingCustomer(){
+        //*** gererate Zuora products
+        List<zqu__ZProduct__c> lstZproducts = TestDataGenerator.generateZProducts(3, true);
 
-		//*** generate Zuora rate plans
-		zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
-		zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
-		insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
+        //*** generate Zuora rate plans
+        zqu__ProductRatePlan__c zPlanForUnitPrice = TestDataGenerator.generateZRatePlans(lstZproducts[0].Id, 1, false)[0];
+        zqu__ProductRatePlan__c zPlanForSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[1].Id, 1, false)[0];
+        zqu__ProductRatePlan__c zPlanForUnitPriceAndSetupFee = TestDataGenerator.generateZRatePlans(lstZproducts[2].Id, 1, false)[0];
+        insert new List<zqu__ProductRatePlan__c>{zPlanForUnitPrice, zPlanForSetupFee, zPlanForUnitPriceAndSetupFee};
 
-		//*** generate Zuora rate plan charges - charge 0 is for discount
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
-		lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
-		lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
-		lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
-		lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
-		insert lstZChargeForUnitPrice;
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
-		lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
-		lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
-		lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
-		lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
-		insert lstZChargeForSetupFee;
-		List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
-		lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
-		lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
-		lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
-		lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
-		lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
-		insert lstZChargeForUnitPriceAndSetupFee;
+        //*** generate Zuora rate plan charges - charge 0 is for discount
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPrice = TestDataGenerator.generateZCharges(zPlanForUnitPrice.Id, 2, false);
+        lstZChargeForUnitPrice[0].zqu__Model__c = 'Discount-Fixed Amount';
+        lstZChargeForUnitPrice[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForUnitPrice[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForUnitPrice[0].zqu__Type__c = 'One-Time';
+        lstZChargeForUnitPrice[1].zqu__Model__c = 'Per Unit';
+        lstZChargeForUnitPrice[1].zqu__Type__c = 'Recurring';
+        insert lstZChargeForUnitPrice;
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForSetupFee = TestDataGenerator.generateZCharges(zPlanForSetupFee.Id, 2, false);
+        lstZChargeForSetupFee[0].zqu__Model__c = 'Discount-Percentage';
+        lstZChargeForSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForSetupFee[0].zqu__Type__c = 'One-Time';
+        lstZChargeForSetupFee[1].zqu__Model__c = 'Flat Fee';
+        lstZChargeForSetupFee[1].zqu__Type__c = 'Recurring';
+        insert lstZChargeForSetupFee;
+        List<zqu__ProductRatePlanCharge__c> lstZChargeForUnitPriceAndSetupFee = TestDataGenerator.generateZCharges(zPlanForUnitPriceAndSetupFee.Id, 3, false);
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Model__c = 'Discount-Fixed Amount';
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Level__c = 'Subscription';
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Discount_Apply_Type__c = 7;
+        lstZChargeForUnitPriceAndSetupFee[0].zqu__Type__c = 'One-Time';
+        lstZChargeForUnitPriceAndSetupFee[1].zqu__Model__c = 'Per Unit';
+        lstZChargeForUnitPriceAndSetupFee[1].zqu__Type__c = 'Recurring';
+        lstZChargeForUnitPriceAndSetupFee[2].zqu__Model__c = 'Flat Fee';
+        lstZChargeForUnitPriceAndSetupFee[2].zqu__Type__c = 'One-Time';
+        insert lstZChargeForUnitPriceAndSetupFee;
 
-		//*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
-		//ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
+        //*** cover "getProductRatePlanChargeByRatePlanId" in "ProductRatePlanCharge_Sel"
+        //ProductRatePlanCharge_Sel.getProductRatePlanChargeByRatePlanId(new Set<Id>{zPlanForUnitPrice.Id, zPlanForSetupFee.Id, zPlanForUnitPriceAndSetupFee.Id});
 
-		//*** generate Account
-		Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
+        //*** generate Account
+        Account oAccount = TestDataGenerator.generateAccounts(1,true)[0];
 
-		//*** generate Contact
-		Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
+        //*** generate Contact
+        Contact oContact = TestDataGenerator.generateContacts(oAccount.Id, 1, true)[0];
 
-		//*** cover getAccountIdByContactId in "Contact_Sel"
-		//Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
+        //*** cover getAccountIdByContactId in "Contact_Sel"
+        //Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
 
-		//*** generate order
-		Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
-		oOrder.BillToContact_Email__c = oContact.Email;
-		oOrder.ShipToContact_Email__c = oContact.Email;
-		oOrder.Invoice_Text__c = 'error';         //*** cause failure for payment submission
-		oOrder.Sales_Order_Remark__c = 'error';   //*** cause failure of getting payment from Zuora
-		insert oOrder;
+        //*** generate order
+        Order oOrder = TestDataGenerator.generateOrder(1, oAccount.Id, oContact.Id, oContact.Id, false)[0];
+        oOrder.BillToContact_Email__c = oContact.Email;
+        oOrder.ShipToContact_Email__c = oContact.Email;
+        oOrder.Invoice_Text__c = 'error';         //*** cause failure for payment submission
+        oOrder.Sales_Order_Remark__c = 'error';   //*** cause failure of getting payment from Zuora
+        insert oOrder;
 
-		//*** generate order items
-		List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
-		lstOrderItem[0].Freight_Charge__c = 1;
-		lstOrderItem[0].Handling_charges__c = 2;
-		lstOrderItem[0].Tax__c = 3;
-		lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
-		lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
-		lstOrderItem[0].ServiceDate = system.today();
-		lstOrderItem[1].Freight_Charge__c = 1;
-		lstOrderItem[1].Handling_charges__c = 2;
-		lstOrderItem[1].Tax__c = 3;
-		lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
-		lstOrderItem[1].ServiceDate = system.today().addDays(1);
-		lstOrderItem[2].Freight_Charge__c = 1;
-		lstOrderItem[2].Handling_charges__c = 2;
-		lstOrderItem[2].Tax__c = 3;
-		lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
-		lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
-		lstOrderItem[2].ServiceDate = system.today().addDays(2);
-		insert lstOrderItem;
+        //*** generate order items
+        List<OrderItem> lstOrderItem = TestDataGenerator.generateOrderItemForContract(oOrder.Id, 3, false);
+        lstOrderItem[0].Freight_Charge__c = 1;
+        lstOrderItem[0].Handling_charges__c = 2;
+        lstOrderItem[0].Tax__c = 3;
+        lstOrderItem[0].Zuora_Rate_Plan_Id__c = zPlanForUnitPrice.zqu__ZuoraId__c;
+        lstOrderItem[0].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPrice[1].zqu__ZuoraId__c;
+        lstOrderItem[0].ServiceDate = system.today();
+        lstOrderItem[1].Freight_Charge__c = 1;
+        lstOrderItem[1].Handling_charges__c = 2;
+        lstOrderItem[1].Tax__c = 3;
+        lstOrderItem[1].Zuora_Setup_Fee_Plan_Id__c = zPlanForSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[1].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForSetupFee[1].zqu__ZuoraId__c;
+        lstOrderItem[1].ServiceDate = system.today().addDays(1);
+        lstOrderItem[2].Freight_Charge__c = 1;
+        lstOrderItem[2].Handling_charges__c = 2;
+        lstOrderItem[2].Tax__c = 3;
+        lstOrderItem[2].Zuora_Rate_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Rate_Plan_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[1].zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Setup_Fee_Plan_Id__c = zPlanForUnitPriceAndSetupFee.zqu__ZuoraId__c;
+        lstOrderItem[2].Zuora_Setup_Fee_Charge_Id__c = lstZChargeForUnitPriceAndSetupFee[2].zqu__ZuoraId__c;
+        lstOrderItem[2].ServiceDate = system.today().addDays(2);
+        insert lstOrderItem;
 
-		//*** generate order item charges for discounts
-		List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
-		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
-		lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
-		//lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
-		insert lstOrderItemCharge;
+        //*** generate order item charges for discounts
+        List<Order_Item_Charge__c> lstOrderItemCharge = new List<Order_Item_Charge__c>();
+        lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[0].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[0].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPrice[0].zqu__ZuoraId__c));
+        lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[1].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[1].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForSetupFee[0].zqu__ZuoraId__c));
+        //lstOrderItemCharge.add(new Order_Item_Charge__c(Order_Item__c=lstOrderItem[2].Id, Discount_Type__c='test', Discount_Amount__c=1, Zuora_Rate_Plan_Id__c=lstOrderItem[2].Zuora_Rate_Plan_Id__c, Zuora_Rate_Plan_Charge_Id__c=lstZChargeForUnitPriceAndSetupFee[0].zqu__ZuoraId__c));
+        insert lstOrderItemCharge;
 
-		//*** link SFDC products with Zuora products and make them available for purchase
-		List<Product2> lstProduct = new List<Product2>();
-		for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
-			lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
-			                            //*** make product electronic and available for E-Commerce
-			                          , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
-			                            //*** force to subscribe product to Zuora no matter of payment method
-			                          , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
-			                          , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
-		update lstProduct;
+        //*** link SFDC products with Zuora products and make them available for purchase
+        List<Product2> lstProduct = new List<Product2>();
+        for (OrderItem oi : [select Product__c, ServiceDate from OrderItem where OrderId = :oOrder.Id order by ServiceDate])
+            lstProduct.add(new Product2(Id=Id.valueOf(oi.Product__c), Effective_From__c=system.today().addDays(-10), Effective_To__c=system.today().addYears(1)
+                                        //*** make product electronic and available for E-Commerce
+                                      , SAP_Status_Code__c='A', SAP_Product_Type_Code__c='07', Post_to_Ecommerce_Date__c= system.today(), Sell_through_eCommerce__c=true
+                                        //*** force to subscribe product to Zuora no matter of payment method
+                                      , Available_for_Subscription__c=true, Is_Shippable__c=false, Charge_Shipping__c=false, SAP_Media_Code__c='30', Number_of_months_of_subscription__c=1
+                                      , ZProduct__c=lstZproducts[oi.ServiceDate == system.today() ? 0 : (oi.ServiceDate == system.today().addDays(1) ? 1 : 2)].Id));
+        update lstProduct;
 
-		//*** generate payment information for credit card
-		String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
-		Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
-		zPaymentMethod.setValue('Id', strCreditCard);
-		IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
-		Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
-		ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
-		zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
-		zPaymentMethodForParse.zPaymentMethod = strCreditCard;
-		Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
+        //*** generate payment information for credit card
+        String strCreditCard = '4028e6992e836e4a012e914e1ddf5e2e';
+        Zuora.zObject zPaymentMethod = new Zuora.zObject('PaymentMethod');
+        zPaymentMethod.setValue('Id', strCreditCard);
+        IECZuoraHelper.PaymentMethod oPayment = new IECZuoraHelper.PaymentMethod(zPaymentMethod);
+        Map<Id, IECZuoraHelper.PaymentMethod> mapOrderId_PaymentMethod = new Map<Id, IECZuoraHelper.PaymentMethod>{oOrder.Id => oPayment};
+        ZuoraUtil.zAccountPaymentMethod zPaymentMethodForParse = new ZuoraUtil.zAccountPaymentMethod();
+        zPaymentMethodForParse.zPaymentMethodName = 'Credit Card';
+        zPaymentMethodForParse.zPaymentMethod = strCreditCard;
+        Map<String, ZuoraUtil.zAccountPaymentMethod> mapOrderId_PaymentMethodForParse = new Map<String, ZuoraUtil.zAccountPaymentMethod>{String.valueOf(oOrder.Id) => zPaymentMethodForParse};
 
-		//*** generate Zuora customer
-		Zuora__CustomerAccount__c zCustomerAccount = TestDataGenerator.generateZCustomerAccount(oAccount.Id, oContact.Id, 1, true)[0];
-		Zuora__PaymentMethod__c zPayment = TestDataGenerator.generatePaymentMethod(zCustomerAccount.Id, 1, true)[0];
-		zCustomerAccount.Zuora__Default_Payment_Method__c = zPayment.Id;
-		update zCustomerAccount;
+        //*** generate Zuora customer
+        Zuora__CustomerAccount__c zCustomerAccount = TestDataGenerator.generateZCustomerAccount(oAccount.Id, oContact.Id, 1, true)[0];
+        Zuora__PaymentMethod__c zPayment = TestDataGenerator.generatePaymentMethod(zCustomerAccount.Id, 1, true)[0];
+        zCustomerAccount.Zuora__Default_Payment_Method__c = zPayment.Id;
+        update zCustomerAccount;
 
-		//*** cover method "getZaccountById"
-		Zuora.zObject zCustomerAccountQuery = Order_Svc.getZaccountById(zCustomerAccount.Zuora__Zuora_Id__c);
-		system.assertEquals(String.valueOf(zCustomerAccountQuery.getValue('Id')), zCustomerAccount.Zuora__Zuora_Id__c);
+        //*** cover method "getZaccountById"
+        Zuora.zObject zCustomerAccountQuery = Order_Svc.getZaccountById(zCustomerAccount.Zuora__Zuora_Id__c);
+        system.assertEquals(String.valueOf(zCustomerAccountQuery.getValue('Id')), zCustomerAccount.Zuora__Zuora_Id__c);
 
-		//*** cover all scenarios of payment type and payment method for method "subscribe" -> nothing to assert
-		Map<Id, Zuora.zApi.SubscribeResult> mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
-		mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Credit Card'});
-		Test.startTest();
-			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
-			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, null);
-			mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
+        //*** cover all scenarios of payment type and payment method for method "subscribe" -> nothing to assert
+        Map<Id, Zuora.zApi.SubscribeResult> mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, null);
+        mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Credit Card'});
+        Test.startTest();
+            mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, new Map<Id, String>{oOrder.Id => 'Bank Transfer'});
+            mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, null, null);
+            mapOrderItemId_SubscribeResponse = Order_Svc.subscribe(new Set<Id>{oOrder.Id}, mapOrderId_PaymentMethod, new Map<Id, String>{oOrder.Id => 'Credit Card'});
 
-			//*** prepare to reset order items
-			List<OrderItem> resetOrderItem = new List<OrderItem>();
-			for (OrderItem oi : lstOrderItem)
-				resetOrderItem.add(new OrderItem(Id=oi.Id, Zuora_InvoiceId__c=null, Zuora_InvoiceNumber__c=null, Zuora_SubscriptionId__c=null, Zuora_Subscription_Number__c=null));
+            //*** prepare to reset order items
+            List<OrderItem> resetOrderItem = new List<OrderItem>();
+            for (OrderItem oi : lstOrderItem)
+                resetOrderItem.add(new OrderItem(Id=oi.Id, Zuora_InvoiceId__c=null, Zuora_InvoiceNumber__c=null, Zuora_SubscriptionId__c=null, Zuora_Subscription_Number__c=null));
 
-			//*** cover "parseSubscribeResult2UpdateItems" - case failed at payment submission
-			Map<Id, String> mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
-			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
-			update resetOrderItem;
-			//*** cover "parseSubscribeResult2UpdateItems" - case success of payment submission but still fail at getting Zuora payment
-			oOrder.Invoice_Text__c = null;
-			update oOrder;
-			mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
-			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
-			update resetOrderItem;
-			//*** cover "parseSubscribeResult2UpdateItems" - case success of parse
-			oOrder.Sales_Order_Remark__c = null;
-			update oOrder;
-			mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
-			system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
+            //*** cover "parseSubscribeResult2UpdateItems" - case failed at payment submission
+            Map<Id, String> mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+            system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
+            update resetOrderItem;
+            //*** cover "parseSubscribeResult2UpdateItems" - case success of payment submission but still fail at getting Zuora payment
+            oOrder.Invoice_Text__c = null;
+            update oOrder;
+            mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+            system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
+            update resetOrderItem;
+            //*** cover "parseSubscribeResult2UpdateItems" - case success of parse
+            oOrder.Sales_Order_Remark__c = null;
+            update oOrder;
+            mapOrderItemId_ParseResponse = Order_Svc.parseSubscribeResult2UpdateItems(mapOrderItemId_SubscribeResponse, mapOrderId_PaymentMethodForParse);
+            system.assertEquals(lstOrderItem.size(), [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_InvoiceId__c != null and Zuora_SubscriptionId__c != null]);
 
-			//*** prepare to cover "orderItemsToUpdateInZuora" and "updateZsubscriptions"
-			lstOrderItem = [select Id, Zuora_InvoiceId__c, Zuora_InvoiceNumber__c, Zuora_SubscriptionId__c, Zuora_Subscription_Number__c from OrderItem where OrderId = :oOrder.Id];
-			for (OrderItem oi : lstOrderItem)
-				oi.Zuora_Subscription_Status__c = 'Pending Activation';
-			update lstOrderItem;
+            //*** prepare to cover "orderItemsToUpdateInZuora" and "updateZsubscriptions"
+            lstOrderItem = [select Id, Zuora_InvoiceId__c, Zuora_InvoiceNumber__c, Zuora_SubscriptionId__c, Zuora_Subscription_Number__c from OrderItem where OrderId = :oOrder.Id];
+            for (OrderItem oi : lstOrderItem)
+                oi.Zuora_Subscription_Status__c = 'Pending Activation';
+            update lstOrderItem;
 
-			//*** cover "orderItemsToUpdateInZuora" - nothing to assert
-			Order_Svc.orderItemsToUpdateInZuora(new Set<Id>{oOrder.Id});
+            //*** cover "orderItemsToUpdateInZuora" - nothing to assert
+            Order_Svc.orderItemsToUpdateInZuora(new Set<Id>{oOrder.Id});
 
-			//*** cover "updateZsubscriptions"
-			Order_Svc.updateZsubscriptions(lstOrderItem);
-			system.assertEquals(0, [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_Subscription_Status__c != null]);
-		Test.stopTest();
-	} //*** end of "test_zuoraSubscribeWithExistingCustomer"
+            //*** cover "updateZsubscriptions"
+            Order_Svc.updateZsubscriptions(lstOrderItem);
+            system.assertEquals(0, [select count() from OrderItem where OrderId = :oOrder.Id and Zuora_Subscription_Status__c != null]);
+        Test.stopTest();
+    } //*** end of "test_zuoraSubscribeWithExistingCustomer"
 
 
     /****************************************************************************************************
@@ -1313,6 +1313,10 @@ private class Order_Svc_Test
         Apex_Setting__c cs = Apex_Setting__c.getValues('Email batch max value');
         if (cs == null) cs = new Apex_Setting__c(Name='Email batch max value');
         cs.Number_1__c = 100;   //*** cover only 1 bulk email
+        upsert cs;
+        cs = Apex_Setting__c.getValues('ContactId to populate email Template');
+        if (cs == null) cs = new Apex_Setting__c(Name='ContactId to populate email Template');
+        cs.Text_1__c = lstContact[0].Id;
         upsert cs;
         lstOrder[0].Status = IECConstants.ORDER_STATUS_READY_FOR_SAP;
         lstOrder[0].Payment_Type__c = 'Bank Transfer';
