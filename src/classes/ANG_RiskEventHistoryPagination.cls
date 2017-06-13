@@ -107,6 +107,7 @@ public class ANG_RiskEventHistoryPagination {
 
 	//access methods
 	public List<RiskEvent> getRecords(){
+		if(pages.isEmpty()) return new List<RiskEvent>();
 		return pages[pageNumber-1];
 	}
 
@@ -125,10 +126,16 @@ public class ANG_RiskEventHistoryPagination {
 		public RiskEvent(ANG_Agency_Risk_Event__c risk){
 			this.risk = risk;
 			accountsInvolved = new List<Id>{risk.ANG_AccountId__c};
+
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventHistoryPagination - RiskEvent constructor] risk.Name - ' + risk.Name);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventHistoryPagination - RiskEvent constructor] accountsInvolved - ' + accountsInvolved);
 		}
 
 		public void addAccount(Id accId){
 			accountsInvolved.add(accId);
+
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventHistoryPagination - addAccount] risk.Name - ' + risk.Name);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventHistoryPagination - addAccount] accountsInvolved - ' + accountsInvolved);
 		}
 	}
 }

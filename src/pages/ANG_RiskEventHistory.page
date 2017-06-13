@@ -76,6 +76,33 @@
 			//start observing for changes
 			new MutationObserver(bindLinks).observe($('.observed')[0], { attributes: false, childList: true, characterData: false, subtree: true });
 		}
+
+		function openPopUp(Id) {
+			var w = 500;
+			var h = 500;
+			
+			// Fixes dual-screen position Most browsers Firefox
+			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+			var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+			width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+			height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+			var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+			var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+			var newWindow = window.open(
+				'/apex/ANG_RiskEventPopUp?id='+Id,
+				'_blank',
+				'toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left
+			);
+
+			// Puts focus on the newWindow
+			if (window.focus) {
+				newWindow.focus();
+			}
+
+			return false;
+		}
 	</script>
 
 	<apex:form styleClass="observed" >
@@ -123,10 +150,10 @@
 						</apex:facet>
 						
 						<!-- Exceptional rendering for multiple agencies type -->
-						<apex:outputPanel layout="none" rendered="{!AND(r.accountsInvolved.size > 1, OR(fld == 'ANG_Name_Link_FF__c', fld == 'Name'))}">
-							<apex:outputLink onclick="window.open('/AMG_RiskEventPopUp?source={!r.risk.ANG_Source_Id__c}&type={!r.risk.ANG_Risk_Type__c}'); return false;">Multiple Agencies</apex:outputLink>
+						<apex:outputPanel layout="none" rendered="{!AND(r.accountsInvolved.size > 1, OR(fld == 'Name', fld == 'ANG_Name_Link_FF__c', fld == 'ANG_Account_IATA_Code__c'))}">
+							<apex:outputLink onclick="return openPopUp('{!r.risk.Id}');">Multiple Agencies</apex:outputLink>
 						</apex:outputPanel>
-						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'ANG_Name_Link_FF__c', fld != 'Name'))}">
+						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'Name', fld != 'ANG_Name_Link_FF__c', fld != 'ANG_Account_IATA_Code__c'))}">
 							<apex:outputField value="{!r.risk[fld]}"/>
 						</apex:outputPanel>
 					</apex:column>
