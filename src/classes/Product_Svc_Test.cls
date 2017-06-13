@@ -35,11 +35,6 @@ static void test_saveZProducts()
                                and Is_Triable__c = false)
                      from Product_Information__c
                      where Id = :oProdInfo.Id];
-		if (pi.Product_Rate_Plans_Information__r.size() > 0)
-            {
-                oProdInfo = pi;
-                break;
-            }
 
         Test.startTest();
         //-- Generate Test Data
@@ -389,6 +384,7 @@ static void test_saveZProducts()
 	{
 		Map<Id, Boolean> mapCheck;
 		List<Product2> lstProduct = [select Id from Product2 limit 2];
+		TestDataGenerator.generateISOCountryState();
 		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
 		lstCountry[0].Is_Non_Compliant__c = false;
 		lstCountry[1].Is_Non_Compliant__c = true;
