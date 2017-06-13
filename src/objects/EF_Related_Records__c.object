@@ -335,9 +335,11 @@
     </recordTypes>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FIR_Code_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Location_Code_Details__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>RECORDTYPE</lookupDialogsAdditionalFields>
         <searchResultsAdditionalFields>FIR_Code_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Location_Code_Details__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
     </searchLayouts>
