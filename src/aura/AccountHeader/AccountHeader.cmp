@@ -8,14 +8,6 @@
     <aura:attribute name="canEdit2" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-    <style>
-        .text-align label {
-        max-width: 100%;
-    display: block;
-    word-break: break-word;
-    WHITE-SPACE: normal;
-        }        
-    </style>
     <!-- PAGE HEADER -->
     <div class="slds-page-header" role="banner">
         
@@ -50,7 +42,7 @@
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
             <div class="slds-media__body slds-align-middle text-align-center">          
             <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
-                <span>    {!v.account.Due_Diligence_Status__c}   </span>  
+                <span style="color:#ff0000">    {!v.account.Due_Diligence_Status__c}   </span>  
                 <aura:set attribute="else">
                         <span>   </span>  
                 </aura:set>
@@ -82,7 +74,7 @@
                                         <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                                             <span class="slds-assistive-text">Cancel</span>
                                         </button>
-                                        <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save2" >
+                                        <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save2" title="Save" >
                                             <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
                                             <span class="slds-assistive-text">Save</span>
                                         </button>
@@ -91,7 +83,7 @@
                                         
                                     </aura:renderIf> 
                                     <aura:renderIf isTrue="{!!v.isEditMode2}">
-                                        <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit2">
+                                        <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit2" title="Edit">
                                             <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon" />
                                             <span class="slds-assistive-text">Edit</span>
                                         </button>
