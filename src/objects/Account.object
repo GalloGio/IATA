@@ -7261,12 +7261,6 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>DandbCompanyId</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -7397,11 +7391,6 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>DunsNumber</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
@@ -9918,16 +9907,6 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>NaicsCode</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>NaicsDesc</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -13576,11 +13555,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Tradestyle</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
@@ -14128,11 +14102,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Website</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
-    </fields>
-    <fields>
-        <fullName>YearStarted</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Zuora_Temp_ID__c</fullName>
