@@ -48,52 +48,14 @@
                 
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-media__body">
-                <table class="slds-table  slds-table--fixed-layout slds-table--striped" style="background-color:#f4f6f9">
-                    <thead> 
-                        <tr class="slds-text-heading--label">
-                             <th scope="col" class="actionColumn" style="width:11rem;">
-                                        
-                                </th>
-                                <th scope="col" >
-                                       <p class="slds-text-heading--label">Sanction Notice</p>
-                                </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr>
-                                <td>                                   
-                                    <aura:renderIf isTrue="{!v.canEdit}">
-                                    <aura:renderIf isTrue="{!v.isEditMode}">
-                                        
-                                        <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel1" title="Cancel">
-                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
-                                            <span class="slds-assistive-text">Cancel</span>
-                                        </button>
-                                        <button class="slds-button slds-button--neutral" onclick="{!c.save}" id="save1">
-                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#check'}" class="slds-button__icon" />
-                                            <span class="slds-assistive-text">Save</span>
-                                        </button>
-                                    </aura:renderIf> 
-                                    <aura:renderIf isTrue="{!!v.isEditMode}">
-                                        <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit1"> 
-                                            <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon" />
-                                            <span class="slds-assistive-text">Edit</span>
-                                        </button>
-                                    </aura:renderIf>
-                                    </aura:renderIf>
-                                </td>
-                                <td>
-                                    <aura:renderIf isTrue="{!v.isEditMode}">
-                                        <ui:inputTextArea  value="{!v.account.SanctionNotice__c}" class="slds-input "/>                                        
-                                    </aura:renderIf>
-                                    <aura:renderIf isTrue="{!!v.isEditMode}">                                    
-                                        <span  class="alignText">    {!v.account.SanctionNotice__c}   </span>
-                                    </aura:renderIf>                                    
-                                </td>
-                            </tr>
-                    </tbody>
-                 </table>    
+            <div class="slds-media__body slds-align-middle text-align-center">          
+            <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
+                <span>    {!v.account.Due_Diligence_Status__c}   </span>  
+                <aura:set attribute="else">
+                        <span>   </span>  
+                </aura:set>
+
+            </aura:if>                              
             </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
             <div class="slds-size_1-of-4 slds-align-middle">
@@ -101,7 +63,7 @@
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
             <div class="slds-media__body">
-                <table class="slds-table  slds-table--fixed-layout slds-table--striped" style="background-color:#f4f6f9">
+                <table class="slds-table" style="background-color:#f4f6f9">
                     <thead> 
                         <tr class="slds-text-heading--label">
                              <th scope="col" class="actionColumn">
@@ -114,7 +76,7 @@
                     </thead>
                     <tbody>
                             <tr>
-                                <td> 
+                                <td class="text-align-center"> 
                                     <aura:renderIf isTrue="{!v.canEdit2}">
                                     <aura:renderIf isTrue="{!v.isEditMode2}">
                                         <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
