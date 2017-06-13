@@ -12,9 +12,11 @@ public class ANG_RiskEventTriggerHandler {
 
     public void onBeforeInsert(){
     	loadInformationsInsert();
+        generateMultiples();
     }
     public void onBeforeUpdate(){
     	loadInformationsUpdate();
+        generateMultiples();
     }
 
     // ************************************************************
@@ -45,4 +47,22 @@ public class ANG_RiskEventTriggerHandler {
 
         new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
 	}
+
+    private void generateMultiples(){
+        List<ANG_Agency_Risk_Event__c> changedRisks = new List<ANG_Agency_Risk_Event__c>();
+
+        for(ANG_Agency_Risk_Event__c re : triggerNew){
+            if(
+                re.ANG_isMultipleType__c &&
+                re.ANG_OscarId__c != null &&
+                (Trigger.isInsert || re.ANG_OscarId__c != oldMap.get(re.Id).ANG_OscarId__c)
+            ){
+                changedRisks.add(re);
+            }
+        }
+
+        if(changedRisks.isEmpty()) return;
+
+        new ANG_RiskEventGenerator(changedRisks).generateMultiples();
+    }
 }

@@ -27,11 +27,18 @@ public class ANG_RiskEventGenerator {
 		set;
 	}
     
-    
     public static Boolean skipStatusAssignment{
         get{
             if(skipStatusAssignment == null) skipStatusAssignment = false;
             return skipStatusAssignment;
+        }
+        set;
+    }
+
+    public static Boolean skipMultipleGeneration{
+        get{
+            if(skipMultipleGeneration == null) skipMultipleGeneration = false;
+            return skipMultipleGeneration;
         }
         set;
     }
@@ -197,7 +204,7 @@ public class ANG_RiskEventGenerator {
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEventsToUpdate - ' + riskEventsToUpdate);
 
 		//insert new risk events and check for duplicate errors
-		if(!riskEvents .isEmpty()){
+		if(!riskEvents.isEmpty()){
 
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
 			List<Database.SaveResult> insertResults = Database.insert(riskEvents, false);
@@ -274,6 +281,28 @@ public class ANG_RiskEventGenerator {
 		}
 
 		if(!Trigger.isExecuting || !Trigger.isBefore) upsert newObjects;
+	}
+
+	public void generateMultiples() {
+
+		if(skipMultipleGeneration) return;
+		skipMultipleGeneration = true;
+
+		//find all Accounts Involved (process details) for the oscars and create a map to fetch risk event information
+		Map<Id, ANG_Agency_Risk_Event__c> risks = new Map<Id, ANG_Agency_Risk_Event__c>();
+		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects) risks.put(re.ANG_OscarId__c, re);
+
+		//generate the multiples with correct account
+		List<ANG_Agency_Risk_Event__c> multiples = new List<ANG_Agency_Risk_Event__c>();
+		for(AMS_Process_Detail__c accountInvolved : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :risks.keySet()]){
+			ANG_Agency_Risk_Event__c newRisk = risks.get(accountInvolved.OSCAR__c).clone(false, true);
+			newRisk.ANG_OscarId__c = accountInvolved.OSCAR__c;
+			newRisk.ANG_AccountId__c = accountInvolved.Account__c;
+
+			multiples.add(newRisk);
+		}
+
+		if(!multiples.isEmpty()) insert multiples;
 	}
 
 
