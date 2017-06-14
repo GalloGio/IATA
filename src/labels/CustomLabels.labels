@@ -12228,7 +12228,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_download_of</shortDescription>
-        <value>of your Notice Of Change application.</value>
+        <value>of your Notice Of Change.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyChanges</fullName>

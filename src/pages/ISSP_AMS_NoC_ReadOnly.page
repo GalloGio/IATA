@@ -551,6 +551,7 @@
                             <apex:outputfield value="{!newForm.Give_details_for_the_change_of_ownership__c}" />
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
+                            <apex:outputLabel value="" />
                             
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
                             <apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
