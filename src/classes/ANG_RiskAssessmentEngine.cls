@@ -35,12 +35,13 @@ public class ANG_RiskAssessmentEngine{
                 for(account acc:[select id,name, remittance_frequency__c,ANG_Accreditation_Model__c ,(select id from All_Risk_Events__r where  ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c ='Yes' AND ANG_Event_Status__c='Active') counter from account where id in :accCalcMap.keySet()]){
                     accInfoMap.put(acc.id,acc);
                 }
-            }
-            
+            }            
             return accInfoMap;
         }
         private set;
     }
+
+    
 
     private map<id,Map<id,integer>> accCalcMap{ //map containning accounts RE occurences for assessment
         get{
@@ -58,7 +59,58 @@ public class ANG_RiskAssessmentEngine{
         set;
     } // assist variable to skip cicle
 
-    public ANG_RiskAssessmentEngine(map<id,Map<id,integer>> AccMap){
+
+
+
+    //============================FORECASTING VARIABLES ==========================================
+    private map<id,ang_risk_event_type__c> reTypeId2CalcMap{ //map adjusted risk calculations
+        get{
+            if(reTypeId2CalcMap==null){
+                reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
+                reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
+                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
+                    reTypeId2CalcMap.put(ret.id,ret);
+                    reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
+                }
+            }
+            return reTypeId2CalcMap;
+        }
+        private set;
+    }
+
+    private map<string,ang_risk_event_type__c> reTypeKeyId2CalcMap{ //map adjusted risk calculations
+        get{
+            if(reTypeKeyId2CalcMap==null){
+                reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
+                reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
+                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
+                    reTypeId2CalcMap.put(ret.id,ret);
+                    reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
+                }
+            }
+            return reTypeKeyId2CalcMap;
+        }
+        private set;
+    }
+
+    private account forecastAccount{ //referenced account to have risk history forecasted
+        get;private set;
+    }
+
+    private map<id,integer> forecastCalcMap{  //calculation/occurence number map in the forecast
+        get;private set;
+    }
+    private integer nrAdjustedRe{ // nr adjusted RE in the forecast
+        get;private set;
+    }
+
+    //============================ END FORECASTING VARIABLES=========================================
+
+
+
+    //============================ CONSTRUCTORS ====================================================
+
+    public ANG_RiskAssessmentEngine(map<id,Map<id,integer>> AccMap){ // account -> calculation- Occurrence nr
         if(AccMap ==null) return;
         accCalcMap.putAll(AccMap);
         string accId=null;
@@ -86,6 +138,52 @@ public class ANG_RiskAssessmentEngine{
         }
     }
 
+    public ANG_RiskAssessmentEngine(list<ANG_Agency_Risk_Event__c> reList, Account acc, list<String> newReKeyIdList){
+        nrAdjustedRe=0;
+
+        forecastAccount=acc;
+
+        forecastCalcMap = new map<id,integer>();
+
+        //MAP <config ID; integer>
+        for(ANG_Agency_Risk_Event__c are:reList){
+            if(are.ANG_Risk_Type__c==null || are.ANG_Event_Status__c!='Active')continue;
+            ang_risk_event_type__c ret=(ang_risk_event_type__c)reTypeId2CalcMap.get(are.ANG_Risk_Type__c);
+            id calcId=ret.ANG_Agency_Risk_Calculation__c;
+            if(forecastCalcMap.containsKey(calcId)){
+                Integer nOcc=(integer)forecastCalcMap.get(calcId)+1;
+                forecastCalcMap.remove(calcId);
+                forecastCalcMap.put(calcId,nOcc);
+            }else{
+                forecastCalcMap.put(calcId,1);
+            }
+            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                nrAdjustedRe+=1;
+            }
+        }
+
+        for(String retKey : newReKeyIdList){
+            if(!reTypeKeyId2CalcMap.containsKey(retKey))continue;
+            ang_risk_event_type__c ret=(ang_risk_event_type__c)reTypeKeyId2CalcMap.get(retKey);
+            id calcId=ret.ANG_Agency_Risk_Calculation__c;
+            if(forecastCalcMap.containsKey(calcId)){
+                Integer nOcc=(integer)forecastCalcMap.get(calcId)+1;
+                forecastCalcMap.remove(calcId);
+                forecastCalcMap.put(calcId,nOcc);
+            }else{
+                forecastCalcMap.put(calcId,1);
+            }
+            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                nrAdjustedRe+=1;
+            }
+        }
+
+    }
+
+    //============================ END CONSTRUCTORS ====================================================
+
+    //============================ PUBLIC METHODS ====================================================
+
     public void assessment(){
         list<account> AccUpdList= new list<account>();
         for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
@@ -97,19 +195,49 @@ public class ANG_RiskAssessmentEngine{
                 AccUpdList.add(updAcc);
                 continue;
             }
-            for(string reRec: groupingMap.keySet()){ // iterate groupings
-                accParentOccs=groupingMap.get(reRec);                
-                if(risCalcMap.containsKey(reRec)){ //validate REC
-                    if( accParentOccs>=risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
-                        updAcc.ANG_HE_RiskHistoryAssessment__c='Failed';
-                        break;
-                    }else if(risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){                        
-                        for(ang_agency_risk_calculation__c arca: risCalcMap.get(reRec).ANG_Adjustments__r){
-                            if(arca.ANG_Remittance_Frequency__c==accInfoMap.get(accKey).get('remittance_frequency__c') && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= accInfoMap.get(accKey).All_Risk_Events__r.size()){
-                                updAcc.ANG_HE_RiskHistoryAssessment__c='Failed';
-                                breakCicle=true;
-                                break;
-                            }
+            updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap,(String)accInfoMap.get(accKey).get('remittance_frequency__c'),accInfoMap.get(accKey).All_Risk_Events__r.size());            
+            AccUpdList.add(updAcc);  
+        }
+        update AccUpdList;
+    }
+
+    public String forecastAssessment(){
+        return calculateRiskHistoryAssessment(forecastCalcMap,forecastAccount.Remittance_frequency__c,nrAdjustedRe);
+    }
+
+    //============================ END PUBLIC METHODS ====================================================
+
+    //============================ PRIVATE METHODS ====================================================
+     private String calculateRiskHistoryAssessment(map<id,integer> groupingMap,String remiFreq, Integer nrAdjusRe){
+        String result ='Passed';
+        for(string reRec: groupingMap.keySet()){ // iterate groupings
+            integer accParentOccs=groupingMap.get(reRec);                
+            if(risCalcMap.containsKey(reRec)){ //validate REC
+                if( accParentOccs>=risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
+                    result='Failed';
+                    break;
+                }else if(risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){                        
+                    for(ang_agency_risk_calculation__c arca: risCalcMap.get(reRec).ANG_Adjustments__r){
+                        if(arca.ANG_Remittance_Frequency__c==remiFreq && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= nrAdjusRe){
+                            result='Failed';
+                            breakCicle=true;
+                            break;
+                        }
+                    }
+                }
+                if(breakCicle){ // break cicle since account already failed assessment
+                    breakCicle=false;
+                    break;
+                }
+            }
+
+            if(risCalAdjcMap.containsKey(reRec)){ //validate adjusted REC
+                if(risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){
+                    for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
+                        if(arca.ANG_Remittance_Frequency__c==remiFreq && arca.ANG_Occurrence_Num__c <= nrAdjusRe){
+                            result='Failed';      
+                            breakCicle=true;                        
+                            break;  
                         }
                     }
                     if(breakCicle){ // break cicle since account already failed assessment
@@ -117,25 +245,10 @@ public class ANG_RiskAssessmentEngine{
                         break;
                     }
                 }
-
-                if(risCalAdjcMap.containsKey(reRec)){ //validate adjusted REC
-                    if(risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){
-                        for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
-                            if(arca.ANG_Remittance_Frequency__c==accInfoMap.get(accKey).get('remittance_frequency__c') && arca.ANG_Occurrence_Num__c <= accInfoMap.get(accKey).All_Risk_Events__r.size()){
-                                updAcc.ANG_HE_RiskHistoryAssessment__c='Failed';      
-                                breakCicle=true;                        
-                                break;  
-                            }
-                        }
-                        if(breakCicle){ // break cicle since account already failed assessment
-                            breakCicle=false;
-                            break;
-                        }
-                    }
-                }
             }
-            AccUpdList.add(updAcc);  
         }
-        update AccUpdList;
-    }
+        return result;
+     }
+     //============================ END PRIVATE METHODS ====================================================
+
 }

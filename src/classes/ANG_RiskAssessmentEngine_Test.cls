@@ -124,7 +124,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Type__c='HE',
         	Location_Class__c='P',
         	Remittance_frequency__c='Monthly',
-        	ANG_Accreditation_Model__c ='Cash'
+        	ANG_Accreditation_Model__c ='Cash',
+        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         	);
         insert acc;
     }
@@ -209,7 +210,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Type__c='HE',
         	Location_Class__c='P',
         	Remittance_frequency__c='Monthly',
-        	ANG_Accreditation_Model__c ='Cash'
+        	ANG_Accreditation_Model__c ='Cash',
+        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         	);
         accList.add(acc2);
 
@@ -218,7 +220,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Type__c='HE',
         	Location_Class__c='P',
         	Remittance_frequency__c='Monthly',
-        	ANG_Accreditation_Model__c ='Cash'
+        	ANG_Accreditation_Model__c ='Cash',
+        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         	);
         accList.add(acc3);
     	
@@ -272,7 +275,8 @@ public class ANG_RiskAssessmentEngine_Test{
         	Location_Class__c='P',
         	Remittance_frequency__c='Monthly',
         	ANG_Accreditation_Model__c ='Cashless',
-        	ANG_HE_RiskHistoryAssessment__c='Passed'
+        	ANG_HE_RiskHistoryAssessment__c='Passed',
+        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
         	);	
 
         insert acc;	
@@ -280,6 +284,44 @@ public class ANG_RiskAssessmentEngine_Test{
 			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.Today());
 			system.assertEquals('Passed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc4' limit 1].ANG_HE_RiskHistoryAssessment__c);
 			
+		Test.stopTest();
+    }
+
+    TestMethod static void testPassForecastAssessment(){
+    	//Passes agency risk forecast
+    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
+    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
+    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
+		Test.startTest();
+			String result=new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'2'}).forecastAssessment();
+			system.assertEquals('Passed',result);
+		Test.stopTest();
+    }
+    TestMethod static void testFailedForecastAssessment(){
+    	//Fails agency risk forecast
+    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
+    	
+    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
+    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
+
+    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
+		Test.startTest();
+			String result=new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'2'}).forecastAssessment();
+			system.assertEquals('Failed',result);
+		Test.stopTest();
+    }
+    TestMethod static void testFailedForecastAssessmentWithAdjusted(){
+    	// fails agency risk forecast with adjusted RE
+    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
+    	
+    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
+    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
+    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
+    	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
+
+    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
+		Test.startTest();
+			system.assertEquals('Failed',new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'4','4'}).forecastAssessment());
 		Test.stopTest();
     }
 }
