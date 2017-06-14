@@ -1352,12 +1352,16 @@ public with sharing class AMS_XML_Generator {
 
                 //Only fills Manager name when the DPC is "Maestro"
                 if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
-                //get Manager first and Last name, 1st record where Financial_Assessment_Contact__c is set to true is the one to be used
-                if( iQmp == null && auxContact.Financial_Assessment_Contact__c ){
-                    iQmp = auxContact.Id;
-                    sQmpf_name = auxContact.FirstName;
-                    sQmpl_name = auxContact.LastName;
-                }
+                    //get Manager first and Last name, 1st record where Financial_Assessment_Contact__c is set to true is the one to be used
+                    if( iQmp == null && auxContact.Financial_Assessment_Contact__c ){
+                        iQmp = auxContact.Id;
+                        
+                        //FM - 24-05-2017 - AMSU-92
+                        //sQmpf_name = auxContact.FirstName;
+                        //sQmpl_name = auxContact.LastName;
+                        sQmpf_name = 'UNKNOWN';
+                        sQmpl_name = 'UNKNOWN';
+                    }
                 }
             }
 
@@ -1398,58 +1402,66 @@ public with sharing class AMS_XML_Generator {
         //Only fills Manager name when the DPC is "Maestro"
         if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
                 
-        //Get:
-        // - Manager first and Last name, but only if no manager was found on the account contacts
-        // - Ticketing agent first and Last name
-        // both from Person object or contact related to the account role
-        for(AMS_Account_Role__c emp : lEmployee){    
-            if(emp.Account__c == agency.Id){
+            //Get:
+            // - Manager first and Last name, but only if no manager was found on the account contacts
+            // - Ticketing agent first and Last name
+            // both from Person object or contact related to the account role
+            for(AMS_Account_Role__c emp : lEmployee){    
+                if(emp.Account__c == agency.Id){
 
-                if(emp.Person__c != null){
-                    if(mEmp_VS_Person.containsKey(emp.Id)){
-                        oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
-                    }else{
-                        oEmpPerson = new AMS_Person__c();
-                        oEmpPerson.First_Name__c = '';
-                        oEmpPerson.Lastname__c = '';
-                    }
+                    if(emp.Person__c != null){
+                        if(mEmp_VS_Person.containsKey(emp.Id)){
+                            oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
+                        }else{
+                            oEmpPerson = new AMS_Person__c();
+                            oEmpPerson.First_Name__c = '';
+                            oEmpPerson.Lastname__c = '';
+                        }
 
-                    if(iQmp == null && emp.isManager__c){
-                        iQmp = oEmpPerson.Id;
-                        sQmpf_name = oEmpPerson.First_Name__c;
-                        sQmpl_name = oEmpPerson.Lastname__c;
-                    }
-                    if(emp.isTicketingAgent__c){
-                        iQta = oEmpPerson.Id;
-                        sQtaf_name = oEmpPerson.First_Name__c;
-                        sQtal_name = oEmpPerson.Lastname__c;
-                    }
-                }
+                        if(iQmp == null && emp.isManager__c){
+                            iQmp = oEmpPerson.Id;
 
-                if(emp.Contact__c != null){
-                    if(mEmp_VS_Contact.containsKey(emp.Id)){
-                        oEmpContact = (Contact) msObject.get(mEmp_VS_Contact.get(emp.Id));
-                    }else{
-                        oEmpContact = new Contact();
-                        oEmpContact.FirstName = '';
-                        oEmpContact.LastName = '';
+                            //FM - 24-05-2017 - AMSU-92
+                            //sQmpf_name = oEmpPerson.First_Name__c;
+                            //sQmpl_name = oEmpPerson.Lastname__c;
+                            sQmpf_name = 'UNKNOWN';
+                            sQmpl_name = 'UNKNOWN';
+                        }
+                        if(emp.isTicketingAgent__c){
+                            iQta = oEmpPerson.Id;
+                            sQtaf_name = oEmpPerson.First_Name__c;
+                            sQtal_name = oEmpPerson.Lastname__c;
+                        }
                     }
 
-                    if(iQmp == null && emp.isManager__c){
-                        iQmp = oEmpContact.Id;
-                        sQmpf_name = oEmpContact.FirstName;
-                        sQmpl_name = oEmpContact.LastName;
-                    }
-                    if(emp.isTicketingAgent__c){
-                        iQta = oEmpContact.Id;
-                        sQtaf_name = oEmpContact.FirstName;
-                        sQtal_name = oEmpContact.LastName;
+                    if(emp.Contact__c != null){
+                        if(mEmp_VS_Contact.containsKey(emp.Id)){
+                            oEmpContact = (Contact) msObject.get(mEmp_VS_Contact.get(emp.Id));
+                        }else{
+                            oEmpContact = new Contact();
+                            oEmpContact.FirstName = '';
+                            oEmpContact.LastName = '';
+                        }
+
+                        if(iQmp == null && emp.isManager__c){
+                            iQmp = oEmpContact.Id;
+
+                            //FM - 24-05-2017 - AMSU-92
+                            //sQmpf_name = oEmpContact.FirstName;
+                            //sQmpl_name = oEmpContact.LastName;
+                            sQmpf_name = 'UNKNOWN';
+                            sQmpl_name = 'UNKNOWN';
+                        }
+                        if(emp.isTicketingAgent__c){
+                            iQta = oEmpContact.Id;
+                            sQtaf_name = oEmpContact.FirstName;
+                            sQtal_name = oEmpContact.LastName;
+                        }
                     }
                 }
             }
         } 
-        } 
-        
+    
         /*Agencies Section*/
         String sRec_id = Null;
         String sChangeCode = Null;
