@@ -412,6 +412,20 @@ global class AMS_OSCAR_Webservice {
 
         try{
 
+            //getAccountConcerned
+            List<AMS_OSCAR__c> oscars = [SELECT Id, Name FROM AMS_OSCAR__c WHERE Id = :oscarId LIMIT 1];
+
+            if(!oscars.isEmpty())
+            {
+                String oscarName = oscars.get(0).Name;
+                List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case WHERE CaseNumber = :oscarName AND AccountId = :agencyId LIMIT 1];
+
+                if(!cases.isEmpty() && cases.get(0).Account_Concerned__c != null)
+                {
+                    agencyId = cases.get(0).Account_Concerned__c;
+                }
+            } 
+
             //creates request
             AMS_Certificate_Request__c request = new AMS_Certificate_Request__c();
             request.OSCAR__c = oscarId;
