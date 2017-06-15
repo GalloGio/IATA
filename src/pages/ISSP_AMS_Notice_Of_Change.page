@@ -1139,8 +1139,8 @@
 										<div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_First_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_First_name__c}</div>
 										<div class="contact-detail col-md-6"><span style="font-weight:bold">{!$Label.ISSP_AMS_Last_Name_Chinese}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Local_Last_Name__c}</div>
 									</apex:outputText>
-									<div class="contact-detail col-md-6"><span style="font-weight:bold">Email&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Email__c}</div>
-                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Phone__c}</div>
+									<div class="contact-detail col-md-6"><span style="font-weight:bold">Email&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Email__c}&nbsp;</div>
+                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Phone__c}&nbsp;</div>
 								</div>
 							</apex:column>
 						</apex:pageBlockTable>
@@ -1190,9 +1190,9 @@
 									<!--<apex:outputText rendered="{!newForm.ISSP_AMS_Legal_Status__c=='Corporation'}">
 									<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}&nbsp;</span>{!TEXT(agencycon.Number_Of_Shares__c)}</div>
 									</apex:outputText>-->
-									<div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Email.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Email__c}</div>
-                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Phone__c}</div>
-                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Time_devoted_to_Agency_business__c}%</div>
+									<div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Email.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Email__c}&nbsp;</div>
+                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Phone__c}&nbsp;</div>
+                                    <div class="contact-detail col-md-6"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}&nbsp;</span></div><div class="contact-detail col-md-6">{!agencycon.Time_devoted_to_Agency_business__c}%&nbsp;</div>
 								</div>
 							</apex:column>
 						</apex:pageBlockTable>
