@@ -273,6 +273,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
                         changeCode.memoText = 'Correction';
+                        changeCode.publishedOnEBulletin = false;
                         }
                     // If the picklist is set create a CAD change code.
 	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){

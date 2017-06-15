@@ -29,7 +29,7 @@ private class AMP_ChatterBroadcastToolControllerTest {
         	ctrl.GoToStep2();
         	ctrl.GoBackToStep1();
 
-        	ctrl.message = 'test broadcast #Cargo';
+        	ctrl.message = '#Cargo test broadcast';
 
         	ctrl.BroadcastMessage();
 
