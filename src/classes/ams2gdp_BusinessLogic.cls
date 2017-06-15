@@ -807,6 +807,17 @@ public class ams2gdp_BusinessLogic
 				, Territory_Description__c = territory.Comments__c 
 			));*/
 
+			String code = '';
+			String name = '';
+			if(territory.Appointment__r.Accreditation_Endorsement_organisation__c != null ) {
+				code = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c;
+				name = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name;
+			}
+			else if(territory.Appointment__r.Airline__c != null ) {
+				code = territory.Appointment__r.Airline__r.IATACode__c != null ? territory.Appointment__r.Airline__r.IATACode__c.left(3) : '';
+				name = territory.Appointment__r.Airline__r.Name;
+			}
+
 			result.add(new GSA_Territory__c(AMS_GDP_Key__c = key+'GDP'
  				, Accreditation_ID__c = rank
  				, Related_Accreditation__c = accreditationIdByAccountId.get(territory.Appointment__r.Account__c)
@@ -817,8 +828,8 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
 				, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
 				, Location_Country_Name__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30)
-				, Airline_Code__c = territory.Appointment__r.Account__r.Main_Accreditation_Organization__c
-				, Airline_Name__c = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name  
+				, Airline_Code__c = code
+				, Airline_Name__c = name
 				, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
 				, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c				
 				, Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c 
