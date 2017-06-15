@@ -237,9 +237,16 @@
                 <behavior>Edit</behavior>
                 <field>IATA_Cargo_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>a) Parent Organization</label>
+        <layoutColumns/>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Legal_Reg_Name_Address__c</field>
@@ -248,9 +255,16 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Principal_business_Org__c</field>
             </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>b) Estimated Gross Amount of Sales</label>
+        <layoutColumns/>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_Gross_Amnt_First_year__c</field>
@@ -385,7 +399,7 @@
         <fields>Agency_owner__c</fields>
         <fields>Agency_role__c</fields>
         <fields>Financial_interest__c</fields>
-        <fields>Number_Of_Shares__c</fields>
+        <fields>Time_devoted_to_Agency_business__c</fields>
         <relatedList>AMS_Accreditation_Contact__c.AMS_Pax_Accreditation_Form__c</relatedList>
         <sortField>RECORDTYPE</sortField>
         <sortOrder>Asc</sortOrder>

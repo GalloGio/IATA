@@ -349,7 +349,6 @@ public without sharing class ISSP_AMS_Accreditation {
         lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
         lblCourierTitle = Label.ISSP_AMS_StepsAll_Courier_Title;
     
-        Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
         if (ApexPages.currentPage().getParameters().containsKey('step'))
             stepNumber = ApexPages.currentPage().getParameters().get('step');
 
@@ -358,6 +357,11 @@ public without sharing class ISSP_AMS_Accreditation {
 
         if (ApexPages.currentPage().getParameters().containsKey('isBankAccountChange'))
             isBankAccountChange = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isBankAccountChange'));
+
+        if (isNoticeOfChange) 
+            Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Change_Summary.pdf');
+        else
+            Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename=Application_Summary.pdf');
         
         //AS - NoC V2.0 - Now Other Change will always be for 3 types of changes
         if(isBankAccountChange) {
