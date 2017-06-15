@@ -20,7 +20,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 
 		String fields = ' Id, Name, Status__c, Date_Organisation_Status_attained__c, AIMS_ID__c, Webstar_ID__c '
 			+', Location_Class__c, Check_Digit__c, IATACode__c ' 
-			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c '
+			+', Organization_Last_Change_Date__c,  Original_Approval_DAte__c, Accreditation_date__c '
 			+', Main_Accreditation_Organization__c, Verification_Date__c '
 			+', IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AIMS_Area_ID__c,CNS_Agency__c' ;
 

@@ -894,7 +894,7 @@ public class ams2gdp_BusinessLogic
 				, Accreditation_ID__c = rank 
 				, Last_change_date__c = acc.Organization_Last_Change_Date__c
 				, Last_re_inspection_date__c = acc.Verification_Date__c
-				, Original_approval_date__c = acc.Original_Approval_DAte__c
+				, Original_approval_date__c = acc.Accreditation_date__c
 				, Related_Account__c = acc.Id
 				, Date__c = acc.Date_Organisation_Status_attained__c
 			); 
