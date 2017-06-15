@@ -6,22 +6,35 @@ private class Product_Svc_Test
     public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
     @isTest(seeAllData=true)
-    static void test_saveZProducts() 
+static void test_saveZProducts() 
     {
         delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
-        Product_Information__c oProdInfo;
-        for (Product_Information__c pi : [select Id
-                                               , (select Id, Name
-                                                  from Product_Rate_Plans_Information__r
-                                                  where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
-                                                    and Is_Triable__c = false
-                                                  limit 1)
-                                          from Product_Information__c])
-            if (pi.Product_Rate_Plans_Information__r.size() > 0)
-            {
-                oProdInfo = pi;
-                break;
-            }
+        // create Zuora product
+        zqu__ZProduct__c oZProduct = IECTestUtil.CreateSampleProduct('Zuora Product');
+        insert oZProduct;
+        // create Zuora rate plan
+        zqu__ProductRatePlan__c oZRatePlan = IECTestUtil.CreateSampleProductRatePlan('Zuora Rate Plan 1', false, oZProduct);
+        insert oZRatePlan;
+        // create Zuora rate plan charge
+        zqu__ProductRatePlanCharge__c oZRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oZRatePlan, 'Zuora Rate Plan Charge 1', 100);
+        insert oZRatePlanCharge;
+        // create product category
+        Product_Category__c oProdCat = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACPRO, true);
+        insert oProdCat;
+        // create product information
+        Product_Information__c oProdInfo = IECTestUtil.CreateSampleProductInfo('Product Information', oProdCat, oZProduct);
+        insert oProdInfo;
+        // create product rate plan information
+        Product_Rate_Plan_Information__c oRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan 1', false, oZRatePlan, oProdInfo);
+        insert oRatePlanInfo;
+        
+        oProdInfo = [select Id
+                          , (select Id, Name
+                             from Product_Rate_Plans_Information__r
+                             where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
+                               and Is_Triable__c = false)
+                     from Product_Information__c
+                     where Id = :oProdInfo.Id];
 
         Test.startTest();
         //-- Generate Test Data
@@ -371,6 +384,7 @@ private class Product_Svc_Test
 	{
 		Map<Id, Boolean> mapCheck;
 		List<Product2> lstProduct = [select Id from Product2 limit 2];
+		TestDataGenerator.generateISOCountryState();
 		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
 		lstCountry[0].Is_Non_Compliant__c = false;
 		lstCountry[1].Is_Non_Compliant__c = true;

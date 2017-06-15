@@ -21,18 +21,19 @@ private class ISSP_HomepageTest {
         insert con;
         
         //Contact con2 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,3);
+		/*
+		
         Contact con2 = ISSP_ObjectFactory.createNewContact();
         con2.Email = 'test2@test.test';
         con2.AccountId= acc.Id;
         con2.User_Portal_Status__c='Approved User';
         insert con2;
         
-        //Contact con3 = (Contact)ISSP_ObjectFactory.createSObject('Contact',false,4);
         Contact con3 = ISSP_ObjectFactory.createNewContact();
         con3.Email = 'test3@test.test';
         con3.AccountId= acc.Id;
         con3.User_Portal_Status__c='Approved Admin';
-        
+        */
         /*
         insert con3;
         

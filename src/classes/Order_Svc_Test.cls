@@ -1314,6 +1314,10 @@ private class Order_Svc_Test
         if (cs == null) cs = new Apex_Setting__c(Name='Email batch max value');
         cs.Number_1__c = 100;   //*** cover only 1 bulk email
         upsert cs;
+		cs = Apex_Setting__c.getValues('ContactId to populate email Template');
+        if (cs == null) cs = new Apex_Setting__c(Name='ContactId to populate email Template');
+        cs.Text_1__c = lstContact[0].Id;
+        upsert cs;
         lstOrder[0].Status = IECConstants.ORDER_STATUS_READY_FOR_SAP;
         lstOrder[0].Payment_Type__c = 'Bank Transfer';
         update lstOrder[0];
