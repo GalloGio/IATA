@@ -3,7 +3,7 @@ public class ANG_RiskEventPopUpExtension {
 	private final ANG_Agency_Risk_Event__c risk;
 
     public ANG_RiskEventPopUpExtension(ApexPages.StandardController stdController) {
-        stdController.addFields(new List<String>{'ANG_Source_Id__c', 'ANG_Risk_Type__c'});
+        if (!Test.isRunningTest()) stdController.addFields(new List<String>{'ANG_Source_Id__c', 'ANG_Risk_Type__c'});
         this.risk = (ANG_Agency_Risk_Event__c)stdController.getRecord();
     }
 

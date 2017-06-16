@@ -1,0 +1,55 @@
+
+@isTest
+public class ANG_RiskEventHistoryPagination_Test {
+
+
+	@testSetup static void testSetup(){
+		ANG_Risk_Event_Type__c ret1= new ANG_Risk_Event_Type__c(
+			name= 'Risk Type 1',
+			ANG_Risk_ID__c='1',
+			ANG_Expiration__c=12,
+			ANG_isMultiple__c=true
+		);
+		insert ret1;
+
+		list<account> accountList= new list<account>();
+
+		Account acc1 = new Account(
+			name='acc1',
+			Location_Type__c='HE',
+			Location_Class__c='P',
+			Remittance_frequency__c='Monthly',
+			ANG_Accreditation_Model__c ='Cash',
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+		);
+		insert acc1;
+
+		for(integer i=0; i<5;i++){
+			generateRiskEvent(acc1.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today());
+		}
+		
+
+	}
+
+	private static void generateRiskEvent(id accId, id riskEventTypeId, Date reDate){
+		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
+		ANG_AccountId__c=accId,
+		ANG_HE_AccountId__c=accId,
+		ANG_Risk_Type__c=riskEventTypeId,
+		ANG_Issued_Date__c = reDate
+		);
+
+		insert are;
+	}
+
+	static testmethod void pageMethodsCoverage(){
+		ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select id,name,ANG_Source_Id__c,ANG_Risk_Type__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]);
+		rehp.first();
+		rehp.next();
+		rehp.previous();
+		rehp.last();
+
+	}
+
+
+}
