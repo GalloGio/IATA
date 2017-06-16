@@ -108,7 +108,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c,ANG_Risk_Event_Type__r..ANG_isMultipleType__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c,ANG_Risk_Event_Type__r.ANG_isMultiple__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -170,8 +170,8 @@ public class ANG_RiskEventGenerator {
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
-					String uniqueKey = o.Id+''+(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?(id)o.get(accountFields.get(objectName)):'')+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
-
+					String uniqueKey = o.Id+''+String.valueOf(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?(id)o.get(accountFields.get(objectName)):null)+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+		
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
 
@@ -245,7 +245,7 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = Id.valueOf(re.ANG_Source_Id__c)+''+(re.ANG_isMultipleType__c?Id.valueOf(re.ANG_AccountId__c):'')+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+String.valueOf(re.ANG_isMultipleType__c?ID.valueOf(re.ANG_AccountId__c):null)+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
