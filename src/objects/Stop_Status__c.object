@@ -46,7 +46,7 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <description>A case status in which the &quot;clock should stop,&quot; i.e. time calculated in business hours should not be added to the &quot;Time With Support&quot; field.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
