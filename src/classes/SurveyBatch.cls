@@ -906,6 +906,18 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        !c.Contact.Email.contains('@salesforce.com')){
         template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
       } //end INC292755
+      //start INC325289
+      else if(c.Account.Source_System__c == 'WEBSTAR' && 
+              c.BSPCountry__c == 'United States' && 
+              (c.Status != '' || c.Status != 'Terminated' || c.Status != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
+        if(c.Case_Group__c == 'Query'){
+          template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
+        }
+        if(c.Case_Group__c == 'Process'){
+          template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
+        }
+      } //end INC325289
 
       /****** Preparing the email *****/
       if (template != null) {
