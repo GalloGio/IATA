@@ -5032,18 +5032,62 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     }
 
+    /**
+        
+        This method was build to represent all the new Form Validations for the New Accreditation Model ( Standard / Lite)
+        
+        - NEWGEN-663
+        - NEWGEN-271
+
+
+    **/
+    private boolean validateNewAccModel(boolean isnewgenError){
+
+         boolean ngErrorFound = false;           
+            
+            //checking if IATAN question is answered
+            if(newForm.IATA_Registered_IATAN_Agent__c == null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)){
+                newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
+                ngErrorFound = true;
+            }
+            
+            //checking if IATAN code field is fill            
+            if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
+                newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
+                ngErrorFound = true;
+            }
+            
+            //checking if the Legal Name is fill in Agency Details
+            if(hqAccount.Name == null){
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, '* Please fill the Legal Name on the Agency Details');
+                ApexPages.addMessage(myMsg);
+                ngErrorFound = true;
+            }
+
+            //checking if the Phone number is fill in Agency Details
+            if(hqAccount.Phone == null){
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, '* Please fill the Phone on the Agency Details');
+                ApexPages.addMessage(myMsg);
+                ngErrorFound = true;
+            }
+
+        return ngErrorFound;        
+    }
+
     private boolean validateForm(boolean includeErrorMsgs) {
         boolean errorFound = false;
         Integer cntAuthorisedSig;
         Integer cntIFAPContacts;
         Integer cntCASSContact;
-
+        
         cntAuthorisedSig = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                             WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Authorised_signatory__c = true];
 
         cntIFAPContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Financial_Assessment_Contact__c = true AND Id != :newContact.Id];
-
+        
         cntCASSContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                           WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND CASS_contact__c = true];
 
@@ -5339,6 +5383,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ApexPages.addMessage(myMsg);
                         errorFound = true;
                     }
+                     if(validateNewAccModel(true)) errorFound = true;
                     
                     //Travel HO Ownership must be 100% except for listed Corporations
                 if (newCase.Reason1__c == 'New HO' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
