@@ -517,7 +517,7 @@
                                        </div>
                                        <div class="col-lg-9">
                                            <div class="input-container" style="position: relative;">
-                                               <input id="ccotheremail" required="required" style="width: 100%;" class="form-control rec mandatory ccotheremail" type="text" />
+                                               <input id="ccotheremail" style="width: 100%;" class="form-control rec mandatory ccotheremail" type="text" />
                                            </div>
                                        </div>
                                        <p style="text-align:center; padding-top:50px;">

@@ -1271,6 +1271,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>chiavonf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
