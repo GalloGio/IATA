@@ -2946,7 +2946,7 @@ System.DEBUG('validateCharactersInForm  - 1 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
-            Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,6}))');
+            Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
             if (newForm.Branch_Office_Email__c != null && !validEmail.matcher(newForm.Branch_Office_Email__c).matches()) {
                 newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
