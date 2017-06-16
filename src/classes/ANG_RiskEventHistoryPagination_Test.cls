@@ -25,7 +25,7 @@ public class ANG_RiskEventHistoryPagination_Test {
 		insert acc1;
 
 		for(integer i=0; i<5;i++){
-			generateRiskEvent(acc1.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today());
+			generateRiskEvent(acc1.id,ret1.id, system.today());
 		}
 		
 
@@ -43,11 +43,15 @@ public class ANG_RiskEventHistoryPagination_Test {
 	}
 
 	static testmethod void pageMethodsCoverage(){
-		ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select id,name,ANG_Source_Id__c,ANG_Risk_Type__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]);
-		rehp.first();
-		rehp.next();
-		rehp.previous();
-		rehp.last();
+		Test.startTest();
+			ANG_RiskEventHistoryPagination rehp = new ANG_RiskEventHistoryPagination([select id,name,ANG_Source_Id__c,ANG_Risk_Type__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]);
+			rehp.first();
+			rehp.next();
+			rehp.previous();
+			rehp.last();
+			rehp.getRecords();
+			rehp.setPageSize(1);
+		Test.stopTest();
 
 	}
 
