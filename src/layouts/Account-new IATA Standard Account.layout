@@ -22,7 +22,7 @@
                 <field>ParentId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>IATACode__c</field>
             </layoutItems>
             <layoutItems>
