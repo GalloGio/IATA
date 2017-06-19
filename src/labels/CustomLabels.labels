@@ -19500,14 +19500,17 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
         <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account. By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;Do you wish to proceed?</value>
-    </labels>        
+    </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_Portal_Request_Access_Msg</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_Portal_Request_Access_Msg</shortDescription>
-        <value>Adding these users to your IATA EasyPay Account is now in progress. In order to finalise user access an IEP Admin or Master Wallet Manager from your Agency is required to grant access and assign these users to a wallet before they can start using the service. All IEP Admins and Master Wallet Managers will be notified by email once this pending access request is ready for processing.</value>
+        <value>Access to your IATA EasyPay Account for the selected user(s) has been requested.  IATA EasyPay Administrator (s) and Master Wallet Manager(s) have been notified for their approval.
+               &lt;br/&gt;
+               Users will receive a confirmation once their access has been granted.
+        </value>
     </labels>
     <labels>
         <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</fullName>
