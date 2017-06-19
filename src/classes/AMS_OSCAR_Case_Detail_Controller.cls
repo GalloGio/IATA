@@ -84,6 +84,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
+        //For newgen
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
+            if(notEditableForNEWGEN.contains(fieldName))
+                return false;
+
         //verifu "hardcoded" logic
         if(fieldName == 'IATACode__c') return false;
         if(!isAgencyChanges) return true;        
@@ -125,6 +130,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return editable;
         }
     }
+
+    public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c','Abbreviated_name__c'};
+
 
     // The extension constructor initializes the private member
     // variable oscarObj by using the getRecord method from the standard
@@ -194,7 +202,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,CNS_process__c ,
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
-                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
+                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
 

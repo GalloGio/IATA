@@ -463,7 +463,11 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         if (oldOSCAR.Send_FS_request__c == false && updatedOscar.Send_FS_request__c == true) {
             updatedOSCAR.Bank_Guarantee_requested__c = Date.today();
-            updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
+
+            if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c))
+                updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 40;
+            else
+                updatedOSCAR.Bank_Guarantee_deadline__c = Date.today() + 30;
         }
 
         if((updatedOscar.Process__c == AMS_Utils.NEWHELITE || updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD) && oldOSCAR.STEP6__c <> updatedOscar.STEP6__c && updatedOscar.STEP6__c == 'Passed'){
