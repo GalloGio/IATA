@@ -8477,6 +8477,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Invalid email address</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Invalid_IATAN_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Invalid IATAN Code</shortDescription>
+        <value>Invalid IATAN Code: Please enter a valid code</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Invalid_IATA_Code</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -11748,6 +11755,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step5 Files Missing</shortDescription>
         <value>One or more mandatory files are missing for your application. Please return to STEP 4 and upload the required file(s) for each mandatory requirement.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step5_IATAN_Travel_Agent</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step5 IATAN Travel Agent</shortDescription>
+        <value>* Is your agency an IATAN (International Airlines Travel Agent Network) Accredited Agent?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar</fullName>
@@ -16313,6 +16328,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP Loading Cargo Agency Details</shortDescription>
         <value>Loading Cargo Agent details...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Loading_IATAN_Agency_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Loading IATAN Agency Details</shortDescription>
+        <value>Loading IATAN Agent details...</value>
     </labels>
     <labels>
         <fullName>ISSP_Loading_Cargo_Company_Details</fullName>

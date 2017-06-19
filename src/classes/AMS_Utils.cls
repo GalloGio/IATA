@@ -214,6 +214,7 @@ public without sharing class AMS_Utils {
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
     public static final String ACCREDITATIONMODEL_CASH = 'Cash';
     public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
+    public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
 
 
     static {
