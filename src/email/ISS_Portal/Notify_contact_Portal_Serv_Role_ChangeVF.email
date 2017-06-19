@@ -17,7 +17,9 @@
 {!relatedTo.ANG_Portal_Service_Role__c}.
 <BR/>
 {!$Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2}
-<a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>.<BR/>
+<a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>
+{!$Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3}
+<BR/>
 <BR/>
 <BR/>
 

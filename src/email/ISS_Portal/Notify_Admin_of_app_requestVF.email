@@ -14,26 +14,55 @@ language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Po
 <BR/>
 
 <BR/>
-{!$Label.ISSP_Email_AppReq_BeInformed} 
-{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_IATA_EasyPay, relatedTo.Portal_Application__r.Name)}        
-{!$Label.ISSP_Email_AppReq_From} {!relatedTo.Contact__r.Salutation} {!relatedTo.Contact__r.FirstName} {!relatedTo.Contact__r.LastName}.<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_AppReq_BeInformed, $Label.ISSP_Email_AppReq_BeInformed)}
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), "", relatedTo.Portal_Application__r.Name)}
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+,$Label.ISSP_AMS_Name &" : "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName
+,$Label.ISSP_Email_AppReq_From &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName
+)}
+<BR/>
+{!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+,$Label.ANG_ISSP_e_mail_address &" : "& relatedTo.Contact__r.Email
+, ""    
+)}
+
 
 <BR/>
 
 {!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS"
 , $Label.ISSP_APrequest_AdminEmail1 &" "& relatedTo.Contact__r.Salutation &" "& relatedTo.Contact__r.FirstName &" "& relatedTo.Contact__r.LastName &", "& $Label.ISSP_APrequest_AdminEmail2
-, $Label.ISSP_Email_PleaseProcess )}
+, IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')
+, ""
+, $Label.ISSP_Email_PleaseProcess 
+))}
+
+<apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  <BR/>
+  <BR/>  
+  {!$Label.ANG_ISSP_Notify_Admin_app_req_1}
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!relatedTo.id}">{!$Label.ISSP_Email_Here}</a>
+  {!$Label.ANG_ISSP_Notify_Admin_app_req_2}
+</apex:outputPanel>
 
 <BR/>
 <BR/>
 
+<apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  {!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS", $Label.ISSP_Email_AppReq_AccessRequest2, $Label.ISSP_Email_AppReq_AccessRequest )}
+  <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!relatedTo.id}">{!$Label.ISSP_Email_Here}</a>.<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_IataService}<BR/>
+</apex:outputPanel>
 
-{!IF(relatedTo.Portal_Application__r.Name = "Join BSP / CASS", $Label.ISSP_Email_AppReq_AccessRequest2, $Label.ISSP_Email_AppReq_AccessRequest )}
-<a href="{!$Label.ISSP_Email_PortalUrl}ISSP_EditPortalServiceAccess?&mid=M4S2&Id={!relatedTo.id}">{!$Label.ISSP_Email_Here}</a>.<BR/>
-<BR/>
-{!$Label.ISSP_Email_ThankYouInAdvance}<BR/>
-<BR/>
-{!$Label.ISSP_Email_IataService}<BR/>
+<apex:outputPanel rendered="{! BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">
+  <BR/>
+  {!$Label.LAQ_Thankyou},<BR/>
+  <BR/>
+  {!$Label.ISSP_Email_IataService}<BR/>
+</apex:outputPanel>
 
 <p>
 
