@@ -2677,8 +2677,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'BANK.ACCOUNT.CHANGES';
             else if (isNoticeOfChange && !isBankAccountChange)
                 typeOfProcess = 'MAJOR.CHANGES';
-            else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD)
-                typeOfProcess = 'ANG.NEW.HE.STANDARD.1.0';
+            else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE)
+                typeOfProcess = 'ANG.NEW.HE.LITE.1.0';
             
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
