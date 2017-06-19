@@ -5057,21 +5057,29 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 ngErrorFound = true;
             }
             
-            //checking if the Legal Name is fill in Agency Details
+            //checking if the Legal Name is fill
             if(hqAccount.Name == null){
-                ApexPages.Message myMsg;
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, '* Please fill the Legal Name on the Agency Details');
-                ApexPages.addMessage(myMsg);
+                hqAccount.Name.addError(Label.ISSP_YouMustEnter);
                 ngErrorFound = true;
             }
 
-            //checking if the Phone number is fill in Agency Details
+            //checking if the Phone number is fill
             if(hqAccount.Phone == null){
-                ApexPages.Message myMsg;
-                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, '* Please fill the Phone on the Agency Details');
-                ApexPages.addMessage(myMsg);
+                hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
                 ngErrorFound = true;
             }
+
+            //checking if the Billing Street is fill
+            if (hqAccount.BillingStreet == null){
+                hqAccount.BillingStreet.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }
+
+            //checking if the Billing City is fill
+            if (hqAccount.BillingCity == null){
+                hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }   
 
         return ngErrorFound;        
     }
