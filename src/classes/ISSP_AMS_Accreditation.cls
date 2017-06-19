@@ -5392,6 +5392,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
                      if(validateNewAccModel(true)) errorFound = true;
+                     if(newForm.Agent_Type__c == AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH){
+                        if(validateNewAccModel(true)) errorFound = true;   
+                     }
                     
                     //Travel HO Ownership must be 100% except for listed Corporations
                 if (newCase.Reason1__c == 'New HO' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
