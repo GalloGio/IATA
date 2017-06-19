@@ -898,6 +898,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( TEXT(SAAM_Case__r.Account.Location_Type__c) = &apos;AE&apos;, TEXT(SAAM_Case__r.Account.ANG_Accreditation_Model__c), &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
