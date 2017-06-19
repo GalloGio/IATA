@@ -173,9 +173,11 @@ public with sharing class ISSP_AvailableServices{
                 
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
-                    isModalErrorMessageEnable = true;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                }
+
+                if (!isIEPAccountEnable) {
                     isModalErrorMessageEnable = true;
                 }
 
