@@ -356,7 +356,7 @@
                   <td>
                   </td>
                   <td style="padding-left: 10px; padding-top: 10px">
-                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService}">                    
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">                    
                       <span>
                         <apex:outputLabel value="{!$Label.ANG_ISSP_ConfirmRequestIEP_2}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
                       </span>
@@ -368,7 +368,7 @@
                   <td>
                   </td>
                   <td style="padding-left: 10px; padding-top: 10px">
-                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService}">
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">
                       <span>
                         <apex:outputLabel value="{!$Label.ANG_ISSP_ConfirmRequestIEP_3}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
                         <b><a href="{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link}">{!$Label.ISSP_Email_Here}</a>.</b>
