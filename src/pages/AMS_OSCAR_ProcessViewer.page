@@ -386,10 +386,14 @@ function buildFunctionCall(func, argList){
                 <apex:outputText rendered="{!NOT(isNotNewGenProcess)}">
                     <li>* Specify Legal Status</li>
                 </apex:outputText>
-                <li>Location Class</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Class</li>
+                </apex:outputText>
                 <li>Country</li>
                 <li>Street name and number</li>
-                <li>Location Type</li>
+                <apex:outputText rendered="{!isNotNewGenProcess}">
+                    <li>Location Type</li>
+                </apex:outputText>
                 <li>City</li>
                 <apex:outputText rendered="{!isNotNewGenProcess}">
                     <li>Office Email (except for MSO process)</li>
