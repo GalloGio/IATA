@@ -36,9 +36,9 @@
                 <!-- HEADING AREA -->                
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-size_1-of-5 slds-col--padded">
+            <div class="slds-size_1-of-5 slds-col--padded slds-no-flex">
                 <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
-                    <div class="slds-col--padded  slds-m-around--x-small" style="color:#ff0000"> {!v.account.Due_Diligence_Status__c}</div>
+                    <div style="color:#ff0000"> {!v.account.Due_Diligence_Status__c}</div>
                     <aura:set attribute="else">
                             <span>   </span>  
                     </aura:set>
@@ -101,7 +101,7 @@
         <div class="slds-grid slds-page-header__detail-row">
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Account Record Type</p>
@@ -113,7 +113,7 @@
             </div>
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 2 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Verified</p>
@@ -125,7 +125,7 @@
             </div>
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 3 -->
-            <div class="slds-col--padded slds-size--1-of-5"> 
+            <div class="slds-col--padded slds-size--1-of-6"> 
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Country</p>
@@ -135,7 +135,7 @@
             </div>
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 4 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Sector</p>
@@ -145,7 +145,7 @@
             </div>
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 5 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">Category</p>
@@ -155,7 +155,7 @@
             </div>
 
             <!-- PAGE HEADER / ROW 2 / COLUMN 6 -->
-            <div class="slds-col--padded slds-size--1-of-5">
+            <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
                         <p class="slds-text-heading--label slds-truncate">IATA Membership Status</p>
