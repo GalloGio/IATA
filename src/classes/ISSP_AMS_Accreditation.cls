@@ -5391,7 +5391,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ApexPages.addMessage(myMsg);
                         errorFound = true;
                     }
-                     if(validateNewAccModel(true)) errorFound = true;
+                     
                      if(newForm.Agent_Type__c == AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH){
                         if(validateNewAccModel(true)) errorFound = true;   
                      }
