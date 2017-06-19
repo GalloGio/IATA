@@ -86,6 +86,12 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public boolean isNewgenRT{
+        get{
+            return oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWAE || oscar.RecordTypeID == AMS_Utils.RECTYPE_NEWHE;
+        }
+    }
+
     public AMS_OSCAR_ProcessViewerController() {
         
         
@@ -282,7 +288,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){

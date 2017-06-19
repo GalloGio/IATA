@@ -295,6 +295,11 @@ body.loading .modal {
     color: white;
 }
 
+.warningRed{
+    font-weight: bold;
+    color: red;
+}
+
 </style>
 <script>
 function buildFunctionCall(func, argList){
@@ -465,6 +470,10 @@ function buildFunctionCall(func, argList){
         <apex:repeat value="{!flow.steps}" var="step">
             <div id="inline{!step.name}" style="display:none;">
                 <h1><apex:outputText value="{!$Label[step.label]}"/></h1><br/><br/>
+
+                <h2><apex:outputText rendered="{!step.name == 'STEP2' && isNewgenRT}" styleClass="warningRed" value="{!$Label['ANG_OSCAR_WARNING_RISK']}"> </apex:outputText></h2>
+                <br />
+
                 <h2><apex:outputText value="Actions" rendered="{!IF(step.actions.size > 0, true, false)}"/></h2>
                     
                 <apex:repeat value="{!step.actions}" var="action">

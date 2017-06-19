@@ -20683,6 +20683,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Special characters &apos; and &amp; are not allowed, please rename the file.</value>
     </labels>
     <labels>
+        <fullName>OSCAR_RISK_WARNING</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSCAR_RISK_WARNING</shortDescription>
+        <value>The approval of this application will have an impact on the Agency&apos;s risk properties: the new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Account_Association</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
