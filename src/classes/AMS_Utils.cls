@@ -105,6 +105,7 @@ public without sharing class AMS_Utils {
     public static final String AO = 'AO';
     public static final String SA = 'SA';
     public static final String HE = 'HE';
+    public static final String AE = 'AE';
 
 
     //Processes of type NEW
@@ -131,8 +132,9 @@ public without sharing class AMS_Utils {
     //Process of type NewGen
     public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
     public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
+    public static final String NEWAE = 'ANG.NEW.AE.1.0';
 
-    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD};
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
 
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
@@ -149,6 +151,9 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
     public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
     public static final String RECTYPE_NEWHE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+    public static final String RECTYPE_NEWAE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
+
+
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
 
