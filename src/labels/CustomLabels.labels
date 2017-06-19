@@ -12854,6 +12854,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
 Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
+        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement billing (BSP sales) to your DD account.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

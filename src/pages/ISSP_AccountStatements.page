@@ -264,8 +264,10 @@
           </table>
           </div>
 
+          <apex:variable value="{!AND(account.Country_ISO_Code__c=='CN',account.Sector__c = 'Travel Agent')}" var="ChinaDisclaimer" />
           <div class="col-xs-12 small text-left">
-            {!$Label.ISSP_Account_Statements_Disclaimer}
+            <apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer}" rendered="{!NOT(ChinaDisclaimer)}"></apex:outputText>
+            <apex:outputText value="{!$Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent}" rendered="{!ChinaDisclaimer}"></apex:outputText>
           </div>
 
 				</div>

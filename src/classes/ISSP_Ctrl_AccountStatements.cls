@@ -4,7 +4,8 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 
 	public ContentVersion faq {get;set;}
 	public ContentVersion document {get;set;}
-	public Account headofficeAccount {get; set;}
+	public Account account {get; set;}
+    public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
 	public list<WrapperStatement> listWrapper {get; set;}
@@ -71,7 +72,9 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		this.listMessages = new list<String>();
 		// get current user
 		this.currentUser = [
-			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c
+			Select Id, ContactId, Contact.AccountId, Contact.Account.Status__c,
+				Contact.Account.Sector__c,
+				Contact.Account.Country_ISO_Code__c
 			From User
 			Where id = :UserInfo.getUserId()];
 
@@ -84,11 +87,10 @@ public without sharing class ISSP_Ctrl_AccountStatements {
 		}
 
 		// get HQ account
-		Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
+		this.account = this.currentUser.Contact.Account;
+		Id parentAccountId = getMaxParentAccount(this.account.Id);
 		this.headofficeAccount = [Select Id, IATACode__c from Account where id = :parentAccountId];
 		list<Account> listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
-
-
 
 		// get Account Statements related with all accounts in the hierarchy
 		this.listStatements = [
