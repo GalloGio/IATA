@@ -609,12 +609,20 @@ global with sharing class ANG_ConversionHelper {
         
         for(Account acct:accts){
 
+        	if(isAcctElegibleToCreateAuthorization(acct)){
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+			}
 		}
 
         insert authorizations;
+    }
+
+    public static boolean isAcctElegibleToCreateAuthorization(Account acct){
+
+    	return !(acct.IATACode__c == null ||  acct.Status__c == 'New application pending' || acct.Status__c == 'Not accreditated' || acct.Purge_Flag__c == true);
+
     }
 
 	public class MigrationContainer{
