@@ -99,7 +99,7 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Map<String, Schema.SObjectField> objFieldsMap = Schema.getGlobalDescribe().get(trackedObjApiName).getDescribe().fields.getMap();
 
-        Set<String> duplicated = new Set<String>();
+        //Set<String> duplicated = new Set<String>();
 
 
 
@@ -119,11 +119,13 @@ public with sharing class ANG_GenericHistoryViewerController {
             if(trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType') 
                 trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
 
+			/*
             if(duplicated.contains(String.valueOf(history.get('CreatedDate')) + history.get('CreatedById') + trackedFieldApiName))
                 continue;
             else
                 duplicated.add(String.valueOf(history.get('CreatedDate')) + history.get('CreatedById') + trackedFieldApiName);
-
+			*/
+			
             //for some reason record type changes generate 2 records in history table???!!! one has the values with Ids of the record types
             //and the other has the value with the label of the record type. we just want to keep the one with the names
             if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' )
