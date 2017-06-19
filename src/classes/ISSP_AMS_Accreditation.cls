@@ -2717,8 +2717,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
     private void accountStagingFieldMapping(Account sourceAccount, String strReason, Boolean alreadyAccredited) {  //Field mapping to be used when updating staging area from HO Account for HO Applications
         Map<String, String> mapAccountToAccrFormFields;
-        
-        if(strReason == 'New HO' && !alreadyAccredited) {
+        system.debug('aqui strReason ' + strReason + ' alreadyAccredited ' + alreadyAccredited );
+        if((strReason == 'New HO' || strReason == AMS_UTILS.CASE_REASON_HE_LITE || strReason == AMS_UTILS.CASE_REASON_HE_STANDARD) && !alreadyAccredited) {
             mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
                 'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
                 'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
@@ -2728,7 +2728,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
                 'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c' 
                 };    
-        } else if(strReason == 'New HO' && alreadyAccredited) {
+        } else if((strReason == 'New HO' || strReason == AMS_UTILS.CASE_REASON_HE_LITE || strReason == AMS_UTILS.CASE_REASON_HE_STANDARD) && alreadyAccredited) {
             mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'Short_Name__c' => 'Short_Name__c',
                 'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
                 'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
@@ -5032,18 +5032,70 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     }
 
+    /**
+        
+        This method was build to represent all the new Form Validations for the New Accreditation Model ( Standard / Lite)
+        
+        - NEWGEN-663
+        - NEWGEN-271
+
+
+    **/
+    private boolean validateNewAccModel(boolean isnewgenError){
+
+         boolean ngErrorFound = false;           
+            
+            //checking if IATAN question is answered
+            if(newForm.IATA_Registered_IATAN_Agent__c == null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)){
+                newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
+                ngErrorFound = true;
+            }
+            
+            //checking if IATAN code field is fill            
+            if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
+                newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
+                ngErrorFound = true;
+            }
+            
+            //checking if the Legal Name is fill
+            if(hqAccount.Name == null){
+                hqAccount.Name.addError(Label.ISSP_YouMustEnter);
+                ngErrorFound = true;
+            }
+
+            //checking if the Phone number is fill
+            if(hqAccount.Phone == null){
+                hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
+                ngErrorFound = true;
+            }
+
+            //checking if the Billing Street is fill
+            if (hqAccount.BillingStreet == null){
+                hqAccount.BillingStreet.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }
+
+            //checking if the Billing City is fill
+            if (hqAccount.BillingCity == null){
+                hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }   
+
+        return ngErrorFound;        
+    }
+
     private boolean validateForm(boolean includeErrorMsgs) {
         boolean errorFound = false;
         Integer cntAuthorisedSig;
         Integer cntIFAPContacts;
         Integer cntCASSContact;
-
+        
         cntAuthorisedSig = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                             WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Authorised_signatory__c = true];
 
         cntIFAPContacts = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Financial_Assessment_Contact__c = true AND Id != :newContact.Id];
-
+        
         cntCASSContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                           WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND CASS_contact__c = true];
 
@@ -5258,11 +5310,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         }
                     }
 
-                    if (newForm.ISSP_AMS_Online_Agency_Application__c == null) {
+                    if (newForm.ISSP_AMS_Online_Agency_Application__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                         newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
-                    if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null) {
+                    if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) { 
                         newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
@@ -5282,17 +5334,17 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
                     
-                    if (newForm.ISSP_AMS_Registered_Capital__c == null) {
+                    if (newForm.ISSP_AMS_Registered_Capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                         newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
                     
-                    if (newForm.ISSP_AMS_Paidup_capital__c == null) {
+                    if (newForm.ISSP_AMS_Paidup_capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                         newForm.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
                     
-                    if (newForm.ISSP_AMS_Min_Paidup_capital__c == null) {
+                    if (newForm.ISSP_AMS_Min_Paidup_capital__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                         newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
@@ -5333,11 +5385,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     }
 
                     if (cntIFAPContacts == 0) {
+                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH) {
                         ApexPages.Message myMsg;
                         myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
                         ApexPages.addMessage(myMsg);
                         errorFound = true;
                     }
+                     
+                     if(newForm.Agent_Type__c == AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH){
+                        if(validateNewAccModel(true)) errorFound = true;   
+                     }
                     
                     //Travel HO Ownership must be 100% except for listed Corporations
                 if (newCase.Reason1__c == 'New HO' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
@@ -5430,22 +5487,22 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
-            if (newForm.ISSP_AMS_Premises_located_at_airport__c == null) {
+            if (newForm.ISSP_AMS_Premises_located_at_airport__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                 newForm.ISSP_AMS_Premises_located_at_airport__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
             }
 
-            if (newForm.ISSP_AM_Means_Identified_Travel_Agency__c == null) {
+            if (newForm.ISSP_AM_Means_Identified_Travel_Agency__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                 newForm.ISSP_AM_Means_Identified_Travel_Agency__c.addError(Label.ISSP_AMS_Means_Agency_Identified);
                 errorFound = true;
             }
 
-            if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null) {
+            if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                 newForm.ISSP_AMS_Gross_Amnt_First_year__c.addError(Label.ISSP_AMS_Gross_Amnt_First_year);
                 errorFound = true;
             }
             
-            if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null) {
+            if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null  && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
                 newForm.ISSP_AMS_Gross_Amnt_Second_year__c.addError(Label.ISSP_AMS_Gross_Amnt_Second_year);
                 errorFound = true;
             }
