@@ -391,6 +391,9 @@
         <fields>Sales_Quantity__c</fields>
         <relatedList>IEC_Event_Release__c.Last_Version__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedStandardPriceList</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
