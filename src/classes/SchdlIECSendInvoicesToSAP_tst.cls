@@ -35,11 +35,11 @@ private class SchdlIECSendInvoicesToSAP_tst {
 		lstZInvoice[3].Name = 'zzzTest Invoice 4 ' + system.now();
 		insert lstZInvoice;
 		List<Invoice_Item__c> lstZInvoiceItem = new List<Invoice_Item__c>{
-			  new Invoice_Item__c(Invoice__c=lstZInvoice[0].Id, Zuora_ID__c='zzzTest111', Subscription_Zuora_ID__c='zzzTest Sub 1', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
-			, new Invoice_Item__c(Invoice__c=lstZInvoice[1].Id, Zuora_ID__c='zzzTest222', Subscription_Zuora_ID__c='zzzTest Sub 2', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
-			, new Invoice_Item__c(Invoice__c=lstZInvoice[2].Id, Zuora_ID__c='zzzTest333', Subscription_Zuora_ID__c='zzzTest Sub 3', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
-			, new Invoice_Item__c(Invoice__c=lstZInvoice[3].Id, Zuora_ID__c='zzzTest444', Subscription_Zuora_ID__c='zzzTest Sub 4', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
-			, new Invoice_Item__c(Invoice__c=lstZInvoice[3].Id, Zuora_ID__c='zzzTest555', Subscription_Zuora_ID__c='zzzTest Sub 4', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10, Charge_Name__c='Tax')
+			  new Invoice_Item__c(Invoice__c=lstZInvoice[0].Id, Zuora_ID__c='zzzTest111', Subscription_Zuora_ID__c='zzzTest Sub 1', Subscription_Number__c = 'nbr zzzTest Sub 1', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
+			, new Invoice_Item__c(Invoice__c=lstZInvoice[1].Id, Zuora_ID__c='zzzTest222', Subscription_Zuora_ID__c='zzzTest Sub 2', Subscription_Number__c = 'nbr zzzTest Sub 2', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
+			, new Invoice_Item__c(Invoice__c=lstZInvoice[2].Id, Zuora_ID__c='zzzTest333', Subscription_Zuora_ID__c='zzzTest Sub 3', Subscription_Number__c = 'nbr zzzTest Sub 3', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
+			, new Invoice_Item__c(Invoice__c=lstZInvoice[3].Id, Zuora_ID__c='zzzTest444', Subscription_Zuora_ID__c='zzzTest Sub 4', Subscription_Number__c = 'nbr zzzTest Sub 4', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10)
+			, new Invoice_Item__c(Invoice__c=lstZInvoice[3].Id, Zuora_ID__c='zzzTest555', Subscription_Zuora_ID__c='zzzTest Sub 5', Subscription_Number__c = 'nbr zzzTest Sub 5', Quantity__c=1, Unit_Price__c=10, Charge_Amount__c=10, Charge_Name__c='Tax')
 		};
 		insert lstZInvoiceItem;
 
