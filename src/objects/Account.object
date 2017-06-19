@@ -82274,6 +82274,18 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
+),
+TEXT(Location_Type__c) = &apos;AE&apos;,
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;
+)</errorConditionFormula>
+        <errorMessage>An Associate Entity must have a parent account with location type HE</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
         <active>false</active>
         <description>If Industry = Airline, then Field/Head Office must be filled</description>

@@ -1940,7 +1940,7 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, Integer> contacts = getAccreditationContacts(oscars);
 
-		ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+		//ID newNGRT = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 		
 		Map<Id, Integer> allPercentages = getAllOWnersPercentage(oscars);
 
@@ -1948,7 +1948,7 @@ public class AMS_OSCARTriggerHandler {
 
 			Boolean isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c);
 
-			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && oscar.RecordTypeId == newNGRT){
+			if(oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED && isNewGenProcess){
 
 				if(contacts.get(oscar.AMS_Online_Accreditation__c) > 0)
 					continue;

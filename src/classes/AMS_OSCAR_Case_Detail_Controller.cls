@@ -55,6 +55,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
+                , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_Type__c
             };
         }
     }
@@ -86,6 +87,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
         //verifu "hardcoded" logic
         if(fieldName == 'IATACode__c') return false;
+        if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
+        if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
         if(!isAgencyChanges) return true;        
 
         //check per field
@@ -96,6 +99,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'Is_your_firm_handling_Dangerous_Goods__c') return isCargoAgency;
         if(fieldName == 'CASS_Number__c') return !isNewGenProcess;
         if(fieldName == 'SAAM_Case__c') return isNewGenProcess;
+        if(fieldName == 'ANG_Accreditation_Type__c') return isNewGenProcess;
 
         return true;
     }
