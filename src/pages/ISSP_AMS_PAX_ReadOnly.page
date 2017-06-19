@@ -363,9 +363,7 @@
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c} {!newForm.CurrencyIsoCode}"/>                 
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c} {!newForm.CurrencyIsoCode}"/>
             <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!amsOfficeType == 'HO'}"/>
-            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>
-            <apex:outputText label="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" value="{!IF(newForm.IATA_Registered_IATAN_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" rendered="{!IF(OR(newForm.Agent_Type__c!='Standard no Cash',newForm.Agent_Type__c!='Standard with Cash'),true,false)}"/>
-            <apex:outputField rendered="{!newForm.IATA_Registered_IATAN_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" value="{!newForm.IATAN_Code__c}"/>            
+            <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>                      
             <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" rendered="{!amsOfficeType == 'HO'}"/>
 
         </apex:pageBlockSection>
