@@ -12834,7 +12834,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statement Notifications Button</shortDescription>
-        <value>Receive remittance date reminders</value>
+        <value>Remittance Date Reminders</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements</fullName>
