@@ -1316,4 +1316,7 @@ public without sharing class OneIdVfDSEController {
         return theContact;
     }
 
+    public Static String getCommunityName(){
+        return OneIdUtils.getCommunityUrlName();
+    }    
 }

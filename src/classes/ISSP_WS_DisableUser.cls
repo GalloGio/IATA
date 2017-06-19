@@ -192,6 +192,9 @@ global class ISSP_WS_DisableUser {
                             //app = 'CASSLink Analytics';
                             serviceId = serviceIdInstance.CASSLinkRouteAnalyzer__c;
                         }
+                        else if (app.toUpperCase() == 'CASS04'){                           
+                            serviceId = serviceIdInstance.CNS_CassLink__c;
+                        }
                         else if (app.toUpperCase() == 'SIS'){
                             serviceId = serviceIdInstance.SIS__c;
                         }
@@ -482,6 +485,9 @@ global class ISSP_WS_DisableUser {
                         else if (app.toUpperCase() == 'CASS03'){
                             //app = 'CASSLink Analytics';
                             serviceId = serviceIdInstance.CASSLinkRouteAnalyzer__c;
+                        }
+                        else if (app.toUpperCase() == 'CASS04'){                           
+                            serviceId = serviceIdInstance.CNS_CassLink__c;
                         }
                         else if (app.toUpperCase() == 'SIS'){
                             serviceId = serviceIdInstance.SIS__c;

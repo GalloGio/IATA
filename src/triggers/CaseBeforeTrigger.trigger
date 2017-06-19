@@ -1,53 +1,53 @@
 /*BRIEF DOCUMENTATION ON CASE TRIGGER AFTER THE CASE TRIGGER OPTIMIZATION PROGRAM (Each part refers to a detailed document)
-01 - trgProcessISSCase - ALL: isInsert, isUpdate                  FILE
-02 - trgCase - All: isInsert, isUpdate                         FILE
-03 - trgCaseIFAP - ALL: Common, isInsert, isUpdate                  FILE
-04 - ISSP_CreateNotificationForCase - All: isUpdate                  FILE
-05 - trgCase_BeforeDelete - All: isDelete                      FILE
-06 - UserInfoUpdate - All: Common, isInsert, isUpdate                FILE
-07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate      FILE
-08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate            FILE
-09 - trgCustomerPortalCaseSharing - ALL: isInsert	
-10 - trgBeforeInsertUpdate - All: Common                      FILE
-11 - CalculateBusinessHoursAges - All: isUpdate                    FILE
-12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate                FILE
-13 - trgICCSCaseValidation - All: Common                      FILE
-14 - trgParentCaseUpdate - All: isUpdate                      FILE
-15 - Case_FSM_Handle_NonCompliance_BI_BU - All: Common, isInsert, isUpdate      FILE
-16 - trgIDCard_Case_BeforeUpdate - All: isUpdate                  FILE
-17 - trgICCS_ASP_Case_Validation - All: Common                    FILE
-18 - trgCreateUpdateServiceRenderedRecord - All: Common                FILE
-19 - updateAccountFieldBasedOnIATAwebCode - All: Common                FILE
-20 - CaseBeforInsert - All: isInsert                        FILE
-21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate                  FILE
-22 - trgAccelyaRequestSetCountry - All: Common, isInsert              FILE
+01 - trgProcessISSCase - ALL: isInsert, isUpdate                  
+02 - trgCase - All: isInsert, isUpdate                         
+03 - trgCaseIFAP - ALL: Common, isInsert, isUpdate                  
+04 - ISSP_CreateNotificationForCase - All: isUpdate                  
+05 - trgCase_BeforeDelete - All: isDelete                      
+06 - UserInfoUpdate - All: Common, isInsert, isUpdate                
+07 - trgCheckBusinessHoursBeforeInsert - All: Common, isInsert, isUpdate      
+08 - trgSidraCaseBeforeInsertUpdate - All: isInsert, isUpdate            
+09 - trgCustomerPortalCaseSharing - ALL: isInsert                  
+10 - trgBeforeInsertUpdate - All: Common                      
+11 - CalculateBusinessHoursAges - All: isUpdate                    
+12 - trgCase_SIS_ICH_AreaVsType - All: Common, isUpdate                
+13 - trgICCSCaseValidation - All: Common                      
+14 - trgParentCaseUpdate - All: isUpdate                      
+15 - Case_FSM_Handle_NonCompliance_BI_BU - All: Common, isInsert, isUpdate      
+16 - trgIDCard_Case_BeforeUpdate - All: isUpdate                  
+17 - trgICCS_ASP_Case_Validation - All: Common                    
+18 - trgCreateUpdateServiceRenderedRecord - All: Common                
+19 - updateAccountFieldBasedOnIATAwebCode - All: Common                
+20 - CaseBeforInsert - All: isInsert                        
+21 - AMS_OSCARCaseTrigger - All: isInsert, isUpdate                  
+22 - trgAccelyaRequestSetCountry - All: Common, isInsert              
 */
  
 trigger CaseBeforeTrigger on Case (before delete, before insert, before update) {   
 
     /*DEVELOPMENT START/STOP FLAGS*/
-	boolean trgProcessISSCase = true; //GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;
-	boolean trgCase = true; //GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
-	boolean trgCaseIFAP = true; //GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;
-	boolean ISSP_CreateNotificationForCase = true; //GlobalCaseTrigger__c.getValues('BT ISSP_CreateNotificationForCase').ON_OFF__c; 			//11111111111111
-	boolean trgCase_BeforeDelete = true; //GlobalCaseTrigger__c.getValues('BT trgCase_BeforeDelete').ON_OFF__c;  			                    //11111111111111
-	boolean UserInfoUpdate = true; //GlobalCaseTrigger__c.getValues('BT UserInfoUpdate').ON_OFF__c;                                             //22222222222222
-	boolean trgCheckBusinessHoursBeforeInsert = true; //GlobalCaseTrigger__c.getValues('BT trgCheckBusinessHoursBeforeInsert').ON_OFF__c;
-	boolean trgSidraCaseBeforeInsertUpdate = true; //GlobalCaseTrigger__c.getValues('BT trgSidraCaseBeforeInsertUpdate').ON_OFF__c;				//22222222222222
-	boolean trgBeforeInsertUpdate = true; //GlobalCaseTrigger__c.getValues('BT trgBeforeInsertUpdate').ON_OFF__c; 						        //11111111111111
-	boolean CalculateBusinessHoursAges = true; //GlobalCaseTrigger__c.getValues('BT CalculateBusinessHoursAges').ON_OFF__c;					    //22222222222222
-	boolean trgCase_SIS_ICH_AreaVsType = true; //GlobalCaseTrigger__c.getValues('BT trgCase_SIS_ICH_AreaVsType').ON_OFF__c; 					//11111111111111
-	boolean trgICCSCaseValidation = true; //GlobalCaseTrigger__c.getValues('BT trgICCSCaseValidation').ON_OFF__c;                               //22222222222222
-	boolean trgParentCaseUpdate = true; //GlobalCaseTrigger__c.getValues('BT trgParentCaseUpdate').ON_OFF__c;							        //33333333333333
-	boolean Case_FSM_Handle_NonCompliance_BI_BU = true; //GlobalCaseTrigger__c.getValues('BT Case_FSM_Handle_NonCompliance_BI_BU').ON_OFF__c;	//22222222222222
-	boolean trgIDCard_Case_BeforeUpdate = true; //GlobalCaseTrigger__c.getValues('BT trgIDCard_Case_BeforeUpdate').ON_OFF__c;
-	boolean trgICCS_ASP_Case_Validation = true; //GlobalCaseTrigger__c.getValues('BT trgICCS_ASP_Case_Validation').ON_OFF__c;                   //11111111111111
-	boolean trgCreateUpdateServiceRenderedRecord = true; //GlobalCaseTrigger__c.getValues('BT trgCreateUpdateServiceRendered').ON_OFF__c;
-	boolean updateAccountFieldBasedOnIATAwebCode = true; //GlobalCaseTrigger__c.getValues('BT updateAccountFieldBasedOnIATA').ON_OFF__c;		//22222222222222
-	boolean CaseBeforInsert = true; //GlobalCaseTrigger__c.getValues('BT CaseBeforInsert').ON_OFF__c;							                //33333333333333
-	boolean AMS_OSCARCaseTrigger = true; //GlobalCaseTrigger__c.getValues('BT AMS_OSCARCaseTrigger').ON_OFF__c;
-	boolean trgAccelyaRequestSetCountry = true; //GlobalCaseTrigger__c.getValues('BT trgAccelyaRequestSetCountry').ON_OFF__c;					//33333333333333
-	boolean trgCustomerPortalCaseSharing = true; //GlobalCaseTrigger__c.getValues('BT trgCustomerPortalCaseSharing').ON_OFF__c;                 
+    boolean trgProcessISSCase = true;//GlobalCaseTrigger__c.getValues('BT trgProcessISSCase').ON_OFF__c;
+    boolean trgCase = true;// GlobalCaseTrigger__c.getValues('BT trgCase').ON_OFF__c;                                                           //33333333333333
+    boolean trgCaseIFAP =  true;//GlobalCaseTrigger__c.getValues('BT trgCaseIFAP').ON_OFF__c;                                                   //44444444444444
+    boolean ISSP_CreateNotificationForCase =  true;//GlobalCaseTrigger__c.getValues('BT ISSP_CreateNotificationForCase').ON_OFF__c;             //11111111111111
+    boolean trgCase_BeforeDelete =  true;//GlobalCaseTrigger__c.getValues('BT trgCase_BeforeDelete').ON_OFF__c;                                 //11111111111111
+    boolean UserInfoUpdate =  true;//GlobalCaseTrigger__c.getValues('BT UserInfoUpdate').ON_OFF__c;                                             //22222222222222
+    boolean trgCheckBusinessHoursBeforeInsert =  true;//GlobalCaseTrigger__c.getValues('BT trgCheckBusinessHoursBeforeInsert').ON_OFF__c;
+    boolean trgSidraCaseBeforeInsertUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgSidraCaseBeforeInsertUpdate').ON_OFF__c;             //22222222222222
+    boolean trgBeforeInsertUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgBeforeInsertUpdate').ON_OFF__c;                               //11111111111111
+    boolean CalculateBusinessHoursAges =  true;//GlobalCaseTrigger__c.getValues('BT CalculateBusinessHoursAges').ON_OFF__c;                     //22222222222222
+    boolean trgCase_SIS_ICH_AreaVsType =  true;//GlobalCaseTrigger__c.getValues('BT trgCase_SIS_ICH_AreaVsType').ON_OFF__c;                     //11111111111111
+    boolean trgICCSCaseValidation =  true;//GlobalCaseTrigger__c.getValues('BT trgICCSCaseValidation').ON_OFF__c;                               //22222222222222
+    boolean trgParentCaseUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgParentCaseUpdate').ON_OFF__c;                                   //33333333333333
+    boolean Case_FSM_Handle_NonCompliance_BI_BU =  true;//GlobalCaseTrigger__c.getValues('BT Case_FSM_Handle_NonCompliance_BI_BU').ON_OFF__c;   //22222222222222
+    boolean trgIDCard_Case_BeforeUpdate =  true;//GlobalCaseTrigger__c.getValues('BT trgIDCard_Case_BeforeUpdate').ON_OFF__c;
+    boolean trgICCS_ASP_Case_Validation =  true;//GlobalCaseTrigger__c.getValues('BT trgICCS_ASP_Case_Validation').ON_OFF__c;                   //11111111111111
+    boolean trgCreateUpdateServiceRenderedRecord =  true;//GlobalCaseTrigger__c.getValues('BT trgCreateUpdateServiceRendered').ON_OFF__c;       //44444444444444
+    boolean updateAccountFieldBasedOnIATAwebCode =  true;//GlobalCaseTrigger__c.getValues('BT updateAccountFieldBasedOnIATA').ON_OFF__c;        //22222222222222
+    boolean CaseBeforInsert =  true;//GlobalCaseTrigger__c.getValues('BT CaseBeforInsert').ON_OFF__c;                                           //33333333333333
+    boolean AMS_OSCARCaseTrigger =  true;//GlobalCaseTrigger__c.getValues('BT AMS_OSCARCaseTrigger').ON_OFF__c;
+    boolean trgAccelyaRequestSetCountry =  true;//GlobalCaseTrigger__c.getValues('BT trgAccelyaRequestSetCountry').ON_OFF__c;                   //33333333333333
+    boolean trgCustomerPortalCaseSharing =  true;//GlobalCaseTrigger__c.getValues('BT trgCustomerPortalCaseSharing').ON_OFF__c;                 //44444444444444
     
     /**********************************************************************************************************************************/
     /*Record type*/
@@ -56,7 +56,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID SIDRAcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
     ID SIDRABRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA BR');
     ID sisHelpDeskCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get(Label.Cases_SIS_Help_Desk);
-    ID caseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
+    //ID caseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SIDRA');
     ID caseSEDARecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('SEDA');//INC200638
     Id RT_ICCS_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Product_Management');
     Id RT_ICCS_BA_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Bank_Account_Management');
@@ -79,6 +79,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID SEDAcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SEDA');
     ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ISS_Portal_New_Case_RT');//TF - SP9-C5
     ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
+    ID PortalRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
     /*Record type*/
     
     /*Variables*/
@@ -90,6 +91,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     Profile IFAPcurrentUserProfile;
     Boolean isIfapAuthorizedUser = false;
     String profileName, profileId;
+    string CurrUser;
     String cPriority, defect, caseStatus, assignedTo, l2SupportOwner, supportAccount, caseType, caseClass, alphaNumericCode, supportOwner, caseArea, description;
     string KeyString;    
     public static final String PAX = 'Travel Agent';
@@ -114,10 +116,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     Map < string, Case > KaleCases = new Map < string, Case > ();
     
     /*CONTROLLARE IL POPOLAMENTO DELLE SEGUENTI MAPPE QUANDO VIENE CHIAMATA CheckBusinessHoursHelperClass*/
-    Map < string, Contact > CBHContactMap = new Map < string, Contact > ();
-    Map < string, Account > CBHAccountMap = new Map < string, Account > ();
-    
-    List<User> currentUser;   
+    Map <string, Contact> CBHContactMap = new Map <string, Contact> ();
+    Map <string, Account> CBHAccountMap = new Map <string, Account> ();
+    map <ID, Case> mapFSMCases;
+
+    List<User> currentUser;
+    List<EmailTemplate__c> IFAPemailtemplate = new List<EmailTemplate__c>();
     List<Contact> lstConts = new List<Contact>();
     List<Profile> profileList = new List<Profile>();
     List<Profile> currentUserProfile; 
@@ -130,8 +134,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     /*Share trigger code*/
     if(Trigger.isInsert || Trigger.isUpdate){
         
-        /*trgCaseIFAP Trigger
-        //////INSERIRE LA CONDIZIONE PER FARLO ESEGUIRE SOLO IN ISINSERT E ISUPDATE
+        /*trgCaseIFAP Trigger*/
         if(trgCaseIFAP){ //FLAG
           system.debug('trgCaseIFAP');
             if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
@@ -139,6 +142,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 Boolean isIFAp = false;
                 Set<Id> contactIds = new Set<Id>();
                 Set<Id> IFAPaccountIds = new Set<Id>();
+                List<Contact> contacts = new List<Contact>();
+                List<Account> accounts = new List<Account>();
                 for (Case aCase : trigger.New) {
                 //GM - IMPRO - START
                 //again the for loop doesn't work properly, if the first in the list is not ifap rt, it exits
@@ -154,12 +159,18 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
                 if (isIFAp) {
                   system.debug('##ROW##');
-                    //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                    //IFAPcurrentUserProfile = [SELECT ID, Name FROM Profile WHERE id =: currentUser.ProfileId limit 1];
                     IFAPcurrentUserProfile = [SELECT ID, Name FROM Profile WHERE id = : UserInfo.getProfileId() limit 1];
-                    List<Contact> contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
-                    List<Account> accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                    if(!contactIds.isEmpty()){
+                        contacts = [Select c.Id, c.Agent_Type__c, c.AccountId From Contact c where Id IN : contactIds];
+                    }
+                    if(!IFAPaccountIds.isEmpty()){
+                        accounts = [Select a.Id, a.IATACode__c, a.BillingCountry, a.Type From Account a where Id IN : IFAPaccountIds];
+                    }
                     System.debug('QUERY DEBUG' + Limits.getQueryRows());
+                    //GM - IMPRO - START
+                    //emailtemplate query from isinsert and isupdate to the share code
+                    IFAPemailtemplate = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
+                    //GM - IMPRO - END
                     //Ifap Authorized users have a specific permission set
                     List<PermissionSet> PSet = [SELECT Id FROM PermissionSet WHERE Name = 'IFAP_Authorized_Users'];
                     if(PSet <> null && PSet.size()>0){
@@ -195,6 +206,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*UserInfoUpdate Trigger*/
         if(UserInfoUpdate){//FLAG 
           system.debug('UserInfoUpdate');
+            //IMPRO GM START
+            //currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
+            CurrUser = UserInfo.getUserId();
+            //IMPRO GM END
+
             // Update L.Faccio ----------------When a case is closed, I save the user who closed the case.
             for(Case c : Trigger.new){
                 if((Trigger.isInsert && c.Status == 'Closed') || (Trigger.isUpdate && Trigger.oldMap.get(c.Id).Status != 'Closed' && c.Status == 'Closed')){
@@ -207,7 +223,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         
         /*trgCheckBusinessHoursBeforeInsert Trigger
         if(trgCheckBusinessHoursBeforeInsert){//FLAG
-          system.debug('trgCheckBusinessHoursBeforeInsert');
+            system.debug('trgCheckBusinessHoursBeforeInsert');
+            List < Contact > ctcIdList = new List < Contact >();
             for (Case newCaseObj: trigger.new){
                 if (((newCaseObj.RecordTypeId != null) && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || ((newCaseObj.description != null) 
                     && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) || ((newCaseObj.CaseArea__c != null) 
@@ -226,8 +243,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                         CBHAccountMap.put(relatedAccount.Name, relatedAccount);
                     }
                 }
-                
-                List < Contact > ctcIdList = [Select id, accountid, email, name from Contact where account.Name in : AccountNames order by accountid];
+                if(!AccountNames.isEmpty()){
+                    ctcIdList = [Select id, accountid, email, name from Contact where account.Name in : AccountNames order by accountid];
+                }
                 if (!ctcIdList.isEmpty()){
                   system.debug('##ROW##');
                   //GM - IMPRO - START
@@ -474,6 +492,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     setFSMCaseId.add(NCCase.ParentId);
                 }
             }
+            if(!setFSMCaseId.isEmpty()){
+                mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed
+                                                        , FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c
+                                                        , firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c
+                                                        from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
+            }
         }
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger*/
         
@@ -503,17 +527,19 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             // get a map of relevant cases per Account Id
             Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP
             Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
-            for (Case c : [SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c FROM Case WHERE (RecordTypeId = :RT_ICCS_ASP_Id OR RecordTypeId = :AirlineCodingRTId) AND IsClosed = false AND AccountId IN :setRelatedAcctIds]) {
-                if (c.RecordTypeId == RT_ICCS_ASP_Id) { 
-                    mapCasesPerAccountId.put(c.AccountId, c);
-                }
-                if (c.RecordTypeId == AirlineCodingRTId  ) {
-                    list<Case> listCase = mapACCasesPerAccountId.get(c.AccountId);
-                    if (listCase == null) {
-                        listCase = new list<Case>();
+            if(!setRelatedAcctIds.isEmpty()){
+                for (Case c : [SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c FROM Case WHERE (RecordTypeId = :RT_ICCS_ASP_Id OR RecordTypeId = :AirlineCodingRTId) AND IsClosed = false AND AccountId IN :setRelatedAcctIds]) {
+                    if (c.RecordTypeId == RT_ICCS_ASP_Id) { 
+                        mapCasesPerAccountId.put(c.AccountId, c);
                     }
-                    listCase.add(c);
-                    mapACCasesPerAccountId.put(c.AccountId, listCase);
+                    if (c.RecordTypeId == AirlineCodingRTId  ) {
+                        list<Case> listCase = mapACCasesPerAccountId.get(c.AccountId);
+                        if (listCase == null) {
+                            listCase = new list<Case>();
+                        }
+                        listCase.add(c);
+                        mapACCasesPerAccountId.put(c.AccountId, listCase);
+                    }
                 }
             }
             // Validate one single ASP creation case OR one single 
@@ -568,7 +594,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgICCS_ASP_Case_Validation Trigger*/
         
-        /*trgCreateUpdateServiceRenderedRecord Trigger
+        /*trgCreateUpdateServiceRenderedRecord Trigger*/
         //Trigger that creates a Service Rendered record if the Case Area is Airline Joining / Leaving, the case record type is "IDFS Airline Participation Process" and the case is approved
         if(trgCreateUpdateServiceRenderedRecord){
           system.debug('trgCreateUpdateServiceRenderedRecord');
@@ -820,59 +846,59 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             }   
         }
         /*trgBeforeInsertUpdate Trigger*/
-  
-        /*trgCustomerPortalCaseSharing Trigger
-		//Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
-		if(trgCustomerPortalCaseSharing){
-			try{
-				String CPCcaseRecType;
-				BusinessHours bHourObj = new BusinessHours();
-				Set<Id> UserIds = new Set<Id>();
-				list<User> lstUsers = new List<User>();
-				list<QueueSobject> lstQueue = new List<QueueSobject>();
-				//GM - IMPRO - START
-				//the control on record type has been thought for a single insert only
-				for(Case ObjCaseNew : Trigger.New){ 
-					CPCcaseRecType = ObjCaseNew.RecordTypeId;            
-					UserIds.add(ObjCaseNew.OwnerId);                                        
-				}
-				
-				if(CPCcaseRecType == PortalRecordTypeID){ 
-					lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
-					bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
-					for(Case ObjCaseNew : Trigger.New){                	
-						ObjCaseNew.BusinessHoursId = bHourObj.Id;
-					} 
-					if(lstUsers.Size()>0){
-						for(Case ObjCaseNew : Trigger.New){
-							for(Integer i=0;i<lstUsers.Size();i++){
-								if(ObjCaseNew.OwnerId == lstUsers[i].Id){
-									ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
-									System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
-									break;
-								}
-							}           
-						}   
-					}else{        
-						lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
-						if(lstQueue.Size()>0){
-							for(Case ObjCaseNew : Trigger.New){
-								for(Integer i=0;i<lstQueue.Size();i++){
-									if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
-										ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
-										break;
-									}
-								}           
-							}
-						} //lstQueue.Size
-					} //else
-				} //if CPCcaseRecType
-			}//GM - IMPRO - END
-			catch(Exception e){
-				System.debug('Error Message -----: ' + e.getMessage());
-			} 
-		} //if trgCustomerPortalCaseSharing
-		/*trgCustomerPortalCaseSharing Trigger*/
+        
+        /*trgCustomerPortalCaseSharing Trigger*/
+    //Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
+    if(trgCustomerPortalCaseSharing){
+      try{
+        String CPCcaseRecType;
+        BusinessHours bHourObj = new BusinessHours();
+        Set<Id> UserIds = new Set<Id>();
+        list<User> lstUsers = new List<User>();
+        list<QueueSobject> lstQueue = new List<QueueSobject>();
+        //GM - IMPRO - START
+        //the control on record type has been thought for a single insert only
+        for(Case ObjCaseNew : Trigger.New){ 
+          CPCcaseRecType = ObjCaseNew.RecordTypeId;            
+          UserIds.add(ObjCaseNew.OwnerId);                                        
+        }
+        
+        if(CPCcaseRecType == PortalRecordTypeID){ 
+          lstUsers = [Select Id, Name FROM User WHERE Id IN : UserIds and IsActive =: True];
+          bHourObj = [Select id, name from BusinessHours where name =: 'EUR - France'];
+          for(Case ObjCaseNew : Trigger.New){                  
+            ObjCaseNew.BusinessHoursId = bHourObj.Id;
+          } 
+          if(lstUsers.Size()>0){
+            for(Case ObjCaseNew : Trigger.New){
+              for(Integer i=0;i<lstUsers.Size();i++){
+                if(ObjCaseNew.OwnerId == lstUsers[i].Id){
+                  ObjCaseNew.Case_Owner_CP__c = lstUsers[i].Name;   
+                  System.debug('Owner name: ' + ObjCaseNew.Case_Owner_CP__c);                  
+                  break;
+                }
+              }           
+            }   
+          }else{        
+            lstQueue = [SELECT Id, Queue.Id, Queue.Name, Queue.Type FROM QueueSobject WHERE Queue.Id IN : UserIds];         
+            if(lstQueue.Size()>0){
+              for(Case ObjCaseNew : Trigger.New){
+                for(Integer i=0;i<lstQueue.Size();i++){
+                  if(ObjCaseNew.OwnerId == lstQueue[i].QueueId){                                                          
+                    ObjCaseNew.Case_Owner_CP__c = lstQueue[i].Queue.Name;                       
+                    break;
+                  }
+                }           
+              }
+            } //lstQueue.Size
+          } //else
+        } //if CPCcaseRecType
+      }//GM - IMPRO - END
+      catch(Exception e){
+        System.debug('Error Message -----: ' + e.getMessage());
+      } 
+    } //if trgCustomerPortalCaseSharing
+    /*trgCustomerPortalCaseSharing Trigger*/
         
     }
     /*Share trigger code*/
@@ -896,6 +922,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 // only process case of type SAAM
                 if (newCase.RecordTypeId == ProcessISSPcaseRecordTypeID) {
                     // get parent case
+                    //GM - IMPRO - START
                     Case[] parentCase = [Select c.Id, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, 
                         c.secondFAnonComplianceDate__c, c.Account.Type, c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c 
                         from Case c where c.Id =: newCase.ParentId];
@@ -1062,50 +1089,72 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgProcessISSCase Trigger.isInsert*/
         
-        /*trgCaseIFAP Trigger.isInsert
+        /*trgCaseIFAP Trigger.isInsert*/
         if(trgCaseIFAP){//FLAG
-          system.debug('trgCaseIFAP Trigger.isInsert');
+           if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
+            system.debug('trgCaseIFAP Trigger.isInsert');
             for (Case newCase : Trigger.New) {
                 // only consider IFAP cases
                 if (newCase.RecordTypeId == IFAPcaseRecordTypeID) {
                     // validate the account's country
-                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap))
+                    if (!IFAP_BusinessRules.isCountryValid(newCase, accountMap)){ //if false
                         newCase.addError('The account\'s country is not valid.');
-                    else
+                    }else
                         IFAP_BusinessRules.setCountryAreaAndISOCode(newCase, accountMap);
                     // validate the Agent Type
                     //if (!IFAP_BusinessRules.isAgentTypeValid(newCase, contactMap))
                         //newCase.addError('The contact\'s Agent Type is not valid.');
                     // validate the Agent Code if the financial review type is not 'New'
                     if (newCase.Financial_Review_Type__c != 'New applications')
-                    //GM - IMPRO - START
                     //the check on the agent code is done only on number of characters 7<X<11, sure is correct?
                         if (!IFAP_BusinessRules.isAgentCodeValid(newCase, accountMap))
-                    //GM - IMPRO - END
                             newCase.addError('The contact\'s Agent Code is not valid.');
                     if (!IFAP_BusinessRules.IsStatusCanBeSelected(true, newCase, null, IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
                         newCase.addError('This following case status cannot be selected: ' + newCase.status);
                     }
+                    //GM - IMPRO - START
+                    //query inside FOR, query inside FOR, query inside FOR
                     // check if the FA template's country matches the case country
-                    EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected Initial Request Email Template does not match the case country.');
+                    if(newCase.EmailTemplate__c!=null){
+                        //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c EmTe : IFAPemailtemplate){
+                            if (EmTe.Id == newCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Initial Request Email Template does not match the case country.');
+                                break;
+                            }
+                        }
                     }
                     // check if the FA reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected Reminder Email Template does not match the case country.');
+                    if(newCase.Reminder_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c REmTe : IFAPemailtemplate){
+                            if (REmTe.Id == newCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected Reminder Email Template does not match the case country.');
+                                break;
+                            }
+                        }
                     }
                     // check if the FS template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected FS Email Template does not match the case country.');
+                    if(newCase.FS_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSEmTe : IFAPemailtemplate){
+                            if (FSEmTe.Id == newCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Email Template does not match the case country.');
+                                break;
+                            }
+                        }
                     }
                     // check if the FS reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], newCase.IFAP_Country_ISO__c)) {
-                        newCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                    if(newCase.FS_Reminder_EmailTemplate__c!=null){
+                        //et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : newCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSREmTe : IFAPemailtemplate){
+                            if (FSREmTe.Id == newCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, newCase.IFAP_Country_ISO__c)) {
+                                newCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                                break;
+                            }
+                        }
                     }
+                    //GM - IMPRO - END
                     // Phase 4
                     // check if the agent already has closed case for the same financial year and if the checkbox has been checked
                     if (IFAP_BusinessRules.accountHasClosedCases(newCase.AccountId, newCase.IFAP_Financial_Year__c) && newCase.IFAP_CanCreateWhileClosedCase__c == false)
@@ -1118,6 +1167,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     }
                 }
             }
+          }
         }
         /*trgCaseIFAP Trigger.isInsert*/
         
@@ -1134,23 +1184,19 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     /// Update_AIMS_IRRWITH__c        updates   CS_Rep_ACC_IRR_Withdrawal__c
                     // Update_AIMS_REI_DEFWITH__c    updates    CS_Rep_Acc_REI__c            
                     //  Update_AIMS_TER__c            updates    CS_Rep_ACC_TER__c
-                    if (isCurrentUserInit == false){
-                        currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                        isCurrentUserInit = true;
-                    }if (currentUser.size() > 0){                      
-                        if (aCase.CS_Contact_Result__c != null)
-                            aCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
-                        if (aCase.Update_AIMS_IRR__c != null)
-                            aCase.CS_Rep_Acc_IRR_DEF__c = currentUser[0].Id ; 
-                        if (aCase.Update_AIMS_DEF__c != null)
-                            aCase.CS_Rep_Acc_DEF__c = currentUser[0].Id ; 
-                        if (aCase.Update_AIMS_IRRWITH__c != null)
-                            aCase.CS_Rep_ACC_IRR_Withdrawal__c = currentUser[0].Id ; 
-                        if (aCase.Update_AIMS_REI_DEFWITH__c != null)
-                            aCase.CS_Rep_Acc_REI__c = currentUser[0].Id ; 
-                        if (aCase.Update_AIMS_TER__c != null)
-                            aCase.CS_Rep_ACC_TER__c = currentUser[0].Id ; 
-                    }
+                    if (aCase.CS_Contact_Result__c != null)
+                        aCase.CS_Rep_Contact_Customer__c = currUser ;
+                    if (aCase.Update_AIMS_IRR__c != null)
+                        aCase.CS_Rep_Acc_IRR_DEF__c = currUser ; 
+                    if (aCase.Update_AIMS_DEF__c != null)
+                        aCase.CS_Rep_Acc_DEF__c = currUser ; 
+                    if (aCase.Update_AIMS_IRRWITH__c != null)
+                        aCase.CS_Rep_ACC_IRR_Withdrawal__c = currUser ; 
+                    if (aCase.Update_AIMS_REI_DEFWITH__c != null)
+                        aCase.CS_Rep_Acc_REI__c = currUser ; 
+                    if (aCase.Update_AIMS_TER__c != null)
+                        aCase.CS_Rep_ACC_TER__c = currUser ; 
+                
                 }                
             }
         }
@@ -1168,11 +1214,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         //Constantin
         if(trgSidraCaseBeforeInsertUpdate){
-          system.debug('trgSidraCaseBeforeInsertUpdate rigger.isInsert');
+          system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isInsert');
             // automatically fill in the exchange rate using the rate stored in the system for the SIDRA cases
             set<String> setCurrencies = new set<String>();
             for (Case c: trigger.new){
-                if ((c.RecordTypeId == caseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
+                if ((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == caseSEDARecordTypeID) && c.Currency__c != null) {//INC200638 - added SEDA record type
                     setCurrencies.add(c.Currency__c);
                 }
             }
@@ -1192,46 +1238,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                 }
             }
         }
-        //COMMENTED CODE IN THE INITIAL TRIGGER
-        /*if (trigger.isInsert){
-        for (Case aCase: trigger.new){ // Fill a set of Account Ids for the cases select statement
-            // Only for Sidra small amount cases
-            system.debug(LoggingLevel.Error,'============== INSERT analyze '+aCase.Subject+' which has IRR_Withdrawal_Reason__c = '+aCase.IRR_Withdrawal_Reason__c+'================');
-            
-            if (aCase.RecordTypeId == caseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY))
-            {
-                // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
-                accountIds.add(aCase.AccountId);
-                system.debug(LoggingLevel.Error,'============== SMALL AMOUNT: '+aCase.Subject+' ================');
-            }     
-        }
-
-        if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
-            // Get a list of all related cases
-            List<Case> casesIns = [SELECT AccountId, Action_needed_Small_Amount__c FROM Case 
-                                    WHERE RecordTypeId =: caseRecordTypeID 
-                                    AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
-                                        OR IRR_Withdrawal_Reason__c = :MINORPOLICY 
-                                        OR Action_needed_Small_Amount__c=true) 
-                                    AND CreatedDate >=: OneYearAgo 
-                                    AND AccountId IN: accountIds];
-            
-            for (Case mCase : Trigger.new){
-                integer nbCasesSA = 0;
-                for (Case testCase : casesIns){
-                    if (testCase.AccountId == mCase.AccountId){ nbCasesSA ++; }
-                } 
-                
-                if (nbCasesSA >= 3){ 
-                    mCase.Action_needed_Small_Amount__c = true;
-                    mCase.IRR_Withdrawal_Reason__c = null; 
-                }
-                else { mCase.Action_needed_Small_Amount__c = false; }
-            }
-        }
-        }
-        else{*/
-        /*Constantin*/
         /*trgSidraCaseBeforeInsertUpdate Trigger.isInsert*/
         
         /*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isInsert*/
@@ -1241,8 +1247,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(!setFSMCaseId.isEmpty()){
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                map<ID, Case> mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, 
-                                                                firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
                 for(Case NCCase:trigger.new){
                   system.debug('##ROW##');
                     if(NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)){
@@ -1347,6 +1351,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             set<string> CountryNameSet = new set<string>();
             map<string,IATA_ISO_Country__c> IATAISOCountryMap = new map<string,IATA_ISO_Country__c>();
             List<Mapping_for_CSR_Cases__c> CSRCasesMapping = Mapping_for_CSR_Cases__c.getAll().values();
+            Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
+            Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
             List<Case> parentAccount;
             List<Contact> accountFromRelatedContact;
             for(Case newCase : trigger.new){
@@ -1355,12 +1361,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             //Gavinho - 27-03-2017
             for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet OR Case_BSP_Country__c IN :CountryNameSet]){
                 IATAISOCountryMap.put(iso.Name,iso);
-                if(iso.Case_BSP_Country__c != null) 
+                if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
                     IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
             }
             for(Case newCase : trigger.new){
-                Id RT_Fin_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('IATA_Financial_Security_Monitoring');
-                Id Financtial_Sec_Monitoring_Id = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('EmailTemplate__c').get('FSM');
                 if(IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c)!=null){
                     system.debug('\n\n\n Region__c '+newCase.Region__c +'\n\n\n');
                     IATA_ISO_Country__c iso = IATAISOCountryMap.get(newCase.Country_concerned_by_the_query__c);
@@ -1507,165 +1511,156 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         }
         /*trgProcessISSCase Trigger.isUpdate*/
         
-        /*trgCaseIFAP Trigger.isUpdate
+        /*trgCaseIFAP Trigger.isUpdate*/
         if(trgCaseIFAP){//FLAG
+         if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
           system.debug('trgCaseIFAP Trigger.isUpdate');
-            for (Case updatedCase : Trigger.New) {
+            //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.recordType.Name = 'IFAP'];
+            for (Case IFAPupdatedCase : Trigger.New) {
                 // ** May 2014 modif: Forbid change of recordtype FROM or TO IFAP case
-                if (updatedCase.RecordTypeId == IFAPcaseRecordTypeID && Trigger.oldMap.get(updatedCase.ID).RecordTypeId != IFAPcaseRecordTypeID) 
-                  updatedCase.addError('You cannot create an IFAP case by changing the case record type. If you want to create an IFAP case, create the IFAP case as a child case.');
-                if (updatedCase.RecordTypeId != IFAPcaseRecordTypeID && Trigger.oldMap.get(updatedCase.ID).RecordTypeId == IFAPcaseRecordTypeID) 
-                  updatedCase.addError('You cannot change the record type of an IFAP case.');
+                if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID && Trigger.oldMap.get(IFAPupdatedCase.ID).RecordTypeId != IFAPcaseRecordTypeID) 
+                  IFAPupdatedCase.addError('You cannot create an IFAP case by changing the case record type. If you want to create an IFAP case, create the IFAP case as a child case.');
+                if (IFAPupdatedCase.RecordTypeId != IFAPcaseRecordTypeID && Trigger.oldMap.get(IFAPupdatedCase.ID).RecordTypeId == IFAPcaseRecordTypeID) 
+                  IFAPupdatedCase.addError('You cannot change the record type of an IFAP case.');
                 // ** End May 2014 modif
                 // only consider IFAP cases
-                if (updatedCase.RecordTypeId == IFAPcaseRecordTypeID) {
+                if (IFAPupdatedCase.RecordTypeId == IFAPcaseRecordTypeID) {
                   system.debug('##ROW##');
-                    Case oldCase = Trigger.oldMap.get(updatedCase.ID);
-                    //if(updatedCase.AccountId <> oldCase.AccountId){
-                    if (updatedCase.Country__c <> oldCase.Country__c) {
+                    Case IFAPoldCase = Trigger.oldMap.get(IFAPupdatedCase.ID);
+                    //if(IFAPupdatedCase.AccountId <> IFAPoldCase.AccountId)
+                    if (IFAPupdatedCase.Country__c <> IFAPoldCase.Country__c) {
                         // validate the account's country
-                        if (!IFAP_BusinessRules.isCountryValid(updatedCase, accountMap))
-                            updatedCase.addError('The account\'s country is not valid.');
+                        if (!IFAP_BusinessRules.isCountryValid(IFAPupdatedCase, accountMap))
+                            IFAPupdatedCase.addError('The account\'s country is not valid.');
                     }
-                    if (updatedCase.IFAP_Agent_Type__c <> oldCase.IFAP_Agent_Type__c) {
+                    if (IFAPupdatedCase.IFAP_Agent_Type__c <> IFAPoldCase.IFAP_Agent_Type__c) {
                         // validate the Agent Type
-                        if (!IFAP_BusinessRules.isAgentTypeValid(updatedCase, contactMap))
-                            updatedCase.addError('The contact\'s Agent Type is not valid.');
+                        if (!IFAP_BusinessRules.isAgentTypeValid(IFAPupdatedCase, contactMap))
+                            IFAPupdatedCase.addError('The contact\'s Agent Type is not valid.');
                     }
                     // validate the Agent Code if the financial review type is not 'New'
-                    if (updatedCase.Financial_Review_Type__c != 'New applications') {
-                        if (updatedCase.IFAP_Agent_Code__c <> oldCase.IFAP_Agent_Code__c) {
-                            if (!IFAP_BusinessRules.isAgentCodeValid(updatedCase, accountMap))
-                                updatedCase.addError('The contact\'s Agent Code is not valid.');
+                    if (IFAPupdatedCase.Financial_Review_Type__c != 'New applications') {
+                        if (IFAPupdatedCase.IFAP_Agent_Code__c <> IFAPoldCase.IFAP_Agent_Code__c) {
+                            if (!IFAP_BusinessRules.isAgentCodeValid(IFAPupdatedCase, accountMap))
+                                IFAPupdatedCase.addError('The contact\'s Agent Code is not valid.');
                         }
                     }
-                    if (UpdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
-                        if (UpdatedCase.status <> oldCase.status) {
-                            if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, updatedCase, oldCase , IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
+                    if (IFAPupdatedCase.status != 'Closed' && !TransformationHelper.NoStatusValidation ) {
+                        if (IFAPupdatedCase.status <> IFAPoldCase.status) {
+                            if (!IFAP_BusinessRules.IsStatusCanBeSelected(false, IFAPupdatedCase, IFAPoldCase , IFAPcurrentUserProfile, isIfapAuthorizedUser)) {
                                 System.debug('IFAP_BusinessRules.IsStatusCanBeSelected............trg');
-                                updatedCase.addError('The following case status cannot be selected: ' + updatedCase.status);
-                            }else if (IFAP_BusinessRules.FSValidationCheckBox(updatedCase, oldCase , IFAPcurrentUserProfile)) {
+                                IFAPupdatedCase.addError('The following case status cannot be selected: ' + IFAPupdatedCase.status);
+                            }else if (IFAP_BusinessRules.FSValidationCheckBox(IFAPupdatedCase, IFAPoldCase , IFAPcurrentUserProfile)) {
                                 System.debug('IFAP_BusinessRules.FSValidationCheckBox..........');
-                                updatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
+                                IFAPupdatedCase.addError('The case cannot be saved. Tick ALL the Financial Security Validation checkboxes and enter FS Submitted Date to save the case.' );
                             }
                         }
                     }
-                    /*
+                    //GM - IMPRO - START - queries inside FOR (Shame on whoever has done this!)
                     // check if the FA template's country matches the case country
-                    EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected Initial Request Email Template does not match the case country.');
-                    }
-                    // check if the FA reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.Reminder_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected Reminder Email Template does not match the case country.');
-                    }
-                    // check if the FS template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.FS_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected FS Email Template does not match the case country.');
-                    }
-                    // check if the FS reminder template's country matches the case country
-                    et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id =: updatedCase.FS_Reminder_EmailTemplate__c];
-                    if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                      updatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
-                    }*//*
-                    // check if the FA template's country matches the case country
-                    if (UpdatedCase.EmailTemplate__c != null && (UpdatedCase.EmailTemplate__c <> oldCase.EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected Initial Request Email Template does not match the case country.');
+                    if (IFAPupdatedCase.EmailTemplate__c != null && (IFAPupdatedCase.EmailTemplate__c <> IFAPoldCase.EmailTemplate__c)) {
+                        for (EmailTemplate__c EmTe : IFAPemailtemplate){
+                            if (EmTe.Id == IFAPupdatedCase.EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(EmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                                IFAPupdatedCase.addError('The selected Initial Request Email Template does not match the case country.');
+                                break;
+                            }
                         }
                     }
                     // check if the FA reminder template's country matches the case country
-                    if (UpdatedCase.Reminder_EmailTemplate__c != null && (UpdatedCase.Reminder_EmailTemplate__c <> oldCase.Reminder_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected Reminder Email Template does not match the case country.');
+                    if (IFAPupdatedCase.Reminder_EmailTemplate__c != null && (IFAPupdatedCase.Reminder_EmailTemplate__c <> IFAPoldCase.Reminder_EmailTemplate__c)) {
+                        //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c REmTe : IFAPemailtemplate){
+                            if (REmTe.Id == IFAPupdatedCase.Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(REmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                                IFAPupdatedCase.addError('The selected Reminder Email Template does not match the case country.');
+                                break;
+                            }
                         }
                     }
                     // check if the FS template's country matches the case country
-                    if (UpdatedCase.FS_EmailTemplate__c != null && (UpdatedCase.FS_EmailTemplate__c <> oldCase.FS_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected FS Email Template does not match the case country.');
+                    if (IFAPupdatedCase.FS_EmailTemplate__c != null && (IFAPupdatedCase.FS_EmailTemplate__c <> IFAPoldCase.FS_EmailTemplate__c)) {
+                        //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSEmTe : IFAPemailtemplate){
+                            if (FSEmTe.Id == IFAPupdatedCase.FS_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSEmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                                IFAPupdatedCase.addError('The selected FS Email Template does not match the case country.');
+                                break;
+                            }
                         }
                     }
                     // check if the FS reminder template's country matches the case country
-                    if (UpdatedCase.FS_Reminder_EmailTemplate__c != null && (UpdatedCase.FS_Reminder_EmailTemplate__c <> oldcase.FS_Reminder_EmailTemplate__c)) {
-                        EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : updatedCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
-                        if (et.size() > 0 && !IFAP_BusinessRules.isTemplateCountryValid(et[0], updatedCase.IFAP_Country_ISO__c)) {
-                            updatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                    if (IFAPupdatedCase.FS_Reminder_EmailTemplate__c != null && (IFAPupdatedCase.FS_Reminder_EmailTemplate__c <> IFAPoldCase.FS_Reminder_EmailTemplate__c)) {
+                        //EmailTemplate__c[] et = [Select et.IATA_ISO_Country__r.Id from EmailTemplate__c et where et.Id = : IFAPupdatedCase.FS_Reminder_EmailTemplate__c and et.recordType.Name = 'IFAP'];
+                        for (EmailTemplate__c FSREmTe : IFAPemailtemplate){
+                            if (FSREmTe.Id == IFAPupdatedCase.FS_Reminder_EmailTemplate__c && !IFAP_BusinessRules.isTemplateCountryValid(FSREmTe, IFAPupdatedCase.IFAP_Country_ISO__c)) {
+                                IFAPupdatedCase.addError('The selected FS Reminder Email Template does not match the case country.');
+                                break;
+                            }
                         }
                     }
+                    //GM - IMPRO - END
                     // check if the account country was changed
-                    if (IFAP_BusinessRules.AccountCountryHasChanged(oldCase, UpdatedCase)) {
+                    if (IFAP_BusinessRules.AccountCountryHasChanged(IFAPoldCase, IFAPupdatedCase)) {
                         // validate the account's country
-                        if (!IFAP_BusinessRules.isCountryValid(UpdatedCase, accountMap))
-                            UpdatedCase.addError('The account\'s country is not valid.');
+                        if (!IFAP_BusinessRules.isCountryValid(IFAPupdatedCase, accountMap))
+                            IFAPupdatedCase.addError('The account\'s country is not valid.');
                         else
-                            IFAP_BusinessRules.setCountryAreaAndISOCode(UpdatedCase, accountMap);
+                            IFAP_BusinessRules.setCountryAreaAndISOCode(IFAPupdatedCase, accountMap);
                     }
                     //check if region is missing
-                    if (UpdatedCase.Region__c == '' || UpdatedCase.Region__c == null) {
-                        IFAP_BusinessRules.setCountryAreaAndISOCode(UpdatedCase, accountMap);
+                    if (IFAPupdatedCase.Region__c == '' || IFAPupdatedCase.Region__c == null) {
+                        IFAP_BusinessRules.setCountryAreaAndISOCode(IFAPupdatedCase, accountMap);
                     }
-                    //updatedCase.IsComplaint__c = false;
+                    //IFAPupdatedCase.IsComplaint__c = false;
                     // Phase 4
                     // check if Parent case is a SAAM case
-                    if (String.valueOf(updatedCase.ParentId) != '' && IFAP_BusinessRules.isSAAMCase(updatedCase.ParentId)) {
-                        Case theParentCase = [Select c.Id, c.CaseNumber from Case c where c.Id = :updatedCase.ParentId limit 1];
+                    if (String.valueOf(IFAPupdatedCase.ParentId) != '' && IFAP_BusinessRules.isSAAMCase(IFAPupdatedCase.ParentId)) {
+                        //GM - IMPRO - START - Query inside FOR, never used
+                        //Case theParentCase = [Select c.Id, c.CaseNumber from Case c where c.Id = :IFAPupdatedCase.ParentId limit 1];
+                        //GM - IMPRO - END
                         // check if a new parent SAAM case has been assigned
-                        if (oldCase.ParentId <> updatedCase.ParentId) {
+                        if (IFAPoldCase.ParentId <> IFAPupdatedCase.ParentId) {
                             //INC158616 - changed to list and check if size > 0
                             Case childCaseOfParent;
-                            List<Case> listChildCaseOfParent = [Select c.Id, c.CaseNumber, c.RecordTypeId FROM Case c WHERE c.ParentId = :updatedCase.ParentId AND c.Id <> :updatedCase.Id AND c.RecordTypeId = : IFAPcaseRecordTypeID LIMIT 1];
+                            List<Case> listChildCaseOfParent = [Select c.Id, c.CaseNumber, c.RecordTypeId FROM Case c WHERE c.ParentId = :IFAPupdatedCase.ParentId AND c.Id <> :IFAPupdatedCase.Id AND c.RecordTypeId = : IFAPcaseRecordTypeID LIMIT 1];
                             if (listChildCaseOfParent <> null && listChildCaseOfParent.size() > 0) {
-                                updatedCase.addError('The selected parent SAAM case already has a child IFAP case.');
+                                IFAPupdatedCase.addError('The selected parent SAAM case already has a child IFAP case.');
                             }
                         }
                         // update some fields in the parent SAAM case
-                        IFAP_BusinessRules.updateParentSAAMCase(oldCase, updatedCase);
+                        IFAP_BusinessRules.updateParentSAAMCase(IFAPoldCase, IFAPupdatedCase);
                     }
                     //don not allow change of Financial Review Result for unauthorized users
-                    if (updatedCase.Financial_Review_Result__c <> oldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
-                        updatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
+                    if (IFAPupdatedCase.Financial_Review_Result__c <> IFAPoldCase.Financial_Review_Result__c && !isIfapAuthorizedUser && !IFAPcurrentUserProfile.Name.toLowerCase().contains('system administrator')) {
+                        IFAPupdatedCase.addError('Your user does not have the permission to change the Financial Review Result field.');
                     }
                     //when case has an OSCAR attached must synchronize fields
-                    if(updatedCase.Oscar__c != null)
-                        AMS_Utils.syncOSCARwithIFAP(oldCase, updatedCase);
+                    if(IFAPupdatedCase.Oscar__c != null)
+                        AMS_Utils.syncOSCARwithIFAP(IFAPoldCase, IFAPupdatedCase);
                 }
             }
+          }
         }
         /*trgCaseIFAP Trigger.isUpdate*/
         
         /*UserInfoUpdate Trigger.isUpdate*/
         if(UserInfoUpdate){//FLAG
           system.debug('UserInfoUpdate Trigger.isUpdate');
-            for (Case updatedCase: Trigger.New){
-                if ((updatedCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updatedCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
-                    //User currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
+            for (Case updateCase: Trigger.New){
+                if ((updateCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updateCase.RecordTypeId == SIDRABRcaseRecordTypeID )){
                     //compare with old values       
-                    Case oldCase = Trigger.oldMap.get(updatedCase.ID);
-                    if (isCurrentUserInit == false){
-                        currentUser = [Select Id, FirstName, LastName, ProfileId from User where Id =: UserInfo.getUserId() limit 1];
-                        isCurrentUserInit = true;
-                    }if (currentUser.size() > 0){                      
-                        //update name field if values changed
-                        if (updatedCase.CS_Contact_Result__c != oldCase.CS_Contact_Result__c)
-                            updatedCase.CS_Rep_Contact_Customer__c = currentUser[0].Id ;
-                        if (updatedCase.Update_AIMS_IRR__c != oldCase.Update_AIMS_IRR__c)
-                            updatedCase.CS_Rep_Acc_IRR_DEF__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_DEF__c != oldCase.Update_AIMS_DEF__c)
-                            updatedCase.CS_Rep_Acc_DEF__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_IRRWITH__c != oldCase.Update_AIMS_IRRWITH__c)
-                            updatedCase.CS_Rep_ACC_IRR_Withdrawal__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_REI_DEFWITH__c != oldCase.Update_AIMS_REI_DEFWITH__c)
-                            updatedCase.CS_Rep_Acc_REI__c = currentUser[0].Id ; 
-                        if (updatedCase.Update_AIMS_TER__c != oldCase.Update_AIMS_TER__c)
-                            updatedCase.CS_Rep_ACC_TER__c = currentUser[0].Id ; 
-                    }                    
+                    Case UIUoldCase = Trigger.oldMap.get(updateCase.ID);                    
+                    //update name field if values changed
+                    if (updateCase.CS_Contact_Result__c != UIUoldCase.CS_Contact_Result__c)
+                        updateCase.CS_Rep_Contact_Customer__c = currUser ;
+                    if (updateCase.Update_AIMS_IRR__c != UIUoldCase.Update_AIMS_IRR__c)
+                        updateCase.CS_Rep_Acc_IRR_DEF__c = currUser ; 
+                    if (updateCase.Update_AIMS_DEF__c != UIUoldCase.Update_AIMS_DEF__c)
+                        updateCase.CS_Rep_Acc_DEF__c = currUser ; 
+                    if (updateCase.Update_AIMS_IRRWITH__c != UIUoldCase.Update_AIMS_IRRWITH__c)
+                        updateCase.CS_Rep_ACC_IRR_Withdrawal__c = currUser ; 
+                    if (updateCase.Update_AIMS_REI_DEFWITH__c != UIUoldCase.Update_AIMS_REI_DEFWITH__c)
+                        updateCase.CS_Rep_Acc_REI__c = currUser ; 
+                    if (updateCase.Update_AIMS_TER__c != UIUoldCase.Update_AIMS_TER__c)
+                        updateCase.CS_Rep_ACC_TER__c = currUser ;                     
                 }
             }
         }
@@ -1681,15 +1676,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         /*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
         
         /*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
-        if(trgSidraCaseBeforeInsertUpdate){//FLAG
+        if(trgSidraCaseBeforeInsertUpdate){ //FLAG
           Set<Id> accountIds = new Set<Id>();
           system.debug('trgSidraCaseBeforeInsertUpdate Trigger.isUpdate');
              for (Case aCase: trigger.new){ // Fill a set of Account Ids for the cases select statement
                 // Only for Sidra small amount cases, only cases created within the last 24 hours
                 system.debug(LoggingLevel.Error,'============== UPDATE analyze '+aCase.Subject+' which has IRR_Withdrawal_Reason__c = '+aCase.IRR_Withdrawal_Reason__c+'================');
-                if (aCase.RecordTypeId == caseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null){
+                if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && (aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && aCase.CreatedDate >= Last24Hours && aCase.AccountId != null){
                     // We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
-                    system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee');
                     accountIds.add(aCase.AccountId);
                 }     
             }
@@ -1697,15 +1691,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             if(accountIds.size() > 0){ // This list should be empty if all of the cases aren't related to the Sidra Small amount process
                 system.debug('##ROW##');
                 // Get a list of all related cases
-                List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c FROM Case 
-                                        WHERE RecordTypeId =: caseRecordTypeID 
-                                        AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
-                                            OR IRR_Withdrawal_Reason__c = :MINORPOLICY 
-                                            OR Action_needed_Small_Amount__c=true) 
-                                        AND CreatedDate >=: OneYearAgo
-                                        AND AccountId <> null 
-                                        AND AccountId IN: accountIds];
-                
+                List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c 
+                                            FROM Case WHERE RecordTypeId =: SIDRAcaseRecordTypeID 
+                                            AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT 
+                                            OR IRR_Withdrawal_Reason__c = :MINORPOLICY OR Action_needed_Small_Amount__c=true) 
+                                            AND CreatedDate >=: OneYearAgo AND AccountId <> null AND AccountId IN: accountIds];
                 // If there are minor error policy cases, make a list of the latest reinstatement date per Account Id
                 map<Id, Datetime> mapReiDatesPerAccountiId = new map<Id, Datetime>();
                 if (!casesUpd.isEmpty()) { 
@@ -1718,7 +1708,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                               AND AccountId IN: accountIds 
                               GROUP BY AccountId ];
                 if (!REIDates.isEmpty()) {
-                  system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee REIDates '+REIDates);
                   for (AggregateResult ar : REIDates) {
                       mapReiDatesPerAccountiId.put((Id)ar.get('AccountId'), (Datetime)ar.get('reinstatement_date'));
                     }
@@ -1727,17 +1716,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
         for (Case mCase : Trigger.new){
                   // only act on cases that were created within the last 24 hours
                   if (mCase.CreatedDate >= Last24Hours) {
-                      system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee '+mCase.casenumber);
                       integer nbCasesSA = 0;
                       for (Case testCase : casesUpd ){
                           if (testCase.AccountId == mCase.AccountId && testCase.Id != mCase.Id && 
                               (mapReiDatesPerAccountiId.get(testCase.AccountId) == null || testCase.CreatedDate > mapReiDatesPerAccountiId.get(testCase.AccountId)) ){ 
                             nbCasesSA ++; 
-                            system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee nbCasesSA '+nbCasesSA);
                        }
                       }
                       if (nbCasesSA >=3){ 
-                        system.debug('eeeeeeeeeeeeeeeeeeeeeeeeee');
                           mCase.Action_needed_Small_Amount__c = true; 
                           mCase.IRR_Withdrawal_Reason__c = null;
                           mCase.Propose_Irregularity__c = Datetime.now();
@@ -1881,8 +1867,6 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
               system.debug('##ROW##');
                 map<Id, Case> mapFSMCaseToUpdate = new map<Id, Case>(); //List of FSM case to update
                 //Search Parent Case (FSM)
-                map<ID, Case> mapFSMCases = new Map<ID, Case>([Select Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed, FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c, 
-                                                                firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c from Case c where Id IN :setFSMCaseId and RecordTypeId = :FSMRecordTypeID]);
                 for(Case NCCase:trigger.new){
                     if(NCCase.RecordTypeId == NCRecordTypeID && mapFSMCases.keyset().contains(NCCase.ParentId)){
                         Case FSMCase;

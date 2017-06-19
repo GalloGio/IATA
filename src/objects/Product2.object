@@ -2031,6 +2031,10 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </picklistValues>
@@ -4453,6 +4457,7 @@ The product will only appear on the Online Store when the date entered in this f
     <listViews>
         <fullName>GDP_All_Products1</fullName>
         <columns>PRODUCT2.NAME</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
@@ -4510,6 +4515,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4637,6 +4643,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4688,7 +4695,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
         <columns>ZProduct__c</columns>
-        <columns>Zuora_Id__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4712,7 +4719,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
         <columns>ZProduct__c</columns>
-        <columns>Zuora_Id__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4865,6 +4872,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>IEC_Product_Rate_Plan_Information__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Product_Manager_lookup__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>PRODUCT2.FAMILY</field>
@@ -4987,6 +4995,7 @@ The product will only appear on the Online Store when the date entered in this f
         <columns>PRODUCT2.NAME</columns>
         <columns>IEC_Product_Information__c</columns>
         <columns>IEC_Parent_Product__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
         <columns>SAP_Material_Number__c</columns>
         <columns>Display_to_ECommerce__c</columns>
         <columns>Sell_through_eCommerce__c</columns>
@@ -5035,6 +5044,28 @@ The product will only appear on the Online Store when the date entered in this f
             <value>Passenger Agency List</value>
         </filters>
         <label>GDP/EPUB/Passenger Agency List</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>GDP_Products_Formula_Zuora_ID_Check</fullName>
+        <columns>PRODUCT2.NAME</columns>
+        <columns>ZProduct__c</columns>
+        <columns>Formula_Zuora_Id__c</columns>
+        <columns>IEC_Product_Information__c</columns>
+        <columns>IEC_Parent_Product__c</columns>
+        <columns>IEC_Product_Rate_Plan_Information__c</columns>
+        <columns>SAP_Material_Number__c</columns>
+        <columns>Effective_To__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRODUCT2.FAMILY</field>
+            <operation>equals</operation>
+            <value>GDP</value>
+        </filters>
+        <label>GDP Products / Formula Zuora ID Check</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
@@ -6717,6 +6748,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9703,6 +9738,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mileage</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Mileage Manual</fullName>
                 <default>false</default>
             </values>
@@ -12639,6 +12678,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Marshalling Signals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mileage</fullName>
                 <default>false</default>
             </values>
             <values>
