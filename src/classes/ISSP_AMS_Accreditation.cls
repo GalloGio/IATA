@@ -5381,18 +5381,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent);
                         errorFound = true;
                     }
-
-                    //NEWGEN - 663 STARTS                    
-                    if(newForm.IATA_Registered_IATAN_Agent__c == null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)){
-                        newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
-                        errorFound = true;
-                    }
-
-                    if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
-                        newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
-                        errorFound = true;
-                    }
-                    //NEWGEN - 663 END
                     
                     if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
                         newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs);
