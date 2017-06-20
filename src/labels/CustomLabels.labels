@@ -19526,7 +19526,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</shortDescription>
-        <value>These users must now be approved in IATA EasyPay and assigned to one or more wallets by an IEP Admin or Master Wallet Manager before they can start using the service, if this hasn’t already been done. Users will be notified by email once access is granted.</value>
+        <value>As IEP Admin or Master Wallet Manager you must now approve those users in IATA EasyPay and assign them to one or more wallets before they can start using the service.&lt;br/&gt;&lt;br/&gt;Users will be notified by email once access is granted.</value>
     </labels>    
     <labels>
         <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</fullName>
