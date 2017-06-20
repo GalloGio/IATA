@@ -35,9 +35,9 @@ public class ANG_RiskEventHistoryExtension_Test {
 		insert accountList;
 
 		case case1= new Case(
-				Subject='Test',
-				BSP_CASS__c='BSP',
-				recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite')
+			Subject='Test',
+			BSP_CASS__c='BSP',
+			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite')
 		);
 		insert case1;
 	}
@@ -54,8 +54,8 @@ public class ANG_RiskEventHistoryExtension_Test {
 		insert are;
 	}
 
-	static testmethod void testMethod1(){
- 
+	static testmethod void testPageInitialization(){
+ 	// tests the page construction and paginator reset/initializing
 		account acc1 = [select id,Location_Type__c from account where name='acc1'];
 		account acc2 = [select id,Location_Type__c from account where name='acc2'];
 
@@ -73,7 +73,7 @@ public class ANG_RiskEventHistoryExtension_Test {
 	}
 
 	static testmethod void deleteRiskEvent(){
- 
+ 		//tests the risk event deletion
 		account acc = [select id from account where name='acc1'];
 		generateRiskEvent(acc.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today(),null);
 
@@ -82,9 +82,5 @@ public class ANG_RiskEventHistoryExtension_Test {
 		ANG_RiskEventHistoryExtension.deleteRecord(reList.get(0).id);
 
 		system.assertEquals((nRecordBeforeDelete-1),[select id from ANG_Agency_Risk_Event__c].size(),'Record was not deleted');
-
-		//test reset
-		
-
 	}
 }
