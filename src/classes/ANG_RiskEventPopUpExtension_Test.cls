@@ -52,7 +52,7 @@ public class ANG_RiskEventPopUpExtension_Test{
 		insert are;
 	}
 
-	static testmethod void testMethod1(){
+	static testmethod void testPageInitialization(){
  
 		account acc1 = [select id,Location_Type__c from account where name='acc1'];
 	
