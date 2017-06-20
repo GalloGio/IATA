@@ -386,7 +386,7 @@
                                 <br/>
                               </div>
                               <div class="modal-body">
-                                <apex:outputText value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
+                                <apex:outputText escape="false" value="{!$Label.ANG_ISSP_IEP_Portal_Request_Access_Msg}"/>
                                 <br/>
                               </div>
                               <div class="modal-footer">
