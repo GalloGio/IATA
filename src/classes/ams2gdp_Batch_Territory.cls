@@ -23,7 +23,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 			+', Appointment__r.Account__r.Main_Accreditation_Organization__c, Appointment__r.Accreditation_Endorsement_organisation__r.Name  '
 			+',  ISO_Country__r.ISO_Code__c,  ISO_Country__r.Name, ISO_Country__r.ISO_Country_Short_Name__c,  ISO_State__r.ISO_Code__c '
 			+', Appointment__r.Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.Name, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c, Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c' 
-			+', Appointment__r.Airline__r.IATACode__c, Appointment__r.Airline__r.Name '
+			+', Appointment__r.Airline__r.IATACode__c, Appointment__r.Airline__r.Name, Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c '
 			+', Appointment__r.Account__r.state_numeric_code__c';
 
 		//-- Query conditions 

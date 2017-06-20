@@ -810,7 +810,11 @@ public class ams2gdp_BusinessLogic
 			String code = '';
 			String name = '';
 			if(territory.Appointment__r.Accreditation_Endorsement_organisation__c != null ) {
-				code = territory.Appointment__r.Accreditation_Endorsement_organisation__c;
+				if(territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c != null) {
+					if(territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c.length()>3) {
+						code = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c.left(3);
+					} else { code = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c;}
+				}
 				name = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name;
 			}
 			else if(territory.Appointment__r.Airline__c != null ) {
