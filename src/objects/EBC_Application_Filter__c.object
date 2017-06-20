@@ -235,13 +235,13 @@ Dedicated to the eBroadcast application.</description>
         <columns>Search_Level__c</columns>
         <columns>Filter_Description__c</columns>
         <columns>Data_Type__c</columns>
+        <columns>Filter_Field__c</columns>
         <columns>Data_Source_Object__c</columns>
         <columns>Data_Source_Where_Clause__c</columns>
         <columns>Data_Source_Label_Field__c</columns>
         <columns>Data_Source_Value_Field__c</columns>
         <columns>Filter_RelatedList__c</columns>
         <columns>Filter_RelatedList_Field__c</columns>
-        <columns>Filter_Field__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

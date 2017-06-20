@@ -201,6 +201,7 @@ public class AMS_AgencyChangesTest {
 		
 		// If I finalize the change (STEP 2) no more change codes schould be generated
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
+		theOSCAR.STEP15__c = AMS_Utils.PASSED;
         theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		update theOSCAR;
 		
@@ -277,6 +278,7 @@ public class AMS_AgencyChangesTest {
 		
 		// If I finalize the change (STEP 2) a change code CHF should be generated for all the agencies involved (HO1, BR1, BR2, BR3)
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
+		theOSCAR.STEP15__c = 'Passed';
         theOSCAR.RPM_Approval__c = 'Authorize Approval';
 		update theOSCAR;
 		

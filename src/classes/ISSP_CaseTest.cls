@@ -552,6 +552,7 @@ public class ISSP_CaseTest {
         c.RecordTypeId = recordTypeId;
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
+        c.Visible_on_ISS_Portal__c = true;
         insert c;
 
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
@@ -562,6 +563,7 @@ public class ISSP_CaseTest {
         Test.startTest();
         system.runAs(thisUser){
             ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
             // test there are no cc others
             list<String> result1 = cttr.getListCCOther();
             System.assert(result1.isEmpty(),'wrong result ' + result1);

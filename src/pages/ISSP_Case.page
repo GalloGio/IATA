@@ -517,7 +517,7 @@
                                        </div>
                                        <div class="col-lg-9">
                                            <div class="input-container" style="position: relative;">
-                                               <input id="ccotheremail" required="required" style="width: 100%;" class="form-control rec mandatory ccotheremail" type="text" />
+                                               <input id="ccotheremail" style="width: 100%;" class="form-control rec mandatory ccotheremail" type="text" />
                                            </div>
                                        </div>
                                        <p style="text-align:center; padding-top:50px;">
@@ -677,13 +677,13 @@
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem >
                                             <apex:outputlabel value="{!$Label.ISSP_CCOthers}" for="ccothers" />
-                                            <apex:outputField value="{!newCase.E2CP__AdditionalCC__c}" id="ccothers"/>
+                                            <apex:outputText value="{!AdditionalCC}" id="ccothers"/>
                                         </apex:pageblocksectionitem>
                                         <apex:pageBlockSectionItem rendered="{!NOT(HideForClosedCases)}">
                                             <apex:outputPanel layout="none"/>
                                             <apex:outputPanel layout="none">
                                                 <input id="btnaddccother" value="{!$Label.ISSP_CCOther_Add}" class="btn" onclick="openAddDialog();"/>
-                                                <input id="btnremoveccother" value="{!$Label.ISSP_CCOther_Remove}" class="btn" onclick="openRemoveDialog();" style="display: {!IF(newCase.E2CP__AdditionalCC__c=='','none','')}"/>
+                                                <input id="btnremoveccother" value="{!$Label.ISSP_CCOther_Remove}" class="btn" onclick="openRemoveDialog();" style="display: {!IF(AdditionalCC=='','none','')}"/>
                                             </apex:outputPanel>
                                         </apex:pageBlockSectionItem>
                                     </apex:pageblocksection>

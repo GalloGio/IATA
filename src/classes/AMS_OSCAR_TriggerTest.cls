@@ -121,6 +121,7 @@
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId, Issue_credit_note_if_applicable__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.Issue_credit_note_if_applicable__c = true;
         oscar.STEP3__c = 'Passed';
@@ -179,6 +180,7 @@
             STEP3__c, STEP4__c, STEP5__c, STEP6__c, STEP7__c, STEP8__c, STEP9__c, Status__c,OwnerId from AMS_OSCAR__c where Process__c = :AMS_Utils.new_HO limit 1];
 
         oscar.STEP1__c = 'Passed';
+        oscar.STEP15__c = 'Passed';
         oscar.STEP2__c = 'Passed';
         oscar.STEP3__c = 'Passed';
         oscar.STEP4__c = 'Passed';
@@ -575,6 +577,7 @@
 
             oscarT.recordTypeID = newRT;
             oscarT.STEP2__c = 'Not Started';
+            oscarT.STEP15__c = 'Passed';
 
             update oscarT;
 
