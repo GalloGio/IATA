@@ -6099,6 +6099,13 @@ msgDeleted: is deleted.</value>
         <value>Please fill required fields with the correct format</value>
     </labels>
     <labels>
+        <fullName>IEC_Required_Field_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Required Field Error Msg</shortDescription>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt; You must enter a value</value>
+    </labels>
+    <labels>
         <fullName>IFAPAllFilesCheck</fullName>
         <language>en_US</language>
         <protected>false</protected>
