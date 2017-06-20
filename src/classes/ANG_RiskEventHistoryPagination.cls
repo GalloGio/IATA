@@ -63,9 +63,8 @@ public class ANG_RiskEventHistoryPagination {
 	public Integer pageNumber {
 		get;
 		set{
-			if(value > totalPages) pageNumber = totalPages;
-			
-			if (value < 1) pageNumber = 1;
+			if (value <= 1) pageNumber = 1;
+			else if(value > totalPages) pageNumber = totalPages;
 			else pageNumber = value;
 		}
 	}
