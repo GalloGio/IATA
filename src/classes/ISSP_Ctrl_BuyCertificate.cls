@@ -221,18 +221,80 @@ public class ISSP_Ctrl_BuyCertificate {
     }
 
 
-    public List<SelectOption> getAccounts() {
-        List<SelectOption> options = new List<SelectOption>();
-        
-        List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
-                                      FROM Account
-                                     WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
-									AND IATACode__c != null
-                                      ORDER BY IATACode__c
-                                     ];
-        for(Account thisAccount : accountList){
-             String theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
-            options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
+    public List<List<SelectOption>> getAccounts() {
+        List<List<SelectOption>> options = new List<List<SelectOption>>();
+        List<SelectOption> none = new List<SelectOption>();
+        none.add(new SelectOption('', '--None--'));
+        options.add(none);
+        List<List<Account>> auxAccounts = new List<List<Account>>();
+        List <Account> accountList2 = new List<Account>();
+        List <Account> accountList3 = new List<Account>();
+        List <Account> accountList4 = new List<Account>();
+        List <Account> accountList5 = new List<Account>();
+        List <Account> accountList1 = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+                                        FROM Account
+                                        WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
+                                        AND IATACode__c != null
+                                      ORDER BY IATACode__c limit 1000
+                                      ];
+             auxAccounts.add(accountList1);                       
+         if(accountList1.size() == 1000){
+            accountList2=
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+             FROM Account
+             WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
+             AND IATACode__c != null
+             ORDER BY IATACode__c
+             Limit 1000
+             OFFSET 1000
+            ];
+            auxAccounts.add(accountList2);
+        }
+         if(accountList2.size() == 1000){
+            accountList3=
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+             FROM Account
+             WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
+             AND IATACode__c != null
+             ORDER BY IATACode__c
+             Limit 1000
+             OFFSET 2000
+            ];
+            auxAccounts.add(accountList3);
+        }   
+        if(accountList3.size() == 1000){
+            accountList4=
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+             FROM Account
+             WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
+             AND IATACode__c != null
+             ORDER BY IATACode__c
+             Limit 1000
+             OFFSET 3000
+            ];
+            auxAccounts.add(accountList4);
+        } 
+        if(accountList4.size() == 1000){
+            accountList5=
+            [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
+             FROM Account
+             WHERE (Id = :con.AccountId OR Top_Parent__c = :con.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account')
+             AND IATACode__c != null
+             ORDER BY IATACode__c
+             Limit 1000
+             OFFSET 4000
+            ];
+            auxAccounts.add(accountList5);
+        }                          
+        if(auxAccounts!= null && auxAccounts.size() >0 ){  
+            for(List<Account> accounts : auxAccounts){
+                List<SelectOption> optionsAux = new List<SelectOption>();
+                for(Account account : accounts){
+                    String theLabel = account.Name + ' (' + account.IATACode__c + ')';
+                    optionsAux.add(new SelectOption(account.IATACode__c, theLabel));
+                }
+                options.add(optionsAux);
+            }
         }
         return options;
     }

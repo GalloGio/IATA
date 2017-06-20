@@ -325,6 +325,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Name of the account that the participant represents for this specific group, if applicable.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>

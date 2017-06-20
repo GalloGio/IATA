@@ -5,6 +5,9 @@
 	Subject: Trigger Handler for Zuora Payments.
 	History: 2017-05-11, asantos, Initial Release.
 			 2017-05-14, asantos, Workflow for received credit card payments.
+			 2017-05-31, asantos, Included a field to bypass the trigger logic that
+                                  should be used when performing data fixes in the
+                                  Zuora__Payment__c object.
 
        Info: Purpose of this handler is to:
               - populate the Order__c field on Zuora__Payment__c object to link the Payment with
@@ -20,12 +23,51 @@
 public with sharing class trgHndlrIECPayment {
 	static Set<Id> processedPaymentIdSet = new Set<Id>();
 	static Set<Id> processedOrderIdSet = new Set<Id>();
+	static Set<Id> updateIgnoredSet = new Set<Id>();
+	static Set<Integer> insertIgnoredSet = new Set<Integer>();
 
 	public static void OnBeforeInsertOrUpdate(
 		List<Zuora__Payment__c> newRecords,
 		Map<Id,Zuora__Payment__c> oldRecordsMap
 	) {
+		Integer seq;
+
+		/* collect the records to be ignored */
+		if (newRecords != null) {
+			seq = -1;
+
+			for (Zuora__Payment__c payment : newRecords) {
+				seq++;
+
+				if (payment.Bypass_Trigger_Logic__c == true) {
+					if (payment.Id != null) {
+						updateIgnoredSet.add(payment.Id);
+					} else {
+						insertIgnoredSet.add(seq);
+					}
+				}
+			}
+		}
+
 		correlateCreditCardPaymentsWithOrders(newRecords, oldRecordsMap);
+
+		/* reset the flag status for the records to be ignored */
+		if (newRecords != null) {
+			seq = -1;
+			for (Zuora__Payment__c payment : newRecords) {
+				seq++;
+
+				if (payment.Id != null) {
+					if (updateIgnoredSet.contains(payment.Id)) {
+						payment.Bypass_Trigger_Logic__c = false;
+					}
+				} else {
+					if (insertIgnoredSet.contains(seq)) {
+						payment.Bypass_Trigger_Logic__c = false;
+					}
+				}
+			}
+		}
 	}
 
 	public static void OnAfterInsertOrUpdate(
@@ -156,9 +198,20 @@ public with sharing class trgHndlrIECPayment {
 	public static void correlateCreditCardPaymentsWithOrders(List<Zuora__Payment__c> newRecords, Map<Id,Zuora__Payment__c> oldRecordsMap) {
 		Set<String> transactionNumberSet = new Set<String>();
 		Map<String,Id> orderIdMap = new Map<String,Id>();
+		Integer seq;
 
 		if (newRecords != null) {
+			seq = -1;
 			for (Zuora__Payment__c payment : newRecords) {
+				seq++;
+
+				/* check if to bypass trigger logic */
+				if (payment.Id != null && updateIgnoredSet.contains(payment.Id)) {
+					continue;
+				} else if (payment.Id == null && insertIgnoredSet.contains(seq)) {
+					continue;
+				}
+				
 				if (payment.Zuora__PaymentMethod__c != null && payment.Zuora__PaymentMethod__c.startsWith('Credit Card')) {
 					transactionNumberSet.add(payment.Zuora__ReferenceID__c);
 
@@ -175,20 +228,32 @@ public with sharing class trgHndlrIECPayment {
 			}
 		}
 
-		for (Zuora__Payment__c payment : newRecords) {
-			System.debug('Payment Method: ' + payment.Zuora__PaymentMethod__c);
+		if (newRecords != null) {
+			seq = -1;
+			for (Zuora__Payment__c payment : newRecords) {
+				seq++;
 
-			if (payment.Zuora__PaymentMethod__c != null && payment.Zuora__PaymentMethod__c.startsWith('Credit Card')) {
-				String transactionNumber = payment.Zuora__ReferenceID__c;
+				/* check if to bypass trigger logic */
+				if (payment.Id != null && updateIgnoredSet.contains(payment.Id)) {
+					continue;
+				} else if (payment.Id == null && insertIgnoredSet.contains(seq)) {
+					continue;
+				}
 
-				if (transactionNumber != null) {
-					Id orderId = orderIdMap.get(transactionNumber);
+				System.debug('Payment Method: ' + payment.Zuora__PaymentMethod__c);
 
-					if (orderId != null) {
-						// connect Payment with respective Order
-						payment.Order__c = orderId;
+				if (payment.Zuora__PaymentMethod__c != null && payment.Zuora__PaymentMethod__c.startsWith('Credit Card')) {
+					String transactionNumber = payment.Zuora__ReferenceID__c;
 
-						System.debug('Assigning Order ID: ' + orderId + ' to Zuora Reference ID: ' + transactionNumber);
+					if (transactionNumber != null) {
+						Id orderId = orderIdMap.get(transactionNumber);
+
+						if (orderId != null) {
+							// connect Payment with respective Order
+							payment.Order__c = orderId;
+
+							System.debug('Assigning Order ID: ' + orderId + ' to Zuora Reference ID: ' + transactionNumber);
+						}
 					}
 				}
 			}

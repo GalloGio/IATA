@@ -1361,7 +1361,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
             //Gavinho - 27-03-2017
             for(IATA_ISO_Country__c iso : [select Id,ISO_Code__c,Name,Region__c,Case_BSP_Country__c from IATA_ISO_Country__c where Name in:CountryNameSet OR Case_BSP_Country__c IN :CountryNameSet]){
                 IATAISOCountryMap.put(iso.Name,iso);
-                if(iso.Case_BSP_Country__c != null) 
+                if(iso.Case_BSP_Country__c != null && !IATAISOCountryMap.containsKey(iso.Case_BSP_Country__c)) //same cases the country has different name that the bsp iso country) 
                     IATAISOCountryMap.put(iso.Case_BSP_Country__c ,iso);
             }
             for(Case newCase : trigger.new){
