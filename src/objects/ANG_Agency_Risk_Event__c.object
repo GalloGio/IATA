@@ -142,7 +142,7 @@
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -152,7 +152,7 @@
         <label>Created from</label>
         <length>80</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -237,7 +237,7 @@
         <relationshipLabel>Agency Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -261,7 +261,7 @@
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
         <required>true</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -305,7 +305,7 @@ Id
         <label>Unique Key</label>
         <length>40</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -320,6 +320,16 @@ Id
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+    <fields>
+        <fullName>ANG_isMultipleType__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_Risk_Type__r.ANG_isMultiple__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Multiple Type</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Agency Risk Event</label>
     <listViews>
         <fullName>All</fullName>
@@ -329,7 +339,7 @@ Id
     <nameField>
         <displayFormat>RE-{00000000}</displayFormat>
         <label>Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agency Risk Events</pluralLabel>
@@ -387,6 +397,12 @@ Id
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Prevent_RE_in_Not_Accreditated_Agencies</fullName>
+        <active>true</active>
+        <errorConditionFormula>ANG_Manual__c &amp;&amp; ANG_AccountId__r.RecordType.DeveloperName!=&apos;IATA_Agency&apos;</errorConditionFormula>
+        <errorMessage>You can only create risk events for Accredited Agencies</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Prevent_users_from_changing_issued_date</fullName>
         <active>true</active>

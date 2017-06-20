@@ -2,12 +2,13 @@
 private class ANG_RiskEventGeneratorTest {
 
 	@testSetup static void createData() {
-		Id recType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
+        Id accRecType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+		Id caseRecType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
 
-		Account a = new Account(Name = 'Test');
+		Account a = new Account(Name = 'Test', RecordTypeId = accRecType);
 		insert a;
 
-		Case c = new Case(AccountId = a.Id, Subject = 'Test', RecordTypeId = recType, Update_AIMS_IRR__c = System.now());
+		Case c = new Case(AccountId = a.Id, Subject = 'Test', RecordTypeId = caseRecType, Update_AIMS_IRR__c = System.now());
 
 		ANG_RiskEventGenerator.skip = true;
 		insert c;
@@ -16,20 +17,40 @@ private class ANG_RiskEventGeneratorTest {
 		ANG_Risk_Event_Type__c riskType = new ANG_Risk_Event_Type__c(Name = 'Test', ANG_Risk_Id__c = '99', ANG_Expiration__c = 12);
 		insert riskType;
 
-		ANG_Risk_Event_Configuration__c config = new ANG_Risk_Event_Configuration__c();
-		config.ANG_Risk_Event_Type__c = riskType.Id;
-		config.ANG_Object_Type__c = 'Case';
-		config.ANG_Object_Record_Type__c = 'SIDRA';
-		config.ANG_Field01__c = 'Update_AIMS_IRR__c';
-		config.ANG_Field01_Conditions__c = 'Less than today';
-		config.ANG_Field02__c = 'Account.Name';
-		config.ANG_Field02_Conditions__c = 'Not blank';
-		insert config;
+		ANG_Risk_Event_Configuration__c configActive = new ANG_Risk_Event_Configuration__c();
+		configActive.ANG_Risk_Event_Type__c = riskType.Id;
+		configActive.ANG_Risk_Event_Status__c = 'Active';
+		configActive.ANG_isUpdateOnly__c = false;
+		configActive.ANG_Object_Type__c = 'Case';
+		configActive.ANG_Object_Record_Type__c = 'SIDRA';
+		configActive.ANG_Field01__c = 'Update_AIMS_IRR__c';
+		configActive.ANG_Field01_Conditions__c = 'Less than today';
+        configActive.ANG_Field02__c = 'Account.Name';
+        configActive.ANG_Field02_Conditions__c = 'Not blank';
+        configActive.ANG_Field03__c = 'Subject';
+        configActive.ANG_Field03_Conditions__c = 'Equal to';
+        configActive.ANG_Field03_Values__c = 'Test';
+        configActive.ANG_Field04__c = 'Subject';
+        configActive.ANG_Field04_Conditions__c = 'Not equal to';
+        configActive.ANG_Field04_Values__c = 'Something else';
+
+
+		ANG_Risk_Event_Configuration__c configInactive = new ANG_Risk_Event_Configuration__c();
+		configInactive.ANG_Risk_Event_Type__c = riskType.Id;
+		configInactive.ANG_Risk_Event_Status__c = 'Inactive_Revoked';
+		configInactive.ANG_isUpdateOnly__c = true;
+		configInactive.ANG_Object_Type__c = 'Case';
+		configInactive.ANG_Object_Record_Type__c = 'SIDRA';
+		configInactive.ANG_Field01__c = 'Update_AIMS_IRR__c';
+		configInactive.ANG_Field01_Conditions__c = 'Greater than today';
+		configInactive.ANG_Field02__c = 'Account.Name';
+		configInactive.ANG_Field02_Conditions__c = 'Not blank';
+		insert new List<ANG_Risk_Event_Configuration__c>{configActive, configInactive};
 
 	}
 	
 	static testMethod void test_generation_Match() {
-		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c FROM Case LIMIT 1];
+		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		c.Update_AIMS_IRR__c = System.now().addDays(-1);
 		c.IRR_Approval_Rejection__c = 'Approved'; //pass validation
 
@@ -50,18 +71,32 @@ private class ANG_RiskEventGeneratorTest {
 
 		new ANG_RiskEventGenerator(caseList, caseMap).generate();
 
-		//second time will just upsert
+		System.assertEquals([SELECT Id, ANG_Risk_Type__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c][0].ANG_Event_Status__c, 'Active');
+
+		ANG_RiskEventGenerator.skip = false; //allow recurrence
+		//second time will just trigger duplicate error validation
+		new ANG_RiskEventGenerator(caseList, caseMap).generate();
+
+		//Updating case to match second config
+		c.Update_AIMS_IRR__c = System.now().addDays(1);
+
+		ANG_RiskEventGenerator.skip = true;
+		update c;
+		ANG_RiskEventGenerator.skip = false;
+
+		//testing revoking
 		new ANG_RiskEventGenerator(caseList, caseMap).generate();
 
 		Test.stopTest();
 
-		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Risk_Type__c FROM ANG_Agency_Risk_Event__c];
+		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Risk_Type__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c];
 		System.assertEquals(1, riskEvents.size());
+		System.assertEquals(riskEvents[0].ANG_Event_Status__c, 'Inactive_Revoked');
 		System.assertEquals(riskEvents[0].ANG_Risk_Type__c, [SELECT Id FROM ANG_Risk_Event_Type__c LIMIT 1].Id);
 	}
 	
 	static testMethod void test_generation_noMatch() {
-		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c FROM Case LIMIT 1];
+		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 
 		Case oldCase = c.clone(true, true);
 		oldCase.Update_AIMS_IRR__c = null;
@@ -82,7 +117,7 @@ private class ANG_RiskEventGeneratorTest {
 	}
 	
 	static testMethod void test_generation_noChange() {
-		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c FROM Case LIMIT 1];
+		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		Case oldCase = c.clone(true, true);
 
 		List<Case> caseList = new List<Case>{c};
@@ -101,14 +136,14 @@ private class ANG_RiskEventGeneratorTest {
 	}
 	
 	static testMethod void test_generation_configError() {
-		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c FROM Case LIMIT 1];
+		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		Case oldCase = c.clone(true, true);
 
 		List<Case> caseList = new List<Case>{c};
 		Map<Id, Case> caseMap = new Map<Id, Case>();
 		caseMap.put(c.Id, oldCase);
 
-		ANG_Risk_Event_Configuration__c config = [SELECT Id FROM ANG_Risk_Event_Configuration__c];
+		ANG_Risk_Event_Configuration__c config = [SELECT Id FROM ANG_Risk_Event_Configuration__c WHERE ANG_isUpdateOnly__c = false];
 		config.ANG_Field03__c = 'TestField';
 		config.ANG_Field03_Conditions__c = 'Not blank';
 		update config;

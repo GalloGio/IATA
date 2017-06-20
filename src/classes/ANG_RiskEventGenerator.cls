@@ -108,7 +108,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c,ANG_Risk_Event_Type__r.ANG_isMultiple__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -151,7 +151,7 @@ public class ANG_RiskEventGenerator {
 		if(reQuery){
 			// if any of the conditions fields includes a relationship (.) requery de object to get the relationships
 			try{
-				objToEvaluate = Database.query('SELECT Id, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
+				objToEvaluate = Database.query('SELECT Id, RecordTypeId, '+ String.join(new List<String>(fields), ', ')+' FROM '+objectName+' WHERE Id IN :objectIds');
 			}catch(System.QueryException e){
 				if(!e.getMessage().startsWith('No such column ')) throw e; 
 				else {
@@ -165,24 +165,70 @@ public class ANG_RiskEventGenerator {
 
 
 		// for each object on the list, verify that it matches a config and create a risk event
-		List<ANG_Agency_Risk_Event__c> riskEvents = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> riskEvents  = new List<ANG_Agency_Risk_Event__c>();
+		Map<String, String> riskEventsToUpdate  = new Map<String, String>();
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
-				if(checkRequisites(o, config)){
-					
-					ANG_Agency_Risk_Event__c risk = new ANG_Agency_Risk_Event__c();
-					risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
-					risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
-					risk.ANG_Created_from__c = objectName;
-					risk.put(sourceFields.get(objectName), o.Id);
-					risk.ANG_UniqueKey__c = o.Id+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
+					String uniqueKey = o.Id+''+String.valueOf(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?(id)o.get(accountFields.get(objectName)):null)+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+		
+					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
+					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
 
-					riskEvents.add(risk);
+					if(config.ANG_IsUpdateOnly__c){
+						riskEventsToUpdate.put(uniqueKey, config.ANG_Risk_Event_Status__c);
+					}else{
+						ANG_Agency_Risk_Event__c risk = new ANG_Agency_Risk_Event__c();
+						risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
+						risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
+						risk.ANG_Created_from__c = objectName;
+						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
+						risk.put(sourceFields.get(objectName), o.Id);
+						risk.ANG_UniqueKey__c = uniqueKey;
+
+						riskEvents .add(risk);
+					}
+					
 				}
 			}
 		}
 
-		if(!riskEvents.isEmpty()) upsert riskEvents ANG_Agency_Risk_Event__c.fields.ANG_UniqueKey__c;
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEvents - ' + riskEvents);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEventsToUpdate - ' + riskEventsToUpdate);
+
+		//insert new risk events and check for duplicate errors
+		if(!riskEvents.isEmpty()){
+
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
+			List<Database.SaveResult> insertResults = Database.insert(riskEvents, false);
+
+			for(Database.SaveResult result : insertResults){
+
+				System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] result - ' + result);
+
+				if(!result.isSuccess()){
+					for(Database.Error e : result.getErrors()){
+						//if error is for duplicate records do nothing, for other cases, throw error
+						if(e.getStatusCode() != StatusCode.DUPLICATE_VALUE) throw new RiskEventGeneratorException(e.getMessage());
+					}
+				}
+			}
+		}
+
+		riskEvents.clear();
+		//check if risk events to update already exists and apply new status
+		for(ANG_Agency_Risk_Event__c risk : [SELECT Id, ANG_UniqueKey__c, ANG_Event_Status__c FROM ANG_Agency_Risk_Event__c WHERE ANG_UniqueKey__c IN :riskEventsToUpdate.keySet()]){
+			String status = riskEventsToUpdate.get(risk.ANG_UniqueKey__c);
+			if(risk.ANG_Event_Status__c != status){
+				risk.ANG_Event_Status__c = status;
+				riskEvents.add(risk);
+			}
+		}
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
+		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] riskEventsToUpdate - ' + riskEventsToUpdate);
+
+		if(!riskEvents.isEmpty()) update riskEvents;
 	}
 
 	public void loadInitialInformations(){		
@@ -199,7 +245,7 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = Id.valueOf(re.ANG_Source_Id__c)+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+String.valueOf(re.ANG_isMultipleType__c?ID.valueOf(re.ANG_AccountId__c):null)+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
@@ -243,6 +289,8 @@ public class ANG_RiskEventGenerator {
 
 		SObject oldObject = objMap == null ? null : objMap.get(newObject.Id);
 
+		System.debug(loggingLevel.FINEST, '\n____ [cls ANG_RiskEventGenerator - checkRequisites] New condition for an '+config.ANG_Risk_Event_Status__c+' Risk Id ' + config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c + (config.ANG_isUpdateOnly__c ? ' (Update Only)':''));
+
 		//make checks against configs
 		for(ANG_RiskEventConfigurationFields f : ANG_RiskEventConfigurationFields.getList()){
 			String fieldName = (String)config.get(f.fieldName);
@@ -254,9 +302,19 @@ public class ANG_RiskEventGenerator {
 
 			Boolean configResult = false;
 
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] fieldName - ' + fieldName);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] fieldValue - ' + fieldValue);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] condition - ' + condition);
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] checkValue - ' + checkValue);
+
 			//check if values match conditions
-			if(condition.equalsIgnoreCase('Equal to') && new Set<String>(checkValue.split(';')).contains(String.valueOf(fieldValue))) 			configResult = true;
-			else if(condition.equalsIgnoreCase('Not equal to') && !new Set<String>(checkValue.split(';')).contains(String.valueOf(fieldValue)))	configResult = true;
+			//split possible values by commas or semi-colons ignoring whitespaces (trim is to check for whitespaces at the beggining or end)
+			if(condition.equalsIgnoreCase('Equal to')){
+				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			}
+			else if(condition.equalsIgnoreCase('Not equal to')){
+				for(String v : checkValue.split('\\s*[;,]\\s*')) if(!v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+			}
 
 			else if(condition.equalsIgnoreCase('Blank') && fieldValue == null)					configResult = true;
 			else if(condition.equalsIgnoreCase('Not blank') && fieldValue != null)				configResult = true;
@@ -276,6 +334,7 @@ public class ANG_RiskEventGenerator {
 				if(condition.equalsIgnoreCase('Less than today') && dateToCheck < System.today())		configResult = true;
 			}
 
+			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] configResult - ' + configResult);
 			if(!configResult) return false; //means that the conditions didn't match, no need to check others
 
 			//check to see if field was updated (for relationship fields we check if the relationship has changed)
@@ -292,6 +351,7 @@ public class ANG_RiskEventGenerator {
 			if(configResult) conditionsChecked++;
 		}
 
+		System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] conditionsChecked - ' + conditionsChecked);
 		if(conditionsChecked == 0) return false;
 
 		return true;
