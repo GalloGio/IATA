@@ -19299,14 +19299,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Entity&apos;s Portal Administrator in order to request them to open the IATA EasyPay for your Agency.</value>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator in order to request them to open the IATA EasyPay for your Agency.</value>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>        
     </labels>
     <labels>
         <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
@@ -19366,14 +19366,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</shortDescription>
-        <value>Please follow this </value>
+        <value>Please read this </value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</shortDescription>
-        <value>article</value>
+        <value>FAQ</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</fullName>
@@ -19387,14 +19387,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</shortDescription>
-        <value> that describes how to manage your EasyPay account and the initial steps in order to transfer funds so that you can start issuing EasyPay tickets.</value>
+        <value> to learn more on how to manage your EasyPay account and get started.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value> Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access. </value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The FAQ above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</fullName>
@@ -19404,6 +19404,14 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <shortDescription>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</shortDescription>
         <value>Dear IEP Admin / Master Wallet Manager,</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_AppReq_BeInformed</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_AppReq_BeInformed</shortDescription>
+        <value>Please be informed that the below user has requested access to IATA EasyPay Service.</value>
+    </labels>    
     <labels>
         <fullName>ANG_ISSP_Email_AccessRequest2_IEP</fullName>
         <categories>ISSP, Email</categories>
@@ -19427,7 +19435,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</shortDescription>
         <value>You can access it</value>
-    </labels>    
+    </labels> 
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</shortDescription>
+        <value>or from your IATA customer portal home page.</value>
+    </labels> 
     <labels>
         <fullName>ANG_ISSP_Email_PortalServiceRole_Change_1</fullName>
         <categories>ISSP, Email</categories>
@@ -19466,7 +19482,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Min_Users_With_Role_Error_Msg</shortDescription>
-        <value>The following contact is the sole remaining $$ROLE$$ for this Agency and therefore cannot be deactivated.</value>
+        <value>The following contact is the only currently active IATA EasyPay administrator for this agency and it cannot be deactivated. Please contact IATA Customer Service for support.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_Abroad_Account_error_msg</fullName>
@@ -19474,7 +19490,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_Abroad_Account_error_msg</shortDescription>
-        <value>Since your Branch Office is in a different country than your Head Office you currently cannot open an IATA EasyPay Account in self-service mode. Please contact IATA Customer Support if you need any further information concerning this.</value>
+        <value>Your branch is located in a different country than your Head Office. We regret to inform you that IATA Easypay service is not available for your office at this stage. Please contact IATA Customer Support if you need any further information.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</fullName>
@@ -19491,7 +19507,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
         <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
-    </labels>  
+    </labels>
     <labels>
         <fullName>ANG_ISSP_UserProvisioningError</fullName>
         <categories>ISSP</categories>
@@ -19499,7 +19515,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_UserProvisioningError</shortDescription>
         <value>Sorry, there was an issue setting up your IATA EasyPay access. Try again and if the issue persists please contact Customer Support</value>
-    </labels>
+    </labels>    
     <labels>
         <fullName>ANG_ISSP_SelectContacts</fullName>
         <categories>ISSP</categories>
@@ -19509,12 +19525,23 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Select one or more contacts</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_EasyPayLegalConfirmation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
+        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account. By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;Do you wish to proceed?</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_Portal_Request_Access_Msg</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_Portal_Request_Access_Msg</shortDescription>
-        <value>Adding these users to your IATA EasyPay Account is now in progress. In order to finalise user access an IEP Admin or Master Wallet Manager from your Agency is required to grant access and assign these users to a wallet before they can start using the service. All IEP Admins and Master Wallet Managers will be notified by email once this pending access request is ready for processing.</value>
+        <value>Access to your IATA EasyPay Account for the selected user(s) has been requested.  IATA EasyPay Administrator (s) and Master Wallet Manager(s) have been notified for their approval.
+               &lt;br/&gt;
+               Users will receive a confirmation once their access has been granted.
+        </value>
     </labels>
     <labels>
         <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</fullName>
@@ -19530,7 +19557,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</shortDescription>
-        <value>These users must now be approved in IATA EasyPay and assigned to one or more wallets by an IEP Admin or Master Wallet Manager before they can start using the service, if this hasn’t already been done. Users will be notified by email once access is granted.</value>
+        <value>As IEP Admin or Master Wallet Manager you must now approve those users in IATA EasyPay and assign them to one or more wallets before they can start using the service.&lt;br/&gt;&lt;br/&gt;Users will be notified by email once access is granted.</value>
     </labels>    
     <labels>
         <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</fullName>
@@ -19541,14 +19568,62 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>IATA EasyPay can be accessed from the home page of the </value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_1</shortDescription>
+        <value>Please select your access role for IATA EasyPay.</value>
+    </labels>        
+    <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_2</shortDescription>
+        <value>Once you confirm your access request will be sent to your IATA EasyPay administrator and wallet manager for approval.</value>
+    </labels>        
+    <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_3</shortDescription>
+        <value>For information on the available roles, please click</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_e_mail_address</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
+        <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_1</shortDescription>
+        <value>To manage the request please click </value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_2</shortDescription>
+        <value>to access your IATA EasyPay portal.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_ChangeContactHierarchyError</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
         <value>Please deny this contact's access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
-    </labels>                    
-    <labels>        
+    </labels>                        
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>

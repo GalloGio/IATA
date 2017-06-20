@@ -321,45 +321,75 @@
                 </div>
                 
               </apex:outputPanel>
-            <ul class="external_links clearfix nav">
 
-                <li> 
+              <table>
+
+                <tr><td> 
                   <span class="appfocus">
                     <a  id="appReq{!Serv.recordService.Id}"  title="">
                       <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" />
                     </a>
                   </span>
+                  </td>
                   <!--span>
                       <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!Serv.recordService.Name}" rendered="{!!Serv.recordService.Confirm_Box__c}" />
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                   </span-->
-
+                  <td style="padding-left: 10px">
                   <span>
                       <apex:outputPanel rendered="{!NOT(CONTAINS(Serv.recordService.Name,'IATA EasyPay'))}">
-                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
+                          <apex:outputLabel escape = "false" value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c}" />
 
                         <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
                       </apex:outputPanel>
                       
                       <apex:outputPanel rendered="{!CONTAINS(Serv.recordService.Name,'IATA EasyPay')}">
 
-                        <apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}" />
+                          <!--apex:outputLabel value="{!$Label.ISSP_ServiceRequestConfirm} {!IF(Serv.isEasyPayService, $Label.ANG_ISSP_IATA_EasyPay, Serv.recordService.Name)}?" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}" /-->
+                          <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_EasyPayLegalConfirmation}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable && Serv.useDefaultRole}"/>
 
-                        <apex:outputLabel value="{!modalErrorMessage}" rendered="{!!Serv.recordService.Confirm_Box__c && isModalErrorMessageEnable}" />
+                          <apex:outputPanel rendered="{! NOT Serv.useDefaultRole}">
+                            <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_1}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>                                              
+                          </apex:outputPanel>  
+
+                          <apex:outputLabel escape = "false" value="{!modalErrorMessage}" rendered="{!!Serv.recordService.Confirm_Box__c && isModalErrorMessageEnable}" />
 
                       <apex:outputLabel value="{!Serv.recordService.Confirm_Text__c}" rendered="{!Serv.recordService.Confirm_Box__c}" escape="false" />
 
                       </apex:outputPanel>  
                   </span>
-                </li>
+                    </td>
+                </tr>
 
-                <li> 
-                  <span class="appfocus" rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole)}">
-                    <a  id="appReq{!Serv.recordService.Id}"  title="">
-                      <apex:outputText escape="false" value="{!Serv.recordService.Application_icon__c}" style="visibility: hidden"/>
-                    </a>
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">                    
+                      <span>
+                        <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_2}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
+                      </span>
+                    </apex:outputPanel>
+                  </td>
+                </tr>                      
+
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
+                    <apex:outputPanel rendered="{! NOT Serv.useDefaultRole && Serv.isEasyPayService && NOT Serv.recordService.Confirm_Box__c && NOT isModalErrorMessageEnable}">
+                      <span>
+                        <apex:outputLabel escape = "false" value="{!$Label.ANG_ISSP_ConfirmRequestIEP_3}" rendered="{!!Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable}"/>
+                        <b><a href="{!$Label.ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link}">{!$Label.ISSP_Email_Here}</a>.</b>
                   </span>
+                    </apex:outputPanel>                      
+                  </td>
+                </tr>                      
 
+                <tr>
+                  <td>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 10px">
                   <apex:outputPanel rendered="{! (Serv.isEasyPayService && !Serv.useDefaultRole && !Serv.recordService.Confirm_Box__c && !isModalErrorMessageEnable)}">
                     <apex:outputLabel value="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE} : " title="{!$Label.ANG_ISSP_PORTAL_SERVICE_ROLE_HINT}"/> 
                     <apex:selectList id="portalRoles" value="{!Serv.portalServiceRole}" size="1" required="true">
@@ -367,7 +397,9 @@
                       <apex:actionSupport event="onchange" rerender="serviceSubmitButton,serviceSubmitButton2"/>
                     </apex:selectList>                  
                   </apex:outputPanel>
-                </li>
+                  </td>
+                </tr>
+              </table>
 
                 <script> 
                   if('{!JSENCODE(Serv.recordService.Description__c)}'!=''){ 
@@ -376,7 +408,6 @@
                   }
                 </script>
 
-            </ul>
 
               <apex:outputPanel rendered="{!Serv.recordService.Name=='Standards Setting Workspace'}"> 
                 <div class="checkbox">
@@ -470,7 +501,7 @@
             <div class="row">
               <div class="col-md-12">
                 <p>              
-                  <apex:outputLabel id="errorMessage" value=""/>
+                  <apex:outputLabel escape = "false" id="errorMessage" value=""/>
                 </p>
               </div>
             </div>            
