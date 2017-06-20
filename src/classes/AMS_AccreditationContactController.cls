@@ -139,7 +139,7 @@ public with sharing class AMS_AccreditationContactController {
                             || typeOfChangeContainsOwnershipToIATA
                             || (aoa.SAAM_Case__r.OSCAR__r.CNS_process__c && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Class__c =='R');
 
-        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.ANG.NEW.AE.1.0)
+        if(aoa.ANG_IsNewGenAgency__c && aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.NEWAE)
             blockOwnershipEdit = false;
 
         isCorrection = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.COR;
