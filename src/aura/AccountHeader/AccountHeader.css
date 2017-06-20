@@ -1,5 +1,5 @@
 .THIS .alignText{
-    max-width: 300px;
+    width: 100%;
     display: block;
     word-break: break-word;
     WHITE-SPACE: normal;
@@ -14,4 +14,26 @@
 
 .THIS .text-align-center{
     text-align: center;
+}
+
+.THIS .slds-size_1-of-5{
+	flex:1 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(3){
+	display: flex;
+}
+
+.THIS .slds-size_1-of-5:nth-child(3) img{
+	margin: 0 auto;
+	align-self: baseline;
+	    max-width: none;
+}
+
+.THIS .slds-size_1-of-5:nth-child(4){
+	flex-grow: 1.5 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5){
+	flex-grow: 0.5 !important;
 }
