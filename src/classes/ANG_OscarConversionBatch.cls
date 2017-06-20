@@ -44,9 +44,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		this.countryToSearch = countryToSearch;
 
 		if(countryToSearch != null)
-			this.query = 'SELECT Id, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.Location_Class__c in :locationClassAllowed and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
+			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.Location_Class__c in :locationClassAllowed and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
 		else
-			this.query = 'SELECT Id, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Name = :oscarName';
+			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Name = :oscarName';
 
 	}
 	
@@ -93,7 +93,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		AMS_Pax_Accreditation_Form__c onlineForm = [SELECT Id, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id = :oscarToProcess.AMS_Online_Accreditation__c LIMIT 1];
 
-		onlineForm.Location_Type__c = locationTypeMap.get(oscarToProcess.Process__c);
+		onlineForm.Location_Type__c = locationTypeMap.get(oscarToProcess.Account__r.Location_Type__c);
 
 		return onlineForm;
 	}
@@ -108,13 +108,16 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 			toReturn = caseLst.get(0);
 		
-			toReturn.Subject = '' + ' - ' + oscarToProcess.Account__r.Name;
-			toReturn.CaseArea__c = 'Accreditation process';
+			toReturn.CaseArea__c = 'Accreditation Process';
 			
-			if(oscarToProcess.Process__c == AMS_Utils.NEWHESTANDARD)
+			if(oscarToProcess.Process__c == AMS_Utils.NEWHESTANDARD){
+				toReturn.Subject = 'New HE standard' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New HE standard';
-			else
+			}
+			else{
+				toReturn.Subject = 'New AE' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New AE';
+			}
 
 		}
 
