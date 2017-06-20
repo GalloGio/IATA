@@ -1,8 +1,12 @@
 .THIS .alignText{
-    max-width: 100%;
+    max-width: 300px;
     display: block;
     word-break: break-word;
-    WHITE-SPACE: normal;  
+    WHITE-SPACE: normal;
+    overflow: auto;
+    max-height:50px;
+    font-size: 0.75rem;
+    
 }
 .THIS .float-right{
     float: right;

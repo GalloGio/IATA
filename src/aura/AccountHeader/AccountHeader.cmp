@@ -36,7 +36,7 @@
                 <!-- HEADING AREA -->                
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-size_1-of-5 slds-col--padded slds-no-flex">
+            <div class="slds-size_1-of-5 slds-col--padded">
                 <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
                     <div style="color:#ff0000"> {!v.account.Due_Diligence_Status__c}</div>
                     <aura:set attribute="else">
@@ -54,7 +54,7 @@
                     <div class="text-align-center slds-size_1-of-2 slds-col--padded"> 
                         <aura:renderIf isTrue="{!v.canEdit2}">
                         <aura:renderIf isTrue="{!v.isEditMode2}">
-                            <div class="slds-button-group" role="group">
+                            <div class="slds-button-group float-right" role="group">
                                 <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                                     <span class="slds-assistive-text">Cancel</span>
                                 </button>
@@ -76,10 +76,10 @@
                     </div>
                     <div class="slds-size_1-of-2 slds-col--padded">
                         <aura:renderIf isTrue="{!v.isEditMode2}">
-                            <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-textarea slds-form-element__control" maxlength="150" cols="50" />                                        
+                            <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-textarea " maxlength="150" cols="50" />                                        
                         </aura:renderIf>
                         <aura:renderIf isTrue="{!!v.isEditMode2}">
-                            <span  class="text alignText slds-media__body" style="width: 500px;" >    {!v.account.SanctionNotice2__c}   </span>          
+                            <span  class="alignText" style="" >    {!v.account.SanctionNotice2__c}   </span>          
                         </aura:renderIf>                                    
                     </div>
                 </div>
