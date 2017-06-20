@@ -13630,6 +13630,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Change User Portal Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_Change_Bank</fullName>
+        <categories>ISSP, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Change_Bank_Details</shortDescription>
+        <value>BSP / CASS Change of Bank details</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Change_Finalized</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
