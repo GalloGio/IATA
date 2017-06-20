@@ -595,7 +595,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
         }
 
-        if(isocountry.ANG_Enable_NewGen__c == true)
+        if(isocountry.ANG_Enable_NewGen__c == true) 
             newAccreditationModels = true;
 
         system.debug('sector value ' + sectorValue);
