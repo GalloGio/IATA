@@ -810,7 +810,7 @@ public class ams2gdp_BusinessLogic
 			String code = '';
 			String name = '';
 			if(territory.Appointment__r.Accreditation_Endorsement_organisation__c != null ) {
-				code = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c;
+				code = territory.Appointment__r.Accreditation_Endorsement_organisation__c;
 				name = territory.Appointment__r.Accreditation_Endorsement_organisation__r.Name;
 			}
 			else if(territory.Appointment__r.Airline__c != null ) {
