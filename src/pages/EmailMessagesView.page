@@ -15,7 +15,7 @@
 
        function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
-            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}"});
+            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}", caseGroup:"{!cse.Case_Group__c}", caseCNS:"{!cse.CNSCase__c}"});
             if (countryEmail == '') {
                 countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
             }

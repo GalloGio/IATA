@@ -37,7 +37,7 @@ public with sharing class SidraLiteSendEmailController {
             Inform_Agent_DEF__c, Inform_Airlines_Locally_Default__c, Inform_Airlines_REI_DEFWD__c, Issue_Declaration_of_Default_to_Agent__c,
             NOI_sent__c, NOT_Sent__c, Notify_TER_to_AG__c, Open_TKT_System__c, Shut_Down_TKT_System_GDS_and_BSPlink__c,
             Ticketing_Authority_Re_assigned__c, Update_AIMS_DEF__c, Update_AIMS_IRR__c, Update_AIMS_IRRWITH__c, Update_AIMS_TER__c,
-            SIDRA_Lite_Reason__c, Region__c, Account.Type
+            SIDRA_Lite_Reason__c, Region__c, Account.Type, CNSCase__c
             from Case where id = :caseId];
         if (listCase.isEmpty()) {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'No case found with id ' + caseId));
@@ -155,7 +155,7 @@ public with sharing class SidraLiteSendEmailController {
 
     private String getURLCongaMerge() {
         // get 'From Email' using predefined custom setting 'RecordTypeEmail'
-        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.Name, cse.BSPCountry__c);
+        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.DeveloperName, cse.BSPCountry__c, cse.Case_Group__c, String.ValueOf(cse.CNSCase__c));
         list<OrgWideEmailAddress> listadd = [
             Select Id, DisplayName, Address
             From OrgWideEmailAddress
