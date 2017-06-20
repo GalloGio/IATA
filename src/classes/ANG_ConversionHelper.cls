@@ -607,7 +607,9 @@ global with sharing class ANG_ConversionHelper {
         
         ID FormOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
         
-        for(Account acct:accts){
+        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c from Account where Id in:accts];
+        
+        for(Account acct:acctToInsert){
 
         	if(isAcctElegibleToCreateAuthorization(acct)){
         		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
