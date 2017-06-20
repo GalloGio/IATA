@@ -16,7 +16,15 @@
 <BR/>            
         {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2, "")}
         
-        <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a><BR/>
+        <apex:outputPanel rendered="{!BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
+            <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{! NOT BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay')}">        
+            <a href="{!$Label.ISSP_Email_PortalUrl}">{!$Label.ISSP_Email_Here}</a>.
+        </apex:outputPanel>
+           
+        {!IF(BEGINS(relatedTo.Portal_Application__r.Name, 'IATA EasyPay'), $Label.ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3, "")}
+<BR/>
 <BR/>
 
 <apex:outputPanel rendered="{!relatedTo.Access_Status_Reason__c != ''}" >
