@@ -1,28 +1,10 @@
 <apex:page showHeader="false" sidebar="false" standardController="Account" extensions="ANG_RiskEventHistoryExtension">
 		
-		<apex:includeScript value="/support/console/30.0/integration.js"/>
-		<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
-		<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000Uy1x'=Account.Name, 'CF00N6E000000Uy1x_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
-		
-		<apex:form >
-			<div id="observed">
-			<c:relatedList objectName="ANG_Agency_Risk_Event__c" parentFieldId="{!Account.Id}" parentFieldName="{!IF(Account.Location_Type__c == 'HE', 'ANG_HE_AccountId__c', 'ANG_AccountId__c')}" fieldsCSV="{!$ObjectType.ANG_Agency_Risk_Event__c.FieldSets.RelatedList}" urlForNewRecord="{!newLink}" hideButtons="{!NOT(Account.ANG_IsNewGenAgency__c)}" hideActionLinkDel="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.deletable)}" hideActionLinkEdit="{!NOT($ObjectType.ANG_Agency_Risk_Event__c.updateable)}" pageSize="5" orderByFieldName="ANG_Issued_Date__c" sortDirection="desc"/>
-			</div>
-		</apex:form>
-
-		<!-- <c:relatedList title="Risk Event History" list="Location_Risk_Events__r" rendered="{!Account.Location_Type__c != 'HE'}" />
-		<c:relatedList title="Risk Event History" list="All_Risk_Events__r" rendered="{!Account.Location_Type__c == 'HE'}" /> -->
-
-		<script>	    		 
-			// check if table is rerendered
-			var observer = new MutationObserver(function(mutations) {
-				bindLinks(); 
-			});
 	<apex:includeScript value="/support/console/37.0/integration.js"/>
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
 	<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
-	<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N7E0000012ob5'=Account.Name, 'CF00N7E0000012ob5_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
+	<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000Uy1x'=Account.Name, 'CF00N6E000000Uy1x_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
 
 	<style>
 		.alignLeft{
