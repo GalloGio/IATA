@@ -7324,18 +7324,6 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
-        <fullName>Detailed_Hierarchy_View__c</fullName>
-        <externalId>false</externalId>
-        <formula>HYPERLINK(
-&quot;javascript:if(typeof(srcUp)==&apos;function&apos;){srcUp(&apos;/apex/AccountHierarchy?id=&quot; &amp; Id &amp; &quot;&amp;console=1&apos;);} else {window.location.href=&apos;/apex/AccountHierarchy?id=&quot; &amp; Id &amp; &quot;&apos;}&quot;, &quot;[View Hierarchy]&quot;,&quot;_self&quot;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Detailed Hierarchy View</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Document_Std_Instruction__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Latest year expected.</inlineHelpText>
@@ -78711,6 +78699,21 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <openType>sidebar</openType>
         <page>DSE__DS_CallDataManagerAccount</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Detailed_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Detailed Hierarchy View</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(typeof(srcUp)==&apos;function&apos;){
+  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
+} else {
+  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
+}</url>
     </webLinks>
     <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
