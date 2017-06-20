@@ -54,6 +54,45 @@ private class EmailMessageHandlerTest {
         test.stopTest();
     }
     
+    static testMethod void test_sendEmailToSenderWhenCaseClosed() {
+        // create a SIDRA case
+        Contact contact = new Contact();
+        contact.FirstName = 'test contact';
+        contact.LastName = 'last name';
+        contact.Email = 'test1@example.com';
+        insert contact;
+        
+        Account account = new Account(Name='test Account');
+        insert account;
+        
+        list<String> validRT = new list<String>(EmailMessageHandler.SET_VALID_RT);
+        String caseJSON = '{"attributes":{'
+            + '"type":"Case",'
+            + '"url":"/services/data/v25.0/sobjects/Case/500E0000002nH2fIAE"},'
+            + '"CreatedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"Subject":"Test Case Subject",'
+            + '"Status":"Closed",'
+            + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"ContactId":"' + contact.id + '",'
+            + '"AccountId":"' + account.id + '",'
+            + '"RecordTypeId":"' + RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get(validRT.get(0)) + '"'
+            + '}';
+        Case aCase = (Case) JSON.deserialize(caseJSON, Case.class );
+        insert aCase;
+        
+        test.startTest();
+            // simulate the creation of an email message
+            EmailMessage em = new EmailMessage();
+            em.parentId = acase.Id;
+            em.FromAddress = 'test2@example.com';
+            insert em;
+        test.stopTest();
+        
+        // assert that the case NOI Sent was set
+        list<EmailMessage> listEmails = [SELECT Id FROM EmailMessage WHERE ParentId = :aCase.Id];
+        System.assertEquals(2,listEmails.size());
+    }
+    
     /* 
     static testMethod void test_PreventEmailDeletion() {
         // create a SIDRA case
