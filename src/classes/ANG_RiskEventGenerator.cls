@@ -197,7 +197,7 @@ public class ANG_RiskEventGenerator {
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] (before inserting) riskEventsToUpdate - ' + riskEventsToUpdate);
 
 		//insert new risk events and check for duplicate errors
-		if(!riskEvents .isEmpty()){
+		if(!riskEvents.isEmpty()){
 
 			System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] riskEvents - ' + riskEvents);
 			List<Database.SaveResult> insertResults = Database.insert(riskEvents, false);
