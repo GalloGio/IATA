@@ -1,0 +1,126 @@
+<apex:page controller="ISSP_LocalGroups" action="{!init}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+    <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+
+<script>
+  $(document).ready( function () {
+    // init datatable
+    var tbl = $('.table-pagination').DataTable({
+      "bSort" : false,
+      "language": {
+              "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
+              "zeroRecords": "{!$Label.ISSP_Nothing_found}",
+              "info": "{!$Label.ISSP_Showing_page}",
+              "infoEmpty": "{!$Label.ISSP_No_records_available}",
+              "infoFiltered": "{!$Label.ISSP_filtered_from_total_records}",
+              "search": "{!$Label.ISSP_Search}",
+              "paginate": {
+                "next": "{!$Label.ISSP_Next}",
+                "previous": "{!$Label.ISSP_Previous}"
+              }
+          }
+    });
+    // add filters only for certain columns
+    $('.table-pagination thead th.headerRowFilter').each( function (i) {
+        if ([0,1,2,3].indexOf(i)>-1) {
+            var title = $('th.headerRow')[i].textContent;
+            var select = $('<select class="select-filter" data-index="'+i+'"></select>');
+            select.append( '<option value="" selected>' + title + '</option>' )
+            // get all distinct values and creates an option value
+            tbl.column(i).data().unique().sort().each( function ( d, j ) {
+                select.append( '<option value="'+d+'">'+d+'</option>' )
+            } );
+            $(this).html( select );
+        }
+    } );
+    // add filter event
+    $(".select-filter").on( 'change', function () {
+        if ($(this).val()=='') {
+            tbl
+                .column( $(this).attr("data-index"))
+                .search( '' )
+                .draw();
+        } else {
+            tbl
+                .column( $(this).attr("data-index"))
+                .search( '^'+$(this).val()+'$', true, false )
+                .draw();
+        }
+    } );
+    
+    
+  });
+</script>
+<style>
+    th.headerRowFilter {
+        padding: 5px !important;
+        padding: 5px !important;
+    }
+    .select-filter {
+        width: 100%;
+        font-size: 85%;
+    }
+    th.headerRow {
+        background-color: #EAEAEA;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+
+        <apex:form id="mainForm">
+            <apex:pageMessages />
+
+            <!--page-description-->
+            <h4>
+                <span>{!$Label.ISSP_Company_Administration}</span>
+                <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                <span>{!$Label.ISSP_Local_Groups_Industry_Title}</span>
+                <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
+                <small>{!$Label.ISSP_Local_Groups_Industry_Description}</small>
+            </h4>
+            
+            <hr/>
+            <!-- MAIN TABLE  -->
+            <table class="table table-condensed table-pagination">
+                <thead>
+                    <tr class="headerRowFilter">
+                        <apex:repeat value="{!listFieldName}" var="fieldname">
+                            <th class="headerRowFilter"></th>
+                        </apex:repeat>
+                    </tr>
+                    <tr class="headerRow">
+                        <apex:repeat value="{!listFieldName}" var="fieldname">
+                            <th class="headerRow">
+                                <apex:outputText value="{!$ObjectType.Participant__c.fields[fieldname].label}" rendered="{!fieldname!='Country__c'}"/>
+                                <apex:outputText value="{!$Label.ISSP_Local_Groups_Country}" rendered="{!fieldname=='Country__c'}"/>
+                            </th>
+                        </apex:repeat>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!listParticipant}" var="item">
+                      <tr>
+                        <apex:repeat value="{!listFieldName}" var="fieldname">
+                            <td>
+                                <apex:outputText value="{!item[fieldname]}" rendered="{!fieldName!='Contact__c'}"/>
+                                <apex:outputText value="{!item.Contact__r.Name}" rendered="{!fieldName=='Contact__c'}"/>
+                            </td>
+                        </apex:repeat>
+                      </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+        </apex:form>
+
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
+    </div><!-- end container-->
+
+</body>
+</html>
+</apex:page>
