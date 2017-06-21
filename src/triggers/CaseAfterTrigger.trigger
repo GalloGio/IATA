@@ -16,19 +16,35 @@
 
 trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, after update) {
     /*DEVELOPMENT START/STOP FLAGS*/
-    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = true;//GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
-	boolean trgCaseLastSIDRADate = true;//GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;                                     //55555555555555
-	boolean trgCase_ContactLastSurveyUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;               //44444444444444
-	boolean trgParentCaseUpdate = true;//GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;                                       //33333333333333
-	boolean trgICCSManageProductAssignment = true;//GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;
-	boolean trgICCS_ASP_CaseClosed = true;//GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;                                 //44444444444444
-	boolean trgCreateUpdateServiceRenderedRecord = true;//GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;           //44444444444444
-	boolean trgCaseEscalationMailNotificationICH = true;//GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;                    //44444444444444
-	boolean trgCheckSISCaseRecycleBinAfterInsert = true;//GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;                //22222222222222
-	boolean CaseBeforInsert = true;//GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;                                               //33333333333333
-	boolean AMS_OSCARCaseTrigger = true;//GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;
-	boolean trgAccelyaRequestSetCountry = true;//GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
-	boolean trgCase = true;//GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
+    boolean trgCaseIFAP_AfterInsertDeleteUpdateUndelete = true;
+	boolean trgCaseLastSIDRADate = true;
+	boolean trgCase_ContactLastSurveyUpdate = true;
+	boolean trgParentCaseUpdate = true;
+	boolean trgICCSManageProductAssignment = true;
+	boolean trgICCS_ASP_CaseClosed = true;
+	boolean trgCreateUpdateServiceRenderedRecord = true;
+	boolean trgCaseEscalationMailNotificationICH = true;
+	boolean trgCheckSISCaseRecycleBinAfterInsert = true;
+	boolean CaseBeforInsert = true;
+	boolean AMS_OSCARCaseTrigger = true;
+	boolean trgAccelyaRequestSetCountry = true;
+	boolean trgCase = true;
+
+	if(!Test.isRunningTest()){
+		trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
+		trgCaseLastSIDRADate = GlobalCaseTrigger__c.getValues('AT trgCaseLastSIDRADate').ON_OFF__c;                                     //55555555555555
+		trgCase_ContactLastSurveyUpdate = GlobalCaseTrigger__c.getValues('AT trgCase_ContactLastSurveyUpdate').ON_OFF__c;               //44444444444444
+		trgParentCaseUpdate = GlobalCaseTrigger__c.getValues('AT trgParentCaseUpdate').ON_OFF__c;                                       //33333333333333
+		trgICCSManageProductAssignment = GlobalCaseTrigger__c.getValues('AT trgICCSManageProductAssignment').ON_OFF__c;                 //55555555555555
+		trgICCS_ASP_CaseClosed = GlobalCaseTrigger__c.getValues('AT trgICCS_ASP_CaseClosed').ON_OFF__c;                                 //44444444444444
+		trgCreateUpdateServiceRenderedRecord = GlobalCaseTrigger__c.getValues('AT trgCreateUpdateServiceRendered').ON_OFF__c;           //44444444444444
+		trgCaseEscalationMailNotificationICH = GlobalCaseTrigger__c.getValues('AT trgCaseEscalationMail').ON_OFF__c;                    //44444444444444
+		trgCheckSISCaseRecycleBinAfterInsert = GlobalCaseTrigger__c.getValues('AT trgCheckSISCaseRecycleBin').ON_OFF__c;                //22222222222222
+		CaseBeforInsert = GlobalCaseTrigger__c.getValues('AT CaseBeforInsert').ON_OFF__c;                                               //33333333333333
+		AMS_OSCARCaseTrigger = GlobalCaseTrigger__c.getValues('AT AMS_OSCARCaseTrigger').ON_OFF__c;                                     //55555555555555
+		trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
+		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
+	}
     /**********************************************************************************************************************************/
     
     /*Record type*/
@@ -67,6 +83,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     Set<Id> accountNotificationIdSet = new Set <Id>(); //TF
     Set<Id> setASCaseIds = new Set<Id>();
 	Set<Id> setDIPCaseIds = new Set<Id>();
+	Set<Id> sCaseIds = new Set<Id>();
 	list<Case> cases = new list<Case>();
 	list<Case> ICHcases = new list<Case>();
     list<Case> IFAPcases = new list<Case>(); 
@@ -82,32 +99,35 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
-	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
-		if(!CaseChildHelper.noValidationsOnTrgCAseIFAP ){
-			if (Trigger.isDelete) 
-				cases = Trigger.old;
-			else
-				cases = Trigger.new;
+	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
+		if (Trigger.isDelete) 
+	    	cases = Trigger.old;
+	  	else
+	    	cases = Trigger.new;
+
+		for(Case cse : cases) {
+			if(cse.RecordTypeId == IFAPcaseRecordTypeID){
+		    	caseRecType = true;
+		    	casesToConsider.add(cse);
+		    	sCaseIds.add(cse.Id);
+		    } 
 		}
 		//IFAP P5 start   
 		map<Id,Account> AcctToBeUpdatedPerId = new map<Id,Account>(); 
-		if(trigger.isInsert || trigger.isUpdate){ 
-			if(!casesToConsider.isEmpty()){
-				list<Case> casesToUdpateTheAccts = new list<Case>();
-				for(Case c: CasesToConsider){
-					if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
-							(trigger.isInsert || //if not is update and we check if there were any changes
-							(trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
-							|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
-							|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ //   throw new transformationException('' + casesToUdpateTheAccts);  
-						casesToUdpateTheAccts.add(c);
-					}
+		if(!casesToConsider.isEmpty() && (trigger.isUpdate || trigger.isInsert)){
+			list<Case> casesToUdpateTheAccts = new list<Case>();
+			for(Case c: CasesToConsider){
+				if(c.status == 'Assessment Performed' && c.Financial_Review_Result__c <> null && c.Assessment_Performed_Date__c <> null &&
+					(trigger.isInsert || (trigger.newMap.get(c.id).Assessment_Performed_Date__c <> trigger.oldMap.get(c.id).Assessment_Performed_Date__c 
+					|| trigger.newMap.get(c.id).Financial_Review_Result__c <> trigger.oldMap.get(c.id).Financial_Review_Result__c
+					|| trigger.newMap.get(c.id).status  <> trigger.oldMap.get(c.id).status))){ 
+				casesToUdpateTheAccts.add(c);
 				}
-				if(!casesToUdpateTheAccts.isEmpty())  {              
+			}
+			if(!casesToUdpateTheAccts.isEmpty())  {              
 				// throw new transformationException();
-					AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
-				}
-			}          
+				AcctToBeUpdatedPerId =IFAP_AfterTrigger.updateTheAcctsTrigger(casesToUdpateTheAccts);
+			}         
 		} 
 		System.debug('***After checking record type ' + caseRecType);
 		if(!casesToConsider.isEmpty()){
@@ -136,19 +156,19 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 						acct.Has_Financial_Review_Open_Cases__c = false;
 					}
 					if(AcctToBeUpdatedPerId.get(acct.id) == null){
-					AcctToBeUpdatedPerId.put(acct.id, acct);
-				  }else{
-					acctToBeUpdatedPerId.get(acct.id).Has_Financial_Review_Open_Cases__c = acct.Has_Financial_Review_Open_Cases__c;
-				   }
+						AcctToBeUpdatedPerId.put(acct.id, acct);
+						}else{
+						acctToBeUpdatedPerId.get(acct.id).Has_Financial_Review_Open_Cases__c = acct.Has_Financial_Review_Open_Cases__c;
+					}
 				}
 			}
 			if(!acctToBeUpdatedPerId.isEmpty() && !acctToBeUpdatedPerId.values().isEmpty()) {
 				update acctToBeUpdatedPerId.values();
 			}
-		//IFAP P5 end  
-		//Case child creation if Status = Assessment performed
-		CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
-		}	
+			//IFAP P5 end  
+			//Case child creation if Status = Assessment performed
+			CaseChildHelper.CreateChildCase(Trigger.old, Trigger.new);
+		}  
 	}
 	/*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	
@@ -542,6 +562,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		}
 		/*trgCaseEscalationMailNotificationICH Trigger*/
+		/*Risk Event Management*/
+  		if(Trigger.isInsert || Trigger.isUpdate){
+    		new ANG_RiskEventGenerator(Trigger.New, Trigger.oldMap).generate();
+  		}
+  		/*Risk Event Management*/
 	}
 	/*Share trigger code*/
 	
@@ -710,7 +735,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	else if (Trigger.isUpdate) {
         /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){
-			Set<Id> sCaseIds = new Set<Id>();
 			// Check if received cases are IFAP Cases
 			for(Case cse : cases){
 				if(cse.RecordTypeId == IFAPcaseRecordTypeID){
@@ -732,7 +756,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			for(Case cse : cases) {
 				if(cse.RecordTypeId == IFAPcaseRecordTypeID){
 					caseRecType = true;
-					casesToConsider.add(cse);
+					//casesToConsider.add(cse);
 					// Bellow logic used for Quality issue  
 					Case OldCase =  Trigger.oldMap.get(cse.Id);
 					// approval
