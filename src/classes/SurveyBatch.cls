@@ -690,6 +690,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         if(RoleName.contains('Distribution - Airline Coding & MITA')){
           template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
         }
+        //Inc325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+              AccountCountry == 'United States' && 
+               (c.Account.Status__c != '' ||  c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
+          template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
+        }
         else if (c.CNSCase__c == true) {
             template = templates.get('Clicktools_Contact_Email_EN_CNS');
         }
@@ -908,15 +915,10 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       } //end INC292755
       //start INC325289
       else if(c.Account.Source_System__c == 'WEBSTAR' && 
-              c.BSPCountry__c == 'United States' && 
+              AccountCountry == 'United States' && 
                (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
-              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
-        if(c.Case_Group__c == 'Query'){
-          template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
-        }
-        if(c.Case_Group__c == 'Process'){
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
           template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
-        }
       } //end INC325289
 
       /****** Preparing the email *****/
