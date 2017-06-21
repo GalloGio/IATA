@@ -64,26 +64,6 @@
 		});
 
 	}
-   	
-	function isValidAddressStreet() {
-		var bstreet = $j('#billingstreet textarea').val();
-		var sstreet = $j('#shippingstreet textarea').val();
-		var bstreetValid = (isBlank(bstreet) || bstreet.length <= 70);
-		var sstreetValid = (isBlank(sstreet) || sstreet.length <= 70);
-		if(!bstreetValid) {
-			$j('#billingAddressLimit').show();
-			$j(window).scrollTop(0);
-		} else {
-			$j('#billingAddressLimit').hide();
-		}
-		if(!sstreetValid) {
-			$j('#shippingAddressLimit').show();
-			$j(window).scrollTop(0);
-		} else {
-			$j('#shippingAddressLimit').hide();
-		}
-		return bstreet && sstreet; 
-	}
 	
 	function modifyUIForm() {
 		$j('#billingstreet textarea').prop("maxlength","70");
@@ -117,6 +97,17 @@
 	  	}
 	}
 	
+	function validateNewCompany() {
+		$j('#recFields').hide();
+		var element = $j('input[id*="iecNewAccount"]');
+		if(!element.val()) {
+			$j('#recFields').show();
+			element.parent().addClass('has-error');
+			return false;
+		}
+		return true;
+	}
+	
 	/*iec functions - end*/
 	
 	var countriesWithoutZipCode;
@@ -143,6 +134,7 @@
             
             //TC: remove address validation boxes
             if("{!sRefererCommunity}"=="iec") {
+            	$j('input[id*="accountName"]').removeAttr('required');
             	replaceShippingTXT(document.body);
 	            $j(".elementBAddressToHide").hide();  
 	            $j(".elementSAddressToHide").hide();     
@@ -215,7 +207,7 @@
                     </apex:repeat>
                 </div> 
                 
-                <div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -47px; display: none;">
+                <div class="formError" id="addressStreetMSG" style="width: 180px; opacity: 0.87; position: absolute; top: 0px; left: 16.4px; right: initial; margin-top: -74px; display: none;">
 					<div class="formErrorContent"></div>
 					<div class="formErrorArrow">
 						<div class="line10"><!-- --></div>
@@ -292,13 +284,15 @@
                     </div>
                     
                     <!-- TF - SP10 - If airline, search for Airline Designator -->
-                    <div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
-                        <label class="control-label" for="inputError">{!$Label.ISSP_Designator_Code}</label>
-                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
-                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
-                        </apex:outputPanel>
-                        <apex:inputText styleclass="form-control" value="{!searchDesignatorCode}"/>
-                    </div>
+                    <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+	                    <div class="form-group" id="DesignatorCode" style="display:{!IF(toSearchDesignatorCode,'','none')}">
+	                        <label class="control-label" for="inputError">{!$Label.ISSP_Designator_Code}</label>
+	                        <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+	                        	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="DesignatorCodeBubble" />
+	                        </apex:outputPanel>
+	                        <apex:inputText styleclass="form-control" value="{!searchDesignatorCode}"/>
+	                    </div>
+                    </apex:outputPanel>
                     
                     <!-- TF - SP10 - If airline, search for IATA Code -->
                     <div class="form-group" style="display:{!IF(toSearchDesignatorCode,'','none')}">
@@ -321,22 +315,33 @@
                         </apex:selectList>
                     </div>
                     
-                    <!-- TF - SP08 - If agency, ask if Cargo or Agent --> 
-                    <div class="form-group" style="display:{!IF(OR(isAgency, isNotIATA),'','none')}">
-                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Select_Agency_Type}</label>
-                        <apex:selectRadio style="width:25%" value="{!cargoTravel}" onchange="checkAgencyType()" >
-                            <apex:selectOptions value="{!cargoTravelOptions}"/>
-                        </apex:selectRadio>
-                    </div>
+                    <apex:outputPanel layout="none" rendered="{!AND(sRefererCommunity == 'iec', isAirline)}">
+                    	<div class="form-group">
+                    		<label class="control-label">{!$Label.IEC_CompanyName}</label>
+                    		<apex:inputText styleclass="form-control" value="{!companyName}"/>
+                    	</div>
+                    </apex:outputPanel>
+
                     
-                    <!-- TF - SP08 - If agency, ask if has IATA Code --> 
-                    <div class="form-group" style="display:{!IF(agencyTypeSelected,'','none')}">
-                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_IATA_Code_Question}</label>
-                        <apex:selectRadio style="width:15%" value="{!toSearchIataCodeString}" onchange="checkSearchIataCode()" >
-                            <apex:selectOptions value="{!iataCodeQuestion}"/>
-                        </apex:selectRadio>
-                    </div>
                     
+                                    
+                    <apex:outputPanel layout="none" rendered="{!AND(isAgency, sRefererCommunity != 'iec')}">
+                    	<!-- TF - SP08 - If agency, ask if Cargo or Agent --> 
+	                    <div class="form-group" style="display:{!IF(OR(isAgency, isNotIATA),'','none')}">
+	                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_Select_Agency_Type}</label>
+	                        <apex:selectRadio style="width:25%" value="{!cargoTravel}" onchange="checkAgencyType()" >
+	                            <apex:selectOptions value="{!cargoTravelOptions}"/>
+	                        </apex:selectRadio>
+	                    </div>
+	                    
+	                    <!-- TF - SP08 - If agency, ask if has IATA Code --> 
+	                    <div class="form-group" style="display:{!IF(agencyTypeSelected,'','none')}">
+	                        <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_IATA_Code_Question}</label>
+	                        <apex:selectRadio style="width:15%" value="{!toSearchIataCodeString}" onchange="checkSearchIataCode()" >
+	                            <apex:selectOptions value="{!iataCodeQuestion}"/>
+	                        </apex:selectRadio>
+	                    </div>
+                    </apex:outputPanel> 
                     <div class="form-group" style="display:{!IF(showSearchCountry,'','none')}"> 
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'display:none;','')}"><span class="required">*</span>{!$Label.ISSP_CompanyLocation}</label>
                         <label class="control-label"  for="inputError" style="{!if(isGeneral==true,'','display:none;')}"><span class="required">*</span>{!$Label.GeneralPublicLocation}</label>
@@ -350,12 +355,22 @@
                         <!-- <apex:inputSecret styleclass="form-control countryName" value="{!searchCountryName}" style="display:none"/> -->
                     </div>
                     <div class="form-group" style="display:{!IF(showSearchIataCode,'','none')}">
-                        <label class="" for="inputError"><span class="required">*</span>{!$ObjectType.Account.fields.IATACode__c.Label}</label>
+                        <label class="" for="inputError">
+                        	<apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+                        		<span class="required">*</span>
+                        	</apex:outputPanel>{!$ObjectType.Account.fields.IATACode__c.Label}
+                        </label>
                         <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
                         	<img src="/img/msg_icons/info16.png" style="vertical-align:middle; margin-left:3px" id="IATACode" />
                         </apex:outputPanel>
-                        <apex:inputText styleclass="form-control {!IF(showSearchIataCode,'recSearch','')}" value="{!searchIATACode}" id="iataCodeInput" />
+                        <apex:inputText styleclass="form-control {!IF(AND(showSearchIataCode, sRefererCommunity != 'iec'),'recSearch','')}" value="{!searchIATACode}" id="iataCodeInput" />
                     </div>
+                    <apex:outputPanel layout="none" rendered="{!AND(sRefererCommunity == 'iec', isAgency)}">
+                    	<div class="form-group">
+                    		<label class="control-label">{!$Label.IEC_CompanyName}</label>
+                    		<apex:inputText styleclass="form-control" value="{!companyName}"/>
+                    	</div>
+                    </apex:outputPanel>
                     <div class="form-group" id="CompanyName" style="display:{!IF(showSearchCompName,'','none')}">
                         <label class="control-label" for="inputError"><span class="required">*</span>{!$Label.ISSP_CompanyName} {!$Label.ISSP_Company_Name_Search_Format}</label>
                         <apex:inputText styleclass="form-control {!IF(showSearchCompName,'recSearch','')} len3" value="{!searchCompanyName}"/>
@@ -457,7 +472,8 @@
                 
                 <div id="onegpa" class="alert alert-info" style="{!IF(onegpa!=true,'display:none','')}" >
                     <p style = "font-size:14px;"> {!$Label.ISSP_FoundGeneralPublic}</p>
-                </div>
+                </div>    
+                
                 
                 <div class="panel panel-default row" style="display:{!IF(showCreateAccount,'none','')}" id="submitAccountButtons1" >
                      <div class="col-md-6">
@@ -479,14 +495,14 @@
                             <!-- <apex:param name="selectedAccId" value="{!selectedAccId}" assignTo="{!selectedAccId}" />
                         </apex:commandButton> -->
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 nextAsGP" onClick="if(!validateGPForm()){return false;} blockme2();" action="{!nextAsGP}" value="{!$Label.ISSP_Next}" rendered="{!showNextAsGP}"/>
-                    </div>
+                    </div>                    
+                    
                 </div> 
     
                 </apex:form>
                 </apex:outputPanel>
-                    
-                    
-                     
+                
+                
                <apex:form id="newAccount" rendered="{!IF(OR(showCreateAccount,showcreateother),true,false)}"> 
                <div style="display:none" id="createAccountForm">
                 <div class="panel panel-default row" id="companyInfo">
@@ -494,7 +510,7 @@
                         <h3 class="panel-title">{!$Label.ISSP_CompanyInformation}</h3>
                     </div>
                     <div class="form-group col-lg-6" style="display:{!IF(!createBranch,'','none')}">
-                        <label for="exampleInputEmail1">{!$ObjectType.Account.fields.Legal_name__c.Label}</label><span class="required">*</span>
+                        <label for="exampleInputEmail1">{!IF(sRefererCommunity == 'iec',$Label.IEC_AccountName ,$ObjectType.Account.fields.Legal_name__c.Label)}</label><span class="required">*</span>
                         <apex:inputField styleclass="form-control rec"  id="accountName" value="{!acc.Name}" rendered="{!!createBranch}" />
                     </div>
                     <div class="form-group col-lg-6" style="display:{!IF(createBranch,'','none')}">
@@ -504,13 +520,19 @@
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1">{!$ObjectType.Account.fields.Sector__c.Label}</label><span class="required">*</span>
                         <!-- <apex:inputField styleclass="form-control rec" id="sector" value="{!acc.Sector__c}" onfocus="removeSectorValues('{!selectedCustomerType}', '{!$Component.sector}')" rendered="{!!hqFound}" /> -->
-                        <div style="display:{!IF(isAirline,'none','')}" >
-                        <apex:inputField styleclass="form-control rec" id="sector" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, !createAgency)}" />
+                        <div style="display:{!IF(AND(isAirline, sRefererCommunity != 'iec'),'none','')}" >
+                        <apex:inputField styleclass="form-control rec" id="sector" value="{!acc.Sector__c}" rendered="{!OR(sRefererCommunity == 'iec', AND(!hqFound, !createAgency))}" />
                         </div>
                         <apex:outputText styleclass="form-control" id="sectorHQ" value="{!hqAccount.Sector__c}" rendered="{!AND(hqFound, !createAgency)}" />
                         <apex:outputText styleclass="form-control" id="sectorAgency" value="{!acc.Sector__c}" rendered="{!AND(!hqFound, createAgency)}" />
                         <apex:outputText styleclass="form-control" id="sectorAirline" value="{!acc.Sector__c}" rendered="{!AND(isAirline, !toSearchDesignatorCode)}" />
                     </div>
+                    <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
+	                    <div class="form-group col-lg-6" >
+	                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+	                        <apex:inputField id="tradeNameIEC" styleclass="form-control"  value="{!acc.TradeName__c}"/>
+	                    </div>
+                    </apex:outputPanel>
                     <!-- 
                     <div class="form-group col-lg-6" style="display:{!IF(AND(!showSearchIataCode, createAgency),'','none')}" >
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
@@ -521,11 +543,13 @@
                         <apex:inputField id="tradeNameOther" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode, !createAgency)}" />
                     </div>
                      -->
-                    <div class="form-group col-lg-6" style="display:{!IF(!showSearchIataCode,'','none')}" >
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
-                        <apex:inputField id="tradeNameOther" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode)}" />
-                    </div>
-                    <div class="form-group col-lg-6" style="display:{!IF(showSearchIataCode,'','none')}" >
+                    <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+	                    <div class="form-group col-lg-6" style="display:{!IF(!showSearchIataCode,'','none')}" >
+	                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+	                        <apex:inputField id="tradeNameOther" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(!showSearchIataCode)}" />
+	                    </div>
+                    </apex:outputPanel>
+                    <div class="form-group col-lg-6" style="display:{!IF(AND(showSearchIataCode, sRefererCommunity != 'iec'),'','none')}" >
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.IATACode__c.Label}</label>
                         <apex:outputText styleclass="form-control" value="{!searchIATACode}"/>
                     </div>
@@ -556,10 +580,12 @@
                         <label for="exampleInputEmail1"><span class="required">*</span>{!$ObjectType.Account.fields.Category_Other_Value__c.Label}</label>
                         <apex:inputText styleclass="form-control rec" style="display:none" id="categoryOther" value="{!acc.Category_Other_Value__c}"/>
                     </div>
-                    <div class="form-group col-lg-6" style="display:{!IF(showSearchIataCode,'','none')}" >
-                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
-                        <apex:inputField id="tradeNameBranch" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(showSearchIataCode)}" />
-                    </div>
+                    <apex:outputPanel layout="none" rendered="{!sRefererCommunity != 'iec'}">
+	                    <div class="form-group col-lg-6" style="display:{!IF(showSearchIataCode,'','none')}" >
+	                        <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
+	                        <apex:inputField id="tradeNameBranch" styleclass="form-control"  value="{!acc.TradeName__c}" rendered="{!AND(showSearchIataCode)}" />
+	                    </div>
+                    </apex:outputPanel>
                     <!-- 
                     <div class="form-group col-lg-6">
                         <label for="exampleInputEmail1"><span class="required"></span>{!$ObjectType.Account.fields.TradeName__c.Label}</label>
@@ -583,7 +609,7 @@
                         <input type="checkbox" name="vehicle" id="copyCheckBox" onChange="copyBillingAddress()"/>
                         <label for="exampleInputEmail1">{!$Label.ISSP_CopyBillingAddress}</label> 
                         <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
-                        	<p style="color: #C90435; font-size: 11px;">{!$Label.IEC_PO_BOX_MSG}</p>
+                        	<p style="color: #C90435; font-size: 14px; margin-left: 19px;">{!$Label.IEC_PO_BOX_MSG}</p>
                         </apex:outputPanel>
                       </div>
                       <div class="form-group col-lg-6">
@@ -720,17 +746,17 @@
                         <!--<apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2" onclick = "checkvar()" value="{!$Label.ISSP_Back}" id="back"/>  -->
                         
                         <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2"  action="{!backToContactPage}" value="{!$Label.ISSP_Back}" id="backOth" style="display:none;"/>
-                   
                     </div>
                     <div class="col-md-6">
                       <input type="button" class="btn_iata btn-lg btn-block btn-success2" onClick="showCreateAccountForm()"
-                        value="{!IF(createBranch, $Label.ISSP_Create_New_Airline_Branch,
+                        value="{!IF(sRefererCommunity == 'iec', $Label.ISSP_Create_New_Other_Account, 
+                        		 IF(createBranch, $Label.ISSP_Create_New_Airline_Branch,
                                  IF(isAirline, $Label.ISSP_Create_New_Airline,
                                  IF(isNotIATA, $Label.ISSP_Create_New_Agency,
                                  IF(isOther, $Label.ISSP_Create_New_Other_Account,
                                  IF(showCreateStandardAirline, $Label.ISSP_NoRecordsFoundCreateStandardAirline,
                                  $Label.ISSP_Next
-                                 )))))}"
+                                 ))))))}"
                         id="btnShowCreateAccount"
                         style="display:{!if(or(showCreateAccount,showCreateOther),'','none')}"
                         />
@@ -938,6 +964,7 @@
         var shippingAddressValid = checkShippingAddress();
         
         var myCategoryField = document.getElementById(categoryField);
+        
         if (myCategoryField == null){
             //alert("is null");
         }
@@ -978,15 +1005,13 @@
         }
         )
         
-        /*
-        if (myCategoryField.value == '')
-            flag = false;
-        */
         if(flag == false){
             $j('#iec_div_errors').show();
             $j('#iec_rec_fields').show();
         }
-        return flag && shippingAddressValid && isValidAddressStreet();
+        
+        console.log(flag);
+        return flag && shippingAddressValid;
     }
     
     function validateNewAccount_non_iec() {    	    
@@ -1170,8 +1195,11 @@
         $j('#infoBox').hide();
         $j('#searchResultsHQ').hide();
         $j('#searchResults').hide();
-        document.getElementById('j_id0:j_id2:newAccount:back').style.display = 'none';
-        document.getElementById('j_id0:j_id2:newAccount:back2').style.display = 'block';
+        if($j('form[id*="newCompanyForm"]')) {$j('form[id*="newCompanyForm"]').hide();}
+        $j('input[id*="back"]').css('display', 'none');
+        $j('input[id*="back2"]').css('display', 'block');
+        //document.getElementById('{!$Component.newAccount.back}').style.display = 'none';
+        //document.getElementById('{!$Component.newAccount.back2}').style.display = 'block';
         
         var all = $j("div[id=recordstatuscontainer]");
         var box = all[0];

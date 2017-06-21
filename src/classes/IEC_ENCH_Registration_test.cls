@@ -95,7 +95,7 @@ private class IEC_ENCH_Registration_test {
 		Test.stopTest();
 	}
 	
-	public static testMethod void testISSP_Registration() {
+	public static testMethod void testISSP_Registration1() {
 		TestDataGenerator.generateISOCountryState();
 		Test.startTest();
 		ISSP_Registration ctrl = new ISSP_Registration();
@@ -103,10 +103,47 @@ private class IEC_ENCH_Registration_test {
 		ctrl.searchCountryName = 'Portugal';
 		Boolean reqZipCode = ctrl.requiredZipCode;
 		ctrl.isGPSearchValid();
+		ctrl.getCustomerTypeList();
 		ctrl.sRefererCommunity = 'iec';
 		ctrl.nextAsGP();
 		ctrl.getISOCountry();
 		ctrl.getCustomerTypeList();
+		List<SelectOption> opts = ctrl.shpCountry;
 		Test.stopTest();
 	}
+	
+	public static testMethod void testISSP_Registration2() {
+		TestDataGenerator.generateISOCountryState();
+		Test.startTest();
+		ISSP_Registration ctrl = new ISSP_Registration();
+		ctrl.companyName = 'test 123 tes tes';
+		ctrl.searchCompany('AC 1234 AC AF', 'Test', [SELECT Id FROM IATA_ISO_Country__c LIMIT 1][0].Id, 'Airline');
+		ctrl.searchCompany('AC 1234 AC AF', 'Test', [SELECT Id FROM IATA_ISO_Country__c LIMIT 1][0].Id, 'Agency');
+		List<SelectOption> opts = ctrl.shpCountry;
+		Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Registration3() {
+		List<IATA_ISO_Country__c> countries = TestDataGenerator.generateISOCountryState();
+		Test.startTest();
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_CreateAccount')); 
+		system.currentPageReference().getParameters().put('sRefererCommunity', 'iec');
+		ISSP_Registration ctrl = new ISSP_Registration();
+		ctrl.searchCountryAirline = countries[0].Id;
+		ctrl.searchCountry = countries[0].Id;
+		ctrl.getISOCountry();
+		ctrl.accList = new List<Account>();
+		ctrl.handleSearchResults();
+		Account acc = new Account(Name='TEST');
+		insert acc;
+		ctrl.accList = new List<Account>{acc};
+		ctrl.handleSearchResults();
+		ctrl.isAirline = true;
+		ctrl.searchAccount();
+		ctrl.isAirline = false;
+		ctrl.isAgency = true;
+		ctrl.searchAccount();
+		Test.stopTest();
+	}
+	
 }
