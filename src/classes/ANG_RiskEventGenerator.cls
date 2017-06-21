@@ -27,11 +27,18 @@ public class ANG_RiskEventGenerator {
 		set;
 	}
     
-    
     public static Boolean skipStatusAssignment{
         get{
             if(skipStatusAssignment == null) skipStatusAssignment = false;
             return skipStatusAssignment;
+        }
+        set;
+    }
+
+    public static Boolean skipMultipleGeneration{
+        get{
+            if(skipMultipleGeneration == null) skipMultipleGeneration = false;
+            return skipMultipleGeneration;
         }
         set;
     }
@@ -170,7 +177,7 @@ public class ANG_RiskEventGenerator {
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
-					String uniqueKey = o.Id+''+String.valueOf(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?(id)o.get(accountFields.get(objectName)):null)+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+					String uniqueKey = o.Id+''+String.valueOf((config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?String.valueOf((id)o.get(accountFields.get(objectName))):''))+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 		
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
@@ -245,7 +252,7 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+String.valueOf(re.ANG_isMultipleType__c?ID.valueOf(re.ANG_AccountId__c):null)+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_isMultipleType__c?String.valueOf(ID.valueOf(re.ANG_AccountId__c)):'')+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
@@ -274,6 +281,28 @@ public class ANG_RiskEventGenerator {
 		}
 
 		if(!Trigger.isExecuting || !Trigger.isBefore) upsert newObjects;
+	}
+
+	public void generateMultiples() {
+
+		if(skipMultipleGeneration) return;
+		skipMultipleGeneration = true;
+
+		//find all Accounts Involved (process details) for the oscars and create a map to fetch risk event information
+		Map<Id, ANG_Agency_Risk_Event__c> risks = new Map<Id, ANG_Agency_Risk_Event__c>();
+		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects) risks.put(re.ANG_OscarId__c, re);
+
+		//generate the multiples with correct account
+		List<ANG_Agency_Risk_Event__c> multiples = new List<ANG_Agency_Risk_Event__c>();
+		for(AMS_Process_Detail__c accountInvolved : [SELECT Id, Account__c, OSCAR__c FROM AMS_Process_Detail__c WHERE OSCAR__c IN :risks.keySet()]){
+			ANG_Agency_Risk_Event__c newRisk = risks.get(accountInvolved.OSCAR__c).clone(false, true);
+			newRisk.ANG_OscarId__c = accountInvolved.OSCAR__c;
+			newRisk.ANG_AccountId__c = accountInvolved.Account__c;
+
+			multiples.add(newRisk);
+		}
+
+		if(!multiples.isEmpty()) insert multiples;
 	}
 
 
