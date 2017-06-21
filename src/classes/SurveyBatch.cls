@@ -115,7 +115,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
                                Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
-                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,
+                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
                                WhoClosedCase__r.Profile.Name, CNSCase__c
@@ -909,7 +909,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
       //start INC325289
       else if(c.Account.Source_System__c == 'WEBSTAR' && 
               c.BSPCountry__c == 'United States' && 
-              (c.Status != '' || c.Status != 'Terminated' || c.Status != null) && 
+               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
               (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
         if(c.Case_Group__c == 'Query'){
           template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
