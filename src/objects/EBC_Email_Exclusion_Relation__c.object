@@ -51,7 +51,7 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
@@ -67,6 +67,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -81,6 +82,7 @@
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -94,6 +96,7 @@
         <label>External Id</label>
         <length>255</length>
         <required>true</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -109,6 +112,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -123,6 +127,7 @@
         <relationshipLabel>EBC Email Exclusion Relations</relationshipLabel>
         <relationshipName>EBC_Email_Exclusion_Relations</relationshipName>
         <required>false</required>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -133,6 +138,7 @@
         <formula>LOWER(EBC_Email_Exclusion__r.Email__c) != LOWER(IF(!ISBLANK(GDP_Products_Account_View__c),  GDP_Products_Account_View__r.Email_Address__c,  ID_Card__r.Email__c))</formula>
         <inlineHelpText>Is GDP Account or ID Card email address changed since the exclusion</inlineHelpText>
         <label>Is Email Changed</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -141,6 +147,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Is Global</label>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -202,6 +209,7 @@
     </listViews>
     <nameField>
         <label>EBC Email Exclusion Relation Name</label>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>EBC Email Exclusion Relations</pluralLabel>

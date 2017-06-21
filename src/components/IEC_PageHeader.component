@@ -109,8 +109,9 @@
                                     </div>
                                     <input type="submit" class="button" value="Log in" />
                                     <!-- <button class="button">Log in</button> -->
-                                    <p>Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
-                                    <p><apex:outputLink value="#" onclick="signUpAction();">No Account? Register</apex:outputLink></p>                             
+                                    <p style="margin-bottom : 0;">Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
+                                    <p style="margin : 0;">No Account? <a class="text-link" href="#" onclick="signUpAction()">Register</a></p>
+                                       
                                 </div>
                             </form>
                             <apex:form ><apex:actionFunction name="signUpAction" action="{!miniRegister}"/></apex:form>
