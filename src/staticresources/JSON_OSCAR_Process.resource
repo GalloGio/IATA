@@ -4440,7 +4440,6 @@
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
                   "Update_AIMS_Approval__c",
-                  "Change_effective_as_of__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
@@ -4980,7 +4979,6 @@
                   "Welcome_call__c",
                   "Country_Specifics_Approval__c",
                   "Update_AIMS_Approval__c",
-                  "Change_effective_as_of__c",
                   "STEP1__c"
                 ],
                 "IsDependent": false
