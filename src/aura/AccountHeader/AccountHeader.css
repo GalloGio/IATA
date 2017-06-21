@@ -1,11 +1,9 @@
 .THIS .alignText{
     width: 100%;
-    display: block;
     word-break: break-word;
     WHITE-SPACE: normal;
-    overflow: auto;
-    max-height:50px;
-    font-size: 0.75rem;
+    font-size: 0.55rem;
+    margin-bottom: 	10px;
     
 }
 .THIS .float-right{
@@ -24,6 +22,11 @@
 	display: flex;
 }
 
+.THIS .slds-button.inline-button{
+	line-height: normal;
+    padding: 4px;
+}
+
 .THIS .slds-size_1-of-5:nth-child(3) img{
 	margin: 0 auto;
 	align-self: baseline;
@@ -36,4 +39,23 @@
 
 .THIS .slds-size_1-of-5:nth-child(5){
 	flex-grow: 0.5 !important;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5) .slds-button-group{
+	width: 100%;
+}
+
+.THIS .slds-size_1-of-5:nth-child(5) button{
+	font-size: 0.8em;
+    padding: 0;
+    width: 100%;
+    min-width: 140px;
+}
+
+.THIS .slds-page-header__detail-row.resize{
+	margin: 1rem 0 0.75rem 1rem;
+}
+
+.THIS.slds-page-header.resizeHeader {
+    padding: 1.1rem 1.5rem 0.3rem;
 }

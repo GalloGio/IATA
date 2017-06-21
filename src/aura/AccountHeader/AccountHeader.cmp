@@ -9,7 +9,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <!-- PAGE HEADER -->
-    <div class="slds-page-header" role="banner">
+    <div class="slds-page-header resizeHeader" role="banner">
         
         <!-- PAGE HEADER TOP ROW -->
         <div class="slds-grid  slds-grid_pull-padded ">
@@ -36,16 +36,16 @@
                 <!-- HEADING AREA -->                
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-size_1-of-5 slds-col--padded">
+            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle text-align-center">
                 <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
-                    <div style="color:#ff0000"> {!v.account.Due_Diligence_Status__c}</div>
+                    <div style="color:#ff0000; font-size: .75rem;"> {!v.account.Due_Diligence_Status__c}</div>
                     <aura:set attribute="else">
                             <span>   </span>  
                     </aura:set>
                 </aura:if>                    
             </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
-            <div class="slds-size_1-of-5 slds-col--padded">
+            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle">
                 <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
@@ -55,10 +55,19 @@
                         <aura:renderIf isTrue="{!v.isEditMode2}">
                             <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-textarea " maxlength="150" cols="50" />                                        
                         </aura:renderIf>
-                        <aura:renderIf isTrue="{!!v.isEditMode2}">
-                            <span  class="alignText" style="" >    {!v.account.SanctionNotice2__c}   </span>          
-                        </aura:renderIf>                                    
-                    </div>
+                        
+                        <aura:renderIf isTrue="{!!v.isEditMode2}">     
+		      				    <div class="slds-form-element__control">        
+	                            <span  class="alignText" style="" >    {!v.account.SanctionNotice2__c}   </span> 
+	                            <aura:renderIf isTrue="{!v.canEdit2}">
+		                            <button class="slds-button slds-button_icon slds-float_right slds-button_icon slds-button_icon-small inline-button" onclick="{!c.switchToEditMode}" id="edit2" title="Edit">
+	                                		<c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon slds-button__icon_hint" />
+	                                		<span class="slds-assistive-text">Edit</span>
+	                            	</button>	       		   				
+	                                 </aura:renderIf>  
+                             </div>                                                               
+                        </aura:renderIf>     
+                         </div>  
                     <div class="text-align-center slds-size_1-of-2 slds-col--padded"> 
                         <aura:renderIf isTrue="{!v.canEdit2}">
                         <aura:renderIf isTrue="{!v.isEditMode2}">
@@ -74,19 +83,13 @@
                                     <span class="slds-assistive-text">Cancel</span> -->       
                             </div>                                 
                         </aura:renderIf> 
-                        <aura:renderIf isTrue="{!!v.isEditMode2}">
-                            <button class="slds-button slds-button--neutral float-right" onclick="{!c.switchToEditMode}" id="edit2" title="Edit">
-                                <c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon" />
-                                <span class="slds-assistive-text">Edit</span>
-                            </button>
-                        </aura:renderIf>
                         </aura:renderIf>
                     </div>
                     
                 </div>
             </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 3 -->
-            <div class="slds-col--padded slds-no-flex  slds-size_1-of-5 ">
+            <div class="slds-col--padded slds-no-flex  slds-size_1-of-5 slds-align-middle">
                 <div class="slds-button-group float-right" role="group">
                     <button class="slds-button slds-button--neutral">
                         <a href="{!'/' + v.account.Id}">Back to Classic View</a>
@@ -99,7 +102,7 @@
         <!-- / PAGE HEADER TOP ROW -->
         
         <!-- PAGE HEADER DETAIL ROW -->
-        <div class="slds-grid slds-page-header__detail-row">
+        <div class="slds-grid slds-page-header__detail-row resize">
             
             <!-- PAGE HEADER / ROW 2 / COLUMN 1 -->
             <div class="slds-col--padded slds-size--1-of-6">
