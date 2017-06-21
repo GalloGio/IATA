@@ -89,6 +89,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Billing_Account__c</fields>
+        <fields>External_Id__c</fields>
+        <fields>GDP_Products_Account_View__c</fields>
+        <fields>ID_Card__c</fields>
+        <fields>Is_Global__c</fields>
         <relatedList>EBC_Email_Exclusion_Relation__c.EBC_Email_Exclusion__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -97,7 +102,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h8E000000Ny6H</masterLabel>
+        <masterLabel>00hw000000hfV2z</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
