@@ -80431,6 +80431,21 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <protected>false</protected>
     </webLinks>
     <webLinks>
+        <fullName>Detailed_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Detailed Hierarchy View</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(typeof(srcUp)==&apos;function&apos;){
+  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
+} else {
+  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
