@@ -217,7 +217,7 @@
         <criteriaItems>
             <field>Category__c</field>
             <operation>equals</operation>
-            <value>IATA Regional Office</value>
+            <value>IATA Local office,IATA Regional Office</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>

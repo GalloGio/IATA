@@ -2370,6 +2370,13 @@ Case description: {!Case.Description}
         <value>Download Invoice</value>
     </labels>
     <labels>
+        <fullName>EBulletin_More_than_8_owners_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EBulletin More than 8 owners message</shortDescription>
+        <value>. THE AGENT HAS MORE THAN 8 OWNERS, PLEASE CONTACT IATA FOR FULL DETAILS.</value>
+    </labels>
+    <labels>
         <fullName>EF_Account_Disallow_BA</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5416,6 +5423,20 @@ and
         <value>You must select two travel professional courses.</value>
     </labels>
     <labels>
+        <fullName>IEC_AccountName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC AccountName</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>IEC_AirlineNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC AirlineNotFound</shortDescription>
+        <value>No Company was found for these search criteria. Please modify your search or select &quot;Other Company&quot; as &quot;Type of Customer&quot;.</value>
+    </labels>
+    <labels>
         <fullName>IEC_BillingAddressLimit</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5453,6 +5474,13 @@ and
         <protected>false</protected>
         <shortDescription>IEC Transaction Number</shortDescription>
         <value>Your Transaction number is:</value>
+    </labels>
+    <labels>
+        <fullName>IEC_CompanyName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC CompanyName</shortDescription>
+        <value>Company Name</value>
     </labels>
     <labels>
         <fullName>IEC_Confirm_AddNewCard</fullName>
@@ -5894,6 +5922,15 @@ and
         <protected>false</protected>
         <shortDescription>IEC_NOGPAccount</shortDescription>
         <value>No General Public Account was found matching your country.</value>
+    </labels>
+    <labels>
+        <fullName>IEC_NoRecordsFoundCreateAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC_NoRecordsFoundCreateAccount</shortDescription>
+        <value>No Organization was found for these search criteria. Please modify your search and try again or click Create New Account to create a new company record.
+&lt;br/&gt;&lt;br/&gt; 
+If you continue to experience issues registering for the IATA Customer Portal, then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>IEC_NoRecordsFoundGP</fullName>
