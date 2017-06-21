@@ -1271,6 +1271,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>chiavonf@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>dovgano@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3539,6 +3543,10 @@
         <fullName>Send_email_notification_for_a_new_comment_on_a_case</fullName>
         <description>Send email notification for a new comment on a case</description>
         <protected>false</protected>
+        <recipients>
+            <recipient>Partner User Role</recipient>
+            <type>caseTeam</type>
+        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>

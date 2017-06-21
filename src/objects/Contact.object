@@ -27521,7 +27521,7 @@ ISCHANGED(ISSP_Contact_Name__c )
     </validationRules>
     <validationRules>
         <fullName>Contact_email_change_BSPlink</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>prevents changes of email address for BSPlink users.</description>
         <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedaa@iata.org&quot;,
 NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>

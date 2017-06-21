@@ -866,6 +866,57 @@
             <group>FDS_KPI_Reporting_Team</group>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>Weekly_Abandoned_calls_rate</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Value_Percentage__c</columns>
+        <columns>Date_Value__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>Abandoned calls rate (Weekly)</value>
+        </filters>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>(Weekly) Abandoned calls rate</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FDS_KPI_Reporting_Team</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Weekly_RET_Management_performance</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Deadline__c</columns>
+        <columns>Value_Percentage__c</columns>
+        <columns>Responsible__c</columns>
+        <columns>Not_Available__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>% RET files processing performance (Weekly)</value>
+        </filters>
+        <filters>
+            <field>Deadline__c</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>(Weekly) RET Management performance</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>FDS_KPI_Reporting_Team</group>
+        </sharedTo>
+    </listViews>
     <nameField>
         <label>KPI Value Name</label>
         <trackHistory>true</trackHistory>
