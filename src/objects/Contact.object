@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>AddToCampaign</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -2809,7 +2813,9 @@ IF(Financial_Assessment_Contact__c,IMAGE(&quot;/servlet/servlet.FileDownload?fil
 &amp;&quot; &quot;&amp;
 IF(NOT(ISBLANK(Function__c)),IMAGE(&quot;/resource/Primary_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp;
-IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp;
+IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Type</label>
         <required>false</required>
@@ -3059,6 +3065,15 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>CNS_Contact__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the contacts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Contact</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Call_Status_Update__c</fullName>
@@ -4376,21 +4391,41 @@ IF(Membership_Main_Contact__c,IMAGE(&quot;/resource/Main_Contact_image&quot; ,&q
         <externalId>false</externalId>
         <formula>/*PreProd*/
 /* 
+IF( AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;) , &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
++SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
+SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+
+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+
+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ 
+SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+
+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
+IF(Account.IATACode__c != &apos;&apos; 
+, 
 IF(Account.IATACode__c != &apos;&apos; 
 , 
 &quot;http://www-qa.iata.org/services/finance/pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-)
+))
 */
 
 /*Prod*/ 
+IF(  AND(Account.CNS_Account__c,  Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;), &quot;https://mycnsc.com/accreditation/registration?company_name=&quot;
++SUBSTITUTE(SUBSTITUTE(Account.Name, &apos;&amp;&apos;, &apos;%26&apos;),&apos; &apos;, &apos;%20&apos;)+
+&quot;&amp;first_name=&quot;+ FirstName + &quot;&amp;last_name=&quot;+LastName+&quot;&amp;address1=&quot;+ 
+SUBSTITUTE(Account.BillingStreet, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;city=&quot;+
+SUBSTITUTE(Account.BillingCity, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;zip=&quot;+
+SUBSTITUTE(Account.BillingPostalCode, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;state=&quot;+
+SUBSTITUTE(Account.BillingState, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;country=&quot;+ 
+SUBSTITUTE(Account.BillingCountry, &apos; &apos;, &apos;%20&apos;)+&quot;&amp;phone=&quot;+
+SUBSTITUTE(Phone, &apos; &apos;, &apos;&apos;)+&quot;&amp;email=&quot;+Email,
 IF(Account.IATACode__c != &apos;&apos; 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+Account.IATACode__c+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
 , 
 &quot;http://www.iata.org/services/finance/Pages/paymentlink-form.aspx?accName=&quot;+ SUBSTITUTE(Account.Name, &quot;&amp;&quot;, &quot;%26&quot;) +&quot;&amp;iataCode=&quot;+AccountId+&quot;&amp;countryIsoCode=&quot;+Account.IATA_ISO_Country__r.ISO_Code__c+&quot;&amp;companyType=&quot;+Account.RecordType.Name+&quot;&amp;email=&quot;+Email 
-)</formula>
+))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Credit Card Payment Link</label>
         <required>false</required>
@@ -7072,6 +7107,25 @@ TotalRows-Successes-Errors</description>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>MITA_Service__c</fullName>
+        <externalId>false</externalId>
+        <label>MITA Service</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>equals</operation>
+            <value>a2ww0000000Sd6U</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Name</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>MITA_Teletype__c</fullName>
         <externalId>false</externalId>
         <label>Teletype</label>
@@ -7224,6 +7278,7 @@ TotalRows-Successes-Errors</description>
         <fullName>Membership_Main_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
+        <inlineHelpText>Shows that this person is the one main point of contact for IATA</inlineHelpText>
         <label>Main Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -8953,7 +9008,9 @@ IF(S_SIS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037SpQ&
 &amp;&quot; &quot;&amp; 
 IF(ID_Card_Holder__c,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Sne&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000037Som&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(MITA_Contact__c=TRUE,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w00000052zdM&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -9536,9 +9593,9 @@ IF(Service_TD_Basic__c + Service_TD_Premium__c&gt;0,IMAGE(&quot;/servlet/servlet
         <description>Shows an image to represent a valid or invalid domain for current contact email, used for ISSP portal</description>
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL(ValidContactDomainName__c, &quot;valid&quot;),
-  IMAGE(&quot;/resource/1475750392000/intellimail__check&quot;, &quot;valid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Valid&quot;, &quot;valid&quot;, 16, 106),
 IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
-  IMAGE(&quot;/resource/1488191467000/AccountDomainValidation_Invalid&quot;, &quot;invalid&quot;, 16, 16),
+  IMAGE(&quot;/resource/1488281629000/AccountDomainValidationInternalImage_Invalid&quot;, &quot;invalid&quot;, 16, 147),
   &quot;&quot; )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -10183,6 +10240,58 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <language>en_US</language>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Client_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Client</value>
+        </filters>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>E&amp;F Client Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>E_F_Operator_Contacts</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>CONTACT.TITLE</columns>
+        <columns>CONTACT.PHONE1</columns>
+        <columns>CONTACT.EMAIL</columns>
+        <columns>Airline_Contact_Type__c</columns>
+        <columns>EF_Account_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>EF_Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <filters>
+            <field>EF_Account_Type__c</field>
+            <operation>equals</operation>
+            <value>E&amp;F Operator</value>
+        </filters>
+        <label>E&amp;F Operator Contacts</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>IDFSEFServices</role>
         </sharedTo>
     </listViews>
     <listViews>
@@ -27335,7 +27444,7 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <description>prevents flagging a contact as CEO CFO unless it is under an airline HQ account</description>
         <errorConditionFormula>Account_HQ_BO__c &lt;&gt; &quot;Headquarter&quot; &amp;&amp; not(ispickval(CEO_CFO__c,&quot;&quot;))</errorConditionFormula>
         <errorDisplayField>CEO_CFO__c</errorDisplayField>
-        <errorMessage>Airline CEO/CFO can only be flagged under the airline headquarter account. If this is the correct contact, please relocate it under the HQ by editing the &quot;Account&quot; field to the correct value.</errorMessage>
+        <errorMessage>Airline CEO/CFO/COO can only be flagged under the airline headquarter account. If this is the correct contact, please relocate it under the HQ by editing the &quot;Account&quot; field to the correct value.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Call_Update_Date_Must_be_Added</fullName>
@@ -27412,7 +27521,7 @@ ISCHANGED(ISSP_Contact_Name__c )
     </validationRules>
     <validationRules>
         <fullName>Contact_email_change_BSPlink</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>prevents changes of email address for BSPlink users.</description>
         <errorConditionFormula>aND(S_BSPlink__c&lt;&gt;0,ischanged(Email),$User.Username&lt;&gt;&quot;oscarl@iata.org&quot;,$User.Username&lt;&gt;&quot;rovedaa@iata.org&quot;,
 NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionFormula>
@@ -27445,18 +27554,19 @@ NOT(Contains($Profile.Name, &quot;System Administrator&quot;)))</errorConditionF
         <errorConditionFormula>AND(
 RecordType.DeveloperName = &apos;Standard_Contact&apos;,
 OR(
- TEXT(CEO_CFO__c)=&quot;CEO&quot;,
- TEXT(CEO_CFO__c)=&quot;CFO&quot;,
- TEXT(CEO_CFO__c)=&quot;COO&quot;,
- Membership_Main_Contact__c
+TEXT(CEO_CFO__c)=&quot;CEO&quot;,
+TEXT(CEO_CFO__c)=&quot;CFO&quot;,
+TEXT(CEO_CFO__c)=&quot;COO&quot;,
+NOT(ISBLANK (Function__c)),
+Membership_Main_Contact__c
 ),
 OR(
- ISBLANK(FirstName ) ,
- ISBLANK(LastName),
- ISBLANK(Title ) ,
- ISBLANK(Email) ,
- ISBLANK(AccountId ),
- ISBLANK(Membership_Function__c) ))</errorConditionFormula>
+ISBLANK(FirstName ) ,
+ISBLANK(LastName),
+ISBLANK(Title ) ,
+ISBLANK(Email) ,
+ISBLANK(AccountId ),
+ISBLANK(Membership_Function__c) ))</errorConditionFormula>
         <errorMessage>Please make sure you filled in all the following fields: First Name, Last Name, Title, Job Function, Email address and Account</errorMessage>
     </validationRules>
     <validationRules>

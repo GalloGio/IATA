@@ -10,10 +10,10 @@
     
     <apex:form >
     	<apex:pageBlock >
-    	<apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
+    	<apex:pageBlockSection columns="1" title="{!IF(newlabels,$Label.ISSP_AMS_First_Page_Summary_Header_New,$Label.ISSP_AMS_First_Page_Summary_Header)}" collapsible="false">
     			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
                     	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
                     	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
                     	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -143,12 +143,12 @@
         <apex:pageBlockSection columns="1" rendered="{!List_AgencyContacts.size > 0}">                            
             <apex:pageBlockTable styleClass="summary-table" value="{!List_AgencyContacts}" var="agencycon" >
                 <apex:facet name="header">{!$Label.ISSP_AMS_CASS_HO_ReadOnly_SECTION2_1}</apex:facet>
-                <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
-	            	<apex:facet name="header">{!$Label.ISSP_AMS_Name}</apex:facet>
-	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
-	        	</apex:column>
-	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
-	                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
+                <apex:column style="vertical-align: text-top;" headerClass="checkbox-td">
+    	            	<apex:facet name="header">{!$Label.ISSP_AMS_Contact_Name}</apex:facet>
+    	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
+    	        	</apex:column>
+	            <apex:column style="vertical-align: text-top;" headerClass="checkbox-td">
+	                <apex:facet name="header">{!$Label.ISSP_AMS_Contact_Info}</apex:facet>
 	            	{!$ObjectType.Contact.fields.Phone.Label}: {!agencycon.Phone__c}<br/>
 	       			{!$ObjectType.Contact.fields.MobilePhone.Label}: {!agencycon.Mobile__c}<br/>
 	  				{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}<br/>
@@ -161,19 +161,54 @@
 	 				<span style="display:{!IF(agencycon.AddressCountry__c == '','none','')}">, </span>
 					{!agencycon.AddressCountry__c}
 				</apex:column>
-	        	<apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+	        	<apex:column style="vertical-align: text-top;" headerClass="checkbox-td">
 	  				<apex:facet name="header">{!$Label.ISSP_AMS_Additional_Data}</apex:facet>
 	   				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!TEXT(agencycon.Financial_interest__c)}<br/>
 					{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}: {!TEXT(agencycon.Time_devoted_to_Agency_business__c)}<br/>
 	            </apex:column>
-	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
+
+              <apex:column styleClass="checkbox-td">
+                  <apex:facet name="header">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:facet>
+                  <apex:outputText rendered="{!agencycon.Agency_owner__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
+              </apex:column> 
+              <apex:column styleClass="checkbox-td">
+                  <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
+                  <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
+              </apex:column> 
+
+              <apex:column  styleClass="checkbox-td">
+                  <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Roles_and_Responsibilities}"/></apex:facet>
+                  <table>
+                      <tr>
+                          <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Authorised_signatory__c,'','un')}checked.gif"/></td>
+                          <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+                      </tr>
+
+                      <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+                          <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Financial_Assessment_Contact__c,'','un')}checked.gif"/></td>
+                          <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
+                      </tr>
+                      <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+                          <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.id == newForm.ISSP_AMS_Portal_admin__c,'','un')}checked.gif"/></td>
+                          <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></td>
+                      </tr>
+                      <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+                          <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Id == newForm.ISSP_AMS_Invoicing_Contact__c,'','un')}checked.gif"/></td>
+                          <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
+                      </tr>
+                  </table>                  
+              </apex:column>
+              <!--
+	            <apex:column style="vertical-align: text-top;" headerClass="checkbox-td" width="20%" >
 	                <apex:facet name="header">{!$Label.ISSP_AMS_Roles_and_Responsibilities}</apex:facet>
 	                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Agency_role__c}" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Authorised_signatory__c}" value="{!$Label.ISSP_AMS_Authorised_Sig}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Authorised_signatory__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}" value="{!$Label.ISSP_AMS_Fin_Contact}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Financial_Assessment_Contact__c}"/><br/>
-	                <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}" value="{!$Label.ISSP_AMS_Portal_Admin}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"/>
-	            </apex:column>                        
+                  <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}" value="{!$Label.ISSP_AMS_Portal_Admin}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"/><br/>
+                  <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Invoicing_Contact__c}" value="{!$Label.ISSP_AMS_Invoicing_Contact}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Invoicing_Contact__c}"/>
+	            </apex:column>  
+              -->                      
             </apex:pageBlockTable>
         </apex:pageBlockSection>
         </span>

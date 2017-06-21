@@ -12,7 +12,7 @@
 	    <apex:pageBlockSection columns="1" title="{!$Label.ISSP_AMS_First_Page_Summary_Header}" collapsible="false">
 	    			<apex:panelGrid columns="2" width="100%" cellpadding="10%" columnClasses="col1, col2">
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Operation_Type}"/>
-	                        <apex:outputText value="{!$Label.ISSP_Cargo_Agent}"/>
+	                        <apex:outputText value="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_AMS_Step1_Approval_Sought}" />
 	                    	<apex:outputText value="{!newForm.Agent_Type__c + ' - ' + IF(newCase.Reason1__c=='New HO', $Label.ISSP_AMS_Reason_New_HO, $Label.ISSP_AMS_Reason_New_Branch)}"/>
 	                    	<apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
@@ -24,7 +24,7 @@
 	          <apex:pageBlockSection columns="1" collapsible="false">
 	              <apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, $Label.ISSP_AMS_STEP_3_1_Branch_Title)}
+	                            {!CASE(amsOfficeType,'HO', $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Section1" style="float:right"/>
 	                        </apex:outputpanel>                       
 	                    </apex:facet>
@@ -71,7 +71,7 @@
 	    <apex:pageBlockSection columns="1" collapsible="false">
 	        	<apex:facet name="header">
 	                        <apex:outputpanel >
-	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_STEP_3_2_Title,
+	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_STEP_3_2_Title_New, $Label.ISSP_AMS_STEP_3_2_Title),
                         $Label.ISSP_AMS_CGO_ReadOnly_SECTION2)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section2}" value="{!$Label.ISSP_EditSection}" id="Edit-Section2" style="float:right"/>
 	                        </apex:outputpanel>                       
@@ -104,7 +104,7 @@
 	                <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
 	                 <apex:outputfield value="{!hqAccount.Fax}" />
                     
-                    <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label,
+                    <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
                                                  'Date office opened as an Intermediary')}" />           
 	                <apex:outputText value="{0,date, MMMM d,  yyyy}">
 	                    <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
@@ -147,7 +147,7 @@
 	                <apex:outputText value="{!$ObjectType.Account.fields.Fax.Label}" />
 	                 <apex:outputfield value="{!newForm.Branch_Office_FAX__c}" />
 	                                   
-	                <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label,
+	                <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Cargo_Office_Open_Date_New, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Cargo_Office_Open_Date__c.Label),
                                                  'Date office opened as an Intermediary')}" />           
 	                <apex:outputText value="{0,date, MMMM d,  yyyy}">
 	                    <apex:param value="{!newForm.ISSP_AMS_Cargo_Office_Open_Date__c}"/>
@@ -222,19 +222,19 @@
 	    <apex:facet name="header">
 	                        <apex:outputpanel >
 	                            {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                            $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency, $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
+                            IF(newlabels, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency_New, $Label.ISSP_AMS_Step3_3_Title_Cargo_Agency), $Label.ISSP_AMS_Step3_3_Title_Cargo_Intermediary)} 
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section3}" value="{!$Label.ISSP_EditSection}" id="Edit-Section3" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
 	    <apex:panelGrid columns="1" width="100%" cellpadding="10%">
-	        <apex:dataTable value="{!List_AgencyContacts}" var="agencycon" width="100%" columnsWidth="15%,30%,25%,30%">
-	            <apex:facet name="header">{!$Label.ISSP_AMS_Step3_3_1_Title}</apex:facet>
-	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
-	            	<apex:facet name="header">{!$Label.ISSP_AMS_Name}</apex:facet>
+	    	<apex:facet name="header">{!$Label.ISSP_AMS_Step3_3_1_Title}</apex:facet>
+	        <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" width="100%" styleClass="summary-table">	            
+	            <apex:column  headerClass="checkbox-td">
+	            	<apex:facet name="header">{!$Label.ISSP_AMS_Contact_Name}</apex:facet>
 	            	<apex:outputText value="{!agencycon.First_name__c} {!agencycon.Last_name__c} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Local_First_name__c + ' ' + agencycon.Local_Last_Name__c + ')','')}"/>
 	        	</apex:column>
-	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
-	                <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
+	            <apex:column headerClass="checkbox-td">
+	                <apex:facet name="header">{!$Label.ISSP_AMS_Contact_Info}</apex:facet>
 	            	{!$ObjectType.Contact.fields.Phone.Label}: {!agencycon.Phone__c}<br/>
 	       			{!$ObjectType.Contact.fields.MobilePhone.Label}: {!agencycon.Mobile__c}<br/>
 	  				{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}<br/>
@@ -247,20 +247,56 @@
 	 				<span style="display:{!IF(agencycon.AddressCountry__c == '','none','')}">, </span>
 					{!agencycon.AddressCountry__c}
 				</apex:column>
-	        	<apex:column style="vertical-align: text-top;" headerClass="pdfHeader">
+	        	<apex:column headerClass="checkbox-td">
 	  				<apex:facet name="header">{!$Label.ISSP_AMS_Additional_Data}</apex:facet>
 	   				{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!TEXT(agencycon.Financial_interest__c)}<br/>
 					{!$ObjectType.AMS_Accreditation_Contact__c.fields.Time_devoted_to_Agency_business__c.Label}: {!TEXT(agencycon.Time_devoted_to_Agency_business__c)}<br/>
 	            </apex:column>
+
+	            <apex:column styleClass="checkbox-td">
+	                <apex:facet name="header">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:facet>
+	                <apex:outputText rendered="{!agencycon.Agency_owner__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
+	            </apex:column> 
+	            <apex:column styleClass="checkbox-td">
+	                <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
+	                <apex:outputText rendered="{!agencycon.Agency_role__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
+	            </apex:column> 
+
+	            <apex:column  styleClass="checkbox-td">
+	                <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Roles_and_Responsibilities}"/></apex:facet>
+	                <table>
+	                    <tr>
+	                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Authorised_signatory__c,'','un')}checked.gif"/></td>
+	                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Authorised_Sig}"/></td>
+	                    </tr>
+
+	                    
+	                    <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+	                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Financial_Assessment_Contact__c,'','un')}checked.gif"/></td>
+	                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Fin_Contact}"/></td>
+	                    </tr>
+	                    <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+	                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.id == newForm.ISSP_AMS_Portal_admin__c,'','un')}checked.gif"/></td>
+	                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Portal_Admin}"/></td>
+	                    </tr>
+	                    <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+	                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Id == newForm.ISSP_AMS_Invoicing_Contact__c,'','un')}checked.gif"/></td>
+	                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
+	                    </tr>
+	                    
+	                </table>	                
+	            </apex:column>
+            <!--
 	            <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" width="20%" >
 	                <apex:facet name="header">{!$Label.ISSP_AMS_Roles_and_Responsibilities}</apex:facet>
 	                <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Agency_role__c}" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Authorised_signatory__c}" value="{!$Label.ISSP_AMS_Authorised_Sig}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Authorised_signatory__c}"/><br/>
 	                <apex:outputText rendered="{!agencycon.Financial_Assessment_Contact__c}" value="{!$Label.ISSP_AMS_Fin_Contact}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Financial_Assessment_Contact__c}"/><br/>
-	                <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}" value="{!$Label.ISSP_AMS_Portal_Admin}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"/>
-	            </apex:column>                                                      
-	        </apex:dataTable>
+	                <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}" value="{!$Label.ISSP_AMS_Portal_Admin}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"/><br/>
+	                <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Invoicing_Contact__c}" value="{!$Label.ISSP_AMS_Invoicing_Contact}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.id == newForm.ISSP_AMS_Invoicing_Contact__c}"/>
+	            </apex:column>       -->                                               
+	        </apex:pageBlockTable>
 	        <br/>
 	        <apex:dataTable value="{!List_AgencyCompanies}" var="agencycon" width="100%" columnsWidth="30%,30%,20%,20%" rendered="{!List_AgencyCompanies.size != 0}">
 	            <apex:facet name="header">{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_2}</apex:facet>
@@ -290,12 +326,12 @@
 	    <apex:facet name="header">
 	                        <apex:outputpanel >
 	                           {!IF(newForm.Agent_Type__c!='EACP Intermediary',
-                                $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title, $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
+                                IF(newlabels, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title_New, $Label.ISSP_AMS_Step3_4_Cargo_Agent_Title), $Label.ISSP_AMS_Step3_4_Cargo_Intermediary_Title)}
 	                            <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
 	                        </apex:outputpanel>                       
 	       		</apex:facet>
 	    <apex:panelGrid columns="3" width="100%" headerClass="bg-primary" rowClasses="row1" columnClasses="col1, col2_4, col3">
-            <apex:outputText value="{!IF(isocountry.EACP_Country__c,$Label.ISSP_AMS_Step3_4_Q1_Intermediary,$Label.ISSP_AMS_Step3_4_Q1_Agency)}"/>
+            <apex:outputText value="{!IF(isocountry.EACP_Country__c,$Label.ISSP_AMS_Step3_4_Q1_Intermediary,IF(newlabels, $Label.ISSP_AMS_Step3_4_Q1_Agency_New, $Label.ISSP_AMS_Step3_4_Q1_Agency))}"/>
 	        <apex:outputText value="{!CASE(newForm.Has_your_firm_ever_held_a_Cargo_Agency__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}" />
 	        <apex:outputText >
 	            <apex:panelGrid columns="4" rendered="{!newForm.Has_your_firm_ever_held_a_Cargo_Agency__c=='Yes'}" columnClasses="col1_inner, col2_inner">
@@ -458,12 +494,12 @@
 	        </apex:outputText>
 	        </apex:outputText>
 	        
-	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', $Label.ISSP_AMS_Step3_4_Q19, $Label.ISSP_AMS_Step3_4_Q19_intermediary)}"/>
+	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary', IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_New, $Label.ISSP_AMS_Step3_4_Q19), IF(newlabels, $Label.ISSP_AMS_Step3_4_Q19_intermediary_New, $Label.ISSP_AMS_Step3_4_Q19_intermediary))}"/>
 
 	        <apex:outputText value="{!CASE(newForm.Been_a_sole_proprietor__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}"/>
 	        <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
 	        
-	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',$Label.ISSP_AMS_Step3_4_20_Agency, $Label.ISSP_AMS_Step3_4_20_Intermediary)}"/>
+	        <apex:outputText value="{!IF(newForm.Agent_Type__c!='EACP Intermediary',IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Agency_New, $Label.ISSP_AMS_Step3_4_20_Agency), IF(newlabels, $Label.ISSP_AMS_Step3_4_20_Intermediary_New, $Label.ISSP_AMS_Step3_4_20_Intermediary))}"/>
 
 	        <apex:outputText value="{!CASE(newForm.Been_director_or_had_a_financial__c,'Yes', $Label.ISSP_Yes,'No', $Label.ISSP_No, '')}"/>
 	        <apex:outputText >

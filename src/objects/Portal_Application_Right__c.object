@@ -237,6 +237,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Conctact_is_CNS__c</fullName>
+        <description>CNS contacts, useful to get CNS branding on portal and emails</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.CNS_Contact__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Conctact is CNS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ContactId__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__c</formula>
@@ -311,6 +322,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ICCS_Currency_Center_Current_Visit__c</fullName>
+        <description>Technical field for ICCS Currency Center (Portal Service) to store current visit date.</description>
+        <externalId>false</externalId>
+        <label>ICCS Currency Center Current Visit</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>ICCS_Currency_Center_Previous_Visit__c</fullName>
+        <description>Technical field for ICCS Currency Center (Portal Service) to store previous visit date.</description>
+        <externalId>false</externalId>
+        <label>ICCS Currency Center Previous Visit</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Invoice_Type__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Please choose at least one invoice type to give rights</inlineHelpText>
@@ -342,6 +373,17 @@
         <externalId>false</externalId>
         <label>Kavi user</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Last_modified_by_internal_user__c</fullName>
+        <description>This is a helper field used by the Process Builder</description>
+        <externalId>false</externalId>
+        <formula>NOT(CONTAINS(LastModifiedBy.Profile.Name  , &apos;ISS&apos;) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Last modified by internal user</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -390,10 +432,12 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;SIS Help Desk&quot;, $Label.SIS_Help_Desk, 
 &quot;Management Information Report&quot;, $Label.ISSP_MIR, 
 &quot;IATA Accreditation &amp; Changes&quot;, $Label.ISSP_Become_Accredited_Agent, 
+&quot;CNS Endorsement &amp; Changes&quot;, $Label.ISSP_Become_Endorsed_Agent_CNS, 
 &quot;BSP / CASS Change Request&quot;, $Label.ISSP_Change_Request,
 &quot;BSP / CASS Change of Bank details&quot;, $Label.ISSP_AP_Bank_Details_Change,
 &quot;BSPLink&quot;, $Label.ISSP_BSPLink, 
 &quot;CassLink&quot;, $Label.ISSP_CassLink, 
+&quot;CNS CassLink&quot;, $Label.ISSP_CASSLink_Export_CNS, 
 &quot;IFAP&quot;, $Label.ISSP_IFAP, 
 &quot;Resource Center&quot;, $Label.ISSP_Resource_Center, 
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_Simplified_Interline_Settlement, 
@@ -413,6 +457,8 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
+&quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -747,7 +793,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     </validationRules>
     <validationRules>
         <fullName>MR_cannot_be_approved_by_admin</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND( 
 OR (ISCHANGED(Right__c) , ISNEW() ), 
 Application_Name__c = &apos;Management Information Report&apos;, 

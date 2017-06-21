@@ -10,12 +10,15 @@
     <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/enc-base64-min.js')}" />
     <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/jquery.js')}" />
     <apex:includeScript value="/support/console/29.0/integration.js"/>
-
+    <c:Loading />
     <script>
             
             // Get the Root URL dynamically
             var pageMainUrl = window.location.protocol + "//" + window.location.hostname;
-    
+     //jQuery.noConflict();
+        $( document ).ready(function() {
+        });
+
             function getAWSLink(filePath, awsUrlPath, secretAccessKey, accessKeyId){
                 
 
@@ -33,7 +36,31 @@
                 return awsUrlPath+filePath + queryString;
                 
             }
-         
+    
+         function deleteAttachmentAmazon(id, fullName) {
+            if(!confirm("{!$Label.Ask_Delete_Attachment}")) {
+                return false;
+            }
+             startLoading();
+            ArchiveAttachmentListController.deleteAttachmentAmazon(id, fullName,function(result, event){
+                if (!result) alert("{!$Label.Delete_Attachment_Error}");
+               refreshList();         
+            }, {timeout: 120000} );
+            return false;
+          }
+        
+             function getS3LInk(fileName) {
+                    startLoading();
+                    ArchiveAttachmentListController.getExpiringLink(fileName,function(result, event){
+                        var result2= result.replace("&amp;","&");
+                        var newWin = window.open(result2);
+                        if(!newWin || newWin.closed || typeof newWin.closed=='undefined'){
+                            alert('{!$Label.Check_popup_settings}');
+                        }
+                        stopLoading();
+                    }, {buffer: true, escape: false, timeout: 120000} );
+                }
+                 
          
          function DeleteAttachment(id){
         
@@ -94,7 +121,16 @@
             //Make the Root Url dynamic
             //window.top.location= pageMainUrl +"/p/attach/NoteAttach?pid={!relatedCase.Id}&parentname={!relatedCase.CaseNumber}&retURL=%2F{!relatedCase.Id}";   
         }   
-        
+        function redirect(page) {
+            var redirectUrl = page;
+            if (sforce.console.isInConsole()) { 
+                ServiceConsoleIntegration(redirectUrl);
+            } else {
+                window.top.location=redirectUrl;
+            }
+            //return false;
+        }
+    
         function TransferAttachments() 
         {
             var redirectUrl = "/apex/TransferCaseAttachments?id={!relatedCase.Id}";
@@ -140,7 +176,8 @@
         }
 
          </script>
-    <apex:form >
+    <apex:form id="mainform" >
+         <apex:actionFunction name="refreshList" action="{!refreshList}"  rerender="mainform" status="loading" oncomplete="stopLoading();" />
         <apex:pageBlock >
             <apex:facet name="header">
                 <div class="pbHeader" style="padding: 0;">
@@ -160,7 +197,7 @@
                                         title="Attach File" type="button" style="display: {!IF(( StandardRedirect != true),"inline","none")}"/>
                                     
                                     <input value="Transfer Attachments" class="btn"
-                                        name="transferAtt" onclick="TransferAttachments();return false;"
+                                        name="transferAtt" onclick="redirect('{!TransferAttachmentsUrl}');"
                                         title="Transfer Attachments" type="button"  style="display: {!IF(( StandardRedirect == true),"inline","none")}" />
 
 
@@ -183,7 +220,7 @@
                 <div
                     style="height: 140px; width: 100%; padding: 0;; margin: 6px; overflow-x: hidden; overflow-y: auto; display: {!IF(( hasAttachment == false),"none","block")}">
                     <apex:outputPanel rendered="{!fullAttachmentAccess}" layout="block" id="attchHolder">
-                        <table class="list" cellspacing="0" cellpadding="0" border="0"  style="display: {!IF(( hasAttachment == true),"block","none")}">
+                        <table class="list" cellspacing="0" cellpadding="0" border="0"  style="display: {!IF(( hasAttachment == true),"block","none")}" id="tableReload">
                             <tbody>
                                 <tr class="headerRow">
                                     <th class="actionColumn" scope="col">Action</th>
@@ -205,11 +242,11 @@
                                             | <a class="actionLink" title="View" onclick="ViewAttachment('{!sfAttachment.recordAttachment.Id}');return false;" style="cursor: pointer">View</a>
 <!--                                        | <a class="actionLink" title="Delete - " href="javascript:void();" onclick="return DeleteAttachment('{!sfAttachment.recordAttachment.Id}');">Del</a> -->
                                              
-                                            | <apex:commandLink styleClass="actionLink" action="{!reload}" value=" Del " 
+                                            | <apex:commandLink styleClass="actionLink" action="{!refreshList}" value=" Del " 
                                                     onclick="return DeleteAttachment('{!sfAttachment.recordAttachment.Id}');" /> 
 
-                                            | <apex:commandLink styleClass="actionLink" action="{!actionAttachmentPermission}" 
-                                                    value=" {!$Label.ISSP_Make_Public}" rendered="{!sfAttachment.isPrivate}" >
+                                           | <apex:commandLink styleClass="actionLink" action="{!actionAttachmentPermission}" 
+                                                    value=" {!$Label.ISSP_Make_Public}" rendered="{!sfAttachment.isPrivate}">
                                                     <apex:param name="attId"
                                                         value="{!sfAttachment.recordAttachment.Id}"
                                                         assignTo="{!attId}"/>
@@ -217,8 +254,8 @@
                                                         value="false"
                                                         assignTo="{!makePrivate}"/>
                                               </apex:commandLink>
-                                              <apex:commandLink styleClass="actionLink" action="{!actionAttachmentPermission}" 
-                                                    value=" {!$Label.ISSP_Make_Private}" rendered="{!!sfAttachment.isPrivate}" >
+                                              <apex:commandLink styleClass="actionLink" action="{!actionAttachmentPermission}"  
+                                                    value=" {!$Label.ISSP_Make_Private}" rendered="{!!sfAttachment.isPrivate}">
                                                     <apex:param name="attId"
                                                         value="{!sfAttachment.recordAttachment.Id}"
                                                         assignTo="{!attId}"/>
@@ -240,8 +277,17 @@
                                             <a onclick="ViewAttachment('{!sfAttachment.recordAttachment.Id}');return false;" style="cursor: pointer">{!sfAttachment.recordAttachment.Name}</a>
                                             
                                         </td>
-                                        <td class=" dataCell " scope="row"><apex:outputField value="{!sfAttachment.recordAttachment.BodyLength}" /></td>
-                                        <td class=" dataCell " scope="row"><apex:outputField value="{!sfAttachment.recordAttachment.CreatedDate}" /></td>
+                                        <td class=" dataCell " scope="row">
+                                            <apex:outputText value="{0,number,0.##} MB">
+                                                <apex:param value="{!sfAttachment.recordAttachment.BodyLength* 0.000001}" />
+                                            </apex:outputText>
+                                        </td>
+                                            
+                                         
+                                        <td class=" dataCell " scope="row">
+                                            <apex:outputText value=" {!sfAttachment.recordAttachment.CreatedDate}">                                                
+                                             </apex:outputText>
+                                        </td>
                                         <td class=" dataCell " scope="row">
                                             <apex:outputLink value="/{!sfAttachment.recordAttachment.CreatedById}" target="_top">
                                                 {!sfAttachment.recordAttachment.CreatedBy.Name}
@@ -273,8 +319,52 @@
                                         </td>-->
                                         <td class=" dataCell " scope="row">Archived</td>
                                     </tr>
-                                </apex:repeat>
+                                </apex:repeat>           
+                                <apex:repeat var="attach" value="{!listAmazon}">     
+                                    <apex:variable value="{!IF(attach.isPublic, $Label.ISSP_Make_Public  ,$Label.ISSP_Make_Private)}" var="chanagePermissionActionTitle" />
+                                    <apex:variable value="{!NOT(attach.isPublic)}" var="isAttachmentPublic" />
+                                    <tr>
+                                        <td class="actionColumn">
+                                            <a class="actionLink" title="Edit" onclick="EditAttachment('{!attach.Id}');return false;" style="cursor: pointer">Edit</a> 
+                                            | <a class="actionLink" title="View" onclick="getS3LInk('{!attach.fullName}');" style="cursor: pointer">View</a> 
+<!--                                        | <a class="actionLink" title="Delete - " href="javascript:void();" onclick="return DeleteAttachment('{!sfAttachment.recordAttachment.Id}');">Del</a> -->
+                                             
+                                            | <apex:commandLink styleClass="actionLink" value=" Del " 
+                                                    onclick="return deleteAttachmentAmazon('{!attach.Id}','{!attach.fullName}');" /> 
 
+                                              <!-- MAKE PUBLIC ACTION -->                                           
+                                              | <apex:commandLink styleClass="actionLink"  onclick="startLoading();" action="{!attach.changePermission}" value=" {!IF(attach.isPublic, $Label.Make_Private, $Label.Make_Public)}" target="_blank" oncomplete="refreshList();" >
+                                            <apex:param name="attId"
+                                                        value="{!attach.Id}"
+                                                        assignTo="{!attId}"/>
+                                            
+                                            </apex:commandLink>
+                                            
+                                        </td>
+                                        <td class=" dataCell " id = "inputCheck" scope="row">
+                                             <apex:inputcheckbox value="{!attach.isPublic}" disabled="true" />
+                                        </td>
+                                        <td class=" dataCell " scope="row">
+                                            <!--<a href="/{!sfAttachment.recordAttachment.Id}" target="_parent">{!sfAttachment.recordAttachment.Name}</a>-->
+                                            <a onclick="ViewAttachment('{!attach.Id}');return false;" style="cursor: pointer">{!attach.Name}</a>
+                                            
+                                        </td>
+                                        <td class=" dataCell " scope="row">
+                                            <apex:outputText value="{0,number,0.##} MB">
+                                                <apex:param value="{!attach.size}" />
+                                            </apex:outputText>
+                                        </td>
+                                        <td class=" dataCell " scope="row">
+                                            <apex:outputText value=" {!attach.createdDate}">
+                                             </apex:outputText></td>
+                                        <td class=" dataCell " scope="row">
+                                            <apex:outputLink value="/{!attach.createdBy}" target="_top">
+                                                {!attach.createdByName}
+                                            </apex:outputLink>
+                                        </td>
+                                        <td class=" dataCell " scope="row">Amazon</td>
+                                    </tr>
+                                    </apex:repeat>
                             </tbody>
                         </table>
                     </apex:outputPanel>

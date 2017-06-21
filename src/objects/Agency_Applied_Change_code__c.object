@@ -189,7 +189,7 @@
             <sorted>true</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -213,7 +213,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Checked if this code is Active. Agency can only have one Active code in same time.</inlineHelpText>
         <label>Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -269,6 +269,106 @@
         <label>Change Code</label>
         <picklist>
             <picklistValues>
+                <fullName>BSF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CAS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CCF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHJ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHL</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CHV</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CLF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CLI</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CLO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CLR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CMF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CNF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CSF</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CWD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DEF</fullName>
                 <default>false</default>
             </picklistValues>
@@ -277,7 +377,23 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>DFW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DIS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>DWD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FIN</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -297,7 +413,39 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>LRA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LRR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MCH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>MEP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NAC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NCA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>NEW</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -309,6 +457,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>NWD</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>RCM</fullName>
                 <default>false</default>
             </picklistValues>
@@ -317,11 +469,19 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>REC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>REI</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>RPY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RRC</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -353,11 +513,27 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>TAP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TCH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>TER</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>TRW</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VRR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VRW</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -467,15 +643,26 @@ AND(
         <externalId>false</externalId>
         <label>End Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c), 
-    true, 
+        <formula>IF( ISNULL(Account__r.Last_Integration_Date__c),
+    true,
     IF( Created_Date_To_Show__c &gt; Account__r.Last_Integration_Date__c,
         true,
         false
@@ -488,10 +675,23 @@ AND(
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>IATA_Code__c</fullName>
+        <description>Show the IATA Code from the related Account</description>
+        <externalId>false</externalId>
+        <formula>Account__r.IATACode__c</formula>
+        <inlineHelpText>Show the IATA Code from the related Account</inlineHelpText>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>IRR_Expiration_Date__c</fullName>
         <externalId>false</externalId>
         <formula>DATETIMEVALUE(
-  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; + 
+  TEXT(YEAR(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate)) )+1)+ &quot;-&quot; +
   IF(
     AND(MONTH(NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 2,DAY( NULLVALUE(Effective_Date__c, DATEVALUE(CreatedDate))) = 29)
     ,&quot;3-1&quot;
@@ -510,7 +710,7 @@ AND(
         <description>If true, irregularities points are not summed in the account. It expires 12 months after the Effective_Date__c</description>
         <externalId>false</externalId>
         <label>Irregularities_Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -530,8 +730,8 @@ AND(
     <fields>
         <fullName>Irregularity_Type_Description__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;, 
-	  CASE( TEXT(Irregularity_Type__c) , 
+        <formula>IF(ISBLANK(TEXT(Irregularity_Type__c) ), &quot;&quot;,
+	  CASE( TEXT(Irregularity_Type__c) ,
 	    &quot;1PT&quot;,&quot;CARGO NON COMPLIANCE&quot;,
 	    &quot;2PT&quot;,&quot;NON-COMPLIANCE TO CRITERIA&quot;,
 	    &quot;FC1&quot;,&quot;NON SUBMIS. DOCS-FIN. RVW&quot;,
@@ -618,7 +818,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -630,7 +830,7 @@ AND(
         <label>Operation</label>
         <length>5</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -641,7 +841,7 @@ AND(
         <label>PreviousReason</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -987,7 +1187,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -997,7 +1197,7 @@ AND(
         <description>Sent to external system</description>
         <externalId>false</externalId>
         <label>Sent to external system</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1019,7 +1219,7 @@ AND(
         <externalId>false</externalId>
         <label>Start Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1539,6 +1739,106 @@ AND(
         <picklistValues>
             <picklist>Change_Code__c</picklist>
             <values>
+                <fullName>BSF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CCF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CHV</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CLR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DEF</fullName>
                 <default>false</default>
             </values>
@@ -1547,7 +1847,23 @@ AND(
                 <default>false</default>
             </values>
             <values>
+                <fullName>DFW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DOM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>DWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FIN</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1555,7 +1871,39 @@ AND(
                 <default>false</default>
             </values>
             <values>
+                <fullName>LRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>MEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1567,6 +1915,10 @@ AND(
                 <default>false</default>
             </values>
             <values>
+                <fullName>NWD</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>RCM</fullName>
                 <default>false</default>
             </values>
@@ -1575,11 +1927,19 @@ AND(
                 <default>false</default>
             </values>
             <values>
+                <fullName>REC</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>REI</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>RPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RRC</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1611,11 +1971,27 @@ AND(
                 <default>false</default>
             </values>
             <values>
+                <fullName>TAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TCH</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TER</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>TRW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VRR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VRW</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

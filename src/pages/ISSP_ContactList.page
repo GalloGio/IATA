@@ -1,47 +1,41 @@
 <apex:page controller="ISSP_ContactList" tabStyle="Contact" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
  <html>
- <c:ISSP_Header ></c:ISSP_Header>
+ <c:ISSP_Header  communityName="{!communityName}" ></c:ISSP_Header>
  <body>
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" />
     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" />
     <div class="container">
- <c:ISSP_CustomNavigation />
+ <c:ISSP_CustomNavigation communityName="{!communityName}" />
 
     <script>
 
-    // To have no conflict with SFDC
-    j$ = jQuery.noConflict();
-
     // When document is ready
-    j$(document).ready(function() {
+    $(document).ready(function() {
+        onready();
+    });
 
-        // Into our j$ prototype
-        j$(function() {
-
-            // Color invalid domain in red
-            j$(".domainpartred").each(function(){
-                var inner = $(this).html();
-                var innserSplited = inner.split('@');
-                var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
-                $(this).html(innserSplited[0]).append(domainColorSpan);
-                $('.colorred').css("color", "red");
-            });
-
-            // Color valid domain in green
-            j$(".domainpartgreen").each(function(){
-                var inner = $(this).html();
-                var innserSplited = inner.split('@');
-                var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
-                $(this).html(innserSplited[0]).append(domainColorSpan);
-                $('.colorgreen').css("color", "green");
-            });
-
-            // Create Jquery tooltip only for the invalid email domain validation (cross)
-            j$("#emadomvalinvpopup").tooltip();
-
+    function onready() {
+        // Color invalid domain in red
+        $(".domainpartred").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorred">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorred').css("color", "red");
         });
 
-    });
+        // Color valid domain in green
+        $(".domainpartgreen").each(function(){
+            var inner = $(this).html();
+            var innserSplited = inner.split('@');
+            var domainColorSpan = '<span class="colorgreen">'.concat('@').concat(innserSplited[1]).concat('</span>');
+            $(this).html(innserSplited[0]).append(domainColorSpan);
+            $('.colorgreen').css("color", "green");
+        });
+
+        // Create Jquery tooltip only for the invalid email domain validation (cross)
+        $(".emadomvalinvpopup").tooltip();
+    }
 
     function selectAllCheckboxes(obj,receivedInputID){
         var inputCheckBox = document.getElementsByTagName("input");
@@ -128,7 +122,7 @@
     </select>
     </div>
     <div class="{!if(isAdmin,"col-md-3 pull-right","")}">
-          <apex:commandButton onClick="navigateToUrl('/apex/ISSP_PortalUserCreation?retUrl=%2Fapex%2FISSP_ContactList&mid=M4S1','LIST_VIEW','newContact');return false;" value="{!$Label.ISSP_Contact_OneStepCreate}" rendered="{!isAdmin}" StyleClass="btn_iata_primary btn btn-block"/>
+          <apex:commandButton onClick="navigateToUrl('/apex/ISSP_PortalUserCreation?retUrl=%2Fapex%2FISSP_ContactList&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}','LIST_VIEW','newContact');return false;" value="{!$Label.ISSP_Contact_OneStepCreate}" rendered="{!isAdmin}" StyleClass="btn_iata_primary btn btn-block"/>
            </div>
      </div>
     <script>
@@ -169,6 +163,7 @@
 
     <apex:pageBlock id="Contacts" >
       <!--  <apex:pageBlockButtons location="top"> -->
+      <script>onready();</script>
       <br />
       <div class="row">
           <div class="{!if(!isAdmin,"col-md-3","")}">
@@ -214,18 +209,22 @@
                 <apex:facet name="header" >
                     {!$Label.ISSP_My_Contact_Action}
                 </apex:facet>
-                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit" target="_self">{!$Label.ISSP_Edit}</apex:outputLink>
+                <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink> 
             </apex:column>
-
             <apex:repeat value="{!fields}" var="f">
                   <apex:column >
 
                    <!-- For e-mail field, display if this a valid e-mail -->
-                   <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
-                      <span title="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', $Label.ISSP_ContactList_HoverPopup_Text, '') }" id="emadomvalinvpopup">
-                        <apex:outPutField value="{!item.recordContact.ValidContactDomainImage__c}" />
-                        <apex:outputText value="&nbsp;" escape="false" />
-                      </span>
+                  <apex:outputpanel rendered="{! IF(f.FieldPath=='Email', true, false) }">
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'valid', true, false) }">
+                          <apex:image url="{! $Resource.IntelliMail__check }" width="16" height="16" />
+                      </apex:outputpanel>
+                      <apex:outputpanel rendered="{! IF(item.recordContact.ValidContactDomainName__c == 'invalid', true, false) }">
+                          <span title="{! $Label.ISSP_ContactList_HoverPopup_Text }" class="emadomvalinvpopup">
+                              <apex:image url="{! $Resource.AccountDomainValidation_Invalid }" width="16" height="16" />
+                          </span>
+                      </apex:outputpanel>
+                      <apex:outputText value="&nbsp;" escape="false" />
                    </apex:outputpanel>
 
                     <apex:facet name="header">
@@ -254,15 +253,22 @@
                     </apex:outputpanel>
 
                     <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Contact_Name__c',true,false)}">
-                     <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1" target="_self">{!item.recordContact.name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Contact?Id={!item.recordContact.Id}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.name}</apex:outputLink>
                     </apex:outputpanel>
 
                     <apex:outputpanel rendered="{!IF(f.FieldPath=='ISSP_Account_Name__c',true,false)}">
-                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1" target="_self">{!item.recordContact.Account.Name}</apex:outputLink>
+                     <apex:outputLink value="/apex/ISSP_Account?Id={!item.recordContact.Accountid}&mid=M4S1{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.recordContact.Account.Name}</apex:outputLink> 
                     </apex:outputpanel>
 
                   </apex:column>
             </apex:repeat>
+
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
 
         </apex:pageBlockTable>
 
@@ -355,7 +361,7 @@
      </div>
 
  </apex:form>
-  <c:ISSP_CustomFooter />
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div><!-- end container -->
      </body>
     </html>

@@ -1867,7 +1867,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <fullName>IATA_Cargo_Code__c</fullName>
         <externalId>false</externalId>
         <label>* IATA Code</label>
-        <length>8</length>
+        <length>11</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -2242,6 +2242,19 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ISSP_AMS_Invoicing_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Invoicing Contact</label>
+        <referenceTo>AMS_Accreditation_Contact__c</referenceTo>
+        <relationshipLabel>AMS Online Accreditations (Invoicing Contact)</relationshipLabel>
+        <relationshipName>AMS_Online_Accreditations</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ISSP_AMS_Is_Applicant_Parent__c</fullName>
@@ -3002,7 +3015,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>Issued_share_capital__c</fullName>
         <externalId>false</externalId>
-        <label>Current Issued Share Capital</label>
+        <label>Issued Share Capital</label>
         <precision>13</precision>
         <required>false</required>
         <scale>0</scale>
@@ -4059,7 +4072,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Shipping_Street__c</fullName>
         <externalId>false</externalId>
         <label>Shipping Street</label>
-        <length>100</length>
+        <length>200</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

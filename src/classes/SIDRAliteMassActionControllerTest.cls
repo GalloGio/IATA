@@ -78,6 +78,7 @@ public class SIDRAliteMassActionControllerTest {
         controller.filter.getListRecordtype();
         controller.filter.getListIFAPCountries();
         controller.triggerSidraLiteAction();
+        controller.exportCSV();
         Test.stopTest();
     }
 
@@ -116,6 +117,7 @@ public class SIDRAliteMassActionControllerTest {
         controller.filter.getShortName();
         controller.filter.getListReasons();
         controller.filter.getListFinancialReviews();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -153,6 +155,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -184,6 +187,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -216,6 +220,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -248,6 +253,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -280,6 +286,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -316,6 +323,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -353,6 +361,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 
@@ -385,6 +394,7 @@ public class SIDRAliteMassActionControllerTest {
 
         controller.filter.getShortName();
         controller.filter.getListReasons();
+        controller.getcsvContent();
         Test.stopTest();
     }
 

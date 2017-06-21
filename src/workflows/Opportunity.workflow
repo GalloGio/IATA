@@ -23,7 +23,7 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>
@@ -62,7 +62,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ayarik@iata.org</recipient>
+            <recipient>bertolusj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -102,7 +102,7 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org</ccEmails>
+        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
@@ -137,7 +137,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>ayarik@iata.org</recipient>
+            <recipient>bertolusj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -162,10 +162,6 @@
         </recipients>
         <recipients>
             <recipient>mckayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>seifeddinh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

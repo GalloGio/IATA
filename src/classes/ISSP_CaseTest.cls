@@ -1,6 +1,6 @@
 @isTest
 public class ISSP_CaseTest {
-	
+
 	public static testMethod void testISSP_Case_1() {
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
@@ -22,7 +22,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         insert c;
-        
+
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
         ApexPages.currentPage().getParameters().put('topic', 'test');
@@ -32,13 +32,13 @@ public class ISSP_CaseTest {
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
         	cttr.pageLoad();
-        	
+
         	cttr.AddComment();
         	cttr.edit();
         }
         Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Case_2() {
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
@@ -60,7 +60,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         insert c;
-       
+
        	ContentVersion doc = new ContentVersion();
         doc.Title = 'test;';
         doc.PathOnClient = 'test';
@@ -71,7 +71,7 @@ public class ISSP_CaseTest {
         cDist.Name = 'test';
         cDist.ContentVersionId = doc.Id;
         insert cDist;
-        
+
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
         ApexPages.currentPage().getParameters().put('topic', 'SIS');
@@ -87,7 +87,7 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Case_3() {
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
@@ -127,7 +127,7 @@ public class ISSP_CaseTest {
         form2.Operation_Type__c = 'Travel_Agent';
         form2.SAAM_Case__c = c.Id;
         insert form2;
-        
+
         FAQ__kav FAQkav;
         FAQkav =  (FAQ__kav)ISSP_ObjectFactory.createSObject('FAQ__kav',false,5);
         FAQkav.Language='en_US';
@@ -135,14 +135,14 @@ public class ISSP_CaseTest {
         FAQkav.Title ='Test';
         FAQkav.To_display_on_Homepage__c=true;
         insert FAQkav;
-        
+
         String kId = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :FAQkav.Id LIMIT 1].KnowledgeArticleId;
-        
+
         CaseArticle art = new CaseArticle();
         art.CaseId = c.Id;
         art.KnowledgeArticleId = kId;
         insert art;
-        
+
         How_To__kav howTokav ;
         howTokav =  (How_To__kav)ISSP_ObjectFactory.createSObject('How_To__kav',false,12);
         howTokav.Language='en_US';
@@ -150,14 +150,14 @@ public class ISSP_CaseTest {
         howTokav.Title='test2';
         howTokav.To_display_on_Homepage__c=true;
         insert howTokav;
-        
+
         String kId2 = [SELECT KnowledgeArticleId FROM How_To__kav WHERE Id = :howTokav.Id LIMIT 1].KnowledgeArticleId;
-        
+
         CaseArticle art2 = new CaseArticle();
         art2.CaseId = c.Id;
         art2.KnowledgeArticleId = kId2;
         insert art2;
-        
+
         String recordTypeId2 = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
         Account account2 = ISSP_ObjectFactory.createNewAccount();
         account2.Name = 'Account2';
@@ -169,7 +169,7 @@ public class ISSP_CaseTest {
         service.Services_Rendered_By__c = account.Id;
         service.Services_Rendered_to_Airline__c = account2.Id;
         insert service;
-        
+
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
         ApexPages.currentPage().getParameters().put('topic', 'test');
@@ -179,6 +179,14 @@ public class ISSP_CaseTest {
         Test.startTest();
         system.runAs(thisUser){
         	ISSP_Case cttr = new ISSP_Case();
+
+			ApexPages.currentPage().getParameters().put('topic', 'SA');
+			cttr = new ISSP_Case();
+			ApexPages.currentPage().getParameters().put('topic', 'TIDS');
+			cttr = new ISSP_Case();
+			ApexPages.currentPage().getParameters().put('topic', 'VR');
+			cttr = new ISSP_Case();
+
         	cttr.pageLoad();
         	cttr.getAirlines();
         	cttr.AddComment();
@@ -189,7 +197,7 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Case_4() {
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
@@ -211,7 +219,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         insert c;
-        
+
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
         ApexPages.currentPage().getParameters().put('topic', 'test');
@@ -232,13 +240,13 @@ public class ISSP_CaseTest {
         	cttr.validateACR();
         	cttr.newCase.Evaluation_Effort__c = 'test';
         	cttr.newCase.Specification_Effort__c = 'test';
-            cttr.newCase.Coding_Effort__c = 'test'; 
+            cttr.newCase.Coding_Effort__c = 'test';
             cttr.newCase.Unit_Test_Effort__c = 'test';
-    		cttr.newCase.System_Test_Effort__c = 'test'; 
+    		cttr.newCase.System_Test_Effort__c = 'test';
     		cttr.newCase.QA_Effort__c = 'test';
-            cttr.newCase.Documentation_Effort__c = 'test'; 
+            cttr.newCase.Documentation_Effort__c = 'test';
             cttr.newCase.Implementation_Effort__c = 'test';
-            cttr.newCase.Estimated_Total_Person_days__c = 1; 
+            cttr.newCase.Estimated_Total_Person_days__c = 1;
             cttr.newCase.Estimated_Total_Development_Cost__c = 1;
         	cttr.validateACR();
         	cttr.newCase.Planned_Documentation_Date__c = system.today();
@@ -250,7 +258,7 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
 	}
-	
+
 	public static testMethod void testISSP_Case_5() {
 		Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
@@ -272,7 +280,7 @@ public class ISSP_CaseTest {
         c.CaseArea__c = 'test';
         c.Reason1__c = 'test';
         insert c;
-        
+
         ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
         ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
         ApexPages.currentPage().getParameters().put('topic', 'test');
@@ -311,6 +319,51 @@ public class ISSP_CaseTest {
         }
         Test.stopTest();
 	}
+    
+	public static testMethod void testISSP_Case_6() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
+        
+        // insert a case using json to set the field ClosedDate
+        String caseJSON = '{"attributes":{'
+            + '"type":"CasSe",'
+            + '"url":"/services/data/v25.0/sobjects/Case/500E0000002nH2fIAE"},'
+            + '"CreatedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"Subject":"test 1",'
+            + '"Status":"Closed",'
+            + '"ClosedDate":' + JSON.serialize(DateTime.now().addMonths(-3)) + ','
+            + '"AccountId":"' + account.id + '",'
+            + '"ContactId":"' + contact.id + '",'
+            + '"Region__c":"Europe",'
+            + '"RecordTypeId":"' + recordTypeId + '",'
+            + '"CaseArea__c":"test",'
+            + '"Reason1__c":"test",'
+            + '"Visible_on_ISS_Portal__c":"true"'
+            + '}';
+        Case c = (Case) JSON.deserialize(caseJSON, Case.class );
+        insert c;
+        
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+        	ISSP_Case cttr = new ISSP_Case();
+            cttr.newCase = c;
+        	cttr.showAlertMessage();
+        }
+        Test.stopTest();
+	}
 
 	public static testMethod void testISSP_Case_99() {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
@@ -323,7 +376,8 @@ public class ISSP_CaseTest {
 		User currentUserInfo = [select LanguageLocaleKey from User where Id = :UserInfo.getUserId()];
     	currentUserInfo.LanguageLocaleKey = 'pt_BR';
         update currentUserInfo;
-        
+
+        Test.StartTest();
         ISSP_Case cttr = new ISSP_Case();
         cttr.getItems();
         currentUserInfo.LanguageLocaleKey = 'zh_CN';
@@ -347,11 +401,22 @@ public class ISSP_CaseTest {
         currentUserInfo.LanguageLocaleKey = 'de';
         update currentUserInfo;
         cttr.getItems();
-        
+
+		Boolean isOSCARCase = cttr.isOSCARCase;
+		Boolean isAgencyUser = cttr.isAgencyUser;
+		Boolean isToShowSurveyBtn = cttr.isToShowSurveyBtn;
+		Boolean isDPCAccepted = cttr.isDPCAccepted;
+		Boolean isACRAccepted = cttr.isACRAccepted;
+		Boolean disableCaseComments = cttr.getDisableCaseComments();
+		// PageReference pr = cttr.getSelectArtical();
+		Id i = cttr.getAMSRegionalQueue();
+		// ISSP_Case.articleWrapper selectedArtical = ctrl.selectedArtical;
+
         cttr.edit();
-        
-        Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
-        cttr.getCaseClassificationItems();
+
+		Apexpages.currentPage().getParameters().put('caseTypeSelection', 'Feature Request');
+
+
         /*
         cttr.filterCaseClassificationItems();
         Apexpages.currentPage().getParameters().put('caseTypeSelection', 'General Question');
@@ -449,17 +514,82 @@ public class ISSP_CaseTest {
         cttr.getCaseDefectItems();
         Apexpages.currentPage().getParameters().put('caseClassificationSelection', 'test');
         cttr.getCaseDefectItems();
-        
+
         cttr.getCaseSubTypeItems();
-        
+
         //cttr.retCaseClassificationItems();
-        
+
         cttr.newCase.CaseArea__c = 'ICH';
         cttr.getCaseTypeItems();
         cttr.newCase.CaseArea__c = 'SIS';
         cttr.getCaseTypeItems();
         cttr.newCase.CaseArea__c = 'test';
         cttr.getCaseTypeItems();
+        List<SelectOption> selectOptions = cttr.getCaseClassificationItems();
+        Test.StopTest();
 	}
+    
+    public static testMethod void testCCOthers() {
+        Account account = ISSP_ObjectFactory.createNewAccount();
+        account.Name = 'Account1';
+        insert account;
+        Contact contact = ISSP_ObjectFactory.createNewContact();
+        contact.AccountId = account.Id;
+        insert contact;
+        Contact teamContact = ISSP_ObjectFactory.createNewContact();
+        teamContact.Email = 'teamcontact@email.com';
+        insert teamContact;
+        User thisUser = ISSP_ObjectFactory.createPortalUser(contact);
+        contact.OwnerId = thisUser.Id;
+        update contact;
+        String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'FDS_ICCS_Email_to_Case'].Id;
+        Case c = new Case();
+        c.Subject = 'test 1';
+        c.Status = 'Open';
+        c.AccountId = account.id;
+        c.ContactId = contact.id;
+        c.Region__c = 'Europe';
+        c.RecordTypeId = recordTypeId;
+        c.CaseArea__c = 'test';
+        c.Reason1__c = 'test';
+        c.Visible_on_ISS_Portal__c = true;
+        insert c;
+
+        ApexPages.currentPage().getParameters().put('caseId', String.valueOf(c.Id));
+        ApexPages.currentPage().getParameters().put('recordTypeId', recordTypeId);
+        ApexPages.currentPage().getParameters().put('topic', 'test');
+        ApexPages.currentPage().getParameters().put('subtopic', 'test1');
+        ApexPages.currentPage().getParameters().put('origin', 'Portal');
+        Test.startTest();
+        system.runAs(thisUser){
+            ISSP_Case cttr = new ISSP_Case();
+            cttr.pageLoad();
+            // test there are no cc others
+            list<String> result1 = cttr.getListCCOther();
+            System.assert(result1.isEmpty(),'wrong result ' + result1);
+            
+            //insert one cc other
+            cttr.inputccotheremail = teamContact.Email;
+            cttr.addCCOther();
+            // insert one fake cc other
+            cttr.inputccotheremail = 'noemail';
+            cttr.addCCOther();
+            
+            // check a cc other was inserted
+            set<String> result2 = new set<String>(cttr.getListCCOther());
+            System.assert(result2.contains(teamContact.Email),'wrong result ' + result2);
+            
+            //remove ccother
+            cttr.inputDelCCOther = teamContact.Email;
+            cttr.delCCOther();
+            // del one fake cc other
+            cttr.inputDelCCOther = 'noemail';
+            cttr.delCCOther();
+            
+            list<String> result3 = cttr.getListCCOther();
+            System.assert(result3.isEmpty(),'wrong result ' + result3);
+        }
+        Test.stopTest();
+    }
 
  }

@@ -67,6 +67,27 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>AMS_GDP_Key__c</fullName>
+        <externalId>true</externalId>
+        <label>AMS GDP Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AMS_GDP_Mapping_Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Account__r.Id +  Assoc_Affiliation_Code__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AMS GDP Mapping Key</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Assoc_Affiliation_Code__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

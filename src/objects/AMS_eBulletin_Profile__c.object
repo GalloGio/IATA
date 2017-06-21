@@ -217,7 +217,7 @@
         <fullName>Last_NotificationBatch_Run__c</fullName>
         <defaultValue>now()</defaultValue>
         <externalId>false</externalId>
-        <label>Last_NotigicationBatch_Run</label>
+        <label>Last Notification Batch Run</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
@@ -344,11 +344,25 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>OWNER.FIRST_NAME</columns>
-        <columns>OWNER.LAST_NAME</columns>
+        <columns>User__c</columns>
+        <columns>Area_1__c</columns>
+        <columns>Area_2__c</columns>
+        <columns>Area_3__c</columns>
+        <columns>Daily_Frequency__c</columns>
+        <columns>Last_Run__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Opt_in__c</columns>
+        <columns>Opt_out_Bulletin__c</columns>
+        <columns>StatusDisplay__c</columns>
+        <columns>Suspend_Subscription__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <listViews>
         <fullName>Portal</fullName>
@@ -443,7 +457,8 @@
      Agency_Info_Irregularities__c == false, 
      Agency_Info_Defaults__c == false, 
      Agency_Info_Termination_Closures__c == false,
-     Agency_Info_Reviews__c == false
+     Agency_Info_Reviews__c == false, 
+    Agency_Info_Reinstatements__c == false 
   ),false
   )</errorConditionFormula>
         <errorMessage>DAILY Bulletin - Please select at least the Agency Information of interest</errorMessage>
@@ -516,7 +531,8 @@ Agency_Info_Defaults__c == false,
 Agency_Info_Termination_Closures__c == false, 
 Agency_Info_Reviews__c == false,
 Agency_Info_New_Aplication_Processes__c == false,
-Agency_Info_Agency_Changes__c == false
+Agency_Info_Agency_Changes__c == false, 
+Agency_Info_Reinstatements__c == false 
 ),false 
 )</errorConditionFormula>
         <errorMessage>WEEKLY Bulletin - Please select the Agency Information of interest</errorMessage>

@@ -959,6 +959,19 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Drafts</fullName>
+        <columns>NAME</columns>
+        <columns>Maximum_Allowed_Step__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>DRAFT</value>
+        </filters>
+        <label>Drafts</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>EBC_Approvers_EBC_Campaign</fullName>
         <filterScope>Queue</filterScope>
         <label>eBroadcast Approvers</label>
@@ -966,6 +979,25 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Sent</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>SENT</value>
+        </filters>
+        <label>Sent</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>eBroadcast Campaign Name</label>

@@ -109,8 +109,9 @@
                                     </div>
                                     <input type="submit" class="button" value="Log in" />
                                     <!-- <button class="button">Log in</button> -->
-                                    <p>Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
-                                    <p><apex:outputLink value="#" onclick="signUpAction();">No Account? Register</apex:outputLink></p>                             
+                                    <p style="margin-bottom : 0;">Forgot your password? <a class="text-link" href="{!$Site.BaseUrl}/IEC_ForgotPassword">Click here</a></p>
+                                    <p style="margin : 0;">No Account? <a class="text-link" href="#" onclick="signUpAction()">Register</a></p>
+                                       
                                 </div>
                             </form>
                             <apex:form ><apex:actionFunction name="signUpAction" action="{!miniRegister}"/></apex:form>
@@ -156,9 +157,9 @@
 
                 <!-- Global Search Form -->
                 <apex:variable value="1" var="notDashBoardOrCheckout2" rendered="{!AND(is_dashboard!=true,is_checkout!=true)}">
-                    <div id="js-search-container" class="search-container">
-                        <a class="icon search toggle-button" id="js-search-button" href="#"><span class="reader-only">{!$Label.Button_Open_search_field}</span></a>
-                        <form class="form form-search is-hidden" id="js-search-form" action="{!$Site.BaseUrl}/IEC_SearchResults" name="form-site-search">
+                    <div id="search-container" class="search-container">
+                        <a class="icon search toggle-button" id="search-button" onclick="toggleText();" ><span class="reader-only">{!$Label.Button_Open_search_field}</span></a>
+                        <form class="form form-search" id="search-form" action="{!$Site.BaseUrl}/IEC_SearchResults" name="form-site-search">
                             <label>
                                 <span class="reader-only">{!$Label.Search}</span>
                                 <input class="user-input text" type="text" name="site-search" placeholder="{!$Label.Search}" />
@@ -320,5 +321,26 @@
 
 <!-- Pardot tracking -->
 <apex:includeScript value="{!$Resource.IEC_Pardot_Track_Page}" loadOnReady="false" />
+<script type="text/javascript">
+
+    window.addEventListener("load",toggleText,false);
+
+    function toggleText() {
+        var isDevice = function(alias) {
+                        return $('.device-' + alias).is(':visible');
+                    };
+
+        if(isDevice('xs') || isDevice('sm') || isDevice('md'))
+        {
+            $('#search-form').toggleClass('is-hidden');
+        } else {
+            if($('#search-form').hasClass('is-hidden'))
+            {
+                $('#search-form').toggleClass('is-hidden');
+            }
+        }
+    }
+
+</script>
 
 </apex:component>

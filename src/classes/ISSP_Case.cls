@@ -1,6 +1,12 @@
 public without sharing class ISSP_Case {
     
     private static String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+    private static String AME_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Africa & Middle East').RecordTypeId;
+    private static String AMERICAS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Americas').RecordTypeId;
+    private static String APAC_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Asia & Pacific').RecordTypeId;
+    private static String CHINA_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - China & North Asia').RecordTypeId;
+    private static String EUROPE_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId;
+    private static String IDFS_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('Complaint (IDFS ISS)').RecordTypeId;
     //private static String AGENT_ACCREDITATION_PORTAL_SERVICE = 'Become an IATA Accredited Agent';
     //private static String AIRLINE_PARTICIPATION_PORTAL_SERVICE = 'Join BSP / CASS';
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
@@ -46,6 +52,7 @@ public without sharing class ISSP_Case {
     public List<CaseComment> List_CaseComment {get; set;}
     public List<Case_Milestone__c> List_CaseMilestones {get; set;}
     public String SurveyLanguage {get; set;}
+    private E2CPFieldAccess e2cpFieldaccess;
 
     //Content Related List Handle
     public List<ContentDistribution> ContentDistribution_List {get; set;}
@@ -91,26 +98,54 @@ public without sharing class ISSP_Case {
     public Decimal CaseStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Internal.get(newCase.Status);}    }
     public Decimal CaseDPCStatusACR { get {return ISSP_Constant.caseStatusMap_ACR_Portal.get(newCase.Escalated_Status_ACCA__c);}   }
 
+    //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+    public String firstCommParam { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
             newCase = DAL_ISSP.getCase(caseId);
             if (!newCase.Visible_on_ISS_Portal__c) {
-                PageReference pr = new PageReference('/ISSP_Homepage');
+                PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
             }
-            
+            this.e2cpFieldAccess = new E2CPFieldAccess(caseId);
+
             if(newCase.RecordType.name == 'IATA Financial Review') { //Open IFAP cases must be opened via the page used specifically for open IFAP cases (ISSP_IFAPCases) 
                 popContact();
                 Set<String> openIFAPStatuses = new Set<String>
                     {'action needed', 'agent notified (email)', 'agent notified (mail)', 'sanity check failure'};
                 if(openIFAPStatuses.contains(newCase.Status.toLowerCase()) && con.Financial_Assessment_Contact__c) {
-                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId);
+                        PageReference pr = new PageReference('/ISSP_IFAPCases?id=' + caseId + commParam);
                 		return pr;
                     }
             }
+            
+            showAlertMessage();
+
         }
         return null;
+    }
+    
+    /**
+        Shows a disclaimer if current case was closed for more than 2 weeks
+    **/
+    public void showAlertMessage() {
+        if (getHideForClosedCases()) {
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO, System.Label.ISSP_Case_Closed_More_Than_2_Months);
+            ApexPages.addMessage(myMsg);
+        }
+    }
+    
+    /**
+        Returns true if the input case has an specific RecordType
+        and is closed for more than 2 months
+    **/
+    public Boolean getHideForClosedCases() {
+        set<String> validRecordtypes = new set<String>{AME_RECORD_TYPE_ID, AMERICAS_RECORD_TYPE_ID, APAC_RECORD_TYPE_ID, CHINA_RECORD_TYPE_ID, EUROPE_RECORD_TYPE_ID, IDFS_RECORD_TYPE_ID};
+        return (validRecordtypes.contains(this.newCase.RecordtypeId) && this.newCase.ClosedDate < Date.today().addDays(-14));
     }
 
     public ISSP_Case() {
@@ -654,7 +689,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             try {
                 //get parameters
@@ -697,7 +732,7 @@ public without sharing class ISSP_Case {
                 //PageReference pr = new Pagereference('/ISSP_Case?caseId='+newCase.Id);
                 //pr.setRedirect(true);
                 //return pr;
-                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+                return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
@@ -708,6 +743,13 @@ public without sharing class ISSP_Case {
     public Pagereference saveAttach() {
 
         system.debug('saveAttach AccountId: ' + accountId);
+
+        // CNS
+        if(con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.CNS_Account__c == true && newCase.CaseArea__c == 'Accreditation Process') {
+            newCase.CNSCase__c = true;
+            newCase.Groups__c = 'CNS Team';
+        }
+
         //TF - SP9-C5
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && !isFDSRecordType) {
             ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error, System.Label.ISSP_Select_Airline);
@@ -716,7 +758,7 @@ public without sharing class ISSP_Case {
         } else if (isGSAOnly && accountId != null) {
             newCase.Account_Concerned__c = accountId;
             upsert newCase;
-            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
+            return new Pagereference('/ISSP_Case?caseId=' + newCase.Id + commParam);
         } else {
             //get parameters
             String paramTopic = ApexPages.currentPage().getParameters().get('topic');
@@ -757,11 +799,11 @@ public without sharing class ISSP_Case {
 				**/
 
                 //return new Pagereference('/p/attach/NoteAttach?pid' + newCase.Id + '&retURL=%2FISSP_Case?caseId='+ newCase.Id);
-                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+                return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
             } catch (DmlException ex) {
                 ApexPages.addMessages(ex);
             }
-            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id);
+            return new Pagereference('/ISSP_AddAttachment?caseid=' + newCase.Id + commParam);
         }
     }
 
@@ -772,10 +814,10 @@ public without sharing class ISSP_Case {
             return new Pagereference(retURL);
         else if (caseId != null) {
             isEditMode = false;
-            return new Pagereference('/ISSP_Case?caseId=' + caseId);
+            return new Pagereference('/ISSP_Case?caseId=' + caseId + commParam);
         } else {
             isEditMode = false;
-            return new Pagereference('/ISSP_Homepage?mid=M0S1');
+            return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
             //return null;
         }
     }
@@ -789,7 +831,7 @@ public without sharing class ISSP_Case {
         upsert closeCase ;
         //string retURL = ApexPages.currentPage().getParameters().get('retURL');
         PageReference pageRef = ApexPages.currentPage();
-        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id); //ApexPages.currentPage();
+        return new Pagereference('/ISSP_Case?caseId=' + closeCase.Id + commParam); //ApexPages.currentPage();
     }
 
     public Pagereference DPCAccept() {
@@ -894,7 +936,7 @@ public without sharing class ISSP_Case {
         }
         update newCase;
         //return new Pagereference('/ISSP_Case?caseId=' + newCase.Id);
-        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true');
+        return new Pagereference('/ISSP_CaseList?MainNav=Queries&subNav=MyQueries&mid=M4S3&admin=true' + commParam);
     }
 
     @TestVisible
@@ -1019,7 +1061,7 @@ public without sharing class ISSP_Case {
     }
 
     public Pagereference AddComment() {
-        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId'));
+        PageReference p = new PageReference('/apex/ISSP_AddComment?caseId=' + ApexPages.currentPage().getParameters().get('caseId') + commParam);
         p.setRedirect(true);
         return p;
     }
@@ -1231,5 +1273,115 @@ public without sharing class ISSP_Case {
       		}
   		}
          return false;
+    }
+
+    /**
+        Add a new CC Other Contact to current Case
+    **/
+    public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+    public String inputccotheremail{get; set;} 
+    public void addCCOther() {
+        String findEmail = this.inputccotheremail.trim();
+        this.inputccotheremail = '';
+        if (findEmail==null||findEmail=='') return;
+        // find contact with input email
+        list<Contact> listContact = [SELECT Id,Email FROM Contact WHERE Email = :findEmail limit 1];
+        if (listContact.size()!=1) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail)));
+            return;
+        }
+        // insert found contact as a team member of the case
+        Savepoint sp = Database.setSavepoint();
+        try {
+            Contact contact = listContact.get(0);
+            CaseTeamMember teammember = new CaseTeamMember(
+                ParentId = this.newCase.Id,
+                MemberId = contact.Id,
+                TeamRoleId = PARTNER_USER_ROLE);
+            insert teammember;
+            insertAddressInE2CP_CCOthers(contact.Email);
+        } catch (DMLException e) {
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
+            }
+            Database.rollback(sp);
+        }
+    }
+    
+    public String inputDelCCOther {get; set;} 
+    public void delCCOther() {
+        Savepoint sp = Database.setSavepoint();
+        try {
+            removeAddressInE2CP_CCOthers(this.inputDelCCOther);
+            list<Contact> listContact = [SELECT Id FROM Contact WHERE email = :this.inputDelCCOther];
+            list<CaseTeamMember> listMember = [
+                SELECT id
+                FROM CaseTeamMember 
+                WHERE ParentId = :this.newCase.Id
+                AND TeamRoleId = :PARTNER_USER_ROLE
+                AND MemberId IN :listContact];
+            if (!listMember.isEmpty()) {
+                delete listMember;
+            }
+        } catch (DMLException e) {
+            System.debug('ERROR delTeamMember ' + e.getMessage());
+            for (Integer i = 0; i < e.getNumDml(); i++) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, this.inputDelCCOther + ': ' + e.getDmlMessage(i)));
+            }
+            Database.rollback(sp);
+        }
+    }
+    
+    public String getAdditionalCC() {
+        if (this.e2cpFieldAccess==null) {
+            return '';
+        }
+        return this.e2cpFieldAccess.getAdditionalCC();
+    }
+    
+    /**
+        Convert the cc emails string in a list
+    **/
+    public list<String> getListCCOther() {
+        String additionalCC = getAdditionalCC();
+        if (additionalCC==null) {
+            return new list<String>();
+        }
+        set<String> setString = new set<String>(additionalCC.split(';'));
+        setString.remove('');
+        return new list<String>(setString);
+    }
+    /**
+        Inserts a new email in the field Case.E2CP__AdditionalCC__c which is a
+        list of emails in semi-colon separated string
+    **/
+    private void insertAddressInE2CP_CCOthers(String insertEmail) {
+        String additionalCC = getAdditionalCC();
+        set<String> setNews = new set<String>();
+        setNews.add(insertEmail);
+        for (String email: additionalCC.split(';')) {
+            setNews.add(email.trim());
+        }
+        if (this.e2cpFieldAccess!= null) {
+            this.e2cpFieldAccess.setAdditionalCC(String.join(new list<String>(setNews),';'));
+        }
+    }
+    
+    /**
+        Removes an email in the field Case.E2CP__AdditionalCC__c which is a
+        list of emails in semi-colon separated string
+    **/
+    private void removeAddressInE2CP_CCOthers(String address) {
+        String additionalCC = getAdditionalCC();
+        list<String> listNews = new list<String>();
+        for (String email: additionalCC.split(';')) {
+            String trimEmail = email.trim();
+            if (trimEmail!=address) {
+                listNews.add(trimEmail);
+            }
+        }
+        if (this.e2cpFieldAccess!= null) {
+            this.e2cpFieldAccess.setAdditionalCC(String.join(listNews,';'));
+        }
     }
 }

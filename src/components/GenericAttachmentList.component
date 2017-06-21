@@ -4,19 +4,15 @@
     <apex:attribute name="uploaderWizard" description="uploader" type="String" required="false" assignTo="{!uploader}" />
     <apex:attribute name="sourceSystem" description="source" type="String" required="false" assignTo="{!source}" />
     <apex:attribute name="scrollable" description="scrollable" type="Boolean" required="false" assignTo="{!scroll}" />
+    <apex:attribute name="showAttachFileButton" description="showAttachFileButton" type="Boolean" required="false" default="true"/>
 
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
-    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
     <apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
-    <apex:includeScript value="/support/console/29.0/integration.js"/>
-    <apex:includeScript value="/soap/ajax/26.0/connection.js" />
-    <apex:includeScript value="/soap/ajax/26.0/apex.js" />
-    <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/core-min.js')}" />
-    <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/hmac-min.js')}" />
-    <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/sha1-min.js')}" />
-    <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/enc-base64-min.js')}" />
-    <apex:includeScript value="{!URLFOR($Resource.CryptoJS4Attachment, '/jquery.js')}" />
-    <apex:includeScript value="/support/console/29.0/integration.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/jszip-utils.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jszip, '/zippack.js')}"/>
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
 
     <c:Loading />
 
@@ -79,36 +75,23 @@
             if (sforce.console.isInConsole()) {
                 ServiceConsoleIntegration(redirectUrl);
             } else {
-                window.open(redirectUrl);
+                window.top.location=redirectUrl;
             }
             //return false;
         }
 
         function downloadZIP() {
           startLoading();
-          GenericAttachmentListController.getFilesFromAmazon("{!sObjectId}",function(result, event){
-          // alert(result);
-          try {            
-            downloadAndZipFiles(result, "files.zip");
-          } catch (e) {
-            alert(e);
-          }
-          stopLoading();
+          GenericAttachmentListController.getAllExpiringLink("{!sobjectId}",function(result, event){
+              try {
+                var zipfiles = new ZipFiles(result, "files.zip");
+                zipfiles.downloadZip();
+              } catch (e) {
+                alert(e);
+              }
+              stopLoading();
           }, {buffer: true, escape: false, timeout: 120000} );
         }
-
-        function oscarAttachments()
-        {
-            var redirectUrl = "/apex/AMS_OSCAR_Attachment_List?id={!relatedCase.parent.OSCAR__c}";
-            
-            if (sforce.console.isInConsole()) {
-                ServiceConsoleIntegration(redirectUrl);
-            } else {
-                window.open(redirectUrl);
-            }
-
-        }
-
     </script>
 
         <apex:pageblock id="fileList" title="{!$Label.Attachments}" > 
@@ -124,7 +107,7 @@
                     <apex:commandButton value="Download All Files" action="{!makeAllPrivate}" onclick="downloadZIP(); return false;" />
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!isPortal}" >
-                    <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!canAttachFilesToCase}"/>
+                    <apex:commandButton action="{!goToAttachmentPage}" value="{!$Label.ISSP_Attach_File}" rendered="{!AND(showAttachFileButton,canAttachFilesToCase)}"/>
                 </apex:outputPanel>
             </apex:pageblockButtons>
             <div class="{!IF(scroll == true, 'tableWrapper', '')}">
@@ -187,8 +170,7 @@
                 </apex:column>
 
                 <apex:column headerValue="{!$Label.Created_Date}" >
-                    <apex:outputText value=" {0,date,d MMM yyyy HH:mm a}">
-                        <apex:param value="{!attach.createdDate}" />
+                    <apex:outputText value=" {!attach.createdDate}">                  
                     </apex:outputText>
                 </apex:column>
 

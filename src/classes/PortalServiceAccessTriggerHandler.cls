@@ -3,6 +3,8 @@ public without sharing class PortalServiceAccessTriggerHandler {
     public static Boolean privetTrigger = false;
     public static Boolean avoidAppTrigger = false;
 
+    public static final String CURRENCYCENTERAPPURL = '/ISSP_CurrencyCenterHome';
+
     public static void onAfterInsert(list<Portal_Application_Right__c> newPortalApplicationRightList 
                                    , map<ID, Portal_Application_Right__c> newPortalApplicationRightMap) {
         
@@ -15,6 +17,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
     System.debug('zZzZ Start SendEmailToPortalAdminToValidateRequest ==>'+ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
         ID templateId = getEmailTemplateIdByName(ENV.EmailTemplateData.NotifyAdminOfAppRequestVF);
     System.debug('zZzZ templateId==>'+templateId);
+        ID templateID_CNS = getEmailTemplateIdByName (ENV.EmailTemplateData.NotifyAdminOfAppRequestVF_CNS);
         if(String.isBlank(templateId)) {
             system.debug(LoggingLevel.ERROR, 'Email template ' + ENV.EmailTemplateData.NotifyAdminOfAppRequestVF + ' not found');   
             return;
@@ -37,6 +40,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
     System.debug('zZzZ ENV.Reply_Email==>'+ENV.Reply_Email);
         ID standartReplyUserID = getStandartReplyUserID(ENV.Reply_Email);
     System.debug('zZzZ standartReplyUserID==>'+standartReplyUserID);    
+        ID standardReplyUserID_CNS = getStandartReplyUserID(ENV.Reply_Email_CNS);
         list<Messaging.SingleEmailMessage> msgList = new list<Messaging.SingleEmailMessage>();
         for(Portal_Application_Right__c par : newPortalApplicationRightList) {
     System.debug('zZzZ par==>'+par);
@@ -51,15 +55,27 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 if(null == portalAdminUserIDs) continue;
                 for(ID userId : portalAdminUserIDs) {
                     Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage(); 
+                    if(par.Conctact_is_CNS__c!=null && par.Conctact_is_CNS__c){
+                        emailMsg.setTemplateId(templateId_CNS);
+                    }else{
                     emailMsg.setTemplateId(templateId);
+                    } 
                     emailMsg.setTargetObjectId(userId);
                     emailMsg.saveAsActivity = false;
                     
-                    if(null != standartReplyUserID)
-                        emailMsg.setOrgWideEmailAddressId(standartReplyUserID);
+                    if(!par.Conctact_is_CNS__c && par.Conctact_is_CNS__c!=null){
+                        if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
                     else {
                         emailMsg.setReplyTo(ENV.Reply_Email);
                         emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                    }
+
+                    }else{
+                         if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
+                        else {
+                            emailMsg.setReplyTo(ENV.Reply_Email_CNS);
+                            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject_CNS);
+                        }
                     }
                     emailMsg.setWhatId(par.ID); 
                     msgList.add(emailMsg);
@@ -135,6 +151,47 @@ public without sharing class PortalServiceAccessTriggerHandler {
         if (!accessListUpdate.isEmpty()){
             avoidAppTrigger = true;
             update accessListUpdate;
+        }
+    }
+
+
+
+    /*** Automatically subscribe the new Currency Center users to all the existing Country Profile records***/
+    public static void SubscribeNewUsersToAllCountryProfiles(Map<Id, Portal_Application_Right__c> newItems){
+        list<EntitySubscription> lstUserSubscriptions = new list<EntitySubscription>();
+        set<Id> setRelatedContactIds = new set<Id>();
+
+        // Get contacts that can access the service
+        for (Portal_Application_Right__c par : newItems.values()) {
+            if (par.Application_Start_URL__c == CURRENCYCENTERAPPURL && par.Right__c == 'Access Granted') {
+                setRelatedContactIds.add(par.Contact__c);
+            }            
+        }
+
+        if (!setRelatedContactIds.isEmpty()) {
+            // Get the actual user IDs
+            list<Id> lstRelatedUserIds = new list<Id>();
+            for (User usr : [SELECT Id, ContactId FROM User WHERE ContactId <> null AND ContactId IN :setRelatedContactIds]) {
+                lstRelatedUserIds.add(usr.Id);
+            }
+
+            // Get the community Id
+            Id communityId = [SELECT Id FROM Network WHERE Name = 'IATA Portal'].Id;
+
+            // Get a list of all existing Country Profiles
+            list<Country_Profile__c> lstCountryProfiles = [SELECT Id FROM Country_Profile__c];
+
+            // Create the chatter subscription records
+            for (Id userId : lstRelatedUserIds) {
+                for (Country_Profile__c cp : lstCountryProfiles) {
+                    EntitySubscription newSubscription = new EntitySubscription(SubscriberId = userId, ParentId = cp.Id, NetworkId = communityId);
+                    lstUserSubscriptions.add(newSubscription);
+                }
+            }
+
+            // Insert the records. Will fail if Chatter Feeds has not been previously activated on the Country Profile object
+            if (!lstUserSubscriptions.isEmpty()) 
+                insert lstUserSubscriptions;
         }
     }
 }

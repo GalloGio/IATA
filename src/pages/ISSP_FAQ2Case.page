@@ -1,6 +1,6 @@
 <apex:page controller="vfISSP_FAQ2Case" action="{!pageLoad}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
- <c:ISSP_Header ></c:ISSP_Header>
+ <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
  <body>
 
  <!--<script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}" ></script>
@@ -13,9 +13,11 @@
      <script type="text/javascript" src="{!urlfor($Resource.IIS_Portal,'/js/jquery1-7-2.min.js')}"></script>
      <script src="{!urlfor($Resource.IIS_Portal,'/js/bootstrap.js')}" type="text/javascript"> </script> --> 
 
+<link rel="stylesheet" href="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/css/bootstrap-select.min.css')}" type="text/css" />
+<script src="{!URLFOR($Resource.bootstrapselect, '/bootstrap-select-1.12.2/js/bootstrap-select.min.js')}" type="text/javascript" > </script> 
 
   <div class="container">
-   <c:ISSP_CustomNavigation />
+   <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 
        
 <style type="text/css">
@@ -176,7 +178,7 @@
 <div class="col-md-12">
  <h4>{!$Label.LAQ_ContactUs} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
          {!$Label.ISSP_Create_query} <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span> 
-         <small>{!$Label.ISSP_PageDescription_ISSP_FAQ2Case}</small></h4>
+         <small>{!if(communityName=='CNS', $Label.ISSP_PageDescription_ISSP_FAQ2Case_CNS, $Label.ISSP_PageDescription_ISSP_FAQ2Case)}</small></h4>
 </div>
 </div>
     <div class="row"> 
@@ -190,7 +192,7 @@
                     <ul class="nav nav-pills ">
                      <li role="presentation" class="sidenav active" id="liGen"><a href="#" onclick="GeneralQueueMethod();selectGeneral();return false;" id="general" >{!$Label.ISSP_General_enquiries}</a></li> 
 
-                     <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
+                     <li role="presentation" class="sidenav" style=" display:{!IF(isSISHelpDesk,'block','none')}"><a href="/apex/ISSP_Case?recordTypeId=01220000000Q3F2&origin=Portal&ent=Case&cas11=portal%20for%20example{!if(communityName=='CNS','&CommunityName='+communityName,'')}" onclick="CheckNewCaseRecordType('Cases_SIS_Help_Desk');">{!$Label.ISSP_SIS_Help_Desk}</a>
                      </li>
 
                      <li role="presentation" class="sidenav" style=" display:{!IF(isIATAServiceRequest,'block','none')}"><a href="#" onclick="CheckNewCaseRecordType('IATA_Service_Request');">{!$Label.Iata_service_request}</a>
@@ -279,7 +281,7 @@
                             </apex:outputpanel>
                         </li>
                          <apex:outputPanel rendered="{!isCompliment}"><!-- compliment message -->
-                           <apex:outputText escape="false" value="{!$Label.ISSP_CaseComplimentMessage}"  style="color:#3174AF;font-style: italic;"/><br /><br />
+                           <apex:outputText escape="false" value="{!if(communityName=='CNS', $Label.ISSP_CaseComplimentMessage_CNS, $Label.ISSP_CaseComplimentMessage)}"  style="color:#3174AF;font-style: italic;"/><br /><br />
 
                          </apex:outputPanel>
 
@@ -377,6 +379,19 @@
                                                             <apex:selectlist styleclass="form-control " value="{!newCase.IATAcode__c}" required="false" size="1">
                                                                 <apex:selectoptions value="{!airlines}" />
                                                             </apex:selectlist>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel rendered="{!field.fieldType == 'ccothers' && isCompliment == false}">
+                                                            <apex:inputText styleclass="form-control" value="{!field.fieldValueEntered}" />
+                                                            <small class="text-muted">{!$Label.ISSP_CCOther_Help_Text}</small>
+                                                        </apex:outputpanel>
+                                                        <apex:outputpanel styleclass="selectpicker" rendered="{!field.fieldType == 'bootstrap-select' && isCompliment == false}">
+                                                            <apex:selectlist styleclass="selectpicker form-control" html-data-live-search="true" value="{!newCase[field.fieldValue]}" required="false" size="1" rendered="{!field.listOptions!=null}">
+                                                                <apex:selectoptions value="{!field.listOptions}" />
+                                                            </apex:selectlist>
+                                                            <script>
+                                                                $('.selectpicker').selectpicker();
+                                                                $('.bootstrap-select').find('button').removeClass('btn-default').removeClass('btn').addClass('form-control').addClass('mandatory');
+                                                            </script>
                                                         </apex:outputpanel>
                                                         <div class="hiddenerror" style="display: none;">
                                                             <p class="errormsg" style="line-height: 26px;">ERROR</p>
@@ -684,7 +699,7 @@
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------->
-  <c:ISSP_CustomFooter />
+  <c:ISSP_CustomFooter communityName="{!communityName}"/>
                   </div>
 </body>
 </html>

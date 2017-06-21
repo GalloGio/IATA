@@ -31,7 +31,13 @@ public with sharing class ISSP_PersonalInformation {
     public boolean isHOAccredited {get;set;}
     public boolean isTerminatedAgent {get; set;}
     public boolean isTerminatedAgentBR {get; set;}
+    public boolean isCNSAccount {get; set;}
     private Id vHQAccountId;
+
+     //CNS
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
+    public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
+
     
 	//Global Variables
 	public String UserPortalStatus {get;set;}
@@ -83,6 +89,7 @@ public with sharing class ISSP_PersonalInformation {
         isIATAAgencyAcctBR = false;
         isTerminatedAgent = false;
         isTerminatedAgentBR = false;
+        isCNSAccount = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
     	system.debug('confirmParameter: ' + confirmParameter);
@@ -107,6 +114,10 @@ public with sharing class ISSP_PersonalInformation {
             vHQAccountId = con.Account.Top_Parent__c;
         }
 
+        if (communityName=='CNS') { //It is a CNS contact
+            isCNSAccount = true;
+        }
+
         //Is this user's account accredited
         if(con.Account.IATACode__c!=null && con.Account.RecordType.DeveloperName=='IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' && con.Account.Status__c != 'No longer a customer')
         	isHOAccredited = true; //This is an accredited Agency Account    
@@ -120,7 +131,7 @@ public with sharing class ISSP_PersonalInformation {
         noirr = string.valueof(con.Account.Accumulated_Irregularities__c);
         FinSubmission  = string.valueof(con.Account.Fin_statements_submission_deadline__c);
         
-        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c)) {
+        if ( (con.Account.Sector__c=='Cargo Agent' || con.Account.Sector__c=='Travel Agent') && (con.User_Portal_Status__c=='Approved Admin' || con.BSP_CASS_Payment_contact__c || con.Financial_Assessment_Contact__c) && getPermissionForStandardAccount() == false && (!con.Account.CNS_Account__c)) {
                 showIrregularities = True;
         }
         else {
@@ -294,7 +305,7 @@ public with sharing class ISSP_PersonalInformation {
     }
     
     public Pagereference AssignIFAPContact(){
-        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+ con.AccountId + '&MainNav=Services&subNav=Access&mid=M4S2');
+        Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+ con.AccountId + '&MainNav=Services&subNav=Access&mid=M4S2' + commParam);
         p.setredirect(true);
         return p;
       return null;
@@ -346,7 +357,7 @@ public with sharing class ISSP_PersonalInformation {
         List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
                                       FROM Account
                                       WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency') 
-                                        //AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+                                      AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
                                               ORDER BY Name, IATACode__c
                                      ];
        
@@ -411,4 +422,24 @@ public with sharing class ISSP_PersonalInformation {
         
     }
     
+    /**
+        If the account.Quality__c field contains the id of the verfied image then is a verified account
+    **/
+    public Boolean getIsVerifiedAccount() {
+        return this.con.Account!=null && this.con.Account.Quality__c!=null && this.con.Account.Quality__c.contains('015w0000001yCfW');
+    }
+    
+    /**
+        Return true if it is a Standard Account
+    **/
+    public Boolean getIsStandardAccount() {
+        return this.con.Account!=null && this.con.Account.RecordType.DeveloperName=='Standard_Account';
+    }
+    
+    /**
+        If is admin user, a standard account and non verified, then it has some special permissions in Company Page
+    **/
+    public Boolean getPermissionForStandardAccount() {
+        return this.bIsAdmin && getIsStandardAccount() && !getisVerifiedAccount();
+    }
 }

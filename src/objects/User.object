@@ -288,6 +288,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account_or_Agency__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND (
+  OR( Contact.Account.CNS_Account__c , Contact.Account.CNS_Agency__c),
+  OR( Contact.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;, Contact.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CNS Account or Agency</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>For admin use. Reason for deactivation or reactivation between other comments another admin may need to know before doing any modification.</description>
         <externalId>false</externalId>
@@ -382,7 +393,7 @@
         <fullName>Customer_type__c</fullName>
         <externalId>false</externalId>
         <formula>CASE(Contact.Account.RecordType.Name, 
-   &quot;Agency&quot;, &quot;Agency&quot;,
+   &quot;Agency&quot;, If( OR(Contact.Account.CNS_Account__c, Contact.Account.CNS_Agency__c),&quot;CNS Agency&quot;, &quot;Agency&quot;),
    &quot;Airline Branch&quot;, &quot;Airline&quot;,
    &quot;Airline Headquarters&quot;, &quot;Airline&quot;,
    &quot;General Sales Agent Branch&quot;,IF(ISBLANK(Contact.Account.IATACode__c), &quot;GSA&quot;, &quot;GSSA&quot;),
@@ -484,6 +495,17 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EmailForSSO__c</fullName>
+        <description>This is a copy of the standard email field. Required for SSO and the connected app configuration.</description>
+        <externalId>false</externalId>
+        <formula>Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>EmailForSSO</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Employee_Number_PPD__c</fullName>
@@ -813,6 +835,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <length>10</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>License_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Profile.UserLicense.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>License name</label>
+        <required>false</required>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -1306,6 +1338,16 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Portal_App_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>One Id Portal App Role</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Portal_User_Frozen_Checkbox__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -1648,6 +1690,11 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
             <operation>equals</operation>
             <value>S</value>
         </filters>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce</value>
+        </filters>
         <label>All Internal Active Users</label>
         <language>en_US</language>
         <sharedTo>
@@ -1668,6 +1715,28 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Company_community</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>Comments__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>License_name__c</field>
+            <operation>equals</operation>
+            <value>Salesforce platform</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Company community users</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2636,9 +2705,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>FULL_NAME</columns>
         <columns>CORE.USERS.DIVISION</columns>
         <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.PROFILE.NAME</columns>
-        <columns>CORE.USERS.LAST_LOGIN</columns>
         <columns>CREATED_BY_NAME</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.NAME</columns>
@@ -2655,13 +2724,12 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         </filters>
         <filters>
             <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
+            <operation>notContain</operation>
             <value>Portal</value>
         </filters>
         <filters>
-            <field>LANGUAGE</field>
+            <field>CORE.USERS.LAST_LOGIN</field>
             <operation>notEqual</operation>
-            <value>1</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

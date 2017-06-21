@@ -4,6 +4,8 @@ global class AMS_OSCAR_Attachments {
     private Case cse;
 
     public Boolean isAdminUser {get; set;}
+    public Boolean isReadOnly {get; set;}
+    public Boolean isEmbedded {get; set;}
 
     public Id caseId{
         get{
@@ -66,6 +68,9 @@ global class AMS_OSCAR_Attachments {
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+
+        isReadOnly = ApexPages.currentPage().getParameters().get('readOnly') == 'true' ? true : false;
+        isEmbedded = ApexPages.currentPage().getParameters().get('isEmbedded') == 'true' ? true : false;
     }
 
     /*
@@ -107,9 +112,15 @@ global class AMS_OSCAR_Attachments {
     global static Boolean deleteAttachment(string strId, String fullName) {
         Schema.SObjectType attType = Id.valueOf(strId).getSObjectType();
         Boolean result = false;
-        if (attType == Schema.Attachment.SObjectType)               result = deleteSalesforceAttachment(strId);
-        if (attType == Schema.Archived_Attachment__c.SObjectType)   result = deleteArchivedAttachment(strId);
-        if (attType == Schema.AmazonFile__c.SObjectType)            result = deleteAmazonAttachment(strId, fullName);
+        if (attType == Schema.Attachment.SObjectType) {
+            result = deleteSalesforceAttachment(strId);
+        }
+        if (attType == Schema.Archived_Attachment__c.SObjectType) {
+            result = deleteArchivedAttachment(strId);
+        }
+        if (attType == Schema.AmazonFile__c.SObjectType) {
+            result = deleteAmazonAttachment(strId, fullName);
+        }
         //System.debug('GenericAttachmentListController.deleteAttachment: ' + strId + ' object not recognized');
         return result;
     }
@@ -203,8 +214,11 @@ global class AMS_OSCAR_Attachments {
     
     
     public Boolean getCanAttachFilesToCase() {
-        if(cse.Status == 'Draft') return false;
-        else return true;
+        if(cse.Status != 'Draft') {
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public PageReference goToAttachmentPage() {

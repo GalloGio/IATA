@@ -624,11 +624,15 @@
         <columns>Termination_Date__c</columns>
         <columns>Active__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>Owner_Name__c</columns>
+        <columns>Owner_Sequence__c</columns>
+        <columns>Percentage__c</columns>
+        <columns>Legacy_System__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Account__c</field>
             <operation>equals</operation>
-            <value>SENZER INTERNATIONAL TRAVEL</value>
+            <value>FIRST REISEBUERO GUETTLER GMBH &amp; CO. KG</value>
         </filters>
         <label>TD</label>
         <language>en_US</language>

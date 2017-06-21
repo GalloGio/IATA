@@ -6,24 +6,67 @@ private class Product_Svc_Test
     public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
     @isTest(seeAllData=true)
-    static void test_saveZProducts() 
+static void test_saveZProducts() 
     {
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+        // create Zuora product
+        zqu__ZProduct__c oZProduct = IECTestUtil.CreateSampleProduct('Zuora Product');
+        insert oZProduct;
+        // create Zuora rate plan
+        zqu__ProductRatePlan__c oZRatePlan = IECTestUtil.CreateSampleProductRatePlan('Zuora Rate Plan 1', false, oZProduct);
+        insert oZRatePlan;
+        // create Zuora rate plan charge
+        zqu__ProductRatePlanCharge__c oZRatePlanCharge = IECTestUtil.CreateSampleProductRatePlanCharge(oZRatePlan, 'Zuora Rate Plan Charge 1', 100);
+        insert oZRatePlanCharge;
+        // create product category
+        Product_Category__c oProdCat = IECTestUtil.CreateSampleProductCategory(IECConstants.ProductCategory_SF_CACPRO, true);
+        insert oProdCat;
+        // create product information
+        Product_Information__c oProdInfo = IECTestUtil.CreateSampleProductInfo('Product Information', oProdCat, oZProduct);
+        insert oProdInfo;
+        // create product rate plan information
+        Product_Rate_Plan_Information__c oRatePlanInfo = IECTestUtil.CreateSampleProductRatePlanInfo('Rate Plan 1', false, oZRatePlan, oProdInfo);
+        insert oRatePlanInfo;
+        
+        oProdInfo = [select Id
+                          , (select Id, Name
+                             from Product_Rate_Plans_Information__r
+                             where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
+                               and Is_Triable__c = false)
+                     from Product_Information__c
+                     where Id = :oProdInfo.Id];
+
         Test.startTest();
         //-- Generate Test Data
         TestDataGenerator.generateUtilitySetting();
-        List<Product2> products = TestDataGenerator.generateProducts(2, false); 
+        List<Product2> products = TestDataGenerator.generateProducts(3, false); 
         
         //-- 1st Product has ho Zuora Id : zcreate must be called 
         products[0].Zuora_Id__c = null; //-- 
+        products[0].Status__c = 'New';
+        products[0].Product_Manager_lookup__c = UserInfo.getUserId();
 
         //-- 2nd Product has invalid date : api wil not be called for this product 
-        products[1].Effective_To__c = null;
+        products[1].SAP_Material_Number__c = null;
+
+        products[2].Zuora_Id__c = null;
+        products[2].IEC_Product_Information__c = oProdInfo.Id;
+        products[2].IEC_Product_Rate_Plan_Information__c = oProdInfo.Product_Rate_Plans_Information__r[0].Id;
 
         insert products;
 
         Database.executeBatch(new Product_Batch('saveZProducts', products));
 
         Map<Id, Product2> productMap = new Map<Id, Product2>(products);
+
+        products[0].Zuora_Id__c = null;
+        products[0].Effective_From__c = system.today().addYears(2);
+        products[0].Effective_To__c = system.today().addYears(3);
+        products[0].Status__c = 'Active';
+        products[2].Effective_From__c = null;
+        products[2].Effective_To__c = null;
+        products.remove(1);
+        update products;
 
         Set<Id> productIds = productMap.keySet();
         
@@ -38,6 +81,8 @@ private class Product_Svc_Test
     @isTest(seeAllData=true)
     static void test_ProductStockStatus()
     {
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
         Test.startTest();
          //-- Generate Test Data
         TestDataGenerator.generateUtilitySetting();
@@ -80,6 +125,8 @@ private class Product_Svc_Test
     @isTest(seeAllData=true)
     static void test_setIsNewVersion()
     {
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
         Test.startTest();
         TestDataGenerator.generateUtilitySetting();
 
@@ -114,6 +161,7 @@ private class Product_Svc_Test
         Test.startTest();
         TestDataGenerator.generateUtilitySetting();
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
 
         List<Product2> listProd = new List<Product2>();
         listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1',Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78',Effective_From__c = Date.today(),Effective_To__c = Date.today().addYears(1)));
@@ -212,6 +260,7 @@ private class Product_Svc_Test
         List<Product2> listProd = new List<Product2>();
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** create relationships between Profit Center and Product Manager
@@ -256,6 +305,7 @@ private class Product_Svc_Test
         Map<String, Id> mapRecordType_Id = Utility.getRTmapName_Id('Product2', null);
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** create setttings for record types
@@ -276,7 +326,7 @@ private class Product_Svc_Test
         system.assert(listProd[2].RecordTypeId == mapRecordType_Id.get('Unclassified'), 'Expected Unclassified RT ' + mapRecordType_Id.get('Unclassified') + ': ' + listProd[2].RecordTypeId);
         system.assert(listProd[3].RecordTypeId == mapRecordType_Id.get('GDP'), 'Expected GDP RT ' + mapRecordType_Id.get('GDP') + ': ' + listProd[3].RecordTypeId);
         
-        //*** invoking coverage for update event
+        //*** invoking coverage for update event -> cannot cover because this portion is deactivated
         listProd[0].SAP_Sales_Channel_Code__c = 'channel 2'; 
         update listProd;
         listProd = [select RecordTypeId, Name from Product2 where Name like 'zzzTest%' order by Name];
@@ -298,6 +348,7 @@ private class Product_Svc_Test
         List<Product2> listProd = new List<Product2>();
         
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
         
         //*** invoking coverage for insert event
@@ -315,6 +366,7 @@ private class Product_Svc_Test
     {
         Test.startTest();
         TestDataGenerator.generateApexSetting();
+        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
         TestDataGenerator.generateUtilitySetting();
 
         //-- Create product
@@ -326,5 +378,35 @@ private class Product_Svc_Test
         Product_Soap.send2Zuora(products[0].Id);
 		Test.stopTest();
     }
+
+	@isTest(seeAllData=true)
+	static void test_IsProductAndCountryCompliant()
+	{
+		Map<Id, Boolean> mapCheck;
+		List<Product2> lstProduct = [select Id from Product2 limit 2];
+		TestDataGenerator.generateISOCountryState();
+		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
+		lstCountry[0].Is_Non_Compliant__c = false;
+		lstCountry[1].Is_Non_Compliant__c = true;
+		update lstCountry;
+		insert new Non_Compliant_Country__c(Product__c=lstProduct[1].Id, IATA_ISO_Country__c=lstCountry[0].Id);
+		
+		system.assertEquals(Product_Svc.IsProductAndCountryCompliant(lstProduct[0].Id, null), true);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[0].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), true);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+		
+		mapCheck = Product_Svc.IsProductAndCountryCompliant(new List<Id>{lstProduct[0].Id, lstProduct[1].Id}, new Set<String>{lstCountry[1].ISO_Code__c});
+		system.assertEquals(mapCheck.get(lstProduct[0].Id), false);
+		system.assertEquals(mapCheck.get(lstProduct[1].Id), false);
+	} //*** end of "test_IsProductAndCountryCompliant"
+
+	@isTest(seeAllData=false)
+	static void test_Miscellaneous()
+	{
+		TestDataGenerator.generateProducts(1, true);
+		system.assert(Product_Svc.getAllProducts().size() > 0, 'Wrong count');
+	} //*** end of "test_Miscellaneous"
 
 }

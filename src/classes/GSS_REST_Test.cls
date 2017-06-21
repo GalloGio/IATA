@@ -579,6 +579,7 @@ global class GSS_REST_Test {
             GDP_Products_Account_View__c myProductAccountView = new GDP_Products_Account_View__c();
             myProductAccountView.name='Account'+i;
             myProductAccountView.Website__c = 'WebsiteExample'+i;
+            myProductAccountView.IATA_Code__c='1234567'+i;
             Insert myProductAccountView;
             
             

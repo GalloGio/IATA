@@ -112,6 +112,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Case_Email_Domain_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ContactPhone</field>
             </layoutItems>
             <layoutItems>
@@ -200,6 +204,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Visible_on_ISS_Portal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CNSCase__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -482,6 +490,9 @@
         <fields>CX_NPS_rating__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Instant_Surveys__c.Relationship_to_Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedTeamMemberList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

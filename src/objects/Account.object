@@ -65,6 +65,11 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Simple_Account_name</fullName>
+        <fields>Name</fields>
+        <label>Simple Account name</label>
+    </compactLayouts>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
@@ -3079,6 +3084,22 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Airline_Search_Field__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATACode__c&amp;Airline_designator__c&amp;Site &amp; &apos; &apos; &amp;
+IATACode__c&amp;Site&amp;Airline_designator__c &amp; &apos; &apos; &amp;
+Site&amp;IATACode__c&amp;Airline_designator__c &amp; &apos; &apos; &amp;
+Site&amp;Airline_designator__c &amp;IATACode__c&amp; &apos; &apos; &amp;
+Airline_designator__c &amp;Site&amp;IATACode__c&amp; &apos; &apos; &amp;
+Airline_designator__c &amp;IATACode__c&amp;Site</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Search Field</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Airline_designator__c</fullName>
         <description>Field used for the airline designator code e.g. BA</description>
         <externalId>false</externalId>
@@ -4647,6 +4668,16 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>CNS_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>[CNS Portal CRM] used to identify the accounts belonging to CNS. (used for all kind of accounts, agencies, airlines, GSSAs...)</description>
+        <externalId>false</externalId>
+        <label>CNS Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CNS_Agency__c</fullName>
         <externalId>false</externalId>
         <formula>AND( 
@@ -5038,11 +5069,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-                <controllingFieldValues>Airline</controllingFieldValues>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
@@ -6002,10 +6028,6 @@ V - Co-operative</inlineHelpText>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Sales Agents (Gold)</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>Sales Agents (Generic)</fullName>
                 <default>false</default>
             </picklistValues>
@@ -6027,6 +6049,14 @@ V - Co-operative</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>Service Providers</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agent (Generic 2)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Agent (Startup)</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>false</sorted>
@@ -7231,12 +7261,6 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>DandbCompanyId</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -7310,6 +7334,15 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Default_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Default date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Description</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -7360,11 +7393,6 @@ V - Co-operative</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>DunsNumber</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
         <description>E&amp;F CRM Project. Holds E&amp;F additional SAP number, that might not match the SAP number from other departments.</description>
         <externalId>false</externalId>
@@ -7372,7 +7400,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Additional SAP Nr.</label>
         <length>250</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7385,7 +7413,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Airline ID</label>
         <length>12</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7446,7 +7474,7 @@ V - Co-operative</inlineHelpText>
         <externalId>false</externalId>
         <label>E&amp;F Status Change Date</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
     </fields>
@@ -7457,7 +7485,7 @@ V - Co-operative</inlineHelpText>
         <label>E&amp;F Legacy Code</label>
         <length>20</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -7496,7 +7524,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <externalId>false</externalId>
         <label>Liquidator/Administrator</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -7516,7 +7544,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <description>E&amp;F CRM Project. Used to verify if the E&amp;F SIS Code has been verified/provided by SIS team</description>
         <externalId>false</externalId>
         <label>SIS Verified</label>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -7524,7 +7552,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <fullName>EF_SIS_Code__c</fullName>
         <description>E&amp;F SIS Code. Specific for them. Sometimes does not match the SIS Member Code</description>
         <externalId>false</externalId>
-        <label>SIS Accounting Code</label>
+        <label>SIS 3-Digit Code</label>
         <length>15</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
@@ -7536,7 +7564,7 @@ when E&amp;F Status gets inactive, this field becomes mandatory.</description>
         <fullName>EF_SIS_Designator__c</fullName>
         <description>E&amp;F SIS Designator. Most of the times the same as Airline Designator, but sometimes specific value for E&amp;F</description>
         <externalId>false</externalId>
-        <label>SIS Designator</label>
+        <label>SIS 2-Letter Code</label>
         <length>2</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
@@ -7566,7 +7594,7 @@ when E&amp;F Status gets inactive, this field can hold information about why the
         <externalId>false</externalId>
         <label>E&amp;F Status Additional Information</label>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>TextArea</type>
     </fields>
@@ -7674,7 +7702,7 @@ An account should have a field to indicate if it&apos;s an E&amp;F client or Ope
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
@@ -8160,7 +8188,8 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <formula>OR( Has_a_Financial_Assessment_Contact__c, Has_a_Financial_Assessment_Contact_Sum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Has a Financial Assessment Contact</label>
+        <inlineHelpText>Has a financial assessment contact under this account or any from the hierarchy</inlineHelpText>
+        <label>Has FA Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8181,7 +8210,7 @@ WSPN-Worldspan</inlineHelpText>
         <description>If true, then one of the related contacts is a financial assessment contact, otherwise it&apos;s false</description>
         <externalId>false</externalId>
         <inlineHelpText>Has a Financial Assessment Contact in this account</inlineHelpText>
-        <label>Has a FA Contact (This account)</label>
+        <label>Has FA Contact (This account)</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -8191,7 +8220,8 @@ WSPN-Worldspan</inlineHelpText>
         <externalId>false</externalId>
         <formula>OR( Has_an_Administrator_User_Portal__c, Has_an_Administrator_User_Portal_Sum__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Has an Administrator User Portal</label>
+        <inlineHelpText>Has an admin user under this account or any from the same hierarchy</inlineHelpText>
+        <label>Has an Admin Portal User</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
@@ -8209,7 +8239,8 @@ WSPN-Worldspan</inlineHelpText>
         <defaultValue>false</defaultValue>
         <description>Search in all related contacts and if any of them is an Admin User portal this value is checked</description>
         <externalId>false</externalId>
-        <label>Has an Admin User Portal (This account)</label>
+        <inlineHelpText>Has an admin contact under this account</inlineHelpText>
+        <label>Has an Admin Portal User (This account)</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -8521,7 +8552,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
                 <default>false</default>
                 <controllingFieldValues>checked</controllingFieldValues>
             </picklistValues>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -9023,6 +9054,40 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <fullName>Jigsaw</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Key_Customer_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Key Customer Reason</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Volume (Local)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Key_Customer__c</fullName>
@@ -9825,18 +9890,8 @@ J-Joint Vent</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>NaicsCode</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>NaicsDesc</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>Name</fullName>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
@@ -10141,6 +10196,21 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>Number_of_GDI_financial_securities__c</fullName>
+        <description>Counts the number of Financial security, security type = GDI</description>
+        <externalId>false</externalId>
+        <label>Number of GDI financial securities</label>
+        <summaryFilterItems>
+            <field>Financial_Security__c.Security_Type__c</field>
+            <operation>equals</operation>
+            <value>GDI</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Financial_Security__c.Account__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Number_of_GDP_Billing_accounts__c</fullName>
         <description>auto calculates the number of GDP billing accounts under the account</description>
         <externalId>false</externalId>
@@ -10277,7 +10347,7 @@ J-Joint Vent</inlineHelpText>
     </fields>
     <fields>
         <fullName>OwnerId</fullName>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
@@ -10624,7 +10694,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
         <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008gLy&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
-IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot;|| EF_SIS_Code_Verified__c ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
+IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
         <required>false</required>
@@ -10867,7 +10937,7 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <label>SAP Number</label>
         <length>12</length>
         <required>false</required>
-        <trackFeedHistory>true</trackFeedHistory>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
@@ -10886,6 +10956,18 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SIS_ID__c</fullName>
+        <description>Used by SIS team to store the SIS ID for integration purposes</description>
+        <externalId>false</externalId>
+        <label>SIS ID</label>
+        <length>13</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>SIS_Member_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Member_Code_Numeric__c + &apos;-&apos; + Airline_designator__c</formula>
@@ -10895,6 +10977,74 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Status__c</fullName>
+        <description>Used by SIS team to reflect the current status of the SIS customer</description>
+        <externalId>false</externalId>
+        <label>SIS Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SIS_Sub_Status__c</fullName>
+        <description>Used by the SIS team to reflect the SIS Member type</description>
+        <externalId>false</externalId>
+        <label>SIS Sub Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>E&amp;F Airport</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TOU E&amp;F</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>STD_Code__c</fullName>
@@ -11062,6 +11212,31 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Segmentation__c</fullName>
+        <externalId>false</externalId>
+        <label>Segmentation</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Small</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -12851,7 +13026,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <label>Status</label>
         <picklist>
             <picklistValues>
+                <fullName>Applicant</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ARC registered</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12864,6 +13047,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </picklistValues>
             <picklistValues>
                 <fullName>Changes processed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Endorsed</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -12887,11 +13074,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Terminated</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Under review</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unregisterable STP</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>
@@ -13337,11 +13536,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Tradestyle</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
@@ -13397,7 +13591,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>CASS Associates</fullName>
+                <fullName>CASS Associate</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -13889,11 +14083,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Website</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
-    </fields>
-    <fields>
-        <fullName>YearStarted</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Zuora_Temp_ID__c</fullName>
@@ -24275,11 +24464,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24288,6 +24481,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24603,6 +24811,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24988,9 +25219,70 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25176,10 +25468,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Type</picklist>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26983,11 +27271,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26996,6 +27288,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27413,6 +27720,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -27790,6 +28120,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -27857,6 +28233,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28058,10 +28449,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29753,11 +30140,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -29766,6 +30157,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29904,6 +30310,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -29949,6 +30426,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30099,6 +30599,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -30162,6 +30708,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Recreational</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32042,11 +32603,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -32093,6 +32658,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32297,6 +32877,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -32410,6 +33061,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -32429,6 +33103,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -32696,6 +33517,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Cargo Agent</fullName>
@@ -32707,6 +33574,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33761,10 +34643,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Associations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35399,15 +36277,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Sales Agents %28Platinum%29</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35599,6 +36488,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>BR</fullName>
@@ -35710,6 +36622,67 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Russia %26 CIS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35910,10 +36883,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Couriers</fullName>
                 <default>false</default>
             </values>
@@ -35989,6 +36958,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
     <recordTypes>
         <fullName>IATA_Airline</fullName>
         <active>true</active>
+        <compactLayoutAssignment>Simple_Account_name</compactLayoutAssignment>
         <description>The new record type for ALL Airlines, IATA members and non members - Headquaters Account - with NEW data model - Use this for all Airlines HQ</description>
         <label>Airline Headquarters</label>
         <picklistValues>
@@ -38252,11 +39222,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -38284,6 +39258,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38484,6 +39473,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -38570,6 +39630,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -39044,6 +40127,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -39178,6 +40307,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42653,11 +43797,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42666,6 +43814,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42804,6 +43967,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>IATA_Area__c</picklist>
             <values>
                 <fullName>1 - Americas</fullName>
@@ -42849,6 +44083,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43230,9 +44487,70 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43430,10 +44748,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45110,11 +46424,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45142,6 +46460,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45342,6 +46675,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -45405,6 +46809,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -45601,6 +47028,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -45668,6 +47141,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49234,6 +50722,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Data_quality_feedback__c</picklist>
             <values>
                 <fullName>Account Duplicated</fullName>
@@ -49249,6 +50748,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49449,6 +50963,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -49516,6 +51101,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49723,6 +51331,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>General Sales Agent</fullName>
@@ -49730,6 +51384,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -53380,6 +55049,32 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -53727,6 +55422,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -53873,6 +55591,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -53940,6 +55704,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54153,10 +55932,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -55639,6 +57414,32 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -55986,6 +57787,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -56132,9 +57956,70 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -56348,10 +58233,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57833,6 +59714,32 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Customer_Type__c</picklist>
+            <values>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>EF_Level__c</picklist>
             <values>
                 <fullName>1</fullName>
@@ -58180,6 +60087,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
                 <fullName>AO</fullName>
@@ -58326,9 +60256,70 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Internal Use</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58542,10 +60533,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60157,11 +62144,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -60170,6 +62161,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Strategic Partners</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60485,6 +62491,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Power Supplier</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60866,6 +62895,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -60933,6 +63008,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -61118,10 +63208,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <picklist>Type</picklist>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -62965,10 +65051,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -63746,11 +65828,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>true</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65480,6 +67566,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -66262,6 +68371,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -66333,6 +68488,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68259,10 +70429,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>CANSO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>CASS Associates</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70406,10 +72572,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -70501,11 +72663,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70533,6 +72699,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -70861,6 +73042,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71312,6 +73516,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -71383,6 +73633,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74476,10 +76741,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -74614,11 +76875,15 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Generic%29</fullName>
+                <fullName>Sales Agent %28Generic 2%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Sales Agents %28Gold%29</fullName>
+                <fullName>Sales Agent %28Startup%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sales Agents %28Generic%29</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74650,6 +76915,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Partcipation information missing</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Default_Payment_Type__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>ICH</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74869,6 +77149,77 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS__c</picklist>
+            <values>
+                <fullName>ABAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AGTD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AXSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CMAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DERD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FLGX</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GDSL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>INFI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>KOTI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MINS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RESI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SABR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>STRA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOPAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UALA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WSPN</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GSA_Type__c</picklist>
             <values>
                 <fullName>Cargo</fullName>
@@ -75051,6 +77402,29 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Key_Customer_Reason__c</picklist>
+            <values>
+                <fullName>Big Buyer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other Reasons</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Contacts</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Level_of_risk__c</picklist>
             <values>
                 <fullName>High</fullName>
@@ -75070,6 +77444,153 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Very high</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Category__c</picklist>
+            <values>
+                <fullName>AL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JJ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ND</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75600,6 +78121,52 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SIS_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SIS_Sub_Status__c</picklist>
+            <values>
+                <fullName>E%26F Airport</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISPA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISUA Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TERMINATED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TOU E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Sector__c</picklist>
             <values>
                 <fullName>Accommodation</fullName>
@@ -75671,6 +78238,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Segmentation__c</picklist>
+            <values>
+                <fullName>Large</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Small</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -76748,10 +79330,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>CASS Associates</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Car Rental</fullName>
                 <default>false</default>
             </values>
@@ -77164,6 +79742,27 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Airline_HO_Name</fullName>
+        <active>true</active>
+        <description>You are not allowed to change the field &quot;Account Name&quot;.</description>
+        <errorConditionFormula>ISCHANGED(Name) &amp;&amp;  RecordType.DeveloperName  = &apos;IATA_Airline&apos;</errorConditionFormula>
+        <errorDisplayField>Name</errorDisplayField>
+        <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Airline_HO_Trade_Name</fullName>
+        <active>true</active>
+        <description>The trade name for Member airlines can only be updated by the account management team or membership.</description>
+        <errorConditionFormula>ISCHANGED(TradeName__c ) &amp;&amp;  
+RecordType.DeveloperName  = &apos;IATA_Airline&apos;  &amp;&amp; 
+NOT((
+$User.Profile_Name__c = &apos;Account management team&apos; || 
+$User.Profile_Name__c = &apos;MER Membership&apos;
+))</errorConditionFormula>
+        <errorDisplayField>TradeName__c</errorDisplayField>
+        <errorMessage>The trade name for Member airlines can only be updated by the account management team or membership.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>BR_and_SA_Standard_Account_Parent_Id</fullName>
         <active>true</active>
         <description>BR and SA Standard Account Parent Id must be filled.</description>
@@ -77306,7 +79905,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
@@ -77479,7 +80078,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <active>true</active>
         <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
         <errorConditionFormula>AND( ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)  ,  ISPICKVAL(IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, &apos;Maestro&apos;),LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
-        <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
+        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
@@ -77775,6 +80374,7 @@ newmsoagency.Category__c = &quot;MSO Member Sales Office&quot;;
 newmsoagency.Location_Class__c = &quot;M&quot;;
 newmsoagency.Location_Type__c = &quot;HO&quot;;
 newmsoagency.Reason_for_creation__c = &quot;New Agent&quot;;
+newmsoagency.IATA_ISO_Country__c = &apos;{!Account.IATA_ISO_CountryId__c}&apos;;
 
 result = sforce.connection.create([newmsoagency]);
 var accId = result[0].id;
@@ -77829,6 +80429,21 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <openType>sidebar</openType>
         <page>DSE__DS_CallDataManagerAccount</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Detailed_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Detailed Hierarchy View</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(typeof(srcUp)==&apos;function&apos;){
+  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
+} else {
+  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
+}</url>
     </webLinks>
     <webLinks>
         <fullName>ENZ__AttachFTP</fullName>

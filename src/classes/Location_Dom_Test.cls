@@ -62,6 +62,8 @@ private class Location_Dom_Test {
 			update oContact;
 	    
 	    Test.stopTest();
+	    
+	    delete oLocation;   //cover deletion
      }
      
      // Test location after update when address field is replaced by another to sync with Zuora
@@ -81,10 +83,7 @@ private class Location_Dom_Test {
 
     	set<Id> addressIds = new set<Id>();
     	
-
-		IFAP_BusinessRulesTest.createIsoCountry();
-
-
+		TestDataGenerator.generateISOCountryState();
     	IECAddress__c oAddress = new IECAddress__c(
 	     	Street__c = '12 main street'
 	     	, City__c = 'Montreal'

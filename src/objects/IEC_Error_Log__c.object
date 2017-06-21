@@ -213,6 +213,28 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Errors_by_Date</fullName>
+        <columns>NAME</columns>
+        <columns>Type__c</columns>
+        <columns>Errror_Message__c</columns>
+        <columns>Source__c</columns>
+        <columns>Displayed_Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Error</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>6/9/2017 12:00 AM</value>
+        </filters>
+        <label>Errors by Date</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Errors_for_GSS_CACWEB_File_Production</fullName>
         <columns>NAME</columns>
         <columns>CREATED_DATE</columns>
@@ -230,7 +252,7 @@
         <filters>
             <field>Source__c</field>
             <operation>contains</operation>
-            <value>GSS,CAC</value>
+            <value>GSS,CAC,MDP</value>
         </filters>
         <filters>
             <field>Displayed_Message__c</field>

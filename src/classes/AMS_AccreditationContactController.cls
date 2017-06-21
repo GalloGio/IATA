@@ -22,6 +22,7 @@ public with sharing class AMS_AccreditationContactController {
     private Id AcCurrentOwnerRt;
     public List<TrainedStaffWrapper> trainedStaffWrapper{get; set;}
     public boolean isNewProcess {get; set;}
+    public boolean isChangeProcess {get; set;}
 
     public static Map<String, String> accreditationContactRT = new Map<String, String> {
 
@@ -143,6 +144,7 @@ public with sharing class AMS_AccreditationContactController {
         isCertificationOSCAR = aoa.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.CERTIFICATION ? true : false;
 
         isNewProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_NEW? true : false;
+        isChangeProcess = aoa.SAAM_Case__r.OSCAR__r.RecordTypeId == AMS_Utils.RECTYPE_CHANGE? true : false;
     }
     
     public void addEmptyRow()
@@ -200,6 +202,20 @@ public with sharing class AMS_AccreditationContactController {
         }
         
         this.acWrapper.remove(this.toUnselect);
+        return null;
+    }
+
+    public PageReference removeFromTsList()
+    {
+        //AMS_Accreditation_Contact__c acToDelete = this.acList.get(this.toUnselect);
+        AMS_Accreditation_Contact__c acToDelete = trainedStaffWrapper.get(toUnselect).ac;
+        
+        if(acToDelete.id != null)
+        {
+            this.forDeletion.add(acToDelete);
+        }
+        
+        this.trainedStaffWrapper.remove(this.toUnselect);
         return null;
     }
     
@@ -336,6 +352,39 @@ public with sharing class AMS_AccreditationContactController {
                 Id standardAccountRtId = AMS_Utils.getId('Account', 'Standard_Account');
                 List<Account> accountInsertList = new List<Account>();
                 List<AMS_Accreditation_Contact__c> acUpsertList = new List<AMS_Accreditation_Contact__c>();
+                List<Account> acList = new List<Account>();
+                Set<Id> idsAux = new Set<Id>();
+                Boolean emptyList = false;
+                Boolean invalidIataCode = false;
+                for (AccountWrapper acw : accountWrapper)
+                {
+                    if(acw.account.IATACode__c != null)
+                    {
+                        acList = [SELECT Id, IATACode__c FROM Account WHERE IATACode__c = :acw.account.IATACode__c];
+                        if(!acList.isEmpty() && acw.account.Id == null)
+                        {
+                            emptyList = true;
+                        }
+
+                        if(acList.isEmpty())
+                        {
+                            invalidIataCode = true;
+                        }
+                    }
+                }
+
+                if(emptyList)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure that you link the IATACode that you insert with the right Legal Name.'));
+                    return null;
+                }
+
+                if(invalidIataCode)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please make sure that you insert an existent IATACode.'));
+                    return null;
+                }
+
                 for(AccountWrapper aw : accountWrapper)
                 {
                     System.debug('ACCOUNT WRAPPER : ' + aw);
@@ -412,7 +461,7 @@ public with sharing class AMS_AccreditationContactController {
             ownership = ownership + aWrapped.financialInterest;
         }
         
-        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && ownership != 100)
+        if(aoa.SAAM_Case__r.OSCAR__r.Account__r.CNS_Agency__c == false && aoa.SAAM_Case__r.OSCAR__r.Account__r.Location_Type__c != 'BR' && ownership != 100)
         {
             return false;
         } else
@@ -748,6 +797,7 @@ public with sharing class AMS_AccreditationContactController {
         wrapped.recordId = acc.Id;
         wrapped.account.Id = acc.Id;
         wrapped.accountAc.Company__c = acc.Id;
+        wrapped.accountAc.IATACode__c = acc.IATACode__c;
         
         // fields that might get copied, but are not displayed on the form.
         if(acc.Email__c != null)

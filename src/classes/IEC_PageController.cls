@@ -16,6 +16,7 @@ public virtual class IEC_PageController
 
 	public Boolean hasError { get; protected set; }
 	public Boolean hasConfirm { get; protected set; } 
+	public Boolean hasWarning { get; protected set; }
 	public String paramReturnURL {get; set;}
 	public String currentPageName{get{
 		String pageName = ApexPages.CurrentPage().getUrl();  
@@ -95,7 +96,7 @@ public virtual class IEC_PageController
 
 			System.debug('User Logged IN');
 			OrderItem_Sel oiSelector = new OrderItem_Sel();
-			Order pendingOrder = IECOrder_Svc.getPenddingOrder(); 
+			Order pendingOrder = IECOrder_Svc.getPenddingOrder(false); 
 			List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(pendingOrder.Id);
 			
 			for(OrderItem oi : pendingOrderItems)
@@ -109,7 +110,7 @@ public virtual class IEC_PageController
 
 			cookieContent = Order_Svc.getItemsInCookie();
 
-			
+			System.debug('cookieContent: ' + cookieContent);
 			
 			//-- Create Cookie_Sync entry
 			Cookie c = new Cookie('Cookie_Sync','true', null, Utility.getIntegerSetting('IEC Order Cookie maxAge'), false);
@@ -119,6 +120,8 @@ public virtual class IEC_PageController
 		for(Product2 p : [SELECT Name, SAP_Material_Number__c FROM Product2 WHERE SAP_Material_Number__c != null AND Display_to_ECommerce__c = true AND SAP_Material_Number__c IN :cookieContent.keySet()])
 			cartContent.add(new CartWrapper(p.SAP_Material_Number__c, p.Name, cookieContent.get(p.SAP_Material_Number__c)));
 		
+		System.debug('cartContent: ' + cartContent);
+
 		return cartContent;
 	} set; }
 
@@ -214,6 +217,23 @@ public virtual class IEC_PageController
 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, message));
 		hasError = true;
 		hasConfirm = false;
+		hasWarning = false;
+	}
+
+	public void addErrorMessage(String message, String additionalDebugMessage) {
+		addErrorMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, additionalDebugMessage));
+		}
+	}
+
+	public void addErrorMessage(String message, Exception e) {
+		addErrorMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, e.getStackTraceString()));
+		}
 	}
 
 	public void addConfirmMessage(String message) 
@@ -221,7 +241,31 @@ public virtual class IEC_PageController
     	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));
     	hasConfirm = true;
     	hasError = false;
+		hasWarning = false;
   	}
+
+	public void addWarningMessage(String message) {
+		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, message));
+		hasError = false;
+		hasConfirm = false;
+		hasWarning = true;
+	}
+
+	public void addWarningMessage(String message, String additionalDebugMessage) {
+		addWarningMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, additionalDebugMessage));
+		}
+	}
+
+	public void addWarningMessage(String message, Exception e) {
+		addWarningMessage(message);
+
+		if (IEC_Trace.isDebugActive) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, e.getStackTraceString()));
+		}
+	}
 
 	public Pagereference logout() 
     {
@@ -237,7 +281,9 @@ public virtual class IEC_PageController
             pr = Page.IEC_Logout;
             pr.setRedirect(true);
         }
-        catch (Exception ex) {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));}
+        catch (Exception ex) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+		}
 
         return pr;
     }
@@ -267,9 +313,14 @@ public virtual class IEC_PageController
             //}
             
             pr.setRedirect(true);
+
             return pr;
         }
-        catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
+        catch (Exception ex) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+
+			return null;
+		}
     }
 
 }

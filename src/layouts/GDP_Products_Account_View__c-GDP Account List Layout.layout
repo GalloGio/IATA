@@ -13,6 +13,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Legal_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Trading_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -22,10 +26,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Last_Date_of_Update__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Profit_Center__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -45,6 +45,10 @@
                 <behavior>Edit</behavior>
                 <field>CASS_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Profit_Center__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -56,11 +60,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Agency_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Agency_Status_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Agency_Status__c</field>
+                <field>Agency_Status_Code_Interpreted__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -71,6 +79,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Accreditation_Class__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Accredited_By__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -91,11 +103,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Country_Name__c</field>
+                <field>State_Province__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>State_Province__c</field>
+                <field>Zip_Postal_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Country_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -105,7 +121,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Zip_Postal_Code__c</field>
+                <field>Country_Short_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -114,6 +130,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>State_Province_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Area__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -267,9 +287,6 @@
                 <behavior>Edit</behavior>
                 <field>Legal_Name_3__c</field>
             </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -280,6 +297,13 @@
                 <behavior>Edit</behavior>
                 <field>Trading_Name_2__c</field>
             </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>GSS_MDP_Sort_Key_Formula__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -287,18 +311,46 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Agency Profile</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <label>CAC WebService Specific</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Json_WS_Complex__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Json_WS_Simple__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Agency Specialization</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <label>AMS Replication Specific</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agency_Code_Uniqueness_Validation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AMS_GDP_Key__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AgRef__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AgXRef__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -363,6 +415,10 @@
         <relatedList>GDP_Delta__c.Related_GDP_Product_Account_View__c</relatedList>
         <sortField>DeltaLastModifiedDate__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>EBC_Email_Exclusion_Relation__c.GDP_Products_Account_View__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

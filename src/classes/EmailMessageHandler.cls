@@ -66,6 +66,64 @@ public with sharing class EmailMessageHandler {
 			em.addError('You are not allowed to delete this Email message.');
 		}
 	}
-	
+
+	/*
+	 * If an email message related to a case closed for more than 2 weeks is received
+	 * and this case is in one of the selected recordtypes then
+	 * a warning email is sent to the sender
+	 */
+	public static final String TEMPLATE_DEV_NAME = 'Auto_reply_Queries_closed_more_than_2_weeks';
+	public static final String ORG_ADDRESS_FROM = 'noreply@iata.org';
+	public static final set<String> SET_VALID_RT = new set<String>{'CasesEurope','CasesAmericas','CasesMENA','ExternalCasesIDFSglobal','Cases_China_North_Asia','ComplaintIDFS'};
+	public static void sendEmailToSenderWhenCaseClosed(list<EmailMessage> listNewEmail) {
+		// create a map with parent cases as key and their emails as value
+		map<Id,list<EmailMessage>> mapCaseIdEmail = new map<Id,list<EmailMessage>>();
+		for (EmailMessage em : listNewEmail) {
+			if (em.ParentId!=null && em.ParentId.getSobjectType()==Schema.Case.SObjectType) {
+				list<EmailMessage> listEmails = mapCaseIdEmail.get(em.ParentId);
+				if (listEmails==null) {
+					listEmails = new list<EmailMessage>();
+				}
+				listEmails.add(em);
+				mapCaseIdEmail.put(em.ParentId, listEmails);
+			}
+		}
+		
+		// find, in previously selected cases, those that fit the conditions:
+		// a valid RT and closed fror more than 2 weeks
+		map<Id,Case> mapCases = new map<Id,Case>();
+		for (Case cse: [
+				SELECT Id, ClosedDate, ContactId, RecordType.DeveloperName
+				FROM Case
+				WHERE id IN :mapCaseIdEmail.keyset()]) {
+			if (SET_VALID_RT.contains(cse.RecordType.DeveloperName) && cse.ClosedDate < Date.today().addDays(-14)) {
+				mapCases.put(cse.Id, cse);
+			}
+		}
+		
+		if (mapCases.isEmpty()) return;
+		
+		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :TEMPLATE_DEV_NAME];
+		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE address = :ORG_ADDRESS_FROM];
+		
+		//Finally, send and email to all found cases
+		list<Messaging.SingleEmailMessage> listSendEmail = new list<Messaging.SingleEmailMessage>();
+		for (Case cse: mapCases.values()) {
+			for (EmailMessage emailMessage: mapCaseIdEmail.get(cse.Id) ) {
+				if (emailMessage.FromAddress != ORG_ADDRESS_FROM) {
+					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+					email.setTargetObjectId(cse.ContactId);
+					email.setWhatId(cse.Id);
+					email.setOrgWideEmailAddressId(orgAddress.Id);
+					email.setToAddresses(new list<String>{emailMessage.FromAddress});
+					email.setTemplateId(template.Id);
+					listSendEmail.add(email);
+				}
+			}
+		}
+
+		// send emails created if exist
+		if (!listSendEmail.isEmpty()) Messaging.sendEmail(listSendEmail);
+	}
 	
 }

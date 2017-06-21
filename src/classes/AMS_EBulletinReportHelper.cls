@@ -29,15 +29,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	
 	public static final String HIERARCHY	= 	'7-Hierarchy';
 
-
-	public static final String STATUS			= 	'17-Status';
-	public static final String REASON			= 	'21-Reason';
-
 	public static final String STATE  	        = 	'10-Country or State';
 	public static final String COUNTRY  	    =	'11-Country or State';
+
+	public static final String STATUS			= 	'19-Status';
+	public static final String REASON			= 	'23-Reason';
+
 	public static final String CHANGECODE       = 	'1-Change Code';
 
-	public static final String OWNERS 	   	 	   =	'24-Owner1';
+	public static final String OWNERS 	   	 	   =	'27-Owner1';
 	public static final String OWNERAPINAME 	   =	'Account__r.Owners';
 	public static final String OWNERSTOTALAPINAME  =	'OwnersTotal';
 
@@ -45,14 +45,15 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final Integer OWNERPOS 			=	8;
 	public static final Integer NEWOWNERPOS 		=	12;
 
-	public static final String NEWHIERARCHY	= 	'43-New Hierarchy';
+	public static final String NEWLEGALSTATUS	= 	'46-New Legal Status';
+	public static final String NEWHIERARCHY	= 	'47-New Hierarchy';
 	
-	public static final String NEWSTATE 	    =	'46-New Country or State';
-	public static final String NEWCOUNTRY 		= 	'47-New Country or State';
+	public static final String NEWSTATE 	    =	'50-New Country or State';
+	public static final String NEWCOUNTRY 		= 	'51-New Country or State';
 
-	public static final String IRRREASON 		=	'71-IRR: Reason';
-	public static final String IRRPERIODSD 		= 	'72-IRR: Period';
-	public static final String IRRPERIODED		= 	'73-IRR: Period';
+	public static final String IRRREASON 		=	'77-IRR: Reason';
+	public static final String IRRPERIODSD 		= 	'78-IRR: Period';
+	public static final String IRRPERIODED		= 	'79-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
 	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
@@ -62,6 +63,9 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static String fieldsQuery;
 	public static String filterCCQuery = '';
 	public static String headerCSV;
+    
+    public static Integer remarkPosition;
+    public static Map<string, Integer> ownersByType;
 
 	//Contains values for the CSV to be recovered by a query in the main object
 	//
@@ -527,17 +531,17 @@ public without sharing class AMS_EBulletinReportHelper {
 	/** 
 		 Get EBulletin Settings with the Account / Oscar / Change Codes fields to be recovered 
 	*/
-	private static Map<ID,List<AMS_AccountRoleCreator.OwnerFieldsEntity>> getOwnersfromAACCAccounts(List <Agency_Applied_Change_code__c> ccList)
-	{
-		Set<ID> acctIDSet = getAccountIdsFromCC(ccList);
-		 
-			List<AMS_Account_Role__c> ownersList = 
-					Database.query(
-						AMS_QueryUtils.getFieldsQuery('AMS_Account_Role__c',' Account__c,Owner_Name__c,Owner_Account__r.Name,Percentage__c ',' Account__c IN :acctIDSet and Active__c = TRUE order by Account__c')
-					);
-
-			return getOwnersByAccountID(ownersList);	
-	}
+    private static Map<ID,List<AMS_AccountRoleCreator.OwnerFieldsEntity>> getOwnersfromAACCAccounts(List <Agency_Applied_Change_code__c> ccList)
+    {
+        Set<ID> acctIDSet = getAccountIdsFromCC(ccList);
+        
+        List<AMS_Account_Role__c> ownersList = 
+            Database.query(
+                AMS_QueryUtils.getFieldsQuery('AMS_Account_Role__c',' Account__c,Owner_Name__c,Owner_Account__r.Name,Percentage__c ',' Account__c IN :acctIDSet and Active__c = TRUE order by Account__c')
+            );
+        
+        return getOwnersByAccountID(ownersList);	
+    }
 
 
 	/** 
@@ -634,7 +638,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	{
 		//Map with API Value as key to cross with AMSEBulletinSetting
 		//		
-		
+		ownersByType = new Map<string, Integer>();
 		Map<String,AMS_ChangeCodesHelper.ObjectChange> ccHistChangesPerAPIValMap = new Map<String,AMS_ChangeCodesHelper.ObjectChange>(); 
 		if(ccHistChangesList != null && !ccHistChangesList.isEmpty())
 			ccHistChangesPerAPIValMap = getChangesPerAPIValue(ccHistChangesList); 
@@ -646,7 +650,9 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		Integer customFieldsCounter = 0, positionMax = headersList.size();
 		
+		system.debug('DDD CC: ' + cc.change_Code__c);
 		
+		system.debug('DDD ccHistChangesPerAPIValMap: ' + ccHistChangesPerAPIValMap);
 
 
 		for (Integer position = 0 ; position < positionMax ; position++)
@@ -693,15 +699,23 @@ public without sharing class AMS_EBulletinReportHelper {
 				
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONCLASS)) strVal = AMS_Utils.getLocationClassDescr(strVal);
 
-				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + strVal;
+				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(STATUS)) strVal = AMS_Utils.getIATANumericStatus(strVal) + '/' + AMS_Utils.overrideEBulletinStatusDescr(strVal);
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(IATACODE) || fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(HIERARCHY)) strVal = '=""' + strVal + '""';
-
+                
+                
 				recordsList.add(strVal);
+                if (fieldsList.get(position - customFieldsCounter) == 'BULLETIN_INFORMATION__C') {
+                    remarkPosition = recordsList.size() - 1;
+                }
+                
 			}
 			
 		}
-		
+        if (ownersByType.get('old') > 8 || ownersByType.get('new') > 8) {
+            recordsList.set(remarkPosition, recordsList.get(remarkPosition) + Label.EBulletin_More_than_8_owners_message);
+        } 
+        
 		return recordsList;
 	}
 
@@ -740,13 +754,13 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 				recordValue = processCountryOrStateCCHist( headerVal, cc, objVal, objValCountry,countryStateList);
-				
 			}			
 			
 			else if(apiNameUpper == OWNERAPINAME)
 			{
 				//Recover Owner Info
 				//
+                
 				if(headerVal.Name == OWNERS) {
 
 					newOwners = decodeOwnersInfo(objVal.newValue.split('\n'));
@@ -758,16 +772,17 @@ public without sharing class AMS_EBulletinReportHelper {
 					recordValue = processOwners(headerVal , newOwners , NEWOWNERPOS);
 				else
 					recordValue = processOwners(headerVal , oldOwners , OWNERPOS);
-
 				
-				ccHistChangesPerAPIValMap.put(OWNERSTOTALAPINAME,null);				
-
 			}
 			else if(apiNameUpper == OWNERSTOTALAPINAME)
 			{
 				recordValue = String.valueOf(ownersTotalPercentage);
 				ownersTotalPercentage = 0;
 			
+			}
+			else if (headerVal.Name == NEWLEGALSTATUS)
+			{
+				recordValue = AMS_Utils.transformLegalStatus(objVal.newValue);
 			}
 			else
 			{
@@ -873,22 +888,18 @@ public without sharing class AMS_EBulletinReportHelper {
 	*/
 	private String processCustomHeader(AMSEBulletinSettings__c headerVal,Agency_Applied_Change_code__c cc)
 	{
-		if(oldOwners.isempty() && !headerVal.is_Field_New__c)
-		{	
-			if(headerVal.Api_Name__c == OWNERAPINAME ) 
-			{	
-				return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),OWNERPOS);
-			}
-			else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
-				
-				if(ownersTotalPercentage == 0) return '';
+		
+        if(headerVal.Api_Name__c == OWNERAPINAME ){
+            return processOwners( headerVal, customFields.ownersMap.get(cc.Account__c),(headerVal.is_Field_New__c ? NEWOWNERPOS:OWNERPOS));
+        } else if(headerVal.Api_Name__c == OWNERSTOTALAPINAME){
+			
+			if(ownersTotalPercentage == 0) return '';
 
-				String recordValue = String.valueOf(ownersTotalPercentage);
-				
-				ownersTotalPercentage = 0;
+			String recordValue = String.valueOf(ownersTotalPercentage);
+			
+			ownersTotalPercentage = 0;
 
-				return	recordValue;
-			}
+			return	recordValue;
 		}
 		if (headerVal.name == STATE){
 			List<String> values =  customFields.getAPIPairFieldValuesForCC(COUNTRY,STATE);
@@ -953,8 +964,13 @@ public without sharing class AMS_EBulletinReportHelper {
 			return financialInterest;
 		}
 		//Name of the Owner
-		else
+        else {
+            String typeOwner = headerVal.is_Field_New__c ? 'new' : 'old';
+            if (!ownersByType.containsKey(typeOwner)) {
+                ownersByType.put(typeOwner, ownersList.size());
+            }
 			return ownersList.get(integer.valueof(headerVal.name.substring(pos , pos + 1)) - 1).name;
+        }
 
 	}
 
