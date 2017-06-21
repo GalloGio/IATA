@@ -52,6 +52,7 @@ public without sharing class ISSP_Case {
     public List<CaseComment> List_CaseComment {get; set;}
     public List<Case_Milestone__c> List_CaseMilestones {get; set;}
     public String SurveyLanguage {get; set;}
+    private E2CPFieldAccess e2cpFieldaccess;
 
     //Content Related List Handle
     public List<ContentDistribution> ContentDistribution_List {get; set;}
@@ -110,7 +111,8 @@ public without sharing class ISSP_Case {
                 PageReference pr = new PageReference('/ISSP_Homepage' + firstCommParam);
                 return pr;
             }
-            
+            this.e2cpFieldAccess = new E2CPFieldAccess(caseId);
+
             if(newCase.RecordType.name == 'IATA Financial Review') { //Open IFAP cases must be opened via the page used specifically for open IFAP cases (ISSP_IFAPCases) 
                 popContact();
                 Set<String> openIFAPStatuses = new Set<String>
@@ -1297,7 +1299,7 @@ public without sharing class ISSP_Case {
                 MemberId = contact.Id,
                 TeamRoleId = PARTNER_USER_ROLE);
             insert teammember;
-            insertAddressInE2CP_CCOthers(this.newCase,contact.Email);
+            insertAddressInE2CP_CCOthers(contact.Email);
         } catch (DMLException e) {
             for (Integer i = 0; i < e.getNumDml(); i++) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, findemail + ': ' + e.getDmlMessage(i)));
@@ -1310,7 +1312,7 @@ public without sharing class ISSP_Case {
     public void delCCOther() {
         Savepoint sp = Database.setSavepoint();
         try {
-            removeAddressInE2CP_CCOthers(this.newCase,this.inputDelCCOther);
+            removeAddressInE2CP_CCOthers(this.inputDelCCOther);
             list<Contact> listContact = [SELECT Id FROM Contact WHERE email = :this.inputDelCCOther];
             list<CaseTeamMember> listMember = [
                 SELECT id
@@ -1330,14 +1332,22 @@ public without sharing class ISSP_Case {
         }
     }
     
+    public String getAdditionalCC() {
+        if (this.e2cpFieldAccess==null) {
+            return '';
+        }
+        return this.e2cpFieldAccess.getAdditionalCC();
+    }
+    
     /**
         Convert the cc emails string in a list
     **/
     public list<String> getListCCOther() {
-        if (this.newCase.E2CP__AdditionalCC__c==null) {
+        String additionalCC = getAdditionalCC();
+        if (additionalCC==null) {
             return new list<String>();
         }
-        set<String> setString = new set<String>(this.newCase.E2CP__AdditionalCC__c.split(';'));
+        set<String> setString = new set<String>(additionalCC.split(';'));
         setString.remove('');
         return new list<String>(setString);
     }
@@ -1345,31 +1355,33 @@ public without sharing class ISSP_Case {
         Inserts a new email in the field Case.E2CP__AdditionalCC__c which is a
         list of emails in semi-colon separated string
     **/
-    private static void insertAddressInE2CP_CCOthers(Case cse, String insertEmail) {
-        cse.E2CP__AdditionalCC__c = cse.E2CP__AdditionalCC__c==null? '': cse.E2CP__AdditionalCC__c;
+    private void insertAddressInE2CP_CCOthers(String insertEmail) {
+        String additionalCC = getAdditionalCC();
         set<String> setNews = new set<String>();
         setNews.add(insertEmail);
-        for (String email: cse.E2CP__AdditionalCC__c.split(';')) {
+        for (String email: additionalCC.split(';')) {
             setNews.add(email.trim());
         }
-        cse.E2CP__AdditionalCC__c = String.join(new list<String>(setNews),';');
-        update cse;
+        if (this.e2cpFieldAccess!= null) {
+            this.e2cpFieldAccess.setAdditionalCC(String.join(new list<String>(setNews),';'));
+        }
     }
     
     /**
         Removes an email in the field Case.E2CP__AdditionalCC__c which is a
         list of emails in semi-colon separated string
     **/
-    private static void removeAddressInE2CP_CCOthers(Case cse, String address) {
-        cse.E2CP__AdditionalCC__c = cse.E2CP__AdditionalCC__c==null? '': cse.E2CP__AdditionalCC__c;
+    private void removeAddressInE2CP_CCOthers(String address) {
+        String additionalCC = getAdditionalCC();
         list<String> listNews = new list<String>();
-        for (String email: cse.E2CP__AdditionalCC__c.split(';')) {
+        for (String email: additionalCC.split(';')) {
             String trimEmail = email.trim();
             if (trimEmail!=address) {
                 listNews.add(trimEmail);
             }
         }
-        cse.E2CP__AdditionalCC__c = String.join(listNews,';');
-        update cse;
+        if (this.e2cpFieldAccess!= null) {
+            this.e2cpFieldAccess.setAdditionalCC(String.join(listNews,';'));
+        }
     }
 }

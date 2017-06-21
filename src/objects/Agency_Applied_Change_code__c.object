@@ -818,7 +818,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1187,7 +1187,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
