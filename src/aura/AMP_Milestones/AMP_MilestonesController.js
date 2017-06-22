@@ -53,7 +53,7 @@
             var mstone = component.get("v.newMilestone");
             mstone.WhatId = component.get("v.activity").Id;
             var newMilestone = JSON.parse(JSON.stringify(mstone));
-            milestones.push(newMilestone);
+            milestones.unshift(newMilestone);
             component.set("v.milestones", milestones);
         }
     },
@@ -78,6 +78,12 @@
                 console.log('success');
                 var milestones = component.get("v.milestones");
                 milestones[index] = milestone; // replace the line with the one returned from the database
+                
+                milestones.sort(function(a,b) { 
+                console.log("teste:" + new Date(a.ActivityDate).getTime() );
+                    return new Date(a.ActivityDate).getTime() - new Date(b.ActivityDate).getTime() 
+                });
+                
                 component.set("v.milestones", milestones);                
             }
             else if (state === "ERROR") {

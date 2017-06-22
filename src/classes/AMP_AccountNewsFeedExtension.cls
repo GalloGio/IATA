@@ -31,7 +31,8 @@ public with sharing class AMP_AccountNewsFeedExtension {
       String accountName = '';
       List<Account> a  = [SELECT Id, Name FROM Account WHERE Id =:accountId];
       if(!a.isEmpty()) accountName = a[0].Name;
-      accountName = EncodingUtil.urlEncode(accountName,'UTF-8');
+      accountName = EncodingUtil.urlEncode('"' + accountName + '" Airline','UTF-8');
+      system.debug(accountName);
       return accountName;
     }
 

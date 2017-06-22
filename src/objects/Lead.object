@@ -2157,10 +2157,6 @@
         <trackHistory>true</trackHistory>
     </fields>
     <fields>
-        <fullName>CompanyDunsNumber</fullName>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>Company_A__c</fullName>
         <externalId>false</externalId>
         <label>Company (A)</label>
@@ -3461,11 +3457,6 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>DandbCompanyId</fullName>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Day_requested__c</fullName>

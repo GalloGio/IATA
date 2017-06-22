@@ -425,6 +425,8 @@
                                                     <ul class="nav1">
                                                           <span class="appfocus">
                                                               <li id="Serv2"  class="left-color">
+                                                                  <!-- temp for CNS -->
+                                                                  <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c != 'CNS Endorsement & Changes'}" >
                                                                     <apex:outputPanel rendered="{!app.Right__c != 'Access Requested'}" >
                                                                     <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',app.Application_Start_URL__c)}">
                                                                       <h5>{!app.PortalServiceTranslatedName__c}</h5>
@@ -433,6 +435,13 @@
                                                                     <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
                                                                       <h5>{!app.PortalServiceTranslatedName__c}</h5>
                                                                     </apex:outputPanel>
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c == 'CNS Endorsement & Changes'}" >
+                                                                        <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
+                                                                            <h5>{!app.PortalServiceTranslatedName__c}</h5>
+                                                                        </a>
+                                                                    </apex:outputPanel>
+                                                                    <!-- /temp for CNS -->
                                                               </li>
                                                           </span>
                                                           <span class="lbl_services" style="display: {!IF(app.Right__c == 'Access Requested','','none')}">
@@ -448,13 +457,43 @@
                                                           var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Portal_Application__r.Service_Description__c)}'+'</div>';
                                                           $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
                                                         }
+
+                                                        function checkEligibility(){
+                                                            if ('{!app.PortalServiceTranslatedName__c}' === 'CNS Endorsement & Changes'){
+                                                                bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
+                                                                    if(result) {
+                                                                        window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                                                    }
+                                                                });
+                                                            }
+                                                        }
                                                     </script>
                                                 </apex:repeat>
 
                                                 <h5 class="blueback">{!$Label.ISSP_External_Links}</h5>
 
                                                 <apex:repeat value="{!externalLinksList}" var="app">
-                                                <apex:outputPanel rendered="{!OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false))}">
+                                                <apex:outputPanel rendered="{!app.Name == 'CNS Endorsement & Changes'}" >
+                                                    <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
+                                                        <h5>{!app.Name}</h5>
+                                                    </a>
+                                                    <script>
+                                                    if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                                                        var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
+                                                        $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                    }
+                                                    function checkEligibility(){
+                                                        if ('{!app.Name}' === 'CNS Endorsement & Changes'){
+                                                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
+                                                                if(result) {
+                                                                    window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                    </script>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!AND(app.Name != 'CNS Endorsement & Changes', OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false)))}">
                                                     <ul class="nav1">
                                                         <span class="appfocus">
                                                               <li id="Serv3"  class="left-color">
@@ -478,16 +517,15 @@
                             </div>
                       </div>
  <!--------------------------------------------- Carousel banner Section -------------------------------------------->
-                              <div class="col-md-4 bottomrow"  id="Carousel">
-                                   <div class="panel panel-primary panelsml">
-                                          <div class="panel-heading">
-                                                <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>{!$Label.ISSP_News}</h3>
-                                          </div>
-                                         <!-- <div class="panel-body">-->
-                                       <c:ISSP_DynamicBanner ></c:ISSP_DynamicBanner>
-
-                                         <!-- </div> end panel body -->
-                                    </div>
+                              <div class="col-md-4 bottomrow" id="News">
+                                <div class="panel panel-primary">
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title"><span class="glyphicon glyphicon-star"></span>{!$Label.ISSP_News}</h3>
+                                  </div>
+                                  <div id="Carousel">
+                                    <c:ISSP_DynamicBanner ></c:ISSP_DynamicBanner>
+                                  </div>
+                                </div>
                               </div>
   <!--------------------------------------------- end Carousel banner Section -------------------------------------------->
 <!---------------------------------------------key docs Section -------------------------------------------->

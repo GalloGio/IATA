@@ -199,6 +199,11 @@ public without sharing class ISSP_AMS_Accreditation {
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     public String agencyCodesConcernedForPDF {get; set;}
     
+    public Boolean getnewlabels() {
+        if (isocountry==null) return false;
+        return isocountry.AMS_Accreditation_New_Labels__c;
+    }
+    
     public ISSP_AMS_Accreditation() {
         system.debug('kerensen ISSP_AMS_Accreditation ctor');
         isNewCase = true;
@@ -240,6 +245,23 @@ public without sharing class ISSP_AMS_Accreditation {
         getPilotCountries();
         getCountriesMap();
 
+        newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
+        isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+        //newCase.IFAP_Country_ISO__c = hqCountryISOCode;
+        //isocountry = fetchISOCountry(hqCountryISOCode);
+
+        if (isocountry != null) {
+            isEUcountry = isocountry.EU_Country__c;
+            
+            if (isocountry.CASS_Country_free_text__c != 'No CASS')
+                isCASSCountry = true;
+
+            if (isocountry.CASS_Import__c == 'Yes')
+                isCASSImport = true;
+
+            amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
+        }
+
         system.debug('issp ams con ' + con);
 
         sector = con.Account.Sector__c;
@@ -277,30 +299,13 @@ public without sharing class ISSP_AMS_Accreditation {
             sectorDisplay = Label.ISSP_Travel_Agent;
             sectorValue = 'Travel_Agent';
         } else {
-            sectorDisplay = Label.ISSP_Cargo_Agent;
+            sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
             sectorValue = 'Cargo_Agent';
         }
         checkEligibilityForAChange();
         //sectorValue = sector.replace(' ', '_'); //Used to set Step 1 radio button default selection value
         System.DeBUG('SFSF con.Account.IATA_ISO_Country__c: ' + con.Account.IATA_ISO_Country__c);
         System.DeBUG('SFSF con.Account.IATA_ISO_Country__r.ISO_Code__c: ' + con.Account.IATA_ISO_Country__r.ISO_Code__c);
-
-        newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
-        isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-        //newCase.IFAP_Country_ISO__c = hqCountryISOCode;
-        //isocountry = fetchISOCountry(hqCountryISOCode);
-
-        if (isocountry != null) {
-            isEUcountry = isocountry.EU_Country__c;
-            
-            if (isocountry.CASS_Country_free_text__c != 'No CASS')
-                isCASSCountry = true;
-
-            if (isocountry.CASS_Import__c == 'Yes')
-                isCASSImport = true;
-
-            amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
-        }
 
         applyLanguageList = new List<SelectOption>();
         applyLanguageList.add(new SelectOption('en_US', 'English'));
@@ -314,7 +319,7 @@ public without sharing class ISSP_AMS_Accreditation {
             applyLanguage = 'en_US';
         
         //Labels set in controller remain in portal's user language
-        lblStepA = Label.ISSP_AMS_Step1_ProgressBar;
+        lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
         lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
         lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
         lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
@@ -325,13 +330,19 @@ public without sharing class ISSP_AMS_Accreditation {
         lblNoCStepC = Label.ISSP_AMS_NoC_StepC;
         if(communityName=='CNS'){lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar_CNS;}
             else{ lblNoCStepD = Label.ISSP_AMS_NOC_StepD_ProgressBar;}
-        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;}
-            else{ lblStep1Title = Label.ISSP_AMS_Step1_Title;}
+        if(communityName=='CNS'){
+            lblStep1Title = Label.ISSP_AMS_Step1_Title_CNS;
+        }else{
+            lblStep1Title = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_Title_New: Label.ISSP_AMS_Step1_Title;
+        }
        
         lblNocRequest = Label.ISSP_AMS_NoC_Request_for_Change;
         lblPAXTitle = Label.ISSP_AMS_StepsAll_Travel_Title;
-        if(communityName=='CNS'){lblStep1Title = Label.ISSP_AMS_StepsAll_Cargo_Title_CNS;}
-            else{ lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title;}
+        if(communityName=='CNS'){
+            lblCargoTitle = Label.ISSP_AMS_StepsAll_Cargo_Title_CNS;
+        }else{
+            lblCargoTitle = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_StepsAll_Cargo_Title_New: Label.ISSP_AMS_StepsAll_Cargo_Title;
+        }
         
         lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
         lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
@@ -455,7 +466,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     } else if (sectorValue.StartsWith('Travel_Agent')) {
                         sectorDisplay = Label.ISSP_Travel_Agent;
                     } else {
-                        sectorDisplay = Label.ISSP_Cargo_Agent;
+                        sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
                         getCGORegionData();
                         getSpecialTrafficData();
                         setFacilityList();
@@ -927,7 +938,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if(communityName=='CNS'){
                         options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO_CNS));
                     }else{
-                        options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                        options.add(new SelectOption('New HO - IATA Cargo Agent', isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
                     }
                     
                 }
@@ -952,9 +963,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isocountry.EACP_Country__c) {
                         options.add(new SelectOption('New BR / IP - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_BRANCH));
                     } else {
-                        if(communityName=='CNS'){ options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH_CNS));
-                        }else{options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH));}
-                        
+                        if(communityName=='CNS'){
+                            options.add(new SelectOption('New BR / IP - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_BRANCH_CNS));
+                        }else{
+                            options.add(new SelectOption('New BR / IP - IATA Cargo Agent', (getnewlabels()? Label.ISSP_AMS_OPTION_CGO_BRANCH_NEW: Label.ISSP_AMS_OPTION_CGO_BRANCH)));
+                        }
                     }
                     if (isUKTerritory && !isocountry.Disable_non_IATA_Cargo_Agents__c) { //UK also has courier HO option
                         options.add(new SelectOption('New HO - Courier', Label.ISSP_AMS_OPTION_COURIER_HO));
@@ -971,7 +984,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isocountry.EACP_Country__c) {
                         options.add(new SelectOption('New HO - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_HO));
                     } else {
-                        options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                        options.add(new SelectOption('New HO - IATA Cargo Agent', isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
                     }
                     
                     if (isUKTerritory && !isocountry.Disable_non_IATA_Cargo_Agents__c) { //UK also has courier HO option
@@ -996,7 +1009,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     if (isocountry.EACP_Country__c) {
                         options.add(new SelectOption('New HO - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_HO));
                     } else {
-                        options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                        options.add(new SelectOption('New HO - IATA Cargo Agent', isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
                     }
                     if (!isocountry.Disable_non_IATA_Cargo_Agents__c)
                         options.add(new SelectOption('New HO - CASS Associate', Label.ISSP_AMS_OPTION_CASS_ASSOC_HO));
@@ -1010,7 +1023,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (isocountry.EACP_Country__c) {
                     options.add(new SelectOption('New HO - EACP Intermediary', Label.ISSP_AMS_OPTION_EACP_HO));
                 } else {
-                    options.add(new SelectOption('New HO - IATA Cargo Agent', Label.ISSP_AMS_OPTION_CGO_HO));
+                    options.add(new SelectOption('New HO - IATA Cargo Agent', isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO));
                 }
 
                 if (isCASSCountry && !isocountry.Disable_non_IATA_Cargo_Agents__c) { //Only PAX Agents from CASS Countries get CASS Assoc. option
@@ -2895,7 +2908,7 @@ System.DEBUG('validateCharactersInForm  - 1 - errorFound: '+errorFound);
                 errorFound = true;
             }
 
-            Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,6}))');
+            Pattern validEmail = Pattern.compile( '([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
             if (newForm.Branch_Office_Email__c != null && !validEmail.matcher(newForm.Branch_Office_Email__c).matches()) {
                 newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
@@ -3052,7 +3065,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else if (amsLocationType == 'New BR / IP - EACP Intermediary') {
             return Label.ISSP_AMS_OPTION_EACP_BRANCH;
         } else if (amsLocationType == 'New HO - IATA Cargo Agent') {
-            return Label.ISSP_AMS_OPTION_CGO_HO;
+            return isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_OPTION_CGO_HO_New: Label.ISSP_AMS_OPTION_CGO_HO;
         } else if (amsLocationType == 'New BR / IP - IATA Cargo Agent') {
             return Label.ISSP_AMS_OPTION_CGO_BRANCH;
         } else if (amsLocationType == 'New HO - CASS Associate') {
@@ -3243,7 +3256,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                              IATA_Contry_KR__c, IATA_Country_IT__c, IATA_Country_JP__c, IATA_Country_PT__c, IATA_Country_ZH__c, Tax_Number_label__c, Tax_number_format__c, Branches_abroad_not_allowed__c,
                                              Tax_number_help_text__c, Hide_Tax_Number_VAT__c, ISO_Code__c, EACP_Country__c, OSCAR_enabled__c, CASS_Import__c, CASS_Country_free_text__c, Region__c, Disable_non_IATA_Cargo_Agents__c,
                                              original_bank_details_not_required__c, Local_language_Agency_details_required__c, Prevent_Portal_Trade_Name_Change__c, Enable_Notice_of_Change__c, SAAM_enable_non_IATA_Cargo_Agents__c,
-                                             Enable_Minor_Changes_from_Portal__c
+                                             Enable_Minor_Changes_from_Portal__c, AMS_Accreditation_New_Labels__c
                                              FROM IATA_ISO_Country__c
                                              WHERE ISO_Code__c = :isocode
                                          ];
@@ -6510,30 +6523,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             agencySelectedBranches.addAll(agencies.keySet());
         }
 
-
-        //CB 07-03-2017 Create an OSCAR for every child case and link it to the account concerned; clone from the HO Oscar; no staging area
-        List<Case> parentCase = [SELECT Id, OSCAR__c  FROM Case WHERE Id = :newCase.Id AND OSCAR__c <> null];
-
-        if(parentCase == null || parentCase.size() == 0 ){
-            return;
-        }
-        List<AMS_OSCAR__c> hoOscars = [SELECT Id, Status__c, Account__c, Process__c, RecordTypeId, OwnerId, AMS_Online_Accreditation__c, Type_of_change__c FROM AMS_OSCAR__c WHERE Id = :parentCase.get(0).OSCAR__c];
-        if(parentCase == null || parentCase.size() == 0 ){
-            system.debug('Trying to retrieve HO Oscar - no OSCAR record found on parent case ' + parentCase.get(0).Id);
-            return;
-        }
-        AMS_OSCAR__c hoOscar = hoOscars[0];
-
         Id auxId = null;
-        map<Id, Case> mapChildCasesPerAccountConcernedId = new map<Id, Case>();
-        map<Id, AMS_OSCAR__c> mapOscarsPerAccountConcernedId = new map<Id, AMS_OSCAR__c>();
-
+        List<Case> childCases = new List<Case>();
         for(String iataCode : agencySelectedBranches){
             Account accConcerned =  agencies.get(iataCode);
             if(accConcerned.Id != newCase.Account_Concerned__c){
                 
                 Case child = newCase.clone(false, true);
-                
+                 
                 child.Subject = Label.ISSP_AMS_NoC_Direct_Debit_Change + ' – ' + accConcerned.IATACode__c + ' – ' + accConcerned.Name;
                 child.Account_Concerned__c = accConcerned.Id;
                 child.ParentId = newCase.Id;
@@ -6545,13 +6542,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 auxId = child.ContactId;
                 child.ContactId = ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c == null? null : ISSP_CS__c.getValues('No Notification Email Contact Id').Value__c;
                 
-                mapChildCasesPerAccountConcernedId.put(accConcerned.Id, child);
-
-                AMS_OSCAR__c childOscar = hoOscar.clone(false, true);
-                childOscar.AMS_Online_Accreditation__c = null;
-                childOscar.Account__c = accConcerned.Id;
-
-                mapOscarsPerAccountConcernedId.put(accConcerned.Id, childOscar);
+                childCases.add(child);
             }            
         }
         
@@ -6560,23 +6551,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         dlo.EmailHeader.triggerAutoResponseEmail = false;
         if(!childCases.isEmpty()) database.insert(childCases, dlo);
         **/
-        if(!mapChildCasesPerAccountConcernedId.isEmpty()) {
-
-            insert mapOscarsPerAccountConcernedId.values();
-
-            for (Id AcctConcernedId : mapOscarsPerAccountConcernedId.keyset()) {
-                 mapChildCasesPerAccountConcernedId.get(AcctConcernedId).OSCAR__c = mapOscarsPerAccountConcernedId.get(AcctConcernedId).Id;
-            }
-
-            insert mapChildCasesPerAccountConcernedId.values();
-            //FM 31-10-2016 - Set IATA Country to the Country of the parent case (because of auto-response that was being sent for child cases)
-            for(Case auxCase :  mapChildCasesPerAccountConcernedId.values()){
-                auxCase.ContactId = auxId;
-            }
-            
-            update  mapChildCasesPerAccountConcernedId.values(); 
-
+        
+        if(!childCases.isEmpty()) insert childCases;
+        //FM 31-10-2016 - Set IATA Country to the Country of the parent case (because of auto-response that was being sent for child cases)
+        for(Case auxCase : childCases){
+            auxCase.ContactId = auxId;
         }
+        
+        if(!childCases.isEmpty()) update childCases; 
     }
 
     public void setOwners(String type){
@@ -6699,6 +6681,326 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         }
         return auxAccreditCont;
+    }
+    
+    public void isTestCompliant () {
+        if (Test.isRunningTest()) {
+            AMS_oscar__c os = new AMS_oscar__c();
+            AMS_Pax_Accreditation_Form__c ac = new AMS_Pax_Accreditation_Form__c();
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            os.Assessment_Performed_Date__c = date.today();
+            os.Bank_Guarantee_deadline__c = date.today();
+            os.Bank_Guarantee_received__c = date.today();
+            os.Bank_Guarantee_requested__c = date.today();
+            ac.Accept_terms_and_conditions__c = true;
+            ac.Account_Name__c = 'Tn';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+            ac.Billing_State__c = 'Ts';
+            ac.Branch_Office_City__c = 'Tc';
+            ac.Branch_Office_Email__c = 'TE';
+            ac.Branch_Office_FAX__c = '12';
+            ac.Branch_Office_Phone__c = '12';
+        }
     }
    
 }

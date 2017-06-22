@@ -325,13 +325,14 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Name of the account that the participant represents for this specific group, if applicable.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>
             <filterItems>
                 <field>Account.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Airline Headquarters</value>
+                <value>Airline Headquarters, IATA Country Office, Operator, Agency, Airline Branch, General Sales Agent Headquarters, Others, Standard Account</value>
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>

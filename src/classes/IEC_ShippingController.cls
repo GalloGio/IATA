@@ -15,13 +15,33 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public Address_DTO newShipToAddress{get;set;}
 
     public Map<Id, Boolean> mapProduct2Id_Compliance;
+    
+    //TC map to know which countries don't have zip code
+	public Map<String, Boolean> zipCodeApplicableMap {
+		get{
+			return zipCodeApplicableMap != null ? zipCodeApplicableMap : new Map<String, Boolean>();
+		}
+		set;
+	}
 
     public List<SelectOption> availableCountries{get{
-        if(availableCountries == null){
-            availableCountries = ISO_Country_State_Helper.getCountriesSelectOption();
-        }
-        return availableCountries;
-    }set;}
+		if(availableCountries == null){
+			//TC get options and fill map zipCodeApplicable
+			Map<String, Object> countries = ISO_Country_State_Helper.getCountriesOptionsMap();
+			availableCountries = (List<SelectOption>) countries.get('options');
+			zipCodeApplicableMap = (Map<String, Boolean>) countries.get('zipCodeApplicable');
+		}
+		return availableCountries;
+	}set;}
+
+	//TC 
+	public Boolean unlockZipCode {
+		get{
+			return newShipToAddress != null && !String.isBlank(newShipToAddress.countryCode) && 
+				zipCodeApplicableMap.get(newShipToAddress.countryCode) != null && zipCodeApplicableMap.get(newShipToAddress.countryCode);
+		}
+		set;
+	}
 
     public List<SelectOption> newAddressAvailableStates{get;set;}
 
@@ -455,8 +475,31 @@ global without sharing class IEC_ShippingController extends IEC_PageController
      **************************************************************************************************************/
     private void validateConfiguration()
     {
+
+        HPM_Setting__c hpmSetting;
+        String url = System.URL.getCurrentRequestUrl().toExternalForm();
+        system.debug('### url ' + url);
+        
+        url = url.replace('/apex','' );
+        system.debug('### new url ' + url);
+
+        for(HPM_Setting__c hpmS : [SELECT Id, Name, Base_URL__c,HPM_Page_Id__c,HPM_Tenant_Id__c,HPM_Security_Token__c,HPM_App_Url__c FROM HPM_Setting__c]){
+            if(hpmS.Base_URL__c == null || hpmS.Base_URL__c == ''){ 
+                continue;
+            }
+            system.debug('### hpmS.Base_URL__c ' + hpmS.Base_URL__c);            
+            if(url.startsWithIgnoreCase(hpmS.Base_URL__c)){                
+                hpmSetting = hpmS;                
+                break;
+            }
+        }        
+
         this.hasConfigError = false;
-        HPM_Setting__c hpmSetting = HPM_Setting__c.getInstance( 'Zuora HPM Setting' );
+        
+        if(hpmSetting == null){
+            hpmSetting = HPM_Setting__c.getInstance( 'Zuora HPM Setting' );
+        }
+    
         if ( hpmSetting == null ) throw new HPMConfigException( IECErrorCodeMapping.VALUES.get( 'Sfdc.NoConfiguration' ) ); 
     
         String missingFields = ''; 
@@ -656,6 +699,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
   }
 
 
+
     /**************************************************************************************************************
      *  saveNewAddress: method calls when customer create a new Shipping address                                  *
      *  Author: David Daboué                                                                                      *  
@@ -663,14 +707,33 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     public PageReference saveNewAddress()
     {
         showNewAddress = true;
-        
+        Boolean hError = false;
         //-- Validate Address
-        if(!validateAddress(newShipToAddress))
-        {
-            addErrorMessage('You must specify all the required fields for the new address');return null;
+        if(!validateAddress(newShipToAddress)) {
+            addErrorMessage('You must specify all the required fields for the new address');
+            hError = true;
+           // return null;
         }
+        
+        //TC 2017-05-16
+        if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {
+        	addErrorMessage(Label.IEC_ShippingAddressLimit);
+        	hError = true;
+        	//return null;	
+        }      
+        
+        if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {
+        	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+        	hError = true;
+        	//return null;
+        }
+        
+        if(hError) {        	
+        	return null;	
+        }
+        
 
-        try{
+        try {
             //-- Validate inputs 
             if(String.isBlank(newShipToAddress.attention)) newShipToAddress.attention = loggedCustomer.sfContact.Name;
 
@@ -1051,8 +1114,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
     }
 
     public PageReference processPayment()
-    {
-        
+    {       
         if(String.isBlank(orderPaymentType))
         { 
           addErrorMessage('You must select a Payment method');
@@ -1102,10 +1164,17 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         //Validate Shipping Informations 
         if(!isShipToValid()) return null;
         
+        //TC 2017-05-10 check if shipping adddess is a post office box
+	    
+	    if(sfOrder != null && !String.isBlank(sfOrder.ShippingStreet) && IECUtil.isPostOfficeBox(sfOrder.ShippingStreet)) {
+	    	addErrorMessage(Label.IEC_PO_BOX_ERROR);
+	    	return null;
+	    }	    
+	    
         //Validate T&C
         if(!isTermsAccepted()) return null;
 
-    //Validate payment method
+    	//Validate payment method
 
         //Validation for the Total amount allowed for Credit card 
         Map<String,IEC_Payment_Threshold__c> paymentMethodThresholdByType = Order_Sel.getPaymentMethodThresholdByType();
@@ -1116,11 +1185,11 @@ global without sharing class IEC_ShippingController extends IEC_PageController
             return null;
         }
 
-    //Valide that customer have at lease on card selected if the payment method is credit card
-    if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
-      addErrorMessage(Label.Credit_card_validation);
-      return null;
-    }
+		//Valide that customer have at lease on card selected if the payment method is credit card
+		if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_CreditCard && (orderCreditCardId == null || orderCreditCardId == '')){
+			addErrorMessage(Label.Credit_card_validation);
+		  	return null;
+		}
         
         //Validation for the minimun amount allowed for ICH
         IEC_Payment_Threshold__c thresholdForIch = paymentMethodThresholdByType.get(IECConstants.PaymentThresholdType_ICH);
@@ -1154,7 +1223,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
           addErrorMessage(Label.Bank_transfer_validation_for_auto_renew);
           return null;
         }
-    }
+    }  
 
 
 
@@ -1172,9 +1241,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         PageReference pgRef = new PageReference('/IEC_ConfirmOrder');
             pgRef.setRedirect(true);
         return pgRef;
-    }
-
-    
+    }    
 
 
     /**************************************************************************************************************
@@ -1425,5 +1492,5 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         vfOrder.taxes                = totalTaxes;
         vfOrder.orderTotalAmount     = totalAmount;
     } //*** end of "calculateFreightTaxDTO"
-
+	
 }
