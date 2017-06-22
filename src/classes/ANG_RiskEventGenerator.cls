@@ -177,7 +177,7 @@ public class ANG_RiskEventGenerator {
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
-					String uniqueKey = o.Id+''+String.valueOf((config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?String.valueOf((id)o.get(accountFields.get(objectName))):''))+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+					String uniqueKey = o.Id+''+(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?String.valueOf((Id)o.get(accountFields.get(objectName))):'')+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 		
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
@@ -216,6 +216,7 @@ public class ANG_RiskEventGenerator {
 				if(!result.isSuccess()){
 					for(Database.Error e : result.getErrors()){
 						//if error is for duplicate records do nothing, for other cases, throw error
+						System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] error status code - ' + e.getStatusCode());
 						if(e.getStatusCode() != StatusCode.DUPLICATE_VALUE) throw new RiskEventGeneratorException(e.getMessage());
 					}
 				}

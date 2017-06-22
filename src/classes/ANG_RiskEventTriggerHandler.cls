@@ -1,6 +1,6 @@
 public class ANG_RiskEventTriggerHandler {
 
-	public List<ANG_Agency_Risk_Event__c> triggerNew = (List<ANG_Agency_Risk_Event__c>) Trigger.new;
+    public List<ANG_Agency_Risk_Event__c> triggerNew = (List<ANG_Agency_Risk_Event__c>) Trigger.new;
     public List<ANG_Agency_Risk_Event__c> triggerOld = (List<ANG_Agency_Risk_Event__c>) Trigger.old;
 
     public Map<Id, ANG_Agency_Risk_Event__c> newMap = (Map<Id,ANG_Agency_Risk_Event__c>) Trigger.newMap;
@@ -11,15 +11,11 @@ public class ANG_RiskEventTriggerHandler {
     // ************************************************************
 
     public void onBeforeInsert(){
-    	loadInformationsInsert();
-        generateMultiples();
+        loadInformationsInsert();
     }
-    public void onBeforeUpdate(){
-    	loadInformationsUpdate();
-        generateMultiples();
-    }
-
     public void onAfterInsert(){
+        generateMultiples();
+
         map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();
         for(ANG_Agency_Risk_Event__c re : triggerNew){  
             if(re.ANG_HE_AccountId__c !=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
@@ -27,7 +23,13 @@ public class ANG_RiskEventTriggerHandler {
         if(updAccMap.isEmpty()) return;
         new ANG_RiskAssessmentEngine(updAccMap).assessment();
     }
-    public void onAfterUpdate(){     
+    
+    public void onBeforeUpdate(){
+        loadInformationsUpdate();
+    }
+    public void onAfterUpdate(){   
+        generateMultiples();
+     
         map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();        
         for(ANG_Agency_Risk_Event__c re : triggerNew){                  
             ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
@@ -40,7 +42,7 @@ public class ANG_RiskEventTriggerHandler {
         } 
         if(updAccMap.isEmpty()) return;
         
-        new ANG_RiskAssessmentEngine(updAccMap).assessment();           
+        new ANG_RiskAssessmentEngine(updAccMap).assessment();    
     }
 
     // ************************************************************
