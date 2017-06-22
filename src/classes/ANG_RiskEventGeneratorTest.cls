@@ -2,7 +2,7 @@
 private class ANG_RiskEventGeneratorTest {
 
 	@testSetup static void createData() {
-        Id accRecType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+        	Id accRecType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
 		Id caseRecType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
 
 		Account a = new Account(Name = 'Test', RecordTypeId = accRecType);
@@ -14,8 +14,8 @@ private class ANG_RiskEventGeneratorTest {
 		insert c;
 		ANG_RiskEventGenerator.skip = false;
 
-		ANG_Risk_Event_Type__c riskType = new ANG_Risk_Event_Type__c(Name = 'Test', ANG_Risk_Id__c = '99', ANG_Expiration__c = 12);
-		insert riskType;
+		ANG_Risk_Event_Type__c riskType = new ANG_Risk_Event_Type__c(Name = 'Test', ANG_Risk_Id__c = '99', ANG_Expiration__c = 12, ANG_IsMultiple__c = true);
+        	insert riskType;
 
 		ANG_Risk_Event_Configuration__c configActive = new ANG_Risk_Event_Configuration__c();
 		configActive.ANG_Risk_Event_Type__c = riskType.Id;
@@ -25,14 +25,14 @@ private class ANG_RiskEventGeneratorTest {
 		configActive.ANG_Object_Record_Type__c = 'SIDRA';
 		configActive.ANG_Field01__c = 'Update_AIMS_IRR__c';
 		configActive.ANG_Field01_Conditions__c = 'Less than today';
-        configActive.ANG_Field02__c = 'Account.Name';
-        configActive.ANG_Field02_Conditions__c = 'Not blank';
-        configActive.ANG_Field03__c = 'Subject';
-        configActive.ANG_Field03_Conditions__c = 'Equal to';
-        configActive.ANG_Field03_Values__c = 'Test';
-        configActive.ANG_Field04__c = 'Subject';
-        configActive.ANG_Field04_Conditions__c = 'Not equal to';
-        configActive.ANG_Field04_Values__c = 'Something else';
+        	configActive.ANG_Field02__c = 'Account.Name';
+        	configActive.ANG_Field02_Conditions__c = 'Not blank';
+        	configActive.ANG_Field03__c = 'Subject';
+        	configActive.ANG_Field03_Conditions__c = 'Equal to';
+        	configActive.ANG_Field03_Values__c = 'Test';
+        	configActive.ANG_Field04__c = 'Subject';
+        	configActive.ANG_Field04_Conditions__c = 'Not equal to';
+        	configActive.ANG_Field04_Values__c = 'Something else';
 
 
 		ANG_Risk_Event_Configuration__c configInactive = new ANG_Risk_Event_Configuration__c();
@@ -164,8 +164,38 @@ private class ANG_RiskEventGeneratorTest {
 		System.assertEquals(0, riskEvents.size());
 	}
 
-	static testMethod void test_loading() {
-		Account a = [SELECT Id FROM Account];
+	static testMethod void test_multipleGeneration() {
+		
+		Account a = [SELECT Id, RecordTypeId FROM Account];
+        Id accRecType = a.RecordTypeId;
+
+        Account a1 = new Account(Name = 'Test1', RecordTypeId = accRecType, ParentId = a.Id);
+		Account a2 = new Account(Name = 'Test2', RecordTypeId = accRecType, ParentId = a.Id);
+		insert new List<Account>{a1, a2};
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a.Id);
+		insert oscar;
+
+		AMS_Process_Detail__c p1 = new AMS_Process_Detail__c(Account__c = a1.Id, OSCAR__c = oscar.Id);
+		AMS_Process_Detail__c p2 = new AMS_Process_Detail__c(Account__c = a2.Id, OSCAR__c = oscar.Id);
+		insert new List<AMS_Process_Detail__c>{p1, p2};
+
+		Test.startTest();
+
+		insert new ANG_Agency_Risk_Event__c(
+			ANG_AccountId__c = a.Id
+			, ANG_Risk_Type__c = [SELECT Id FROM ANG_Risk_Event_Type__c].Id
+			, ANG_Issued_date__c = System.today()
+			, ANG_OscarId__c = oscar.Id
+		);
+
+		Test.stopTest();
+		System.assertEquals(3, [SELECT Id FROM ANG_Agency_Risk_Event__c].size());
+
+	}
+
+    static testMethod void test_loading() {
+        Account a = [SELECT Id FROM Account];
 
 		ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(
 			ANG_AccountId__c = a.Id
