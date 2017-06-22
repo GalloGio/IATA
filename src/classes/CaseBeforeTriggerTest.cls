@@ -2008,7 +2008,7 @@ private class CaseBeforeTriggerTest {
       
    }
 
-   @isTest static void testProcessISSTrigger() {
+   /*@isTest static void testProcessISSTrigger() {
 
         IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'Canada',ISO_Code__c ='CA',AIMS_Area_ID__c= '1',CurrencyIsoCode = 'CAD' );
         insert isoCountry;
@@ -2127,7 +2127,7 @@ private class CaseBeforeTriggerTest {
             insert caseChild3;
         }catch(Exception ex) {}
         Test.stopTest();
-    }
+    }*/
 
     @isTest static void testProcessISSTrigger2() {
 
