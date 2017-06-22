@@ -190,24 +190,6 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Update Date%2FTime Closed</fullName>
-        <actions>
-            <name>Update_Date_Time_Closed</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
-            <operation>equals</operation>
-            <value>Closed effective,Closed error,Closed effectiveness pending,Closed not effective</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Date_Time_Closed__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Update OI Status</fullName>
         <actions>
             <name>OI_Status_WF</name>
@@ -215,22 +197,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         </actions>
         <active>true</active>
         <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status</description>
-        <formula>OR(	ISNEW(),
-	AND(NOT(ISNEW()),
-		OR(
-			ISCHANGED(Date_Time_Closed__c),
-			ISCHANGED(Extension_approved_date__c),
-			ISCHANGED(Submission_for_extension_date__c),
-			ISCHANGED(Submission_for_Approval_Date__c),
-			ISCHANGED(Overall_Deadline__c),
-			ISCHANGED(Pending_eff_validation_date__c),
-			ISCHANGED(Terminated_Date__c),
-			ISCHANGED(OI_Approval_date__c),
-			ISCHANGED(Conclusion_Date__c),
-			ISCHANGED(Extension_rejected_date__c)
-		)
-	)
-)</formula>
+        <formula>OR(	ISNEW(), 	AND(NOT(ISNEW()), 		OR( 			ISCHANGED(Date_Time_Closed__c), 			ISCHANGED(Extension_approved_date__c), 			ISCHANGED(Submission_for_extension_date__c), 			ISCHANGED(Submission_for_Approval_Date__c), 			ISCHANGED(Overall_Deadline__c), 			ISCHANGED(Pending_eff_validation_date__c), 			ISCHANGED(Terminated_Date__c), 			ISCHANGED(OI_Approval_date__c), 			ISCHANGED(Conclusion_Date__c), 			ISCHANGED(Extension_rejected_date__c) 		) 	) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

@@ -234,7 +234,7 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
             <operation>notContain</operation>
             <value>Closed</value>
         </criteriaItems>
@@ -279,7 +279,7 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
             <operation>notContain</operation>
             <value>Closed</value>
         </criteriaItems>
@@ -324,7 +324,7 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
             <operation>notContain</operation>
             <value>Closed</value>
         </criteriaItems>
@@ -369,7 +369,7 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
             <operation>notContain</operation>
             <value>Closed</value>
         </criteriaItems>
@@ -414,7 +414,7 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
+            <field>Operational_Improvements__c.OI_Status_WF__c</field>
             <operation>notContain</operation>
             <value>Closed</value>
         </criteriaItems>

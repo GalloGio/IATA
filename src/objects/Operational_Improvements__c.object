@@ -1655,7 +1655,13 @@
         <externalId>false</externalId>
         <formula>IF( AND(OI_Status_WF__c==&quot;Concluded&quot;, Pending_eff_validation_date__c&lt;=TODAY()),
 	&quot;Pending Effectiveness Validation&quot;,
-	SUBSTITUTE(OI_Status_WF__c,&quot; Delayed&quot;, IF(TODAY()&gt;Overall_Deadline__c,&quot; Delayed&quot;,&quot;&quot;))
+	IF(CONTAINS(OI_Status_WF__c,&quot;Delayed&quot;),
+		IF(TODAY()&gt;Overall_Deadline__c,
+			&quot;Delayed&quot;,
+			SUBSTITUTE(OI_Status_WF__c,&quot; Delayed&quot;,&quot;&quot;)
+		),
+		OI_Status_WF__c
+	)
 )</formula>
         <inlineHelpText>This status is automatically deducted from the date field in the OI</inlineHelpText>
         <label>OI Status</label>
@@ -2023,20 +2029,21 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <fields>
         <fullName>Status_Image__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( CONTAINS(OI_Status_auto__c, &quot;Delayed&quot;),
-  IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1e4&quot;, &quot;Delayed &quot;,40,620 ),
-  CASE(OI_Status_auto__c,
-	&quot;Closed&quot;, IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1ex&quot;, &quot;C &quot;,40,620 ),
-	&quot;Extended&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dz&quot;, &quot;E &quot;,40,620 ),
-	&quot;Ongoing Action Plan&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1df&quot;, &quot;OAP&quot;,40,620 ),
-	&quot;Pending Extension Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dB&quot;, &quot;PEA&quot;,40,620 ),
-	&quot;Pending Approval&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dV&quot;, &quot;PA&quot;,40,620 ),
-	&quot;Concluded&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1eY&quot;, &quot;CO&quot;,40,620 ),
-	&quot;Pending Effectiveness Validation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dQ&quot;, &quot;PEV &quot;,40,620 ),
-	&quot;Investigation&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1dk&quot;, &quot;I&quot;,40,620 ),
-	&quot;Terminated&quot;,IMAGE(&quot;/servlet/servlet.FileDownload?file=0156E000000E1fC&quot;, &quot;T&quot;,40,620 ),
-	&quot;&quot;)
-)</formula>
+        <formula>IMAGE(&quot;/servlet/servlet.FileDownload?file=&quot; + 
+	CASE(OI_Status_auto__c,
+		&quot;Delayed&quot;,&quot;OI_Status_auto__c&quot;,
+		&quot;Closed&quot;,&quot;0156E000000E1ex&quot;,
+		&quot;Extended&quot;,&quot;0156E000000E1dz&quot;,
+		&quot;Ongoing Action Plan&quot;,&quot;0156E000000E1df&quot;,
+		&quot;Pending Extension Approval&quot;,&quot;0156E000000E1dB&quot;,
+		&quot;Pending Approval&quot;,&quot;0156E000000E1dV&quot;,
+		&quot;Concluded&quot;,&quot;0156E000000E1eY&quot;,
+		&quot;Pending Effectiveness Validation&quot;,&quot;0156E000000E1dQ&quot;,
+		&quot;Terminated&quot;,&quot;0156E000000E1fC&quot;,
+		&quot;Investigation&quot;,&quot;0156E000000E1dk&quot;,
+		&quot;&quot;
+	)
+,&quot;&quot;,40,620)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Status Image</label>
         <required>false</required>
@@ -2044,54 +2051,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Status__c</fullName>
-        <externalId>false</externalId>
-        <label>Status</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Action plan ongoing</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed effective</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed error</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed effectiveness pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Closed not effective</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Deprioritized</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Expired</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Input pending</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Investigation</fullName>
-                <default>true</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Subject__c</fullName>
@@ -2158,7 +2117,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2177,7 +2135,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2196,7 +2153,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2215,7 +2171,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2234,7 +2189,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2253,7 +2207,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2272,7 +2225,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2291,7 +2243,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2310,7 +2261,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2329,7 +2279,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2348,7 +2297,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -2380,7 +2328,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Open_Date__c</columns>
         <columns>OI_Type__c</columns>
         <columns>Region__c</columns>
-        <columns>Status__c</columns>
         <columns>Subject__c</columns>
         <columns>OWNER.ALIAS</columns>
         <filterScope>Queue</filterScope>
@@ -3762,45 +3709,6 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <values>
                 <fullName>Moderate</fullName>
                 <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Action plan ongoing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed effective</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed effectiveness pending</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed error</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed not effective</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Deprioritized</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Expired</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Input pending</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Investigation</fullName>
-                <default>true</default>
             </values>
         </picklistValues>
     </recordTypes>
