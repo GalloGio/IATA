@@ -228,14 +228,14 @@ private class ANG_PortalApplicationRightTest {
 			update par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		try {
 			delete par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		Test.stopTest();
@@ -252,14 +252,14 @@ private class ANG_PortalApplicationRightTest {
 			update par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		try {
 			delete par;	
 			System.assert(false);
 		} catch(Exception e) {
-			System.assert(e.getMessage().contains('The following contact is the sole remaining'));
+			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		Test.stopTest();
