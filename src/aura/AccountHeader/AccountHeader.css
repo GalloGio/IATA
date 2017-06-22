@@ -53,9 +53,13 @@
 }
 
 .THIS .slds-page-header__detail-row.resize{
-	margin: 1rem 0 0.75rem 1rem;
+	margin: 0.2rem 0 .75rem 1rem;
 }
 
 .THIS.slds-page-header.resizeHeader {
-    padding: 1.1rem 1.5rem 0.3rem;
+    padding: 0.5rem 1rem .1rem;
+}
+
+.THIS .slds-size_1-of-2.slds-col--padded.resizeBox{
+	min-height: 90px;
 }

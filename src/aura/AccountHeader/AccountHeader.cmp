@@ -15,7 +15,7 @@
         <div class="slds-grid  slds-grid_pull-padded ">
             
             <!-- PAGE HEADER / ROW 1 / COLUMN 1 -->
-            <div class="slds-size_1-of-5 slds-col--padded">                
+            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle">                
                 <!-- HEADING AREA -->
                 <!-- MEDIA OBJECT = FIGURE + BODY --> 
                 <div class="slds-media">                    
@@ -29,7 +29,7 @@
                     
                     <div class="slds-media__body" >
                         <p class="slds-text-heading--label">Account</p>
-                        <h1 class="slds-text-heading--medium">{!v.account.Name}</h1>
+                        <h1 class="slds-text-heading--small">{!v.account.Name}</h1>
                     </div>      
                 </div>
                 <!-- / MEDIA OBJECT -->
@@ -51,7 +51,7 @@
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
             <div class="slds-size_1-of-5 slds-col--padded" >
                 <div class="slds-grid" style="flex-direction: column">
-                    <div class="slds-size_1-of-2 slds-col--padded">
+                    <div class="slds-size_1-of-2 slds-col--padded resizeBox">
                         <aura:renderIf isTrue="{!v.isEditMode2}">
                             <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-textarea " maxlength="150" cols="50" />                                        
                         </aura:renderIf>
