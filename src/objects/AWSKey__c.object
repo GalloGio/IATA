@@ -145,8 +145,14 @@
     <label>AWS Credential</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>AWS_ENDPOINT_URL__c</columns>
+        <columns>Bucket__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Credential Name</label>
