@@ -106,18 +106,6 @@
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>Grouping_Number__c</fullName>
-        <externalId>false</externalId>
-        <label>Grouping Number</label>
-        <precision>5</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ANG_nr_occurence_ff__c</fullName>
         <externalId>false</externalId>
         <formula>IF(!ISBLANK(ANG_Agency_Risk_Calculation__c) &amp;&amp; !ISPICKVAL(ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,&apos;Yes&apos;),TEXT(ANG_Agency_Risk_Calculation__r.ANG_Occurrence_Num__c),&apos;Adjusted&apos;)</formula>
