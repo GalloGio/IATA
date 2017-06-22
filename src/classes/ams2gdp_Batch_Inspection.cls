@@ -29,7 +29,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 		//-- Query conditions
 		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'IATACode__c != null'
-			,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
+			// ,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
 			,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 			,	'CNS_Agency__c = false'
 		};
@@ -62,7 +62,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			{
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{

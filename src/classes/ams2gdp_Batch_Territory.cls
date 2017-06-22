@@ -9,6 +9,8 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 	public Datetime syncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
+	Set<String> locationsSet;
+	Set<String> statusSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -29,8 +31,18 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'Appointment__r.Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Appointment__r.Account__r.IATACode__c != null'
-			, 'Appointment__r.Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 		}; 
+
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+			statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+			conditions.add(' Appointment__r.Account__r.Status__c IN :  statusSet');
+		}
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			conditions.add(' Appointment__r.Account__r.Location_Class__c IN :  locationsSet');
+		}
 
 		if(extraIds!=null && extraIds.size() > 0) {
 			 if(extraIds[0]=='none'){	
@@ -52,7 +64,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
