@@ -13,33 +13,19 @@ public class ANG_RiskEventTriggerHandler {
     public void onBeforeInsert(){
         loadInformationsInsert();
     }
+    public void onAfterInsert(){
+        assessRisk();
+    }
+
     public void onBeforeUpdate(){
         loadInformationsUpdate();
     }
+    public void onAfterUpdate(){
+        assessRisk();
+    }
 
-    public void onAfterInsert(){
-        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();
-        for(ANG_Agency_Risk_Event__c re : triggerNew){  
-            if(re.ANG_HE_AccountId__c !=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
-        }
-        if(updAccMap.isEmpty()) return;
-        new ANG_RiskAssessmentEngine(updAccMap).assessment();
-    }
-    public void onAfterUpdate(){     
-        map<id,Map<id,integer>> updAccMap = new map<id,Map<id,integer>>();        
-        for(ANG_Agency_Risk_Event__c re : triggerNew){                  
-            ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
-            if(re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c){
-                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
-                if(oldRe.ANG_HE_AccountId__c!=null) updAccMap.put(oldRe.ANG_HE_AccountId__c,null);
-            }else{
-                if(re.ANG_HE_AccountId__c!=null) updAccMap.put(re.ANG_HE_AccountId__c,null);
-            } 
-        } 
-        if(updAccMap.isEmpty()) return;
-        
-        new ANG_RiskAssessmentEngine(updAccMap).assessment();           
-    }
+    public void onBeforeDelete(){}
+    public void onAfterDelete(){}
 
     // ************************************************************
     // ********************* action methods ***********************
@@ -68,5 +54,22 @@ public class ANG_RiskEventTriggerHandler {
         if(changedRisks.isEmpty()) return;
 
         new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
+    }
+
+    private void assessRisk() {
+        
+        Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+        for(ANG_Agency_Risk_Event__c re : triggerNew){  
+            if(re.ANG_HE_AccountId__c != null) involvedAccounts.put(re.ANG_HE_AccountId__c,null);
+
+            if(Trigger.isUpdate){
+                ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
+                if(re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c && oldRe.ANG_HE_AccountId__c != null) involvedAccounts.put(oldRe.ANG_HE_AccountId__c,null);
+            }
+        }
+
+        if(involvedAccounts.isEmpty()) return;
+
+        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
 }
