@@ -20173,6 +20173,18 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <errorMessage>To change the Financial Review Result you need to provide a reason for the change in &quot;Reason for change of Financial result&quot;.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>RPM_Approval_only_after_Validation</fullName>
+        <active>true</active>
+        <description>Enforce the proper process by ensuring that the manager approval cannot happen before the assistant manager&apos;s validation.</description>
+        <errorConditionFormula>AND (
+  ISCHANGED(RPM_Approval__c),
+  NOT(ISPICKVAL(Validation_Status__c,&apos;Passed&apos;)),
+  NOT(ISPICKVAL(Validation_Status__c,&apos;Failed&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>RPM_Approval__c</errorDisplayField>
+        <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Voluntary_Relinquishment_Suspension</fullName>
         <active>true</active>
         <errorConditionFormula>RecordType.Name = &apos;VOLUNTARY RELINQUISHMENT&apos;
