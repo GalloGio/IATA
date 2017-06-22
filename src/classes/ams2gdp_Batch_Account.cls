@@ -58,6 +58,44 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 			,	idsCondition
 		};
 
+		if(extraIds!=null && extraIds.size() > 0) {
+			 if(extraIds[0]=='none'){
+			 conditions.add('Id=null');}
+			 else{
+			//Run batch on specific Ids
+			List<String> specificIds = new List<String>();
+			for(String s: extraIds)
+			{
+				if(s.length() >= 15) specificIds.add(s.left(15));
+			}
+
+			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
+		}else{
+			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
+
+			if(batchInfo != null)
+			{
+				//Run only on the deltas
+				String deltaConditions = String.format('LastModifiedDate >= {0}'
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
+
+				if(String.isNotBlank(batchInfo.Failed_Records__c))
+				{
+					// Reprocess failed records
+					List<String> failedRecordIds = new List<String>();
+					for(String s: batchInfo.Failed_Records__c.split(';'))
+					{
+						if(s.length() >= 15)
+							failedRecordIds.add(s.left(15));
+					}
+					if(failedRecordIds.size() > 0)
+						deltaConditions += ' OR Id IN (\'' + String.join(failedRecordIds, '\' , \'') + '\') ';
+				}
+
+				conditions.add('('+deltaConditions+')');
+			}
+		}
+
 		query = String.format('SELECT {0} '
 			+	'FROM Account '
 			+ 	'WHERE {1} '
