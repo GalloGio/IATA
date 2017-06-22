@@ -31,7 +31,8 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'Appointment__r.Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Appointment__r.Account__r.IATACode__c != null'
-			, 'Appointment__r.Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 		}; 
 
 		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
