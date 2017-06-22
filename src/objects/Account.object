@@ -9092,27 +9092,8 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
     <fields>
         <fullName>Key_Customer__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXL&quot; ,&quot;&quot;,25,25),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Volume (Local)&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDWh&quot; ,&quot;&quot;,25,25),&quot;&quot;)
-&amp;&quot; &quot;&amp;
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Special Contacts&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDW8&quot; ,&quot;&quot;,25,25),&quot;&quot;) 
-&amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Other Reasons&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDXB&quot; ,&quot;&quot;,25,25),&quot;&quot;)
-&amp;&quot; &quot;&amp; 
-IF(INCLUDES(Key_Customer_Reason__c,&quot;Big Buyer&quot;),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005MDVo &quot; ,&quot;&quot;,25,25),&quot;&quot;)</formula>
+        <formula>IF( Identify_as_Key_Customer__c = True,IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011YZg&quot;,&quot;VIP Customers&quot;, 23, 23),&quot; &quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>Images shown depend on &quot;Key Customer Reason&quot; values:
-
-Green and white star = Volume
-
-Blue person (Speaker) = Special Contact
-
-Golden medal = Other Reasons
-
-Fuchsia coins = Big Buyer
-
-Green and white location pin = Volume (Local)</inlineHelpText>
         <label>Key Customer</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -80097,7 +80078,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <active>true</active>
         <description>Abbreviated name length - 30 Chars to Passenger Agencies and 60 chars to Cargo Agencies</description>
         <errorConditionFormula>AND( ISPICKVAL(Sector__c,&apos;Travel Agent&apos;)  ,  ISPICKVAL(IATA_ISO_Country__r.AMS_Settlement_System__r.DPC_System__c, &apos;Maestro&apos;),LEN( Abbreviated_name__c) &gt; 30 )</errorConditionFormula>
-        <errorMessage>Max of 30 Chars to Passenger Agencies</errorMessage>
+        <errorMessage>Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
@@ -80448,6 +80429,21 @@ javascript:srcUp(&apos;/apex/AMS_AccountOSCARWizardPage?accountId=&apos;+accId+&
         <openType>sidebar</openType>
         <page>DSE__DS_CallDataManagerAccount</page>
         <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Detailed_Hierarchy_View</fullName>
+        <availability>online</availability>
+        <description>Opens the Detailed Hierarchy View VF page, either in a new tab in the console or in the current window in normal view.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Detailed Hierarchy View</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(typeof(srcUp)==&apos;function&apos;){
+  srcUp(&apos;/apex/AccountHierarchy?id={!Account.Id}&amp;console=1&apos;);
+} else {
+  window.location.href=&apos;/apex/AccountHierarchy?id={!Account.Id}&apos;;
+}</url>
     </webLinks>
     <webLinks>
         <fullName>ENZ__AttachFTP</fullName>
