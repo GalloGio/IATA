@@ -160,7 +160,7 @@ trigger Case_FSM_Handle_NonCompliance_BI_BU on Case (before insert, before updat
 	    }
 	}
 	
-	
+	 
 	private static Date getMondayIfOnWeekend(date deaddate){
 		Date RefDate = date.NewInstance(1900,1,7);
 		integer dayOfWeek = math.mod(RefDate.daysBetween(deaddate),7);
