@@ -2031,7 +2031,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <externalId>false</externalId>
         <formula>IMAGE(&quot;/servlet/servlet.FileDownload?file=&quot; + 
 	CASE(OI_Status_auto__c,
-		&quot;Delayed&quot;,&quot;OI_Status_auto__c&quot;,
+		&quot;Delayed&quot;,&quot;015w0000003oTcP&quot;,
 		&quot;Closed&quot;,&quot;0156E000000E1ex&quot;,
 		&quot;Extended&quot;,&quot;0156E000000E1dz&quot;,
 		&quot;Ongoing Action Plan&quot;,&quot;0156E000000E1df&quot;,
