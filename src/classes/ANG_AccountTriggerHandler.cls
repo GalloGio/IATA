@@ -28,12 +28,15 @@ public class ANG_AccountTriggerHandler {
 
         for(Account acct: accs){
 
-            if(!topLocationTypes.contains(acct.Location_Type__c))
-                continue;
+        	if(!topLocationTypes.contains(acct.Location_Type__c))
+        		continue;
 
-            if(isInsert || hasChangedValuesAccount(oldMap.get(acct.Id), acct) )
-                acct.ANG_HE_RiskStatus__c = calculationTable.get(acct.Financial_Review_Result__c + acct.ANG_HE_RiskHistoryAssessment__c);
-      
+            if(acct.ANG_Accreditation_Model__c == 'Cash' || acct.ANG_Accreditation_Model__c == null){            
+                if(isInsert || hasChangedValuesAccount(oldMap.get(acct.Id), acct) )
+                    acct.ANG_HE_RiskStatus__c = calculationTable.get(acct.Financial_Review_Result__c + acct.ANG_HE_RiskHistoryAssessment__c);
+            }
+            if(acct.ANG_Accreditation_Model__c == 'Cashless')
+                acct.ANG_HE_RiskStatus__c = 'Not applicable';
         } 
     }
 
