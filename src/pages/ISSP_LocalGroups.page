@@ -1,12 +1,15 @@
 <apex:page controller="ISSP_LocalGroups" action="{!init}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+    <script src="//cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.ISSP_LocalGroups, '/css/main.css')}"/>
 
 <script>
   $(document).ready( function () {
     // init datatable
     var tbl = $('.table-pagination').DataTable({
       "bSort" : false,
+      "dom": '<"top">rt<"bottom"lp><"clear"i>',
       "language": {
               "lengthMenu": "{!$Label.ISSP_Display_Records_per_page}",
               "zeroRecords": "{!$Label.ISSP_Nothing_found}",
@@ -20,11 +23,17 @@
               }
           }
     });
+    // search box
+    $('#table-pagination-search').on( 'keypress', function () {
+        tbl.search( this.value ).draw();
+    } );
+    
     // add filters only for certain columns
     $('.table-pagination thead th.headerRowFilter').each( function (i) {
-        if ([0,1,2,3].indexOf(i)>-1) {
+        if ([0,1,2,3,4].indexOf(i)>-1) {
             var title = $('th.headerRow')[i].textContent;
             var select = $('<select class="select-filter" data-index="'+i+'"></select>');
+            //var select = $('<select class="selectpicker" data-style="btn-primary" data-index="'+i+'"></select>');
             select.append( '<option value="" selected>' + title + '</option>' )
             // get all distinct values and creates an option value
             tbl.column(i).data().unique().sort().each( function ( d, j ) {
@@ -47,25 +56,8 @@
                 .draw();
         }
     } );
-    
-    
   });
 </script>
-<style>
-    th.headerRowFilter {
-        padding: 5px !important;
-        padding: 5px !important;
-    }
-    .select-filter {
-        width: 100%;
-        font-size: 85%;
-    }
-    th.headerRow {
-        background-color: #EAEAEA;
-        padding-top: 6px !important;
-        padding-bottom: 6px !important;
-    }
-</style>
 
 <body>
 
@@ -75,17 +67,40 @@
         <apex:form id="mainForm">
             <apex:pageMessages />
 
-            <!--page-description-->
-            <h4>
-                <span>{!$Label.ISSP_Company_Administration}</span>
-                <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-                <span>{!$Label.ISSP_Local_Groups_Industry_Title}</span>
-                <span class="glyphicon glyphicon-chevron-right small " aria-hidden="true"></span>
-                <small>{!$Label.ISSP_Local_Groups_Industry_Description}</small>
-            </h4>
-            
-            <hr/>
+            <div class="row">
+                <div class="col-xs-12 service-header">
+                    <div class="row">&nbsp;</div>
+                    <div class="row ">
+                        <div class="col-xs-10 page-title">
+                            {!$Label.ISSP_Local_Groups_Industry_Title}
+                        </div>
+                        <div class="col-xs-2">
+                            <apex:outputLink styleclass="header-link-right" value= "{!URLFOR($Page.ISSP_LocalGroupsCSV)}">
+                                {!$Label.ISSP_Local_Groups_Export_CSV}
+                            </apex:outputlink>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 page-subtitle">
+                            {!$Label.ISSP_Local_Groups_Industry_Description}
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-xs-9">
+                        </div>
+                        <div class="col-xs-3 row-buttons">
+                            <input id="table-pagination-search" class="form-control" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" type="text"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- MAIN TABLE  -->
+            <div id="table-container">
             <table class="table table-condensed table-pagination">
                 <thead>
                     <tr class="headerRowFilter">
@@ -107,15 +122,16 @@
                       <tr>
                         <apex:repeat value="{!listFieldName}" var="fieldname">
                             <td>
-                                <apex:outputText value="{!item[fieldname]}" rendered="{!fieldName!='Contact__c'}"/>
-                                <apex:outputText value="{!item.Contact__r.Name}" rendered="{!fieldName=='Contact__c'}"/>
+                                <apex:outputText value="{!item[fieldname]}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c')}"/>
+                                <apex:outputText value="{!item.Local_Governance__r.Country__r.Name + item.Local_Governance__r.Cluster__r.Name}" rendered="{!fieldName=='Country__c'}"/>
+                                <apex:outputLink value="/ISSP_Contact?id={!item.Contact__c}&mid=M4S1" rendered="{!fieldName=='Contact__c'}">{!item.Contact__r.Name}</apex:outputLink>
                             </td>
                         </apex:repeat>
                       </tr>
                     </apex:repeat>
                 </tbody>
             </table>
-
+            </div>
         </apex:form>
 
         <c:ISSP_CustomFooter communityName="{!communityName}"/>

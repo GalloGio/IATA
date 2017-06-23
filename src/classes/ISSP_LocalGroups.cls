@@ -2,7 +2,7 @@ public with sharing class ISSP_LocalGroups {
 
     public static final set<String> ALLOWED_PROFILES = new set<String>{'ISS Portal Airline Delegated Admin User'};
     public static final Id RT_LOCALGROUP = [SELECT Id FROM Recordtype WHERE sObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups'].Id;
-    public static final list<String> LIST_FIELDNAME = new list<String>{'Country__c','Local_Group_Type__c','Cargo_Passenger__c','Participant_Type__c','Contact__c','Title__c','Email__c','Phone__c'};
+    public static final list<String> LIST_FIELDNAME = new list<String>{'Region__c','Country__c','Local_Group_Type__c','Cargo_Passenger__c','Participant_Type__c','Contact__c','Title__c','Email__c'};
     public list<String> getListFieldName() { return LIST_FIELDNAME;}
     public list<Participant__c> listParticipant {get;set;}
 
@@ -23,7 +23,7 @@ public with sharing class ISSP_LocalGroups {
         Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
         this.listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
         
-        string queryString = 'SELECT Contact__r.Name, '+ String.join(LIST_FIELDNAME,',')
+        string queryString = 'SELECT Contact__r.Name, Local_Governance__r.Country__r.Name, Local_Governance__r.Cluster__r.Name,'+ String.join(LIST_FIELDNAME,',')
             + ' FROM Participant__c'
             + ' WHERE Contact__r.AccountId IN :listAccount'
             + ' AND Local_Governance__r.RecordtypeId = :RT_LOCALGROUP'

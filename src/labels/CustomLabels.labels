@@ -16287,7 +16287,15 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Local Groups Country</shortDescription>
-        <value>Country</value>
+        <value>Country/Cluster</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Local_Groups_Export_CSV</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Local Groups Export CSV</shortDescription>
+        <value>Export to CSV</value>
     </labels>
     <labels>
         <fullName>ISSP_Local_Groups_Industry</fullName>
@@ -16303,7 +16311,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Local Groups Industry Description</shortDescription>
-        <value>Local Group Detail Table</value>
+        <value>description</value>
     </labels>
     <labels>
         <fullName>ISSP_Local_Groups_Industry_Title</fullName>
