@@ -583,6 +583,7 @@
 
             if( c== 0){           
             
+            oscarT.Validation_Status__c = AMS_Utils.PASSED;
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
             update oscarT;
 
@@ -594,6 +595,7 @@
             }
             else{
 
+            oscarT.Validation_Status__c = AMS_Utils.PASSED;
             oscarT.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
             update oscarT;
 
@@ -873,4 +875,5 @@
 
         Test.stopTest();
     }
+
 }

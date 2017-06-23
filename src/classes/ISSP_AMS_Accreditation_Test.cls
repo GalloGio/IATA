@@ -3387,6 +3387,7 @@ private class ISSP_AMS_Accreditation_Test
             ctrl2.newform.Will_such_change_affect_the_managers__c = 'Yes';
             ctrl2.newForm.Have_any_having_authorization_to_act__c = 'Yes';
             ctrl2.newForm.Will_the_change_of_ownership_cause__c = 'Yes';
+            ctrl2.newForm.Will_such_change_affect_locations__c = 'No';
 
             pr1 = ctrl2.goToFinalStep();
 
