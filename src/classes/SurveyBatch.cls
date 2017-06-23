@@ -437,7 +437,14 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         else if (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
                  AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
           template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
-
+          //start INC325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+                AccountCountry == 'United States' && 
+               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
+                system.debug('PROCESS!!');
+                template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
+        } //end INC325289
 
         else if (
 
@@ -912,14 +919,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
         template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      } //end INC292755
-      //start INC325289
-      else if(c.Account.Source_System__c == 'WEBSTAR' && 
-              AccountCountry == 'United States' && 
-               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
-              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
-          template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
-      } //end INC325289
+      } //end INC292755      
 
       /****** Preparing the email *****/
       if (template != null) {
