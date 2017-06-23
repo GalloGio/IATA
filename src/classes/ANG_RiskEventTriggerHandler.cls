@@ -15,6 +15,7 @@ public class ANG_RiskEventTriggerHandler {
     }
     public void onAfterInsert(){
         generateMultiples();
+        assessRisk();
     }
     
     public void onBeforeUpdate(){
@@ -22,6 +23,7 @@ public class ANG_RiskEventTriggerHandler {
     }
     public void onAfterUpdate(){   
         generateMultiples();
+        assessRisk();
     }
 
     public void onBeforeDelete(){}
@@ -72,5 +74,22 @@ public class ANG_RiskEventTriggerHandler {
         if(changedRisks.isEmpty()) return;
 
         new ANG_RiskEventGenerator(changedRisks).generateMultiples();
+    }
+
+    private void assessRisk() {
+        
+        Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+        for(ANG_Agency_Risk_Event__c re : triggerNew){  
+            if(re.ANG_HE_AccountId__c != null) involvedAccounts.put(re.ANG_HE_AccountId__c,null);
+
+            if(Trigger.isUpdate){
+                ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
+                if(re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c && oldRe.ANG_HE_AccountId__c != null) involvedAccounts.put(oldRe.ANG_HE_AccountId__c,null);
+            }
+        }
+
+        if(involvedAccounts.isEmpty()) return;
+
+        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
 }

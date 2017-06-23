@@ -10882,19 +10882,27 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Weekly</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <fullName>Every 5 days</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>3-days</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10 days</fullName>
+                <fullName>Every 3 days</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -23208,6 +23216,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -25583,6 +25626,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28600,6 +28678,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -30975,6 +31088,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33512,7 +33660,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -34880,6 +35056,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37003,6 +37214,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42389,6 +42635,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -44891,6 +45172,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49223,6 +49539,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -53462,6 +53813,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -56079,6 +56465,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -58379,6 +58800,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -60675,6 +61131,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63349,6 +63840,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68346,11 +68872,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3-days</fullName>
+                <fullName>4 times per month</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68358,7 +68880,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -70870,6 +71404,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -75055,6 +75624,41 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Remittance_Frequency</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Montly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -78116,7 +78720,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

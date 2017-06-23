@@ -33,7 +33,16 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Assessment</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Agency_Risk_Calculation__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_nr_occurence_ff__c</field>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -91,7 +100,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h6E000000EeqZ</masterLabel>
+        <masterLabel>00h7E000000JpRL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

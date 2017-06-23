@@ -172,6 +172,10 @@
                 <behavior>Readonly</behavior>
                 <field>Has_an_Administrator_User_Portal_Formula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ANG_RiskHistoryAssessment__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
