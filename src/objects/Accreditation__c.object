@@ -115,7 +115,19 @@
     <fields>
         <fullName>Endorsed_Accredited_By_Formula__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISNULL(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Endorsed/Accredited By</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Endorsed_Accredited_By__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Related_Account__r.Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Related_Account__r.Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(Related_Account__r.WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Endorsed/Accredited By</label>
         <required>false</required>
