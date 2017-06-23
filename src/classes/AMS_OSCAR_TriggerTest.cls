@@ -800,13 +800,13 @@
 
     @isTest static void testAppointmentsUpdate() {
 
+        Test.startTest();
+
         AMS_OSCAR__c oscar = [SELECT Id, STEP10__c from AMS_OSCAR__c where Process__c = :AMS_Utils.new_GSA limit 1];
 
         oscar.STEP10__c = AMS_Utils.FAILED;
 
         update oscar;
-        
-        Test.startTest();
 
         oscar.STEP10__c = AMS_Utils.PASSED;
 
