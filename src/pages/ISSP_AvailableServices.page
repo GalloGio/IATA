@@ -48,7 +48,6 @@
               closeDialog();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
-            planeOn = 1;
             $('#ModalNewIepServiceRequest').modal('toggle');            
           } else {
             $('#ModalNewServiceRequest').modal('toggle');
