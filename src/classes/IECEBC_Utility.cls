@@ -42,7 +42,7 @@ public class IECEBC_Utility {
 		a.Activity_Type__c = 'Send';
 		a.Name = 'Cancel campaign: ' + c.Name;
 		a.Activity_Date_Time__c  = Datetime.now();
-		a.Reason__c='Cancelled by the customer';
+        a.Reason__c='Cancelled by the customer';
 		insert a;
 	}
 	
@@ -57,7 +57,7 @@ public class IECEBC_Utility {
 		
 		
 	}
-	public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
+	public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId, boolean elastic_switch) {
 		EBC_Master_Filter__c masterFilter = [
 			SELECT Id,
 			Audience__c,
@@ -79,9 +79,183 @@ public class IECEBC_Utility {
 			FROM EBC_Master_Filter__c
 			WHERE Id = :masterFilterId
 		];
-		 
+        //eBroadcast_Counter_Switch__c
+		if (columns==null && elastic_switch) return ES_getSOQLFromMasterFilter(masterFilter); 
 		return getSOQLFromMasterFilter(columns, masterFilter); 
 	}
+    public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId) {
+        return getSOQLFromMasterFilter(columns,masterFilterId,false);
+    }
+	
+    /*
+    # Elastic Search Project
+    # Abdellah Bellahssan
+    # Get the search query based on the elastic search version 5
+    # Will return a string to send to elastic search using the webservice and used only with
+    # and for the count operation
+	# ANY query the agency only  (A Or B Or C Or NOT(D) Or NOT(E)....OR X) AND (G AND NOT(F))
+    # ALL query the agency only  (A AND B AND C AND NOT(D) AND NOT(E)....AND X) AND (G AND NOT(F))
+  	# Aggregation and listing and filter
+	
+    */
+	public static String ES_getSOQLFromMasterFilter(EBC_Master_Filter__c masterFilter) {
+		List<String> queryFields = new List<String>();
+		List<String> queryGeoFilters = new List<String>();
+		List<String> queryRefinementFilters = new List<String>();
+		String table = (masterFilter.Audience__c == 'Agent' ? 'agent' : 'agency');
+		String emailField = (table == 'agent' ? 'Email__c' : 'Email_Address__c');
+        integer line_index=0;
+		for(EBC_Customer_Filter__c cf : masterFilter.EBC_Customer_Filters__r) {
+			if (String.isBlank(cf.Field_Operator__c) || (String.isBlank(cf.EBC_Application_Filter__c) && cf.EBC_Application_Filter__r == null)) continue;
+			
+			System.debug(masterFilter.Geo_Condition__c);
+			String relationship='';
+			String fieldName = cf.Field_Name__c;
+			String searchLevel = cf.EBC_Application_Filter__r.Search_Level__c;
+			EBC_Application_Filter__c af = cf.EBC_Application_Filter__r;
+			System.debug(cf);
+			System.debug(af);
+			System.debug(cf.EBC_Application_Filter__c);
+			if (af == null && cf.EBC_Application_Filter__c != null) {
+				af = [Select Id, Filter_Field__c, Search_Level__c, Filter_RelatedList_Field__c, Filter_RelatedList__c From EBC_Application_Filter__c Where Id = :cf.EBC_Application_Filter__c];
+				System.debug(af);
+				fieldName = af.Filter_Field__c;
+				searchLevel = af.Search_Level__c;
+			}
+
+			if (searchLevel == 'Geo-Selection' && masterFilter.Audience__c == 'Agent') { 
+			   relationship = 'GDP_Products_Account_View__r.';
+			}
+			if (af.Filter_RelatedList__c != null) {
+               relationship = af.Filter_RelatedList__c.replace('__c','__r')+ '.';
+            }
+			String filterValue = cf.Field_Value__c;
+			if (cf.Field_Operator__c != 'in' && cf.Field_Operator__c != 'not in') {
+				filterValue = '"' + String.escapeSingleQuotes(filterValue) + '"';
+			}
+			String filter = fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
+            if (cf.Field_Operator__c=='='){ 
+               	filter='{"match": {"' + relationship + fieldName + '": ' + filterValue + '}}';
+            }
+		    if (cf.Field_Operator__c=='!='){ 
+               	filter='{"bool": {"must_not": [{"match": {"' + relationship +  fieldName + '": ' + filterValue + '}}]}}';
+            }
+
+            /*
+			if (af.Filter_RelatedList__c != null) {
+				filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
+			}
+			
+			if (searchLevel == 'Geo-Selection') {
+				if (masterFilter.Audience__c == 'Agent') { 
+					queryGeoFilters.add('GDP_Products_Account_View__c  in (Select Id From GDP_Products_Account_View__c Where ' + filter + ')');
+                    
+				} else {
+					queryGeoFilters.add(filter);
+				}
+			} else {
+				queryRefinementFilters.add(filter);
+			}*/
+			String nextline = '';
+			if (searchLevel == 'Geo-Selection') {
+				if (queryGeoFilters.size()>0) nextline = ',';
+				queryGeoFilters.add(nextline + filter);
+			} else {
+				if (queryRefinementFilters.size()>0) nextline = ',';
+				queryRefinementFilters.add(nextline + filter);
+			}
+            line_index++;
+		}
+		
+		System.debug(masterFilter.Audience__c);
+		//query += 'From ' + table + ' ';
+		
+		List<String> queryWhereClauses = new List<String>();
+		// Remove exclusions
+		/*
+		queryWhereClauses.add(emailField + ' != null');
+         */
+        queryWhereClauses.add('{"database":"iata", "document":"'+table+'", "request":{"_source": false, "explain": false,  "size":0,"query": {"bool": {"must": [');
+        queryWhereClauses.add('{"bool": {"must": [');
+        if (masterFilter.Audience__c == 'Agent') { 
+	        queryWhereClauses.add('{"bool":{"must": [{"match": {"Opt_in__c": true}}]}},');
+	        queryWhereClauses.add('{"bool":{"must": [{"match": {"Is_Active_Card__c": true}}]}},');
+        }else{
+	        queryWhereClauses.add('{"bool":{"must": [{"terms": {"Agency_Status_Code__c": [4,5,6,7,8,9]}}]}},');
+	        queryWhereClauses.add('{"bool":{"must": [{"match": {"GDP_Opt_In__c": true}}]}},');
+        }
+         //not and or
+        queryWhereClauses.add('{"bool": {"must_not": [');
+        queryWhereClauses.add('	{"bool": {"should": [');
+        queryWhereClauses.add('		{"bool":{"must": [{"match": {"EBC_Email_Exclusion_Relation__r.Is_Global__c": true}}]}},');
+        queryWhereClauses.add('		{"bool":{"must": [{"match": {"EBC_Email_Exclusion_Relation__r.Billing_Account__c": "' + masterFilter.Billing_Account__c + '"}}]}}');
+        queryWhereClauses.add('	]}}');
+        queryWhereClauses.add(']}}');
+        queryWhereClauses.add(']}}');       
+		/*
+		if (masterFilter.Audience__c == 'Agent') {
+			queryWhereClauses.add('Opt_in__c = true');
+			queryWhereClauses.add('Is_Active_Card__c = true');
+			queryWhereClauses.add('Id NOT IN (Select ID_Card__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
+		} else {
+			queryWhereClauses.add('Agency_Status_Code__c >= 4');
+			queryWhereClauses.add('GDP_Opt_In__c = true');
+			queryWhereClauses.add('Id NOT IN (Select GDP_Products_Account_View__c From EBC_Email_Exclusion_Relation__c Where Is_Global__c = true OR Billing_Account__c = \'' + masterFilter.Billing_Account__c + '\')');
+		}
+		*/
+		if (masterFilter.Audience__c == 'Custom') {
+            List<String> rawCodes = masterFilter.IATA_Codes__c.split(';');
+            List<String> limitedCodes = new List<String>();
+  		    //Or between
+            queryWhereClauses.add(',{"bool": {"should": [');
+            integer codeindex=0;
+            String nextline='';
+            for(String code : rawCodes) {
+                limitedCodes.add(code.left(7));
+	        	if (String.isBlank(code)) continue;
+                //queryWhereClauses.add('IATA_Code__c in (\'' + String.join(limitedCodes, '\',\'') + '\')');
+                if (codeindex>0) nextline=',';
+                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match": {"IATA_Code__c": "'+code+'"}}]}}');
+                codeindex++;
+			}
+			queryWhereClauses.add(']}}');
+		} else {
+			System.debug(masterFilter);
+			System.debug(queryGeoFilters);
+			if (queryGeoFilters.size() > 0) {
+				// Adding geo filtering
+				System.debug('masterFilter.Geo_Condition__c >>>'+masterFilter.Geo_Condition__c);
+				if (masterFilter.Geo_Condition__c=='OR' ) {queryWhereClauses.add(',{"bool": {"should": [');}
+				if (masterFilter.Geo_Condition__c=='AND') {queryWhereClauses.add(',{"bool": {"must": [');}
+				queryWhereClauses.addAll(queryGeoFilters);
+				queryWhereClauses.add(']}}');
+			}
+			if (queryRefinementFilters.size() > 0) {
+				// Adding geo filtering
+				System.debug('masterFilter.Refinement_Condition__c >>>'+masterFilter.Refinement_Condition__c);
+			
+				if (masterFilter.Refinement_Condition__c=='OR' ) {queryWhereClauses.add(',{"bool": {"should": [');}
+				if (masterFilter.Refinement_Condition__c=='AND') {queryWhereClauses.add(',{"bool": {"must": [');}
+				queryWhereClauses.addAll(queryRefinementFilters);
+				queryWhereClauses.add(']}}');
+			}
+		}
+		queryFields.addAll(queryWhereClauses);
+        queryFields.add(']}}');
+		queryFields.add(',"aggs":{"distinct_email_count": {"cardinality": {"precision_threshold": 100,"field": "' + emailField + '.keyword"}}}');
+        queryFields.add('}}');
+		System.debug(masterFilter);
+		String query = String.join(queryFields, '');
+		System.debug(query);
+		return query;
+	}
+
+    public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter, boolean elastic_switch) {
+        //eBroadcast_Counter_Switch__c
+		if (columns==null && elastic_switch) return ES_getSOQLFromMasterFilter(masterFilter); 
+		return getSOQLFromMasterFilter(columns, masterFilter);
+    }
+	
 	public static String getSOQLFromMasterFilter(List<String> columns, EBC_Master_Filter__c masterFilter) {
 		List<String> queryFields = new List<String>();
 		List<String> queryGeoFilters = new List<String>();
@@ -176,11 +350,12 @@ public class IECEBC_Utility {
 			
 			if (queryGeoFilters.size() > 0) {
 				// Adding geo filtering
-				System.debug(masterFilter.Geo_Condition__c);
+				System.debug('queryGeoFilters >>>'+queryGeoFilters + ' '+masterFilter.Geo_Condition__c);
 				queryWhereClauses.add('(' + String.join(queryGeoFilters, ' ' + masterFilter.Geo_Condition__c + ' ') + ')');
 			}
 			if (queryRefinementFilters.size() > 0) {
 				// Adding geo filtering
+				System.debug('queryRefinementFilters >>>'+queryRefinementFilters + ' '+masterFilter.Refinement_Condition__c);
 				queryWhereClauses.add('(' + String.join(queryRefinementFilters, ' ' + masterFilter.Refinement_Condition__c + ' ') + ')');
 			}
 		}

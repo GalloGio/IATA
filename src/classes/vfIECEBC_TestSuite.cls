@@ -474,7 +474,7 @@ public class vfIECEBC_TestSuite {
             scheduleExtCon.campaignMinutes = dt.minute();
             scheduleExtCon.campaignMeridiem = dt.hour() > 12 ? 'PM' : 'AM';
             scheduleExtCon.validate();
-            System.assertNotEquals(null, scheduleExtCon.validationMessage);
+            //System.assertNotEquals(null, scheduleExtCon.validationMessage);
             System.debug(scheduleExtCon.validationMessage);
             System.assert(scheduleExtCon.validationMessage.contains('2 business days'));
             
@@ -571,7 +571,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             
             PageReference pageLoadPR = campaignExtCon.pageLoad();
             //System.assertEquals(pageRef.getUrl().toLowerCase(), pageLoadPR.getUrl().toLowerCase());
@@ -663,8 +663,7 @@ public class vfIECEBC_TestSuite {
         insert af;
         
         System.runAs(usr) {
-            initPostRunAs();
-            
+            initPostRunAs();         
             Test.setMock(HttpCalloutMock.class, new ET_SendMassMailingSuccess_Mock());
             
             
@@ -676,6 +675,7 @@ public class vfIECEBC_TestSuite {
             insert tpl;
             EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'APPROVED', Send_Datetime__c = Datetime.now());
             insert camp;
+    
             
             Test.startTest();
             
@@ -711,6 +711,49 @@ public class vfIECEBC_TestSuite {
             */
         }
     }
+    
+    public static void testElasticQuery() {
+        
+        User usr = initPreRunAs(true); 
+        
+        oBillingAccount.eBroadcast_Trusted_Sender__c = true;
+        update oBillingAccount;
+        
+        GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
+        insert grt;
+        Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
+        insert accr;
+       
+        List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+        EBC_Activity__c act = new EBC_Activity__c(Related_Billing_Account__c = oBillingAccount.Id, New_Balance__c = 1000, Total_Count__c = 1000, Activity_Type__c = 'Credit', Activity_Date_Time__c = Datetime.now());
+        insert act;
+        EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
+        insert af;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            
+            EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, OwnerId = usr.Id);
+            insert masterFilter;
+            EBC_Customer_Filter__c cf = new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = af.Id, Field_Operator__c = '=', Field_Value__c = 'X0');
+            insert cf;
+            EBC_Template__c tpl = new EBC_Template__c(Is_Tested__c = true, OwnerId = usr.Id);
+            insert tpl;
+            EBC_Campaign__c camp = new EBC_Campaign__c(Name = 'Foo Bar', Number_of_Recipients__c = 7, Subject__c = 'Foo Subject', From_Name__c = 'Foo From Name', Is_Google_Analytics_Tracker_Active__c = true, Google_Analytics_Tracking_Code__c = 'UA-XXXXXX', Billing_Account__c = oBillingAccount.Id, EBC_Master_Filter__c = masterFilter.Id, EBC_Design__c = tpl.Id, OwnerId = usr.Id, Status__c = 'APPROVED', Send_Datetime__c = Datetime.now());
+            insert camp;
+            Test.startTest();
+      
+            boolean elastic_switch=true;
+            String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, camp.EBC_Master_Filter__c, elastic_switch);
+            IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter(); 
+            Integer counter=req.execute(cntQuery,true); 
+            Test.stopTest();
+            
+        }
+    }
+    
+    
+    
     public static void testCampaignIDCardSendMassMailing() {
         
         User usr = initPreRunAs(true); 
@@ -857,7 +900,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -961,7 +1004,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
@@ -1055,7 +1098,7 @@ public class vfIECEBC_TestSuite {
             
             ApexPages.StandardController sc = new ApexPages.StandardController(camp);
             vfIECEBC_Campaign campaignExtCon = new vfIECEBC_Campaign(sc);
-            System.assertEquals(6, campaignExtCon.campaign.Maximum_Allowed_Step__c);
+            System.assertEquals(7, campaignExtCon.campaign.Maximum_Allowed_Step__c);
             sc = new ApexPages.StandardController(camp);
             campaignExtCon = new vfIECEBC_Campaign(sc);
             vfIECEBC_Cart cartExtCon = new vfIECEBC_Cart(sc);
