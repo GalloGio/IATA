@@ -1104,7 +1104,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         } else if( (sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE))){             
             includedPageName = 'ISSP_ANG_PAX_HE';
-            includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
+            includedSummaryPage = 'ISSP_ANG_PAX_HE_ReadOnly';//NEWGEN-604            
 
         } else if((sectorValue.StartsWith('Travel_Agent') && ( newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH) && ( newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_LITE))){
             includedPageName = 'ISSP_ANG_PAX_AE';
@@ -1588,9 +1588,18 @@ public without sharing class ISSP_AMS_Accreditation {
             newForm.Cargo_Agent_Account__c = cargoAgentAccount.Id;
         }
 
-        if(IATANAgentAccount != null){
+        if(IATANAgentAccount != null)
             newForm.IATAN_Agent_Account__c = IATANAgentAccount.id;
+        
+        //NEWGEN - 604 START
+        if(hqAccount != null && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && (!isTerminatedAgent && !isHOAccredited)){
+            if (!validateCharactersInAgencyWindow()) {
+                accountUpdated = false;
+                return;
+            }
+            upsert hqAccount;
         }
+        //NEWGEN - 604 END
 
         try {
            
