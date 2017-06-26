@@ -66,6 +66,18 @@ public without sharing class AMS_Utils {
         private set;
     }
 
+    //20-06-2017 - AMSU-97
+    public static Map<String, String> JsonSpecialChars{
+        get {
+            if(JsonSpecialChars == null){
+                JsonSpecialChars = AMS_Utils.loadJsonSpecialCharsFile();
+            }
+            return JsonSpecialChars;
+        }
+        private set;
+    }
+
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -2148,7 +2160,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
          if(s != null || !s.equalsIgnoreCase('')){
 
-            Map<String, String> mSpecialChars = AMS_Utils.loadJsonSpecialCharsFile();
+            Map<String, String> mSpecialChars = JsonSpecialChars;
 
             //String regex = '[^a-zA-Z0-9]';
             //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
