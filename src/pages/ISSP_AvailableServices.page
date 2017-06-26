@@ -12,7 +12,7 @@
        <script type="text/javascript">
      
     var redirected = false;
-    var planeOn = 0;
+    var requested = 0
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
@@ -43,6 +43,7 @@
       if (doInsert == 0) {
           document.querySelector("[Id$='portalRoleErrorMessage']").style.display = '';       
       } else {
+          requested = 1;
           if (appPortalRole != 'SKIP') {
               closeDialog();
           }
@@ -73,10 +74,8 @@
     }
 
     function onCompleteUserProvisioning(redirect, page, provError) {
-      if(provError == 'true') {
-        if(planeOn == 1) {
-          $('#ModalNewIepServiceRequest').modal('toggle');
-        }
+      if(provError == 'true' && requested == 1) {
+        $('#ModalNewIepServiceRequest').modal('toggle');
         errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
       } else {
         if (redirect == 'true' && !redirected) {
