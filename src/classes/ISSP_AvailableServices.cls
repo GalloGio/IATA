@@ -659,7 +659,6 @@ public with sharing class ISSP_AvailableServices{
             List<Portal_Application_Right__c> l2 = [SELECT Id FROM Portal_Application_Right__c WHERE Portal_Application__c =: Serv.recordService.id AND Contact__c =: conId];
 
             if(l2.size() == 0) {
-                this.pollerOn = false;
                 this.provError = true;
             }            
         }                
