@@ -12,6 +12,7 @@
        <script type="text/javascript">
      
     var redirected = false;
+    var planeOn = 0;
 
     function newAppReq2(appId,appName, flagUseDefaultRole, isEasyPayService){
         
@@ -46,6 +47,7 @@
               closeDialog();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
+            planeOn = 1;
             $('#ModalNewIepServiceRequest').modal('toggle');            
           } else {
             $('#ModalNewServiceRequest').modal('toggle');
@@ -72,7 +74,9 @@
 
     function onCompleteUserProvisioning(redirect, page, provError) {
       if(provError == 'true') {
-        $('#ModalNewIepServiceRequest').modal('toggle');
+        if(planeOn == 1) {
+          $('#ModalNewIepServiceRequest').modal('toggle');
+        }
         errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
       } else {
         if (redirect == 'true' && !redirected) {
