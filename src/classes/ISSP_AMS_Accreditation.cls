@@ -6446,9 +6446,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public PageReference redirectToPDF() {
         PageReference np;
 
-        if (sectorValue.StartsWith('Travel_Agent')) {
+        if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
             np = new PageReference('/ISSP_AMS_PDF_ApplicationForm?caseid=' + newCase.id);
-        } else {
+        }
+        if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) { //NEWGEN - 605
+            np = new PageReference('/ISSP_AMS_PDF_ANG_PAX_HE?caseid=' + newCase.id);
+        } 
+
+        else {
             np = new PageReference('/ISSP_AMS_PDF_CGO?caseid=' + newCase.id + '&mode=pdf');
         }
 
