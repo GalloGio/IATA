@@ -401,7 +401,7 @@ private class ISSP_PortalUserStatusChangeTest {
         System.assert([SELECT Id, ProfileId, Name FROM User WHERE ProfileId =:portalProfile.Id limit 10 ].size() > 0, 'User should have been created');
 
         Test.stopTest();
-    }
+    } 
 
     Public static testMethod void testUpdateUser(){
 
@@ -440,7 +440,7 @@ private class ISSP_PortalUserStatusChangeTest {
         System.runAs(newUser){
             Test.startTest();
 
-            ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id);
+            ISSP_PortalUserStatusChange.updateUser(con.Id, true, con.Email, portalProfile.Id, '');
 
             Test.stopTest();
         }
