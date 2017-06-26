@@ -53,6 +53,7 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         + '   Select contact__c'
         + '   From Portal_Application_Right__c'
         + '   Where Right__c = \'Access Granted\''
+        + '   And Enable_Notifications__c = true'
         + '   And Portal_Application__r.Name =  \'' + ISSP_Ctrl_AccountStatements.APP_NAME + '\')';
         //+ '   And Terms_Acceptance__c = true'
         if ( this.region != null && this.region != '' ) {
