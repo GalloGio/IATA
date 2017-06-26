@@ -7737,6 +7737,14 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Director/&lt;br/&gt;Officer</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Director_NG</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Director</shortDescription>
+        <value>Director Officer</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Domestic</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8631,6 +8639,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>1. General Info</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>1. Identification of Agency for which Approval Requested</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8660,6 +8675,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>2. Intermediary Identification</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_GenInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section2_GenInfo</shortDescription>
+        <value>2. General Info</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8674,6 +8696,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section3</shortDescription>
         <value>3. Financial Info</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_AgencyContacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section3_AgencyContacts</shortDescription>
+        <value>3. Agency Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Agency</fullName>
@@ -8719,6 +8748,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>4. Additional Info</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</shortDescription>
+        <value>4.Security of Electronic Tickets</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section5</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8732,6 +8768,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section5_Cargo</shortDescription>
         <value>5. Facilities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info</shortDescription>
+        <value>5. Other Info</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section6</fullName>
@@ -10360,6 +10403,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the answer to Section 2 above to make these statements and file this document.&lt;br/&gt;&lt;br/&gt;It is hereby agreed that this application shall become a part of every Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in Section 2.2). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in Sections 2.1 and 4, in order to produce and distribute databases among the airline industry participants.&lt;br/&gt;&lt;/p&gt;</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Pax_He</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Pax_He</shortDescription>
+        <value>&lt;p&gt;I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorised by the organisation identified in the answer to 1.1 above to make these statements and file this document.
+It is hereby agreed that this application shall become a part of every Passenger Sales Agency Agreement signed with Members of IATA for the sale of international air passenger transportation, and as such, all information contained herein will be treated as confidential (excluding the information contained in section 1). Notwithstanding the foregoing, the applicant authorizes IATA to use and process the information contained in sections 2.1.2.2, 2.2, 4, 5.1.1 and 5.1.2, in order to produce and distribute databases among the airline industry participants.&lt;br/&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Percentage_Financial_Interest</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10428,6 +10479,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Previous Default</shortDescription>
         <value>* Have you, or any partner, officer, director, manager or any individual having authorization to act and sign on behalf of any such firm, partnership, association or corporation at any time been a director or had a financial interest or a position of management in an IATA Agent which has been removed from the IATA Agency List or which is under notice of default and still has outstanding commercial debts?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Previous_Default_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Previous_Default_2</shortDescription>
+        <value>* Have you, or any person who is a director of, or who holds a material financial interest or a position of management in the Applicant currently or previously been involved in any fiduciary breach or crime, or subject to bankruptcy proceedings, or been a director of or had a financial interest or held a position of management in an Agent which has been removed from the Agency List or is currently subject to review or default action by IATA for non-compliance with the conditions of its Accreditation?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Previous_Default_Details</fullName>
@@ -10515,11 +10573,25 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>SECTION 1 - IFACP Endorsed Head Office Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription>
+        <value>SECTION 2 - General Information</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_HO_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_1 HO Title</shortDescription>
         <value>SECTION 1 - General Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Identi_Appro_Req</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_Identi_Appro_Req</shortDescription>
+        <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_STEP_3_2_Title</fullName>
@@ -10848,6 +10920,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Approval Sought</shortDescription>
         <value>* Location Type requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless</shortDescription>
+        <value>Accreditaiton type requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</fullName>
@@ -11471,12 +11550,26 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Is your firm a member of a national or international association of freight forwarders?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_5_Event_of_inspection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_5_Event_of_inspection</shortDescription>
+        <value>In the event of an inspection, the Applicant will be required to provide evidence that it meets the security requirements for issuance of Electronic Tickets, in accordance with the provisions of section 8, and in particular the Payment Card Industry (PCI) Data Security Standards as referenced in section 2.1.6 of Resolution 890.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_5_Facilities</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_5_Facilities</shortDescription>
         <value>SECTION 5 - Facilities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 5 Other Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_5_Premises_Title</fullName>
@@ -11669,6 +11762,20 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Branch Location</shortDescription>
         <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following IATA Approved agent:&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cash_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_FIN_Interest</fullName>
@@ -14247,6 +14354,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Created Date</value>
     </labels>
     <labels>
+        <fullName>ISSP_Credit_Card_Form</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Credit_Card_Form</shortDescription>
+        <value>Would you like credit card Form of Payment to be enabled for your Agency?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Currency</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -16425,20 +16539,20 @@ this is the tiess topic help</value>
         <value>Loading Cargo Agent details...</value>
     </labels>
     <labels>
-        <fullName>ISSP_Loading_IATAN_Agency_Details</fullName>
-        <categories>ISSP, AMS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Loading IATAN Agency Details</shortDescription>
-        <value>Loading IATAN Agent details...</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Loading_Cargo_Company_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Loading Cargo Company Details</shortDescription>
         <value>Loading Cargo Company details...</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Loading_IATAN_Agency_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Loading IATAN Agency Details</shortDescription>
+        <value>Loading IATAN Agent details...</value>
     </labels>
     <labels>
         <fullName>ISSP_Loading_Travel_Agency_Details</fullName>
@@ -18387,6 +18501,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Search_by_Tags</shortDescription>
         <value>Search by Tags</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Secu_of_Elect_Tickets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Secu_of_Elect_Tickets</shortDescription>
+        <value>SECTION 4 - Security of Electronic Tickets</value>
     </labels>
     <labels>
         <fullName>ISSP_See_more</fullName>
