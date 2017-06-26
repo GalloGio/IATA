@@ -29,8 +29,8 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
                 if(myCase.recordTypeId == SIDRALITE){
 
-                    options.add(new selectoption('1','Fail Financial Statements'));
-                    options.add(new selectoption('6','Unreported change (owner or legal)'));
+                    options.add(new selectoption('5','Fail Financial Statements'));
+                    options.add(new selectoption('7','Unreported Major Change'));
                     options.add(new selectoption('9','Fail Financial Security'));
                     options.add(new selectoption('10','Common ownership default'));
                     options.add(new selectoption('11','Prejudiced collection'));
@@ -94,12 +94,6 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
     }
 
-    /*
-
-            2) necessitamos de ter o "novo" ANG_Risk_History_Assessment__c baseado no valor do riskOpt  e de todos os Risk Events que estão atualmente na conta.
-            3) com o "novo" valor do ANG_Risk_History_Assessment__c e com o valor da conta atual (account.Financial_Review_Result__c) usar um metodo baseado no ANG_AccountTriggerHandler.updateRiskStatus e recuperar o novo ANG_HE_RiskStatus__c.
-            2) enquanto esperamos pelo metodo, vamos usar o valor "Failed".
-    */
     public String fetchRiskHistoryAssessment(Account acct, String choosenRiskEventType, List<ANG_Agency_Risk_Event__c> riskEvents){
 
         return new ANG_RiskAssessmentEngine(riskEvents, acct, new list<String>{choosenRiskEventType}).forecastAssessment();
