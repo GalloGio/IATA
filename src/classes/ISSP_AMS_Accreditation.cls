@@ -11,6 +11,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
     private static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
     private static final String BNK_ACCNT_DTLS = 'BNK_ACCNT_DTLS';
+    private static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
     private String vSAAMCaseId;
@@ -3188,6 +3189,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public void fetchCountryRequirements() {
         SYSTEM.DEBUG('Fetching Country REQS -  SectorValue: ' + sectorValue);
+        
+        Set<String> allowIdentifierSetTravel = new Set<String>();
+        Set<String> identifierSetTravel = new Set<String>{PCI_COMPLIANCE};
+
         if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange == false) {
             String selectedLang;
             String accredModel;
@@ -3209,15 +3214,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             System.debug('SFSF amsOfficeType ' + amsOfficeType);
             System.debug('SFSF newForm.Agent_Type__c ' + newForm.Agent_Type__c);
             System.debug('SFSF selectedLang ' + selectedLang);
-
-
-            /*if(newForm.Agent_Type__c.contains('no Cash')){
-                accredModel = 'Standard without Cash';
-            } else if(newForm.Agent_Type__c.contains('with Cash')){
-                accredModel = 'Standard';
-            } else {
-                accredModel = newForm.Agent_Type__c;
-            }*/
+            System.debug('SFSF newForm.Enable_Credit_Card_FOP__c ' + newForm.Enable_Credit_Card_FOP__c);
 
             if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH; 
@@ -3227,16 +3224,20 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 accredModel = newForm.Agent_Type__c;
             }
 
-            
-            System.debug('SFSF accredModel ' + accredModel);
-            System.debug('SFSF newCase.IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
-            System.debug('SFSF sector ' + sector);
-            System.debug('SFSF amsOfficeType ' + amsOfficeType);
-            System.debug('SFSF newForm.Agent_Type__c ' + newForm.Agent_Type__c);
-            System.debug('SFSF selectedLang ' + selectedLang);            
-            
             System.debug('SFSF accredModel ' + accredModel);
 
+            //NEWGEN-583 start
+            if(newForm.Enable_Credit_Card_FOP__c == 'Yes')
+                allowIdentifierSetTravel.add(PCI_COMPLIANCE);
+
+            Set<String> excludeIdentifierSetTravel = new Set<String>();
+            for(String identifier : identifierSetTravel){
+                if(!(allowIdentifierSetTravel.contains(identifier)))
+                    excludeIdentifierSetTravel.add(identifier);
+            }
+
+            //NEWGEN-583 end
+            system.debug('SFSF excludeIdentifierSetTravel ' + excludeIdentifierSetTravel);
 
              //Get distinct set of Languages for this country / operation requirements
             distinctReqmentLangs = [
@@ -3254,7 +3255,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                        FROM AMS_Accreditation_Requirement__c
                                        WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                                                AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = :selectedLang AND RecordTypeId = :TravelReqRecType.Id
-                                                       ORDER BY Sort_Order__c ASC
+                                                AND File_Identifier2__c NOT IN: excludeIdentifierSetTravel      
+                                                      ORDER BY Sort_Order__c ASC
                                    ];
             system.debug('c req size: ' + List_CountryReqments.size());
             //Then look for country requirements in English if not found for selected language
@@ -3264,6 +3266,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                            FROM AMS_Accreditation_Requirement__c
                                            WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                                                    AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = 'English' AND RecordTypeId = :TravelReqRecType.Id
+                                                    AND File_Identifier2__c NOT IN: excludeIdentifierSetTravel
                                                            ORDER BY Sort_Order__c ASC
                                        ];
                 system.debug('req 2 size: ' + List_CountryReqments.size());
@@ -3279,6 +3282,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                                FROM AMS_Accreditation_Requirement__c
                                                WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                                                        AND Location_type__c INCLUDES (:amsOfficeType) AND ANG_Accreditation_Model__c INCLUDES (:accredModel) AND Language__c = :finalLang AND RecordTypeId = :TravelReqRecType.Id
+                                                       AND File_Identifier2__c NOT IN: excludeIdentifierSetTravel
                                                                ORDER BY Sort_Order__c ASC
                                            ];
                     system.debug('countryReq size: ' + List_CountryReqments.size());
@@ -3352,7 +3356,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,IATAN_Agent_Account__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
