@@ -2228,8 +2228,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         
         return lRes;
     }
-    
-        public static String cleanSpecialChars(String s){
+
+    public static String cleanSpecialChars(String s){
 
         String sRes = '';
 
@@ -2248,8 +2248,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
             Matcher m = Pattern.compile(regex).matcher(s);
 
-            System.debug('m: ' + m);
-            System.debug('m.groupCount(): ' + m.groupCount() );
+            //System.debug('m: ' + m);
+            //System.debug('m.groupCount(): ' + m.groupCount() );
 
             //Pattern p = Pattern.compile('regex'); 
             //Matcher mo = p.matcher('string'); 
@@ -2257,25 +2257,22 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 
                 //System.debug('m.group: ' + m.group()); 
                 if(mSpecialChars.containsKey( m.group() )) {
-                    System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) ); 
+                    //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) ); 
                     sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
                 }else{
-                    System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') ); 
+                    //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') ); 
                     //sRes = sRes.replaceAll(m.group(), '_');
                     sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
-                    System.debug('sRes1: ' + sRes);
+                    //System.debug('sRes1: ' + sRes);
                 }
 
             }
         }
-        System.debug('sRes: ' + sRes);
-
+        //System.debug('sRes: ' + sRes);
 
         return sRes;
-
     }    
     
-
     public static Map<String, String> loadJsonSpecialCharsFile(){
         /*
          *  LOAD JSON TO MAP
