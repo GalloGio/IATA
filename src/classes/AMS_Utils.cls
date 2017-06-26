@@ -2229,6 +2229,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return lRes;
     }
 
+
     public static String cleanSpecialChars(String s){
 
         String sRes = '';
@@ -2268,11 +2269,14 @@ public static String fetchTypeOfCustomer (String locationType , String category)
 
             }
         }
-        //System.debug('sRes: ' + sRes);
+        System.debug('sRes: ' + sRes);
+
 
         return sRes;
+
     }    
     
+
     public static Map<String, String> loadJsonSpecialCharsFile(){
         /*
          *  LOAD JSON TO MAP
@@ -2296,6 +2300,7 @@ public static String fetchTypeOfCustomer (String locationType , String category)
     }
 
     public class Utility_RowIterator implements Iterator<String>, Iterable<String>
+
     {
        private String m_Data;
        private Integer m_index = 0;
