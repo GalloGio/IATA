@@ -5518,13 +5518,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         ApexPages.addMessage(myMsg);
                         errorFound = true;
                     }
-
-                    if (cntIFAPContacts == 0) {
-                        ApexPages.Message myMsg;
-                        myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
-                        ApexPages.addMessage(myMsg);
-                        errorFound = true;
-                    }
                      
                     if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH) {
                          ApexPages.Message myMsg;
