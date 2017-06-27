@@ -48,9 +48,9 @@
               closeDialog();
           }
           if(isEasyPayService && flagUseDefaultRole == "true") {
-            $('#ModalNewIepServiceRequest').modal('toggle');            
+            showModal('#ModalNewIepServiceRequest');
           } else {
-            $('#ModalNewServiceRequest').modal('toggle');
+            showModal('#ModalNewServiceRequest');
           }
                     
           if (doInsert == 1) {
@@ -74,11 +74,11 @@
 
     function onCompleteUserProvisioning(redirect, page, provError) {
       if(provError == 'true' && requested == 1) {
-        $('#ModalNewIepServiceRequest').modal('toggle');
+        hideModal('#ModalNewIepServiceRequest');
         errorMessageModal('{!$Label.ANG_ISSP_UserProvisioningError}');
       } else {
         if (redirect == 'true' && !redirected) {
-          $('#ModalNewIepServiceRequest').modal('toggle');
+          hideModal('#ModalNewIepServiceRequest');
             
           var win = window.open(page, '_blank');
           if (win) {
@@ -92,6 +92,18 @@
         }
       }
     }
+
+    function showModal(modalName) {
+      if (! $(modalName).is(":visible")) {
+        $(modalName).modal('show');  
+      }
+    }
+
+    function hideModal(modalName) {
+      if ($(modalName).is(":visible")) {
+        $(modalName).modal('hide');  
+      }
+    }    
 
     function refreshPage() {
       var currentTime = new Date().getTime();
@@ -113,7 +125,7 @@
 
     function errorMessageModal(errorMsg) {
       $('[id$="errorMessage"]').text(errorMsg);
-      $('[id$="ModalErrorMessage"]').modal('toggle');
+      showModal('#ModalErrorMessage');
     }
 
     function errorMessageModalClose() {
