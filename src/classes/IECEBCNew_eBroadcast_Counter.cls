@@ -57,7 +57,7 @@ public class IECEBCNew_eBroadcast_Counter
         Http h = new Http();
         // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(url);
+        if (!istest) req.setEndpoint(url);
         req.setMethod('POST');
         req.SetHeader('Content-Type', 'application/json');
         req.SetHeader('x-api-key',IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_AWS_API_KEY__c);
