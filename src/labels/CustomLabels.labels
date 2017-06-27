@@ -19625,6 +19625,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Please wait. You'll be redirected to the EasyPay Portal in a few moments.</value>
     </labels>
     <labels>
+        <fullName>ANG_OSCAR_WARNING_RISK</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Oscar Risk values Warning</shortDescription>
+        <value>The approval of this application will have an impact on the Agency&apos;s risk properties: The new Risk Status will be &apos;B&apos; and the Cash conditions will be false.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_UserProvisioningError</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
