@@ -677,6 +677,7 @@ public class ams2gdp_BusinessLogic
 
  		for(AMS_Account_Role__c arole: roles)
  		{
+
  			Integer rank = (rankByAccount.containsKey(arole.Account__c)) ? rankByAccount.get(arole.Account__c)+1 : 1;
  			rankByAccount.put(arole.Account__c, rank);
  			
@@ -690,8 +691,10 @@ public class ams2gdp_BusinessLogic
 				, Owner_ID__c = rank
 				, RecordTypeId = recordTypes.get('Live')	
 			));*/
+			String name = arole.Owner_Name__c;
+			if(arole.Contact__r.name != null) name = arole.Contact__r.name;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
- 				, Name = arole.Owner_Name__c
+ 				, Name =  name
  				, Percent__c=arole.Percentage__c
  				, Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(arole.Account__c)
  				, Related_Account__c=arole.Account__c
