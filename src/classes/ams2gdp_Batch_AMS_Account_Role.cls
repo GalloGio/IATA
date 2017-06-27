@@ -26,7 +26,7 @@
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = ' Id, Owner_Name__c,Percentage__c,Account__c';
+		String fields = ' Id, Owner_Name__c,Percentage__c,Account__c, Active__c, Contact__r.Name ';
 
 		//-- Query conditions 
 		// String accreditation_condition = 'SELECT Related_Account__c '
