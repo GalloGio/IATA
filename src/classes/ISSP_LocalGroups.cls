@@ -1,4 +1,4 @@
-public with sharing class ISSP_LocalGroups {
+public without sharing class ISSP_LocalGroups {
 
     public static final set<String> ALLOWED_PROFILES = new set<String>{'ISS Portal Airline Delegated Admin User'};
     public static final Id RT_LOCALGROUP = [SELECT Id FROM Recordtype WHERE sObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups'].Id;

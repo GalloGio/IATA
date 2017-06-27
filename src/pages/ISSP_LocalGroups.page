@@ -1,7 +1,11 @@
 <apex:page controller="ISSP_LocalGroups" action="{!init}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
-    <script src="//cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js" />
+
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/jquery.dataTables.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/dataTables.bootstrap.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.min.js')}"/>
+    <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/extensions/Responsive/js/responsive.bootstrap.min.js')}"/>
     <link rel="stylesheet" href="{!URLFOR($Resource.ISSP_LocalGroups, '/css/main.css')}"/>
 
 <script>
@@ -111,8 +115,9 @@
                     <tr class="headerRow">
                         <apex:repeat value="{!listFieldName}" var="fieldname">
                             <th class="headerRow">
-                                <apex:outputText value="{!$ObjectType.Participant__c.fields[fieldname].label}" rendered="{!fieldname!='Country__c'}"/>
+                                <apex:outputText value="{!$ObjectType.Participant__c.fields[fieldname].label}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c')}"/>
                                 <apex:outputText value="{!$Label.ISSP_Local_Groups_Country}" rendered="{!fieldname=='Country__c'}"/>
+                                <apex:outputText value="{!$Label.ISSP_Local_Groups_Contact_Name}" rendered="{!fieldName=='Contact__c'}"/>
                             </th>
                         </apex:repeat>
                     </tr>
