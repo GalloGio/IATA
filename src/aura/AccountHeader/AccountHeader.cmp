@@ -29,7 +29,7 @@
                     
                     <div class="slds-media__body" >
                         <p class="slds-text-heading--label">Account</p>
-                        <h1 class="slds-text-heading--small">{!v.account.Name}</h1>
+                        <h1 class="slds-text-heading--small" style="font-size: 1.1rem;">{!v.account.Name}</h1>
                     </div>      
                 </div>
                 <!-- / MEDIA OBJECT -->
@@ -38,28 +38,28 @@
             <!-- / PAGE HEADER / ROW 1 / COLUMN 1 -->
             <div class="slds-size_1-of-5 slds-col--padded slds-align-middle text-align-center">
                 <aura:if isTrue="{!v.account.Due_Diligence_Status__c == 'Sanctioned. Please contact compliance'}" >
-                    <div style="color:#ff0000; font-size: .75rem;"> {!v.account.Due_Diligence_Status__c}</div>
+                    <div style="color:#ff0000; font-size: .60rem; font-weight: bold"> {!v.account.Due_Diligence_Status__c}</div>
                     <aura:set attribute="else">
                             <span>   </span>  
                     </aura:set>
                 </aura:if>                    
             </div>
             <!-- PAGE HEADER / ROW 1 / COLUMN 2 -->
-            <div class="slds-size_1-of-5 slds-col--padded slds-align-middle">
+            <div class="slds-align-middle">
                 <aura:unescapedHtml value="{!v.account.Company_Logo__c}" />
             </div>
             <!-- / PAGE HEADER / ROW 1 / COLUMN 2 -->
             <div class="slds-size_1-of-5 slds-col--padded" >
                 <div class="slds-grid" style="flex-direction: column">
                     <div class="slds-size_1-of-2 slds-col--padded resizeBox">
-                        <aura:renderIf isTrue="{!v.isEditMode2}">
-                            <ui:inputTextArea value="{!v.account.SanctionNotice2__c}" class="slds-textarea " maxlength="150" cols="50" />                                        
+                        <aura:renderIf isTrue="{!v.isEditMode}">
+                            <ui:inputTextArea value="{!v.account.SanctionNotice__c}" class="slds-textarea " maxlength="150" cols="50" />                                        
                         </aura:renderIf>
                         
-                        <aura:renderIf isTrue="{!!v.isEditMode2}">     
+                        <aura:renderIf isTrue="{!!v.isEditMode}">     
 		      				    <div class="slds-form-element__control">        
-	                            <span  class="alignText" style="" >    {!v.account.SanctionNotice2__c}   </span> 
-	                            <aura:renderIf isTrue="{!v.canEdit2}">
+	                            <span  class="alignText" style="" >    {!v.account.SanctionNotice__c}   </span> 
+	                            <aura:renderIf isTrue="{!v.canEdit}">
 		                            <button class="slds-button slds-button_icon slds-float_right slds-button_icon slds-button_icon-small inline-button" onclick="{!c.switchToEditMode}" id="edit2" title="Edit">
 	                                		<c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#edit'}" class="slds-button__icon slds-button__icon_hint" />
 	                                		<span class="slds-assistive-text">Edit</span>
@@ -69,8 +69,8 @@
                         </aura:renderIf>     
                          </div>  
                     <div class="text-align-center slds-size_1-of-2 slds-col--padded"> 
-                        <aura:renderIf isTrue="{!v.canEdit2}">
-                        <aura:renderIf isTrue="{!v.isEditMode2}">
+                        <aura:renderIf isTrue="{!v.canEdit}">
+                        <aura:renderIf isTrue="{!v.isEditMode}">
                             <div class="slds-button-group float-right" role="group">
                                 <button class="slds-button slds-button--neutral" onclick="{!c.cancelEditMode}" id="cancel2" title="Cancel"><c:svg xlinkHref="{!$Resource.SLDS102 + '/assets/icons/utility-sprite/svg/symbols.svg#close'}" class="slds-button__icon" />
                                     <span class="slds-assistive-text">Cancel</span>
@@ -108,7 +108,7 @@
             <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
-                        <p class="slds-text-heading--label slds-truncate">Account Record Type</p>
+                        <p class="slds-text-heading--label slds-truncate">Record Type</p>
                     </dt>
                     <dd>
                         <p class="slds-text-body--regular slds-truncate">{!v.account.RecordType.Name}</p>
@@ -162,7 +162,7 @@
             <div class="slds-col--padded slds-size--1-of-6">
                 <dl>
                     <dt>
-                        <p class="slds-text-heading--label slds-truncate">IATA Membership Status</p>
+                        <p class="slds-text-heading--label slds-truncate">Membership Status</p>
                     </dt>
                     <dd>{!v.account.Membership_status__c}</dd>
                 </dl>

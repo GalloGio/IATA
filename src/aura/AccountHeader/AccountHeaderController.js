@@ -17,13 +17,13 @@
     
     switchToEditMode: function(component, event, helper) {
         var account = component.get("v.account");
-        component.set("v.SanctionNotice2", account.SanctionNotice2__c);
-            component.set("v.isEditMode2", true);
+        component.set("v.SanctionNotice", account.SanctionNotice__c);
+        component.set("v.isEditMode", true);
     },
     
     cancelEditMode : function(component, event, helper) {
-            component.set("v.account.SanctionNotice2__c",component.get("v.SanctionNotice2"));            
-            component.set("v.isEditMode2", false);
+            component.set("v.account.SanctionNotice__c",component.get("v.SanctionNotice"));            
+            component.set("v.isEditMode", false);
             },
     
     save : function(component, event, helper) {
@@ -32,6 +32,6 @@
                  "recordDetail": component.get("v.account")
             });
             $A.enqueueAction(save);
-            component.set("v.isEditMode2", false);       
+            component.set("v.isEditMode", false);       
     },
 })
