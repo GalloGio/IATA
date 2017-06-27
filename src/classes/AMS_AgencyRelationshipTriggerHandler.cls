@@ -36,6 +36,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
 
     }
 
+/*
     public static void handleAfterDelete(List<AMS_Agencies_relationhip__c> rels) {
 
         Set<Id> accountsInTheOldHierarchy = new Set<Id>();
@@ -47,6 +48,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         //setAccountsWithoutHierarchyToHO(accountsInTheOldHierarchy);
 
     }
+*/
 
     public static Map<Id, AMS_Agencies_Hierarchy__c> getRelationshipHierarchies(List<AMS_Agencies_relationhip__c> rels) {
         List<String> hierarchiesIds = new List<String>();
@@ -339,7 +341,7 @@ public class AMS_AgencyRelationshipTriggerHandler {
         return availableCASS;
     }
 
-
+/*
     public static void setAccountsWithoutHierarchyToHO(Set<Id> accountIds) {
         system.debug('setAccountsWithoutHierarchyToHO() --> accountIds = ' + accountIds);
         Map<Id, List<AMS_Agencies_relationhip__c>>  hierarchies = AMS_HierarchyHelper.getAccountsHierarchies(accountIds);
@@ -362,5 +364,19 @@ public class AMS_AgencyRelationshipTriggerHandler {
             if (newHOs.size() > 0)
                 update newHOs;
         }
+    }
+*/
+
+    public static List<AMS_Agencies_relationhip__c> filterRelationsByAMS(List<AMS_Agencies_relationhip__c> rels){
+
+        List<AMS_Agencies_relationhip__c> relsToReturn = new List<AMS_Agencies_relationhip__c>();
+
+        for(AMS_Agencies_relationhip__c rel: rels){
+            if(!rel.Is_Newgen_Relation__c)
+                relsToReturn.add(rel);
+        }
+
+        return relsToReturn;
+
     }
 }

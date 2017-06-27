@@ -567,6 +567,7 @@ global with sharing class ANG_ConversionHelper {
 		else{
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
+					rel.Is_Newgen_Relation__c = true;
 					rel.Parent_Account__c = struct.topParentId;
 					
 					allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
