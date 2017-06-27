@@ -468,7 +468,7 @@ public class AMS_OscarCase_RiskMgmt {
 
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
         AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
-	AACC.Outstanding_Amount__c = (cc.Calculate_Outstanding_Amount__c && isHO && mapCases.get(idCase).Outstanding_Amount__c != null) ? string.valueOf(mapCases.get(idCase).Outstanding_Amount__c) : '';
+		AACC.Outstanding_Amount__c = (cc.Calculate_Outstanding_Amount__c && mapCases.get(idCase).Outstanding_Amount__c != null) ? string.valueOf(mapCases.get(idCase).Outstanding_Amount__c) : '';
 		//AACC.Bulletin_Information__c = GenerateMemoText(mapCases.get(idCase), null
 		//												, cc.Bulletin_Memo_Text__c, cc.Bulletin_Memo_Text2__c, cc.Bulletin_Memo_Text3__c
 		//												, mapIRRS.get(AccountId), mapFinancialSecurity.get(AccountId)).toUpperCase();
