@@ -677,7 +677,6 @@ public class ams2gdp_BusinessLogic
 
  		for(AMS_Account_Role__c arole: roles)
  		{
-			if(arole.Active__c == true) {
 
  			Integer rank = (rankByAccount.containsKey(arole.Account__c)) ? rankByAccount.get(arole.Account__c)+1 : 1;
  			rankByAccount.put(arole.Account__c, rank);
@@ -702,7 +701,6 @@ public class ams2gdp_BusinessLogic
 				, Owner_ID__c = rank
 				, RecordTypeId = recordTypes.get('GDP')	
 			));
- 		}
  		}
 
  		return result;

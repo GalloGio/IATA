@@ -26,7 +26,7 @@
 
 		Map<String, String> recordTypes = ams2gdp_Utils.getRecordTypeIdByName('Account');
 
-		String fields = ' Id, Owner_Name__c,Percentage__c,Account__c, Active__c, Contact__r.Name ';
+		String fields = ' Id, Owner_Name__c,Percentage__c,Account__c, Contact__r.Name ';
 
 		//-- Query conditions 
 		// String accreditation_condition = 'SELECT Related_Account__c '
@@ -37,6 +37,7 @@
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Account__r.IATACode__c != null'
             , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+            , 'Active__c = true'
 			// , 'Account__c IN ('+accreditation_condition+')'
 		}; 
 
