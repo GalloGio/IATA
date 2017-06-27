@@ -216,6 +216,10 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>PCI_COMPLIANCE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>PHOTOS_INT_EXT</fullName>
                 <default>false</default>
             </picklistValues>
@@ -1261,6 +1265,10 @@
             </values>
             <values>
                 <fullName>OFFICE_LEASE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PCI_COMPLIANCE</fullName>
                 <default>false</default>
             </values>
             <values>

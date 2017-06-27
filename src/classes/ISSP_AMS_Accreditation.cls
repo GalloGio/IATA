@@ -5422,11 +5422,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
 **/
 
-        } else if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {            
+        } else if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {
             if (amsOfficeType == 'HO') {
                 if (includeErrorMsgs) {
-                    
-                    if(newCase.Reason1__c=='New HO') { //Check Corporate fields for New HO (and not Branches Abroad)
+                    if(newCase.Reason1__c=='New HO' || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE) { //Check Corporate fields for New HO (and not Branches Abroad)
                         if (newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_when_incorporated__c == null) {
                             newForm.ISSP_AMS_when_incorporated__c.addError(Label.ISSP_YouMustEnter);
                             errorFound = true;
@@ -5527,6 +5526,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
                      
+                    if (cntIFAPContacts == 0 && newForm.Agent_Type__c != AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH) {
+                         ApexPages.Message myMsg;
+                         myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
+                         ApexPages.addMessage(myMsg);
+                         errorFound = true;
+                     }
                      if(newForm.Agent_Type__c == AMS_Utils.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH){
                         if(validateNewAccModel(true)) errorFound = true;   
                      }
