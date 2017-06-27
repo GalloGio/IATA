@@ -60,9 +60,9 @@ public class IECEBCNew_eBroadcast_Counter
         if (!istest) req.setEndpoint(url);
         req.setMethod('POST');
         req.SetHeader('Content-Type', 'application/json');
-        req.SetHeader('x-api-key',IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_AWS_API_KEY__c);
+        if (!istest) req.SetHeader('x-api-key',IEC_Settings__c.getOrgDefaults().eBroadcast_Counter_AWS_API_KEY__c);
         req.setTimeout(6000);
-        req.setbody(elasticsearch_query);
+        if (!istest) req.setbody(elasticsearch_query);
         // Send the request, and return a response
         string response = '{"email_counter": 6}';
         StatusCode=200;
