@@ -1,5 +1,5 @@
 <apex:page controller="ISSP_LocalGroups"  action="{!init}" readOnly="true" contentType="application/vnd.ms-excel#exportContacts.csv">"{!$ObjectType.Participant__c.fields.Region__c.label}","{!$Label.ISSP_Local_Groups_Country}","{!$ObjectType.Participant__c.fields.Local_Group_Type__c.label}","{!$ObjectType.Participant__c.fields.Cargo_Passenger__c.label}","{!$ObjectType.Participant__c.fields.Participant_Type__c.label}","{!$ObjectType.Participant__c.fields.Contact__c.label}","{!$ObjectType.Participant__c.fields.Title__c.label}","{!$ObjectType.Participant__c.fields.Email__c.label}"
   <apex:repeat value="{!listParticipant}" var="item">
-     {!item.Region__c},{!item.Local_Governance__r.Country__r.Name + item.Local_Governance__r.Cluster__r.Name},{!item.Local_Group_Type__c},{!item.Cargo_Passenger__c},{!item.Participant_Type__c},{!item.Contact__r.Name},{!item.Title__c},{!item.Email__c}
+     {!item.Region__c},{!item.Local_Governance__r.Country__r.Name + item.Local_Governance__r.Cluster__r.Name},{!item.Local_Governance__r.Local_Governance_type__c},{!item.Cargo_Passenger__c},{!item.Participant_Type__c},{!item.Contact__r.Name},{!item.Title__c},{!item.Email__c}
   </apex:repeat>
 </apex:page>

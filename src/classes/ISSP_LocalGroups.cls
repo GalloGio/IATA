@@ -23,7 +23,8 @@ public without sharing class ISSP_LocalGroups {
         Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
         this.listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
         
-        string queryString = 'SELECT Contact__r.Name, Local_Governance__r.Country__r.Name, Local_Governance__r.Cluster__r.Name,'+ String.join(LIST_FIELDNAME,',')
+        string queryString = 'SELECT Contact__r.Name, Local_Governance__r.Country__r.Name, Local_Governance__r.Local_Governance_type__c, Local_Governance__r.Cluster__r.Name,'
+            + String.join(LIST_FIELDNAME,',')
             + ' FROM Participant__c'
             + ' WHERE Contact__r.AccountId IN :listAccount'
             + ' AND Local_Governance__r.RecordtypeId = :RT_LOCALGROUP'

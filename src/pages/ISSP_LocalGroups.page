@@ -127,7 +127,8 @@
                       <tr>
                         <apex:repeat value="{!listFieldName}" var="fieldname">
                             <td>
-                                <apex:outputText value="{!item[fieldname]}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c')}"/>
+                                <apex:outputText value="{!item[fieldname]}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c',fieldName!='Local_Group_Type__c')}"/>
+                                <apex:outputText value="{!item.Local_Governance__r.Local_Governance_type__c}" rendered="{!fieldName=='Local_Group_Type__c'}"/>
                                 <apex:outputText value="{!item.Local_Governance__r.Country__r.Name + item.Local_Governance__r.Cluster__r.Name}" rendered="{!fieldName=='Country__c'}"/>
                                 <apex:outputLink value="/ISSP_Contact?id={!item.Contact__c}&mid=M4S1" rendered="{!fieldName=='Contact__c'}">{!item.Contact__r.Name}</apex:outputLink>
                             </td>
