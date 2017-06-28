@@ -1,0 +1,281 @@
+<apex:page controller="ISSP_AMS_MSO_Controller"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+
+<c:ISSP_Header ></c:ISSP_Header>
+
+<head>
+
+<!--<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/outlook_news.css')}" />-->
+<style>
+.service-header {
+	background-image: url("{!URLFOR($Resource.CurrencyCenter_Style, '/RegionalOutlookNews_banner.jpg')}");
+	background-size:720px;
+	background-repeat: no-repeat;
+	background-position-x: 15px;
+	padding-left: 60px;
+	height: 170px;
+}
+.back-home-link {
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	text-decoration: none;
+	display: block;
+	background-image: url("back_arrow.png");
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	background-position: 0 3px;
+}
+.back-home-link:hover {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+@media (min-width:320px){
+	.service-header{background-size:720px;}
+	.back-home-link {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+}
+@media (min-width:768px){
+	.service-header{background-size:720px;}
+	.back-home-link {
+		margin-top: 20px;
+		margin-bottom: 15px;
+	}
+}
+@media (min-width:992px){
+	.service-header{background-size:940px;}
+	.back-home-link {
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+}
+@media (min-width:1200px){
+	.service-header{background-size:1140px;}
+	.back-home-link {
+		margin-top: 35px;
+		margin-bottom: 30px;
+	}
+}
+
+.page-title {
+	font-family: Arial;
+	font-size: 30px;
+	color: #FFFFFF;
+	margin-top: 60px;
+	margin-left: -15px;
+}
+.btn-blue {
+  background-color: #0075BC;
+  color: #FFFFFF;
+  height: 33px;
+  margin-right: 10px;
+}
+
+.hm-table {
+	margin-top: 12px;
+}
+.hm-table .table>thead>tr>th {
+	background-color: #F5F5F5;
+	text-align: center;
+	vertical-align: top;
+	text-transform: uppercase;
+	font-family: Arial;
+	font-size: 12px;
+	color:#444444;
+}
+.hm-table .table .country-cell {
+	width: 151px;
+	height: 33px;
+	background-color: #F5F5F5;	
+	color: #444444;
+	font-family: Arial;
+	font-size: 13px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #D4D9DB;
+}
+
+/* Pagination */
+.paginator {
+	font-size: 12px;
+}
+.firstoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: 0 -10px;
+    width: 9px;
+    height: 10px;
+}
+.prevoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -10px -10px;
+    margin: 0;
+    padding: 0;
+    width: 9px;
+    height: 10px;
+    color: #999;
+}
+.nextoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -17px -10px;
+    width: 9px;
+    height: 10px;
+    color: #999;
+}
+.lastoff {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -27px -10px;
+    width: 9px;
+    height: 10px;
+}
+.first {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: 0 1px;
+    width: 9px;
+    height: 10px;
+}
+.prev {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -10px 1px;
+    margin: 0;
+    padding: 0;
+    width: 9px;
+    height: 10px;
+}
+.next {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -17px 1px;
+    width: 9px;
+    height: 10px;
+}
+.last {
+    background-image: url('/img/paginationArrows.gif');
+    background-repeat: no-repeat;
+    background-position: -27px 1px;
+    width: 9px;
+    height: 10px;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+
+		<c:ISSP_CustomNavigation />
+
+		<apex:form >
+
+		<div class="row">
+      		<div class="col-xs-12 service-header">
+            
+				<div class="row page-title">
+					<div class="col-xs-12 col-md-4">
+						<div class="">{!$Label.ISSP_AMS_MSO_GSA_MSO_Title}</div><!-- ISSP_AMS_MSO_GSA_GSA_Title -->
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="{!$Label.ISSP_AMS_MSO_GSA_Search_Placeholder}" onkeyup="handleSearchChange();"/>&nbsp;
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<apex:outputPanel id="downloadButtons">
+							<!--<button class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterHeatMapPdf?search={!searchText}','_blank');">
+								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
+							</button>-->
+							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterHeatMapPdf?search={!searchText}','_blank');" >
+								<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_Download_Pdf}
+							</button>
+						</apex:outputPanel>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12">{!$Label.ISSP_AMS_MSO_GSA_MSO_Introduction_Text}</div><!--ISSP_AMS_MSO_GSA_GSA_Introduction_Text-->
+		</div>
+			
+		<div class="row hm-table">
+			<div class="col-xs-12">
+				<apex:outputPanel id="tablePanel">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Iata code</th>
+								<th>Account Name</th>
+								<th>Category</th>
+								<th>Billing Address</th>
+								<th>Billing City</th>
+								<th>billing Country</th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat value="{!lstDisplayAccounts}" var="a">
+							<tr>
+								<td>{!a.IATACode__c}</td>
+								<td>{!a.Name}</td>
+								<td>{!a.Category__c}</td>
+								<td>{!a.BillingStreet}</td>
+								<td>{!a.BillingCity}</td>
+								<td>{!a.BillingCountry}</td>
+							</tr>
+							</apex:repeat>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6" style="align: center;"> 
+									<div class="row paginator">
+										<div class="col-xs-3">
+											Display&nbsp;
+											<apex:selectList value="{!recordsPerPage}" multiselect="false" size="1" onchange="handleSearchChange();">
+												<apex:selectOptions value="{!selectOptionItems}"/>
+		        							</apex:selectList>
+		        							&nbsp;records per page
+										</div>
+										<div class="col-xs-6 text-center">
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="firstoff" alt="First Page"/></apex:outputPanel>
+												<apex:commandLink action="{!first}" rendered="{!hasPrevious}"><img src="/s.gif" class="first" title="First Page" alt="First Page"/></apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="prevoff" alt="Previous Page"/>Previous</apex:outputPanel>
+												<apex:commandLink action="{!previous}" rendered="{!hasPrevious}"><img src="/s.gif" class="prev" title="Previous" alt="Previous"/>Previous</apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasNext)}">Next<img src="/s.gif" class="nextoff" alt="Next"/></apex:outputPanel>
+												<apex:commandLink action="{!next}" rendered="{!hasNext}">Next<img src="/s.gif" class="next" alt="Next"/></apex:commandLink>
+											</span>
+											<span class="prevNext">
+												<apex:outputPanel rendered="{!NOT(hasNext)}"><img src="/s.gif" class="lastoff" alt="Last Page"/></apex:outputPanel>
+												<apex:commandLink action="{!last}" rendered="{!hasNext}"><img src="/s.gif" class="last" alt="Last Page"/></apex:commandLink>
+											</span>
+										</div>
+										<div class="col-xs-3 text-right">
+											Page {!pageNumber} of {!totalPages}
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+	              	</table>
+	          	</apex:outputPanel>
+          	</div>
+		</div>
+
+			
+		</apex:form>
+
+		<c:ISSP_CustomFooter />
+
+	</div>
+</body>
+
+</html>
+
+</apex:page>
