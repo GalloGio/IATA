@@ -28,7 +28,7 @@
           }
     });
     // search box
-    $('#table-pagination-search').on( 'keypress', function () {
+    $('#table-pagination-search').keyup(function() {
         tbl.search( this.value ).draw();
     } );
     
