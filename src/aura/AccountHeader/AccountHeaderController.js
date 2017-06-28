@@ -5,11 +5,10 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var vals = response.getReturnValue()
-                component.set("v.canEdit", vals[0]);
-                component.set("v.canEdit2", vals[1]);
+                component.set("v.canEdit", vals[0])
             }
             else {
-                alert("You have no Access to Sanctions");
+                
             }
                 });
         $A.enqueueAction(canEdit);
@@ -18,7 +17,7 @@
     switchToEditMode: function(component, event, helper) {
         var account = component.get("v.account");
         component.set("v.SanctionNotice", account.SanctionNotice__c);
-        component.set("v.isEditMode", true);
+            component.set("v.isEditMode", true);
     },
     
     cancelEditMode : function(component, event, helper) {

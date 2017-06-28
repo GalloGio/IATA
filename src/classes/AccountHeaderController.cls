@@ -7,8 +7,7 @@ public with sharing class AccountHeaderController {
     
    	public static List<String> getSanctionFields() {
 			List<String> sanctionFields = new String [] {
-				'SanctionNotice__c',
-				'SanctionNotice2__c'
+				'SanctionNotice__c'
 			};
 			return sanctionFields;
 
@@ -21,7 +20,7 @@ public with sharing class AccountHeaderController {
           //  system.debug('isUpdateable aqui: ' + sanction);
             system.debug('FIELDS: ' + Schema.sObjectType.Account.fields);
             //system.debug('fieldToCheck1: ' + Schema.sObjectType.Account.fields.sanction.isUpdateable());
-            system.debug('fieldToCheck2: ' + Schema.sObjectType.Account.fields.SanctionNotice2__c.isUpdateable());
+         
 	        // Obtain the field name/token map for the Comment__c object
 	        Map<String,Schema.SObjectField> m = Schema.SObjectType.Account.fields.getMap();
 
@@ -29,7 +28,6 @@ public with sharing class AccountHeaderController {
 	        for (String fieldToCheck : lsSanctionFields) {
 	            // Check if the user has access to view field
 	            //  if (!Schema.sObjectType.Contact.fields.Status__c.isUpdateable()){
-	system.debug('fieldToCheck2: ' + Schema.sObjectType.Account.fields.SanctionNotice2__c.isUpdateable());
 	            system.debug('fieldToCheck1: ' + Schema.sObjectType.Account.fields.SanctionNotice__c.isUpdateable() + ' isUpdateable: ' +m.get(fieldToCheck).getDescribe().isUpdateable() );
 	          /*  if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
 	                canEdit = false;
