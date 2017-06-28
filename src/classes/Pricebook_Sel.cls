@@ -78,29 +78,40 @@ public with sharing class Pricebook_Sel extends Selector
 		{
 			zqu__ProductRatePlanCharge__c zCharge = chargeByProductId.get(productId);
 
-			//-- Validate PricebookEntry exist
-			PricebookEntry pbe; 
-			if(existingEntries.containsKey(pricebookId + '-' + productId))
-			{
-				//-- Update existing Entry
-				pbe = existingEntries.get(pricebookId + '-' + productId);
-				pbe.UnitPrice = zCharge.zqu__ListPrice__c;
-				pbe.IsActive = true;
+			/*
+			System.debug('zqu__ProductRatePlanCharge__c Id: ' + zCharge.Id);
+			System.debug('  ListPrice: ' + zCharge.zqu__ListPrice__c);
+			*/
 
-				pbe2update.add(pbe);
-			}
-			else
-			{
-				//-- Create new Entry
-				pbe = new PricebookEntry(
-					IsActive = true,
-					Pricebook2Id = pricebookId,
-					Product2Id = productId,
-					UnitPrice = zCharge.zqu__ListPrice__c,
-					CurrencyIsoCode = currencyCode
-				);
+			// Ecommerce Enhancements R2, aosantos, 2017-06-16, dont create pricebook entries for discounts, etc, just for prices
+			if (zCharge.zqu__ListPrice__c != null) {
+				//-- Validate PricebookEntry exist
+				PricebookEntry pbe; 
+				if(existingEntries.containsKey(pricebookId + '-' + productId))
+				{
+					//-- Update existing Entry
+					pbe = existingEntries.get(pricebookId + '-' + productId);
 
-				pbe2create.add(pbe);
+					//System.debug('   pbeId: ' + pbe.Id);
+
+					pbe.UnitPrice = zCharge.zqu__ListPrice__c;
+					pbe.IsActive = true;
+
+					pbe2update.add(pbe);
+				}
+				else
+				{
+					//-- Create new Entry
+					pbe = new PricebookEntry(
+						IsActive = true,
+						Pricebook2Id = pricebookId,
+						Product2Id = productId,
+						UnitPrice = zCharge.zqu__ListPrice__c,
+						CurrencyIsoCode = currencyCode
+					);
+
+					pbe2create.add(pbe);
+				}
 			}
 		}
 
