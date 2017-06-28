@@ -91,6 +91,8 @@ public class AMS_AccountTriggerHandler {
         
         handleAgenciesOperations(accs,oldMap);
         handleDDUpdates(accs, oldMap);
+        // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
+        copyHandlingInformationToRegulations(accs, oldMap);
 
     }
 
@@ -179,7 +181,9 @@ public class AMS_AccountTriggerHandler {
             }
 
             AccountChangesStruct struct = new AccountChangesStruct(accountChanges,acct);
+            if(acct.Source_System__c == null || String.isBlank(acct.Source_System__c) || acct.Source_System__c.toUpperCase() != 'WEBSTAR') {
             accountChangesList.add(struct);
+            }
         }
 
          if(!accountChangesList.isEmpty()){
@@ -502,4 +506,30 @@ public class AMS_AccountTriggerHandler {
 
         if(!oscars.isEmpty()) update oscars;
     }
+
+    private static void copyHandlingInformationToRegulations(List<Account> newAccs, Map<Id,Account> oldMapAccs){
+
+        Set<Id> changedAccIds = new Set<Id>();
+        List<AMS_Agency_Regulation__c> certs;
+
+        for(Account acc :newAccs){
+
+            if((acc.Sector__c == AMS_Utils.SECTOR_CARGO || acc.Sector__c == AMS_Utils.CATEGORY_CASSASSOCIATE) && acc.Is_your_firm_handling_Dangerous_Goods__c != oldMapAccs.get(acc.Id).Is_your_firm_handling_Dangerous_Goods__c){
+                changedAccIds.add(acc.Id);
+            }
+        }
+
+        if(!changedAccIds.isEmpty()){
+            certs = new List<AMS_Agency_Regulation__c>();
+            for(AMS_Agency_Regulation__c cert :[SELECT id, 	Is_your_firm_handling_Dangerous_Goods__c, Handling_Account__c, Account__r.Is_your_firm_handling_Dangerous_Goods__c FROM AMS_Agency_Regulation__c WHERE Account__c in :changedAccIds]){
+                cert.Is_your_firm_handling_Dangerous_Goods__c = cert.Account__r.Is_your_firm_handling_Dangerous_Goods__c;//force run of workflow: AMS 90 days DGR Expiration Reminder - if Is_your_firm_handling_Dangerous_Goods__c == 'Yes'
+                certs.add(cert);
+            }
+        }
+
+        if(certs != null && !certs.isEmpty()){
+            update certs;
+        }
+    }
+
 }

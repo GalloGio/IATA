@@ -1240,9 +1240,8 @@ public class AMS_OSCARTriggerHandler {
 		if(updatedOscars.isEmpty()) return;
 
 		List<Case> casesToUpdate = new List<Case>();
-		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars])
-						//AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]) --> CB - 6 APR 2017 - AMS Enhancements AMSU-2
-						{
+		for(Case c : [SELECT Id, Status, OwnerId, Oscar__c, Process_Start_Date__c from CASE WHERE Oscar__c != null AND RecordType.Name = 'OSCAR Communication' AND Oscar__c IN :updatedOscars
+						AND ((Oscar__r.Process__c = 'BANK.ACCOUNT.CHANGES' AND ParentId = null) OR (Oscar__r.Process__c != 'BANK.ACCOUNT.CHANGES'))]){
 
 			AMS_OSCAR__c updatedOSCAR = newMap.get(c.Oscar__c);
 			Boolean caseChanged = false;
@@ -1519,36 +1518,46 @@ public class AMS_OSCARTriggerHandler {
 				system.debug('validateCertificates -> minDgrBR ' + minDgrBR);
 
 				String countryCode = oscar.AMS_Online_Accreditation__r.Branch_Office_Country__r.ISO_Code__c;
-				Integer cassNumber = Integer.valueOf(oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
+				if(oscar.AMS_Online_Accreditation__r.CASS_Number__c != null){
+					Integer cassNumber = Integer.valueOf(oscar.AMS_Online_Accreditation__r.CASS_Number__c);
 
-				if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
-					//If an agency is non handling, it must have a certificate of awareness (DGA)
-					if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
-						System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
-						checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+					System.debug('CHECK CASS: ' + oscar.AMS_Online_Accreditation__r.CASS_Number__c);
+
+					if(oscar.AMS_Online_Accreditation__r.Is_your_firm_handling_Dangerous_Goods__c == 'No'){
+						//If an agency is non handling, it must have a certificate of awareness (DGA)
+						if(oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.HO || oscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.BR){
+							System.debug('OSCARTriggerHandler -> validateCertificates: Non handling '+ oscar.AMS_Online_Accreditation__r.Location_Type__c + ' agency.');
+							checkCertifications(trainedStaffPerAccount.get(oscar.Account__c), locationType, false, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
+						}
+					}else{
+						//RB: Here We will select only the DGR trained staff, which must have a Valid until date
+						Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
+						List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
+						
+						trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+
+						for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {
+							system.debug('DDD trainedStaffToRemove:'  + trainedStaffToRemove);				
+							if( (trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_DGR || trainedStaffToRemove.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)  && trainedStaffToRemove.Valid_until__c != null){
+								//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
+								trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+							}
+						}
+
+						system.debug('Trained staff to remove: '+ trainedStaffDGR);
+						system.debug('All Trained staff: '+ allTrainedStaff);
+
+						checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 					}
 				}else{
-					//RB: Here We will select only the DGR trained staff, which must have a Valid until date
-					Map<Id, List<AMS_Accreditation_Contact__c>> trainedStaffDGR = new Map<Id, List<AMS_Accreditation_Contact__c>>();		
-					List<AMS_Accreditation_Contact__c> listDGR = new List<AMS_Accreditation_Contact__c>();
-					
-					trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
-
-					for(AMS_Accreditation_Contact__c trainedStaffToRemove: allTrainedStaff) {						
-						if(trainedStaffToRemove.Type_Of_Certificate__c == 'DGR' && trainedStaffToRemove.Valid_until__c != null){
-							//trainedStaffDGR.put(tsAccount, new List<AMS_Accreditation_Contact__c>());
-							trainedStaffDGR.get(tsAccount).add(trainedStaffToRemove);
+					for(AMS_OSCAR__c o : oscars){
+						if(o.Id == oscar.Id){
+							o.addError('Error! C, I, R, Q and G Location Types must have a CASS number defined.');
+							return;
 						}
 					}
-
-					system.debug('Trained staff to remove: '+ trainedStaffDGR);
-					system.debug('All Trained staff: '+ allTrainedStaff);
-
-					checkCertifications(trainedStaffDGR.get(oscar.Account__c), locationType, true, locationClass, countryCode, minDgrHO, minDgrBR, cassNumber);
 				}
-
 			}
 		}
 	}
@@ -1557,23 +1566,27 @@ public class AMS_OSCARTriggerHandler {
 
 		Integer numberDGR = 0;
 		Integer numberDGA = 0;
+		Integer numberCATA = 0;
 
 		if(trainedStaff != null)
 			for(AMS_Accreditation_Contact__c tStaff :trainedStaff){
 				if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGR)
 					numberDGR++;
+				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_CATA)
+					numberCATA++;
 				else if(tStaff.Type_Of_Certificate__c == AMS_Utils.CERT_DGA)
 					numberDGA++;
 		}
 
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGR ' + numberDGR);
 		System.debug('OSCARTriggerHandler -> checkCertifications: number of DGA ' + numberDGA);
+		System.debug('OSCARTriggerHandler -> checkCertifications: number of CATA ' + numberDGA);
 
 		System.debug('CHECK VALUES countryCode' + countryCode + ' locationClass ' + locationClass + ' accountLocationType ' + accountLocationType + ' cassNumber ' + cassNumber);
 
 		if(handling){
-			if(countryCode == 'CN' && locationClass == 'C' && numberDGR < 3){
-				throw new AMSException('##This agency must have at least 3 DGR that are not expired.##');
+			if(countryCode == 'CN' && locationClass == 'C' && (numberDGR < 3 || numberCATA < 1)){
+				throw new AMSException('##This agency must have at least 3 DGR and 1 CATA that are not expired.##');
 
 			}else if(countryCode == 'IN' && locationClass == 'C' && accountLocationType == AMS_Utils.BR && cassNumber >= 900 && cassNumber <= 999){
 				 //India has this particular exception to the normal behaviour, no check is to be done

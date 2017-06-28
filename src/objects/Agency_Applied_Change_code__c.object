@@ -648,6 +648,17 @@ AND(
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Financial_Security__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Security</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>For_Integration__c</fullName>
         <externalId>false</externalId>
         <formula>IF( ISNULL(Account__r.Last_Integration_Date__c),
@@ -807,7 +818,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1176,7 +1187,7 @@ AND(
         <relationshipLabel>Agencies Applied Change codes</relationshipLabel>
         <relationshipName>Agencies_Applied_Change_codes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>

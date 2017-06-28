@@ -25,9 +25,10 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     public Integer numberOfRecipients = 0;
 
     public static void prepare(EBC_Campaign__c c, String gaCode, String gaName, String templateExternalId, String senderProfileCustomerKey, String mailingId) {
+        system.debug('prepere starting....');
         String body = vfIECEBC_Template.getTemplateHtml(c.EBC_Design__c, true, gaCode, gaName);
         IECEBC_ETTemplateCreate.updateEmailTemplate(templateExternalId, c.Subject__c, body, 'HTML');
-        String noreply = 'noreply@ebroadcast.iata.org'; //'ebroadcast@iata.org';
+        String noreply = IEC_Settings__c.getInstance().EBC_Send_From_Email__c;  //'ebroadcast@iata.org';'noreply@ebroadcast.iata.org';
         String senderExternalId = IECEBC_ETSenderProfileCreate.createSenderProfile(senderProfileCustomerKey, senderProfileCustomerKey, c.From_Name__c, noreply);
         String sendClassificationId = IECEBC_ETSendClassificationCreate.createSendClassification(senderProfileCustomerKey, senderProfileCustomerKey, senderExternalId);
         
@@ -38,7 +39,7 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
     // Batchable 
     global Database.QueryLocator start(Database.BatchableContext BC){
         c = [Select Id, Name, Subject__c, EBC_Design__c, Billing_Account__c, Billing_Account__r.Name, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c, Send_Datetime__c From EBC_Campaign__c Where Id = :campaignId];
-        
+        system.debug('start ... ');
         
         String senderProfileCustomerKey = c.Id + '_'+IECEBC_Utility.generateRandomString(11);
         
@@ -49,8 +50,12 @@ global class SchdlIECEBCStartCampaign implements Database.Batchable<sObject>, Da
             gaName = c.Name;
         }
         
-        System.debug(gaCode);
-        System.debug(gaName);
+        System.debug('gaCode ' + gaCode);
+        System.debug('gaName ' +gaName);
+        System.debug('templateExternalId ' + templateExternalId);
+        System.debug('senderProfileCustomerKey ' + senderProfileCustomerKey);
+        System.debug('mailingId ' + mailingId);
+        System.debug('c ' + c);
         
         if (!Test.isRunningTest())  prepare(c, gaCode, gaName, templateExternalId, senderProfileCustomerKey, mailingId);
 

@@ -48,7 +48,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>AMS eBulletin Profile</description>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
@@ -373,25 +373,6 @@
         <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <label>Portal</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>one_user</fullName>
-        <columns>NAME</columns>
-        <columns>User__c</columns>
-        <columns>Last_Run__c</columns>
-        <columns>Opt_in__c</columns>
-        <columns>Opt_out_Bulletin__c</columns>
-        <columns>StatusDisplay__c</columns>
-        <columns>Last_NotificationBatch_Run__c</columns>
-        <columns>RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>User__c</field>
-            <operation>equals</operation>
-            <value>Aude Noerdinger,Marina Codazzi</value>
-        </filters>
-        <label>. one user</label>
         <language>en_US</language>
     </listViews>
     <nameField>

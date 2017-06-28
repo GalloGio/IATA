@@ -211,7 +211,6 @@
                 </apex:facet>
                 <apex:outputLink value="/ISSP_Contact?Id={!item.recordContact.Id}&action=edit{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!$Label.ISSP_Edit}</apex:outputLink> 
             </apex:column>
-            
             <apex:repeat value="{!fields}" var="f">
                   <apex:column >
 
@@ -263,6 +262,13 @@
 
                   </apex:column>
             </apex:repeat>
+
+            <apex:column rendered="{!isAdmin}">
+                <apex:facet name="header" >
+                    {!$ObjectType.User.fields.LastLoginDate.label}
+                </apex:facet>
+                <apex:outputField value="{!item.user.LastLoginDate}" rendered="{!item.user!=null}"/>
+            </apex:column>
 
         </apex:pageBlockTable>
 
