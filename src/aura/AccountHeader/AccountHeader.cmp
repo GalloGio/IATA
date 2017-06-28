@@ -1,11 +1,8 @@
 <aura:component controller="AccountHeaderController">
     <aura:attribute name="account" type="Account"/>
     <aura:attribute name="SanctionNotice" type="String"/>
-    <aura:attribute name="SanctionNotice2" type="String"/>
     <aura:attribute name="isEditMode" type="Boolean" default="false"/>
-    <aura:attribute name="isEditMode2" type="Boolean" default="false"/>
     <aura:attribute name="canEdit" type="Boolean" default="false"/>
-    <aura:attribute name="canEdit2" type="Boolean" default="false"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
     <!-- PAGE HEADER -->
