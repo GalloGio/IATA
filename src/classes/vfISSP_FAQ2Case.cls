@@ -1135,8 +1135,8 @@ public without sharing class vfISSP_FAQ2Case
         Return a SelectOption List with all IATA codes in the account hierarchy
     **/
     @TestVisible
-    private list<SelectOption> initIATACodeList(Id accountId) {
-        list<SelectOption> IATACodeList = new list<SelectOption>();
+    private List<List<SelectOption>> initIATACodeList(Id accountId) {
+         List<List<SelectOption>> IATACodeList = new  List<List<SelectOption>>();
         try {
             // find all parents for current account
             Account currentAccount = [
@@ -1165,9 +1165,16 @@ public without sharing class vfISSP_FAQ2Case
                 parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
             }
             
+            //Hierarchy Lists
+            List<List<Account>> auxAccounts = new List<List<Account>>();
+            List <Account> accountList2 = new List<Account>();
+            List <Account> accountList3 = new List<Account>();
+            List <Account> accountList4 = new List<Account>();
+            List <Account> accountList5 = new List<Account>();
+            
             // Get all account in the hierarchy
-            for (Account acc: [
-                SELECT Id, IATAcode__c, Site, Location_type__c
+            List <Account> accountList1 =
+            [SELECT Id, IATAcode__c, Site, Location_type__c
                 FROM Account
                 WHERE IATAcode__c != null
                 AND (Id = :parentId
@@ -1176,8 +1183,81 @@ public without sharing class vfISSP_FAQ2Case
                 OR Parent.Parent.ParentId = :parentId
                 OR Parent.Parent.Parent.ParentId = :parentId
                 OR Parent.Parent.Parent.Parent.ParentId = :parentId)
-                ORDER BY IATAcode__c ASC]) {
-                    IATACodeList.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c));
+                ORDER BY IATAcode__c ASC
+                Limit 1000]; 
+            auxAccounts.add(accountList1);
+            if(accountList1.size() == 1000){
+                accountList2 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 1000]; 
+                auxAccounts.add(accountList2);
+            }
+            if(accountList2.size() == 1000){
+                accountList3 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 2000]; 
+                auxAccounts.add(accountList3);
+            }
+            if(accountList3.size() == 1000){
+                accountList4 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 3000]; 
+                auxAccounts.add(accountList4);
+            }
+            if(accountList4.size() == 1000){
+                accountList5 =
+                [SELECT Id, IATAcode__c, Site, Location_type__c
+                FROM Account
+                WHERE IATAcode__c != null
+                AND (Id = :parentId
+                OR ParentId = :parentId
+                OR Parent.ParentId = :parentId
+                OR Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.ParentId = :parentId
+                OR Parent.Parent.Parent.Parent.ParentId = :parentId)
+                ORDER BY IATAcode__c ASC
+                Limit 1000
+                Offset 4000]; 
+                auxAccounts.add(accountList5);
+            }
+            if(auxAccounts!= null && auxAccounts.size() >0 ){ 
+                for(List<Account> accounts : auxAccounts){
+                    List<SelectOption> optionsAux = new List<SelectOption>();
+                    for(Account acc : accounts){
+                        optionsAux.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c)); 
+                    }
+                IATACodeList.add(optionsAux);
+                }
             }
             // current account value as default
             this.newCase.IATACode__c = currentAccount.IATAcode__c; 
@@ -1627,7 +1707,7 @@ public without sharing class vfISSP_FAQ2Case
         public Boolean AP_CASE      {get; set;}
         //public Boolean Complaint    {get; set;}
         public Decimal orderNumber  {get; set;}
-        public list<SelectOption> listOptions {get; set;} 
+        public list<list<SelectOption>> listOptions {get; set;} 
 
         public fieldRecordWrapper(ISSP_Case_Fields__c CS){
               this.fieldName    = CS.Label__c ;
@@ -1640,7 +1720,7 @@ public without sharing class vfISSP_FAQ2Case
               this.NOT_FDS      = CS.NOT_FDS__c ;
               this.AP_CASE      = CS.AP_Case__c ;
               //this.Complaint    = CS.Complaint__c ;
-              this.listOptions  = new list<SelectOption>();
+              this.listOptions  = new list<list<SelectOption>>();
         }
     }
 
