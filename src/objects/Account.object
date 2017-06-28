@@ -11123,6 +11123,17 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>SanctionNotice__c</fullName>
+        <description>Sanction Notice for AMP Team, Account Managers and direct reports</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sanction Notice for AMP Team, Account Managers and direct reports</inlineHelpText>
+        <label>SanctionNotice</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Search_Code__c</fullName>
         <description>InvoiceWorks</description>
         <externalId>true</externalId>

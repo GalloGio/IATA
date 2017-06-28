@@ -9,7 +9,7 @@
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Email</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
