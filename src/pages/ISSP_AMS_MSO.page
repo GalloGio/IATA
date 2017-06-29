@@ -4,6 +4,11 @@
 <c:ISSP_Header ></c:ISSP_Header>
 
 <head>
+	<script type="text/javascript">
+		function handleSearchChange(){
+			handleSearchAF();
+		}
+	</script>
 
 <!--<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/outlook_news.css')}" />-->
 <style>
@@ -68,6 +73,10 @@
 	margin-top: 60px;
 	margin-left: -15px;
 }
+.introduction-text {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
 .btn-blue {
   background-color: #0075BC;
   color: #FFFFFF;
@@ -97,6 +106,10 @@
 }
 .table-bordered>tbody>tr>td, .table-bordered>thead>tr>th {
     border: 1px solid #D4D9DB;
+}
+.hm-table .table>thead>tr>th a, .hm-table .table>thead>tr>th a:hover {
+	color: #444444;
+	text-decoration: none;
 }
 
 /* Pagination */
@@ -165,6 +178,27 @@
     width: 9px;
     height: 10px;
 }
+.prevNextLinks {
+	color: #A8A8A8;
+}
+.prevNextLinks a {
+	color: #000000;
+}
+
+/* SORTING */
+.sortAsc, .sortDesc {
+    width: 11px;
+    height: 11px;
+    margin: 0 5px;
+    vertical-align: -2px;
+    background: transparent url('/img/alohaSkin/sortArrows_sprite.png') no-repeat 0 top;
+}
+.sortAsc {
+    background-position: 0 -16px;
+}
+.sortDesc {
+    background-position: 0 top;
+}
 </style>
 </head>
 
@@ -174,6 +208,7 @@
 		<c:ISSP_CustomNavigation />
 
 		<apex:form >
+		<apex:actionFunction name="handleSearchAF" rerender="tablePanel" action="{!refreshMsoGsaList}"/>
 
 		<div class="row">
       		<div class="col-xs-12 service-header">
@@ -182,10 +217,10 @@
 					<div class="col-xs-12 col-md-4">
 						<div class="">{!$Label.ISSP_AMS_MSO_GSA_MSO_Title}</div><!-- ISSP_AMS_MSO_GSA_GSA_Title -->
 					</div>
-					<div class="col-xs-6 col-md-4">
+					<div class="col-xs-6 col-md-4 hidden-print">
 						<apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="{!$Label.ISSP_AMS_MSO_GSA_Search_Placeholder}" onkeyup="handleSearchChange();"/>&nbsp;
 					</div>
-					<div class="col-xs-6 col-md-4">
+					<div class="col-xs-6 col-md-4 hidden-print">
 						<apex:outputPanel id="downloadButtons">
 							<!--<button class="btn btn-blue" onclick="window.open('/ISSP_CurrencyCenterHeatMapPdf?search={!searchText}','_blank');">
 								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
@@ -198,7 +233,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12">{!$Label.ISSP_AMS_MSO_GSA_MSO_Introduction_Text}</div><!--ISSP_AMS_MSO_GSA_GSA_Introduction_Text-->
+			<div class="col-xs-12 introduction-text">{!$Label.ISSP_AMS_MSO_GSA_MSO_Introduction_Text}</div><!--ISSP_AMS_MSO_GSA_GSA_Introduction_Text-->
 		</div>
 			
 		<div class="row hm-table">
@@ -207,23 +242,55 @@
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th>Iata code</th>
-								<th>Account Name</th>
-								<th>Category</th>
-								<th>Billing Address</th>
-								<th>Billing City</th>
-								<th>billing Country</th>
+								<th>
+									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Iata code
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='IATACode__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
+									</apex:commandLink>
+								</th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Account Name
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Category
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Category__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="Category__c" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Billing Address
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingStreet',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingStreet" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Billing City
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCity',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingCity" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">billing Country
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
+										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
+										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
+										<apex:param name="SortBy" value="BillingCountry" assignTo="{!SortBy}"/>
+									</apex:commandLink></th>
 							</tr>
 						</thead>
 						<tbody>
 							<apex:repeat value="{!lstDisplayAccounts}" var="a">
 							<tr>
-								<td>{!a.IATACode__c}</td>
-								<td>{!a.Name}</td>
-								<td>{!a.Category__c}</td>
-								<td>{!a.BillingStreet}</td>
-								<td>{!a.BillingCity}</td>
-								<td>{!a.BillingCountry}</td>
+								<td>{!a.Account__r.IATACode__c}</td>
+								<td>{!a.Account__r.Name}</td>
+								<td>{!a.Account__r.Category__c}</td>
+								<td>{!a.Account__r.BillingStreet}</td>
+								<td>{!a.Account__r.BillingCity}</td>
+								<td>{!a.Account__r.BillingCountry}</td>
 							</tr>
 							</apex:repeat>
 						</tbody>
@@ -238,7 +305,7 @@
 		        							</apex:selectList>
 		        							&nbsp;records per page
 										</div>
-										<div class="col-xs-6 text-center">
+										<div class="col-xs-6 text-center prevNextLinks">
 											<span class="prevNext">
 												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="firstoff" alt="First Page"/></apex:outputPanel>
 												<apex:commandLink action="{!first}" rendered="{!hasPrevious}"><img src="/s.gif" class="first" title="First Page" alt="First Page"/></apex:commandLink>

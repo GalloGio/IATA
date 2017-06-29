@@ -1,17 +1,25 @@
-public with sharing class ISSP_AMS_MSO_Controller {
+public without sharing class ISSP_AMS_MSO_Controller {
     public String searchText {get; set;}
     public Account currentAccount {get; set;}
-    public Boolean isExcludeTerminated {get; set;}
+    public String SortingDirection {get; set;}
+    public String SortBy {get; set;}
 
-    private list<Account> lstAccountsInHierarchy;
+    private list<AMS_Inspection__c> lstAccountsInHierarchy;
     private Id currentAccountId;
+    private Id hqAccountId;
+    private String pageName;
+    public Boolean isMSO {
+        get {
+            return pageName == 'ISSP_AMS_MSO';
+        } set;
+    }
 
     public list<Account> OrderedFilteredHierarchy;
     public ApexPages.StandardSetController ssc {get;set;}
-    public list<Account> lstDisplayAccounts {
+    public list<AMS_Inspection__c> lstDisplayAccounts {
         get {
-            list<Account> tmpList = new list<Account>();
-            for (Account a : (list<Account>)ssc.getRecords()) {
+            list<AMS_Inspection__c> tmpList = new list<AMS_Inspection__c>();
+            for (AMS_Inspection__c a : (list<AMS_Inspection__c>)ssc.getRecords()) {
                 tmpList.add(a);
             }
 
@@ -36,35 +44,38 @@ public with sharing class ISSP_AMS_MSO_Controller {
         try {
             User currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
             Contact currentUserContact = [SELECT Id, AccountId FROM Contact WHERE Id = :currentUser.ContactId];
-            this.currentAccount = [SELECT Id, Name FROM Account WHERE Id = :currentUserContact.AccountId];
+            this.currentAccount = [SELECT Id, ParentId, RecordType.DeveloperName, Name FROM Account WHERE Id = :currentUserContact.AccountId];
             currentAccountId = currentAccount.Id;
+            hqAccountId = currentAccount.RecordType.DeveloperName == 'IATA_Airline' ? currentAccountId : currentAccount.ParentId;
         } catch(Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Unable to determine current user account.'));
             return;
         }
 
-        isExcludeTerminated = false;
+        pageName = ApexPages.currentPage().getUrl().substringAfterLast('/').substringBefore('?');
+
         recordsPerPage = 25;
+        SortBy = 'IATACode__c';
+        SortingDirection = 'ASC';
 
         refreshMsoGsaList();
     }
 
     public void refreshMsoGsaList() {
-        String strQuery = 'SELECT Id, Name, IATACode__c, Category__c, BillingStreet, BillingCity, BillingCountry FROM Account WHERE (ParentId = :currentAccountId OR Id = :currentAccountId) ';
+        String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry ';
+        strQuery += 'FROM AMS_Inspection__c WHERE Airline__c = :hqAccountId ';
+        strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
 
-        if (isExcludeTerminated) {
-            strQuery += ' AND Status__c <> \'Terminated\'';
-        }
-
+        //
         if (searchText != null && searchText != '') {
             strQuery += ' AND (';
-            strQuery += 'Name LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
-            strQuery += 'OR IATACode__c LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
-            strQuery += 'OR BillingCountry LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += 'Account__r.Name LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += 'OR Account__r.IATACode__c LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
+            strQuery += 'OR Account__r.BillingCountry LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
             strQuery += ')';
-        }
+        } 
 
-        strQuery += 'ORDER BY IATACode__c NULLS LAST';
+        strQuery += ' ORDER BY Account__r.' + SortBy + ' ' + SortingDirection + ' NULLS LAST';
 
         system.debug('query: ' + strQuery);
 
