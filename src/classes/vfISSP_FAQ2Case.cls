@@ -1171,7 +1171,9 @@ public without sharing class vfISSP_FAQ2Case
             List <Account> accountList3 = new List<Account>();
             List <Account> accountList4 = new List<Account>();
             List <Account> accountList5 = new List<Account>();
-            
+            List<SelectOption> none = new List<SelectOption>();
+            none.add(new SelectOption('', '--None--'));
+            IATACodeList.add(none);
             // Get all account in the hierarchy
             List <Account> accountList1 =
             [SELECT Id, IATAcode__c, Site, Location_type__c
@@ -1256,7 +1258,8 @@ public without sharing class vfISSP_FAQ2Case
                     for(Account acc : accounts){
                         optionsAux.add(new SelectOption(acc.IATAcode__c, acc.IATAcode__c + ' - ' + acc.Location_type__c)); 
                     }
-                IATACodeList.add(optionsAux);
+                    if(optionsAux.size() > 0)
+                        IATACodeList.add(optionsAux);
                 }
             }
             // current account value as default
