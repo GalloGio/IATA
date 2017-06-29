@@ -214,6 +214,10 @@
                 <behavior>Readonly</behavior>
                 <field>Abbreviated_address__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Country_ISO_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
