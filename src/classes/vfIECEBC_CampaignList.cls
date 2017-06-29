@@ -195,6 +195,7 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             fields.add('Number_of_Recipients__c');
             fields.add('Number_of_Unique_Opens__c');
             fields.add('NumberSent__c');
+            fields.add('Delivered7Days__c');
             fields.add('Number_of_Unique_Clicks__c');
             fields.add('EBC_Design__c');
             fields.add('Is_Step5_Writable__c');
