@@ -442,7 +442,6 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                 AccountCountry == 'United States' && 
                (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
               (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
-                system.debug('PROCESS!!');
                 template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
         } //end INC325289
 
