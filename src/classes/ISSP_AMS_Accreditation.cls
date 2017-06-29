@@ -3818,7 +3818,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 agentaccountITAN = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                                  BillingCountry, Name
                                  FROM Account
-                                 WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode 
+                                 WHERE RecordType.DeveloperName = 'IATA_Agency' AND Sector__c = :agentsector AND IATACode__c LIKE :qCargoCode AND Category__c = :AMS_UTILS.IATAN_PASSENGER_AGENT
                                 ];
                 system.debug('agentaccountITAN ' + agentaccountITAN);
             }
