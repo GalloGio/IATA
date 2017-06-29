@@ -46,7 +46,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		if(countryToSearch != null)
 			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.Location_Class__c in :locationClassAllowed and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
 		else
-			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Name = :oscarName';
+			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.Location_Class__c in :locationClassAllowed and Name = :oscarName and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
 
 	}
 	
