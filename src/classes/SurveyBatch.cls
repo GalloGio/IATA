@@ -439,7 +439,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
           template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
           //start INC325289
         else if(c.Account.Source_System__c == 'WEBSTAR' && 
-                AccountCountry == 'United States' && 
+                (AccountCountry == 'United States' ||  AccountCountry == 'US TERRITORIES AND POSSESS' || AccountCountry == 'Northern Mariana Islands') &&
                (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
               (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
                 template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
