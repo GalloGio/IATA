@@ -52,7 +52,6 @@ public class AMS_InspectionHelper {
 
                 String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
 
-
                 if(newStatus != null && accountToProcess.Status__c <> newStatus){
 
                     accountToProcess.Status__c = newStatus;
@@ -70,7 +69,7 @@ public class AMS_InspectionHelper {
 
     private static String getDecodedStatus(String inspectionStatusCode, String airlineCode){
 
-        if(airlineCode.equalsIgnoreCase('IATAN') || airlineCode.equalsIgnoreCase('ARC') airlineCode.equalsIgnoreCase('Airlines Reporting Corp'))
+        if(airlineCode.equalsIgnoreCase('IATAN') || airlineCode.equalsIgnoreCase('ARC') || airlineCode.equalsIgnoreCase('Airlines Reporting Corp'))
             return AMS_Utils.getIATANReadableStatus(inspectionStatusCode);
 
         if(airlineCode.equalsIgnoreCase('DOM') || airlineCode.equalsIgnoreCase('IATA'))
