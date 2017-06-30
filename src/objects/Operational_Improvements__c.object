@@ -3777,10 +3777,20 @@ function htmlDecode(input){
   return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
 }
 
+function getNow(){
+  var time;
+  try {
+    time = &quot;{!NOW()}&quot;.split(&quot; &quot;)[1];
+  } catch (e) {
+    time = &quot;00:00&quot;;
+  }
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())} &quot; + time);
+}
+
 if ({!ISNULL(Operational_Improvements__c.Date_Time_Closed__c)}) {
   var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
   improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-  improvement.Date_Time_Closed__c = new Date(&apos;{!Now()}&apos;);
+  improvement.Date_Time_Closed__c = getNow();
   var result = sforce.connection.update([improvement ]);
 
   if(result[0].getBoolean(&apos;success&apos;)) {
@@ -3819,11 +3829,14 @@ function getOIObject() {
   }
 }
 
+function getToday(){
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}&quot;);
+}
+
 function updateOIObject(object, months) {
   try {
- 
-    var todayDate = new Date(&quot;{!Today}&quot;);
-    var nextDate = new Date(&quot;{!Today}&quot;);
+    var todayDate = getToday();
+    var nextDate = getToday();
     nextDate.setMonth(todayDate.getMonth() + months);
     object.Conclusion_Date__c = todayDate ;
     object.Pending_eff_validation_date__c = nextDate;
@@ -3961,10 +3974,14 @@ function htmlDecode(input){
   return e.childNodes.length === 0 ? &quot;&quot; : e.childNodes[0].nodeValue;
 }
 
+function getToday(){
+  return new Date(&quot;{!MONTH(TODAY())}/{!DAY(TODAY())}/{!YEAR(TODAY())}&quot;);
+}
+
 if ({!ISNULL(Operational_Improvements__c.Terminated_Date__c)}) {
   var improvement = new sforce.SObject(&quot;Operational_Improvements__c&quot;);
   improvement.Id = &apos;{!Operational_Improvements__c.Id}&apos;;
-  improvement.Terminated_Date__c = new Date(&apos;{!Now()}&apos;);
+  improvement.Terminated_Date__c = getToday();
   var result = sforce.connection.update([improvement ]);
 
   if(result[0].getBoolean(&apos;success&apos;)) {
