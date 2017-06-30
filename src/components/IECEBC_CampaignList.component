@@ -47,7 +47,7 @@
                                         </apex:outputText>
                                     </apex:outputText>
                                     <apex:outputText rendered="{!IF(c.Status__c == 'SENT', true, false)}">
-                                         Sent:&nbsp;<apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ssa zz}">
+                                         Sent:&nbsp;<apex:outputText value="{0,date,EEE MMM dd yyyy hh:mm:ss a zz}">
                                             <apex:param value="{!c.Send_Datetime__c}" /> 
                                         </apex:outputText>
                                     </apex:outputText>
@@ -146,7 +146,6 @@
             </apex:repeat>
         </script>
     </apex:outputPanel>
-    
     
     <apex:outputText rendered="{!IF(CampaignsCount == 0 && !isLimitedComponent, true, false)}">
         <div class="action-box">
