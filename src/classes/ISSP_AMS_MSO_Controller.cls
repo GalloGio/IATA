@@ -10,8 +10,15 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public Boolean isMSO {
         get {
             String pageName = ApexPages.currentPage().getUrl().substringAfterLast('/').substringBefore('?');
-            //String pdfParam = ApexPages.currentPage().getParameters().get('')
-            return pageName == 'ISSP_AMS_MSO';
+            String dataParam = ApexPages.currentPage().getParameters().get('data');
+
+            return pageName == 'ISSP_AMS_MSO' || (pageName == 'ISSP_AMS_GSA_MSO_CSV' && dataParam == 'MSO');
+        } set;
+    }
+    public String strRenderAs {
+        get {
+            String pdfParam = ApexPages.currentPage().getParameters().get('renderAs');
+            return pdfParam == 'pdf' ? 'PDF' : 'HTML';
         } set;
     }
 
@@ -56,6 +63,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
         recordsPerPage = 25;
         SortBy = 'IATACode__c';
         SortingDirection = 'ASC';
+        if (ApexPages.currentPage().getParameters().get('search') != null) searchText = ApexPages.currentPage().getParameters().get('search');        
 
         refreshMsoGsaList();
     }
@@ -81,7 +89,10 @@ public without sharing class ISSP_AMS_MSO_Controller {
         lstAccountsInHierarchy = Database.query(strQuery);
 
         ssc = new ApexPages.StandardSetController(lstAccountsInHierarchy);
-        ssc.setPageSize(recordsPerPage);
+        if (strRenderAs == 'PDF') 
+            ssc.setPageSize(lstAccountsInHierarchy.size()); // for PDF display all records
+        else
+            ssc.setPageSize(recordsPerPage);
     }
 
     public Boolean hasNext {
