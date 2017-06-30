@@ -2270,7 +2270,8 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Location_Type__c,
                        Account.Top_Parent__r.Location_Type__c, 
                        Account.ANG_IEP_Status_FF__c,
-                       Account.Is_Branch_Abroad__c
+                       Account.Is_Branch_Abroad__c,
+                       Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
     }
 

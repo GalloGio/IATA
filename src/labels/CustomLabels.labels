@@ -19546,6 +19546,13 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>        
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>        
+    </labels>    
+    <labels>
         <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
         <language>en_US</language>
         <protected>false</protected>
