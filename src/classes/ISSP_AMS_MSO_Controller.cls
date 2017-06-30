@@ -7,9 +7,10 @@ public without sharing class ISSP_AMS_MSO_Controller {
     private list<AMS_Inspection__c> lstAccountsInHierarchy;
     private Id currentAccountId;
     private Id hqAccountId;
-    private String pageName;
     public Boolean isMSO {
         get {
+            String pageName = ApexPages.currentPage().getUrl().substringAfterLast('/').substringBefore('?');
+            //String pdfParam = ApexPages.currentPage().getParameters().get('')
             return pageName == 'ISSP_AMS_MSO';
         } set;
     }
@@ -51,8 +52,6 @@ public without sharing class ISSP_AMS_MSO_Controller {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Unable to determine current user account.'));
             return;
         }
-
-        pageName = ApexPages.currentPage().getUrl().substringAfterLast('/').substringBefore('?');
 
         recordsPerPage = 25;
         SortBy = 'IATACode__c';

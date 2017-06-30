@@ -243,38 +243,38 @@
 						<thead>
 							<tr>
 								<th>
-									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Iata code
+									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='IATACode__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
 									</apex:commandLink>
 								</th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Account Name
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Account_Name}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Category
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Category}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Category__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Category__c" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Billing Address
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Street_Address}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingStreet', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingStreet',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingStreet" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Billing City
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_City}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCity',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingCity" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">billing Country
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Country}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
@@ -311,12 +311,12 @@
 												<apex:commandLink action="{!first}" rendered="{!hasPrevious}"><img src="/s.gif" class="first" title="First Page" alt="First Page"/></apex:commandLink>
 											</span>
 											<span class="prevNext">
-												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="prevoff" alt="Previous Page"/>Previous</apex:outputPanel>
-												<apex:commandLink action="{!previous}" rendered="{!hasPrevious}"><img src="/s.gif" class="prev" title="Previous" alt="Previous"/>Previous</apex:commandLink>
+												<apex:outputPanel rendered="{!NOT(hasPrevious)}"><img src="/s.gif" class="prevoff" alt="{!$Label.ISSP_AMS_MSO_GSA_Previous}"/></apex:outputPanel>
+												<apex:commandLink action="{!previous}" rendered="{!hasPrevious}"><img src="/s.gif" class="prev" title="{!$Label.ISSP_AMS_MSO_GSA_Previous}" alt="{!$Label.ISSP_AMS_MSO_GSA_Previous}"/>{!$Label.ISSP_AMS_MSO_GSA_Previous}</apex:commandLink>
 											</span>
 											<span class="prevNext">
-												<apex:outputPanel rendered="{!NOT(hasNext)}">Next<img src="/s.gif" class="nextoff" alt="Next"/></apex:outputPanel>
-												<apex:commandLink action="{!next}" rendered="{!hasNext}">Next<img src="/s.gif" class="next" alt="Next"/></apex:commandLink>
+												<apex:outputPanel rendered="{!NOT(hasNext)}">{!$Label.ISSP_AMS_MSO_GSA_Next}<img src="/s.gif" class="nextoff" alt="{!$Label.ISSP_AMS_MSO_GSA_Next}"/></apex:outputPanel>
+												<apex:commandLink action="{!next}" rendered="{!hasNext}">{!$Label.ISSP_AMS_MSO_GSA_Next}<img src="/s.gif" class="next" alt="{!$Label.ISSP_AMS_MSO_GSA_Next}"/></apex:commandLink>
 											</span>
 											<span class="prevNext">
 												<apex:outputPanel rendered="{!NOT(hasNext)}"><img src="/s.gif" class="lastoff" alt="Last Page"/></apex:outputPanel>

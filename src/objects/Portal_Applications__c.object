@@ -297,6 +297,8 @@
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;CNS Payment Link&quot;, $Label.ISSP_CNS_PaymentLink_ServiceName,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
+&quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
+&quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
 Name 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -327,6 +329,8 @@ Name
       &quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS,
       &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace,
       &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter_Description,
+      &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Description,
+      &quot;MSO Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Description,
       &quot;&quot;
       )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

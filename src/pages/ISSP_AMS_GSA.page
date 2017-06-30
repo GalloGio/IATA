@@ -243,26 +243,26 @@
 						<thead>
 							<tr>
 								<th>
-									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Iata code
+									<apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='IATACode__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='IATACode__c',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
 									</apex:commandLink>
 								</th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Account Name
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Account_Name}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">Billing City
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_City}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCity', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCity',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="BillingCity" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">billing Country
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel">{!$Label.ISSP_AMS_MSO_GSA_Country}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='BillingCountry', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='BillingCountry',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
