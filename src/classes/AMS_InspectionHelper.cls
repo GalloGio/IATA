@@ -1,26 +1,26 @@
 public class AMS_InspectionHelper {
 
     // this method updates the agencies (account) depending on the inspection attached to them
-    // if the Accreditation_Endorsement_Status_code__c 
+    // if the Accreditation_Endorsement_Status_code__c
     public static void setStatusCodeOnAgency(list<AMS_Inspection__c> inspections){
-        
+
         if(inspections.isEmpty())
             return; // no processing to be done.
-        
+
         //getting available airlines...
-        Map<Id,AMS_Accreditation_Organization__c> airlines = new Map<Id,AMS_Accreditation_Organization__c>( [select id, Air_Code__c from AMS_Accreditation_Organization__c where Air_Code__c in ('DOM','IATA','IATAN')]);
-        
+        Map<Id,AMS_Accreditation_Organization__c> airlines = new Map<Id,AMS_Accreditation_Organization__c>( [select id, Air_Code__c from AMS_Accreditation_Organization__c where Air_Code__c in ('ARC','DOM','IATA','IATAN')]);
+
         //let's find out if any of the inspections belong to the agencies
 
         if(airlines.isEmpty())
             return; // no processing to be done.
 
-        
+
         List<AMS_Inspection__c> iataInspections = new List<AMS_Inspection__c>();
         Set<String> agencyIds = new Set<String>();
 
          for(AMS_Inspection__c i:inspections){
-            
+
             if(i.Account__c == null)
                 continue; // should not be necessary if this is coming from the trigger because the validation is being made ... but this is a public static method.
 
@@ -28,14 +28,14 @@ public class AMS_InspectionHelper {
                 iataInspections.add(i);
                 agencyIds.add(i.Account__c);
             }
-         
+
          }
 
         if(agencyIds.isEmpty())
             return; // no processing to be done.
 
-        
-        Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c from Account where id IN :agencyIds]);
+
+        Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c, Location_Class__c from Account where id IN :agencyIds]);
 
         Set<Account> accountsToUpdate = new Set<Account>();
 
@@ -45,45 +45,47 @@ public class AMS_InspectionHelper {
 
             accountToProcess = mapAgencies.get(i.Account__c);
 
-            if(accountToProcess != null){
+            if(accountToProcess != null ){
                 
+                if(accountToProcess.Location_Class__c!='W' && airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('ARC')) continue;
                 //accordng to the type of airline, the status can be diff, so let's divide and conquer.
 
                 String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
-               
+
+
                 if(newStatus != null && accountToProcess.Status__c <> newStatus){
-                    
+
                     accountToProcess.Status__c = newStatus;
 
                     accountsToUpdate.add(accountToProcess);
                 }
-            
+
             }
         }
 
         if(!accountsToUpdate.isEmpty())
             update new List<Account>(accountsToUpdate);
-        
+
     }
 
     private static String getDecodedStatus(String inspectionStatusCode, String airlineCode){
 
-        if(airlineCode.equalsIgnoreCase('IATAN'))
+        if(airlineCode.equalsIgnoreCase('IATAN') || airlineCode.equalsIgnoreCase('ARC') )
             return AMS_Utils.getIATANReadableStatus(inspectionStatusCode);
 
         if(airlineCode.equalsIgnoreCase('DOM') || airlineCode.equalsIgnoreCase('IATA'))
             return AMS_Utils.getIATAReadableStatus(inspectionStatusCode);
-       
+
         return null; // this shouldn't happen ...
     }
 
 
 
-            
+
     public static void setRecertExpiryDateOnAccount(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
     {
         Map<Id, AMS_Inspection__c> statusCodeChanged = AMS_InspectionHelper.findAMSInspectionsWhereStatusCodeChangedToZero(oldValues, newValues);
-        
+
         List<Account> accountsToProcess = [select id, Expiry_Date__c from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
@@ -96,7 +98,7 @@ public class AMS_InspectionHelper {
         update accountsToProcess;
 
     }
-    
+
     private static Map<Id, AMS_Inspection__c> findAMSInspectionsWhereStatusCodeChangedToZero(Map<Id, AMS_Inspection__c> oldValues, Map<Id, AMS_Inspection__c> newValues)
     {
         Map<Id, AMS_Inspection__c> changedRecords = new Map<Id, AMS_Inspection__c>();
@@ -120,9 +122,9 @@ public class AMS_InspectionHelper {
         }
         return changedRecords;
     }
-    
+
         /**  Comparison of two AMS_Inspection__c records. Used to prevent a last synchronization datetime issue caused by DST.
-     *   If any of the fields apart from last sync is not equal to the old value, 
+     *   If any of the fields apart from last sync is not equal to the old value,
      *   it means something else than the Last Sync value got updated as well.
     */
     public static boolean compareAmsInspectionRecords_IgnoringLastSyncDate(AMS_Inspection__c newRecord, AMS_Inspection__c oldRecord)
@@ -135,7 +137,7 @@ public class AMS_InspectionHelper {
         {
             inspectionAPIFieldNames.add(field.getDescribe().getName());
         }
-        
+
         boolean valueChanged = false;
 
         for(String field : inspectionAPIFieldNames)
@@ -156,5 +158,5 @@ public class AMS_InspectionHelper {
         }
         return false;
     }
-    
+
 }
