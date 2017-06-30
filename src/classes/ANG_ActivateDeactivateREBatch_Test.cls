@@ -49,7 +49,7 @@
 				name='Acc3',
 				IATA_ISO_Country__c=isoCntr3.id,
 				Location_Type__c='HE',
-        		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+                recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 				);
 			accountList.add(acc3);
 			
