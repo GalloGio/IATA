@@ -32,21 +32,24 @@
 			Account acc1= new Account(
 				name='Acc1',
 				IATA_ISO_Country__c=isoCntr.id,
-				Location_Type__c='HE'
+				Location_Type__c='HE',
+        		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 				);
 			accountList.add(acc1);
 
 			Account acc2= new Account(
 				name='Acc2',
 				IATA_ISO_Country__c=isoCntr2.id,
-				Location_Type__c='HE'
+				Location_Type__c='HE',
+        		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 				);
 			accountList.add(acc2);
 
 			Account acc3= new Account(
 				name='Acc3',
 				IATA_ISO_Country__c=isoCntr3.id,
-				Location_Type__c='HE'
+				Location_Type__c='HE',
+        		recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 				);
 			accountList.add(acc3);
 			
