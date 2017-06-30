@@ -19,28 +19,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
         insert sidraLiteCase;
 
-		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
-			name='Risk Event Test',
-			ANG_Description__c='Risk Event Test',
-			ANG_Expiration__c=24,
-			ANG_Risk_ID__c='testRiskId',
-			Limit_Cash_conditions__c = true
-		);
-		
-		insert ret;
 
-        List<ANG_Agency_Risk_Event__c> listAREs = new list<ANG_Agency_Risk_Event__c>();
-
-		ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
-			ANG_AccountId__c=a1.id,
-			ANG_Risk_Type__c=ret.id,
-			ANG_Issued_Date__c =System.today(),
-			ANG_Event_Status__c='Inactive'
-		);
-
-		listAREs.add(are1);
-
-		insert listAREs;
 
 		list<ANG_Agency_Risk_Calculation__c> adjustmentList = new list<ANG_Agency_Risk_Calculation__c>();
 
@@ -65,13 +44,39 @@ private class ANG_RiskForecastPropertiesControllerTest {
 		ANG_Agency_Risk_Calculation__c adj3= new ANG_Agency_Risk_Calculation__c(
 			ANG_Financial_Review_Result__c = 'Satisfactory - No Action' ,
 			ANG_Risk_History__c = 'C',
-			ANG_Risk_History_Assessment__c = 'Failed',
+			ANG_Risk_History_Assessment__c = 'Passed',
 			recordtypeId=risk_Status_AssessmentRTId			
 			);
 
 		adjustmentList.add(adj3);
 
 		insert adjustmentList;
+        
+       		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+			name='Risk Event Test',
+			ANG_Description__c='Risk Event Test',
+			ANG_Expiration__c=24,
+			ANG_Risk_ID__c='testRiskId',
+			Limit_Cash_conditions__c = true,
+			ANG_Agency_Risk_Calculation__c = adj3.Id
+
+                
+		);
+		
+		insert ret;
+
+        List<ANG_Agency_Risk_Event__c> listAREs = new list<ANG_Agency_Risk_Event__c>();
+
+		ANG_Agency_Risk_Event__c are1= new ANG_Agency_Risk_Event__c(
+			ANG_AccountId__c=a1.id,
+			ANG_Risk_Type__c=ret.id,
+			ANG_Issued_Date__c =System.today(),
+			ANG_Event_Status__c='Inactive'
+		);
+
+		listAREs.add(are1);
+
+		insert listAREs;
 
 	}
 
