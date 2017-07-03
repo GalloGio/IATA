@@ -296,7 +296,7 @@
                                     "IATA EasyPay (MSTS)", $Label.ANG_ISSP_IATA_EasyPay,
                                     "IATA EasyPay (WEX)", $Label.ANG_ISSP_IATA_EasyPay,
                                     "IATA Accreditation ", $Label.ISSP_Become_Accredited_Agent,
-
+                                    "BSP / CASS Change of Bank details", $Label.ISSP_Change_Bank,
                                     "click here"
                                     )}"/>
                                 </td>

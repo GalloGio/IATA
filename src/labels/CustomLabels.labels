@@ -6020,6 +6020,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_Required_Field_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Required Field Error Msg</shortDescription>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt; You must enter a value</value>
+    </labels>
+    <labels>
         <fullName>IEC_SAP_Customer_Address_Issue</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13102,6 +13109,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Notifications_Button</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Notifications Button</shortDescription>
+        <value>Remittance Date Reminders</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13117,6 +13132,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
         <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
 Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
+        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement billing (BSP sales) to your DD account.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -13901,6 +13924,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_ContactList</shortDescription>
         <value>Change User Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Change_Bank</fullName>
+        <categories>ISSP, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Change_Bank_Details</shortDescription>
+        <value>BSP / CASS Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Finalized</fullName>
@@ -21557,7 +21588,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Request Access</shortDescription>
-        <value>Request Access</value>
+        <value>Request Access to a new service</value>
     </labels>
     <labels>
         <fullName>OneId_Request_this_App</fullName>
