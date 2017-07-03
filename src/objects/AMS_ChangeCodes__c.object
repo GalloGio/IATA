@@ -100,6 +100,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Calculate_Outstanding_Amount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked the Outstanding Amount column on eBulletin report will display a value</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the Outstanding Amount column on eBulletin report will display a value</inlineHelpText>
+        <label>Calculate Outstanding Amount</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Change_Code__c</fullName>
         <externalId>false</externalId>
         <label>Change Code</label>
