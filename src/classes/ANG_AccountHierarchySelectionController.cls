@@ -194,6 +194,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		private set;
 	}
 
+	public Boolean showNewHeDifferentLegalEntity{
+		get{
+				return tocList.contains(AMS_Utils.ANG_LOCATION_TYPE);
+		}
+		set;
+	}
+
 	//its public so it can be tested
 	public List<String> oscarFieldList{
 		get{
