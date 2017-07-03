@@ -63,6 +63,9 @@ private class ISSP_AMS_MSO_Controller_Test {
             ctrl.previous();
             ctrl.next();
 
+
+            system.assertEquals('/ISSP_Homepage', ctrl.checkIfUserHasAccessToService().getUrl());
+
         }
 
         Test.stopTest();

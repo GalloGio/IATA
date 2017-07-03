@@ -95,6 +95,37 @@ public without sharing class ISSP_AMS_MSO_Controller {
             ssc.setPageSize(recordsPerPage);
     }
 
+    public PageReference checkIfUserHasAccessToService(){
+        User u = [SELECT Id, ContactId From User WHERE Id =: UserInfo.getUserId()];
+        if(u != null){
+            List<Portal_Application_Right__c> par;
+            if (isMSO)
+                par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c 
+                        WHERE Contact__c =: u.ContactId 
+                        AND Right__c = 'Access Granted'
+                        AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin')
+                        AND Application_Start_URL__c = '/ISSP_AMS_MSO'];
+            else 
+                par = [SELECT Id, Terms_Acceptance__c FROM Portal_Application_Right__c 
+                        WHERE Contact__c =: u.ContactId 
+                        AND Right__c = 'Access Granted'
+                        AND (Contact_User_Portal_Status__c = 'Approved User' OR Contact_User_Portal_Status__c = 'Approved Admin')
+                        AND Application_Start_URL__c = '/ISSP_AMS_GSA'];
+
+            if(par.size()==0) {
+                // No access right => return to home page
+                return new PageReference('/ISSP_Homepage');
+            } else {
+                // has access rights
+                return null;
+            }
+        }
+
+        // if this point is reached, an error occured => return to portal home page
+        return new PageReference('/ISSP_Homepage');
+    }
+
+
     public Boolean hasNext {
         get {
             return ssc.getHasNext();

@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_AMS_MSO_Controller" contentType="text/csv#{!IF(isMSO,'MSO', 'GSA')}_Appointments.csv">
+<apex:page controller="ISSP_AMS_MSO_Controller" contentType="text/csv#{!IF(isMSO,'MSO', 'GSA')}_Appointments.csv"  action="{!checkIfUserHasAccessToService}">
 {!$Label.ISSP_AMS_MSO_GSA_IATA_Code},{!$Label.ISSP_AMS_MSO_GSA_Account_Name},{!IF(isMSO, ($Label.ISSP_AMS_MSO_GSA_Category + ',' + $Label.ISSP_AMS_MSO_GSA_Street_Address + ','), '')}{!$Label.ISSP_AMS_MSO_GSA_City},{!$Label.ISSP_AMS_MSO_GSA_Country}
 
 <apex:repeat value="{!lstDisplayAccounts}" var="a">
