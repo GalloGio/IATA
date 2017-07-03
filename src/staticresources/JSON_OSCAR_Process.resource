@@ -5508,6 +5508,493 @@
             ]
           }
         ]
+      },
+       {
+        "Name": "ANG.MAJOR.CHANGES.1.0",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "ANG_AccountHierarchySelection",
+                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                  "Change_effective_as_of__c",
+                  "Type_of_change__c",
+                  "STEP6__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_ANTIMONEYLAUNDERING",
+            "Steps": [
+              {
+                "Name": "STEP17",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "performAML",
+                    "ActionLabel": "AMS_OSCAR_Action4",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_inProgress"
+                  },
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step17_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP17__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_PENALTY",
+            "Steps": [
+              {
+                "Name": "STEP26",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "createSIDRALite",
+                    "ActionLabel": "AMS_OSCAR_Action7",
+                    "args": [
+                      "oscarid"
+                    ]
+                  },
+                  {
+                    "FunctionName": "createCommissionerCase",
+                    "ActionLabel": "AMS_OSCAR_Action8",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [],
+                "DisplayFields": [
+                  "Change_effective_as_of__c",
+                  "Remove_STDs__c",
+                  "Notify_Agent_Suspension__c",
+                  "Notify_Agent_Termination__c",
+                  "STEP26__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP27",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "NOC_Received__c",
+                  "Notify_Agent_Reactivation__c",
+                  "Reinstate_STDs_Reactivation__c",
+                  "STEP27__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP28",
+                "Required": [],
+                "Actions": [],
+                "Automations": [],
+                "DisplayFields": [
+                  "Notify_Agent_Withdrawal__c",
+                  "Reactivate_Ticketing_Authority__c",
+                  "STEP28__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP29",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step29_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                  "Apply_Penalty_Fee__c",
+                  "STEP29__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_AGENCYFEES",
+            "Steps": [
+              {
+                "Name": "STEP8",
+                "Required": [
+                  "STEP6"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step8_succeeded"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step8_inProgress"
+                  }
+                ],
+                "DisplayFields": [
+                  "Billing_Document_Number__c",
+                  "Send_invoice__c",
+                  "STEP8__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP9",
+                "Required": [
+                  "STEP6"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP9__c"
+                ],
+                "IsDependent": true
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_PROCESSING",
+            "Steps": [
+              {
+                "Name": "STEP11",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "createIFAP",
+                    "ActionLabel": "AMS_OSCAR_Action3",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step11_inProgress"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP11__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP12",
+                "Required": [
+                  "STEP8",
+                  "STEP9"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step12_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step12_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step12_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Send_FS_request__c",
+                  "STEP12__c"
+                ],
+                "IsDependent": true
+              },
+              {
+                "Name": "STEP13",
+                "Required": [
+                  "STEP8",
+                  "STEP9"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_failed"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_inProgress"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step13_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Send_inspection_request__c",
+                  "STEP13__c"
+                ],
+                "IsDependent": false
+              },
+              {
+                "Name": "STEP14",
+                "Required": [
+                  "STEP8",
+                  "STEP9"
+                ],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step14_succeeded"
+                  },
+                  {
+                    "Status": "In Progress",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step14_inProgress"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step14_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Send_agreement__c",
+                  "STEP14__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_VALIDATION",
+            "Steps": [
+              {
+                "Name": "STEP25",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step25_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Validation_Status__c",
+                  "Comments_validate__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_APPROVAL",
+            "Steps": [
+              {
+                "Name": "STEP2",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "RPM_Approval__c",
+                  "Comments_approval__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_FINALIZATION",
+            "Steps": [
+              {
+                "Name": "STEP1",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step1_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Update_DPC__c",
+                  "Update_IRIS__c",
+                  "Update_BSPLink_CASSLink__c",
+                  "Update_Portal_Setup__c",
+                  "Send_approval_letter__c",
+                  "Welcome_pack__c",
+                  "Off_site_storage__c",
+                  "Welcome_call__c",
+                  "Change_effective_as_of__c",
+                  "STEP1__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_DISAPPROVAL",
+            "Steps": [
+              {
+                "Name": "STEP3",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "createCorrectionCase",
+                    "ActionLabel": "AMS_OSCAR_Action5",
+                    "args": [
+                      "agencyid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step3_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Issue_disapproval_pack__c",
+                  "Issue_credit_note_if_applicable__c",
+                  "Release_FS_if_applicable__c",
+                  "Roll_back_account_data__c",
+                  "STEP3__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_REJECTION_FINALIZATION",
+            "Steps": [
+              {
+                "Name": "STEP18",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_failed"
+                  },
+                  {
+                    "Status": "Not Applicable",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step18_notApplicable"
+                  }
+                ],
+                "DisplayFields": [
+                  "Issue_rejection_notification_pack__c",
+                  "STEP18__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          },
+          {
+            "Name": "AMS_OSCAR_CHANGE_WITHDRAWAL",
+            "Steps": [
+              {
+                "Name": "STEP4",
+                "Required": [],
+                "Actions": [],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step4_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "Issue_Withdrawal_notification__c",
+                  "Issue_credit_note_withdrawal__c",
+                  "Release_FS_withdrawal__c",
+                  "STEP4__c"
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }
