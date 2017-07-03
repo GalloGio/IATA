@@ -360,6 +360,9 @@
         <relatedList>Product2.IEC_Parent_Product__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Term_Condition__c</fields>
         <fields>Version_Number__c</fields>
