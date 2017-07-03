@@ -200,7 +200,7 @@ public class EF_MaterialLineItemHandler
             {
                 for(EF_Material_Line_Item__c mat : materialLineItemOldMap.values())
                 {
-                    if(mat.Contract__c != null)
+                    if(mat.Contract__c != null && !contractMaterialsMap.isEmpty())
                     {
                         if(contractMaterialsMap.get(mat.Contract__c).contains(mat.EF_Material__c))
                         {
