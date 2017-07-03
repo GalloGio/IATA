@@ -352,6 +352,7 @@ public with sharing class ISSP_AvailableServices{
         public boolean useDefaultRole {get; set;}
         public boolean addUsersEnable {get; set;}
         public boolean accountNotOpenError {get; set;}
+        public boolean isInProgress {get; set;}
         public String lineErrorMessage {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
@@ -377,6 +378,8 @@ public with sharing class ISSP_AvailableServices{
             System.debug('this.addUsersEnable--->' + this.addUsersEnable);
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
+
+            isInProgress = (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS);
                                         
             if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
@@ -390,7 +393,6 @@ public with sharing class ISSP_AvailableServices{
                 }
             }
         }
-
 
         public string getServiceStatus(Portal_Applications__c inService){
             
