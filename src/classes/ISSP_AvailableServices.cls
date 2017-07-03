@@ -181,6 +181,11 @@ public with sharing class ISSP_AvailableServices{
 
                 if (!isIEPAccountEnable) {
                     isModalErrorMessageEnable = true;
+                } else {
+                    if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
+                        modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
+                        isModalErrorMessageEnable = true;
+                    }
                 }
 
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
@@ -352,7 +357,6 @@ public with sharing class ISSP_AvailableServices{
         public boolean useDefaultRole {get; set;}
         public boolean addUsersEnable {get; set;}
         public boolean accountNotOpenError {get; set;}
-        public boolean isInProgress {get; set;}
         public String lineErrorMessage {get; set;}
 
         public ServiceWrapper(Portal_Applications__c inRecord, String IepStatus, Boolean isAdmin){
@@ -378,10 +382,8 @@ public with sharing class ISSP_AvailableServices{
             System.debug('this.addUsersEnable--->' + this.addUsersEnable);
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
-
-            isInProgress = (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS);
                                         
-            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin) {
+            if (flagIsIepPortalService && (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT || IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) && isAdmin) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
                 this.useDefaultRole = true;
             } else {
