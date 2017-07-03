@@ -89,7 +89,8 @@
 Contact.Account.RecordType.Name=&apos;Agency&apos;,
 OR(
   ISPICKVAL(Contact.Account.Status__c, &apos;Approved&apos;),
-  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;)
+  ISPICKVAL(Contact.Account.Status__c, &apos;Changes processed&apos;),
+  ISPICKVAL(Contact.Account.Status__c, &apos;Listed&apos;)  
 )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
