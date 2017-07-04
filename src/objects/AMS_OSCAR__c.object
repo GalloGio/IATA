@@ -2134,6 +2134,28 @@ Format: YYYY</inlineHelpText>
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Is_PCI_compliant__c</fullName>
+        <externalId>false</externalId>
+        <label>Is PCI compliant</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Is_using_credit_card__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -8420,6 +8442,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_PCI_compliant__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
