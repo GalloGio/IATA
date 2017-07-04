@@ -836,6 +836,19 @@ AND(
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Outstanding_Amount__c</fullName>
+        <description>Value to be displayed at Outstanding Amount column on eBulletin report</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Value to be displayed at Outstanding Amount column on eBulletin report</inlineHelpText>
+        <label>Outstanding Amount</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>PreviousReason__c</fullName>
         <externalId>false</externalId>
         <label>PreviousReason</label>

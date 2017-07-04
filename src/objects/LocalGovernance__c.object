@@ -167,19 +167,11 @@
         <label>Division</label>
         <picklist>
             <picklistValues>
-                <fullName>CS</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
                 <fullName>APCS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>MER</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>FDS</fullName>
+                <fullName>CS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -187,14 +179,26 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>SFO</fullName>
+                <fullName>FDS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MACS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MER</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>N/A</fullName>
                 <default>false</default>
             </picklistValues>
-            <sorted>false</sorted>
+            <picklistValues>
+                <fullName>SFO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1451,6 +1455,10 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>FDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MACS</fullName>
                 <default>false</default>
             </values>
             <values>

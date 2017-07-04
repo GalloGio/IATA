@@ -4,6 +4,8 @@ global class AMS_OSCAR_Attachments {
     private Case cse;
 
     public Boolean isAdminUser {get; set;}
+    public Boolean isReadOnly {get; set;}
+    public Boolean isEmbedded {get; set;}
 
     public Id caseId{
         get{
@@ -66,6 +68,9 @@ global class AMS_OSCAR_Attachments {
         // check if current user is Admin
         Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
         this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+
+        isReadOnly = ApexPages.currentPage().getParameters().get('readOnly') == 'true' ? true : false;
+        isEmbedded = ApexPages.currentPage().getParameters().get('isEmbedded') == 'true' ? true : false;
     }
 
     /*
