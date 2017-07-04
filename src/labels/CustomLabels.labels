@@ -19904,7 +19904,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_TypeAccreditadionQuestion</shortDescription>
-        <value>I whould like to apply for accreditation as a:</value>
+        <value>I would like to apply for accreditation as a:</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationTypeRequired</fullName>
@@ -19912,8 +19912,16 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_AccreditationTypeRequired</shortDescription>
-        <value>The </value>
+        <value>Please select the type of operation.</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationTypeTitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationTypeTitle</shortDescription>
+        <value>Type of accreditation</value>
+    </labels>    
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>

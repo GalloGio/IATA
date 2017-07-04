@@ -13,8 +13,11 @@
                 bottom: 160px;
             }
             .movetableup {
-                position: relative;
+                position: relative; 
                 bottom: 246px;
+            }
+            .text-normal * {
+                font-weight: normal;
             }
         </style>
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
@@ -45,7 +48,7 @@
                 }
 
                 function newnAccreditationApplicationNavigateTo() {
-                    if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true') {
+                    if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
                         $j('#modalChooseAccreditationType').modal('toggle');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
@@ -59,18 +62,17 @@
 
                 function redirectAccreditationType() {
                     if(typeAccredSelected == '') {
-
+                        document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
                     } else {
-                        if(typeAccredSelected == '{!$Label.ISSP_Travel_Agent}') {
+                        if(typeAccredSelected == 'Travel_Agent') {
                             // New page
-                            navigateToUrl('www.scp.pt','LIST_VIEW','newCase');
+                            navigateToUrl('/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                         } else {
-                            navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                            navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
                         }
                     }
 
                     var acredType = $j('[id$="accredTypeId"]').val();
-                    alert(acredType);
 
                     //navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
@@ -183,10 +185,14 @@
               <div class="modal-header"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <!--h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4-->
-                <h4 class="modal-title">Type of accreditation</h4>
+                <h4 class="modal-title">{!$Label.ANG_ISSP_AccreditationTypeTitle}</h4>
               </div>
 
               <div class="modal-body">
+                <div class="alert alert-danger" id="accreditationTypeRequired" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_AccreditationTypeRequired} </strong>
+                </div>
+
                 <div class="row">
                   <apex:outputPanel layout="block" styleClass="col-md-12">
                     <apex:outputLabel escape="false" value="{!$label.ANG_ISSP_TypeAccreditadionQuestion}" />
@@ -194,16 +200,16 @@
                 </div>
 
                 <div class="row">
-                  <br/>
                 </div>
 
                 <div class="row">
-                  <apex:outputPanel layout="block" styleClass="col-md-12">
-                      <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId" onChange="saveRadioValue(this.value)">
-                        <apex:selectOptions value="{!accreditationTypes}"/>
+                  <apex:outputPanel layout="block" styleClass="col-md-12 text-normal">
+                      <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId" onChange="saveRadioValue(this.value)" >
+                        <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
+                        <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
                       </apex:selectRadio>
                   </apex:outputPanel>
-                </div>            
+                </div>
               </div>  
 
               <div class="modal-footer">
