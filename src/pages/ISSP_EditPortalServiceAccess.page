@@ -238,7 +238,7 @@
                                     "Treasury Dashboard - Premium", $Label.ISSP_TD_Premium,
                                     "Baggage Proration", $Label.ISSP_BaggageProration,
                                     "TestApp", $Label.ISSP_TestApp,
-
+                                    "BSP / CASS Change of Bank details", $Label.ISSP_Change_Bank,
                                     "click here"
                                     )}"/>
                                 </td>

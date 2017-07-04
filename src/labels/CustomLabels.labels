@@ -5978,6 +5978,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_Required_Field_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Required Field Error Msg</shortDescription>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt; You must enter a value</value>
+    </labels>
+    <labels>
         <fullName>IEC_SAP_Customer_Address_Issue</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8429,6 +8436,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Invalid IATA Code: Please enter a valid code.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Invoicing_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Invoicing_Contact</shortDescription>
+        <value>Invoicing&lt;br/&gt;Contact</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Is_Applicant_Parent_Field_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9089,7 +9103,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NOC Updated Owners Managers</shortDescription>
-        <value>Updated Owner(s) -  Individuals</value>
+        <value>Updated Owner(s) / Officer(s) / Director(s) - Individuals</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Name</fullName>
@@ -9150,7 +9164,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change1</shortDescription>
-        <value>The transferor has informed the Transferee of the need to comply with the provision of the Passenger Sales Agency Rules if the Transferee wishes to be entered on the IATA Agency List as an Accredited Agent. Approval may be granted only if the Transferee complies in all respects with the requirements of the Passenger Sales Agency Rules.</value>
+        <value>The Transferor has informed the Transferee of the need to comply with the provision of the Passenger Sales Agency Rules if the Transferee wishes to be entered on the IATA Agency List as an Accredited Agent. Approval may be granted only if the Transferee complies in all respects with the requirements of the Passenger Sales Agency Rules.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_Change2</fullName>
@@ -9158,7 +9172,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change2</shortDescription>
-        <value>In accordance with one of the requirements of the Passenger Sales Agency Rules, the Transferee hereby undertakes that it accepted joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Sales Agency Agreement as at the date the transfer of ownership takes place.</value>
+        <value>In accordance with one of the requirements of the Passenger Sales Agency Rules, the Transferee hereby undertakes that it accepts joint and several liability with the Transferor for any outstanding obligation of the Transferor under its Sales Agency Agreement as at the date the transfer of ownership takes place.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_Change3</fullName>
@@ -9166,7 +9180,7 @@ For each section below either:&lt;br/&gt;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Bank_Change3</shortDescription>
-        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility of any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
+        <value>Where the Transferor is employed by, or retains a financial or beneficial interest, directly or indirectly, in the agency following the change of ownership, the undersigned Transferee knows and hereby agrees to accept responsibility for any violation by the Transferor of his Sales Agency Agreement which may have occurred within a period of two years immediately prior to the change of ownership as if such violation were a violation of the Transferee&apos;s Sales Agency Agreement.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Bank_acount_details</fullName>
@@ -9306,6 +9320,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Accredited Branch Offices</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_Ownership_details</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_Ownership_details</shortDescription>
+        <value>Confirm Type of entity and Ownership details are correct</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Confirm_details</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -9416,6 +9438,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC IATA Only</shortDescription>
         <value>IATA Internal User Only</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_If_Not_Provide_Explanation</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_If_Not_Provide_Explanation</shortDescription>
+        <value>If not, please provide detailed explanation</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Legal_Name_After_Change</fullName>
@@ -9538,12 +9568,40 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>There are no companies listed as current owners of your Company.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Non_IATA_Owner_Estimates</shortDescription>
+        <value>Specify estimated gross amount of international air transportation sales of IATA carriers:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Non_IATA_Owner_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Non_IATA_Owner_Title</shortDescription>
+        <value>If the new owner is a non-IATA accredited company, please:</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Notice_of_Change</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Notice_of_Change</shortDescription>
         <value>Notice Of Change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Online_Agency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Online_Agency</shortDescription>
+        <value>Will the company operate as an Online Agency under the new status?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Other_Owner</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Other_Owner</shortDescription>
+        <value>If your travel agency is owned by an organization other than the head office, answer the following with respect to the parent organization</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Ownership_Shareholding</fullName>
@@ -9559,7 +9617,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC PDF Title</shortDescription>
-        <value>NOTICE OF CHANGE&lt;br/&gt;APPLICATION</value>
+        <value>NOTICE OF CHANGE</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Percent_Ownership</fullName>
@@ -9600,6 +9658,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Previous_Owners_Managers</shortDescription>
         <value>Previous Owner(s)/Manager(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Provide_Registeration_Or_License</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoC_Provide_Registeration_Or_License</shortDescription>
+        <value>If registration and/or license is required by law in your country give the below information after the change/under new ownership</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Q1</fullName>
@@ -9647,7 +9712,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Q4</shortDescription>
-        <value>* Have any of the new owners, offices (directors), managers or any individual having authorization to act or sign on behalf of such firm been involved in bankruptcy or default proceedings?</value>
+        <value>* Have any of the new owners, officers (directors), managers or any individual having authorization to act or sign on behalf of such firm been involved in bankruptcy or found guilty of willful violations of fiduciary obligations in the course of business or default proceedings ?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Q5</fullName>
@@ -9656,6 +9721,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Q5</shortDescription>
         <value>* Will the change of ownership cause direct or indirect relationship with an organization holding GSA appointment from a member?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Registered_Cargo_Agent</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Registered_Cargo_Agent</shortDescription>
+        <value>Is your agency IATA registered Cargo agent? If so, please state the IATA code under which it is registered</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Registered_Cargo_Agent_Code</fullName>
+        <categories>ISSP, AMS, NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Registered_Cargo_Agent_Code</shortDescription>
+        <value>IATA Cargo numeric code if applicable:</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Request_for_Change</fullName>
@@ -9688,6 +9769,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_State_IATA_code</shortDescription>
         <value>* Please state the IATA code of all locations affected by this change</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Statement_International_Sales</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Statement_International_Sales</shortDescription>
+        <value>Statement of International Sales</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_StepA</fullName>
@@ -9848,6 +9936,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Type_Of_Person</shortDescription>
         <value>Please select the role of this person in the Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</shortDescription>
+        <value>* Will this change affect all approved locations ?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Witness</fullName>
@@ -10236,7 +10331,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Portal Admin</shortDescription>
-        <value>Portal&lt;br/&gt;Administrator</value>
+        <value>Portal&lt;br/&gt;Admin.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Position</fullName>
@@ -11575,6 +11670,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>There is already an owner defined for this Sole Proprietorship.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_ErrMsg_Time_Devoted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_ErrMsg_Time_Devoted</shortDescription>
+        <value>Please enter the % of time devoted to Agency Business</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_HO_Full_Address</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -12133,7 +12235,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_download_of</shortDescription>
-        <value>of your Notice Of Change application.</value>
+        <value>of your Notice Of Change.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyChanges</fullName>
@@ -12829,6 +12931,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Location</value>
     </labels>
     <labels>
+        <fullName>ISSP_Account_Statement_Notifications_Button</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statement Notifications Button</shortDescription>
+        <value>Remittance Date Reminders</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Account_Statements</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -12844,6 +12954,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
         <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
 Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Account_Statements_Disclaimer_China_TravelAgent</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Account Statements Disclaimer China Travel Agent</shortDescription>
+        <value>NOTE: For BSP CN, billing amount shown above includes BOP sales. BSP CN agents only need to remit the supplement billing (BSP sales) to your DD account.</value>
     </labels>
     <labels>
         <fullName>ISSP_Account_Statements_Title</fullName>
@@ -13628,6 +13746,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP_ContactList</shortDescription>
         <value>Change User Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Change_Bank</fullName>
+        <categories>ISSP, Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Change_Bank_Details</shortDescription>
+        <value>BSP / CASS Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Finalized</fullName>
@@ -17694,6 +17820,20 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <value>-None-</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_Online_Agency</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Online_Agency</shortDescription>
+        <value>Is this application for an Online Agency?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Online_Agency_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Online_Agency_URL</shortDescription>
+        <value>URL of Online Agency</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_Others</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -17781,6 +17921,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <value>This Email is already registered in customer portal. 
 If you are an E-Commerce user, please use your E-Commerce credentials. 
 If you want to reset your password, go back to login screen and use &quot;forgot your password function&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Website</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Website</shortDescription>
+        <value>Website</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_acceptGeneralConditions</fullName>
@@ -20891,7 +21038,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Request Access</shortDescription>
-        <value>Request Access</value>
+        <value>Request Access to a new service</value>
     </labels>
     <labels>
         <fullName>OneId_Request_this_App</fullName>
