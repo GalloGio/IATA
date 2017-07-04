@@ -356,11 +356,6 @@
                                                                     <span class="">
                                                                         <apex:outPutField value="{!not.Subject__c}" />
                                                                     </span>
-                                                                    <span class="modalDate">
-                                                                        <apex:outputText value="{0, date, short}">
-                                                                            <apex:param value="{!not.CreatedDate}" />
-                                                                        </apex:outputText>
-                                                                    </span>
                                                                   </div>
                                                                   <div class="modal-body">
                                                                       <apex:outPutField value="{!not.Message__c}" />

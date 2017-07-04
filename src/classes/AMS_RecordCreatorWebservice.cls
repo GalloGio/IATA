@@ -55,7 +55,7 @@ global without sharing class AMS_RecordCreatorWebservice {
                 realAccountId = accountId;
             }
 
-            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+            List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
 
@@ -63,7 +63,18 @@ global without sharing class AMS_RecordCreatorWebservice {
                 ownerId = cases.get(0).OwnerId;
             }
 
-            oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+
+            if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+
+                String selectedAccount = cases.get(0).Account_Concerned__c;
+                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+
+            } else {
+
+                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+
+            }
+
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
