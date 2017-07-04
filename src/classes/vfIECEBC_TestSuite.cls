@@ -1453,6 +1453,94 @@ public class vfIECEBC_TestSuite {
         }
     }
     
+         public static void testCampaignRecipientsExistingListMock() {
+        PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
+            new EBC_Master_Filter__c(Audience__c = 'Agency'), // assign to a different account
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id) // Make sure the count result in 1 result as per described in the assertion
+        };
+        insert existingFilters;
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new vfIECEBC_TestSuiteMock());
+            //existingFilters[2].Id;
+            
+            Integer lastFilterRecipientCount =vfIECEBC_CampaignRecipient.getCounter(existingFilters[2].Id);
+            lastFilterRecipientCount =vfIECEBC_CampaignRecipient.getExistingFilterCnt(existingFilters[2].Id);
+          
+            ApexPages.StandardController sc = new ApexPages.StandardController(camp);
+            vfIECEBC_CampaignRecipient campaignExtCon = new vfIECEBC_CampaignRecipient(sc);
+            
+            campaignExtCon.getMasterFilters();
+        }
+    }
+    public static void testRecipientsCountExistingListMock() {
+        PageReference pageRef = Page.IECEBC_CampaignRecipients;
+        Test.setCurrentPage(pageRef);
+        
+        User usr = initPreRunAs(true);
+        
+        List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id),
+            new EBC_Master_Filter__c(Audience__c = 'Agency'), // assign to a different account
+            new EBC_Master_Filter__c(Audience__c = 'Agency', Billing_Account__c  = oBillingAccount.Id) // Make sure the count result in 1 result as per described in the assertion
+        };
+        insert existingFilters;
+        System.currentPageReference().getParameters().put('id', existingFilters[2].Id);
+  
+        
+        EBC_Campaign__c camp = new EBC_Campaign__c();
+        camp.Name = 'Foo Bar';
+        camp.Subject__c = 'Foo Subject';
+        camp.From_Name__c = 'Foo From Name';
+        camp.Is_Google_Analytics_Tracker_Active__c = true;
+        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
+        camp.Billing_Account__c = oBillingAccount.Id;
+        insert camp;
+        
+        System.runAs(usr) {
+            initPostRunAs();
+            Test.startTest();
+            Test.setMock(HttpCalloutMock.class, new vfIECEBC_TestSuiteMock());
+            //existingFilters[2].Id;
+            
+            Integer lastFilterRecipientCount =restIECEBC_RecipientsCount.getCount(existingFilters[2].Id);
+            lastFilterRecipientCount =restIECEBC_RecipientsCount.doGet();
+          
+            restIECEBC_RecipientsCount campaignExtCon = new restIECEBC_RecipientsCount();
+            
+            campaignExtCon.getCount();
+            
+    }
+
+    }
+    class vfIECEBC_TestSuiteMock implements HttpCalloutMock{
+    // Implement this interface method
+     public HTTPResponse respond(HTTPRequest req) {
+        // Create a fake response
+        HttpResponse res = new HttpResponse();
+        res.setHeader('Content-Type', 'application/json');
+        res.setBody('{"counter":6}');
+        res.setStatusCode(200);
+        return res;
+    }
+}
     
     /*
     public static void testPageLoadLoginRequired() {
