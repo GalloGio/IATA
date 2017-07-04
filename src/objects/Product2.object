@@ -4288,7 +4288,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Source</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -4358,7 +4358,7 @@ The product will only appear on the Online Store when the date entered in this f
         <relationshipLabel>Products</relationshipLabel>
         <relationshipName>ZProduct</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -4368,7 +4368,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Zuora Id</label>
         <length>32</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>true</unique>
     </fields>

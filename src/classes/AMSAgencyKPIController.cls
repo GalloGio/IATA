@@ -20,7 +20,9 @@ public class AMSAgencyKPIController {
         this.ag = (Account)stdController.getRecord();
         this.ag = [select id, Name, IATACode__c, TradeName__c, Status__c, Primary_address__r.Address_1__c, Primary_address__r.City__c,
                                                     Primary_address__r.Email__c, Primary_address__r.AMS_ZipCode__c, IATA_ISO_Country__r.Name, RecordType.Name,
-                                                    CurrencyISOCode, Expiry_Date__c, Accumulated_Irregularities__c, Guaranteed_amount__c from Account where id =: this.ag.id];
+                                                    CurrencyISOCode, Expiry_Date__c, Accumulated_Irregularities__c, Guaranteed_amount__c,
+                                                    Identify_as_Key_Customer__c, Key_Customer__c
+                                                     from Account where id =: this.ag.id];
         ID aux = this.ag.id;
         Account auxParent = null;
         isBranch = false;
@@ -36,7 +38,8 @@ public class AMSAgencyKPIController {
                 break;
         }
         HO = [select id, Name, IATACode__c, TradeName__c, Status__c, Primary_address__r.Address_1__c, Primary_address__r.City__c, Primary_address__r.Email__c,
-                    Primary_address__r.AMS_ZipCode__c, IATA_ISO_Country__r.Name, RecordType.Name, CurrencyISOCode, Expiry_Date__c, Accumulated_Irregularities__c, Guaranteed_amount__c
+                    Primary_address__r.AMS_ZipCode__c, IATA_ISO_Country__r.Name, RecordType.Name, CurrencyISOCode, Expiry_Date__c, Accumulated_Irregularities__c, Guaranteed_amount__c,
+                    Identify_as_Key_Customer__c, Key_Customer__c
                     from Account where id =: aux];
         /*if(isBranch){
             this.ag = [select id, Name, IATACode__c, Trading_Name_1__c, Agency_Status__c, Primary_address__r.Address_1__c, Primary_address__r.City__c, Primary_address__r.Email__c,

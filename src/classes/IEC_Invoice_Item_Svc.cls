@@ -43,11 +43,15 @@ global without sharing class IEC_Invoice_Item_Svc {
 		Map<String, Boolean> mapObjectId_IsUsed = new Map<String, Boolean>();
 		for (Invoice_Item__c invItem : lstInvoiceItem)
 		{
-			mapSubZId_ZInvNum.put(invItem.Subscription_Zuora_ID__c, invItem.Invoice__r.Name);
+			//INC306838
+			//mapSubZId_ZInvNum.put(invItem.Subscription_Zuora_ID__c, invItem.Invoice__r.Name);
+			mapSubZId_ZInvNum.put(invItem.Subscription_Number__c, invItem.Invoice__r.Name);
 			mapObjectId_IsUsed.put(invItem.Invoice__r.Zuora__External_Id__c, false);
 			mapZInvNum_Status.put(invItem.Invoice__r.Name, '');
 		}
-		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
+		//INC306838
+		//Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZId(mapSubZId_ZInvNum.keySet());
+		Map<String, Zuora__Subscription__c> mapSubZId_Subscription = new IEC_ZSubscription_Sel().getSubscriptionByZName(mapSubZId_ZInvNum.keySet());
 		
 		//*** quit on error of missing subscription
 		if (mapSubZId_Subscription.isEmpty() || mapSubZId_Subscription.size() != mapSubZId_ZInvNum.size())
@@ -100,7 +104,9 @@ global without sharing class IEC_Invoice_Item_Svc {
 		//*** get eligible invoice items to create orders
 		for (Invoice_Item__c invItem : lstInvoiceItem)
 		{
-			oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
+			//INC306838
+			//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
+			oSub = mapSubZId_Subscription.get(invItem.Subscription_Number__c);
 			
 			// We only require an order if the OrderID is not specified on the subscription i.e. subscription created from Zuora
 			// OR if the version number is greater than 1 which means there is an amendment on it
@@ -283,7 +289,10 @@ global without sharing class IEC_Invoice_Item_Svc {
 				mapObjectId_IsUsed.put(invItem.Invoice__c + invItem.Subscription_Zuora_ID__c, true);
 				
 				//*** get the payment method for order
-				oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
+				//INC306838
+				//oSub = mapSubZId_Subscription.get(invItem.Subscription_Zuora_ID__c);
+				oSub = mapSubZId_Subscription.get(invItem.Subscription_Number__c);
+				
 				Zuora__CustomerAccount__c oBillingAccount = mapContactID_BillingAccount.get(invItem.Invoice__r.Zuora__BillingAccount__r.Contact__c);
 				String sPaymentMethod = null;
 				Zuora__Payment__c ZPmt = mapInvoice_Pmt.get(invItem.Invoice__r.Name);
