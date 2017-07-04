@@ -6,7 +6,7 @@
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
         <recipients>
-            <recipient>farrella@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -14,7 +14,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pacificoa@iata.org</recipient>
+            <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -27,7 +27,7 @@
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
-            <recipient>farrella@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -36,6 +36,10 @@
         </recipients>
         <recipients>
             <recipient>kalajil@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -48,11 +52,7 @@
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
         <recipients>
-            <recipient>alvarengam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>farrella@iata.org</recipient>
+            <recipient>gonzalezce@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -64,7 +64,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pacificoa@iata.org</recipient>
+            <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <recipients>

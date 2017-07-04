@@ -77,7 +77,10 @@ private class ISSP_Ctrl_AccountStatementsTest {
         Test.startTest();
         System.runAs(testUser) {
             controller = new ISSP_Ctrl_AccountStatements();
+            controller.initActions();
             System.AssertEquals(0, controller.listMessages.size());
+            controller.getInstance();
+            controller.updateAppRight();
         }
         Test.stopTest();
     }
