@@ -52,7 +52,7 @@
                 <field>TradeName__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
             <layoutItems>
@@ -86,7 +86,7 @@
                 <field>Airline_Prefix__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>IATATrainingUrl__c</field>
             </layoutItems>
             <layoutItems>

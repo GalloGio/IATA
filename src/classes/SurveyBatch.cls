@@ -115,7 +115,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                                ParentId, Type_of_customer__c, Phone_Redirected_to_Web__c, Case_Group__c, Origin, Region__c, Financial_Review_Type__c,
                                Account_Billing_Country__c, Financial_Review_Result__c, FS_Submitted_Date__c, Instant_Survey_Last_survey_sent__c, CreatedDate,
                                Reason, CaseNumber, Owner.Name, Owner.LastName, Owner.FirstName, Contact.Name,
-                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,
+                               Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
                                Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
                                WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
                                WhoClosedCase__r.Profile.Name, CNSCase__c
@@ -437,7 +437,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         else if (AccountCountry == 'Egypt' || AccountCountry == 'Iraq' || AccountCountry == 'Jordan' || AccountCountry == 'Libya' ||
                  AccountCountry == 'Somalia' || AccountCountry == 'South Sudan' || AccountCountry == 'Sudan' || AccountCountry == 'Suriname' || AccountCountry == 'Syria')
           template = templates.get('Clicktools_Contact_Email_CX_AM_AR');
-
+          //start INC325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+                (AccountCountry == 'United States' ||  AccountCountry == 'US TERRITORIES AND POSSESS' || AccountCountry == 'Northern Mariana Islands') &&
+               (c.Account.Status__c != '' || c.Account.Status__c != 'Terminated' || c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) && c.Case_Group__c == 'Process'){
+                template = templates.get('Clicktools_Contact_Email_IATAN_CX_AM_EN_2');
+        } //end INC325289
 
         else if (
 
@@ -690,6 +696,13 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
         if(RoleName.contains('Distribution - Airline Coding & MITA')){
           template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
         }
+        //Inc325289
+        else if(c.Account.Source_System__c == 'WEBSTAR' && 
+              AccountCountry == 'United States' && 
+               (c.Account.Status__c != '' ||  c.Account.Status__c != null) && 
+              (c.CNSCase__c != true || c.Account.CNS_Account__c != true) ){
+          template = templates.get('Clicktools_Contact_Email_IATAN_CX_CS_EN_2');
+        }
         else if (c.CNSCase__c == true) {
             template = templates.get('Clicktools_Contact_Email_EN_CNS');
         }
@@ -905,7 +918,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
                        !c.Contact.Email.contains('@iata.org') &&
                        !c.Contact.Email.contains('@salesforce.com')){
         template = templates.get('Clicktools_Contact_Email_CX_CODING_EN');
-      } //end INC292755
+      } //end INC292755      
 
       /****** Preparing the email *****/
       if (template != null) {
