@@ -1677,6 +1677,16 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Effective_date__c</fullName>
+        <externalId>false</externalId>
+        <label>Effective date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Emails_reference_Id__c</fullName>
         <externalId>false</externalId>
         <label>Emails reference Id</label>
@@ -2546,6 +2556,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <fullName>Portal_setup_performed__c</fullName>
         <externalId>false</externalId>
         <label>Portal setup performed</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Previous_FS_released__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous FS released</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -3660,6 +3680,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Release FS (if applicable)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Release_previous_FS_if_applicable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Release previous FS if applicable</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
