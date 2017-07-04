@@ -102,7 +102,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             }
             else if(oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP || oscar.Process__c == AMS_Utils.new_GSSA)
                 oscar.Sanity_check_deadline__c = Date.today();
-            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE){
+            else if(oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES){
                 oscar.Sanity_check_deadline__c = Date.today() + 15;
                 oscar.OSCAR_Deadline__c = Date.today() + 30;
 
@@ -401,7 +401,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Confirm_Payment_if_applicable__c'          => 'Proof_of_payment_received__c',
             'Send_Confirmation__c'                      => 'Confirmation_Sent__c',
             'Update_BSPLink__c'                         => 'BSPLink_updated__c',
-            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c'
+            'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c',
+            'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -610,9 +611,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         // ***************************************
         if(AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
 
-            // ***************************************
-            // ********* GENERIC VALIDATIONS ************
-            // ***************************************
+            // ************************************************************
+            // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
+            // ************************************************************
+            if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
         if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
             updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
         }
@@ -620,14 +622,15 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
             updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
         }
+            }
 
             // *****************************************************
             // ********* STANDARD WITH CASH VALIDATIONS ************
             // *****************************************************
-            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD){
+            if(updatedOSCAR.Process__c == AMS_Utils.NEWHESTANDARD || updatedOSCAR.Process__c == AMS_Utils.NGCHANGES){
 
                 if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
-                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step will be completed.');   
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step is completed.');   
                 }
 
             }

@@ -19866,6 +19866,34 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
         <value>Please deny this contact's access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE APPROVAL FINALIZATION</shortDescription>
+        <value>Approval Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_DISAPPROVAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE DISAPPROVAL FINALIZATION</shortDescription>
+        <value>Disapproval Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE REJECTION FINALIZATION</shortDescription>
+        <value>Rejection Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_WITHDRAWAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE WITHDRAWAL FINALIZATION</shortDescription>
+        <value>Withdrawal Finalization</value>
     </labels>                        
     <labels>
         <fullName>Iata_service_request</fullName>
