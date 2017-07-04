@@ -42,6 +42,17 @@
                         }
                     });
                 }
+
+                function newnAccreditationApplicationNavigateTo() {
+                    if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true') {
+                        $j('#ModalChooseAccreditationType').modal('toggle');
+                    } else {
+                        navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    }
+                    return false;                
+                }
+
+
         </script>
     
     <div class="container">   
@@ -62,7 +73,10 @@
             </tr>
             <tr>
                 <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
-                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+                    <!--input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/-->
+
+                    <input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+
                     <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </div>
@@ -136,6 +150,40 @@
             </tr>
             
         </table>
+
+        <div class="modal" id="ModalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
+            <div class="modal-content"> 
+              <div class="modal-header"> 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <!--h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4-->
+                <h4 class="modal-title">Type of accreditation</h4>
+              </div>
+
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p>              
+                      bla bla bla
+                    </p>
+                  </div>
+                </div>            
+              </div>  
+              <div class="modal-footer">
+                <div class="row">
+                  <div class="col-md-6">
+                    <a onclick="errorMessageModalClose()" class="btn_iata_cancel btn-block btn">
+                      {!$label.LAQ_Close}
+                    </a>
+                    <a onclick="errorMessageModalClose()" class="btn_iata_success btn-block btn">
+                      {!$label.ISSP_Cancel}
+                    </a>
+                  </div>
+                </div>            
+              </div>          
+            </div>
+          </apex:outputPanel>
+        </div>
      
    </apex:form>
    </div>
