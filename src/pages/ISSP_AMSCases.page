@@ -22,6 +22,7 @@
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script type="text/javascript">
                 var $j = jQuery.noConflict();
+                var typeAccredSelected = '';
    
                 $j(function () {
                     $j('[data-toggle="tooltip"]').tooltip();
@@ -45,13 +46,38 @@
 
                 function newnAccreditationApplicationNavigateTo() {
                     if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true') {
-                        $j('#ModalChooseAccreditationType').modal('toggle');
+                        $j('#modalChooseAccreditationType').modal('toggle');
                     } else {
                         navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
                     return false;                
                 }
 
+                function modalChooseAccreditationTypeClose() {
+                    $j('#modalChooseAccreditationType').modal('toggle');
+                }
+
+                function redirectAccreditationType() {
+                    if(typeAccredSelected == '') {
+
+                    } else {
+                        if(typeAccredSelected == '{!$Label.ISSP_Travel_Agent}') {
+                            // New page
+                            navigateToUrl('www.scp.pt','LIST_VIEW','newCase');
+                        } else {
+                            navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                        }
+                    }
+
+                    var acredType = $j('[id$="accredTypeId"]').val();
+                    alert(acredType);
+
+                    //navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                }
+
+                function saveRadioValue(v) {
+                    typeAccredSelected = v;
+                }
 
         </script>
     
@@ -125,7 +151,7 @@
                         <apex:param assignTo="{!agentCaseType}" value="VR" />
                     </apex:commandLink>
                     <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
-                    	<a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
+                        <a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
                     </apex:outputText>
                 </td>
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
@@ -151,8 +177,8 @@
             
         </table>
 
-        <div class="modal" id="ModalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
+        <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent"> 
             <div class="modal-content"> 
               <div class="modal-header"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -162,22 +188,33 @@
 
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-md-12">
-                    <p>              
-                      bla bla bla
-                    </p>
-                  </div>
+                  <apex:outputPanel layout="block" styleClass="col-md-12">
+                    <apex:outputLabel escape="false" value="{!$label.ANG_ISSP_TypeAccreditadionQuestion}" />
+                  </apex:outputPanel>
+                </div>
+
+                <div class="row">
+                  <br/>
+                </div>
+
+                <div class="row">
+                  <apex:outputPanel layout="block" styleClass="col-md-12">
+                      <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId" onChange="saveRadioValue(this.value)">
+                        <apex:selectOptions value="{!accreditationTypes}"/>
+                      </apex:selectRadio>
+                  </apex:outputPanel>
                 </div>            
               </div>  
+
               <div class="modal-footer">
-                <div class="row">
-                  <div class="col-md-6">
-                    <a onclick="errorMessageModalClose()" class="btn_iata_cancel btn-block btn">
-                      {!$label.LAQ_Close}
-                    </a>
-                    <a onclick="errorMessageModalClose()" class="btn_iata_success btn-block btn">
-                      {!$label.ISSP_Cancel}
-                    </a>
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">                    
+                      <button type="button" onclick="modalChooseAccreditationTypeClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" onclick="redirectAccreditationType()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                    </div>
                   </div>
                 </div>            
               </div>          

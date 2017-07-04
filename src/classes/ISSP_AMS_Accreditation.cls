@@ -202,8 +202,10 @@ public without sharing class ISSP_AMS_Accreditation {
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     public String agencyCodesConcernedForPDF {get; set;}
 
-    public boolean newAccreditationModels {get; set;}    
-    
+    public boolean newAccreditationModels {get; set;}   
+
+    public String accredidationType {get; set;}
+
     public Boolean getnewlabels() {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
@@ -7265,5 +7267,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             ac.Branch_Office_Phone__c = '12';
         }
     }
-   
+
+    public List<SelectOption> getAccreditationTypes() {
+        List<SelectOption> options = new List<SelectOption>(); 
+        options.add(new SelectOption(Label.ISSP_Travel_Agent, Label.ISSP_Travel_Agent)); 
+        options.add(new SelectOption(Label.ISSP_Cargo_Agent, Label.ISSP_Cargo_Agent)); 
+        return options;
+    }
 }
