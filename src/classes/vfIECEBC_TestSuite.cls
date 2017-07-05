@@ -1259,6 +1259,12 @@ public class vfIECEBC_TestSuite {
         
         PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_Switch__c=false;
+         
+        upsert customsetting;
         
         User usr = initPreRunAs(true);
         /*
