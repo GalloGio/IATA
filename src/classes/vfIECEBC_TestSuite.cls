@@ -1453,10 +1453,20 @@ public class vfIECEBC_TestSuite {
         }
     }
     
-         public static void testCampaignRecipientsExistingListMock() {
+   public static void testCampaignRecipientsExistingListMock() {
         PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
         
+                     
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_AWS_API_KEY__c='Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+        customsetting.eBroadcast_Counter_AWS_URL__c='https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+        customsetting.eBroadcast_Counter_Switch__c=true;
+         
+        upsert customsetting;
+         
         User usr = initPreRunAs(true);
         
         List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
@@ -1493,7 +1503,14 @@ public class vfIECEBC_TestSuite {
     public static void testRecipientsCountExistingListMock() {
         PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
-        
+        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c,eBroadcast_Counter_AWS_URL__c,eBroadcast_Counter_Switch__c 
+             From IEC_SEttings__c limit 1];
+        if (customsetting==null) customsetting= new IEC_SEttings__c();
+        customsetting.eBroadcast_Counter_AWS_API_KEY__c='Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+        customsetting.eBroadcast_Counter_AWS_URL__c='https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+        customsetting.eBroadcast_Counter_Switch__c=true;
+         
+        upsert customsetting;
         User usr = initPreRunAs(true);
         
         List<EBC_Master_Filter__c> existingFilters = new List<EBC_Master_Filter__c>{
@@ -1527,7 +1544,7 @@ public class vfIECEBC_TestSuite {
             
             campaignExtCon.getCount();
             
-    }
+        }
 
     }
     class vfIECEBC_TestSuiteMock implements HttpCalloutMock{
