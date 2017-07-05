@@ -325,6 +325,22 @@ var dyn_functions = {
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
            
            },
+           ANG_checkAccountHierarchy:function (arg) {
+                var changeTab = function(result){
+                    /*if(result.success == true){
+                        alert('Tab opened sucessfully');
+                    }*/
+                };
+
+                // Use the results primary tab id and open a new subtab
+               var openSubtab = function(result)
+               {            
+                    sforce.console.openSubtab(result.id, '/apex/ANG_AccountHierarchySelection?Id='+arg, true, 'Account Hierarchy Selection', null, changeTab);    
+               };
+
+               sforce.console.getEnclosingPrimaryTabId(openSubtab);
+           
+           },
            createSIDRALite:function (arg) {
                 var result;
                 result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
