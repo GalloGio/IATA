@@ -1,8 +1,7 @@
-<apex:page controller="ISSP_AMS_MSO_Controller" contentType="text/csv#{!IF(isMSO,'MSO', 'GSA')}_Appointments.csv"  action="{!checkIfUserHasAccessToService}">
-{!$Label.ISSP_AMS_MSO_GSA_IATA_Code},{!$Label.ISSP_AMS_MSO_GSA_Account_Name},{!IF(isMSO, ($Label.ISSP_AMS_MSO_GSA_Category + ',' + $Label.ISSP_AMS_MSO_GSA_Street_Address + ','), '')}{!$Label.ISSP_AMS_MSO_GSA_City},{!$Label.ISSP_AMS_MSO_GSA_Country}
+<apex:page controller="ISSP_AMS_MSO_Controller" contentType="text/csv#{!IF(isMSO,'MSO', 'GSA')}_Appointments.csv"  action="{!checkIfUserHasAccessToService}">"{!$Label.ISSP_AMS_MSO_GSA_IATA_Code}","{!$Label.ISSP_AMS_MSO_GSA_Account_Name}","{!IF(isMSO, ($Label.ISSP_AMS_MSO_GSA_Category + '","' + $Label.ISSP_AMS_MSO_GSA_Street_Address), $Label.ISSP_AMS_MSO_GSA_Territories) }","{!$Label.ISSP_AMS_MSO_GSA_City}","{!$Label.ISSP_AMS_MSO_GSA_Country}"
 
 <apex:repeat value="{!lstDisplayAccounts}" var="a">
-{!a.Account__r.IATACode__c},{!a.Account__r.Name}, {!IF(isMSO,(a.Account__r.Category__c + ',' + a.Account__r.BillingStreet + ','),'')}{!a.Account__r.BillingCity},{!a.Account__r.BillingCountry}
+"{!a.appointment.Account__r.IATACode__c}","{!a.appointment.Account__r.Name}","{!IF(isMSO,(a.appointment.Account__r.Category__c + '","' + a.appointment.Account__r.BillingStreet), a.territories) }","{!a.appointment.Account__r.BillingCity}","{!a.appointment.Account__r.BillingCountry}"
 </apex:repeat>
 
 </apex:page>

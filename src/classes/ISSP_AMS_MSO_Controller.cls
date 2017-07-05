@@ -1,4 +1,6 @@
 public without sharing class ISSP_AMS_MSO_Controller {
+    public static final String IATAORGNAME = 'INTERNATIONAL AIR TRANSPORT ASSOCIATION'; // Name of the IATA endorsement organization
+
     public String searchText {get; set;}
     public Account currentAccount {get; set;}
     public String SortingDirection {get; set;}
@@ -24,11 +26,16 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
     public list<Account> OrderedFilteredHierarchy;
     public ApexPages.StandardSetController ssc {get;set;}
-    public list<AMS_Inspection__c> lstDisplayAccounts {
+    public list<AppointmentWrapper> lstDisplayAccounts {
         get {
-            list<AMS_Inspection__c> tmpList = new list<AMS_Inspection__c>();
+            list<AppointmentWrapper> tmpList = new list<AppointmentWrapper>();
             for (AMS_Inspection__c a : (list<AMS_Inspection__c>)ssc.getRecords()) {
-                tmpList.add(a);
+                String territories = '';
+                for (AMS_Territory__c t : a.AMS_Territories__r) {
+                    territories += (territories == '' ? '' : ', ') + t.ISO_Country__r.Name;
+                }
+
+                tmpList.add(new AppointmentWrapper(a, territories));
             }
 
             return tmpList;
@@ -70,9 +77,17 @@ public without sharing class ISSP_AMS_MSO_Controller {
 
     public void refreshMsoGsaList() {
         String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry ';
+
+        if (!isMSO) {
+            strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r) ';
+        }
+
         strQuery += 'FROM AMS_Inspection__c WHERE Airline__c = :hqAccountId ';
         strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
 
+        if (!isMSO) {
+            strQuery += ' AND Accreditation_Endorsement_organisation__r.Name <> \'' + IATAORGNAME + '\'';
+        }
         //
         if (searchText != null && searchText != '') {
             strQuery += ' AND (';
@@ -182,4 +197,13 @@ public without sharing class ISSP_AMS_MSO_Controller {
          ssc.next();
      }
 
+     public class AppointmentWrapper {
+        public AMS_Inspection__c appointment {get; set;}
+        public String territories {get; set;}
+
+        public AppointmentWrapper(AMS_Inspection__c appointment, String territories) {
+            this.appointment = appointment;
+            this.territories = territories;
+        }
+     }
 }

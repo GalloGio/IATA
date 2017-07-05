@@ -10,7 +10,7 @@
 		}
 	</script>
 
-<!--<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/outlook_news.css')}" />-->
+<!--Style to remain in the page, for the PDF rendering-->
 <style>
 .body, div, h4, span, p {
 	font-family: Helvetica, sans-serif;
@@ -265,12 +265,12 @@
 						<tbody>
 							<apex:repeat value="{!lstDisplayAccounts}" var="a">
 							<tr>
-								<td>{!a.Account__r.IATACode__c}</td>
-								<td>{!a.Account__r.Name}</td>
-								<td>{!a.Account__r.Category__c}</td>
-								<td>{!a.Account__r.BillingStreet}</td>
-								<td>{!a.Account__r.BillingCity}</td>
-								<td>{!a.Account__r.BillingCountry}</td>
+								<td>{!a.appointment.Account__r.IATACode__c}</td>
+								<td>{!a.appointment.Account__r.Name}</td>
+								<td>{!a.appointment.Account__r.Category__c}</td>
+								<td>{!a.appointment.Account__r.BillingStreet}</td>
+								<td>{!a.appointment.Account__r.BillingCity}</td>
+								<td>{!a.appointment.Account__r.BillingCountry}</td>
 							</tr>
 							</apex:repeat>
 						</tbody>
