@@ -31,6 +31,30 @@ public class AMS_InspectionHelper {
 
          }
 
+        // fetch the old inspections too
+        List<AMS_Inspection__c> allInspections =
+            [SELECT Id,Account__c,Accreditation_Endorsement_organisation__c,Accreditation_Endorsement_Status_code__c
+            FROM AMS_Inspection__c
+            WHERE Account__c IN :agencyIds
+            ORDER By Account__c, Accreditation_Endorsement_Status_code__c ASC];
+        List<AMS_Inspection__c> maxInspections = new List<AMS_Inspection__c>();
+
+        // if the trigger list has a larger value than database, add it
+        // to the list
+        for(AMS_Inspection__c a : iataInspections) {
+            for(AMS_Inspection__c b : allInspections) {
+                if(a.Account__c == b.Account__c && a.Accreditation_Endorsement_organisation__c == b.Accreditation_Endorsement_organisation__c) {
+                    if(Integer.valueOf(a.Accreditation_Endorsement_Status_code__c.charAt(0)) >
+                    Integer.valueOf(b.Accreditation_Endorsement_Status_code__c.charAt(0)) ) {
+                        maxInspections.add(a);
+
+                        break;
+                    }
+                }
+            }
+        }
+
+
         if(agencyIds.isEmpty())
             return; // no processing to be done.
 
@@ -41,7 +65,7 @@ public class AMS_InspectionHelper {
 
         Account accountToProcess;
 
-        for(AMS_Inspection__c i:iataInspections){
+        for(AMS_Inspection__c i:maxInspections){
 
             accountToProcess = mapAgencies.get(i.Account__c);
 
