@@ -1,7 +1,6 @@
 <apex:page controller="ISSP_LocalGroups" action="{!init}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 <html>
     <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
-
     <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/jquery.dataTables.min.js')}"/>
     <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/js/dataTables.bootstrap.min.js')}"/>
     <script src="{!URLFOR($Resource.DataTables,'DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.min.js')}"/>
@@ -10,6 +9,9 @@
 
 <script>
   $(document).ready( function () {
+    // Enable tooltips
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     // init datatable
     var tbl = $('.table-pagination').DataTable({
       "bSort" : false,
@@ -31,21 +33,38 @@
     $('#table-pagination-search').keyup(function() {
         tbl.search( this.value ).draw();
     } );
-    
-    // add filters only for certain columns
-    $('.table-pagination thead th.headerRowFilter').each( function (i) {
-        if ([0,1,2,3,4].indexOf(i)>-1) {
-            var title = $('th.headerRow')[i].textContent;
-            var select = $('<select class="select-filter" data-index="'+i+'"></select>');
-            //var select = $('<select class="selectpicker" data-style="btn-primary" data-index="'+i+'"></select>');
-            select.append( '<option value="" selected>' + title + '</option>' )
-            // get all distinct values and creates an option value
-            tbl.column(i).data().unique().sort().each( function ( d, j ) {
-                select.append( '<option value="'+d+'">'+d+'</option>' )
-            } );
-            $(this).html( select );
-        }
+    // reset button
+    $('#table-filters-reset').click(function() {
+        // reset all select filters
+        $('select.select-filter').each( function () {
+            $(this).val('');
+            tbl.column( $(this).attr("data-index")).search( '' ).draw();
+        });
+        // reset search box
+        $('#table-pagination-search').val('');
+        // draw all values in table
+        tbl.search('').draw();
     } );
+    
+    //initFilters(tbl);
+    $('.table-pagination thead th.headerRowFilter').each( function (i) {
+      if ([0,1,2,3,4].indexOf(i)>-1) {
+          var title = $('th.headerRow')[i].textContent;
+          var select = $('<select class="select-filter" data-index="'+i+'"></select>');
+          select.append( '<option value="" selected>' + title + '</option>' )
+          // get all distinct values and creates an option value
+          tbl.column(i).data().unique().sort().each( function ( d, j ) {
+              var text = d;
+              if ($(d).is("span")) {
+                text = $(d).text();
+              }
+              //alert(text + " " +  d + " " + j);
+              select.append( '<option value="'+text+'">'+text+'</option>' );
+          } );
+          $(this).html( select );
+      }
+    } );
+    
     // add filter event
     $(".select-filter").on( 'change', function () {
         if ($(this).val()=='') {
@@ -94,7 +113,12 @@
                     <div class="row">&nbsp;</div>
                     <div class="row">&nbsp;</div>
                     <div class="row">
-                        <div class="col-xs-9">
+                        <div class="col-xs-7">
+                        </div>
+                        <div class="col-xs-2 row-buttons">
+                            <apex:outputPanel rendered="{!listParticipant.size>0}" >
+                                <button id="table-filters-reset" type="button" class="btn btn-primary">{!$Label.ISSP_Local_Groups_Industry_Reset}</button>
+                            </apex:outputPanel>
                         </div>
                         <div class="col-xs-3 row-buttons">
                             <input id="table-pagination-search" class="form-control" onkeypress="enterKey(event);" placeholder="{!$Label.ISSP_Search}" type="text"/>
@@ -108,31 +132,44 @@
             <table class="table table-condensed table-pagination">
                 <thead>
                     <tr class="headerRowFilter">
-                        <apex:repeat value="{!listFieldName}" var="fieldname">
-                            <th class="headerRowFilter"></th>
-                        </apex:repeat>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
+                        <th class="headerRowFilter"></th>
                     </tr>
                     <tr class="headerRow">
-                        <apex:repeat value="{!listFieldName}" var="fieldname">
-                            <th class="headerRow">
-                                <apex:outputText value="{!$ObjectType.Participant__c.fields[fieldname].label}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c')}"/>
-                                <apex:outputText value="{!$Label.ISSP_Local_Groups_Country}" rendered="{!fieldname=='Country__c'}"/>
-                                <apex:outputText value="{!$Label.ISSP_Local_Groups_Contact_Name}" rendered="{!fieldName=='Contact__c'}"/>
-                            </th>
-                        </apex:repeat>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Region__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$Label.ISSP_Local_Groups_Country}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Local_Group_Type__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Cargo_Passenger__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Participant_Type__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$Label.ISSP_Local_Groups_Contact_Name}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Title__c.label}"/></th>
+                        <th class="headerRow"><apex:outputText value="{!$ObjectType.Participant__c.fields.Email__c.label}"/></th>
                     </tr>
                 </thead>
                 <tbody>
                     <apex:repeat value="{!listParticipant}" var="item">
                       <tr>
-                        <apex:repeat value="{!listFieldName}" var="fieldname">
-                            <td>
-                                <apex:outputText value="{!item[fieldname]}" rendered="{!AND(fieldName!='Contact__c',fieldName!='Country__c',fieldName!='Local_Group_Type__c')}"/>
-                                <apex:outputText value="{!item.Local_Governance__r.Local_Governance_type__c}" rendered="{!fieldName=='Local_Group_Type__c'}"/>
-                                <apex:outputText value="{!item.Local_Governance__r.Country__r.Name + item.Local_Governance__r.Cluster__r.Name}" rendered="{!fieldName=='Country__c'}"/>
-                                <apex:outputLink value="/ISSP_Contact?id={!item.Contact__c}&mid=M4S1" rendered="{!fieldName=='Contact__c'}">{!item.Contact__r.Name}</apex:outputLink>
-                            </td>
-                        </apex:repeat>
+                        <td>{!item.Local_Governance__r.Region__c}</td>
+                        <td>
+                            <apex:outputText value="{!item.Local_Governance__r.Country__r[IsoCountryFieldName]}" rendered="{!item.Local_Governance__r.Country__r.Name!=null}"/>
+                            <apex:outputText value="{!item.Local_Governance__r.Cluster__r.Name}" rendered="{!item.Local_Governance__r.Cluster__r.Name!=null}"
+                                html-data-toggle="tooltip" title="{!mapClusterCountry[item.Local_Governance__r.Cluster__c]}"/>
+                        </td>
+                        <td>
+                            <apex:outputText value="{!item.Local_Group_Type__c}"
+                                html-data-toggle="tooltip" title="{!$Label[mapGroupTypeDescription[item.Local_Group_Type__c]]}"/>
+                        </td>
+                        <td>{!item.Local_Governance__r.Cargo_Passenger__c}</td>
+                        <td>{!item.Participant_Type__c}</td>
+                        <td><apex:outputLink value="/ISSP_Contact?id={!item.Contact__c}&mid=M4S1">{!item.Contact__r.Name}</apex:outputLink></td>
+                        <td>{!item.Title__c}</td>
+                        <td>{!item.Email__c}</td>
                       </tr>
                     </apex:repeat>
                 </tbody>

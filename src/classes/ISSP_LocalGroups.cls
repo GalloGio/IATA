@@ -1,10 +1,9 @@
 public without sharing class ISSP_LocalGroups {
 
     public static final set<String> ALLOWED_PROFILES = new set<String>{'ISS Portal Airline Delegated Admin User'};
-    public static final Id RT_LOCALGROUP = [SELECT Id FROM Recordtype WHERE sObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups'].Id;
-    public static final list<String> LIST_FIELDNAME = new list<String>{'Region__c','Country__c','Local_Group_Type__c','Cargo_Passenger__c','Participant_Type__c','Contact__c','Title__c','Email__c'};
-    public list<String> getListFieldName() { return LIST_FIELDNAME;}
     public list<Participant__c> listParticipant {get;set;}
+    public map<Id,String> mapClusterCountry {get;set;}
+    public map<String,String> mapGroupTypeDescription {get;set;}
 
     private list<Account> listAccount;
     private User currentUser;
@@ -23,14 +22,111 @@ public without sharing class ISSP_LocalGroups {
         Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
         this.listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
         
-        string queryString = 'SELECT Contact__r.Name, Local_Governance__r.Country__r.Name, Local_Governance__r.Local_Governance_type__c, Local_Governance__r.Cluster__r.Name,'
-            + String.join(LIST_FIELDNAME,',')
-            + ' FROM Participant__c'
-            + ' WHERE Contact__r.AccountId IN :listAccount'
-            + ' AND Local_Governance__r.RecordtypeId = :RT_LOCALGROUP'
-            + ' AND Local_Governance__r.Active__c = true'
-            + ' ORDER BY CreatedDate ';
-        this.listParticipant = (list<Participant__c>)Database.query(queryString);
+        this.listParticipant = [
+            SELECT Region__c, Country__c, Local_Group_Type__c, Cargo_Passenger__c, Participant_Type__c, Title__c, Email__c,
+                Contact__c, Contact__r.Name, Local_Governance__r.Cargo_Passenger__c,
+                Local_Governance__r.Country__r.Name,
+                Local_Governance__r.Country__r.IATA_Country_ZH__c,
+                Local_Governance__r.Country__r.IATA_Country_SP__c,
+                Local_Governance__r.Country__r.IATA_Country_PT__c,
+                Local_Governance__r.Country__r.IATA_Country_JP__c,
+                Local_Governance__r.Country__r.IATA_Country_IT__c,
+                Local_Governance__r.Country__r.IATA_Country_FR__c,
+                Local_Governance__r.Country__r.IATA_Contry_KR__c,
+                Local_Governance__r.Country__r.IATA_COUNTRY_EN__c,
+                Local_Governance__r.Cluster__c,
+                Local_Governance__r.Cluster__r.Name,
+                Local_Governance__r.Local_Governance_type__c,
+                Local_Governance__r.Region__c
+            FROM Participant__c
+            WHERE Contact__r.AccountId IN :listAccount
+            AND Local_Governance__r.Recordtype.DeveloperName = :'Local_Groups'
+            AND Local_Governance__r.Active__c = true
+            ORDER BY CreatedDate];
+        
+        initMapCluster();
+        initMapGroupTypeDescription();
+    }
+    
+    /**
+        Creates a map with the clusters found in the main query with their
+        country names translated to the selected language
+    **/
+    private void initMapCluster() {
+        String fieldName = getIsoCountryFieldName();
+        this.mapClusterCountry = new map<Id,String>();
+        list<Id> listClusterId = new list<Id>();
+        for (Participant__c participant: this.listParticipant) {
+            listClusterId.add(participant.Local_Governance__r.Cluster__c);
+        }
+        for (Cluster_to_ISO_Country__c cc: [
+                SELECT Cluster__c, IATA_ISO_Country__r.Name,
+                    IATA_ISO_Country__r.IATA_Country_ZH__c,
+                    IATA_ISO_Country__r.IATA_Country_SP__c,
+                    IATA_ISO_Country__r.IATA_Country_PT__c,
+                    IATA_ISO_Country__r.IATA_Country_JP__c,
+                    IATA_ISO_Country__r.IATA_Country_IT__c,
+                    IATA_ISO_Country__r.IATA_Country_FR__c,
+                    IATA_ISO_Country__r.IATA_Contry_KR__c,
+                    IATA_ISO_Country__r.IATA_COUNTRY_EN__c
+                FROM Cluster_to_ISO_Country__c
+                WHERE Cluster__c IN :listClusterId]) {
+            String value = this.mapClusterCountry.get(cc.Cluster__c);
+            value = value==null? '': value+', ';
+            value += cc.IATA_ISO_Country__r.get(fieldName);
+            this.mapClusterCountry.put(cc.Cluster__c,value);
+        }
+    }
+    
+    /**
+        Creates a map with the description labels to all values in th picklist
+        field called 'Local_Governance__r.Local_Governance_type__c'
+    **/
+    private void initMapGroupTypeDescription() {
+        this.mapGroupTypeDescription = new map<String,String>{
+            'ALWG' => 'ISSP_Participant_Description_ALWG',
+            'APJC' => 'ISSP_Participant_Description_APJC',
+            'APJC / FAG' => 'ISSP_Participant_Description_APJC_FAG',
+            'CAPJC' => 'ISSP_Participant_Description_CAPJC',
+            'CEC' => 'ISSP_Participant_Description_CEC',
+            'CGA' => 'ISSP_Participant_Description_CGA',
+            'EACP JC' => 'ISSP_Participant_Description_EACP_JC',
+            'ICAP' => 'ISSP_Participant_Description_ICAP',
+            'JALWG' => 'ISSP_Participant_Description_JALWG',
+            'LCAG-C' => 'ISSP_Participant_Description_LCAG_C',
+            'LCAG-P' => 'ISSP_Participant_Description_LCAG_P',
+            'LCAG-P / Credit Card WG' => 'ISSP_Participant_Description_LCAG_P_Credit_Card_WG'
+        };
+    }
+    
+    /**
+        Returns the field name in IATA_ISO_Country__c object that
+        contains the selected translation
+    **/
+    public String getIsoCountryFieldName() {
+        String locale = UserInfo.getLanguage();
+        if (locale.startsWithIgnoreCase('ZH')) {
+            return 'IATA_Country_ZH__c';
+        }
+        if (locale == 'es') {
+            return 'IATA_Country_SP__c';
+        }
+        if (locale.startsWithIgnoreCase('PT')) {
+            return 'IATA_Country_PT__c';
+        }
+        if (locale=='ja') {
+            return 'IATA_Country_JP__c';
+        }
+        if (locale.startsWithIgnoreCase('IT')) {
+            return 'IATA_Country_IT__c';
+        }
+        if (locale.startsWithIgnoreCase('FR')) {
+            return 'IATA_Country_FR__c';
+        }
+        if (locale=='ko') {
+            return 'IATA_Contry_KR__c';
+        }
+        return 'IATA_COUNTRY_EN__c';
     }
     
     /**
@@ -98,4 +194,12 @@ public without sharing class ISSP_LocalGroups {
         }
     }
     
+    /**
+        Return three special characters to be printed at the very beginning of a
+        text file to indicate it's a unicode file
+    **/
+    public String getCSVHeader() {
+        return EncodingUtil.convertFromHex('EFBBBF').toString();
+    }
+
 }

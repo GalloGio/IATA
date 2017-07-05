@@ -1,6 +1,8 @@
 @isTest
 public class ISSP_LocalGroupsTest {
     
+    public static final Id RT_LOCALGROUP = [SELECT Id FROM Recordtype WHERE sObjectType = 'LocalGovernance__c' AND DeveloperName = 'Local_Groups'].Id;
+    
     public static testMethod void testController() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
         country.Name = 'Country';
@@ -11,6 +13,15 @@ public class ISSP_LocalGroupsTest {
         account.Name = 'Account1';
         account.IATA_ISO_Country__c = country.Id;
         insert account;
+        
+        Cluster__c cluster = new Cluster__c();
+        cluster.name = 'testcluster';
+        insert cluster;
+        
+        Cluster_to_ISO_Country__c clusterCountry = new Cluster_to_ISO_Country__c();
+        clusterCountry.Cluster__c = cluster.Id;
+        clusterCountry.IATA_ISO_Country__c = country.Id;
+        insert clusterCountry;
 
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
@@ -24,11 +35,12 @@ public class ISSP_LocalGroupsTest {
         for (Schema.PicklistEntry entry: LocalGovernance__c.Local_Governance_type__c.getDescribe().getPicklistValues()) {
             listLocalGroups.add(
                 new LocalGovernance__c(
-                RecordtypeId = ISSP_LocalGroups.RT_LOCALGROUP,
+                RecordtypeId = RT_LOCALGROUP,
                 IATA_Office__c = account.Id,
                 Active__c = true,
                 Local_Governance_type__c = entry.getValue(),
-                Cargo_Passenger__c = 'Cargo')
+                Cargo_Passenger__c = 'Cargo',
+                Cluster__c = cluster.Id)
             );
             listContacts.add(
                 new Contact(
@@ -59,6 +71,7 @@ public class ISSP_LocalGroupsTest {
         System.assertEquals(listParticipant.size(),controller.listParticipant.size());
         String comname = controller.communityName;
         controller.init();
+        controller.getCSVHeader();
         Test.stopTest();
     }
     
