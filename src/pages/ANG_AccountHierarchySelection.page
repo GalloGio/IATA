@@ -96,7 +96,7 @@
 			}
 	</style>
 	
-	<apex:sectionHeader title="Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
+	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
 	
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
@@ -108,7 +108,7 @@
 					</apex:inputField>
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
-					<apex:inputField value="{!oscar.AMS_Target_Agency__c}" rendered="{!showTargetAgency}"/>
+					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}"/>
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields2">
 					<apex:inputField value="{!oscar.NewHeDifferentLegalEntity__c}" rendered="{!showNewHeDifferentLegalEntity}"/>
@@ -185,7 +185,7 @@
 
 			<apex:pageBlockSection id="controlField" columns="1" rendered="{!showTopPanel}">
 				<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}"/>
-				<apex:outputField value="{!oscar.AMS_Target_Agency__c}" rendered="{!showTargetAgency}"/>
+				<apex:outputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}"/>
 				<apex:outputField value="{!oscar.NewHeDifferentLegalEntity__c}" rendered="{!showNewHeDifferentLegalEntity}"/>
 			</apex:pageBlockSection>
 

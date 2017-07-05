@@ -15,7 +15,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				oscarFields = new Set<String>{
 					'Account__c'
 					, 'ANG_Type_Of_Change__c'
-					, 'AMS_Target_Agency__c'
+					, 'New_parent__c'
 					, 'Change_of_location_type_behavior__c'
 					, 'STEP6__c'
 					, 'Process__c'
@@ -78,23 +78,44 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					AMS_Utils.LOCATION_TYPE,
-					'For change of location type, only one account can be selected'
+					'For change of location type, only one account can be selected.'
 				);
 
 				errorMessages.put(
 					AMS_Utils.ANG_HIERARCHY,
-					'User must select a "New parent. This New parent must be an external "HE" or one of the "AE" selected'
+					'User must select the New parent. This New parent must be an external "HE" or one of the "AE" selected.'
 				);
 
 				errorMessages.put(
 					AMS_Utils.ANG_VMFR,
-					'VMFR must be applied to the full hierarchy'
+					'VMFR must be applied to the full hierarchy.'
 				);
 
 				errorMessages.put(
 					AMS_Utils.ANG_ACCREDITATION_TYPE,
-					'Accreditatin Type must be applied to the full hierarchy'
+					'Accreditatin Type must be applied to the full hierarchy.'
 				);
+
+				errorMessages.put(
+					'Orphan Accounts',
+					'You cannot leave an AE account alone in the hierarchy. Please choose all the accounts in the hierarchy or remove the Top Parent from the selected Accounts.'
+				);
+
+				errorMessages.put(
+					'Top Location Type',
+					'You cannot choose an Account as a target for the destination hierarchy which does not have a valid top Location type (HE).'
+				);
+
+				errorMessages.put(
+					'Location Type Change Detected',
+					'Selecting all hierarchy and not selecting a target agency means you are trying to perform a Change of Location Type. Please choose a target agency or change the Type of Change.'
+				);
+
+				errorMessages.put(
+					'Multiple Hierarchies',
+					'The target agency belongs to multiple hierarchies. To prevent inconsistencies please analyse this problem before performing the Change of Hierarchy.'
+				);
+				
 			}
 			return errorMessages;
 		}
@@ -181,7 +202,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			
 			}
 			
-			oscar.AMS_Target_Agency__c = null;
+			oscar.New_parent__c = null;
 			return false;
 		}
 		set;
@@ -239,9 +260,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(r.Parent_Account__c);
 				}
 				
+				if(oscar.New_parent__c != null)
+					accountIds.add(oscar.New_parent__c);
+
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
 					Boolean main = (a.Id == oscar.Account__c);
-					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.AE));
+					hierarchy.put(a.Id, new HierarchyItem(a, main, processDetails.containsKey(a.Id), a.Location_Type__c == AMS_Utils.HE));
 				}
 				selectMain();
 			}
@@ -322,6 +346,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		//clear error checks
 		errorChecks = null;
 
+		System.debug('Performing validations on the hierarchyValues:'+hierarchyValues);
+
 		if(tocList.contains(AMS_Utils.ANG_LOCATION))
 			if(!isJustOneAgencySelected())
 				errorChecks.put(AMS_Utils.ANG_LOCATION, true);
@@ -339,8 +365,17 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
-			if(oscar.AMS_Target_Agency__c == null && isJustOneAgencySelected() )
+			if(oscar.New_parent__c == null)
 				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
+			if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected())
+				errorChecks.put('Orphan Accounts', true);
+			if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c))
+				errorChecks.put('Top Location Type', true);
+			if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected() )
+				errorChecks.put('Location Type Change Detected', true);
+			if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
+				errorChecks.put('Multiple Hierarchies', true);
+
 		}
 
 		//retrieve error messages
@@ -443,14 +478,37 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
+	public boolean isMovingTopLocationTypeAccount(){
+
+		for(HierarchyItem item:hierarchyValues){
+			if( (item.selected && item.isTopParent) || (item.main && item.isTopParent))
+				return true;
+		}
+
+		return false;
+
+	}
+
+
 	public boolean isAllHierarchySelected(){
 
 		for(HierarchyItem item:hierarchyValues){
-			if(!item.selected)
+			if(!item.selected && !item.main)
 				return false;
 		}
 
 		return true;
+	}
+
+	public boolean hasTopLocationType(Id acctId){
+		
+		for(HierarchyItem item:hierarchyValues){
+			if(item.acc.Id == acctId && item.acc.Location_Type__c == AMS_Utils.HE)
+				return true;
+		}
+
+		return false;
+
 	}
 
 	public boolean isJustOneAgencySelected(){
@@ -458,11 +516,40 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		Integer selected = 0;
 
 		for(HierarchyItem item:hierarchyValues){
-			if(item.selected)
+			if(item.selected || item.main)
 				selected++;
+
 		}
 
 		return selected == 1;
+	}
+
+	public boolean diffDestination(Id newParent){
+
+		for(HierarchyItem item:hierarchyValues){
+			if(item.acc.Id == newParent)
+				return false;
+		}
+
+		return true;
+	}
+
+	public boolean isSingleDestinationHierarchy(Id accountId){
+
+		Set<Id> hierarchies = new Set<Id>();
+
+		List<AMS_Agencies_relationhip__c> rels = [Select Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c = :accountId];
+		
+		if(rels.isEmpty())
+			return true;
+		else{
+			
+			for(AMS_Agencies_relationhip__c rel : rels){
+				hierarchies.add(rel.Hierarchy__c);
+			}
+		}
+
+		return hierarchies.size() == 1;
 	}
 
 	// ***********************************
