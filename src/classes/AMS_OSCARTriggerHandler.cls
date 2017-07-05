@@ -1888,6 +1888,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.SANITYCHECK) templateId 						= 'ANG_New_AE_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && wasApproved) templateId 			= 'ANG_New_AE_Accreditation_Decision_APP';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && !wasApproved) templateId 		= 'ANG_New_AE_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId 					= 'ANG_Changes_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_Changes_APP';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_Changes_DIS';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
