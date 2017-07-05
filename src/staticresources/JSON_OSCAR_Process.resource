@@ -5538,8 +5538,9 @@
                   }
                 ],
                 "DisplayFields": [
-                  "Change_effective_as_of__c",
+                  "Is_PCI_compliant__c",
                   "Type_of_change__c",
+                  "Change_effective_as_of__c",
                   "STEP6__c"
                 ],
                 "IsDependent": false

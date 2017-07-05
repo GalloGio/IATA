@@ -2620,26 +2620,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Process_start_date_Agency_Fees__c</fullName>
-        <externalId>false</externalId>
-        <label>Process start date</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Process_start_date_due_dilligence__c</fullName>
-        <externalId>false</externalId>
-        <label>Process start date</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Process__c</fullName>
         <description>Define the process to follow for this LifeCycle Request</description>
         <externalId>false</externalId>
