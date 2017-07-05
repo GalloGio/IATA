@@ -203,6 +203,13 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Support_Required_from_Account__c</fullName>
         <externalId>false</externalId>
         <label>Support Required from Account</label>
