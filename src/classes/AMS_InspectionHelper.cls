@@ -42,17 +42,25 @@ public class AMS_InspectionHelper {
         // if the trigger list has a larger value than database, add it
         // to the list
         for(AMS_Inspection__c a : iataInspections) {
+            Boolean found = false;
             for(AMS_Inspection__c b : allInspections) {
                 if(a.Account__c == b.Account__c && a.Accreditation_Endorsement_organisation__c == b.Accreditation_Endorsement_organisation__c) {
+                    // if we find the same account and the trigger has a larger value
                     if(Integer.valueOf(a.Accreditation_Endorsement_Status_code__c.charAt(0)) >
                     Integer.valueOf(b.Accreditation_Endorsement_Status_code__c.charAt(0)) ) {
                         maxInspections.add(a);
-
+                        found = true;
                         break;
                     }
                 }
             }
+            // if the account wasn't found use the trigger value
+            if(!found) {
+                maxInspections.add(a);
+
+            }
         }
+        maxInspections.addAll(iataInspections);
 
 
         if(agencyIds.isEmpty())
