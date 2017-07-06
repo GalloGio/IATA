@@ -19819,6 +19819,38 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         </value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_CountryConcerned</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_CountryConcerned</shortDescription>
+        <value>Country Concerned</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationType</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationType</shortDescription>
+        <value>Accreditation Type</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_CountryRequirementsGoBack</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
+        <value>Return to comparison of accreditation type</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_CountryRequirementsTitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_CountryRequirementsTitle</shortDescription>
+        <value>IATA Online Agency Accreditation</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
