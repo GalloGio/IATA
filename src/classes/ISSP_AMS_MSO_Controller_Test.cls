@@ -16,6 +16,7 @@ private class ISSP_AMS_MSO_Controller_Test {
 	        RecordTypeId = accRtId,
 	        Name = 'Airline HQ', 
 	        IATACode__c = '012',
+            Airline_designator__c = 'HQ',
 	        IATA_ISO_Country__c = isoc.Id
 	        );  
         insert acc;

@@ -9,6 +9,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
     private list<AMS_Inspection__c> lstAccountsInHierarchy;
     private Id currentAccountId;
     private Id hqAccountId;
+    private String airlineCode;
     public Boolean isMSO {
         get {
             String pageName = ApexPages.currentPage().getUrl().substringAfterLast('/').substringBefore('?');
@@ -20,7 +21,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public String strRenderAs {
         get {
             String pdfParam = ApexPages.currentPage().getParameters().get('renderAs');
-            return pdfParam == 'pdf' ? 'PDF' : 'HTML';
+            return (pdfParam == 'pdf' || pdfParam == 'csv') ? 'PDF' : 'HTML';
         } set;
     }
 
@@ -59,9 +60,10 @@ public without sharing class ISSP_AMS_MSO_Controller {
         try {
             User currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
             Contact currentUserContact = [SELECT Id, AccountId FROM Contact WHERE Id = :currentUser.ContactId];
-            this.currentAccount = [SELECT Id, ParentId, RecordType.DeveloperName, Name FROM Account WHERE Id = :currentUserContact.AccountId];
+            currentAccount = [SELECT Id, ParentId, RecordType.DeveloperName, Name, Airline_designator__c FROM Account WHERE Id = :currentUserContact.AccountId];
             currentAccountId = currentAccount.Id;
             hqAccountId = currentAccount.RecordType.DeveloperName == 'IATA_Airline' ? currentAccountId : currentAccount.ParentId;
+            airlineCode = currentAccount.Airline_designator__c;
         } catch(Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Unable to determine current user account.'));
             return;
@@ -76,13 +78,13 @@ public without sharing class ISSP_AMS_MSO_Controller {
     }
 
     public void refreshMsoGsaList() {
-        String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry ';
+        String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Account__r.Status__c, Accreditation_Endorsement_Status_code__c ';
 
         if (!isMSO) {
             strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r) ';
         }
 
-        strQuery += 'FROM AMS_Inspection__c WHERE Airline__c = :hqAccountId ';
+        strQuery += 'FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
         strQuery += 'AND Account__r.Location_Class__c = \'' + (isMSO ? 'M' : 'G') + '\'';
 
         if (!isMSO) {

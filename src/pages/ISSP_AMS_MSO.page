@@ -202,7 +202,7 @@
 					</div>
 					<div class="col-xs-6 col-md-4 hidden-print">
 						<apex:outputPanel id="downloadButtons">
-							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?data=MSO&search={!searchText}','_blank');">
+							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?renderAs=csv&data=MSO&search={!searchText}','_blank');">
 								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
 							</button>
 							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_AMS_MSO?renderAs=pdf&search={!searchText}','_blank');" >
@@ -236,6 +236,8 @@
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
+								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Account_Status}</apex:commandLink></th>
+								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Category}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
@@ -267,6 +269,8 @@
 							<tr>
 								<td>{!a.appointment.Account__r.IATACode__c}</td>
 								<td>{!a.appointment.Account__r.Name}</td>
+								<td>{!a.appointment.Account__r.Status__c}</td>
+								<td>{!a.appointment.Accreditation_Endorsement_Status_code__c}</td>
 								<td>{!a.appointment.Account__r.Category__c}</td>
 								<td>{!a.appointment.Account__r.BillingStreet}</td>
 								<td>{!a.appointment.Account__r.BillingCity}</td>
@@ -276,7 +280,7 @@
 						</tbody>
 						<tfoot>
 							<tr class=" hidden-print">
-								<td colspan="6" style="align: center;"> 
+								<td colspan="9" style="align: center;"> 
 									<div class="row paginator hidden-print">
 										<div class="col-xs-3">
 											Display&nbsp;
