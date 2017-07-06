@@ -40,7 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Group_Owner_Text__c</field>
+                <field>Group_Owner__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

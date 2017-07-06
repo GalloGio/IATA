@@ -35,7 +35,9 @@ public class UserProvisioningRequestHandler {
         Set<String> provApp = new Set<String>();
         Set<String> provBuiltApp = new Set<String>();
         Map<String, EmailTemplate> listOfEmailTemp = new Map<String, EmailTemplate>();
-
+ 
+		//Mconde fix
+		ID standartReplyUserID = PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email);
 
         if(!listOfApps.isEmpty()){
             for(One_Id_App_Config_Detail__c anApp : listOfApps){
@@ -82,6 +84,8 @@ public class UserProvisioningRequestHandler {
 
                 mail.setTargetObjectId(uprov.SalesforceUserId);
 
+				//Mconde Fixed
+				mail.setOrgWideEmailAddressId(standartReplyUserID);
 
                 EmailTemplate emailT = listOfEmailTemp.get('Identity Access:'+uprov.AppName);
 

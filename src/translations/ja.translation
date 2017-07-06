@@ -7033,12 +7033,20 @@ and
         <name>ISSP_Account_Statement_Location</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Account Statement Notifications Button --></label>
+        <name>ISSP_Account_Statement_Notifications_Button</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Account Statements --></label>
         <name>ISSP_Account_Statements</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Disclaimer --></label>
         <name>ISSP_Account_Statements_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Account Statements Disclaimer China Travel Agent --></label>
+        <name>ISSP_Account_Statements_Disclaimer_China_TravelAgent</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Account Statements Title --></label>
@@ -7991,7 +7999,7 @@ and
         <name>ISSP_Email_Granted_Reason</name>
     </customLabels>
     <customLabels>
-        <label>こちら</label>
+        <label>こちらをクリックして下さい。</label>
         <name>ISSP_Email_Here</name>
     </customLabels>
     <customLabels>
@@ -8047,7 +8055,7 @@ and
         <name>ISSP_Email_NewUser_Subject</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Eメールアドレスを使って[Link &quot;&quot;here&quot;&quot;]から[Cell#61]にログインしてください&quot;</label>
+        <label>Eメールアドレスを使って次のリンクからカスタマーポータルサイトにログインして下さい。</label>
         <name>ISSP_Email_PleaseLogin</name>
     </customLabels>
     <customLabels>
@@ -8071,7 +8079,7 @@ and
         <name>ISSP_Email_PortalUrl_CNS</name>
     </customLabels>
     <customLabels>
-        <label>が、IATAカスタマーポータルのステータスを[Status]に変更したことをお知らせします。</label>
+        <label>が、あなたのIATAカスタマーポータルステータスを次の通り変更したことをお知らせします。</label>
         <name>ISSP_Email_PortalUser_StatusChange</name>
     </customLabels>
     <customLabels>
@@ -8487,7 +8495,7 @@ and
         <name>ISSP_Homepage_Users</name>
     </customLabels>
     <customLabels>
-        <label>カスタマーポータル</label>
+        <label>カスタマーポータルサイト</label>
         <name>ISSP_Homepage_Welcome_to_IATA_Portal</name>
     </customLabels>
     <customLabels>
@@ -12960,25 +12968,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Welcome</name>
     </customTabs>
     <globalPicklists>
-        <name>EF_Invoice_Distribution</name>
-        <picklistValues>
-            <masterLabel>Electronic Via Email</masterLabel>
-            <translation><!-- Electronic Via Email --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Electronic Via Platform</masterLabel>
-            <translation><!-- Electronic Via Platform --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>No Invoice</masterLabel>
-            <translation><!-- No Invoice --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Paper</masterLabel>
-            <translation><!-- Paper --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Role</name>
         <picklistValues>
             <masterLabel>Account Manager</masterLabel>
@@ -13066,6 +13055,33 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <picklistValues>
             <masterLabel>Manager, Invoicing &amp; Accounting &amp; Data Transformation</masterLabel>
             <translation><!-- Manager, Invoicing &amp; Accounting &amp; Data Transformation --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
+        <name>EF_Payment_Terms</name>
+        <picklistValues>
+            <masterLabel>07 days after invoice date</masterLabel>
+            <translation><!-- 07 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10 days after invoice date</masterLabel>
+            <translation><!-- 10 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>15 days after invoice date</masterLabel>
+            <translation><!-- 15 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20 days after invoice date</masterLabel>
+            <translation><!-- 20 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>30 days after invoice date</masterLabel>
+            <translation><!-- 30 days after invoice date --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payable immediately due net</masterLabel>
+            <translation><!-- Payable immediately due net --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -13336,29 +13352,6 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Manager_Approval</name>
-        <picklistValues>
-            <masterLabel>Approved</masterLabel>
-            <translation><!-- Approved --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>In Progress</masterLabel>
-            <translation><!-- In Progress --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Not Started</masterLabel>
-            <translation><!-- Not Started --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Recalled</masterLabel>
-            <translation><!-- Recalled --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Rejected</masterLabel>
-            <translation><!-- Rejected --></translation>
-        </picklistValues>
-    </globalPicklists>
-    <globalPicklists>
         <name>EF_Allow_Billing_Agreements</name>
         <picklistValues>
             <masterLabel>Allowed</masterLabel>
@@ -13374,30 +13367,14 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Payment_Terms</name>
+        <name>EF_Status</name>
         <picklistValues>
-            <masterLabel>07 days after invoice date</masterLabel>
-            <translation><!-- 07 days after invoice date --></translation>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>10 days after invoice date</masterLabel>
-            <translation><!-- 10 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>15 days after invoice date</masterLabel>
-            <translation><!-- 15 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>20 days after invoice date</masterLabel>
-            <translation><!-- 20 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>30 days after invoice date</masterLabel>
-            <translation><!-- 30 days after invoice date --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Payable immediately due net</masterLabel>
-            <translation><!-- Payable immediately due net --></translation>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14079,6 +14056,29 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
+        <name>EF_Frequency</name>
+        <picklistValues>
+            <masterLabel>2x/Week</masterLabel>
+            <translation><!-- 2x/Week --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4x/Month</masterLabel>
+            <translation><!-- 4x/Month --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fortnightly</masterLabel>
+            <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monthly</masterLabel>
+            <translation><!-- Monthly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weekly</masterLabel>
+            <translation><!-- Weekly --></translation>
+        </picklistValues>
+    </globalPicklists>
+    <globalPicklists>
         <name>EF_Payment_Method</name>
         <picklistValues>
             <masterLabel>Bank transfer</masterLabel>
@@ -14110,14 +14110,26 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Status</name>
+        <name>EF_Manager_Approval</name>
         <picklistValues>
-            <masterLabel>Active</masterLabel>
-            <translation><!-- Active --></translation>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Inactive</masterLabel>
-            <translation><!-- Inactive --></translation>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Started</masterLabel>
+            <translation><!-- Not Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recalled</masterLabel>
+            <translation><!-- Recalled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rejected</masterLabel>
+            <translation><!-- Rejected --></translation>
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
@@ -14836,26 +14848,22 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         </picklistValues>
     </globalPicklists>
     <globalPicklists>
-        <name>EF_Frequency</name>
+        <name>EF_Invoice_Distribution</name>
         <picklistValues>
-            <masterLabel>2x/Week</masterLabel>
-            <translation><!-- 2x/Week --></translation>
+            <masterLabel>Electronic Via Email</masterLabel>
+            <translation><!-- Electronic Via Email --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>4x/Month</masterLabel>
-            <translation><!-- 4x/Month --></translation>
+            <masterLabel>Electronic Via Platform</masterLabel>
+            <translation><!-- Electronic Via Platform --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Fortnightly</masterLabel>
-            <translation><!-- Fortnightly --></translation>
+            <masterLabel>No Invoice</masterLabel>
+            <translation><!-- No Invoice --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Monthly</masterLabel>
-            <translation><!-- Monthly --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Weekly</masterLabel>
-            <translation><!-- Weekly --></translation>
+            <masterLabel>Paper</masterLabel>
+            <translation><!-- Paper --></translation>
         </picklistValues>
     </globalPicklists>
 </Translations>
