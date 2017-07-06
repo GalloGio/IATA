@@ -28,7 +28,8 @@ public class EF_AccountTriggerHandler {
 		Map <Id, Account> childAccsMap = new Map <Id, Account> ();
 
 		if(!inactiveAccsSet.isEmpty())
-			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account where ParentId in: inactiveAccsSet]);
+			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account 
+				where ParentId in: inactiveAccsSet AND EF_Status__c = 'Active']);
 		
 		if(!childAccsMap.isEmpty() && run){
 			for(Account a: childAccsMap.values()){
