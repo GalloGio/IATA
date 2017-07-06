@@ -872,8 +872,8 @@ public without sharing class OneIdVfDSEController {
             else {
                 showConfirmMessage = true;
                 returnToParent = ReturnToParentEnum.AccountContactAndUserSuccess;
-                errorMessage.add(System.Label.ISSP_Registration_Thank_you);
-                errorMessage.add(System.Label.ISSP_Registration_Redirection);
+                errorMessage.add(System.Label.ISSP_Registration_Thank_you_GeneralAccount);
+                errorMessage.add(System.Label.ISSP_Registration_Redirection15s);
 
                 return null;
             }
