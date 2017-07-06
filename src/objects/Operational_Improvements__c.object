@@ -185,7 +185,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Simplified Interline Settlement (SIS)</fullName>
+                <fullName>Simplified Invoicing and Settlement (SIS)</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -198,10 +198,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>IATA Clearing House</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Simplified Interline Settlement</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -2494,11 +2490,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Simplified Interline Settlement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Simplified Interline Settlement %28SIS%29</fullName>
+                <fullName>Simplified Invoicing and Settlement %28SIS%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
