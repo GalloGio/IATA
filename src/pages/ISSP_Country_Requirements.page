@@ -204,58 +204,64 @@
 
           </apex:outputpanel> <!-- OLD LAYOUT -->
           <apex:outputpanel layout="block" rendered="{!newLayout}">
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{!$Label.ANG_ISSP_CountryRequirementsTitle}</h3>
-              </div>              
-            </div>
-            <div class="row">
-              <div class="col-md-12">                
-                <h4><a href="/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
-                </h4>
-              </div>                          
-            </div>
-            <div class="row">
-              <div class="col-md-2">
-                <apex:outputLabel value="{!$Label.ANG_ISSP_CountryConcerned} : "/>
-              </div>
-              <div class="col-md-2">
-                <apex:outputText value="{!countryName}"/>
-              </div>              
-            </div>
-            <div class="row">
-              <div class="col-md-2">
-                <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType} : "/>
-              </div>
-              <div class="col-md-2">
-                <apex:selectList title="something" id="operationType" size="1" value="{!accreditationType}" onchange="operationTypeChanged()">
-                  <apex:selectOptions value="{!accreditationTypes}"/>
-                </apex:selectList>
-              </div>              
-            </div>
-            <apex:actionFunction action="{!refreshRequirementsList}" name="operationTypeChanged" rerender="countryRequirementsListId">
-            </apex:actionFunction>
+            <div class="col-md-12" id="results2">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3>{!$Label.ANG_ISSP_CountryRequirementsTitle}</h3>
+                </div>              
+                <div class="panel-body" id="body-results">
+                  <div class="row">
+                    <div class="col-md-12">                
+                      <h4><a href="/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                      </h4>
+                    </div>                          
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <apex:outputLabel value="{!$Label.ANG_ISSP_CountryConcerned} : "/>
+                    </div>
+                    <div class="col-md-2">
+                      <apex:outputText value="{!countryName}"/>
+                    </div>              
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType} : "/>
+                    </div>
+                    <div class="col-md-2">
+                      <apex:selectList title="something" id="operationType" size="1" value="{!accreditationType}" onchange="operationTypeChanged()">
+                        <apex:selectOptions value="{!accreditationTypes}"/>
+                      </apex:selectList>
+                    </div>              
+                  </div>
+                  <apex:actionFunction action="{!refreshRequirementsList}" name="operationTypeChanged" rerender="countryRequirementsListId">
+                  </apex:actionFunction>
 
-            <div class="row">
-              <div class="col-md-12">
-                <apex:outputPanel id="countryRequirementsListId">
-                  <apex:pageBlock>
-                    <apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
-                      <!--apex:column headerClass="info">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                      </apex:column-->
-                      <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),agentType)),
-                                                                   $Label.ISSP_AMS_NoC_Request_for_Change)}">
-                        <apex:outputText >
-                          <strong>{!reqs.Name}</strong><br/>
-                          <apex:outputField value="{!reqs.Requirement_text__c}"/>
-                        </apex:outputText>
-                      </apex:column>
-                    </apex:dataTable>
-                  </apex:pageBlock>
-                </apex:outputPanel>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <apex:outputPanel id="countryRequirementsListId">
+                        <apex:pageBlock>
+                          <apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
+                            <!--apex:column headerClass="info">
+                              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </apex:column-->
+                            <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),agentType)),
+                                                                         $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                              <apex:outputText>
+                                <strong>{!reqs.Name}</strong><br/>
+                                <span style="font-weight: normal">
+                                  <apex:outputField value="{!reqs.Requirement_text__c}"/>
+                                </span>
+                              </apex:outputText>
+                            </apex:column>
+                          </apex:dataTable>
+                        </apex:pageBlock>
+                      </apex:outputPanel>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </div>            
           </apex:outputpanel>
         </apex:form>
         <c:ISSP_CustomFooter />

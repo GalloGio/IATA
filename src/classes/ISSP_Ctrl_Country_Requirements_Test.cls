@@ -141,7 +141,12 @@ private class ISSP_Ctrl_Country_Requirements_Test {
         System.runAs(testUser) {
             ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
             result = controller.checkAccess();
-        }
+            controller.getNewLayout();
+            controller.getCountryRequirementsList();
+            controller.getAccreditationTypes();
+            controller.refreshRequirementsList();
+        }	
+
         Test.stopTest();
 
         System.assert(result==null);

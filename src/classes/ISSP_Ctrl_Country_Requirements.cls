@@ -296,14 +296,16 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         accreditationTypes = new List<SelectOption>();
 
         if(isHOAccredited && category == 'IATA Passenger Sales Agent') {
-            accreditationTypes.add(new SelectOption('New BR / IP - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH));
+            accredModel = 'Legacy';
+            accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));
         } else {
             if(isNewgenEnabled) {
                 accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASH, Label.ISSP_AMS_Head_Entity_Cash));
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, Label.ISSP_AMS_Head_Entity_No_Cash));
             } else {
-                accreditationTypes.add(new SelectOption('New HO - Legacy', Label.ISSP_AMS_OPTION_PAX_HO));
+                accredModel = 'Legacy';
+                accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_HO));
             }
         }
         return accreditationTypes;
