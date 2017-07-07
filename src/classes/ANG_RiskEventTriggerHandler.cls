@@ -10,35 +10,35 @@ public class ANG_RiskEventTriggerHandler {
 	// ****************** distribution methods ********************
 	// ************************************************************
 
-	public void onBeforeInsert(){
-		loadInformationsInsert();
-	}
-	public void onAfterInsert(){
-		generateMultiples();
-		assessRisk();
-	}
-
-	public void onBeforeUpdate(){
-		loadInformationsUpdate();
-	}
-	public void onAfterUpdate(){
-		generateMultiples();
-		assessRisk();
-	}
+    public void onBeforeInsert(){
+        loadInformationsInsert();
+    }
+    public void onAfterInsert(){
+        generateMultiples();
+        assessRisk();
+    }
+    
+    public void onBeforeUpdate(){
+        loadInformationsUpdate();
+    }
+    public void onAfterUpdate(){   
+        generateMultiples();
+        assessRisk();
+    }
 
 	public void onBeforeDelete(){}
 	public void onAfterDelete(){}
 
-	// ************************************************************
-	// ********************* action methods ***********************
-	// ************************************************************
-	
-	private void loadInformationsInsert() {
-		new ANG_RiskEventGenerator(triggerNew).loadInitialInformations();
-	}
-	
-	private void loadInformationsUpdate() {
-		List<ANG_Agency_Risk_Event__c> changedRisks = new List<ANG_Agency_Risk_Event__c>();
+    // ************************************************************
+    // ********************* action methods ***********************
+    // ************************************************************
+    
+    private void loadInformationsInsert() {
+        new ANG_RiskEventGenerator(triggerNew).loadInitialInformations();
+    }
+    
+    private void loadInformationsUpdate() {
+        List<ANG_Agency_Risk_Event__c> changedRisks = new List<ANG_Agency_Risk_Event__c>();
 
 		for(ANG_Agency_Risk_Event__c re : triggerNew){
 			ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);

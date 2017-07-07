@@ -217,7 +217,7 @@ public class ANG_RiskEventGenerator {
 					for(Database.Error e : result.getErrors()){
 						//if error is for duplicate records do nothing, for other cases, throw error
 						System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - generate] error status code - ' + e.getStatusCode());
-						if(e.getStatusCode() != StatusCode.DUPLICATE_VALUE && e.getStatusCode() != StatusCode.DUPLICATES_DETECTED) throw new RiskEventGeneratorException(e.getMessage());
+						if(e.getStatusCode() != StatusCode.DUPLICATE_VALUE) throw new RiskEventGeneratorException(e.getMessage());
 					}
 				}
 			}
