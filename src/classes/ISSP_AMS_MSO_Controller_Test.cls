@@ -33,7 +33,8 @@ private class ISSP_AMS_MSO_Controller_Test {
             RecordTypeId = agcRtId,
             Name = 'Agency', 
             Location_Class__c = 'M',
-            IATA_ISO_Country__c = isoc.Id
+            IATA_ISO_Country__c = isoc.Id,
+            Status__c = 'Approved'
             );  
         insert agencyM;
 
@@ -44,7 +45,8 @@ private class ISSP_AMS_MSO_Controller_Test {
             RecordTypeId = agcRtId,
             Name = 'Agency', 
             Location_Class__c = 'G',
-            IATA_ISO_Country__c = isoc.Id
+            IATA_ISO_Country__c = isoc.Id,
+            Status__c = 'Approved'
             );  
         insert agencyG;
 
@@ -61,7 +63,8 @@ private class ISSP_AMS_MSO_Controller_Test {
             RecordTypeId = agcRtId,
             Name = 'Agency2', 
             Location_Class__c = 'G',
-            IATA_ISO_Country__c = isoc.Id
+            IATA_ISO_Country__c = isoc.Id,
+            Status__c = 'Approved'
             );  
         insert agency2;
 
