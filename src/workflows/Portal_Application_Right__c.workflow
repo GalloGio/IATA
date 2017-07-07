@@ -701,5 +701,4 @@ Contact__c = $User.ContactId
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
-
 </Workflow>
