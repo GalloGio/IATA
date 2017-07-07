@@ -251,7 +251,7 @@
                             <div class="slds-notify slds-notify--alert slds-theme--alert-texture" role="alert">
                                 <span class="slds-assistive-text">{!$Label.ISSP_Error}</span>
                                 <apex:repeat value="{!errorMessage}" var="er" id="theRepeat">
-                                    <p><apex:outputText value="{!er}" escape="false" /></p>
+                                    <p><apex:outputText value="{!er}" escape="false" /></p> <br>
                                 </apex:repeat>
                             </div>
                         </div>
