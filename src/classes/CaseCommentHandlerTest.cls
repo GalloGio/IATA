@@ -50,6 +50,9 @@ private class CaseCommentHandlerTest {
         caseOpened.ContactId = contact.Id;
         caseOpened.AccountId = contact.AccountId;
         insert caseOpened;
+        
+        //make a fake service simulating E2CP
+        CaseCommentHandler.TEST_E2CPRUNUSERS = new set<Id>{testUser.Id};
 
         Test.startTest();
         System.runAs(testUser) {
@@ -57,7 +60,10 @@ private class CaseCommentHandlerTest {
             update testUser;
             //Test Closed Case
             try {
-                CaseComment caseComment = new CaseComment(ParentId=caseClosed.Id);
+                CaseComment caseComment = new CaseComment(
+                    ParentId=caseClosed.Id,
+                    IsPublished = true
+                );
                 insert caseComment;
                 System.assert(false, 'Error expected');
             } catch(Exception e) {
