@@ -6,6 +6,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public String searchFilter {get;set;}
 
     public static User user;
+    public static Map<String, String> languagesMap {get;set;}
 
     public String sector {get;set;}
     public String countryName {get;set;}
@@ -22,7 +23,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public Boolean isNoticeOfChange {get; set;}
     public String sectorValue {get; set;}
     public Boolean newlabels {get; set;}
-    public String agentType {get; set;}    
+    public String agentType {get; set;}
+    public String userLanguage {get; set;}
 
     public String accreditationType {get;set;}
     public List<AMS_Accreditation_Requirement__c> countryRequirementsList;
@@ -37,6 +39,23 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         if(user != null) {
 
             Boolean comp = (ApexPages.currentPage().getParameters().get('comp') == 'true');
+
+            languagesMap = new Map<String, String>();
+
+            languagesMap.put('fr', 'French');
+            languagesMap.put('es', 'Spanish');
+            languagesMap.put('ar', 'Arabic');
+            languagesMap.put('zh_CN', 'Chinese');
+            languagesMap.put('zh_TW', 'Chinese');
+            languagesMap.put('de', 'German');
+            languagesMap.put('in', 'Indonesian');
+            languagesMap.put('it', 'Italian');
+            languagesMap.put('ja', 'Japanese');
+            languagesMap.put('ko', 'Korean');
+            languagesMap.put('pt_BR', 'Portuguese');
+            languagesMap.put('pt_PT', 'Portuguese');
+            languagesMap.put('vi', 'Vietnamese');
+            languagesMap.put('th', 'Thai');
 
             return user.contact.Account.Sector__c == 'Airline'
                 || user.contact.Account.Sector__c == 'General Sales Agent'
@@ -99,11 +118,12 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                                  Where SobjectType = 'AMS_Accreditation_Requirement__c'
                                    and DeveloperName = 'Travel_Agent'];
 
-            String applyLanguage = 'en_US';
+            userLanguage = UserInfo.getLanguage();
 
             if (ApexPages.currentPage().getParameters().containsKey('isNoticeOfChange'))
                 isNoticeOfChange = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isNoticeOfChange'));
 
+/*
             if (applyLanguage == 'fr') {
                 selectedLang = 'French';
             } else if (applyLanguage == 'es') {
@@ -111,12 +131,13 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             } else {
                 selectedLang = 'English';
             }
-
+*/
             countryIsoCode = user.contact.Account.IATA_ISO_Country__r.ISO_Code__c;
             
             category = user.contact.Account.Category__c;
             sector = user.contact.Account.Sector__c;
             countryName = user.contact.Account.IATA_ISO_Country__r.Name; 
+            amsCountryLabel = countryName;
             isHOAccredited = false;
             isNewgenEnabled = user.contact.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c;
 
@@ -153,7 +174,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             } else {
                 amsOfficeType = 'HO';    
             }
-
+/*            
             if (applyLanguage == 'en_US') {
                 amsCountryLabel = user.contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c;
             } else if (applyLanguage == 'fr') {
@@ -161,7 +182,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             } else {
                 amsCountryLabel = user.contact.Account.IATA_ISO_Country__r.IATA_Country_SP__c;
             }            
-            
+*/
             if(user.contact.Account.IATA_ISO_Country__r.ISO_Code__c != null) {
                 newlabels = user.contact.Account.IATA_ISO_Country__r.AMS_Accreditation_New_Labels__c;
             } else {            
@@ -260,20 +281,66 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<AMS_Accreditation_Requirement__c> getCountryRequirementsList() {
         if(countryRequirementsList == null) {
 
-            countryRequirementsList = [SELECT Id,
+            List<AMS_Accreditation_Requirement__c> countryRequiremeListAux = new List<AMS_Accreditation_Requirement__c>();
+            List<AMS_Accreditation_Requirement__c> countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
+
+            countryRequiremeListAux = [SELECT Id,
                                               Name,
                                               Requirement_text__c,
                                               File_to_Upload__c,
-                                              File_Identifier2__c
+                                              File_Identifier2__c,
+                                              Language__c
                                          FROM AMS_Accreditation_Requirement__c
                                         WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :countryIsoCode                                        
                                           AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                                           AND Location_type__c INCLUDES (:amsOfficeType)
-                                          AND ANG_Accreditation_Model__c INCLUDES (:accredModel)
-                                          AND Language__c = :selectedLang
+                                          AND ANG_Accreditation_Model__c INCLUDES (:accredModel)                                          
                                           AND RecordTypeId = :TravelReqRecType.Id                                          
                                           ORDER BY Sort_Order__c ASC];
 
+
+            System.debug('countryRequiremeListAux-->' + countryRequiremeListAux.size());
+            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
+                System.debug('Name-->' + req.name + '  Lang->' + req.Language__c);
+            }
+
+            Set<String> availableLanguages = new Set<String>();
+
+            Boolean first = false;
+            String firstLanguage;
+            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
+                if(!first) {
+                    firstLanguage = req.Language__c;
+                    first = true;
+                }
+                availableLanguages.add(req.Language__c);
+            }
+
+            String filterLanguage;
+
+            System.debug('---->' + languagesMap.get(userLanguage));
+
+            // User's language is in the list of requirements
+            if(availableLanguages.contains(languagesMap.get(userLanguage))) {
+                filterLanguage = languagesMap.get(userLanguage);
+            } else {
+                // Use english if it exists
+                if(availableLanguages.contains('English')) {
+                    filterLanguage = 'English';
+                } else {
+                    filterLanguage = firstLanguage;
+                }
+            }            
+
+            System.debug('filterLanguage-->' + filterLanguage);
+
+            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
+                System.debug('2222Name-->' + req.name + '  Lang->' + req.Language__c);
+                if (filterLanguage == req.Language__c) {
+                    System.debug('FONIX-->');
+                    countryRequirementsList.add(req);
+                }
+            }
         }
         return countryRequirementsList;
     }
