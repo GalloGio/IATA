@@ -8898,11 +8898,18 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_GSA_Account_Name</fullName>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_GSA</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name</shortDescription>
-        <value>Account Name</value>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_GSA</shortDescription>
+        <value>GSA Name</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Account_Name_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Account_Name_MSO</shortDescription>
+        <value>MSO Name</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Account_Status</fullName>
@@ -8912,11 +8919,25 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Account Status</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Appointment_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Status</shortDescription>
         <value>Appointment Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Appointment_Terminated</shortDescription>
+        <value>Terminated</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Category</fullName>
@@ -8938,6 +8959,20 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
         <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</shortDescription>
+        <value>Date Appointment Terminated</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Date_of_Appointment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Date_of_Appointment</shortDescription>
+        <value>Date of Appointment</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Download_CSV</fullName>

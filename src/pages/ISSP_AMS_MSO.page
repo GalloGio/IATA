@@ -230,13 +230,12 @@
 										<apex:param name="SortBy" value="IATACode__c" assignTo="{!SortBy}"/>
 									</apex:commandLink>
 								</th>
-								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name}
+								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Account_Name_MSO}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Name', SortingDirection=='DESC')}" alt="Sorted Descending" styleClass="sortDesc hidden-print" title="Sorted Descending"/>
 										<apex:param name="SortingDirection" value="{!IF(AND(SortBy=='Name',SortingDirection=='ASC'),'DESC','ASC')}" assignTo="{!SortingDirection}"/>
 										<apex:param name="SortBy" value="Name" assignTo="{!SortBy}"/>
 									</apex:commandLink></th>
-								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Account_Status}</apex:commandLink></th>
 								<th><apex:commandLink>{!$Label.ISSP_AMS_MSO_GSA_Appointment_Status}</apex:commandLink></th>
 								<th><apex:commandLink action="{!refreshMsoGsaList}" rerender="tablePanel, downloadButtons">{!$Label.ISSP_AMS_MSO_GSA_Category}
 										<apex:image value='/img/s.gif' rendered="{! AND(SortBy=='Category__c', SortingDirection=='ASC')}" alt="Sorted Ascending" styleClass="sortAsc hidden-print" title="Sorted Ascending"/>
@@ -269,8 +268,10 @@
 							<tr>
 								<td>{!a.appointment.Account__r.IATACode__c}</td>
 								<td>{!a.appointment.Account__r.Name}</td>
-								<td>{!a.appointment.Account__r.Status__c}</td>
-								<td>{!a.appointment.Accreditation_Endorsement_Status_code__c}</td>
+								<td>
+									{!CASE(a.appointment.Accreditation_Endorsement_Status_code__c, '0', $Label.ISSP_AMS_MSO_GSA_Appointment_Terminated, '9', $Label.ISSP_AMS_MSO_GSA_Appointment_Active, a.appointment.Accreditation_Endorsement_Status_code__c)}
+									<img src="/img/msg_icons/info16.png" title="{!IF(a.appointment.Accreditation_Endorsement_Status_code__c == '0', $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated, $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment) + ': ' + TEXT(a.appointment.Date_Organisation_Status_attained__c)}" style="float: right;" />
+									</td>
 								<td>{!a.appointment.Account__r.Category__c}</td>
 								<td>{!a.appointment.Account__r.BillingStreet}</td>
 								<td>{!a.appointment.Account__r.BillingCity}</td>
