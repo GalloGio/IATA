@@ -54,7 +54,7 @@ public class ams2gdp_BusinessLogic
 				, Check_Digit__c =   account.Check_Digit__c
 				, Email_Address__c =  account.Email__c
 				, GDP_Opt_In__c =  account.GDP_Opt_In__c
-				, IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.startsWith('X') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
+				, IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
 				, Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c 
 				, Agency_Short_Name__c  = account.Short_Name__c
  				, Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
