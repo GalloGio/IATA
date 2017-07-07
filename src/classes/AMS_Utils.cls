@@ -96,6 +96,7 @@ public without sharing class AMS_Utils {
     public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
     public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
+    public static final String HIERARCHY = 'Hierarchy';
 
 
     public static final String ANG_LEGAL_NAME = 'Legal name';
@@ -164,6 +165,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
     public static final String RECTYPE_NEWHE    = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
     public static final String RECTYPE_NEWAE    = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
+    public static final String RECTYPE_NGCHANGES= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
 
@@ -2284,6 +2286,25 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.ANG_IEP_Status_FF__c,
                        Account.Is_Branch_Abroad__c
                   FROM Contact WHERE Id = :conId limit 1];                  
+    }
+
+    public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
+
+        return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+    }
+
+    public static List<String> getOSCARStepsApiName() {
+
+        List<String> oscarSteps = new List<String>();
+
+        for (String fieldApiName : getOSCARFieldMap().keySet()) {
+            if (fieldApiName.startsWithIgnoreCase('STEP'))
+                oscarSteps.add(fieldApiName);
+
+        }
+
+        return oscarSteps;
     }
 
 }

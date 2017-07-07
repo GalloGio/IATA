@@ -36,6 +36,7 @@ public class AMS_OSCARTriggerHandler {
 		//create agency regulation objects for Cargo agencies
 		handleCargoAgencyRegulations();
 		handleChangesProcess(oscars);
+		ANG_AgencyChangesHelper.handleNewGenChangesProcess(oscars);
         copyDataFromTargetAgency();
 		updateOSCARAppointments();
 		handleVRProcess();
@@ -175,7 +176,7 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-		List<String> oscarStepsApiName = getOSCARStepsApiName();
+		List<String> oscarStepsApiName = AMS_Utils.getOSCARStepsApiName();
 
 		for (AMS_OSCAR__c oscar : oscars) {
 
@@ -1798,25 +1799,6 @@ public class AMS_OSCARTriggerHandler {
 	//*************************************
 	//********** access methods ***********
 	//*************************************
-
-	public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
-
-		return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
-
-	}
-
-	public static List<String> getOSCARStepsApiName() {
-
-		List<String> oscarSteps = new List<String>();
-
-		for (String fieldApiName : getOSCARFieldMap().keySet()) {
-			if (fieldApiName.startsWithIgnoreCase('STEP'))
-				oscarSteps.add(fieldApiName);
-
-		}
-
-		return oscarSteps;
-	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
 		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
