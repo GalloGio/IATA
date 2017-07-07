@@ -30,6 +30,7 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 	            emailMsg.setTemplateId(templateId);
 	            emailMsg.setTargetObjectId(userId);
 	            emailMsg.saveAsActivity = false;
+	            emailMsg.setReplyTo(ENV.Reply_Email);
 	            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
 
 	            msgList.add(emailMsg);
