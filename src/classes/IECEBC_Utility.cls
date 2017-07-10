@@ -60,6 +60,7 @@ public class IECEBC_Utility {
 	public static String getSOQLFromMasterFilter(List<String> columns, Id masterFilterId, boolean elastic_switch) {
 		EBC_Master_Filter__c masterFilter = [
 			SELECT Id,
+			Name,
 			Audience__c,
 			Geo_Condition__c,
 			Refinement_Condition__c,
@@ -359,14 +360,13 @@ public class IECEBC_Utility {
 				queryWhereClauses.add('(' + String.join(queryRefinementFilters, ' ' + masterFilter.Refinement_Condition__c + ' ') + ')');
 			}
 		}
-		
-		
+		if (masterFilter.Name=='EBC_TEST_RUN' && table=='GDP_Products_Account_View__c') queryWhereClauses.add('Agency_Code__c like \'423%\'');
+        if (masterFilter.Name=='EBC_TEST_RUN' && table=='ID_Card__c') queryWhereClauses.add('Agency_IATA_Code__c like \'423%\'');
+        
 		query += 'Where ' + String.join(queryWhereClauses, ' AND ');
+		if (columns != null) query += ' ORDER BY ' + emailField;
 		
-		
-		if (columns != null) {
-			query += ' ORDER BY ' + emailField;
-		}
+	
 		
 		System.debug(query);
 		return query;

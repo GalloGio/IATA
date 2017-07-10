@@ -1348,6 +1348,7 @@ public class vfIECEBC_TestSuite {
             recipientEditCon.validateNewFilter();
             System.assertEquals(3, recipientEditCon.newListStepNumber);
             
+            recipientEditCon.newFilter.Name = 'EBC_TEST_RUN';
             Integer cnt = vfIECEBC_RecipientEdit.getNewFilterCnt(recipientEditCon.getNewFilterJSON());
             System.assert(cnt > 0);
             recipientEditCon.newFilter.Number_of_Recipients__c = cnt;
