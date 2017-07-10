@@ -73,10 +73,10 @@
 
 					<apex:pageBlocktable value="{!WithdrawalsAgreements}" var="wrapper">
 						<apex:column headerValue="Concurring party">
-							<apex:outputField value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}" />
+							<apex:outputText value="{!wrapper.accountName1}" />
 						</apex:column>
 						<apex:column headerValue="With">
-							<apex:outputField value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}" />
+							<apex:outputText value="{!wrapper.accountName2}" />
 						</apex:column>
 						<apex:column headerValue="Agreement">
 							<apex:outputText value="{!wrapper.TypeCode}" />
