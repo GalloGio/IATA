@@ -21,7 +21,6 @@
 
 
     <apex:panelGrid styleclass="columnContainer" columns="2" columnClasses="firstColumn, secondColumn">
-
        <!-- BLOCK IN THE LEFT FOR THE LIST OF ALL THE AIRLINES -->
        <apex:pageBlock title="Choose an airline" id="chooseAirlineBlock" >
             <apex:form >
@@ -109,7 +108,7 @@
 <!--
                                 <apex:commandButton value="Deactivate MITA member" onclick="return confirm('Are you sure? This will inactivate all MITA agreements for this Airline.');" action="{!deactivateMitaMember}" style="float:right;" />
 -->
-                                <apex:commandButton value="Deactivate MITA member" action="{!showDeactivateMITAPanel}"  style="float:right;" rerender="mainform" status="Loading"/>
+                                <apex:commandButton value="Deactivate MITA member" action="{!showDeactivateMITAPanel}"  style="float:right;" rerender="mainform" status="Loading" rendered="{!NOT(readOnlyMode)}"/>
                             </apex:pageBlockSection>
                             <apex:pageBlockSection id="editAccountMITAInfo" rendered="{!editAccountMode}" title="Participant dates of MITA agreement">
                                 <apex:inputField value="{!acc.MITA_Member__c}" styleclass="outMITAMember"/>
@@ -143,7 +142,7 @@
                                 <apex:outputField value="{!acc.BIETA_One_way_Intermodal_Participating__c}" />
 
                                 <!--<apex:commandButton value="Deactivate BIETA member" onclick="return confirm('Are you sure? This will inactivate all BIETA agreements for this Airline.');" action="{!deactivateBietaMember}" style="float:right;" />-->
-                                <apex:commandButton value="Deactivate BIETA member" action="{!showDeactivateBIETAPanel}"  style="float:right;" rerender="mainform" status="Loading"/>
+                                <apex:commandButton value="Deactivate BIETA member" action="{!showDeactivateBIETAPanel}"  style="float:right;" rerender="mainform" status="Loading" rendered="{!NOT(readOnlyMode)}"/>
 
                             </apex:pageBlockSection>
                             <apex:pageBlockSection id="editAccountBIETAInfo" rendered="{!editAccountMode}" title="Participant dates of BIETA agreement">
@@ -160,11 +159,11 @@
                             </apex:pageBlockSection>
 
                             <br/>
-                            <div style="text-align:center;">
+                            <apex:outputPanel style="text-align:center;" layout="block" rendered="{!NOT(readOnlyMode)}">
                                 <apex:commandButton value="Edit Airline"   action="{!editAccount}" rerender="accountInfoPanel, messages" rendered="{!NOT(editAccountMode)}" status="Loading"/>
                                 <apex:commandButton value="Save Airline"   action="{!saveAccount}" rerender="accountInfoPanel, agreementSearchPanel, messages" rendered="{!editAccountMode}" status="Loading" onComplete="updateAirlineList()"/>
                                 <apex:commandButton value="Cancel" action="{!resetAccount}" rerender="accountInfoPanel, messages" rendered="{!editAccountMode}" status="Loading" immediate="true"/>
-                            </div>
+                            </apex:outputPanel>
 
 
                         </div>
@@ -335,12 +334,12 @@
                                     <apex:PageBlockSectionItem rendered="{!!wrapper.viewSeparated}"/>
                                 </apex:pageBlockSection>
 
-                                <div style="text-align:center;">
+                                <apex:outputPanel style="text-align:center;" layout="block" rendered="{!NOT(readOnlyMode)}">
                                     <apex:commandButton value="New"   action="{!newMITAAgreement}" rerender="MITAagreementInfoPanel, messages" rendered="{!NOT(editMITAAgreementMode)}" status="Loading"/>
                                     <apex:commandButton value="Edit"   action="{!editMITAAgreement}" rerender="MITAagreementInfoPanel, messages" rendered="{!AND(chosenMITAAgreement, NOT(editMITAAgreementMode))}" status="Loading"/>
                                     <apex:commandButton value="Save"   action="{!saveMITAAgreement}" rerender="messages" rendered="{!editMITAAgreementMode}" status="Loading" oncomplete="refreshAccountIfNoErrors()"/>
                                     <apex:commandButton value="Cancel" action="{!resetMITAAgreement}" rerender="MITAagreementInfoPanel, messages" rendered="{!editMITAAgreementMode}" status="Loading" immediate="true"/>
-                                </div>
+                                </apex:outputPanel>
 
                             </apex:outputPanel>
 
@@ -452,12 +451,12 @@
                                     <apex:inputField value="{!wrapper.agreement.Cancellation_Reason__c}" />
                                 </apex:pageBlockSection>
 
-                                <div style="text-align:center;">
+                                <apex:outputPanel style="text-align:center;" layout="block" rendered="{!NOT(readOnlyMode)}">
                                     <apex:commandButton value="New"   action="{!newBIETAAgreement}" rerender="BIETAagreementInfoPanel, messages" rendered="{!NOT(editBIETAAgreementMode)}" status="Loading"/>
                                     <apex:commandButton value="Edit"   action="{!editBIETAAgreement}" rerender="BIETAagreementInfoPanel, messages" rendered="{!AND(chosenBIETAAgreement, NOT(editBIETAAgreementMode))}" status="Loading"/>
                                     <apex:commandButton value="Save"   action="{!saveBIETAAgreement}" rerender=" messages" rendered="{!editBIETAAgreementMode}" status="Loading" oncomplete="refreshAccountIfNoErrors()"/>
                                     <apex:commandButton value="Cancel" action="{!resetBIETAAgreement}" rerender="BIETAagreementInfoPanel, messages" rendered="{!editBIETAAgreementMode}" status="Loading" immediate="true"/>
-                                </div>
+                                </apex:outputPanel>
 
                             </apex:outputPanel>
 
@@ -533,29 +532,40 @@
 
                             <!-- SECTION WITH CONTACT DETAILS -->
                             <apex:outputPanel id="contactDetailPanel">
-                                <apex:pageBlockSection title="Contact detail" rendered="{!AND(chosenContact, NOT(editContactMode))}">
-                                    <apex:outputField value="{!c.Salutation}" />
-                                    <apex:pageBlockSectionItem />
+                                <apex:OutPutPanel rendered="{!AND(chosenContact, NOT(editContactMode))}">
+                                    <apex:pageBlockSection title="Contact detail">
+                                        <apex:outputField value="{!c.Salutation}" />
+                                        <apex:pageBlockSectionItem />
 
-                                    <apex:outputField value="{!c.Name}" />
-                                    <apex:outputField value="{!c.Status__c}" />
+                                        <apex:outputField value="{!c.Name}" />
+                                        <apex:outputField value="{!c.Status__c}" />
 
-                                    <apex:outputField value="{!c.Title}" />
-                                    <apex:outputField value="{!c.Email}" />
+                                        <apex:outputField value="{!c.Title}" />
+                                        <apex:outputField value="{!c.Email}" />
 
-                                    <apex:outputField value="{!c.Phone}" />
-                                    <apex:outputField value="{!c.Fax}" />
+                                        <apex:outputField value="{!c.Phone}" />
+                                        <apex:outputField value="{!c.Fax}" />
 
-                                    <apex:outputField value="{!c.MITA_Contact_Type__c}" />
-                                    <apex:outputField value="{!c.MITA_Teletype__c}" />
+                                        <apex:outputField value="{!c.MITA_Contact_Type__c}" />
+                                        <apex:outputField value="{!c.MITA_Teletype__c}" />
 
-                                    <apex:outputField value="{!c.OtherStreet}" />
-                                    <apex:outputField value="{!c.OtherCity}" />
-                                    <apex:outputField value="{!c.OtherPostalcode}" />
-                                    <apex:outputField value="{!c.OtherState}" />
-                                    <apex:outputField value="{!c.OtherCountry}" />
-
-                                </apex:pageBlockSection>
+                                        <apex:outputField value="{!c.OtherStreet}" />
+                                        <apex:outputField value="{!c.OtherCity}" />
+                                        <apex:outputField value="{!c.OtherPostalcode}" />
+                                        <apex:outputField value="{!c.OtherState}" />
+                                        <apex:outputField value="{!c.OtherCountry}" />
+                                    </apex:pageBlockSection>
+                                    <apex:OutputPanel rendered="{!listRelatedAccounts.size!=0}">
+                                        <h3><apex:OutputLabel value="Related Accounts"/></h3>
+                                        <apex:pageBlockTable value="{!listRelatedAccounts}" var="relatedAccount" columnsWidth="100px,100px,auto">
+                                            <apex:column value="{!relatedAccount.Airline_designator__c}" headerValue="DCode"/>
+                                            <apex:column value="{!relatedAccount.IATACode__c}" headerValue="NCode"/>
+                                            <apex:column headerValue="Airline Name">
+                                                <a href="/{!relatedAccount.Id}" target="_blank">{!relatedAccount.Name_on_AOC__c}</a>
+                                            </apex:column>
+                                        </apex:pageBlockTable>
+                                    </apex:OutputPanel>
+                                </apex:OutPutPanel>
                                 <apex:pageBlockSection title="Contact detail" rendered="{!AND(chosenContact, editContactMode)}">
                                     <apex:inputField value="{!c.Salutation}" />
                                     <apex:inputField value="{!c.Status__c}" />
@@ -584,7 +594,7 @@
                                 <!-- SECTION WITH FORM FOR SEARCHING CONTACTS BY EMAIL -->
                                 <apex:outputPanel id="searchContactPanel" rendered="{!AND(searchContactMode, NOT(confirmMoveContactMode))}">
                                     <apex:pageBlockSection title="Find a contact by email" >
-                                        <apex:inputText label="Contact Email" value="{!contactEmail}" required="true"/>
+                                        <apex:inputText label="Contact Email" value="{!contactEmail}"/>
                                     </apex:pageBlockSection>
                                     <apex:pageBlockSection title="Choose the proper contact" rendered="{!duplicateContactMode}" columns="1">
                                          <apex:dataTable value="{!duplicateContacts}" var="cv" columnsWidth="20%" columnClasses="contactColumns" style="width:100%">
@@ -628,23 +638,43 @@
 
                                         <apex:inputField value="{!foundContact.OtherCountry}" />
                                     </apex:pageBlockSection>
-                                    <apex:pageMessage severity="Warning" strength="2" summary="If you proceed the contact {!foundContact.Name} will be moved from the {!foundContact.Account.Name_on_AOC__c} to {!acc.Name_on_AOC__c}. Do you really want to proceed?" />
+                                    <apex:OutputPanel rendered="{!listRelatedAccounts.size!=0}">
+                                        <h3><apex:OutputLabel value="Related Accounts"/></h3>
+                                        <apex:pageBlockTable value="{!listRelatedAccounts}" var="relatedAccount">
+                                            <apex:column value="{!relatedAccount.Airline_designator__c}" title="DCode" width="100px"/>
+                                            <apex:column value="{!relatedAccount.IATACode__c}" title="NCode" width="100px"/>
+                                            <apex:column headerValue="Airline Name">
+                                                <a href="/{!relatedAccount.Id}" target="_blank">{!relatedAccount.Name_on_AOC__c}</a>
+                                            </apex:column>
+                                        </apex:pageBlockTable>
+                                    </apex:OutputPanel>
+                                    <apex:pageMessage severity="Warning" strength="2" escape="false" rendered="{!listRelatedAccounts.size!=0}"
+                                        summary="If you click on 'Confirm Move Contact' the contact {!foundContact.Name} will be moved from the related accounts to {!acc.Name_on_AOC__c}.
+                                                If you click on 'Confirm Copy Contact' only a brand new relation will be created to {!acc.Name_on_AOC__c}.
+                                                Do you really want to proceed?" />
+                                    <apex:pageMessage severity="Warning" strength="2" escape="false" rendered="{!listRelatedAccounts.size==0}"
+                                        summary="If you click on 'Confirm Add Contact' the contact {!foundContact.Name} will be added as a MITA Contact to {!acc.Name_on_AOC__c}.
+                                                Do you really want to proceed?" />
                                 </apex:pageBlockSection>
 
 
-                                <div style="text-align:center;">
+                                <apex:outputPanel style="text-align:center;" layout="block" rendered="{!NOT(readOnlyMode)}">
                                     <apex:commandButton value="New Contact"   action="{!newContact}" rerender="contactDetailPanel, messages" rendered="{!NOT(OR(editContactMode, searchContactMode))}" status="Loading"/>
                                     <apex:commandButton value="Edit Contact"   action="{!editContact}" rerender="contactDetailPanel, messages" rendered="{!AND(chosenContact,NOT(editContactMode))}" status="Loading"/>
                                     <apex:commandButton value="Save Contact"   action="{!saveContact}" rerender="messages" rendered="{!editContactMode}" status="Loading" oncomplete="refreshAccountIfNoErrors()"/>
 
                                     <apex:commandButton value="Add existing contact"   action="{!searchContact}" rerender="contactDetailPanel, messages" rendered="{!NOT(OR(editContactMode,searchContactMode))}" status="Loading"/>
-                                    <apex:commandButton value="Choose Contact" rerender="messages"  action="{!moveContact}" rendered="{!AND(searchContactMode, NOT(duplicateContactMode), NOT(confirmMoveContactMode))}" status="Loading" oncomplete="selectAccount()"/>
-                                    <apex:commandButton value="Confirm" rerender="messages"  action="{!confirmMoveContact}" rendered="{!confirmMoveContactMode}" status="Loading" oncomplete="selectAccount()"/>
+                                    <apex:commandButton value="Choose Contact" rerender="messages,column2"  action="{!moveContact}" rendered="{!AND(searchContactMode, NOT(duplicateContactMode), NOT(confirmMoveContactMode))}" status="Loading" />
+                                    
+                                    <apex:commandButton value="Confirm Add Contact" rerender="messages,column2" action="{!confirmMoveContact}" rendered="{!AND(confirmMoveContactMode,listRelatedAccounts.size==0)}" status="Loading"/>
+                                    <apex:commandButton value="Confirm Move Contact" rerender="messages,column2" action="{!confirmMoveContact}" rendered="{!AND(confirmMoveContactMode,listRelatedAccounts.size!=0)}" status="Loading"/>
+                                    <apex:commandButton value="Confirm Copy Contact" rerender="messages,column2" action="{!confirmCopyContact}" rendered="{!AND(confirmMoveContactMode,listRelatedAccounts.size!=0)}" status="Loading"/>
 
-                                    <apex:commandButton value="Remove from MITA contacts" rerender="contactDetailPanel,messages" action="{!removeContactFromMITA}" rendered="{!AND(chosenContact,NOT(editContactMode))}" status="Loading" onclick="if(!confirm('Are you sure you want remove this contact from MITA contacts?')) return false;" oncomplete="selectAccount()"/>
+                                    <apex:commandButton value="Remove from MITA contacts" rerender="contactDetailPanel,messages,column2" action="{!removeContactFromMITA}" rendered="{!AND(chosenContact,NOT(editContactMode))}" status="Loading" onclick="if(!confirm('Are you sure you want remove this contact from MITA contacts?')) return false;"/>
+                                    <apex:commandButton value="Remove All from MITA contacts" rerender="contactDetailPanel,messages,column2" action="{!removeAllContactFromMITA}" rendered="{!AND(chosenContact,NOT(editContactMode),listRelatedAccounts.size!=0)}" status="Loading" onclick="if(!confirm('Are you sure you want remove this contact from MITA contacts for ALL accounts?')) return false;"/>
 
                                     <apex:commandButton value="Cancel" action="{!resetContact}" rerender="contactDetailPanel, messages" rendered="{!OR(editContactMode,searchContactMode,duplicateContactMode,confirmMoveContactMode)}" status="Loading" immediate="true"/>
-                                </div>
+                                </apex:outputPanel>
                                 <apex:inputHidden value="{!contactid}" id="contactid"/>
                                 <apex:actionFunction id="selectContact" name="selectContact" action="{!selectContact}" rerender="contactDetailPanel, messages" status="Loading"/>
 

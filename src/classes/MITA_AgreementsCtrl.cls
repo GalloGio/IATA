@@ -43,14 +43,16 @@ public with sharing class MITA_AgreementsCtrl {
 
     public boolean searchContactMode {get;set;}
     public boolean duplicateContactMode {get;set;}
+    public boolean readOnlyMode {get;set;}
     public boolean confirmMoveContactMode {get;set;}
     public string contactEmail {get;set;}
     public Contact foundContact {get;set;}
     public Map<Id,Contact> duplicateContacts {get;set;}
 
     public List<Contact> contacts {get;set;}
+    public List<Account> listRelatedAccounts {get;set;}
     public Map<Id,WrapperAgreement> agreements {get;set;}
-
+    
     public MITA_AgreementsCtrl(){
         chosenAccount=false;
         chosenMITAAgreement=false;
@@ -60,6 +62,13 @@ public with sharing class MITA_AgreementsCtrl {
 
         this.showDeactivateAgreementsPanel = false;
         this.dummyAgreement = new MITA_Agreement__c();
+        
+        list<PermissionSetAssignment> listPermissionSets = [
+            SELECT Id
+            FROM PermissionSetAssignment
+            WHERE AssigneeId = :UserInfo.getUserId()
+            AND PermissionSet.Name = 'MITA'];
+        this.readOnlyMode = listPermissionSets.size()>0;
     }
 
     public Integer getIsThereAnError(){
@@ -89,15 +98,21 @@ public with sharing class MITA_AgreementsCtrl {
 
         // fill the agreements map
         refreshAgreementList();
+        
+        list<Id> listRelatedContactId = new list<Id>();
+        for (Related_Contact__c relatedContact:[
+                SELECT Contact__c
+                FROM Related_Contact__c
+                WHERE Account__c = :acc.Id]
+        ){
+            listRelatedContactId.add(relatedContact.Contact__c);
+        }
 
         contacts = [
             SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c
             FROM Contact
-            WHERE id IN (
-                Select Contact__c
-                from Related_Contact__c
-                where Account__c = :acc.Id
-                and Contact__r.MITA_Contact__c = true)
+            WHERE (AccountId = :acc.Id AND MITA_Contact__c = true)
+                OR id in :listRelatedContactId
         ];
     }
 
@@ -329,26 +344,26 @@ public with sharing class MITA_AgreementsCtrl {
 
     public void selectContact(){
         try{
-            c = [SELECT Name, Salutation, FirstName, LastName, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c, Phone, Fax, OtherStreet, OtherCity, OtherPostalCode, OtherState, OtherCountry, Status__c FROM Contact WHERE Id = :contactid];
+            c = [SELECT Name, Salutation, FirstName, LastName, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c, Phone, Fax, OtherStreet, OtherCity, OtherPostalCode, OtherState, OtherCountry, Status__c, AccountId
+                FROM Contact
+                WHERE Id = :contactid];
+            searchRelatedAccounts(c);
+            resetContactViews();
             chosenContact = true;
         }catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPAges.Severity.ERROR, 'Error in the system: cannot open the selected contact: '+e.getMessage()));
-
         }
     }
     public void editContact(){
+        resetContactViews();
+        chosenContact = true;
         editContactMode = true;
     }
     public void saveContact(){
         system.savepoint sp = Database.setSavePoint();
         try{
-            upsert c;
+            upsert this.c;
 
-            Related_Contact__c relatedContact = new Related_Contact__c(
-                Account__c = this.accountid,
-                Contact__c = c.Id
-            );
-            insert relatedContact;
             chosenContact = true;
             editContactMode = false;
 
@@ -360,14 +375,18 @@ public with sharing class MITA_AgreementsCtrl {
         }
     }
     public void newContact(){
-        resetContact();
         ID rt = Schema.SObjectType.Contact.getRecordTypeInfosByName().get('Standard').getRecordTypeId();
-        this.c = new Contact(MITA_Contact__c=true, RecordTypeId = rt, Status__c='Active');
+        this.c = new Contact(MITA_Contact__c=true, RecordTypeId = rt, Status__c='Active', AccountId=this.accountId);
+        resetContactViews();
         chosenContact = true;
         editContactMode = true;
     }
     public void resetContact(){
-        c = null;
+        this.c = null;
+        resetContactViews();
+    }
+    
+    private void resetContactViews() {
         chosenContact = false;
         editContactMode = false;
         searchContactMode = false;
@@ -376,9 +395,13 @@ public with sharing class MITA_AgreementsCtrl {
     }
 
     public void searchContact(){
+        resetContact();
         searchContactMode = true;
     }
 
+    /**
+        Remove only current relation between Contact and Account
+    **/
     public void removeContactFromMITA(){
         if(c==null){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No contact has been selected. '));
@@ -386,12 +409,24 @@ public with sharing class MITA_AgreementsCtrl {
         }
         system.savepoint sp = Database.setSavePoint();
         try{
-            c.MITA_Contact__c = false;
-            upsert c;
+            // if the contact is related directly to the account find other possible relations
+            if (this.c.AccountId == this.accountid) {
+                this.c.MITA_Contact__c = false;
+                update this.c;
+            
+            // if the parent is another account and there is a relation then only delete this relation
+            } else {
+                list<Related_Contact__c> listRelatedContact = [
+                    SELECT Id, Account__c
+                    FROM Related_Contact__c
+                    WHERE Contact__c = :this.c.Id
+                    AND Account__c = :this.accountId];
 
-            list<Related_Contact__c> listRelatedContact = [
-                Select Id from Related_Contact__c where Contact__c = :c.Id and Account__c = :this.acc.Id];
-            delete listRelatedContact;
+                if (!listRelatedContact.isEmpty()) {
+                    delete listRelatedContact;
+                }
+            }
+            selectAccount();
 
         }catch(Exception e){
             Database.rollback(sp);
@@ -399,55 +434,162 @@ public with sharing class MITA_AgreementsCtrl {
         }
     }
 
+    /**
+        Remove all relations between Contact and any other account
+    **/
+    public void removeAllContactFromMITA(){
+        if(c==null){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No contact has been selected. '));
+            return;
+        }
+        system.savepoint sp = Database.setSavePoint();
+        try{
+            // remove direct relation
+            this.c.MITA_Contact__c = false;
+            update this.c;
+            // remove secondary relations
+            list<Related_Contact__c> listRelatedContact = [
+                SELECT Id, Account__c
+                FROM Related_Contact__c
+                WHERE Contact__c = :this.c.Id];
+            if (!listRelatedContact.isEmpty()) {
+                delete listRelatedContact;
+            }
+            selectAccount();
+
+        }catch(Exception e){
+            Database.rollback(sp);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error while saving the contact '+c.Name+': '+e.getMessage()));
+        }
+    }
+
+    /**
+        Finds a contact with the email given by user.
+        This methods succeeds only  when one contact is found.
+    **/
     public void moveContact(){
         duplicateContactMode = false;
         if(String.isEmpty(contactEmail)){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please insert a valid email'));
             return;
         }
-        duplicateContacts = new Map<Id, Contact>((List<Contact>) [SELECT Name, Salutation, FirstName, LastName, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c, Phone, Fax, OtherStreet, OtherCity, OtherPostalCode,
-                                                                        OtherState, OtherCountry, Status__c, AccountId, Account.RecordTypeId, Account.Name_on_AOC__c , Account.IATA_ISO_Country__r.Name, Account.Top_Parent__c, Account.ParentId
-                                                                  FROM Contact
-                                                                  WHERE Email = :contactEmail]);
+        duplicateContacts = new Map<Id, Contact>((List<Contact>) [
+            SELECT Name, Salutation, FirstName, LastName, Title, Email, MITA_Contact__c,
+                MITA_Contact_Type__c, MITA_Teletype__c, Phone, Fax, OtherStreet, OtherCity,
+                OtherPostalCode, OtherState, OtherCountry, Status__c, AccountId, 
+                Account.RecordTypeId, Account.Name_on_AOC__c , Account.IATA_ISO_Country__r.Name, Account.Top_Parent__c,
+                Account.ParentId, Account.Airline_designator__c, Account.IATACode__c
+            FROM Contact
+            WHERE Email = :contactEmail]);
 
         //NO CONTACT
         if(duplicateContacts.size()==0){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No contact with the email '+contactemail+' was found in the system. Please check the email is correct or create a new contact.'));
             system.debug(LoggingLevel.ERROR,'####### no contact');
             return;
-
-        //ONE CONTACT
-        }else if(duplicateContacts.size()==1){
-            foundContact = duplicateContacts.values()[0];
-            confirmMoveContactMode=true;
-            duplicateContacts = null;
+        }
         //MANY CONTACTS
-        }else{
+        if(duplicateContacts.size()>1){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Several contacts were found with the email '+contactemail+'. Please select the one you want to use.'));
             system.debug(LoggingLevel.ERROR,'####### tanti contatti, bisogna scegliere da tabella');
             duplicateContactMode = true;
+            return;
         }
+        //ONE CONTACT
+        foundContact = duplicateContacts.values()[0];
+        searchRelatedAccounts(foundContact);
+        if (foundContact.Accountid != null && foundContact.MITA_Contact__c) {
+            this.listRelatedAccounts.add(foundContact.Account);
+        }
+        // if the found contact is already related to this account then inform the user
+        if (this.acc != null && new map<Id,Account>(this.listRelatedAccounts).keyset().contains(this.acc.Id)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'A contact with the email '+contactemail+' was found in the system, but it is related to current account already.'));
+            return;
+        }
+        confirmMoveContactMode=true;
+        duplicateContacts = null;
+        selectAccount();
     }
 
+    /**
+        Fills the list listRelatedAccounts with all Accounts related with input
+        contact
+    **/
+    private void searchRelatedAccounts(Contact contact) {
+        this.listRelatedAccounts = [
+            SELECT Id, Name_on_AOC__c, Airline_designator__c, IATACode__c
+            FROM Account
+            WHERE id IN (SELECT Account__c
+                FROM Related_Contact__c
+                WHERE Contact__c = :contact.Id)];
+    }
+
+    /**
+        Set a new parent to the selected Contact, and remove any other relation
+        existing with other accounts
+    **/
     public void confirmMoveContact(){
         system.savepoint sp = Database.setSavePoint();
 
         try {
-            foundContact.AccountId = accountid;
+            foundContact.AccountId = this.accountid;
             foundContact.MITA_Contact__c = true;
             update foundContact;
-
-            Related_Contact__c relatedContact = new Related_Contact__c(
-                Account__c = this.accountid,
-                Contact__c = foundContact.Id
-            );
-            insert relatedContact;
+            
+            // remove relations
+            list<Related_Contact__c> listRelationContact = [
+                SELECT Account__c
+                FROM Related_Contact__c
+                WHERE Contact__c = :foundContact.Id];
+            if (listRelationContact.isEmpty()) {
+                delete listRelationContact;
+            }
 
             searchContactMode = false;
             confirmMoveContactMode = false;
             duplicateContactMode = false;
             contactEmail = '';
             foundContact = new Contact();
+            selectAccount();
+
+        } catch (Exception e) {
+            Database.rollback(sp);
+            String cleanmessage = e.getMessage();
+            if(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')!=-1)   cleanmessage = cleanmessage.substring(cleanmessage.indexOf('FIELD_CUSTOM_VALIDATION_EXCEPTION')+35);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The contact <a href="/'+foundContact.Id+'" target="_blank">'+foundContact.Name+'</a> raised the following error: '+cleanmessage));
+            system.debug(LoggingLevel.ERROR,'####### ERROR saving a contact: '+cleanmessage);
+            return;
+        }
+    }
+
+    /**
+        Set a new parent to the selected Contact, but keeping other accounts as
+        related
+    **/
+    public void confirmCopyContact(){
+        system.savepoint sp = Database.setSavePoint();
+
+        try {
+            Id previousAccountId = foundContact.AccountId;
+            
+            foundContact.AccountId = this.accountid;
+            foundContact.MITA_Contact__c = true;
+            update foundContact;
+
+            if (previousAccountId!=null && previousAccountId!=this.accountid) {
+                Related_Contact__c relatedContact = new Related_Contact__c(
+                    Account__c = previousAccountId,
+                    Contact__c = foundContact.Id
+                );
+                insert relatedContact;
+            }
+
+            searchContactMode = false;
+            confirmMoveContactMode = false;
+            duplicateContactMode = false;
+            contactEmail = '';
+            foundContact = new Contact();
+            selectAccount();
 
         } catch (Exception e) {
             Database.rollback(sp);
