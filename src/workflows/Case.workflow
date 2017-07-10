@@ -1894,11 +1894,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hattinghc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hazbounc@iata.org</recipient>
+            <recipient>abdullahl@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

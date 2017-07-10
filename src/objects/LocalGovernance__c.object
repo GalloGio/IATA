@@ -797,7 +797,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner_Text__c</columns>
+        <columns>Group_Owner__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>
@@ -817,7 +817,7 @@ Record Type + Group Type + ISO_Country_Name</description>
     <listViews>
         <fullName>Reg_Div_Groups_Pending_Approval</fullName>
         <columns>NAME</columns>
-        <columns>Group_Owner_Text__c</columns>
+        <columns>Group_Owner__c</columns>
         <columns>Reporting_to__c</columns>
         <columns>AM_Under__c</columns>
         <filterScope>Everything</filterScope>

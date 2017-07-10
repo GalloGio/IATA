@@ -15,7 +15,7 @@
         var startUrl = component.get("v.startUrl");
         
         console.log('username ' + username);
-        console.log('password ' + password);
+        //console.log('password ' + password);
         
         component.set("v.errorMessage",'');
         component.set("v.showError",false);
