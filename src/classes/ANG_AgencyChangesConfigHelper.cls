@@ -113,7 +113,10 @@ public class ANG_AgencyChangesConfigHelper{
 		List<String> tocs = typesOfChange.split(';');
 
 		for(String toc: tocs){
-			String matchingFieldSet = 'AMS_'+ (toc.toLowerCase()).replaceAll('[ -]', '');
+			String matchingFieldSet = 'ANG_'+ (toc.toLowerCase()).replaceAll('[ -]', '');
+
+			System.debug('[ANG_AgencyChangesConfigHelper] - matchingFieldSet:'+matchingFieldSet);
+			System.debug('[ANG_AgencyChangesConfigHelper] - field set:' + Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap());
 			Schema.FieldSet fieldSet = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap().get(matchingFieldSet);
 			System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
 			if(fieldSet!=null)

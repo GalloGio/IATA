@@ -115,6 +115,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'Multiple Hierarchies',
 					'The target agency belongs to multiple hierarchies. To prevent inconsistencies please analyse this problem before performing the Change of Hierarchy.'
 				);
+
+				errorMessages.put(
+					'Must include New Parent',
+					'If you are performing a change of Hierarchy and selecting an AE from the current hierarchy as a new parent, you need to also include him in the agencies selected.'
+				);
+
 				
 			}
 			return errorMessages;
@@ -373,6 +379,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorChecks.put('Top Location Type', true);
 			if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected() )
 				errorChecks.put('Location Type Change Detected', true);
+			if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c) )
+				errorChecks.put('Must include New Parent', true);
 			if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
 				errorChecks.put('Multiple Hierarchies', true);
 
@@ -532,6 +540,16 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		return true;
+	}
+
+	public boolean newParentIncluded(Id newParent){
+
+		for(HierarchyItem item:hierarchyValues){
+			if(item.acc.Id == newParent && item.selected)
+				return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSingleDestinationHierarchy(Id accountId){

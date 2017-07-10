@@ -23,29 +23,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
-		public void addAccounts(Set<Account> accounts){
-
-			For(Account acct: accounts){
-				this.accountsMap.put(acct.Id, acct);
-			}
-		}
-
 		public void addAccount(Account account){
 				this.accountsMap.put(account.Id, account);
-		}
-
-		public void addRelations(Set<AMS_Agencies_relationhip__c> relations){
-			
-			For(AMS_Agencies_relationhip__c rel: relations){
-				this.relationsMap.put(rel.Child_Account__c, rel);
-			}
-
 		}
 
 		public void addRelation(AMS_Agencies_relationhip__c relation){
 			this.relationsMap.put(relation.Child_Account__c, relation);
 		}
-		
+
 		public void addChangeCode(Agency_Applied_Change_code__c changeCode){
             this.changeCodesToCreate.add(changeCode);
         }
@@ -70,38 +55,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public class DataStructForAC{
-
-		public List<AMS_Agencies_relationhip__c> relationShips;
-		public Map<Id,Account> accountsInvolved;
-
-		public DataStructForAC(AMS_OSCAR__c oscarToProcess){
-
-			relationShips = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscarToProcess.Account__c}).get(oscarToProcess.Account__c);
-			accountsInvolved = ANG_AgencyChangesHelper.fetchAccounts(relationShips);
-
-		}
-	}
-
-	public static Map<Id,Account> fetchAccounts(List<AMS_Agencies_relationhip__c> relationShips){
-
-		Map<Id,Account> toReturn = new Map<Id,Account>();
-
-		Set<Id> accounts = new Set<Id>();
-
-		For(AMS_Agencies_relationhip__c rel: relationShips){
-
-			accounts.add(rel.Parent_Account__c);
-			accounts.add(rel.Child_Account__c);
-
-		}
-
-		For(Account a: [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c From Account where Id in:accounts])
-			toReturn.put(a.Id, a);
-
-		return toReturn;
-	}
-	
 	public static void handleNewGenChangesProcess(List<AMS_Oscar__c> oscars){
 
 		AMS_OSCAR__c oscar = oscars[0];
@@ -232,13 +185,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toReturn;
 
 	}
-
-	/*public fetchDataToProcess(AMS_OSCAR__c oscarToProcess){
-
-		return new AMS_HierarchyHelper.DataStructForAC(oscarToProcess);
-
-	}*/
-
 
 	public static AChangeStructure applyChangeOfHierarchy(AMS_OSCAR__c oscarToProcess, AChangeStructure toReturn, Set<Id> accountIdsInvolvedSet){
 
@@ -419,20 +365,20 @@ public with sharing class ANG_AgencyChangesHelper {
 			return rels.get(0).Hierarchy__c;
 	}
 
-	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscar, Set<Id> accountsAffected, AChangeStructure toReturn){
+	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn){
 		
 		System.debug('[ANG_AgencyChangesHelper] Performing change of fields');
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
 
-        System.debug('[ANG_AgencyChangesHelper] - Types of Change (' + oscar.ANG_Type_Of_Change__c + ') ');
+        System.debug('[ANG_AgencyChangesHelper] - Types of Change (' + oscarToProcess.ANG_Type_Of_Change__c + ') ');
 
-        Set<String> fieldsToMigrate = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscar.ANG_Type_Of_Change__c);
+        Set<String> fieldsToMigrate = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarToProcess.ANG_Type_Of_Change__c);
 
         System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-        AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
+        AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscarToProcess.AMS_Online_Accreditation__c);
 
         Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
@@ -550,6 +496,7 @@ public with sharing class ANG_AgencyChangesHelper {
     	return toReturn;
 
 	}
+
 	
 	public static boolean validateTypeOfChange(AMS_OSCAR__c oscar, List<Map<String, String>> configs) {
 
