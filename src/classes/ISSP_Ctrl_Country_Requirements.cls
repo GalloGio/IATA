@@ -6,7 +6,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public String searchFilter {get;set;}
 
     public static User user;
-    public static Map<String, String> languagesMap {get;set;}
+    public static Map<String, String> languagesMap;
 
     public String sector {get;set;}
     public String countryName {get;set;}
@@ -40,22 +40,6 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
             Boolean comp = (ApexPages.currentPage().getParameters().get('comp') == 'true');
 
-            languagesMap = new Map<String, String>();
-
-            languagesMap.put('fr', 'French');
-            languagesMap.put('es', 'Spanish');
-            languagesMap.put('ar', 'Arabic');
-            languagesMap.put('zh_CN', 'Chinese');
-            languagesMap.put('zh_TW', 'Chinese');
-            languagesMap.put('de', 'German');
-            languagesMap.put('in', 'Indonesian');
-            languagesMap.put('it', 'Italian');
-            languagesMap.put('ja', 'Japanese');
-            languagesMap.put('ko', 'Korean');
-            languagesMap.put('pt_BR', 'Portuguese');
-            languagesMap.put('pt_PT', 'Portuguese');
-            languagesMap.put('vi', 'Vietnamese');
-            languagesMap.put('th', 'Thai');
 
             return user.contact.Account.Sector__c == 'Airline'
                 || user.contact.Account.Sector__c == 'General Sales Agent'
@@ -94,7 +78,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         clearFilters();
 
         try {
-
+        
             getUser();
 
             Id vHQAccountId;
@@ -120,6 +104,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
             userLanguage = UserInfo.getLanguage();
 
+            if(userLanguage == null) userLanguage = 'en_US';
+            
             if (ApexPages.currentPage().getParameters().containsKey('isNoticeOfChange'))
                 isNoticeOfChange = Boolean.valueOf(ApexPages.currentPage().getParameters().get('isNoticeOfChange'));
 
@@ -281,10 +267,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public List<AMS_Accreditation_Requirement__c> getCountryRequirementsList() {
         if(countryRequirementsList == null) {
 
-            List<AMS_Accreditation_Requirement__c> countryRequiremeListAux = new List<AMS_Accreditation_Requirement__c>();
-            List<AMS_Accreditation_Requirement__c> countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
+            countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
 
-            countryRequiremeListAux = [SELECT Id,
+            List<AMS_Accreditation_Requirement__c> countryRequirementListAux = new List<AMS_Accreditation_Requirement__c>();
+
+            countryRequirementListAux = [SELECT Id,
                                               Name,
                                               Requirement_text__c,
                                               File_to_Upload__c,
@@ -299,49 +286,62 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                                           ORDER BY Sort_Order__c ASC];
 
 
-            System.debug('countryRequiremeListAux-->' + countryRequiremeListAux.size());
-            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
-                System.debug('Name-->' + req.name + '  Lang->' + req.Language__c);
-            }
+            if(countryRequirementListAux.size() != 0) {
+                Set<String> availableLanguages = new Set<String>();
 
-            Set<String> availableLanguages = new Set<String>();
-
-            Boolean first = false;
-            String firstLanguage;
-            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
-                if(!first) {
-                    firstLanguage = req.Language__c;
-                    first = true;
+                Boolean first = false;
+                String firstLanguage = '';
+                for(AMS_Accreditation_Requirement__c req : countryRequirementListAux) {
+                    if(!first) {
+                        firstLanguage = req.Language__c;
+                        first = true;
+                    }
+                    availableLanguages.add(req.Language__c);
                 }
-                availableLanguages.add(req.Language__c);
-            }
+                
+                String filterLanguage = '';
+                String checkLanguage = '';
 
-            String filterLanguage;
+                if (getLanguagesMap().containsKey(userLanguage)) {
+                    checkLanguage = getLanguagesMap().get(userLanguage);
+                } else {
+                    checkLanguage = 'English';
+                }
 
-            System.debug('---->' + languagesMap.get(userLanguage));
-
-            // User's language is in the list of requirements
-            if(availableLanguages.contains(languagesMap.get(userLanguage))) {
-                filterLanguage = languagesMap.get(userLanguage);
-            } else {
-                // Use english if it exists
-                if(availableLanguages.contains('English')) {
-                    filterLanguage = 'English';
+                // User's language is in the list of requirements
+                if(availableLanguages.contains(checkLanguage)) {
+                    filterLanguage = checkLanguage;
                 } else {
                     filterLanguage = firstLanguage;
-                }
-            }            
+                }            
 
-            System.debug('filterLanguage-->' + filterLanguage);
+                Map<String, String> htmlKeepTags = new Map<String, String>();
+                htmlKeepTags.put('<br>', 'breakTag');
+                htmlKeepTags.put('</br>', 'endBreakTag');
+                htmlKeepTags.put('<p>', 'paragraphTag');
+                htmlKeepTags.put('</p>', 'endParagraphTag');
+                htmlKeepTags.put('<ul>','unorderedListTag');
+                htmlKeepTags.put('</ul>','endUnorderedListTag');
+                htmlKeepTags.put('<li>','unorderedListItemTag');
+                htmlKeepTags.put('</li>','endUnorderedListItemTag');
 
-            for(AMS_Accreditation_Requirement__c req : countryRequiremeListAux) {
-                System.debug('2222Name-->' + req.name + '  Lang->' + req.Language__c);
-                if (filterLanguage == req.Language__c) {
-                    System.debug('FONIX-->');
-                    countryRequirementsList.add(req);
+                for(AMS_Accreditation_Requirement__c req : countryRequirementListAux) {
+                    if (filterLanguage == req.Language__c) {
+
+                        req.Requirement_text__c = saveHtlmTags(htmlKeepTags, req.Requirement_text__c);
+
+                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('<[/a-zAZ0-9]*>','');
+
+                        req.Requirement_text__c = restoreHtlmTags(htmlKeepTags, req.Requirement_text__c);
+
+                        countryRequirementsList.add(req);
+                    }
                 }
             }
         }
+
+        System.debug('countryRequirementsList.size()-->' + countryRequirementsList.size());
+
         return countryRequirementsList;
     }
 
@@ -357,6 +357,24 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         accredModel = accreditationType;
         
         return null;
+    }
+
+    private String saveHtlmTags(Map<String, String> htmlKeepTags, String str) {
+        for (String key : htmlKeepTags.keySet()) {
+            str = replaceHtmlTag(str, key, htmlKeepTags.get(key));
+        }
+        return str;
+    }
+
+    private String restoreHtlmTags(Map<String, String> htmlKeepTags, String str) {
+        for (String key : htmlKeepTags.keySet()) {
+            str = replaceHtmlTag(str, htmlKeepTags.get(key), key);
+        }        
+        return str;
+    }
+
+    private String replaceHtmlTag(String str, String patternStr, String repStr) {
+        return str.replaceAll(patternStr, repStr);
     }
 
     private List<SelectOption> setAccreditationTypes() {
@@ -376,5 +394,33 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             }
         }
         return accreditationTypes;
+    }
+
+    public Map<String, String> getLanguagesMap() {
+        if(languagesMap == null) {
+            languagesMap = new Map<String, String>();
+
+            languagesMap.put('en_US','English');
+            languagesMap.put('en_AU','English');
+            languagesMap.put('en_CA','English');
+            languagesMap.put('en_IN','English');
+            languagesMap.put('en_MY','English');
+            languagesMap.put('en_PH','English');
+            languagesMap.put('fr', 'French');
+            languagesMap.put('es', 'Spanish');
+            languagesMap.put('ar', 'Arabic');
+            languagesMap.put('zh_CN', 'Chinese');
+            languagesMap.put('zh_TW', 'Chinese');
+            languagesMap.put('de', 'German');
+            languagesMap.put('in', 'Indonesian');
+            languagesMap.put('it', 'Italian');
+            languagesMap.put('ja', 'Japanese');
+            languagesMap.put('ko', 'Korean');
+            languagesMap.put('pt_BR', 'Portuguese');
+            languagesMap.put('pt_PT', 'Portuguese');
+            languagesMap.put('vi', 'Vietnamese');
+            languagesMap.put('th', 'Thai'); 
+        }
+        return languagesMap;
     }
 }
