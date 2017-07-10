@@ -40,16 +40,16 @@ public with sharing class CaseCommentHandler {
         To check this manually go to:
             Setup->EmailService->select 'ProcessMessage' service->Check run users
     **/
-    public static set<Id> TEST_E2CPRUNUSERS;
+    public static set<Id> TEST_E2CPRUNUSERS = new set<id>();
     private static set<Id> getE2cpRunUsers() {
         set<Id> listRunUsers = new set<Id>();
         // Apex class in Email to Case Premium used to process incoming emails
-        ApexClass processMessage = [Select Id  from ApexClass where Name = 'ProcessMessage'];
+        list<ApexClass> listClasses = [Select Id  from ApexClass where Name = 'ProcessMessage'];
         //Find run as users related to the E2CP service
         for (EmailServicesAddress serviceAddress: [
                 SELECT Id, RunAsUserId
                 FROM EmailServicesAddress
-                WHERE Function.ApexClassId = :processMessage.Id])
+                WHERE Function.ApexClassId IN :listClasses])
         {
             listRunUsers.add(serviceAddress.RunAsUserId);
         }
