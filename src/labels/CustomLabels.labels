@@ -17916,7 +17916,7 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration_Thank_you_GeneralAccount</shortDescription>
-        <value>As requested, you will be associated with the “General Public” account.  Please check the mailbox for the email address you have registered with to complete the registration.</value>
+        <value>As requested, you will be associated with the selected account type. Please check the mailbox for the email address you have registered with to complete the registration.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Title_Bubble</fullName>
