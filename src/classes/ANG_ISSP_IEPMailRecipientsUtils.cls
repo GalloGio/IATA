@@ -3,39 +3,43 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
     //
     // NOTE: The set accountIDs needs the 15 digit ids.
     //
-    public static Map<ID, Set<Id>> getRecipients(Set<String> accountIDs, Set<String> roles) {
+    public static Map<String, Set<Id>> getRecipients(Set<Id> accountIDs, Set<String> roles) {
 
-        //
-        // Get all the top parents linked to the accounts.
-        //
-        List<Portal_Application_Right__c> parl = [Select contact__r.account.Top_Parent__c,
-                                                         contact__r.accountId,
-                                                         contact__r.account.ANG_IEP_Status_FF__c
-                                                    From Portal_Application_Right__c                                                
-                                                   Where account__c in : accountIDs
-                                                     And right__c = 'Access Granted'];
+        Map<Id, String> topParents = new Map<Id, String>();
 
-        //
-        // Set with all accountIds and top parent ids
-        //
-        Set<String> accountsSet = new Set<String>();
-        Map<String, String> topParents = new Map<String, String>();
+        Map<Id, List<AMS_Agencies_relationhip__c>> hier = AMS_HierarchyHelper.getAccountsHierarchies(accountIDs);
 
-        for(Portal_Application_Right__c par : parl) {
-            if(par.contact__r.account.Top_Parent__c != null) {
-                accountsSet.add(par.contact__r.account.Top_Parent__c);
-                topParents.put(par.contact__r.account.Top_Parent__c, par.contact__r.accountId);
+        Set<id> accountIDsSet = new Set<id>();
+
+        for(String accountId : accountIDs) {
+            List<AMS_Agencies_relationhip__c> amsl = hier.get(accountId);
+            accountIDsSet.add(accountId);
+            topParents.put(accountId, String.valueOf(accountId).substring(0, 15));
+
+            for (AMS_Agencies_relationhip__c ams : amsl) {
+                if(ams.Child_Account__c != null) {
+                    accountIDsSet.add(ams.Child_Account__c);
+                    topParents.put(ams.Child_Account__c, String.valueOf(accountId).substring(0, 15));
+                }
+                if(ams.Parent_Account__c != null) {
+                    accountIDsSet.add(ams.Parent_Account__c);
+                    topParents.put(ams.Parent_Account__c, String.valueOf(accountId).substring(0, 15));
+                }
             }
-            accountsSet.add(par.contact__r.accountId);           
-            topParents.put(par.contact__r.accountId, par.contact__r.accountId);
         }
+
+        //System.debug('topParents--->' + topParents);
+        //System.debug('roles--->' + roles);
+        //System.debug('accountIDs--->' + accountIDs);
 
         List<Portal_Application_Right__c> parList2 = [Select Account__c,
                                                      Contact__c
                                                 From Portal_Application_Right__c
                                                Where ANG_Portal_Service_Role__c in : roles
                                                  And right__c = 'Access Granted'
-                                                 And contact__r.accountId in : accountsSet];
+                                                 And contact__r.accountId in : accountIDsSet];
+
+        //System.debug('parList2-->' + parList2);
 
         //
         // Set with all contacts per account
@@ -48,12 +52,12 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
                 contactIDs = new Set<ID>();
             contactIDs.add(p.Contact__c);
             IEP_accountIDs.put(p.Account__c, contactIDs);
-        }                                                         
+        }                                                                
 
         //
         // Get the users by account
         //
-        Map<ID, Set<Id>> accIdToUserIdMapIep = new map<Id, Set<ID>>();
+        Map<String, Set<Id>> accIdToUserIdMapIep = new map<String, Set<ID>>();
 
         for(Id key : IEP_accountIDs.keySet()) {
             Set<Id> userIDsAux = new Set<id>();
@@ -69,6 +73,8 @@ public class ANG_ISSP_IEPMailRecipientsUtils {
 
             accIdToUserIdMapIep.put(topParents.get(key), userIDs);
         }
+
+        System.debug('accIdToUserIdMapIep-->' + accIdToUserIdMapIep); 
 
         return accIdToUserIdMapIep;
     }
