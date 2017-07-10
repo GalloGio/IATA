@@ -116,8 +116,9 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 selectedLang = 'Spanish';
             } else {
                 selectedLang = 'English';
-            }
+            }            
 */
+
             countryIsoCode = user.contact.Account.IATA_ISO_Country__r.ISO_Code__c;
             
             category = user.contact.Account.Category__c;
@@ -270,6 +271,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             countryRequirementsList = new List<AMS_Accreditation_Requirement__c>();
 
             List<AMS_Accreditation_Requirement__c> countryRequirementListAux = new List<AMS_Accreditation_Requirement__c>();
+
+            System.debug('countryIsoCode-->' + countryIsoCode);
+            System.debug('sector-->' + sector);
+            System.debug('amsOfficeType-->' + amsOfficeType);
+            System.debug('accredModel-->' + accredModel);            
 
             countryRequirementListAux = [SELECT Id,
                                               Name,
