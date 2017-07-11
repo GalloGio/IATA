@@ -335,7 +335,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-    <fields>
         <fullName>Previous_status_code__c</fullName>
         <externalId>false</externalId>
         <label>Previous status code</label>
@@ -380,6 +379,7 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
+    <fields>
         <fullName>Valid_Code_For_GDP_Replication__c</fullName>
         <externalId>false</externalId>
         <formula>IF( 
