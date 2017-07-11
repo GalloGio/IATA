@@ -180,6 +180,10 @@
 .search-field {
 	margin-top: 7px;
 }
+.excludeLabel {
+	margin-left: 5px;
+	font-weight: normal;
+}
 </style>
 </head>
 
@@ -203,10 +207,10 @@
 					</div>
 					<div class="col-xs-6 col-md-4 hidden-print">
 						<apex:outputPanel id="downloadButtons">
-							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?renderAs=csv&data=GSA&search={!searchText}','_blank');">
+							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?renderAs=csv&data=GSA&exclude={!isExcludingTerminated}&search={!searchText}','_blank');">
 								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
 							</button>
-							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA?renderAs=pdf&search={!searchText}','_blank');" >
+							<button type="button" class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA?renderAs=pdf&exclude={!isExcludingTerminated}&search={!searchText}','_blank');" >
 								<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_Download_Pdf}
 							</button>
 						</apex:outputPanel>
@@ -220,6 +224,9 @@
 		<div class="row hm-table">
 			<div class="col-xs-12">
 				<apex:outputPanel id="tablePanel">
+					<apex:inputCheckbox value="{!isExcludingTerminated}" id="chkExcludeTerminated" onchange="handleSearchAF();" styleClass="hidden-print" />
+					<apex:outputLabel value="{!$Label.ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments}" for="chkExcludeTerminated" styleClass="excludeLabel hidden-print"/>
+ 
 					<table class="table table-bordered">
 						<thead>
 							<tr>
@@ -260,7 +267,7 @@
 								<td>{!a.appointment.Account__r.Name}</td>
 								<td>
 									{!CASE(a.appointment.Accreditation_Endorsement_Status_code__c, '0', $Label.ISSP_AMS_MSO_GSA_Appointment_Terminated, '9', $Label.ISSP_AMS_MSO_GSA_Appointment_Active, a.appointment.Accreditation_Endorsement_Status_code__c)}
-									<img src="/img/msg_icons/info16.png" title="{!IF(a.appointment.Accreditation_Endorsement_Status_code__c == '0', $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated, $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment) + ': ' + TEXT(a.appointment.Date_Organisation_Status_attained__c)}" style="float: right;" />
+									<img src="/img/msg_icons/info16.png" title="{!IF(a.appointment.Accreditation_Endorsement_Status_code__c == '0', $Label.ISSP_AMS_MSO_GSA_Date_Appointment_Terminated, $Label.ISSP_AMS_MSO_GSA_Date_of_Appointment) + ': ' + TEXT(a.appointment.Date_Organisation_Status_attained__c)}" style="float: right;" styleClass="hidden-print" />
 									</td>
 								<td>{!a.territories}</td>
 								<td>{!a.appointment.Account__r.BillingCity}</td>

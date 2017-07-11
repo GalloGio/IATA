@@ -5,6 +5,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
     public Account currentAccount {get; set;}
     public String SortingDirection {get; set;}
     public String SortBy {get; set;}
+    public Boolean isExcludingTerminated {get; set;}
 
     private list<AMS_Inspection__c> lstAccountsInHierarchy;
     private Id currentAccountId;
@@ -72,7 +73,8 @@ public without sharing class ISSP_AMS_MSO_Controller {
         recordsPerPage = 25;
         SortBy = 'IATACode__c';
         SortingDirection = 'ASC';
-        if (ApexPages.currentPage().getParameters().get('search') != null) searchText = ApexPages.currentPage().getParameters().get('search');        
+        isExcludingTerminated = ApexPages.currentPage().getParameters().get('exclude') == 'true';
+        if (ApexPages.currentPage().getParameters().get('search') != null) searchText = ApexPages.currentPage().getParameters().get('search');
 
         refreshMsoGsaList();
     }
@@ -81,7 +83,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
         String strQuery = 'SELECT Id, Account__r.Name,Account__r.Location_Class__c, Account__r.IATACode__c, Account__r.Category__c, Account__r.BillingStreet, Account__r.BillingCity, Account__r.BillingCountry, Accreditation_Endorsement_Status_code__c, Date_Organisation_Status_attained__c ';
 
         if (!isMSO) {
-            strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r) ';
+            strQuery += ', (SELECT Id, ISO_Country__r.Name FROM AMS_Territories__r ORDER BY ISO_Country__r.Name ASC) ';
         }
 
         strQuery += 'FROM AMS_Inspection__c WHERE Airline_Code__c = :airlineCode '; //Airline__c = :hqAccountId ';
@@ -91,7 +93,11 @@ public without sharing class ISSP_AMS_MSO_Controller {
         if (!isMSO) {
             strQuery += ' AND Accreditation_Endorsement_organisation__r.Name <> \'' + IATAORGNAME + '\'';
         }
-        //
+        
+        if (isExcludingTerminated) {
+            strQuery += ' AND Accreditation_Endorsement_Status_code__c <> \'0\'';
+        }
+
         if (searchText != null && searchText != '') {
             strQuery += ' AND (';
             strQuery += 'Account__r.Name LIKE \'%' + String.escapeSingleQuotes(searchText) + '%\'';
@@ -100,7 +106,7 @@ public without sharing class ISSP_AMS_MSO_Controller {
             strQuery += ')';
         } 
 
-        strQuery += ' ORDER BY Account__r.' + SortBy + ' ' + SortingDirection + ' NULLS LAST';
+        strQuery += ' ORDER BY Account__r.' + SortBy + ' ' + SortingDirection;
 
         system.debug('query: ' + strQuery);
 
