@@ -2826,17 +2826,6 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>ANG_Financial_Review__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(CONTAINS(Financial_Review_Result__c , &apos;Unsatisfactory&apos;),&apos;Failed&apos;,&apos;Passed&apos;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Financial Review</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ANG_HE_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Risk_Status</globalPicklist>
@@ -69942,7 +69931,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
+            <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -69968,7 +69957,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Montly</fullName>
+                <fullName>Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -79898,7 +79887,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
+            <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>4 times per month</fullName>
                 <default>false</default>
@@ -79924,7 +79913,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Montly</fullName>
+                <fullName>Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
