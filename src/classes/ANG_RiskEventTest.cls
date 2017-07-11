@@ -1,9 +1,5 @@
 @isTest
 private class ANG_RiskEventTest {
-    
-    static {
-        //initilize static variables
-    }
 
     @testSetup static void createData() {
         Account a = new Account(

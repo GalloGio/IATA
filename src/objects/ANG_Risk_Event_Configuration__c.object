@@ -315,8 +315,14 @@
     <label>Risk Event Trigger Configuration</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Risk_Event_Type__c</columns>
+        <columns>ANG_isUpdateOnly__c</columns>
+        <columns>ANG_Risk_Event_Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
     </listViews>
     <nameField>
         <displayFormat>REC-{00000000}</displayFormat>
