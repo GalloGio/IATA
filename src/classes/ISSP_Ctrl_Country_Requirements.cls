@@ -304,7 +304,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                     }
                     availableLanguages.add(req.Language__c);
                 }
-                
+
                 String filterLanguage = '';
                 String checkLanguage = '';
 
@@ -321,32 +321,18 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                     filterLanguage = firstLanguage;
                 }            
 
-                Map<String, String> htmlKeepTags = new Map<String, String>();
-                htmlKeepTags.put('<br>', 'breakTag');
-                htmlKeepTags.put('</br>', 'endBreakTag');
-                htmlKeepTags.put('<p>', 'paragraphTag');
-                htmlKeepTags.put('</p>', 'endParagraphTag');
-                htmlKeepTags.put('<ul>','unorderedListTag');
-                htmlKeepTags.put('</ul>','endUnorderedListTag');
-                htmlKeepTags.put('<li>','unorderedListItemTag');
-                htmlKeepTags.put('</li>','endUnorderedListItemTag');
-
                 for(AMS_Accreditation_Requirement__c req : countryRequirementListAux) {
                     if (filterLanguage == req.Language__c) {
 
-                        req.Requirement_text__c = saveHtlmTags(htmlKeepTags, req.Requirement_text__c);
-
-                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('<[/a-zAZ0-9]*>','');
-
-                        req.Requirement_text__c = restoreHtlmTags(htmlKeepTags, req.Requirement_text__c);
+                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
+                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
+                        req.Requirement_text__c = req.Requirement_text__c.replaceAll('</b>','');
 
                         countryRequirementsList.add(req);
                     }
                 }
             }
         }
-
-        System.debug('countryRequirementsList.size()-->' + countryRequirementsList.size());
 
         return countryRequirementsList;
     }
@@ -363,24 +349,6 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         accredModel = accreditationType;
         
         return null;
-    }
-
-    private String saveHtlmTags(Map<String, String> htmlKeepTags, String str) {
-        for (String key : htmlKeepTags.keySet()) {
-            str = replaceHtmlTag(str, key, htmlKeepTags.get(key));
-        }
-        return str;
-    }
-
-    private String restoreHtlmTags(Map<String, String> htmlKeepTags, String str) {
-        for (String key : htmlKeepTags.keySet()) {
-            str = replaceHtmlTag(str, htmlKeepTags.get(key), key);
-        }        
-        return str;
-    }
-
-    private String replaceHtmlTag(String str, String patternStr, String repStr) {
-        return str.replaceAll(patternStr, repStr);
     }
 
     private List<SelectOption> setAccreditationTypes() {

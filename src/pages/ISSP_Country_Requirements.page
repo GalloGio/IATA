@@ -185,6 +185,10 @@
                       height: 32px;
                       position: absolute;
                       left: 50%;
+
+              ul + li + span {
+                font-weight: normal !important;
+                color: black;
               }
             </style>
 
@@ -249,9 +253,11 @@
                                                                          $Label.ISSP_AMS_NoC_Request_for_Change)}">
                               <apex:outputText>
                                 <strong>{!reqs.Name}</strong><br/>
-                                <span style="font-weight: normal">
-                                  <apex:outputField value="{!reqs.Requirement_text__c}"/>
-                                </span>
+                                <div style="font-weight: normal !important">
+                                  <span>
+                                    <apex:outputField value="{!reqs.Requirement_text__c}"/>
+                                  </span>
+                                </div>
                               </apex:outputText>
                             </apex:column>
                           </apex:dataTable>
