@@ -61,7 +61,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 	   		oscarToProcess = (AMS_OSCAR__c)scope.get(0);
 
-	   		modifyOscar(oscarToProcess);
+	   		oscarToProcess = modifyOscar(oscarToProcess);
+
+	   		System.debug('Oscar is now this:'+oscarToProcess);
 			update oscarToProcess;
 
 	   		AMS_Pax_Accreditation_Form__c stagingArea = modifyStagingArea(oscarToProcess);
@@ -81,7 +83,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		}
 	}
 
-	public static void modifyOscar(AMS_OSCAR__c oscarToProcess){
+	public static AMS_OSCAR__c modifyOscar(AMS_OSCAR__c oscarToProcess){
 
 		oscarToProcess = Database.query(getAllSTEPSFieldQuery(oscarToProcess.Id));
 
@@ -100,9 +102,11 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
     	}
 
     	for (String step : stepsOSCAR) {
-    		if(oscarToProcess.get(step) == null)
+    		if(oscarToProcess.get(step + '__c') == null)
         		oscarToProcess.put(step + '__c', 'Not Started');
 		}
+        
+        return oscarToProcess;
 	}
 
 	public static String getAllSTEPSFieldQuery(String oscarToProcessId) {
@@ -119,8 +123,10 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		return 'SELECT ' + fields + ', RecordTypeId, Process__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
-
+		String toReturn = 'SELECT ' + fields + ', RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+		
+        System.debug('Returning ' + toReturn);
+        return toReturn;
 		        
     }
 
