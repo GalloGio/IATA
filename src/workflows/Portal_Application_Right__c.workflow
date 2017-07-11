@@ -288,7 +288,7 @@
     <fieldUpdates>
         <fullName>Notify_Admin_of_contact_request</fullName>
         <field>Notification_Template__c</field>
-        <formula>&quot;NT-0742&quot;</formula>
+        <formula>&quot;NT-0022&quot;</formula>
         <name>Notify Admin of contact request</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

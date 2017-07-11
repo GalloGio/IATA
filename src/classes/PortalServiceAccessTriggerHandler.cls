@@ -35,7 +35,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
         Set<ID> accountIDs = new Set<ID>();
         Map<id, boolean> cannotManagedPortalAdminMap = new Map<id, boolean>();
         Map<id, boolean> requestByUserMap = new Map<id, boolean>();
-        Set<String> accountIDsIepAux = new Set<String>();
+        Set<Id> accountIDsIepAux = new Set<Id>();
 
         List<Portal_Application_Right__c> parListAux = [Select id, Right__c, Contact__c, Application_Name__c, Account__c, Portal_Application__r.Cannot_be_managed_by_portal_admin__c from Portal_Application_Right__c  where id in :ids];  
 
@@ -54,7 +54,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
             } 
         }
 
-        Map<ID, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
+        Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
 
         System.debug('PortalServiceAccessTriggerHandler__SendEmailToPortalAdminToValidateRequest   accIdToUserIdMapIep-->' + accIdToUserIdMapIep);
 
@@ -63,10 +63,10 @@ public without sharing class PortalServiceAccessTriggerHandler {
         //
         Map<Id, String> iepAccountStatusMap = new Map<Id, String>();
 
-        List<Portal_Application_Right__c> parl = [Select contact__r.account.ANG_IEP_Status_FF__c From Portal_Application_Right__c Where account__c in : accountIDsIepAux];
+        List<Account> accountStatusList = [Select Id, ANG_IEP_Status_FF__c From Account Where Id in : accountIDsIepAux];
         
-        for(Portal_Application_Right__c par : parl) {
-            iepAccountStatusMap.put(par.contact__r.accountId, par.contact__r.account.ANG_IEP_Status_FF__c);
+        for(Account a : accountStatusList) {
+            iepAccountStatusMap.put(String.valueOf(a.Id).substring(0, 15), a.ANG_IEP_Status_FF__c);
         }
 
         //
@@ -96,8 +96,6 @@ public without sharing class PortalServiceAccessTriggerHandler {
                 }
 
                 Boolean cannotManagedPortalAdminFlag = cannotManagedPortalAdminMap.get(par.Portal_Application__c);
-
-
                 
                 // The email to the Portal administrator can only be send when
                 // portal_application__c.Cannot_be_managed_by_portal_admin__c = false
@@ -111,7 +109,7 @@ public without sharing class PortalServiceAccessTriggerHandler {
 
                     Set<ID> portalAdminUserIDs;
                     if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-                        System.debug('--->EasyPay');
+                        System.debug('--->EasyPay---->' + par.Account__c);
                         portalAdminUserIDs = accIdToUserIdMapIep.get(par.Account__c);
                     } else {
                         portalAdminUserIDs = accIdToUserIdMap.get(par.Account__c);                   
@@ -137,13 +135,13 @@ public without sharing class PortalServiceAccessTriggerHandler {
                         
                         if(!par.Conctact_is_CNS__c && par.Conctact_is_CNS__c!=null){
                             if(null != standartReplyUserID){ emailMsg.setOrgWideEmailAddressId(standartReplyUserID); }
-                        else {
-                            emailMsg.setReplyTo(ENV.Reply_Email);
-                            emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
-                        }
+                            else {
+                                emailMsg.setReplyTo(ENV.Reply_Email);
+                                emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject);
+                            }
 
                         }else{
-                             if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
+                            if(null != standardReplyUserID_CNS){ emailMsg.setOrgWideEmailAddressId(standardReplyUserID_CNS); }
                             else {
                                 emailMsg.setReplyTo(ENV.Reply_Email_CNS);
                                 emailMsg.setSenderDisplayName(ENV.AccessToApplicationServiceRequested_Email_Subject_CNS);
