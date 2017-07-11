@@ -77,13 +77,16 @@ public with sharing class ANG_AgencyChangesHelper {
   			accountIdsInvolvedSet.add(oscar.Account__c);
 
   			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
+  			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
   			//TODO TODO TODO////
   			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
-				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer);
+				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
+
+				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.Process__c))
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet);
@@ -92,7 +95,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer);
+				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.AUTH_APPROVAL, accountIdsInvolvedSet, changesContainer);
 
@@ -365,7 +368,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			return rels.get(0).Hierarchy__c;
 	}
 
-	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn){
+	public static AChangeStructure applyChangeOfFields(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
 		
 		System.debug('[ANG_AgencyChangesHelper] Performing change of fields');
 
@@ -377,8 +380,6 @@ public with sharing class ANG_AgencyChangesHelper {
         Set<String> fieldsToMigrate = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarToProcess.ANG_Type_Of_Change__c);
 
         System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
-
-        AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscarToProcess.AMS_Online_Accreditation__c);
 
         Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
         
@@ -735,6 +736,15 @@ public with sharing class ANG_AgencyChangesHelper {
         );
 
         return aacNEW;
+
+    }
+
+    public static void sanityCheckValidations(AMS_OSCAR__c oscar, AChangeStructure changesContainer, AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation){
+
+    	if(oscar.ANG_Type_of_change__c.containsIgnoreCase(AMS_Utils.ANG_ACCREDITATION_TYPE)){
+			if(changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c == oscarOnlineAccreditation.ANG_Accreditation_type__c)
+                oscar.addError('To pass sanity checks when type of change includes "Accreditation Type", this value must be modified.');   
+        }
 
     }
 
