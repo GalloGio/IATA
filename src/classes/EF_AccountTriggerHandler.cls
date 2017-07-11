@@ -485,13 +485,9 @@ public class EF_AccountTriggerHandler {
 
         if(!mails.isEmpty()){
         	Messaging.sendEmail(mails);
-        }            
+        }          
               
     }
-    public static void fakeMethod(){
-        
-    }
-
      public class AccountException extends Exception {}
 	
 }
