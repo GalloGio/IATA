@@ -45,4 +45,26 @@ public with sharing class ANG_Risk_Helper{
 
 		if(!updateHE.isEmpty()) update updateHE;
 	}
+
+	public static List<Account> updateRiskStatus(List<Account> accs){
+
+		Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+		
+		Map<String,String> calculationTable = new Map<String,String>();
+		for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
+			calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc.ANG_Risk_History__c);
+		}
+
+		System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
+
+		if(!calculationTable.isEmpty()){
+			for(Account acc : accs){
+				System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] acc.Financial_Review_Result__c - ' + acc.Financial_Review_Result__c);
+				System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] acc.ANG_HE_RiskHistoryAssessment__c - ' + acc.ANG_HE_RiskHistoryAssessment__c);
+				acc.ANG_HE_RiskStatus__c = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
+			}
+		}
+
+		return accs;
+	}
 }
