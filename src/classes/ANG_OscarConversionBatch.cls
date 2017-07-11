@@ -2,8 +2,6 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	
 	global static final Set<String> oscarAMSProcessesToMigrate = new Set <String>{AMS_Utils.new_HO,AMS_Utils.new_BR,AMS_Utils.new_BR_ABROAD,AMS_Utils.new_SA};
 
-	global static final Set<String> locationClassAllowed = new Set <String>{'P'};
-
 	global static final Set<String> invalidOscarStatus = new Set<String>{'Closed (Closed)','Closed (Closed)','Closed','Closed_ Not Accepted','Closed_Rejected','Closed_Withdrawn'};
 
     global static final Map<String,String> oscarProcessMap = new Map<String, String> {
@@ -44,9 +42,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		this.countryToSearch = countryToSearch;
 
 		if(countryToSearch != null)
-			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.Location_Class__c in :locationClassAllowed and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
+			this.query = 'SELECT Id, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
 		else
-			this.query = 'SELECT Id, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Name = :oscarName';
+			this.query = 'SELECT Id, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and Name = :oscarName and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
 
 	}
 	
@@ -85,9 +83,46 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 	public static void modifyOscar(AMS_OSCAR__c oscarToProcess){
 
+		oscarToProcess = Database.query(getAllSTEPSFieldQuery(oscarToProcess.Id));
+
 		oscarToProcess.RecordTypeId = oscarRecordTypeMap.get(oscarToProcess.Process__c);
 		oscarToProcess.Process__c = oscarProcessMap.get(oscarToProcess.Process__c);
+
+	    Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+
+		Map<String, Schema.SObjectField> fieldMap = schemaMap.get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+	    List<String> stepsOSCAR = new List<String>();
+
+		for (String fieldName : fieldMap.keySet()) {
+	        if (fieldName.startsWithIgnoreCase('STEP'))
+    	        stepsOSCAR.add(fieldMap.get(fieldName).getDescribe().getLabel());
+    	}
+
+    	for (String step : stepsOSCAR) {
+    		if(oscarToProcess.get(step) == null)
+        		oscarToProcess.put(step + '__c', 'Not Started');
+		}
 	}
+
+	public static String getAllSTEPSFieldQuery(String oscarToProcessId) {
+
+       String fields = ' ';
+
+		Map<String, Schema.SObjectField> fMap = Schema.sObjectType.AMS_OSCAR__c.fields.getMap();
+
+		for(Schema.SObjectField field : fMap.values()){
+		    
+		    Schema.DescribeFieldResult fd = field.getDescribe();
+		    if(fd.getName().startsWith('STEP')){ fields += fd.getName() + ', ';    System.debug('Field is:'+fd.getName());}
+		}
+
+		fields = fields.substring(0,fields.lastIndexOf(','));
+
+		return 'SELECT ' + fields + ', RecordTypeId, Process__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+
+		        
+    }
 
 	public static AMS_Pax_Accreditation_Form__c modifyStagingArea(AMS_OSCAR__c oscarToProcess){
 
