@@ -360,8 +360,8 @@ public class IECEBC_Utility {
 				queryWhereClauses.add('(' + String.join(queryRefinementFilters, ' ' + masterFilter.Refinement_Condition__c + ' ') + ')');
 			}
 		}
-		if (masterFilter.Name=='EBC_TEST_RUN' && table=='GDP_Products_Account_View__c') queryWhereClauses.add('Agency_Code__c like \'423%\'');
-        if (masterFilter.Name=='EBC_TEST_RUN' && table=='ID_Card__c') queryWhereClauses.add('Agency_IATA_Code__c like \'423%\'');
+		if (masterFilter.Name=='EBC_TEST_RUN' && table=='GDP_Products_Account_View__c') queryWhereClauses.add('Agency_Code__c like \'1111109%\'');
+        if (masterFilter.Name=='EBC_TEST_RUN' && table=='ID_Card__c') queryWhereClauses.add('Agency_IATA_Code__c like \'1111109%\'');
         
 		query += 'Where ' + String.join(queryWhereClauses, ' AND ');
 		if (columns != null) query += ' ORDER BY ' + emailField;

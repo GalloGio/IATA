@@ -140,16 +140,16 @@ public class vfIECEBC_TestSuite {
         insert accr;
             
         List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111111'),
-                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111112'),
-                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111113'),
-                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111114'),
-                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111115'),
-                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='1111116'),
-                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='1111117'),
-                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='1111118'),
-                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111119'),
-                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='1111120')
+            new GDP_Products_Account_View__c(Name = 'a',                Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'a@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110911'),
+                new GDP_Products_Account_View__c(Name = 'b',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'b@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110912'),
+                new GDP_Products_Account_View__c(Name = 'c',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'c@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110913'),
+                new GDP_Products_Account_View__c(Name = 'd',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'd@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110914'),
+                new GDP_Products_Account_View__c(Name = 'e',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'e@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110915'),
+                new GDP_Products_Account_View__c(Name = 'f',            Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'f@b.com',           Preferred_Language__c = 'X0',    IATA_Code__c='111110916'),
+                new GDP_Products_Account_View__c(Name = 'notincluded',  Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'notincluded@b.com', Preferred_Language__c = 'X1',    IATA_Code__c='111110917'),
+                new GDP_Products_Account_View__c(Name = 'optout',       Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = false,  Email_Address__c = 'optout@b.com',      Preferred_Language__c = 'X0',    IATA_Code__c='111110918'),
+                new GDP_Products_Account_View__c(Name = 'duplicate',    Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='111110919'),
+                new GDP_Products_Account_View__c(Name = 'duplicate1',   Related_Accreditation_Class__c = accr.Id,   GDP_Opt_In__c = true,   Email_Address__c = 'duplicate@b.com',   Preferred_Language__c = 'X0',    IATA_Code__c='111110920')
             };
         insert gpavs;
         return gpavs;
@@ -157,10 +157,10 @@ public class vfIECEBC_TestSuite {
     public static List<ID_CARD__c> createIDCARD(id ProductAccountViewId) {
        
         List<ID_CARD__c> gpavs = new List<ID_CARD__c>{
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1',Agency_IATA_Code__c='X1', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2',Agency_IATA_Code__c='X2', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3',Agency_IATA_Code__c='X3', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono'),
-            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4',Agency_IATA_Code__c='X4', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono')
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA1',Agency_IATA_Code__c='X1', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='111110920'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA2',Agency_IATA_Code__c='X2', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='111110920'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA3',Agency_IATA_Code__c='X3', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='111110920'),
+            new ID_CARD__c(Valid_From_Date__c=System.Today(), Valid_To_Date__c=System.Today().AddDays(2),Opt_in__c=true,Name_on_ID_Card__c='IATA4',Agency_IATA_Code__c='X4', Agency_Name__c='IATA',Card_Status__c='Approved',GDP_Products_Account_View__c=ProductAccountViewId,Email__c='ldebono@iata.org',firstname__c='Luc', lastname__c='Debono',Agency_IATA_Code__c='111110920')
          };
         insert gpavs;
         return gpavs;
