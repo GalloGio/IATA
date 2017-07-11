@@ -62,8 +62,6 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id);
 		insert oscar;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -143,8 +141,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = a1.id);
 		insert oscar;
-
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
 
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
@@ -322,8 +318,6 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = destinationAccount.id);
 		insert oscar;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -438,8 +432,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = destinationAccount.id);
 		insert oscar;
-
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
 
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
@@ -557,8 +549,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = destinationAccount.id);
 		insert oscar;
-
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
 
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
@@ -690,8 +680,6 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = a1.id, New_parent__c = destinationAccount.id);
 		insert oscar;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -805,8 +793,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = newHeSingle.id, New_parent__c = he1.id);
 		insert oscar;
-
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
 
 		Contact co1 = new Contact(AccountId = newHeSingle.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
@@ -925,8 +911,6 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = newHeSingle.id, New_parent__c = destinationAccount.id);
 		insert oscar;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
 		Contact co1 = new Contact(AccountId = newHeSingle.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -1043,8 +1027,6 @@ public class ANG_AgencyChangesHelperTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he1.id, ANG_Type_Of_Change__c = 'Legal Name');
 		insert oscar;
 
-		Map<string, Id> caseRT  =  TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case');
-
 		Contact co1 = new Contact(AccountId = he1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
 		insert co1;
 
@@ -1133,6 +1115,368 @@ public class ANG_AgencyChangesHelperTest {
 
         Test.stopTest();
 
+
+	}
+
+
+	@isTest static void performChangeOfOwnership1(){
+
+
+
+		// push single agency to a single new HE
+
+		Test.startTest();
+
+		Account he = null;
+		Account ae1 = null;
+		Account ae2 = null;
+		Account ae3 = null;
+
+		For(Account acct : [Select Id, Name, ParentId,IATA_ISO_Country__c, Location_Class__c, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account]){
+
+			if(acct.Name == 'Main HE Account H1' )
+				he = acct;
+			if(acct.Name == 'Account AE1 H1' )
+				ae1 = acct;
+			if(acct.Name == 'Account AE2 H1' )
+				ae2 = acct;
+			if(acct.Name == 'Account AE3 H1' )
+				ae3 = acct;
+		}
+
+		System.assert(he != null);
+		System.assert(ae1 != null);
+		System.assert(ae2 != null);
+		System.assert(ae3 != null);
+
+        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = he.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+                 // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+                IATAcode__c = he.IATAcode__c,
+                Branch_Office_Country__c = he.IATA_ISO_Country__c,
+                Location_Class__c = he.Location_Class__c,
+                Location_Type__c = he.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333'
+                );
+
+        insert stagingArea;
+
+        List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 60, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse3', Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+4112345673', Phone__c='3424322343', Email__c='unique@email3.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		// let's start !!
+
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae1.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae2.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae3.Id));
+		
+		insert agenciesinvolved;
+
+		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+		accountIdsInvolvedSet.add(oscar.Account__c);
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfOwnership(oscar, accountIdsInvolvedSet, null, true);
+
+        List<AMS_Account_Role__c> roleList = [select Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c from AMS_Account_Role__c];
+
+        For(AMS_Account_Role__c role :roleList)
+	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
+
+        System.assertEquals(12,roleList.size());
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void performChangeOfOwnership2(){
+
+		// push single agency to a single new HE
+
+		Test.startTest();
+
+		Account he = null;
+		Account ae1 = null;
+		Account ae2 = null;
+		Account ae3 = null;
+
+		For(Account acct : [Select Id, Name, ParentId,IATA_ISO_Country__c, Location_Class__c, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account]){
+
+			if(acct.Name == 'Main HE Account H1' )
+				he = acct;
+			if(acct.Name == 'Account AE1 H1' )
+				ae1 = acct;
+			if(acct.Name == 'Account AE2 H1' )
+				ae2 = acct;
+			if(acct.Name == 'Account AE3 H1' )
+				ae3 = acct;
+		}
+
+		System.assert(he != null);
+		System.assert(ae1 != null);
+		System.assert(ae2 != null);
+		System.assert(ae3 != null);
+
+		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+        
+        List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
+
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner1', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=40.0, Legacy_External_ID__c='12345323'));
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner2', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=30.0, Legacy_External_ID__c='12345321'));
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner3', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=30.0, Legacy_External_ID__c='12345322'));
+
+        insert accountRoles;
+
+        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = he.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+                 // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+                IATAcode__c = he.IATAcode__c,
+                Branch_Office_Country__c = he.IATA_ISO_Country__c,
+                Location_Class__c = he.Location_Class__c,
+                Location_Type__c = he.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333'
+                );
+
+        insert stagingArea;
+
+        List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(2).Id ,Agency_Owner__c = true, Financial_interest__c = 60, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse3', Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+4112345673', Phone__c='3424322343', Email__c='unique@email3.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		// let's start !!
+
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae1.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae2.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae3.Id));
+		
+		insert agenciesinvolved;
+
+		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+		accountIdsInvolvedSet.add(oscar.Account__c);
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfOwnership(oscar, accountIdsInvolvedSet, null, true);
+
+        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c];
+
+        For(AMS_Account_Role__c role :roleList)
+	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
+
+        System.assertEquals(12,roleList.size());
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void performChangeOfOwnership3(){
+
+		// push single agency to a single new HE
+
+		Test.startTest();
+
+		Account he = null;
+		Account ae1 = null;
+		Account ae2 = null;
+		Account ae3 = null;
+
+		For(Account acct : [Select Id, Name, ParentId,IATA_ISO_Country__c, Location_Class__c, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account]){
+
+			if(acct.Name == 'Main HE Account H1' )
+				he = acct;
+			if(acct.Name == 'Account AE1 H1' )
+				ae1 = acct;
+			if(acct.Name == 'Account AE2 H1' )
+				ae2 = acct;
+			if(acct.Name == 'Account AE3 H1' )
+				ae3 = acct;
+		}
+
+		System.assert(he != null);
+		System.assert(ae1 != null);
+		System.assert(ae2 != null);
+		System.assert(ae3 != null);
+
+		Id ownerRtId = AMS_Utils.getId('AMS_Account_Role__c', 'Ownership');
+        
+        List<AMS_Account_Role__c> accountRoles = new List<AMS_Account_Role__c>();
+
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner1', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=40.0, Legacy_External_ID__c='12345323'));
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner2', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=30.0, Legacy_External_ID__c='12345321'));
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner3', recordTypeId = ownerRtId, Account__c = he.Id, Person__c = null, Contact__c = null, Percentage__c=30.0, Legacy_External_ID__c='12345322'));
+
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner4', recordTypeId = ownerRtId, Account__c = ae1.Id, Person__c = null, Contact__c = null, Percentage__c=100.0, Legacy_External_ID__c='12345122'));
+        accountRoles.add(new AMS_Account_Role__c(Owner_Name__c = 'Owner5', recordTypeId = ownerRtId, Account__c = ae2.Id, Person__c = null, Contact__c = null, Percentage__c=100.0, Legacy_External_ID__c='12315322'));
+
+        insert accountRoles;
+
+        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = he.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+                 // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+                IATAcode__c = he.IATAcode__c,
+                Branch_Office_Country__c = he.IATA_ISO_Country__c,
+                Location_Class__c = he.Location_Class__c,
+                Location_Type__c = he.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333'
+                );
+
+        insert stagingArea;
+
+        List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+
+        Id personAccreditationRT = AMS_Utils.getId('AMS_Accreditation_Contact__c', 'Person');
+
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(0).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse1', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(1).Id ,Agency_Owner__c = true, Financial_interest__c = 20, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse2', Last_name__c='Last2', Job_title__c='ABC2', Mobile__c='+4112345672', Phone__c='3424322342', Email__c='unique@email2.com', RecordTypeId=personAccreditationRT));
+        accreditationContacts.add(new AMS_Accreditation_Contact__c(AMS_Ownership_Role__c = accountRoles.get(2).Id ,Agency_Owner__c = true, Financial_interest__c = 60, AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = he.Id, First_name__c='NameToUse3', Last_name__c='Last3', Job_title__c='ABC3', Mobile__c='+4112345673', Phone__c='3424322343', Email__c='unique@email3.com', RecordTypeId=personAccreditationRT));
+
+        insert accreditationContacts;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		// let's start !!
+
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae1.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae2.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae3.Id));
+		
+		insert agenciesinvolved;
+
+		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+		accountIdsInvolvedSet.add(oscar.Account__c);
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfOwnership(oscar, accountIdsInvolvedSet, null, true);
+
+        List<AMS_Account_Role__c> roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c];
+
+        For(AMS_Account_Role__c role :roleList)
+	        System.debug('[ANG_AgencyChangesHelperTest]: Owner inserted:' + role);
+
+        System.assertEquals(14,roleList.size());
+
+		roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
+
+        System.assertEquals(12,roleList.size());
+
+		Test.stopTest();
 
 	}
 }
