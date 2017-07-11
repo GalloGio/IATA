@@ -8982,6 +8982,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Download as CSV</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Exclude_Terminated_Appointments</shortDescription>
+        <value>Exclude Terminated Appointments</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_GSA_Introduction_Text</fullName>
         <language>en_US</language>
         <protected>false</protected>
