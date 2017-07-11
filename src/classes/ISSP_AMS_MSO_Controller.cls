@@ -187,26 +187,31 @@ public without sharing class ISSP_AMS_MSO_Controller {
     }
 
     // returns the first page of records
-     public void first() {
-         ssc.first();
-     }
+    public void first() {
+        ssc.first();
+    }
 
-     // returns the last page of records
-     public void last() {
-         ssc.last();
-     }
+    // returns the last page of records
+    public void last() {
+        ssc.last();
+    }
 
-     // returns the previous page of records
-     public void previous() {
-         ssc.previous();
-     }
+    // returns the previous page of records
+    public void previous() {
+        ssc.previous();
+    }
 
-     // returns the next page of records
-     public void next() {
-         ssc.next();
-     }
+    // returns the next page of records
+    public void next() {
+        ssc.next();
+    }
 
-     public class AppointmentWrapper {
+    // the first characters in the CSV file, to ensure its correct display in Excel 
+    public String getCSVHeader() {
+        return EncodingUtil.convertFromHex('EFBBBF').toString();
+    }
+
+    public class AppointmentWrapper {
         public AMS_Inspection__c appointment {get; set;}
         public String territories {get; set;}
 

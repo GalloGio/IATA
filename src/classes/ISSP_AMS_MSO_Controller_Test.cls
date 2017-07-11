@@ -119,6 +119,7 @@ private class ISSP_AMS_MSO_Controller_Test {
             ctrl.refreshMsoGsaList();
             system.assertEquals(1, ctrl.lstDisplayAccounts.size());// only 1 appointment should be returned, the one for agencyG - not endorsed by IATA
 
+            ctrl.getCSVHeader();
         }
 
         Test.stopTest();
