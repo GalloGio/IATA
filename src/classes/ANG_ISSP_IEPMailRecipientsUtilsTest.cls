@@ -92,11 +92,11 @@ private class ANG_ISSP_IEPMailRecipientsUtilsTest {
         );
         insert appRight;
 
-		Set<String> accountIDs = new Set<String>();
+		Set<Id> accountIDs = new Set<Id>();
 
 		accountIDs.add(accountId);
 
-		Map<ID, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDs, roles);
+		Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDs, roles);
 		
 		System.assert(accIdToUserIdMapIep.size() != 0);
 	}
