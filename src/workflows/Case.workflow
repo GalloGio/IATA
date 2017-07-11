@@ -3661,18 +3661,6 @@
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
     </alerts>
     <alerts>
-        <fullName>ZMG__ZMG_Send_Survey_Email_to_Case_Contact_after_Case_Closed</fullName>
-        <ccEmails>oueidatg@iata.org</ccEmails>
-        <description>ZMG_Send Survey Email to Case Contact after Case Closed</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>ZMG__Zoomerang_Templates/ZMG__ZMG_Case_Closed_Survey_Template</template>
-    </alerts>
-    <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
         <description>sMAP - Deadline reached pending inputs inform CM &amp; Case Owner</description>
         <protected>false</protected>
@@ -18203,44 +18191,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ZMG__ZMG_Case Closed Survey Completed</fullName>
-        <actions>
-            <name>ZMG__ZMG_Survey_Completed_by_Case_Contact</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ZMG__ZMG_Survey_Completed__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Task created when Zoomerang Survey is completed related to a closed Case.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZMG__ZMG_Case Closed Survey Sent</fullName>
-        <actions>
-            <name>ZMG__ZMG_Survey_Sent_to_Case_Contact</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Email sent to Case Contact with Zoomerang Survey when Case is Closed.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default Americas - email to R%26S</fullName>
         <actions>
             <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
@@ -18554,28 +18504,5 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <protected>false</protected>
         <status>Not Started</status>
         <subject>Update Authorized Signatories Package</subject>
-    </tasks>
-    <tasks>
-        <fullName>ZMG__ZMG_Survey_Completed_by_Case_Contact</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>Copy and paste this link to view the Survey:
-[Insert public survey URL here for reference]</description>
-        <dueDateOffset>0</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Completed</status>
-        <subject>Survey Completed : &apos;Customer Satisfaction with Customer Service&apos;</subject>
-    </tasks>
-    <tasks>
-        <fullName>ZMG__ZMG_Survey_Sent_to_Case_Contact</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>http://www.zoomerang.com/Survey/WEB22DWFGEZJME</description>
-        <dueDateOffset>0</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Completed</status>
-        <subject>Survey Sent : &apos;Customer Satisfaction with Customer Service&apos;</subject>
     </tasks>
 </Workflow>
