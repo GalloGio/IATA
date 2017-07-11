@@ -17929,6 +17929,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <value>You will be redirected to the starting page in 5 seconds.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_Redirection15s</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Redirection15s</shortDescription>
+        <value>You will be redirected to the starting page in 15 seconds.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_RegistrationProcess</fullName>
         <categories>ISSP, registration</categories>
         <language>en_US</language>
@@ -17959,6 +17966,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Thank you for your registration.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Thank_you_GeneralAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Thank_you_GeneralAccount</shortDescription>
+        <value>As requested, you will be associated with the selected account type. Please check the mailbox for the email address you have registered with to complete the registration.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Title_Bubble</fullName>
@@ -21480,6 +21494,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>http://www.iata.org/</value>
     </labels>
     <labels>
+        <fullName>OneId_Thank_you_for_requesting_access_to_our_service</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Thank you for requesting access to our service.</shortDescription>
+        <value>Thank you for requesting access to our service. You will be informed by email shortly about the status of your request. Please check your mailbox to proceed with the next steps.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Thank_you_for_subscribing_to_this_new_service</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -21534,6 +21556,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Your request has been successfully sent</shortDescription>
         <value>Your request has been successfully sent</value>
+    </labels>
+    <labels>
+        <fullName>Oneid_request_acess_to_a_new_service</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oneid_request_acess_to_a_new_service</shortDescription>
+        <value>REQUEST ACCESS TO A NEW SERVICE</value>
     </labels>
     <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>

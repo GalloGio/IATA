@@ -1592,27 +1592,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ZMG__Zoomerang_Security_Token__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang Security Token</label>
-        <length>500</length>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>LongTextArea</type>
-        <visibleLines>2</visibleLines>
-    </fields>
-    <fields>
-        <fullName>ZMG__Zoomerang_User_ID__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Zoomerang User ID</label>
-        <length>100</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>isSISUser__c</fullName>
         <externalId>false</externalId>
         <formula>if(  

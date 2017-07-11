@@ -4087,7 +4087,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.BSP_Country_free_text__c, &apos;&apos;)</formula>
+        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
         <label>BSP Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -4908,7 +4908,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CASS_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.CASS_Country_free_text__c, &apos;&apos;)</formula>
+        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
         <label>CASS Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -82360,10 +82360,13 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         OR(ISCHANGED(Name),ISCHANGED(BillingStreet),
           ISCHANGED(BillingCity),ISCHANGED(BillingState),
           ISCHANGED(BillingCountry),ISCHANGED(BillingPostalCode),
+          ISCHANGED(BillingCountry),ISCHANGED(IATATrainingUrl__c),
+          ISCHANGED(BillingCountry),ISCHANGED(Website),
           ISCHANGED(IATA_ISO_Country__c)),
         RecordType.DeveloperName = &apos;IATA_Airline&apos;,
         NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
+        NOT($User.Profile_Name__c =&apos;Account management team&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
         NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
         NOT($User.Profile_Name__c =&apos;Developer&apos;)),       

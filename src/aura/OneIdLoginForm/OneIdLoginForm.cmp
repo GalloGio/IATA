@@ -55,7 +55,7 @@
 
                 <div id="sfdc_username_container" class="sfdc">
                     <span id="sfdc_user" class="login-icon" data-icon="a"></span>
-                    <ui:inputText value="" aura:id="username" updateOn="keyup" placeholder="{!$Label.c.OneId_Username}" keyup="{!c.onKeyUp}" 
+                    <ui:inputEmail value="" aura:id="username" updateOn="keyup" placeholder="{!$Label.c.OneId_Username}" keyup="{!c.onKeyUp}" 
                                   class="input sfdc_usernameinput sfdc" label="{!$Label.c.OneId_UsernameLabel}" labelClass="assistiveText"/>
                 </div>
         
