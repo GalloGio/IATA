@@ -55,6 +55,26 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+     <fields>
+        <fullName>ANG_Description_Label__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Product__r.ANG_Description_Label__c</formula>
+        <label>Description Label</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>Related_Product__r.Description</formula>
+        <label>Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>    
     <fields>
         <fullName>Component_Number__c</fullName>
         <externalId>false</externalId>
@@ -102,6 +122,11 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Product Components</pluralLabel>
+    <recordTypes>
+        <fullName>NewGen_Accreditation</fullName>
+        <active>true</active>
+        <label>NewGen Accreditation</label>
+    </recordTypes>    
     <searchLayouts/>
     <sharingModel>Read</sharingModel>
     <validationRules>
