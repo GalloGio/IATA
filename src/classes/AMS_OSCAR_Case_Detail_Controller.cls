@@ -55,7 +55,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Link_agent_name__c
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
-                , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_Type__c
+                , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
             };
         }
     }
@@ -75,6 +75,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         get{
             editableFields = new Set<String>();
             if(oscarObj != null && oscarObj.Type_of_change__c != null) editableFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
 
             System.debug(loggingLevel.FINEST, '____ [cls AMS_OSCAR_Case_Detail_Controller - getEditableFields] editableFields - ' + editableFields);
 
@@ -92,8 +93,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
         //verifu "hardcoded" logic
         if(fieldName == 'IATACode__c') return false;
-        if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
-        if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
+        //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
+        //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
+        if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
         if(!isAgencyChanges) return true;        
 
         //check per field
@@ -111,7 +113,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean isAgencyChanges{
         get{
-            if(oscarObj != null && oscarObj.Process__c == AMS_Utils.AGENCYCHANGES) return true;
+            if(oscarObj != null && (oscarObj.Process__c == AMS_Utils.AGENCYCHANGES || oscarObj.Process__c == AMS_Utils.NGCHANGES)) return true;
             else return false;
         }
         private set;
@@ -206,7 +208,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Out_of_deadline_SAAM__c,OSCAR_Deadline__c,Dossier_Reception_Date__c,OwnerId,CNS_process__c ,
                         Owner.Phone,Owner.Email,Owner.Name,CreatedBy.Name,Owner.UserRole.Name,LastModifiedBy.Name,Contact_Name__c,Contact_Phone__c,Contact_Email__c,
                         createdDate,Date_Time_Closed__c,RecordTypeId,Account__r.IATA_ISO_Country__r.Region__c, Account__r.Sector__c,
-                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
+                        Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, ANG_Type_of_change__c from AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
 

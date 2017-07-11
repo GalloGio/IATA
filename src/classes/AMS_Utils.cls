@@ -96,7 +96,6 @@ public without sharing class AMS_Utils {
     public static final String LEGAL_STATUS = 'Legal status';
     public static final String VFMR = 'VMFR';
     public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
-    public static final String HIERARCHY = 'Hierarchy';
 
 
     public static final String ANG_LEGAL_NAME = 'Legal name';

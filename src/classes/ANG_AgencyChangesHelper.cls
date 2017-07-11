@@ -76,6 +76,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
   			accountIdsInvolvedSet.add(oscar.Account__c);
 
+  			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
+
   			//TODO TODO TODO////
   			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
 
@@ -83,22 +85,20 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer);
 
-				if(Pattern.matches(AMS_Utils.LOCATION_TYPE + '|' + AMS_Utils.HIERARCHY, oscar.Process__c)){
+				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.Process__c))
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet);
 
-					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 
-				}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
+			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
-					changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer);
+				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer);
 
-					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.AUTH_APPROVAL, accountIdsInvolvedSet, changesContainer);
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.AUTH_APPROVAL, accountIdsInvolvedSet, changesContainer);
 
-				} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
+			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
-					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
-
-				}
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
 
 			}
 
@@ -115,9 +115,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		tocList.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
 
 
-		if (tocList.contains(AMS_Utils.LOCATION_TYPE))
+		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE))
 			changesContainer = applyChangeOfLocationType(oscar, changesContainer);
-		else if (tocList.contains(AMS_Utils.HIERARCHY))
+		else if (tocList.contains(AMS_Utils.ANG_HIERARCHY))
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet);
 
 		return changesContainer;
@@ -417,7 +417,8 @@ public with sharing class ANG_AgencyChangesHelper {
                                                                     ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
                                                                     ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
                                                                     ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
-                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'};
+                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'
+                                                                	,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'};
 
         if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
                 Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -556,7 +557,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
                     changesContainer.addChangeCode(changeCode);
                     
-                    accToUpdateStatus.Status__c = changeCodeDef.status;
+                    accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
                     changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus);
                 }
             }
@@ -569,18 +570,18 @@ public with sharing class ANG_AgencyChangesHelper {
         return changesContainer;
     }
 
-    public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode chaneCodeDefinition, AMS_OSCAR__c oscar, Id accId){
+    public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
 
     	String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
         Agency_Applied_Change_code__c aacNEW = new Agency_Applied_Change_code__c(
             Active__c = true
             , Account__c = accId
-            , Change_Code__c = chaneCodeDefinition.name
+            , Change_Code__c = changeCodeDefinition.name
             , OSCAR__c = oscar.Id
-            , Bulletin_Information__c = (chaneCodeDefinition.memoText == null) ? '' : chaneCodeDefinition.memoText.toUpperCase()
-            , Reason_Code__c = chaneCodeDefinition.reasonCode
-            , Reason_Description__c = chaneCodeDefinition.reasonDesc
+            , Bulletin_Information__c = (changeCodeDefinition.memoText == null) ? '' : changeCodeDefinition.memoText.toUpperCase()
+            , Reason_Code__c = changeCodeDefinition.reasonCode
+            , Reason_Description__c = changeCodeDefinition.reasonDesc
             , Source__c = source
             , CreatedDate_User__c = convertToHubEffectiveDate(system.today())
             //, To_Publish_in_e_Bulletin__c = changeCode.publishedOnEBulletin
@@ -602,9 +603,19 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 		        Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 		        Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c   
+		        Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c  
 		        FROM AMS_Pax_Accreditation_Form__c
 		        WHERE Id =: oscarOnlineAccredId limit 1];
+	}
+
+	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
+		return new Map<Id, Account>([SELECT Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
+		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
+		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
+		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
+		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c
+		         FROM Account WHERE Id IN :accountIds]);
 	}
 
 }
