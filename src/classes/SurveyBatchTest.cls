@@ -8,15 +8,13 @@ public class SurveyBatchTest {
   public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
   public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
   public static final ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-  public static final ID aCA = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
 
 
   @testSetup
     static void setupTestData() {
 
-           Map<String,String> mpCountries = new Map<String,String>();           
+           Map<String,String> mpCountries = new Map<String,String>();
            mpCountries.put('Finland','FI');
-           mpCountries.put('United States','US');
            mpCountries.put('Russian Federation','RU');
            mpCountries.put('People\'s Republic of China','CN');
            mpCountries.put('Canada','CA');
@@ -46,8 +44,7 @@ public class SurveyBatchTest {
                                  recordtypeID = hqrt,
                                  IATACode__c ='1234568',
                                  Type = 'IATA Cargo Agent',
-                                 billingCountry = 'CH',Location_Type__c = 'AO',
-                                 Source_System__c = 'WEBSTAR');
+                                 billingCountry = 'CH',Location_Type__c = 'AO');
         insert a;
 
         Contact con =new contact(lastname = 'pluto' ,
@@ -59,7 +56,7 @@ public class SurveyBatchTest {
                                  );
         insert con;
 
-        User u1 = new User(FirstName='Ángel', 
+        User u1 = new User(FirstName='Ángel',
                 Division='UnitTest',
                 License_Cost_Center__c='AAA000AA00',
                 Username='test1@iata.org.amsdev1',
@@ -70,11 +67,7 @@ public class SurveyBatchTest {
                 LanguageLocaleKey='en_US');
 
         insert u1;
-      SurveyBatchIgnoreUsers__c ign = new SurveyBatchIgnoreUsers__c();
-      ign.FirstName__c = 'Ángel';
-      ign.LastName__c = 'Peña';
-      ign.Name = 'Ángel Peña';
-      insert ign;
+
     }
 
 
@@ -990,17 +983,23 @@ public class SurveyBatchTest {
         test.stopTest();
     }
    }
-    static void prepareTestForCountries(Integer countriesLimit, Integer offsetLimit){
-      list<IATA_ISO_Country__c> listCountries = new list<IATA_ISO_Country__c>();
-      if(offsetLimit!=null){
-        listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT :countriesLimit Offset :offsetLimit];
-        }else{
-        listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT :countriesLimit];  
-      }
+
+    static testMethod void testForCountries() {
+
+       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
+       TransformationHelper.CalculateBusinessHoursAges = true;
+       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+
+    User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
+System.runAS(u) {
+
+
+       list<IATA_ISO_Country__c> listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT 5];
        Integer i = 0;
+
        i=0;
        list<Account> listAccount = new list<Account>();
-       for(IATA_ISO_Country__c iso : listCountries) {        
+       for(IATA_ISO_Country__c iso : listCountries) {
            Account a = new Account( name ='IFAP ACCT'+i,
            industry = 'pluto',
            IATA_ISO_Country__c=iso.id,
@@ -1008,13 +1007,12 @@ public class SurveyBatchTest {
            IATACode__c ='1234567'+i,
            Type = 'IATA Cargo Agent',
            billingCountry = iso.Name,
-           Location_Type__c = 'AO',
-           Source_System__c = 'WEBSTAR',
-           status__c = 'Approved');
+           Location_Type__c = 'AO');
            listAccount.add(a);
 
            i++;
        }
+
 
        insert listAccount;
 
@@ -1053,6 +1051,7 @@ public class SurveyBatchTest {
        i=0;
 
         for(IATA_ISO_Country__c iso : listCountries) {
+
             cases.add(new Case(recordtypeID = processRTId,
             Status = 'Financial Security Requested',
             Reason1__c = 'CHC – Change of Shareholding',
@@ -1086,66 +1085,176 @@ public class SurveyBatchTest {
             Assessment_Performed_Date__c = date.today(),
             Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
             ));
+
+
        i++;
 
         }
+
+
+
        for(Case c : cases){
            c.Status = 'Closed';
        }
        insert cases;
+
    TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
    TransformationHelper.CalculateBusinessHoursAges = false;
    CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
-    }
+}
+   test.startTest();
+   //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
+   SurveyBatch batch = new SurveyBatch();
+   batch.ClosedDate = date.today();
+   Database.executeBatch(batch, 50);
 
-    static testMethod void testForCountries() {
+   /*string jobId = System.schedule('SurveyCustomWorkflowTest',
+   '0 0 0 15 3 ? 2022',
+   new SurveyBatchScheduler());*/
+
+   test.stopTest();
+
+   //these cases are for the same account so only one of them should have been sent
+   //system.assertEquals(1,[SELECT Id FROM Case WHERE Instant_Survey_Last_survey_sent__c <> NULL].size());
+   // BECAUSE THE ANTI SPAM FILTERS HAVE BEEN DEACTIVATED, BOTH CASES ARE SENDING SURVEYS
+   //   system.assertEquals(2,[SELECT Id FROM Case WHERE Instant_Survey_Last_survey_sent__c <> NULL].size());
+
+}
+    static testMethod void testForCountries2() {
 
        TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
        TransformationHelper.CalculateBusinessHoursAges = true;
        CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
     User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
-    System.runAS(u) {
-      prepareTestForCountries(5,null);
-      }
-   test.startTest();
-   SurveyBatch batch = new SurveyBatch();
-   batch.ClosedDate = date.today();
-   Database.executeBatch(batch, 50);
-   test.stopTest();
+System.runAS(u) {
 
+
+       list<IATA_ISO_Country__c> listCountries = [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c LIMIT 5 OFFSET 5];
+       Integer i = 0;
+
+       i=0;
+       list<Account> listAccount = new list<Account>();
+       for(IATA_ISO_Country__c iso : listCountries) {
+           Account a = new Account( name ='IFAP ACCT'+i,
+           industry = 'pluto',
+           IATA_ISO_Country__c=iso.id,
+           recordtypeID = hqrt,
+           IATACode__c ='1234567'+i,
+           Type = 'IATA Cargo Agent',
+           billingCountry = iso.Name,
+           Location_Type__c = 'AO');
+           listAccount.add(a);
+
+           i++;
+       }
+
+
+       insert listAccount;
+
+        List<Contact> contactList = new List<Contact>();
+        i=0;
+        for(Account a : listAccount) {
+           Contact con =new contact(
+                lastname = 'pluto' ,phone = '123',accountid = a.id,
+                Financial_Assessment_Contact__c = true,
+                email = 'asd.arg@wewt.et'+i,HasOptedOutOfEmail = false);
+           contactList.add(con);
+
+           i++;
+        }
+
+       insert contactList;
+
+       date dead = date.today().addDays(40);
+
+       Date twoweeksAgo = date.today().addDays(- 14);
+       List<Case> cases = new List<Case>();
+
+       List<String> lsReasons =
+            new List<String>{'CHC – Change of Shareholding',
+                            'CHL - Change of Location',
+                            'CHN - Change of Name',
+                            'CHO / CHS – Change of Ownership / Legal Status',
+                            'New BR / IP', 'New HO',
+                            'New SA / CHV – New Code'};
+       List<String> lsRegions =
+            new List<String>{'Europe',
+                            'Asia & Pacific',
+                            'China & North Asia',
+                            'Africa & Middle East',
+                            'Americas'};
+       i=0;
+
+        for(IATA_ISO_Country__c iso : listCountries) {
+
+            cases.add(new Case(recordtypeID = processRTId,
+            Status = 'Financial Security Requested',
+            Reason1__c = 'CHC – Change of Shareholding',
+            FS_Submitted_Date__c = date.today(),
+            FS_Deadline_Date__c = twoweeksAgo,
+            Origin = 'asd',
+            IFAP_Area__c = 'asda',
+            Financial_Review_Type__c ='Annual',
+            IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+            Deadline_Date__c = dead,
+            contactid = contactList[i].id,
+            AccountId = listAccount[i].id,
+            // Region__c = 'Europe',
+            Assessment_Performed_Date__c = date.today(),
+            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            ));
+
+            cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
+            Status = 'Financial Security Requested',
+            Reason1__c = 'CHC – Change of Shareholding',
+            FS_Submitted_Date__c = date.today(),
+            FS_Deadline_Date__c = twoweeksAgo,
+            Origin = 'asd',
+            IFAP_Area__c = 'asda',
+            Financial_Review_Type__c ='Annual',
+            IFAP_Financial_Year__c =  String.valueOF(date.today().month()),
+            Deadline_Date__c = dead,
+            contactid = contactList[i].id,
+            AccountId = listAccount[i].id,
+            // Region__c = 'Europe',
+            Assessment_Performed_Date__c = date.today(),
+            Financial_Review_Result__c = 'Satisfactory - Update Financial Security'
+            ));
+
+
+       i++;
+
+        }
+
+
+
+       for(Case c : cases){
+           c.Status = 'Closed';
+       }
+       insert cases;
+
+   TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
+   TransformationHelper.CalculateBusinessHoursAges = false;
+   CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
 }
-  static testMethod void testForCountries2() {
-
-     TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-     TransformationHelper.CalculateBusinessHoursAges = true;
-     CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
-
-      User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
-    System.runAS(u) {
-       prepareTestForCountries(5,5);
-    }
    test.startTest();
+   //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
    SurveyBatch batch = new SurveyBatch();
    batch.ClosedDate = date.today();
    Database.executeBatch(batch, 50);
-   test.stopTest();
-}
-static testMethod void testForCountries3() {
 
-     TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-     TransformationHelper.CalculateBusinessHoursAges = true;
-     CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+   /*string jobId = System.schedule('SurveyCustomWorkflowTest',
+   '0 0 0 15 3 ? 2022',
+   new SurveyBatchScheduler());*/
 
-      User u = [SELECT Id, FirstName, LastName FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
-    System.runAS(u) {
-       prepareTestForCountries(6,10);
-    }
-   test.startTest();
-   SurveyBatch batch = new SurveyBatch();
-   batch.ClosedDate = date.today();
-   Database.executeBatch(batch, 50);
    test.stopTest();
+
+   //these cases are for the same account so only one of them should have been sent
+   //system.assertEquals(1,[SELECT Id FROM Case WHERE Instant_Survey_Last_survey_sent__c <> NULL].size());
+   // BECAUSE THE ANTI SPAM FILTERS HAVE BEEN DEACTIVATED, BOTH CASES ARE SENDING SURVEYS
+   //   system.assertEquals(2,[SELECT Id FROM Case WHERE Instant_Survey_Last_survey_sent__c <> NULL].size());
+
 }
 
     static testMethod void testForRegions() {
@@ -1578,69 +1687,6 @@ System.runAS(u) {
         insert c;
 
         c.Region__c = 'Africa & Middle East';
-        c.Status = 'Closed';
-        update c;
-
-       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;
-       TransformationHelper.CalculateBusinessHoursAges = false;
-       CaseChildHelper.noValidationsOnTrgCAseIFAP  = false;
-    }
-       test.startTest();
-       //SurveyCustomWorkflowWrapper wrap = new SurveyCustomWorkflowWrapper();
-       SurveyBatch batch = new SurveyBatch();
-       batch.ClosedDate = date.today();
-       Database.executeBatch(batch, 50);
-
-
-       test.stopTest();
-    }
-
-    static testMethod void testForRoles06() {
-
-       TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-       TransformationHelper.CalculateBusinessHoursAges = true;
-       CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
-
-
-       User u = [SELECT Id FROM User WHERE UserName= 'test1@iata.org.amsdev1'];
-
-       UserRole uRole = new UserRole(Name = 'A&P Customer Service Staff');
-
-       insert uRole;
-       u.UserRoleId = uRole.Id;
-       update u;
-
-    System.runAS(u) {
-
-        Account a = [SELECT Id, Name FROM Account WHERE  name ='IFAP ACCT' LIMIT 1];
-        a.billingCountry = 'People\'s Republic of China';
-        update a;
-
-        Contact con = [SELECT Id, Name FROM Contact WHERE email = 'asd.arg@wewt.et' LIMIT 1];
-
-
-        Case c = new Case();
-        c.RecordTypeId = chinaRTID;
-        c.OwnerId = u.Id;
-        c.Reason1__c = 'CHC – Change of Shareholding';
-        c.BSPCountry__c='Philippines';
-        c.Status = 'Financial Security Requested';
-        c.FS_Submitted_Date__c = date.today();
-        c.FS_Deadline_Date__c = date.today().addDays(-14);
-        c.Origin = 'asd';
-        c.IFAP_Area__c = 'asda';
-        c.Financial_Review_Type__c ='bla';
-        c.IFAP_Financial_Year__c =  String.valueOF(date.today().month());
-        c.Deadline_Date__c = date.today().addDays(-14);
-        c.contactid = con.id;
-        c.AccountId = a.id;
-        c.Assessment_Performed_Date__c = date.today();
-        c.Financial_Review_Result__c = 'very good' ;
-        c.Subject = 'wrthsrthjr';
-        // OwnerId = us.Id
-        insert c;
-
-        c.Region__c = 'Asia & Pacific';
         c.Status = 'Closed';
         update c;
 
