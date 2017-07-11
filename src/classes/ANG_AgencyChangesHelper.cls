@@ -500,7 +500,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure applyChangeOfOwnership(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, Boolean isCorrection){
 	
-		System.debug('[ANG_AgencyChangesHelper] Performing change of Hierarchy');
+		System.debug('[ANG_AgencyChangesHelper] Performing change of Ownership');
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
@@ -518,6 +518,76 @@ public with sharing class ANG_AgencyChangesHelper {
 		cloneOwnersFromHo(cloneFromHoSet,oscarToProcess.Account__c);
 
 		return toReturn;
+	}
+
+	public static AChangeStructure applyChangeOfAccreditationType(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, Boolean isCorrection){
+	
+		System.debug('[ANG_AgencyChangesHelper] Performing change of Accreditation Type');
+
+		if(toReturn == null)
+			toReturn = new AChangeStructure();
+
+        AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscarToProcess.AMS_Online_Accreditation__c);
+
+        List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless')
+        	toUpsert = performChashLessTransformation(accountsAffected);
+        if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash')
+        	toUpsert = performChashTransformation(accountsAffected);
+
+        if(!toUpsert.isEmpty())
+        	upsert toUpsert;
+
+		return toReturn;
+	}
+
+	public static List<Agency_Authorization__c> performChashLessTransformation(Set<Id> accountsAffected){
+
+        List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+		For(Agency_Authorization__c aa: [Select Id , Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
+
+			aa.Status__c = 'Not Authorized';
+			toUpsert.add(aa);
+
+		}
+
+		return toUpsert;
+
+	}
+
+	public static List<Agency_Authorization__c> performChashTransformation(Set<Id> accountsAffected){
+
+		Set<Id> accountsToProcess = accountsAffected.clone();
+
+        List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+        Set<Id> accountsUpdated = new Set<Id>();
+
+		For(Agency_Authorization__c aa: [Select Id , Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment']){
+
+			aa.Status__c = 'Active';
+			toUpsert.add(aa);
+			accountsUpdated.add(aa.Account__c);
+
+		}
+
+		accountsToProcess.removeAll(accountsUpdated);
+
+		Id formOfPaymentRT = null;
+
+		if(!accountsToProcess.isEmpty())
+			formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		For(Id accountId: accountsToProcess){
+
+	    	toUpsert.add(new Agency_Authorization__c(Account__c = accountId, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		
+		}
+
+		return toUpsert;
+
 	}
 
 	public static void cloneOwnersFromHo(Set<Id> accounts, Id originalAccount){
