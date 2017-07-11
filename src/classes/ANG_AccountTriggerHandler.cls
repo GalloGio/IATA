@@ -1,46 +1,209 @@
 public class ANG_AccountTriggerHandler {
 
-    public static void handleBeforeInsert(List<Account> accs){
+	public List<Account> triggerNew = (List<Account>) Trigger.new;
+	public List<Account> triggerOld = (List<Account>) Trigger.old;
 
-        updateRiskStatus(accs, new Map<Id,Account>(), true);
+	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
+	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
 
-    }
+	// ************************************************************
+	// ****************** distribution methods ********************
+	// ************************************************************
 
-    public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
+	public void onBeforeInsert(){
+		updateRiskStatus();
+	}
+	public void onAfterInsert() {}
 
-        updateRiskStatus(accs,oldMap,false);
+	public void onBeforeUpdate(){
+		updateRiskStatus();
+		manageDowngrades();
+	}
+	public void onAfterUpdate() {}
 
-    }
+	public void onBeforeDelete(){}
+	public void onAfterDelete() {}
+
+	// ************************************************************
+	// ********************* action methods ***********************
+	// ************************************************************
+
+	private void updateRiskStatus() {
+
+		List<Account> accs = new List<Account>();
+		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+
+		for(Account acc : triggerNew){
+			if(topLocationTypes.contains(acc.Location_Type__c) && (Trigger.isInsert || hasChangedValuesAccount(oldMap.get(acc.Id), acc))){
+				accs.add(acc);
+			}
+		}
+		
+		if(!accs.isEmpty()) ANG_Risk_Helper.updateRiskStatus(accs);
+	}
+
+	private void manageDowngrades() {
+		List<Account> downGradeAtoB = new List<Account>();
+		List<Account> downGradeBtoC = new List<Account>();
+
+		for(Account acc : triggerNew){
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Risk Status - ' + acc.ANG_HE_RiskStatus__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Risk Status - ' + oldMap.get(acc.Id).ANG_HE_RiskStatus__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_CashCondition__c);
+			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_CashCondition__c);
+
+			if(acc.ANG_HE_RiskStatus__c == 'B' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'A' && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == 'C' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'B') downGradeBtoC.add(acc);
+		}
+
+		if(downGradeAtoB.isEmpty() && downGradeBtoC.isEmpty()) return;
+
+		//fetch portal admins
+		Map<Id, Id> portalAdmins = new Map<Id, Id>();
+		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = 'Approved Admin' AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
+			portalAdmins.put(c.AccountId, c.Id);
+		}
+
+		//create cases
+		List<Case> newCases = new List<Case>();
+		Id saamRecordType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+		for(Account acc : downGradeAtoB){
+			Case c = new Case();
+			c.RecordTypeId = saamRecordType;
+			c.AccountId = acc.Id;
+			c.ContactId = portalAdmins.get(acc.Id);
+			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
+			c.Region__c = acc.Region_formula__c;
+			c.Origin = 'Internal case';
+			c.CaseArea__c = 'Risk Management Process'; 
+			c.Reason1__c = 'Financial Security Update';
+			c.Visible_on_ISS_Portal__c = false;
+
+			newCases.add(c);
+		}
+
+		//insert new objects
+		if(!newCases.isEmpty()) insert newCases;
+		
+		//downgrade from B to C
+		createVMFROscars(downGradeBtoC, portalAdmins);
+	}
 
 
+	// ************************************************************
+	// ********************* helper methods ***********************
+	// ************************************************************
 
-    public static void updateRiskStatus(List<Account> accs, Map<Id,Account> oldMap, Boolean isInsert){
+	private Boolean hasChangedValuesAccount(Account oldAcc, Account newAcc){
+		// used on updateRiskStatus to determine if some values have changed.
 
-        Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
-        ID riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+		return oldAcc.Financial_Review_Result__c != newAcc.Financial_Review_Result__c || oldAcc.ANG_HE_RiskHistoryAssessment__c != newAcc.ANG_HE_RiskHistoryAssessment__c;
+	}
 
-        List<ANG_Agency_Risk_Calculation__c> arcList = [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT];
-        
-        Map<String,String> calculationTable = new Map<String,String>();
+	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
+		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 
-        For(ANG_Agency_Risk_Calculation__c arc: arcList)
-            calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc.ANG_Risk_History__c);
+		//create object reference map
+		Map<Id, OscarObjects> objects = new Map<Id, OscarObjects>();
 
-        for(Account acct: accs){
+		//create oscars
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+		for(Account acc : accounts){
+			objects.put(acc.Id, new OscarObjects());
 
-            if(!topLocationTypes.contains(acct.Location_Type__c))
-                continue;
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
+			oscars.add(oscar);
 
-            if(isInsert || hasChangedValuesAccount(oldMap.get(acct.Id), acct) )
-                acct.ANG_HE_RiskStatus__c = calculationTable.get(acct.Financial_Review_Result__c + acct.ANG_HE_RiskHistoryAssessment__c);
-      
-        } 
-    }
+			objects.get(acc.Id).oscar = oscar;
+		}
 
-    // used on updateRiskStatus to determine if some values have changed.
-    public static boolean hasChangedValuesAccount(Account oldValue, Account newValue){
+		// insert oscars
+		insert oscars;
 
-        return oldValue.Financial_Review_Result__c <> newValue.Financial_Review_Result__c || oldValue.ANG_HE_RiskHistoryAssessment__c <> newValue.ANG_HE_RiskHistoryAssessment__c;
+		//create cases
+		List<Case> cases = new List<Case>();
+		for(Account acc : accounts){
+			Case c = new Case();
 
-    }
+			c.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+			c.OSCAR__c = objects.get(acc.Id).oscar.Id;
+			c.AccountId = acc.Id;
+			c.Account_Concerned__c = acc.Id;
+			c.BSPCountry__c = acc.BillingCountry;
+			c.Region__c = acc.Region_formula__c;
+			c.CaseArea__c = 'Accreditation Process';
+			c.Reason1__c = 'Change of '+AMS_Utils.VFMR;
+			c.ContactId = contacts.get(acc.Id);
+
+			cases.add(c);
+			objects.get(acc.Id).commCase = c;
+		}
+
+		//insert cases
+		insert cases;
+
+		//create staging areas
+		List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
+	    for(Account acc : accounts){
+	    	AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
+
+	    	stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
+	    	stgArea.Abbreviated_Address__c                   = acc.Abbreviated_address__c;
+	    	stgArea.Abbreviated_name__c                      = acc.Abbreviated_name__c;
+	    	stgArea.Accept_terms_and_conditions__c           = true;
+	    	stgArea.Account_Name__c                          = acc.Name;
+	    	stgArea.Billing_State__c                         = acc.BillingState;
+	    	stgArea.Branch_Office_City__c                    = acc.BillingCity;
+	    	stgArea.Branch_Office_Country__c                 = acc.IATA_ISO_Country__c;
+	    	stgArea.Branch_Office_Email__c                   = acc.Email__c;
+	    	stgArea.Branch_Office_FAX__c                     = acc.Fax;
+	    	stgArea.Branch_Office_Phone__c                   = acc.Phone;
+	    	stgArea.Branch_Office_Postal_code__c             = acc.BillingPostalCode;
+	    	stgArea.Branch_Office_Street_name_number__c      = acc.BillingStreet;
+	    	stgArea.CASS_Number__c                           = acc.CASS_Number__c;
+	    	stgArea.IATACode__c                              = acc.IATACode__c;
+	    	stgArea.IATA_ISO_State__c                        = acc.Iso_State__c;
+	    	stgArea.ISSP_AMS_License_No__c                   = acc.License_Number__c;
+	    	stgArea.ISSP_AMS_VAT_number__c                   = acc.VAT_Number__c;
+	    	stgArea.Is_your_firm_handling_Dangerous_Goods__c = acc.Is_your_firm_handling_Dangerous_Goods__c;
+	    	stgArea.Location_Class__c                        = acc.Location_Class__c;
+	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
+	    	stgArea.Mobile__c                                = acc.Mobile__c;
+	    	stgArea.Operation__c                             = acc.Operation__c;
+	    	stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
+	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
+	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
+	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
+	    	stgArea.Shipping_State__c                        = acc.ShippingState;
+	    	stgArea.Shipping_Street__c                       = acc.ShippingStreet;
+	    	stgArea.Short_Name__c                            = acc.Short_Name__c;
+	    	stgArea.Solicitation_Flag__c                     = acc.Solicitation_Flag__c;
+	    	stgArea.Submitted_to_IATA__c                     = true;
+	    	stgArea.Trade_Name__c                            = acc.TradeName__c;
+	    	stgArea.VAT_Number_2__c                          = acc.VAT_Number_2__c;
+	    	stgArea.Website__c                               = acc.Website;
+	    	stgArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(acc.Company_Type__c);
+
+	    	stgAreas.add(stgArea);
+	    	objects.get(acc.Id).stagingArea = stgArea;
+	    }
+
+	    //insert staging areas
+	    insert stgAreas;
+
+	    //go back to the oscars and update according data from the case and staging areas
+	    for(AMS_OSCAR__c oscar : oscars){
+	    	oscar.Oscar_Communication_Case_Id__c = objects.get(oscar.Account__c).commCase.Id;
+	    	oscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), objects.get(oscar.Account__c).commCase.Id);
+	    	oscar.AMS_Online_Accreditation__c = objects.get(oscar.Account__c).stagingArea.Id;
+	    }
+	    
+	    update oscars;
+	}
+
+	private class OscarObjects{
+		private AMS_OSCAR__c oscar;
+		private Case commCase;
+		private AMS_Pax_Accreditation_Form__c stagingArea;
+	}
 }
