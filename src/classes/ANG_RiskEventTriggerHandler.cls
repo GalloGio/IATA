@@ -17,11 +17,11 @@ public class ANG_RiskEventTriggerHandler {
 		generateMultiples();
 		assessRisk();
 	}
-
+    
 	public void onBeforeUpdate(){
 		loadInformationsUpdate();
 	}
-	public void onAfterUpdate(){
+	public void onAfterUpdate(){   
 		generateMultiples();
 		assessRisk();
 	}
@@ -32,11 +32,11 @@ public class ANG_RiskEventTriggerHandler {
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
-	
+    
 	private void loadInformationsInsert() {
 		new ANG_RiskEventGenerator(triggerNew).loadInitialInformations();
 	}
-	
+    
 	private void loadInformationsUpdate() {
 		List<ANG_Agency_Risk_Event__c> changedRisks = new List<ANG_Agency_Risk_Event__c>();
 

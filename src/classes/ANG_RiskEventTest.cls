@@ -1,5 +1,6 @@
 @isTest
 private class ANG_RiskEventTest {
+
     @testSetup static void createData() {
         Account a = new Account(
             Name = 'Test',
