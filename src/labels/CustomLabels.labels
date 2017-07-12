@@ -19567,15 +19567,34 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Entity&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1"&gt;contact support&lt;/a&gt; if you need help.
+        </value>        
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>        
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1"&gt;contact support&lt;/a&gt; if you need help.  
+        </value>        
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. In order to open an IATA EasyPay Account you need to be both a Portal Administrator and Authorized Signatory for your Agency. 
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1"&gt;contact support&lt;/a&gt; if you need help.  
+        </value>        
+    </labels>    
     <labels>
         <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
         <language>en_US</language>
@@ -19805,7 +19824,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
-        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account. By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;Do you wish to proceed?</value>
+        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account.&lt;br/&gt;&lt;br/&gt;By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;&lt;br/&gt;Do you wish to proceed?</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_Portal_Request_Access_Msg</fullName>
@@ -19897,7 +19916,39 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
         <value>Please deny this contact's access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
-    </labels>                        
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_OpeningInProgress</shortDescription>
+        <value>A Portal Adminitstrator from the Head Entity has already initiated the opening of your Agency's IEP Account. Once the IEP Account is successfully you will e able to acccess this service.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_TypeAccreditadionQuestion</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_TypeAccreditadionQuestion</shortDescription>
+        <value>I would like to apply for accreditation as a:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationTypeRequired</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationTypeRequired</shortDescription>
+        <value>Please select the type of operation.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationTypeTitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationTypeTitle</shortDescription>
+        <value>Type of accreditation</value>
+    </labels>
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
