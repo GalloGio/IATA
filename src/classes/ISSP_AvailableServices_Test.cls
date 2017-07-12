@@ -528,6 +528,7 @@ public class ISSP_AvailableServices_Test {
         Account acc = ISSP_ObjectFactory.createNewAccount();
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = acc.id;
         insert con;
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace',

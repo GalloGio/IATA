@@ -45,9 +45,9 @@ public without sharing class PortalServiceAccessTriggerHandler {
         for(Portal_Application_Right__c par : parListAux) {
             if(ENV.AccessStatusPL.AccessRequested.equalsIgnoreCase(par.Right__c)) {
                 if (ANG_ISSP_PortalServiceHelper.isIepPortalService(par.Application_Name__c)) {
-                    accountIDsIepAux.add(par.Account__c);
+                    if(par.Account__c != null) accountIDsIepAux.add(par.Account__c);
                 } else {
-                    accountIDs.add(par.Account__c);
+                    if(par.Account__c != null) accountIDs.add(par.Account__c);
                 }
                 requestByUserMap.put(par.Portal_Application__c, par.Contact__c == currentUser.contactId);
                 cannotManagedPortalAdminMap.put(par.Portal_Application__c, par.Portal_Application__r.Cannot_be_managed_by_portal_admin__c);
