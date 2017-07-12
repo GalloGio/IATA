@@ -17007,7 +17007,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Office_Email</shortDescription>
-        <value>Office Email</value>
+        <value>* Office Email</value>
     </labels>
     <labels>
         <fullName>ISSP_Office_Fax</fullName>

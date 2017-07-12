@@ -5250,6 +5250,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
                     }
+                    
+                    if (newForm.Branch_Office_Email__c == null) {
+                        newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+                        errorFound = true;
+                    }
+
                     if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null) {
                         newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_YouMustEnter);
                         errorFound = true;
