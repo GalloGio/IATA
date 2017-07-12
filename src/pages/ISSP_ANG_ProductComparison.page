@@ -1,3 +1,175 @@
-<apex:page showHeader="true" sidebar="true">
+<apex:page controller="ISSP_ANG_ProductComparison" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<html>
+
+	<style>
+		.DivColumn{
+			float:left;
+		}
+		
+		.divCell{
+			float:top;
+		}
+		
+		
+		.ProdCompwrapper{
+    		/*width:95%;*/
+    		margin-left:15%;
+    		margin-right:15%;
+    		display:block;
+    		margin-top:16px;
+    		overflow: auto;
+		}
+		
+		.ProdCompthecolumn{
+			float:left;
+			max-width:200px;
+		}
+		
+		.relPos {
+		    position: relative;
+		}
+		
+		.ulProduct{
+			list-style-type: none;
+			border: 1px solid #B5B4B7;
+			margin: 0;
+			padding: 0;
+			display: block;
+			 -webkit-transition: 0.3s;
+    		transition: 0.3s;
+		}
+		
+		.ulProduct ul{
+			display:block;
+		}
+		
+		.ulProduct li{
+			border-bottom: 1px solid #B5B4B7;
+			padding: 10px;
+			text-align:center;
+			display: list-item;
+		}
+		
+		.compHeader{
+			min-height: 150px;
+			background-color: #B5B4B7;
+			color: white;
+		}
+		
+		.ItemMinHeight{
+			min-height: 60px;
+		}
+		
+		.buttonApplyNow{
+		    background-color: #008CBA; /* Blue */
+		    border: none;
+		    color: white;
+		    padding: 15px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		}
+		
+		.buttonApplyNow a{
+		    color: white;
+		    text-decoration: none;
+		}
+		
+		.buttonApplyNow a:hover{
+		    color: orange;
+		    text-decoration: none;
+		}
+		
+		.BtnMinHeigth{
+			min-height: 75px;
+		}
+		
+		.CostCellHeight{
+			min-height: 275px;
+		}
+		
+		.tooltip {
+		    position: relative;
+		    display: inline-block;
+		    border-bottom: 1px dotted black;
+		}
+		
+		.tooltip .tooltiptext {
+		    visibility: hidden;
+		    width: 120px;
+		    background-color: black;
+		    color: #fff;
+		    text-align: center;
+		    border-radius: 6px;
+		    padding: 5px 0;
+		    
+		    /* Position the tooltip */
+		    position: absolute;
+		    z-index: 1;
+		    top: -5px;
+		    left: 105%;
+		}
+		
+		.tooltip:hover .tooltiptext {
+		    visibility: visible;
+		}
+	</style>
 	
+ <c:ISSP_Header ></c:ISSP_Header>   
+ <body>
+     <!-- elliot 19 juin -->
+     <apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" />
+    <!-- end elliot 19 juin -->
+ <div class="container">
+ <c:ISSP_CustomNavigation communityName="{!communityName}"/>
+ 
+	
+	<apex:form id="TheForm">
+	
+	<div class="ProdCompwrapper">
+		<div class="ProdCompthecolumn relPos">
+			<ul class="ulProduct">
+				<li class="relPos compHeader"><div>&nbsp;</div></li>
+				<li class="relPos BtnMinHeigth"><div>&nbsp;</div></li> <!-- Apply Now placeholder -->
+				<apex:repeat value="{!lsAllFeatures}" var="theFeature">
+					<li class = "ItemMinHeight">
+						<div>{!theFeature}
+							<apex:outPutpanel rendered="{!!(mapFeatures[theFeature].ANG_Description__c=='')}">
+								<div class="tooltip">(i)<span class="tooltiptext">{!mapFeatures[theFeature].ANG_Description__c}</span></div>
+							</apex:outPutpanel>
+						</div>
+					</li>
+				</apex:repeat>
+				<li class = "ItemMinHeight"><div>Country Specific Requirements</div></li>
+				<li class = "CostCellHeight"><div>Cost</div></li>
+			</ul>
+		</div>
+		
+		<apex:repeat value="{!allFeaturesPerProduct}" var="Prod">
+			<div class="ProdCompthecolumn relPos">
+				<ul class="ulProduct">
+				<li class = "relPos compHeader"><div><h3>{!Prod}</h3></div></li>
+				<li class="relPos BtnMinHeigth"><button class="buttonApplyNow"><a href="{!mapProd[Prod].ANG_ApplyNowUrl__c}">Apply Now</a></button></li> <!-- Apply Now Button -->
+				<apex:repeat value="{!allFeaturesPerProduct[Prod]}" var="theFeat">
+					<li class = "ItemMinHeight">
+						<div>
+						<apex:image value="/img/msg_icons/confirm32.png" rendered="{!theFeat.bActive}"/>
+						<apex:outputText rendered="{!!theFeat.bActive}">&nbsp;</apex:outputText>
+						</div>
+					</li>
+				</apex:repeat>
+				<li class = "ItemMinHeight"><div>{!mapProd[Prod].ANG_CountrySpecRequirementsURL__c}</div></li>
+				<li class="CostCellHeight"><div>Have fun displaying this one... fields are retrieve from product2 object and put in mapProd. See above for samples.</div></li>
+			</ul>
+			</div>
+		</apex:repeat>
+	</div>
+	
+	<br/>
+	</apex:form>
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
+	</div><!-- end container-->
+    </body>
+    </html>
 </apex:page>

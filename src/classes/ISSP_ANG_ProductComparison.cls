@@ -10,7 +10,7 @@ public with sharing class ISSP_ANG_ProductComparison {
     
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     
-    public ISSP_ProductComparisonPOC() {
+    public ISSP_ANG_ProductComparison() {
     	pricebook2 thePricebook;
     	lsAllFeatures = new list<string>();
     	mapProd = new map<string, Product2>();
