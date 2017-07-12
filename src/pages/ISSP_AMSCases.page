@@ -13,8 +13,11 @@
                 bottom: 160px;
             }
             .movetableup {
-                position: relative;
+                position: relative; 
                 bottom: 246px;
+            }
+            .text-normal * {
+                font-weight: normal;
             }
         </style>
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>    
@@ -22,6 +25,7 @@
         <script src="{!URLFOR($Resource.bootbox)}" />
         <script type="text/javascript">
                 var $j = jQuery.noConflict();
+                var typeAccredSelected = '';
    
                 $j(function () {
                     $j('[data-toggle="tooltip"]').tooltip();
@@ -42,6 +46,41 @@
                         }
                     });
                 }
+
+                function newnAccreditationApplicationNavigateTo() {
+                    if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
+                        $j('#modalChooseAccreditationType').modal('toggle');
+                    } else {
+                        navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    }
+                    return false;                
+                }
+
+                function modalChooseAccreditationTypeClose() {
+                    $j('#modalChooseAccreditationType').modal('toggle');
+                }
+
+                function redirectAccreditationType() {
+                    if(typeAccredSelected == '') {
+                        document.querySelector("[Id$='accreditationTypeRequired']").style.display = '';
+                    } else {
+                        if(typeAccredSelected == 'Travel_Agent') {
+                            // New page
+                            navigateToUrl('/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                        } else {
+                            navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
+                        }
+                    }
+
+                    var acredType = $j('[id$="accredTypeId"]').val();
+
+                    //navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                }
+
+                function saveRadioValue(v) {
+                    typeAccredSelected = v;
+                }
+
         </script>
     
     <div class="container">   
@@ -62,7 +101,10 @@
             </tr>
             <tr>
                 <td style="vertical-align:top;padding-bottom:10px;padding-right:20px">
-                    <input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+                    <!--input type="button" class="btn btn_iata_primary" onClick="navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/-->
+
+                    <input type="button" class="btn btn_iata_primary" onClick="newnAccreditationApplicationNavigateTo();" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_New_Application_New, $Label.ISSP_AMS_Step0_New_Application))}"/>
+
                     <div><apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                     </div>
@@ -111,7 +153,7 @@
                         <apex:param assignTo="{!agentCaseType}" value="VR" />
                     </apex:commandLink>
                     <apex:outputText escape="false" rendered="{!AND(isUserAccAccredited, communityName!='CNS')}"><br/>
-                    	<a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
+                        <a href="#" onclick="proceedToVMFR();return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
                     </apex:outputText>
                 </td>
                 <td style="vertical-align:top" class="{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'',(IF(!isoCountry.Enable_Notice_of_Change__c,'movetableup','moveup')))}">
@@ -136,6 +178,55 @@
             </tr>
             
         </table>
+
+        <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <apex:outputPanel layout="block" styleClass="modal-dialog" id="modalChooseAccreditationTypeContent"> 
+            <div class="modal-content"> 
+              <div class="modal-header"> 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <!--h4 class="modal-title">{!$Label.ISSP_Add_User_to_this_service}</h4-->
+                <h4 class="modal-title">{!$Label.ANG_ISSP_AccreditationTypeTitle}</h4>
+              </div>
+
+              <div class="modal-body">
+                <div class="alert alert-danger" id="accreditationTypeRequired" style ="display: none">
+                  <strong> {!$Label.ANG_ISSP_AccreditationTypeRequired} </strong>
+                </div>
+
+                <div class="row">
+                  <apex:outputPanel layout="block" styleClass="col-md-12">
+                    <apex:outputLabel escape="false" value="{!$label.ANG_ISSP_TypeAccreditadionQuestion}" />
+                  </apex:outputPanel>
+                </div>
+
+                <div class="row">
+                </div>
+
+                <div class="row">
+                  <apex:outputPanel layout="block" styleClass="col-md-12 text-normal">
+                      <apex:selectRadio value="{!accredidationType}" layout="pageDirection" id="accredTypeId" onChange="saveRadioValue(this.value)" >
+                        <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
+                        <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!$Label.ISSP_Cargo_Agent}" id="cargoAgentCheck" />
+                      </apex:selectRadio>
+                  </apex:outputPanel>
+                </div>
+              </div>  
+
+              <div class="modal-footer">
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-6">                    
+                      <button type="button" onclick="modalChooseAccreditationTypeClose()" class="btn btn-danger btn-block">{!$label.LAQ_Close}</button>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" onclick="redirectAccreditationType()" class="btn btn-success btn-block">{!$label.IDCard_Continue_Button}</button>                
+                    </div>
+                  </div>
+                </div>            
+              </div>          
+            </div>
+          </apex:outputPanel>
+        </div>
      
    </apex:form>
    </div>

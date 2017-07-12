@@ -202,8 +202,10 @@ public without sharing class ISSP_AMS_Accreditation {
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     public String agencyCodesConcernedForPDF {get; set;}
 
-    public boolean newAccreditationModels {get; set;}    
-    
+    public boolean newAccreditationModels {get; set;}   
+
+    public String accredidationType {get; set;}
+
     public Boolean getnewlabels() {
         if (isocountry==null) return false;
         return isocountry.AMS_Accreditation_New_Labels__c;
@@ -253,6 +255,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
         newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
         isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
+
+        String defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
         
         //newCase.IFAP_Country_ISO__c = hqCountryISOCode;
         //isocountry = fetchISOCountry(hqCountryISOCode);
@@ -302,13 +306,18 @@ public without sharing class ISSP_AMS_Accreditation {
         SYSTEM.DEBUG('HQ Ctry Code: ' + hqCountryISOCode);
         //Need to translate sector for display
 
-        if (sector == 'Travel Agent') {
-            sectorDisplay = Label.ISSP_Travel_Agent;
-            sectorValue = 'Travel_Agent';
+        if(defaultSectorValue != '' && defaultSectorValue != null) {
+            sectorValue = defaultSectorValue;
         } else {
-            sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
-            sectorValue = 'Cargo_Agent';
+            if (sector == 'Travel Agent') {
+                sectorDisplay = Label.ISSP_Travel_Agent;
+                sectorValue = 'Travel_Agent';                
+            } else {
+                sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
+                sectorValue = 'Cargo_Agent';
+            }            
         }
+
         checkEligibilityForAChange();
         //sectorValue = sector.replace(' ', '_'); //Used to set Step 1 radio button default selection value
         System.DeBUG('SFSF con.Account.IATA_ISO_Country__c: ' + con.Account.IATA_ISO_Country__c);
@@ -7265,5 +7274,4 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             ac.Branch_Office_Phone__c = '12';
         }
     }
-   
 }

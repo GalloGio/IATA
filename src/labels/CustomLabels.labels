@@ -19924,7 +19924,31 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_OpeningInProgress</shortDescription>
         <value>A Portal Adminitstrator from the Head Entity has already initiated the opening of your Agency's IEP Account. Once the IEP Account is successfully you will e able to acccess this service.</value>
-    </labels>   
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_TypeAccreditadionQuestion</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_TypeAccreditadionQuestion</shortDescription>
+        <value>I would like to apply for accreditation as a:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationTypeRequired</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationTypeRequired</shortDescription>
+        <value>Please select the type of operation.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_AccreditationTypeTitle</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AccreditationTypeTitle</shortDescription>
+        <value>Type of accreditation</value>
+    </labels>
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
