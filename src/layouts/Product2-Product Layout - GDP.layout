@@ -337,6 +337,12 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedPricebookEntryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedStandardPriceList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Related_Product__c</fields>
         <fields>Recommended_Product_Number__c</fields>
