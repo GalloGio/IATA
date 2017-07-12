@@ -5607,9 +5607,10 @@
                 ],
                 "Automations": [],
                 "DisplayFields": [
-                  "Change_effective_as_of__c",
+                  "Suspend_Agency__c",
                   "Remove_STDs__c",
                   "Notify_Agent_Suspension__c",
+                  "Terminate_Agency__c",
                   "Notify_Agent_Termination__c",
                   "STEP26__c"
                 ],

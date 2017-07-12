@@ -5686,6 +5686,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Suspend_Agency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Suspend Agency</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Suspend_in_BSPLink_CASSLink__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -5725,6 +5735,16 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Terminate_Agency__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Terminate Agency</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Termination_Date__c</fullName>
@@ -26061,6 +26081,25 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>ANG_Block_sanity_check</fullName>
+        <active>true</active>
+        <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
+        <errorConditionFormula>TEXT(Process__c)  = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
+        <errorMessage>Cannot set sanity check as &quot;Passed&quot; if the &quot;Change effective as of&quot; is empty or in the future</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Is_PCI_compliant_mandatory</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Process__c) = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp; ISBLANK(TEXT(Is_PCI_compliant__c))</errorConditionFormula>
+        <errorMessage>To pass sanity checks, the field &quot;Is PCI compliant&quot; is mandatory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Mandatory_New_HE_is_diff_legal_ent</fullName>
+        <active>true</active>
+        <errorConditionFormula>TEXT(Process__c) = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp; ISCHANGED(STEP6__c) &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos; &amp;&amp;  ISBLANK(TEXT(NewHeDifferentLegalEntity__c)) &amp;&amp;  INCLUDES(ANG_Type_Of_Change__c,&apos;Location type&apos;)</errorConditionFormula>
+        <errorMessage>To pass sanity checks If type of change includes &quot;Location Type&quot; then the field &quot;New HE is different legal entity&quot; is mandatory</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Effective_date_mandatory_in_VR</fullName>
         <active>true</active>

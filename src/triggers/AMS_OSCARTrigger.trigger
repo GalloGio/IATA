@@ -402,7 +402,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             'Send_Confirmation__c'                      => 'Confirmation_Sent__c',
             'Update_BSPLink__c'                         => 'BSPLink_updated__c',
             'Create_Agency_Authorization__c'            => 'Agency_Authorization_created__c',
-            'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c'
+            'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c',
+            'Suspend_Agency__c'                         => 'NOC_Requested__c'
             };
            //Map to update Date related checkbox values
         for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
@@ -572,7 +573,7 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
         if (oldOSCAR.BSPLink_participation__c == true && updatedOscar.BSPLink_participation__c == false && oldOSCAR.Process__c == AMS_Utils.new_AHA_BSP)
             updatedOSCAR.Process__c = AMS_Utils.new_AHA;
 
-        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true) {
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true && !AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)) {
 
             //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
             Set<String> tocList = new Set<String>();
@@ -590,21 +591,42 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.OWNERSHIP_IATA+'\n-'+AMS_Utils.OWNERSHIP_NON_IATA+'\n-'+AMS_Utils.MAJ_SHAREHOLDING+'\n-'+AMS_Utils.NAME+'\n-'+AMS_Utils.LEGAL_STATUS+'\n-'+AMS_Utils.LOCATION);
             }
         }
+
+        if (oldOSCAR.Apply_Penalty_Fee__c == false && updatedOscar.Apply_Penalty_Fee__c == true && AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)) {
+
+            //late/absence of NOC - penalty fees can only be applied for some ToC (could add validation for dates)
+            Set<String> tocList = new Set<String>();
+            if(updatedOscar.ANG_Type_of_change__c != null) tocList.addAll(updatedOscar.ANG_Type_of_change__c.split(';'));
+
+            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - validateStep29] tocList - ' + tocList);
+            if(
+                !tocList.contains(AMS_Utils.ANG_LEGAL_NAME)
+                && !tocList.contains(AMS_Utils.ANG_LEGAL_STATUS)
+                && !tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING)
+                && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+                && !tocList.contains(AMS_Utils.ANG_OWNERSHIP)
+            ){
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP);
+            }
+        }
+
         if (oldOSCAR.Apply_Penalty_Fee__c == true && updatedOscar.Apply_Penalty_Fee__c == false) {
             updatedOSCAR.addError('It\'s not possible to cancel the penalty fees that were applied');
         }
 
-        if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
-            updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
-        }
-        
-        if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-            DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
-            updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
-            System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
-        }
+        if(!AMS_Utils.oscarNewGenProcesses.contains(updatedOSCAR.Process__c)){
+            if (oldOSCAR.Notify_Agent_Suspension__c == false && updatedOscar.Notify_Agent_Suspension__c == true) {
+                updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
+            }
+            
+            if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
+                System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+            }
 
-        if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+            if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
+        }
 
         // ***************************************
         // ********* NEWGEN VALIDATIONS ************
@@ -615,13 +637,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             // ********* GENERIC VALIDATIONS FOR NEW APPLICATIONS**********
             // ************************************************************
             if(updatedOSCAR.Process__c != AMS_Utils.NGCHANGES){
-        if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
-            updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
-        }
+                if(oldOSCAR.STEP37__c <> updatedOscar.STEP37__c && updatedOscar.STEP37__c == 'Passed' && (updatedOscar.Create_Agency_Authorization__c == false || updatedOscar.Update_BSPLink__c == false)){
+                    updatedOSCAR.addError('Ticketing Authorities stage status cannot be set to passed until both "Update BSPLink" and "Create Agency Authorization" are not performed.');   
+                }
 
-        if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
-            updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
-        }
+                if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP37__c != 'Passed'){
+                    updatedOSCAR.addError('Cannot close the OSCAR until the Ticketing Authorities step will be completed.');   
+                }
             }
 
             // *****************************************************
@@ -634,6 +656,21 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 }
 
             }
+
+            //*********************
+            //****PENALTY NEWGEN***
+            //*********************
+            if (oldOSCAR.Suspend_Agency__c == false && updatedOscar.Suspend_Agency__c == true) {
+                updatedOSCAR.NOC_Deadline__c = BusinessDays.addNBusinessDays(System.now(), 5, updatedOSCAR.BusinessHours__c).date();
+            }
+            
+            if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
+                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+                updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
+                System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
+            }
+
+            if (oldOSCAR.NOC_Received__c == false && updatedOscar.NOC_Received__c == true) updatedOSCAR.Termination_Date__c = null;
         }
 
     }

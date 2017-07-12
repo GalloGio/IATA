@@ -79,8 +79,10 @@ public with sharing class ANG_AgencyChangesHelper {
   			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
   			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
-  			//TODO TODO TODO////
-  			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+  			//map accountId -> active change code
+			Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode = new Map<Id, Agency_Applied_Change_code__c>();
+			for (Agency_Applied_Change_code__c changeCode : [SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agency_Applied_Change_code__c WHERE Account__c IN :accountIdsInvolvedSet AND Active__c = true])
+				accountsCurrentChangeCode.put(changeCode.Account__c, changeCode);
 
 			if (oldOSCAR.STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED) {
 
@@ -103,6 +105,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.WITHDRAWAL, accountIdsInvolvedSet, changesContainer);
 
+			}else if (!oldOSCAR.Apply_Penalty_Fee__c && oscar.Apply_Penalty_Fee__c) {
+
+				changesContainer = generateLNFChangeCode(oscar, accountsCurrentChangeCode, changesContainer);
+			
 			}
 
 			if(changesContainer != null)
@@ -713,6 +719,23 @@ public with sharing class ANG_AgencyChangesHelper {
         system.debug('[ANG_AgencyChangesHelper] : ' + accts);
 
         return changesContainer;
+    }
+
+    public static AChangeStructure generateLNFChangeCode(AMS_OSCAR__c oscar, Map<Id, Agency_Applied_Change_code__c> accountsCurrentChangeCode, AChangeStructure changesContainer){
+    	
+    	AMS_OSCAR_JSON.ChangeCode changeCodeDef = new AMS_OSCAR_JSON.ChangeCode();
+        Agency_Applied_Change_code__c changeCode;
+		Agency_Applied_Change_code__c lastChangeCode = accountsCurrentChangeCode.get(oscar.Account__c);
+
+		changeCodeDef.name = 'LNF';
+		changeCodeDef.reasonCode = lastChangeCode.Reason_Code__c;
+		changeCodeDef.reasonDesc = lastChangeCode.Reason_Description__c;
+
+		changeCode = createChangeCode(changeCodeDef, oscar, oscar.Account__c);
+        changesContainer.addChangeCode(changeCode);
+
+        return changesContainer;
+
     }
 
     public static Agency_Applied_Change_code__c createChangeCode(AMS_OSCAR_JSON.ChangeCode changeCodeDefinition, AMS_OSCAR__c oscar, Id accId){
