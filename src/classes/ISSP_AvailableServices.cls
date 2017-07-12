@@ -168,19 +168,19 @@ public with sharing class ISSP_AvailableServices{
                 // A user has accecss to easypay when:
                 // If the IEP status is open
                 // If the IEP status is not open and is an admin and the account is HO or HE 
-                if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open')
+                if(contAcc.Account.ANG_IEP_Status_FF__c == 'Open') {
+                    isIEPAccountEnable = true;                
+                } else if(isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE' || 
+                                     (contAcc.Account.Location_Type__c == 'AO' && contAcc.Account.Status__c == 'Listed'))) {
                     isIEPAccountEnable = true;
-                else if(isAuthorisedSignatory && isAdmin && (contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Location_Type__c == 'HE'))
-                    isIEPAccountEnable = true;
+                }
 
-                //
-                // The poller only sets on when the user is an admin
-                //
-                
                 if(contAcc.Account.Location_Type__c == 'HO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HO'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
                 }else if(contAcc.Account.Location_Type__c == 'HE' || contAcc.Account.Top_Parent__r.Location_Type__c == 'HE'){
                     modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
+                } else if (contAcc.Account.Location_Type__c == 'AO' || contAcc.Account.Top_Parent__r.Location_Type__c == 'AO') {
+                    modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
                 }
 
                 if (!isIEPAccountEnable) {
