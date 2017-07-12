@@ -61,7 +61,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 	   		oscarToProcess = (AMS_OSCAR__c)scope.get(0);
 
-	   		modifyOscar(oscarToProcess);
+	   		oscarToProcess = modifyOscar(oscarToProcess);
+
+	   		System.debug('Oscar is now this:'+oscarToProcess);
 			update oscarToProcess;
 
 	   		AMS_Pax_Accreditation_Form__c stagingArea = modifyStagingArea(oscarToProcess);
@@ -81,11 +83,52 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		}
 	}
 
-	public static void modifyOscar(AMS_OSCAR__c oscarToProcess){
+	public static AMS_OSCAR__c modifyOscar(AMS_OSCAR__c oscarToProcess){
+
+		oscarToProcess = Database.query(getAllSTEPSFieldQuery(oscarToProcess.Id));
 
 		oscarToProcess.RecordTypeId = oscarRecordTypeMap.get(oscarToProcess.Process__c);
 		oscarToProcess.Process__c = oscarProcessMap.get(oscarToProcess.Process__c);
+
+	    Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+
+		Map<String, Schema.SObjectField> fieldMap = schemaMap.get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+	    List<String> stepsOSCAR = new List<String>();
+
+		for (String fieldName : fieldMap.keySet()) {
+	        if (fieldName.startsWithIgnoreCase('STEP'))
+    	        stepsOSCAR.add(fieldMap.get(fieldName).getDescribe().getLabel());
+    	}
+
+    	for (String step : stepsOSCAR) {
+    		if(oscarToProcess.get(step + '__c') == null)
+        		oscarToProcess.put(step + '__c', 'Not Started');
+		}
+        
+        return oscarToProcess;
 	}
+
+	public static String getAllSTEPSFieldQuery(String oscarToProcessId) {
+
+       String fields = ' ';
+
+		Map<String, Schema.SObjectField> fMap = Schema.sObjectType.AMS_OSCAR__c.fields.getMap();
+
+		for(Schema.SObjectField field : fMap.values()){
+		    
+		    Schema.DescribeFieldResult fd = field.getDescribe();
+		    if(fd.getName().startsWith('STEP')){ fields += fd.getName() + ', ';    System.debug('Field is:'+fd.getName());}
+		}
+
+		fields = fields.substring(0,fields.lastIndexOf(','));
+
+		String toReturn = 'SELECT ' + fields + ', RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+		
+        System.debug('Returning ' + toReturn);
+        return toReturn;
+		        
+    }
 
 	public static AMS_Pax_Accreditation_Form__c modifyStagingArea(AMS_OSCAR__c oscarToProcess){
 
