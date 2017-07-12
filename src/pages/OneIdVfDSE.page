@@ -286,7 +286,7 @@
                     </div>
 
                     <!-- Shown if matching account is found -->
-                    <div class="panel panel-default row slds-p-horizontal--small slds-size--1-of-1 page-body-account-creation {!IF(accountFound,'','hideFromLayout')}" id="searchResults">
+                    <div class="panel panel-default row slds-p-horizontal--small slds-size--1-of-1 page-body-account-creation {!IF(AND(accountFound,isGeneral==false),'','hideFromLayout')}" id="searchResults">
                         <h4>{!$Label.ISSP_Results}</h4>
                         <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-scrollable--x">
                           <thead>

@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>FDS_CodingAOC</fullName>
-        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert</description>
         <protected>false</protected>
         <recipients>
@@ -10,11 +9,19 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jeffrey@iata.org</recipient>
+            <recipient>kalajil@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>osinskan@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -23,7 +30,6 @@
     </alerts>
     <alerts>
         <fullName>FDS_CodingAOC2</fullName>
-        <ccEmails>alvarengam@iata.org</ccEmails>
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
@@ -31,15 +37,19 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jeffrey@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>kalajil@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>osinskan@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>szajkod@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -48,7 +58,6 @@
     </alerts>
     <alerts>
         <fullName>FDS_Coding_AOC_Expiry_date_alert_10_Days_before2</fullName>
-        <ccEmails>airlinecoding@iata.org</ccEmails>
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
         <recipients>
@@ -56,11 +65,11 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>jeffrey@iata.org</recipient>
+            <recipient>kalajil@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>kalajil@iata.org</recipient>
+            <recipient>osinskan@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

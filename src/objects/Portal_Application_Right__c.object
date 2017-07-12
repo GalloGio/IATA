@@ -332,7 +332,7 @@
         <description>Activates the notification service for current application</description>
         <externalId>false</externalId>
         <label>Enable Notifications</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

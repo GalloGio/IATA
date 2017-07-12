@@ -27,6 +27,20 @@ public class UserProvisioningRequestHandler {
         System.debug('UserProvisioningRequestHandler --- Starting OnAfterUpdate');
 
         List<One_Id_App_Config_Detail__c> listOfApps = OneIdProvisioningDAO.getAppPermissionSetListForSSO();
+        Map<String, String> connAppVPermSSO = new Map<String, String>();
+        Map<String, One_Id_App_Config_Detail__c> connAppVAppConf = new Map<String, One_Id_App_Config_Detail__c>();
+        Set<String> permSetSSO = new Set<String>();
+        Map<String, String> permsetMap = new Map<String, String>();
+        List<One_Id_User_Applications__c> toSyncUserApps = new List<One_Id_User_Applications__c>();
+        List <String> userids = new List <String>();
+        List <String> permissionids = new List <String> ();
+        List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+        Set<String> provApp = new Set<String>();
+        Set<String> provBuiltApp = new Set<String>();
+        Map<String, EmailTemplate> listOfEmailTemp = new Map<String, EmailTemplate>();
+ 
+		//Mconde fix
+		ID standartReplyUserID = PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email);
 
         if(listOfApps.isEmpty()) return; //no one Id apps are configured, no need to go further
 
@@ -78,6 +92,9 @@ public class UserProvisioningRequestHandler {
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
                 mail.setTargetObjectId(uprov.SalesforceUserId);
+
+				//Mconde Fixed
+				mail.setOrgWideEmailAddressId(standartReplyUserID);
 
                 EmailTemplate emailT = listOfEmailTemp.get('Identity Access:'+uprov.AppName);
 
