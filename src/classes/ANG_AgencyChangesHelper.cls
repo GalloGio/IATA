@@ -134,6 +134,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		// 4) need to change all the parent accounts and the location type of all agencies involved
 		// 5) swap IEP information between old and new HE.
 
+		System.debug('[ANG_AgencyChangesHelper] Performing change of Location Type');
+
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
 
@@ -141,12 +143,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		For(AMS_Agencies_relationhip__c rel : accountHierarchyRelationships.get(oscarToProcess.Account__c)){
 
-			System.debug('[applyChangeOfLocationType] - Found these relations to change:' + accountHierarchyRelationships.get(oscarToProcess.Account__c));
-
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				System.debug('[applyChangeOfLocationType] - The AE to be changed is the following:'+ rel.Child_Account__c);
-
 				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
@@ -429,7 +427,6 @@ public with sharing class ANG_AgencyChangesHelper {
                     if (fieldsToMigrate.contains(value)) {
                     
                         accountFieldNewValue.put(key, oscarOnlineAccreditation.get(value));
-                        System.debug(key + ':' + oscarOnlineAccreditation.get(value));
                     }
                 }
 
@@ -634,12 +631,12 @@ public with sharing class ANG_AgencyChangesHelper {
         }
 
         if(!rolesToDeactivate.isEmpty()){
-            System.debug('Roles to deactivate:'+rolesToDeactivate);
+            System.debug('[ANG_AgencyChangesHelper] Roles to deactivate:'+rolesToDeactivate);
             update rolestoDeactivate;
         }
 
         if(!rolesToInsert.isEmpty()){
-            System.debug('Roles to insert:'+rolesToInsert);
+            System.debug('[ANG_AgencyChangesHelper] Roles to insert:'+rolesToInsert);
             insert rolesToInsert;
         }
 
@@ -692,7 +689,7 @@ public with sharing class ANG_AgencyChangesHelper {
         else if (action == AMS_Utils.WITHDRAWAL)
             changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
 
-        system.debug('AGENCY CHANGES: Change code to apply: ' + changeCodeIdentifier);
+        system.debug('[ANG_AgencyChangesHelper] : Change code to apply: ' + changeCodeIdentifier);
         if (changeCodeIdentifier != null) {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
@@ -712,8 +709,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
         }
 
-        system.debug('AGENCY CHANGES: changeCodes: ' + changeCodes);
-        system.debug('AGENCY CHANGES: Accounts: ' + accts);
+        system.debug('[ANG_AgencyChangesHelper] : changeCodes: ' + changeCodes);
+        system.debug('[ANG_AgencyChangesHelper] : ' + accts);
 
         return changesContainer;
     }
