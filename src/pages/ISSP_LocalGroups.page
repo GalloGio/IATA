@@ -149,7 +149,7 @@
                 <tbody>
                     <apex:repeat value="{!listWrapper}" var="wrapper">
                       <tr>
-                        <td>{!wrapper.participant.Id}</td>
+                        <td>{!wrapper.participant.Local_Governance__r.Region__c}</td>
                         <td>
                             <apex:outputText value="{!wrapper.participant.Local_Governance__r.Country__r[IsoCountryFieldName]}" rendered="{!wrapper.participant.Local_Governance__r.Country__r.Name!=null}"/>
                             <apex:outputText value="{!wrapper.participant.Local_Governance__r.Cluster__r.Name}" rendered="{!wrapper.participant.Local_Governance__r.Cluster__r.Name!=null}"
