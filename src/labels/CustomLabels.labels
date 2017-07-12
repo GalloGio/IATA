@@ -19964,6 +19964,34 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <value>Type of accreditation</value>
     </labels>
     <labels>
+        <fullName>ANG_OSCAR_CHANGE_APPROVAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE APPROVAL FINALIZATION</shortDescription>
+        <value>Approval Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_DISAPPROVAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE DISAPPROVAL FINALIZATION</shortDescription>
+        <value>Disapproval Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_REJECTION_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE REJECTION FINALIZATION</shortDescription>
+        <value>Rejection Finalization</value>
+    </labels>
+    <labels>
+        <fullName>ANG_OSCAR_CHANGE_WITHDRAWAL_FINALIZATION</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG OSCAR CHANGE WITHDRAWAL FINALIZATION</shortDescription>
+        <value>Withdrawal Finalization</value>
+    </labels>                        
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>

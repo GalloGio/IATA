@@ -357,6 +357,36 @@
         <label>Name</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ANG_LegalName</fullName>
+        <description>fields to be migrated when we have a change of name process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Name</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>AMS_ownershiptoiataagent</fullName>
         <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
@@ -898,16 +928,14 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_Accreditation_Type__c</fullName>
+        <fullName>ANG_Accreditation_type__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( TEXT(SAAM_Case__r.Account.Location_Type__c) = &apos;AE&apos;, TEXT(SAAM_Case__r.Account.ANG_Accreditation_Model__c), &apos;&apos;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Accreditation Type</label>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <label>Accreditation type</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_IsNewGenAgency__c</fullName>
@@ -1675,7 +1703,7 @@ SAAM_Case__r.Account_Concerned__r.VAT_Number__c)</formula>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
-        <fields>
+    <fields>
         <fullName>Enable_Credit_Card_FOP__c</fullName>
         <externalId>false</externalId>
         <label>Enable Credit Card FOP</label>

@@ -98,6 +98,17 @@ public without sharing class AMS_Utils {
     public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
 
 
+    public static final String ANG_LEGAL_NAME = 'Legal name';
+    public static final String ANG_LEGAL_STATUS =  'Legal status';
+    public static final String ANG_MINOR_SHAREHOLDING = 'Minor shareholding';
+    public static final String ANG_MAJOR_SHAREHOLDING = 'Major shareholding';
+    public static final String ANG_OWNERSHIP =  'Ownership';
+    public static final String ANG_LOCATION_TYPE =  'Location type';
+    public static final String ANG_LOCATION =  'Location';
+    public static final String ANG_HIERARCHY =  'Hierarchy';
+    public static final String ANG_VMFR =  'VMFR';
+    public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
+
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
 
     public static final String BR = 'BR';
@@ -2276,6 +2287,25 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                        Account.Is_Branch_Abroad__c,
                        Account.Status__c
                   FROM Contact WHERE Id = :conId limit 1];                  
+    }
+
+    public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
+
+        return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
+
+    }
+
+    public static List<String> getOSCARStepsApiName() {
+
+        List<String> oscarSteps = new List<String>();
+
+        for (String fieldApiName : getOSCARFieldMap().keySet()) {
+            if (fieldApiName.startsWithIgnoreCase('STEP'))
+                oscarSteps.add(fieldApiName);
+
+        }
+
+        return oscarSteps;
     }
 
 }

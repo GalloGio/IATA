@@ -36,6 +36,7 @@ public class AMS_OSCARTriggerHandler {
 		//create agency regulation objects for Cargo agencies
 		handleCargoAgencyRegulations();
 		handleChangesProcess(oscars);
+		ANG_AgencyChangesHelper.handleNewGenChangesProcess(oscars);
         copyDataFromTargetAgency();
 		updateOSCARAppointments();
 		handleVRProcess();
@@ -175,7 +176,7 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-		List<String> oscarStepsApiName = getOSCARStepsApiName();
+		List<String> oscarStepsApiName = AMS_Utils.getOSCARStepsApiName();
 
 		for (AMS_OSCAR__c oscar : oscars) {
 
@@ -1808,25 +1809,6 @@ public class AMS_OSCARTriggerHandler {
 	//********** access methods ***********
 	//*************************************
 
-	public static Map<String, Schema.SObjectField> getOSCARFieldMap() {
-
-		return Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
-
-	}
-
-	public static List<String> getOSCARStepsApiName() {
-
-		List<String> oscarSteps = new List<String>();
-
-		for (String fieldApiName : getOSCARFieldMap().keySet()) {
-			if (fieldApiName.startsWithIgnoreCase('STEP'))
-				oscarSteps.add(fieldApiName);
-
-		}
-
-		return oscarSteps;
-	}
-
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
 		return new Map<Id, Account>([SELECT Id, ParentId, Parent.Location_Type__c,Parent.IATACode__c, Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
@@ -1897,6 +1879,9 @@ public class AMS_OSCARTriggerHandler {
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.SANITYCHECK) templateId 						= 'ANG_New_AE_SanityCheck_Passed';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && wasApproved) templateId 			= 'ANG_New_AE_Accreditation_Decision_APP';
         else if(agencyType == AMS_Utils.NEWAE && step == AMS_Utils.APPROVAL && !wasApproved) templateId 		= 'ANG_New_AE_Accreditation_Decision_DIS';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.SANITYCHECK) templateId 					= 'ANG_Changes_SanityCheck_Passed';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && wasApproved) templateId 		= 'ANG_Changes_APP';
+        else if(agencyType == AMS_Utils.NGCHANGES && step == AMS_Utils.APPROVAL && !wasApproved) templateId 	= 'ANG_Changes_DIS';
 
         //Get the templates for NG accreditation outcoume
         List<EmailTemplate> etNG = Database.query('SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE \'' + templateId + '%\'' );
