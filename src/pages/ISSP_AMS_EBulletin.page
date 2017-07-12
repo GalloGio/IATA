@@ -414,11 +414,14 @@
 
             //Set current week as selected
             var date = $(this).datepicker('getDate');
-
-            startDate = new Date(date.getFullYear(), date.getMonth(), weekInitialStartDate);
-            endDate = new Date(date.getFullYear(), date.getMonth(), weekInitialEndDate);
-            
+             if(date.getDay() >= 6){
+                date.setDate(date.getDate() + 1);
+            }
+            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
+            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
             var dateFormat = $.datepicker._defaults.dateFormat;
+            startDate.setDate(startDate.getDate() - 1);
+            endDate.setDate(endDate.getDate() - 1);
 
             jQuery('[id$=pWeekStart]').val($.datepicker.formatDate('dd/mm/yy', startDate));
             jQuery('[id$=pWeekEnd]').val($.datepicker.formatDate('dd/mm/yy', endDate));
