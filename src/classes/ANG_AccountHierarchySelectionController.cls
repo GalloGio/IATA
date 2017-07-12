@@ -121,6 +121,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'If you are performing a change of Hierarchy and selecting an AE from the current hierarchy as a new parent, you need to also include him in the agencies selected.'
 				);
 
+				errorMessages.put(
+					'Mixed types of changes',
+					'If you are performing a change of Hierarchy and Accreditation Type, you must selected a New Parent from the source hierarchy.'
+				);
+				
+
 				
 			}
 			return errorMessages;
@@ -366,7 +372,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(!isAllHierarchySelected())
 				errorChecks.put(AMS_Utils.ANG_VMFR, true);
 
-		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE))
+		if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && !tocList.contains(AMS_Utils.ANG_HIERARCHY))
 			if(!isAllHierarchySelected())
 				errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
@@ -384,6 +390,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
 				errorChecks.put('Multiple Hierarchies', true);
 
+			if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)){
+
+				if(diffDestination(oscar.New_parent__c))
+					errorChecks.put('Mixed types of changes', true);
+			}
 		}
 
 		//retrieve error messages

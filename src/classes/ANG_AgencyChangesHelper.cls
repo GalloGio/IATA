@@ -521,7 +521,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toReturn;
 	}
 
-	public static AChangeStructure applyChangeOfAccreditationType(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn, Boolean isCorrection){
+	public static AChangeStructure applyChangeOfAccreditationType(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn){
 	
 		System.debug('[ANG_AgencyChangesHelper] Performing change of Accreditation Type');
 
@@ -566,7 +566,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
         Set<Id> accountsUpdated = new Set<Id>();
 
-		For(Agency_Authorization__c aa: [Select Id , Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment']){
+		For(Agency_Authorization__c aa: [Select Id ,Account__c, Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment']){
 
 			aa.Status__c = 'Active';
 			toUpsert.add(aa);
@@ -754,7 +754,7 @@ public with sharing class ANG_AgencyChangesHelper {
         return string.valueOf(dValue.day() + '-' + lsMonthName.get(dValue.month()) + '-' + dValue.year());
     }
 
-    private static AMS_Pax_Accreditation_Form__c getAccreditation(Id oscarOnlineAccredId){
+    public static AMS_Pax_Accreditation_Form__c getAccreditation(Id oscarOnlineAccredId){
 		return [SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
 		        ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
 		        Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,

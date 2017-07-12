@@ -19,6 +19,7 @@ public class ANG_AgencyChangesHelperTest {
 		account.Category__c = 'IATA Passenger Sales Agent';
 		account.Location_Class__c = 'P';
 		account.Location_Type__c = 'HE';
+		account.ANG_Accreditation_Model__c = 'Cashless';
 
 		account.ANG_IEP_HE_AccntNum__c = '1232132323';
 		account.ANG_IEP_Status__c = 'Suspended' ;
@@ -26,7 +27,6 @@ public class ANG_AgencyChangesHelperTest {
 		account.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
 		account.ANG_HE_RiskStatus__c = 'Not Applicable';
 		account.RecordTypeId = accountAgencyRT;
-		account.ANG_Accreditation_Model__c = 'Cashless';
 
 		insert account;
 		
@@ -1085,7 +1085,9 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfFields(oscar, accountIdsInvolvedSet, null);
+		AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = ANG_AgencyChangesHelper.getAccreditation(oscar.AMS_Online_Accreditation__c);
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfFields(oscar, accountIdsInvolvedSet, null,oscarOnlineAccreditation);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -1475,6 +1477,238 @@ public class ANG_AgencyChangesHelperTest {
 		roleList = [select Owner_Name__c, Legacy_External_ID__c, Contact__c, Percentage__c, Contact__r.Email, Person__c, Person__r.Email__c, Account__c, Active__c from AMS_Account_Role__c where Active__c = true];
 
         System.assertEquals(12,roleList.size());
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void performChangeOfAccreditationCash(){
+
+		// push single agency to a single new HE
+
+		Test.startTest();
+
+		Account he = null;
+		Account ae1 = null;
+		Account ae2 = null;
+		Account ae3 = null;
+
+		For(Account acct : [Select Id, Name, ParentId,IATA_ISO_Country__c, Location_Class__c, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account]){
+
+			if(acct.Name == 'Main HE Account H1' )
+				he = acct;
+			if(acct.Name == 'Account AE1 H1' )
+				ae1 = acct;
+			if(acct.Name == 'Account AE2 H1' )
+				ae2 = acct;
+			if(acct.Name == 'Account AE3 H1' )
+				ae3 = acct;
+		}
+
+		System.assert(he != null);
+		System.assert(ae1 != null);
+		System.assert(ae2 != null);
+		System.assert(ae3 != null);
+
+		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+	    toUpsert.add(new Agency_Authorization__c(Account__c = he.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Not Authorized', RecordTypeId = formOfPaymentRT));
+
+	    insert toUpsert;
+
+        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = he.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+        ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Other Changes').getRecordTypeId();
+
+                 // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+        		RecordTypeId = rtChangesStagingId,
+                IATAcode__c = he.IATAcode__c,
+                Branch_Office_Country__c = he.IATA_ISO_Country__c,
+                Location_Class__c = he.Location_Class__c,
+                Location_Type__c = he.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333',
+				ANG_Accreditation_type__c = 'Cash'
+                );
+
+        insert stagingArea;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		// let's start !!
+
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae1.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae2.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae3.Id));
+		
+		insert agenciesinvolved;
+
+		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+		accountIdsInvolvedSet.add(oscar.Account__c);
+
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, null);
+
+		List<Agency_Authorization__c> aaList = [Select Id , Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active' and RecordType.DeveloperName = 'FormOfPayment'];
+
+        System.assertEquals(4,aaList.size());
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void performChangeOfAccreditationCashless(){
+
+		// push single agency to a single new HE
+
+		Test.startTest();
+
+		Account he = null;
+		Account ae1 = null;
+		Account ae2 = null;
+		Account ae3 = null;
+
+		For(Account acct : [Select Id, Name, ParentId,IATA_ISO_Country__c, Location_Class__c, IATACode__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account]){
+
+			if(acct.Name == 'Main HE Account H1' )
+				he = acct;
+			if(acct.Name == 'Account AE1 H1' )
+				ae1 = acct;
+			if(acct.Name == 'Account AE2 H1' )
+				ae2 = acct;
+			if(acct.Name == 'Account AE3 H1' )
+				ae3 = acct;
+		}
+
+		System.assert(he != null);
+		System.assert(ae1 != null);
+		System.assert(ae2 != null);
+		System.assert(ae3 != null);
+
+		he.ANG_Accreditation_Model__c = 'Cash';
+		update he;
+
+		Id	formOfPaymentRT = AMS_Utils.getId('Agency_Authorization__c','FormOfPayment');
+
+		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+	    toUpsert.add(new Agency_Authorization__c(Account__c = he.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+	    toUpsert.add(new Agency_Authorization__c(Account__c = ae1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+	    toUpsert.add(new Agency_Authorization__c(Account__c = ae2.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+	    toUpsert.add(new Agency_Authorization__c(Account__c = ae3.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+
+	    insert toUpsert;
+
+        ID rtChange = Schema.SObjectType.AMS_OSCAR__c.getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = he.id, RecordTypeId = rtChange, Process__c = 'ANG.MAJOR.CHANGES.1.0');
+
+		insert oscar;
+
+		Contact co1 = new Contact(AccountId = he.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		String OSCAR_RECORD_TYPE_ID = Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = OSCAR_RECORD_TYPE_ID);
+        oscarCase.AccountId = he.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+        ID rtChangesStagingId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.getRecordTypeInfosByName().get('Other Changes').getRecordTypeId();
+
+                 // Create the Staging area for the Account
+        AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(
+        		RecordTypeId = rtChangesStagingId,
+                IATAcode__c = he.IATAcode__c,
+                Branch_Office_Country__c = he.IATA_ISO_Country__c,
+                Location_Class__c = he.Location_Class__c,
+                Location_Type__c = he.Location_Type__c,
+                SAAM_Case__c = oscarCase.Id,
+				Account_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_Legal_Status__c = 'Association',
+				Short_Name__c = 'Lisbon Travel Gods',
+				TradeName__c = 'Lisbon Travel Gods',
+				Trade_Name__c = 'Lisbon Travel Gods',
+				ISSP_AMS_License_No__c = '111222333',
+				ISSP_AMS_VAT_Number_Input__c = '111222333',
+				Branch_Office_Email__c = 'ltg23@fefff2.com',
+				Website__c = 'wwww.asdasidsss12233.pt',
+				Branch_Office_Phone__c = '123456780',
+				Branch_Office_Phone_National__c = '123456780',
+				Branch_Office_FAX__c = '123456780',
+				Branch_Office_Fax_National__c = '123456780',
+				Abbreviated_name__c = 'Lisbon Travel Gods',
+				VAT_Number_2__c = '111222333',
+				ANG_Accreditation_type__c = 'Cashless'
+                );
+
+        insert stagingArea;
+
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        update oscar;
+
+		// let's start !!
+
+        ID rtAgencyInvolved = Schema.SObjectType.AMS_Process_Detail__c.getRecordTypeInfosByName().get('Agency Involved').getRecordTypeId();
+
+        List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae1.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae2.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = ae3.Id));
+		
+		insert agenciesinvolved;
+
+		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
+		accountIdsInvolvedSet.add(oscar.Account__c);
+
+
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, null);
+
+		List<Agency_Authorization__c> aaList = [Select Id , Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active' and RecordType.DeveloperName = 'FormOfPayment'];
+
+        System.assertEquals(0,aaList.size());
+
+		aaList = [Select Id , Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment'];
+
+        System.assertEquals(4,aaList.size());
 
 		Test.stopTest();
 
