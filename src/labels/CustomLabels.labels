@@ -16303,7 +16303,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Local Groups Export CSV</shortDescription>
-        <value>Export to CSV</value>
+        <value>Export in CSV</value>
     </labels>
     <labels>
         <fullName>ISSP_Local_Groups_Industry</fullName>

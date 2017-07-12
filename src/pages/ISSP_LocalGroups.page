@@ -55,11 +55,11 @@
           // get all distinct values and creates an option value
           tbl.column(i).data().unique().sort().each( function ( d, j ) {
               var text = d;
-              if ($(d).is("span")) {
+              if ($($.parseHTML(text)).is("span")) {
                 text = $(d).text();
               }
               //alert(text + " " +  d + " " + j);
-              select.append( '<option value="'+text+'">'+text+'</option>' );
+              select.append( '<option value="'+addslashes(text)+'">'+text+'</option>' );
           } );
           $(this).html( select );
       }
@@ -80,6 +80,16 @@
         }
     } );
   });
+  
+  function addslashes(str) {
+    str=str.replace(/\'/g,'\\\'');
+    str=str.replace(/\"/g,'\\"');
+    str=str.replace(/\\/g,'\\\\');
+    str=str.replace(/\0/g,'\\0');
+    str=str.replace(/\(/g,'\\\(');
+    str=str.replace(/\)/g,'\\\)');
+    return str;
+  }
 </script>
 
 <body>
