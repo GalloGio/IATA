@@ -125,7 +125,7 @@
                         <th colspan="3" class="headerRowFilter">
                             <div class="row">
                                 <div class="hidden-xs hidden-sm col-md-5 col-lg-6 text-center ">
-                                    <apex:outputPanel rendered="{!listParticipant.size>0}" >
+                                    <apex:outputPanel rendered="{!listWrapper.size>0}" >
                                         <button id="table-filters-reset" class="btn btn-primary btn-sm">{!$Label.ISSP_Local_Groups_Industry_Reset}</button>
                                     </apex:outputPanel>
                                 </div>
@@ -147,23 +147,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <apex:repeat value="{!listParticipant}" var="item">
+                    <apex:repeat value="{!listWrapper}" var="wrapper">
                       <tr>
-                        <td>{!item.Local_Governance__r.Region__c}</td>
+                        <td>{!wrapper.participant.Id}</td>
                         <td>
-                            <apex:outputText value="{!item.Local_Governance__r.Country__r[IsoCountryFieldName]}" rendered="{!item.Local_Governance__r.Country__r.Name!=null}"/>
-                            <apex:outputText value="{!item.Local_Governance__r.Cluster__r.Name}" rendered="{!item.Local_Governance__r.Cluster__r.Name!=null}"
-                                html-data-toggle="tooltip" title="{!mapClusterCountry[item.Local_Governance__r.Cluster__c]}"/>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Country__r[IsoCountryFieldName]}" rendered="{!wrapper.participant.Local_Governance__r.Country__r.Name!=null}"/>
+                            <apex:outputText value="{!wrapper.participant.Local_Governance__r.Cluster__r.Name}" rendered="{!wrapper.participant.Local_Governance__r.Cluster__r.Name!=null}"
+                                html-data-toggle="{!IF(wrapper.countryClusterTooltip=='','','tooltip')}" title="{!wrapper.countryClusterTooltip}"/>
                         </td>
                         <td>
-                            <apex:outputText value="{!item.Local_Group_Type__c}"
-                                html-data-toggle="tooltip" title="{!$Label[mapGroupTypeDescription[item.Local_Group_Type__c]]}"/>
+                            <apex:outputText value="{!wrapper.participant.Local_Group_Type__c}"
+                                html-data-toggle="{!IF(wrapper.groupTypeTooltip=='','','tooltip')}" title="{!IF(wrapper.groupTypeTooltip=='','',$Label[wrapper.groupTypeTooltip])}"/>
                         </td>
-                        <td>{!item.Local_Governance__r.Cargo_Passenger__c}</td>
-                        <td>{!item.Participant_Type__c}</td>
-                        <td><apex:outputLink value="/ISSP_Contact?id={!item.Contact__c}&mid=M4S1">{!item.Contact__r.Name}</apex:outputLink></td>
-                        <td class="hidden-md hidden-sm hidden-xs">{!item.Title__c}</td>
-                        <td class="hidden-sm hidden-xs">{!item.Email__c}</td>
+                        <td>{!wrapper.participant.Local_Governance__r.Cargo_Passenger__c}</td>
+                        <td>{!wrapper.participant.Participant_Type__c}</td>
+                        <td><apex:outputLink value="/ISSP_Contact?id={!wrapper.participant.Contact__c}&mid=M4S1">
+                                {!wrapper.participant.Contact__r.Name}
+                            </apex:outputLink>
+                        </td>
+                        <td class="hidden-md hidden-sm hidden-xs">{!wrapper.participant.Title__c}</td>
+                        <td class="hidden-sm hidden-xs">{!wrapper.participant.Email__c}</td>
                       </tr>
                     </apex:repeat>
                 </tbody>

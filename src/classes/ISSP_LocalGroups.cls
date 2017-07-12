@@ -1,12 +1,12 @@
 public without sharing class ISSP_LocalGroups {
 
     public static final set<String> ALLOWED_PROFILES = new set<String>{'ISS Portal Airline Delegated Admin User'};
-    public list<Participant__c> listParticipant {get;set;}
-    public map<Id,String> mapClusterCountry {get;set;}
-    public map<String,String> mapGroupTypeDescription {get;set;}
+    public list<WrapperLocalGroup> listWrapper {get;set;}
 
     private list<Account> listAccount;
     private User currentUser;
+    public map<Id,String> mapClusterCountry;
+    public map<String,String> mapGroupTypeDescription;
     
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -22,7 +22,7 @@ public without sharing class ISSP_LocalGroups {
         Id parentAccountId = getMaxParentAccount(this.currentUser.Contact.AccountId);
         this.listAccount = getAllHierarchy(this.currentUser.Contact.AccountId);
         
-        this.listParticipant = [
+        list<Participant__c> listParticipant = [
             SELECT Region__c, Country__c, Local_Group_Type__c, Cargo_Passenger__c, Participant_Type__c, Title__c, Email__c,
                 Contact__c, Contact__r.Name, Local_Governance__r.Cargo_Passenger__c,
                 Local_Governance__r.Country__r.Name,
@@ -44,19 +44,20 @@ public without sharing class ISSP_LocalGroups {
             AND Local_Governance__r.Active__c = true
             ORDER BY CreatedDate];
         
-        initMapCluster();
+        initMapCluster(listParticipant);
         initMapGroupTypeDescription();
+        initListWrapper(listParticipant);
     }
     
     /**
         Creates a map with the clusters found in the main query with their
         country names translated to the selected language
     **/
-    private void initMapCluster() {
+    private void initMapCluster(list<Participant__c> listParticipant) {
         String fieldName = getIsoCountryFieldName();
         this.mapClusterCountry = new map<Id,String>();
         list<Id> listClusterId = new list<Id>();
-        for (Participant__c participant: this.listParticipant) {
+        for (Participant__c participant: listParticipant) {
             listClusterId.add(participant.Local_Governance__r.Cluster__c);
         }
         for (Cluster_to_ISO_Country__c cc: [
@@ -97,6 +98,18 @@ public without sharing class ISSP_LocalGroups {
             'LCAG-P' => 'ISSP_Participant_Description_LCAG_P',
             'LCAG-P / Credit Card WG' => 'ISSP_Participant_Description_LCAG_P_Credit_Card_WG'
         };
+    }
+    
+    /**
+        Transform the input list of Participants to a list of Wrappers
+    **/
+    private void initListWrapper(list<Participant__c> listParticipant) {
+        this.listWrapper = new list<WrapperLocalGroup>();
+        for (Participant__c participant: listParticipant) {
+            String clusterTooltip = this.mapClusterCountry.get(participant.Local_Governance__r.Cluster__c);
+            String typeTooltip = this.mapGroupTypeDescription.get(participant.Local_Group_Type__c);
+            this.listWrapper.add(new WrapperLocalGroup(participant, clusterTooltip, typeTooltip));
+        }
     }
     
     /**
@@ -200,6 +213,18 @@ public without sharing class ISSP_LocalGroups {
     **/
     public String getCSVHeader() {
         return EncodingUtil.convertFromHex('EFBBBF').toString();
+    }
+    
+    public class WrapperLocalGroup {
+        public Participant__c participant {get;set;}
+        public String countryClusterTooltip {get;set;}
+        public String groupTypeTooltip {get;set;}
+        
+        public WrapperLocalGroup(Participant__c p, String clusterTooltip, String typeTooltip) {
+            this.participant = p;
+            this.countryClusterTooltip = clusterTooltip==null? '': clusterTooltip;
+            this.groupTypeTooltip = typeTooltip==null? '': typeTooltip;
+        }
     }
 
 }

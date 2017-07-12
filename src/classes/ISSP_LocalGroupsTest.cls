@@ -68,7 +68,7 @@ public class ISSP_LocalGroupsTest {
 
         Test.startTest();
         ISSP_LocalGroups controller = new ISSP_LocalGroups();
-        System.assertEquals(listParticipant.size(),controller.listParticipant.size());
+        System.assertEquals(listParticipant.size(),controller.listWrapper.size());
         String comname = controller.communityName;
         controller.init();
         controller.getCSVHeader();
