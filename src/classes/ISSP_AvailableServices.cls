@@ -185,6 +185,11 @@ public with sharing class ISSP_AvailableServices{
 
                 if (!isIEPAccountEnable) {
                     isModalErrorMessageEnable = true;
+                } else {
+                    if (contAcc.Account.ANG_IEP_Status_FF__c == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) {
+                        modalErrorMessage = Label.ANG_ISSP_IEP_OpeningInProgress;
+                        isModalErrorMessageEnable = true;
+                    }
                 }
 
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
@@ -378,7 +383,7 @@ public with sharing class ISSP_AvailableServices{
 
             Boolean flagIsIepPortalService = ANG_ISSP_PortalServiceHelper.isIepPortalService(inRecord.name);
                                         
-            if (flagIsIepPortalService && IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT && isAdmin && isAuthorisedSignatory) {
+            if (flagIsIepPortalService && (IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT || IepStatus == ANG_ISSP_PortalServiceHelper.STATUS_IN_PROGRESS) && isAdmin && isAuthorisedSignatory) {
                 this.btnLabel = System.Label.ANG_ISSP_Open_IATA_EasyPay_Account;
                 this.useDefaultRole = true;
             } else {

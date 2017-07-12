@@ -19916,7 +19916,15 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
         <value>Please deny this contact's access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
-    </labels>                        
+    </labels>   
+    <labels>
+        <fullName>ANG_ISSP_IEP_OpeningInProgress</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_OpeningInProgress</shortDescription>
+        <value>A Portal Adminitstrator from the Head Entity has already initiated the opening of your Agency's IEP Account. Once the IEP Account is successfully you will e able to acccess this service.</value>
+    </labels>   
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
