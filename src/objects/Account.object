@@ -82439,7 +82439,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     </validationRules>
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
         <errorConditionFormula>AND(
     ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
