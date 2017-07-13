@@ -323,7 +323,6 @@
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    </listViews>
     <nameField>
         <displayFormat>REC-{00000000}</displayFormat>
         <label>Risk Event Trigger Configuration Name</label>
