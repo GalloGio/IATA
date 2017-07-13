@@ -90,6 +90,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
+				if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.Process__c))
+					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
+
 				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.Process__c))
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet);
 
@@ -536,9 +539,9 @@ public with sharing class ANG_AgencyChangesHelper {
         List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless')
-        	toUpsert = performChashLessTransformation(accountsAffected);
+        	toUpsert = performCashLessTransformation(accountsAffected);
         if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash')
-        	toUpsert = performChashTransformation(accountsAffected);
+        	toUpsert = performCashTransformation(accountsAffected);
 
         if(!toUpsert.isEmpty())
         	upsert toUpsert;
@@ -546,7 +549,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		return toReturn;
 	}
 
-	public static List<Agency_Authorization__c> performChashLessTransformation(Set<Id> accountsAffected){
+	public static List<Agency_Authorization__c> performCashLessTransformation(Set<Id> accountsAffected){
 
         List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
@@ -561,7 +564,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	}
 
-	public static List<Agency_Authorization__c> performChashTransformation(Set<Id> accountsAffected){
+	public static List<Agency_Authorization__c> performCashTransformation(Set<Id> accountsAffected){
 
 		Set<Id> accountsToProcess = accountsAffected.clone();
 
