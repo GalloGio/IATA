@@ -259,8 +259,8 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			if (billingAccountId != null) {
 				EBC_Account_Notification__c accNotification = billingAccountIdToEbcAccountNotificationMap.get(billingAccountId);
 				
-				Integer numOfEmailSent = (Integer) campaignAggr.get('numOfEmailSent');
-				accNotification.Number_of_Email_Recipients_Last_Month__c = numOfEmailSent;
+				Decimal numOfEmailSentDEC = (Decimal)campaignAggr.get('numOfEmailSent');
+				accNotification.Number_of_Email_Recipients_Last_Month__c = (Integer) numOfEmailSentDEC;
 				
 				Integer numOfCampaigns =  (Integer) campaignAggr.get('numOfCampaigns');
 				accNotification.Number_of_Campaigns_Last_Month__c = numOfcampaigns;
