@@ -20791,7 +20791,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
-        <value>N/A</value>
+        <value>In order to complete your request, please go back to the previous tab and proceed with the next steps.</value>
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_3</fullName>
