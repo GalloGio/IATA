@@ -55,6 +55,7 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'IATACode__c != null'
 			,	'CNS_Agency__c = false'
+			,	'CNS_Account__c = false'
 			,	idsCondition
 		};
 
