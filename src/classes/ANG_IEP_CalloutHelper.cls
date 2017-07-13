@@ -15,8 +15,13 @@ public  with sharing class ANG_IEP_CalloutHelper {
 		for(ANG_CalloutMapping__c item: calloutMappingList){
 			for(Agency_Applied_Change_code__c obj: objList)
 				if(item.Change_code__c == obj.Change_Code__c && obj.IEPPayload__c != null){
-					changeCodeList.put(obj.IEPPayload__c ,item);
-					changeCodeIdMap.put(obj.IEPPayload__c, obj.Id);
+
+					// if the action is PUT we just send the Accounts IATA Code, otherwise we need to send the top Parent IATA Code
+
+					String keyValue = item.Action__c == 'PUT' ? obj.IEPPayload__c : obj.IATA_Code_Top_Parent__c;
+
+					changeCodeList.put(keyValue ,item);
+					changeCodeIdMap.put(keyValue, obj.Id);
 				}
 		}
 
