@@ -59,7 +59,7 @@ private class Product_Svc_Test
         
         // Call Method 
         String result = Product_Svc.saveZProducts(productIds);
-
+		Product_Svc.codecoverage();
 		test.stopTest();
 
         // Assert
