@@ -78,9 +78,12 @@
             <apex:inputField value="{!con.User_Portal_Status__c}" id="theStatus" onchange="showHideReason('{!$Component.theStatus}');" />
             <apex:pageBlockSectionItem >
           <apex:outputText value="User Community" />
-             <apex:selectList value="{!selectedVal}" multiselect="false" size="1">
+          <apex:outputPanel layout="block" styleClass="requiredInput">
+            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+             <apex:selectList id="UserCommunity" value="{!selectedVal}" multiselect="false" size="1" >
                 <apex:selectOptions value="{!communityOptions}"/>
             </apex:selectList>
+            </apex:outputPanel>
             </apex:pageBlockSectionItem>
         </apex:pageBlockSection>
         </div>

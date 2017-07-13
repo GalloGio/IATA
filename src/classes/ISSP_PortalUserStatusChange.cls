@@ -23,6 +23,7 @@ public with sharing class ISSP_PortalUserStatusChange {
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_PortalUserStatusChange(Apexpages.Standardcontroller ctrl){
+        Map<String, String> communityMap = new Map<String, String>{'CNS' => 'CNS Customer Portal', 'IEC' => 'E-Commerce','ISSP' => 'ISS Customer Portal'};
         portalUser = false;
         userExists = false;
         hasIdCard = false;
@@ -37,7 +38,7 @@ public with sharing class ISSP_PortalUserStatusChange {
         }
         if (!con.IEC_Subscriptions_History__r.isEmpty()){
             hasProducts = true;
-        }
+        }        
         system.debug('con.Id: ' + con.Id);
         UserPortalStatus = con.User_Portal_Status__c;
         fieldSetCtrl = new ISSP_FieldSetController(getCountrysMap(),con.Regional_Administrator_Countries__c);
@@ -68,9 +69,15 @@ public with sharing class ISSP_PortalUserStatusChange {
         //CummunityOptions
         communityOptions = new List<SelectOption>();
         communityOptions.add(new SelectOption('','-Select a Community-'));
-        communityOptions.add(new SelectOption('CNS','CNS Customer Portal'));
-        communityOptions.add(new SelectOption('IEC','E-Commerce'));
-        communityOptions.add(new SelectOption('ISSP','ISS Customer Portal'));
+        if(con.Community__c != ''){
+            for (String key : communityMap.keySet()) {
+                communityOptions.add(new SelectOption(key,communityMap.get(key)));
+                if(con.Community__c == communityMap.get(key))
+                    selectedVal = key;
+            }            
+        }
+
+
     }
 
     public Pagereference save(){
