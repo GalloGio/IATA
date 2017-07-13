@@ -5923,15 +5923,7 @@
               {
                 "Name": "STEP3",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "createCorrectionCase",
-                    "ActionLabel": "AMS_OSCAR_Action5",
-                    "args": [
-                      "agencyid"
-                    ]
-                  }
-                ],
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
