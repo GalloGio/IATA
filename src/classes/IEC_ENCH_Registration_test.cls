@@ -146,4 +146,31 @@ private class IEC_ENCH_Registration_test {
 		Test.stopTest();
 	}
 	
+	public static testMethod void testISSP_Registration_ISO_State() {
+		TestDataGenerator.generateISOCountryState();
+		Test.startTest();
+		List<IATA_ISO_State__c> lst = [SELECT Id, Name, IATA_ISO_Country__r.Name, Informatica_Value__c FROM IATA_ISO_State__c];
+		for(IATA_ISO_State__c s : lst) {
+			s.Informatica_Value__c = 'test';
+		}
+		update lst;
+		String isoS = ISSP_Registration.isoStates;
+		Test.stopTest();
+	}
+	
+	public static testMethod void testISSP_Registration4() {
+		Test.startTest();
+		ISSP_Registration ctrl = new ISSP_Registration();
+		ctrl.sRefererCommunity = 'iec';
+		ctrl.backToAccountPage();
+		ctrl = ctrl.thisCtrlForNewCaseForm;
+		Boolean a1 = ctrl.showSearchAirlineDesignator;
+		Boolean a2 = ctrl.showConfirmMessage;
+		String a3 = ctrl.captchaAnswer;
+		String a4 =ctrl.except;
+		Boolean a5 = ctrl.isChina;
+		String a6 = ctrl.urlpicture;
+		Test.stopTest();
+	}
+	
 }
