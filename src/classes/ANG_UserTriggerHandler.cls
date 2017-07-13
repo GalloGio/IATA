@@ -40,14 +40,22 @@ public class ANG_UserTriggerHandler {
 
 	private void assignUserFederationId() {
 
-		List<User> users = new List<User>();
+		List<Id> users = new List<Id>();
 		for(User u : triggerNew){
-			if(u.FederationIdentifier == null) users.add(new User(Id = u.Id, FederationIdentifier = u.Id));
+			if(u.FederationIdentifier == null) users.add(u.Id);
 		}
 
-		doNotRun = true; //prevent recursion of triggers
-		update users;
-		doNotRun = false;
+        if(!users.isEmpty()) setFederationId(users);
 	}
+
+    @Future
+    private static void setFederationId(List<Id> userIds) {
+        List<User> users = new List<User>();
+        for(Id u : userIds) users.add(new User(Id = u, FederationIdentifier = u));
+
+        doNotRun = true; //prevent recursion of triggers
+        update users;
+        doNotRun = false;
+    }
 	
 }
