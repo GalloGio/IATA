@@ -3833,7 +3833,7 @@ public without sharing class Order_Svc
                 else {
                     // Operation failed, so get all errors                
                     for(Database.Error err : sr.getErrors()) {
-                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', '', false));
+                        lstErrors.add(IEC_EventReleaseLog_Svc.logError('The following error has occurred when creating a new order. ' + err.getMessage(), String.valueOf(err.getStatusCode()), null, eventRelease.Id, 'Create order', null, false));
                     }
                 }
             }
