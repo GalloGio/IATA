@@ -216,7 +216,7 @@
                 <div class="panel-body" id="body-results">
                   <div class="row">
                     <div class="col-md-12">                
-                      <h4><a href="/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                      <h4><a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
                       </h4>
                     </div>                          
                   </div>
