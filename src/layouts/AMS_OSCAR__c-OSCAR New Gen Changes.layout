@@ -113,10 +113,6 @@
                 <behavior>Edit</behavior>
                 <field>AML_performed_date__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Process_start_date_due_dilligence__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -174,10 +170,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Proof_of_payment_received__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Process_start_date_Agency_Fees__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
