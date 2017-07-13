@@ -357,7 +357,7 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			CodingChildCase.Subject = 'Airline suspension - ' + parentCase.Account.Name;
 			CodingChildCase.Description = ParentCase.Description;
 			CodingChildCase.Origin = 'Internal Case';
-    			CodingChildCase.CaseArea__c = 'Airline Coding Application';
+    			CodingChildCase.CaseArea__c = 'Airline Coding';
 			CodingChildCase.Reason1__c = 'Airline suspension';
 			CodingChildCase.RecordTypeId = RT_InternalCases_Id;
 			CodingChildCase.Status = 'Open';
@@ -377,8 +377,8 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 			MitaCase.Subject = 'Airline suspension - ' + parentCase.Account.Name;
 			MitaCase.Description = ParentCase.Description;
 			MitaCase.Origin = 'Internal Case';
-			MitaCase.CaseArea__c = 'Coding & MITA';
-			MitaCase.Reason1__c = '';
+			MitaCase.CaseArea__c = 'MITA & BIETA';
+			MitaCase.Reason1__c = 'Airline suspension';
 			MitaCase.RecordTypeId = RT_InternalCases_Id;
 			MitaCase.Status = 'Open';
 			MitaCase.Priority = 'Normal';
