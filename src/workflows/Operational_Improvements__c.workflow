@@ -154,6 +154,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Terminate_OI</fullName>
