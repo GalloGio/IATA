@@ -26,6 +26,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
+	 	req.setTimeout(120000);
 
 		//req.setEndpoint('https://iata-agencies-process.cloudhub.io'+endPointCredential+body+'?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 		req.setEndpoint('callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret);
