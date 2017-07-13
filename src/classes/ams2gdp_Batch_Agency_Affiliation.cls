@@ -37,6 +37,8 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Account__r.IATACode__c != null'
 			, 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+			, 'Account__r.CNS_Agency__c = false'
+			, 'Account__r.CNS_Account__c = false'
 			// , 'Account__c IN ('+accreditation_condition+')'
 		};
 

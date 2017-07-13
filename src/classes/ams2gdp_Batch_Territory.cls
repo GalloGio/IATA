@@ -33,6 +33,8 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 			, 'Appointment__r.Account__r.IATACode__c != null'
 			, 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '
 			, 'Appointment__r.Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+			, 'Appointment__r.Account__r.CNS_Agency__c = false '
+			, 'Appointment__r.Account__r.CNS_Account__c = false '
 		}; 
 
 		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {

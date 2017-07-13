@@ -32,6 +32,7 @@ global class ams2gdp_Batch_Inspection implements Database.Batchable<sObject> , D
 			// ,	'Status__c NOT IN (\'Not accreditated\',\'New application pending\',\'Not in operation\',\'On hold\',\'applicant\',\'Unregisterable STP\')'
 			,	'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
 			,	'CNS_Agency__c = false'
+			,	'CNS_Account__c = false'
 		};
 
 		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {

@@ -30,6 +30,8 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 		, 'IATACode__c != null'
 		, 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+		, 'CNS_Agency__c = false'
+		, 'CNS_Account__c = false'
 		// ,	idsCondition
 		};
 		if(extraIds!=null && extraIds.size() > 0) {
