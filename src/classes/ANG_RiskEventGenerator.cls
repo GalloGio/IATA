@@ -115,7 +115,7 @@ public class ANG_RiskEventGenerator {
 				List<String> fields = new List<String>();
 				for(Schema.SObjectField field : fMap.values()) fields.add(field.getDescribe().getName());
 				
-				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c,ANG_Risk_Event_Type__r.ANG_isMultiple__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
+				configs = Database.query('SELECT ' + String.join(fields, ', ') + ', ANG_Risk_Event_Type__r.ANG_Risk_ID__c FROM ANG_Risk_Event_Configuration__c WHERE ANG_Object_Type__c = :objectName');
 			}
 			return configs;
 		}
@@ -177,7 +177,9 @@ public class ANG_RiskEventGenerator {
 		for(SObject o : objToEvaluate){
 			for(ANG_Risk_Event_Configuration__c config : configs){
 				if((Id)o.get('RecordTypeId') == recordTypes.get(objectName).get(config.ANG_Object_Record_Type__c) && checkRequisites(o, config)){
-					String uniqueKey = o.Id+''+(config.ANG_Risk_Event_Type__r.ANG_isMultiple__c?String.valueOf((Id)o.get(accountFields.get(objectName))):'')+config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
+					String uniqueKey = o.Id+
+									''+(config.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf((Id)o.get(accountFields.get(objectName))) : '')+
+									config.ANG_Risk_Event_Type__r.ANG_Risk_ID__c;
 		
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] uniqueKey - ' + uniqueKey);
 					System.debug(loggingLevel.FINE, '____ [cls ANG_RiskEventGenerator - generate] is update only - ' + config.ANG_IsUpdateOnly__c);
@@ -187,6 +189,7 @@ public class ANG_RiskEventGenerator {
 					}else{
 						ANG_Agency_Risk_Event__c risk = new ANG_Agency_Risk_Event__c();
 						risk.ANG_Risk_Type__c = config.ANG_Risk_Event_Type__c;
+						risk.ANG_Risk_Configuration__c = config.Id;
 						risk.ANG_AccountId__c = (id)o.get(accountFields.get(objectName));
 						risk.ANG_Created_from__c = objectName;
 						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
@@ -253,7 +256,7 @@ public class ANG_RiskEventGenerator {
 			if(re.ANG_OscarId__c != null) oscars.put(re.ANG_OscarId__c, null);
 
 			// sets the Unique Key (this field is also set on the generate method to match the upsert and on a workflow rule if source id is empty)
-			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_isMultipleType__c?String.valueOf(ID.valueOf(re.ANG_AccountId__c)):'')+re.ANG_Risk_ID__c;
+			if(re.ANG_Source_Id__c != null) re.ANG_UniqueKey__c = ID.valueOf(re.ANG_Source_Id__c)+(re.ANG_TargetAgency__c == 'Selected Accounts' ? String.valueOf(Id.valueOf(re.ANG_AccountId__c)) : '')+re.ANG_Risk_ID__c;
 		}
 
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
@@ -265,7 +268,8 @@ public class ANG_RiskEventGenerator {
 
 			//fetch HE account
 			Account mainAccount = accounts.get(re.ANG_AccountId__c);
-			if(Trigger.isExecuting && Trigger.isInsert) re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;			
+			if(Trigger.isExecuting && Trigger.isInsert) re.ANG_HE_AccountId__c = mainAccount.Top_Parent__c == null ? mainAccount.Id : mainAccount.Top_Parent__c;
+			if(re.ANG_TargetAgency__c == 'HE Account') re.ANG_AccountId__c = re.ANG_HE_AccountId__c;
 
 			if(re.ANG_OscarId__c != null) re.ANG_CaseId__c = oscars.get(re.ANG_OscarId__c);
 
@@ -343,7 +347,24 @@ public class ANG_RiskEventGenerator {
 				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
 			}
 			else if(condition.equalsIgnoreCase('Not equal to')){
-				for(String v : checkValue.split('\\s*[;,]\\s*')) if(!v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = true;
+				configResult = true;
+				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = false;
+			}
+
+			if(condition.equalsIgnoreCase('Includes')){
+				for(String cv : checkValue.split('\\s*[;,]\\s*')){
+					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
+						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = true;
+					}
+				}
+			}
+			else if(condition.equalsIgnoreCase('Does not Include')){
+				configResult = true;
+				for(String cv : checkValue.split('\\s*[;,]\\s*')){
+					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
+						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = false;
+					}
+				}
 			}
 
 			else if(condition.equalsIgnoreCase('Blank') && fieldValue == null)					configResult = true;

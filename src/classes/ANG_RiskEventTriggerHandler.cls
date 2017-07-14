@@ -51,9 +51,7 @@ public class ANG_RiskEventTriggerHandler {
             }
         }
 
-        if(changedRisks.isEmpty()) return;
-
-        new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
+        if(!changedRisks.isEmpty()) new ANG_RiskEventGenerator(changedRisks).loadInitialInformations();
     }
 
     private void generateMultiples(){
@@ -61,16 +59,13 @@ public class ANG_RiskEventTriggerHandler {
 
         for(ANG_Agency_Risk_Event__c re : triggerNew){
             if(
-                re.ANG_isMultipleType__c &&
-                re.ANG_OscarId__c != null &&
+                re.ANG_TargetAgency__c == 'Selected Accounts' &&
                 (Trigger.isInsert || re.ANG_OscarId__c != oldMap.get(re.Id).ANG_OscarId__c)
             ){
                 changedRisks.add(re);
             }
         }
 
-        if(changedRisks.isEmpty()) return;
-
-        new ANG_RiskEventGenerator(changedRisks).generateMultiples();
+        if(!changedRisks.isEmpty()) new ANG_RiskEventGenerator(changedRisks).generateMultiples();
     }
 }

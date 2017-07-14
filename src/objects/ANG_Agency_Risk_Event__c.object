@@ -242,6 +242,19 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_Risk_Configuration__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Configuration</label>
+        <referenceTo>ANG_Risk_Event_Configuration__c</referenceTo>
+        <relationshipLabel>Agency Risk Events</relationshipLabel>
+        <relationshipName>ANG_Risk_Events</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ANG_Risk_ID__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_Risk_Type__r.ANG_Risk_ID__c</formula>
@@ -298,6 +311,17 @@ Id
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_TargetAgency__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(ANG_Risk_Configuration__r.ANG_TargetAgency__c)</formula>
+        <label>Target Agency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_UniqueKey__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>This field is populated by the ANG_RiskEventGenerator.loadInitialInformation() method (called on the before trigger).</description>
@@ -319,16 +343,6 @@ Id
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_isMultipleType__c</fullName>
-        <externalId>false</externalId>
-        <formula>ANG_Risk_Type__r.ANG_isMultiple__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Is Multiple Type</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <label>Agency Risk Event</label>
     <listViews>
@@ -378,9 +392,9 @@ Id
     </recordTypes>
     <searchLayouts>
         <excludedStandardButtons>New</excludedStandardButtons>
-        <excludedStandardButtons>Forward</excludedStandardButtons>
-        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
         <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
         <lookupDialogsAdditionalFields>ANG_AccountId__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_Type__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
