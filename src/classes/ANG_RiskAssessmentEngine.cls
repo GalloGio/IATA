@@ -28,18 +28,40 @@ public class ANG_RiskAssessmentEngine{
         }
     }
 
-    private map<id,account > accInfoMap{ //map adjusted risk calculations
+    public class accHelperClass{  //helper class to store account Info
+        private integer nrAdjustedRE;
+        private boolean hasCashCondition;
+        private boolean hasLimitCashCondition;
+        private string remitanceFrequency;
+        private string accreditantionModel;
+        public accHelperClass(Integer nAdjs, boolean hasCashCond,boolean hasLimitCashCond,String remitFreq, String accrModel){
+            nrAdjustedRE=nAdjs;
+            hasCashCondition=hasCashCond;
+            hasLimitCashCondition=hasLimitCashCond;
+            remitanceFrequency=remitFreq;
+            accreditantionModel=accrModel;
+        }
+    }
+
+    private map<id,accHelperClass> accInfoMap{ //map adjusted risk calculations
         get{
             if(accInfoMap==null){
-                accInfoMap = new map<id,account>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_Accreditation_Model__c ,(select id from All_Risk_Events__r where  ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c ='Yes' AND ANG_Event_Status__c='Active') counter from account where id in :accCalcMap.keySet()]){
-                    accInfoMap.put(acc.id,acc);
+                accInfoMap = new map<id,accHelperClass>();
+                for(account acc:[select id,name, remittance_frequency__c,ANG_LimitCashConditions__c,ANG_Accreditation_Model__c ,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
+                    integer nAdjs=0;
+                    boolean hasCashCond=false;
+                    for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
+                        if(are.ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes') nAdjs++;
+                        hasCashCond=hasCashCond||are.ANG_Risk_Type__r.Limit_Cash_conditions__c;
+                    }
+                    accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c));
                 }
-            }            
+            }
             return accInfoMap;
         }
         private set;
     }
+
 
     
 
@@ -111,6 +133,7 @@ public class ANG_RiskAssessmentEngine{
     //============================ CONSTRUCTORS ====================================================
 
     public ANG_RiskAssessmentEngine(map<id,Map<id,integer>> AccMap){ // account -> calculation- Occurrence nr
+
         if(AccMap ==null) return;
         accCalcMap.putAll(AccMap);
         string accId=null;
@@ -131,7 +154,7 @@ public class ANG_RiskAssessmentEngine{
         }
 
         for(id accountId:accInfoMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).get('ANG_Accreditation_Model__c')=='Legacy' ||  accInfoMap.get(accountId).get('ANG_Accreditation_Model__c')=='Cashless')){
+            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel=='Legacy' ||  accInfoMap.get(accountId).accreditantionModel=='Cashless')){
                 accCalcMap.remove(accountId);
             }
 
@@ -187,17 +210,15 @@ public class ANG_RiskAssessmentEngine{
     public void assessment(){
         list<account> AccUpdList= new list<account>();
         for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
-            Account updAcc=new Account(id=accKey,ANG_HE_RiskHistoryAssessment__c='Passed');
+            Account updAcc=new Account(id=accKey);
             Integer accParentOccs=0;
             map<id,integer> groupingMap = accCalcMap.get(accKey);
-            
-            if(groupingMap==null){
-                AccUpdList.add(updAcc);
-                continue;
-            }
-            updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap,(String)accInfoMap.get(accKey).get('remittance_frequency__c'),accInfoMap.get(accKey).All_Risk_Events__r.size());            
             AccUpdList.add(updAcc);  
+            updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap,(String)accInfoMap.get(accKey).remitanceFrequency,accInfoMap.get(accKey).nrAdjustedRE);            
+            updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
         }
+
+        System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] - AccUpdList ' + AccUpdList);
         update AccUpdList;
     }
 
@@ -210,6 +231,7 @@ public class ANG_RiskAssessmentEngine{
     //============================ PRIVATE METHODS ====================================================
      private String calculateRiskHistoryAssessment(map<id,integer> groupingMap,String remiFreq, Integer nrAdjusRe){
         String result ='Passed';
+        if(groupingMap==null)return result;
         for(string reRec: groupingMap.keySet()){ // iterate groupings
             integer accParentOccs=groupingMap.get(reRec);                
             if(risCalcMap.containsKey(reRec)){ //validate REC
@@ -249,6 +271,10 @@ public class ANG_RiskAssessmentEngine{
         }
         return result;
      }
-     //============================ END PRIVATE METHODS ====================================================
 
-}
+
+    private boolean calculateCashCondition(id accId){
+        return accInfoMap.get(accId).hasCashCondition||accInfoMap.get(accId).hasLimitCashCondition;
+    }
+     //============================ END PRIVATE METHODS ====================================================
+ }
