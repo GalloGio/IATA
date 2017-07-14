@@ -35,6 +35,14 @@ public class AMS_InspectionHelper {
             return; // no processing to be done.
 
 
+        List<AMS_Inspection__c> oldInspections =
+            [SELECT Id,Account__c,Accreditation_Endorsement_organisation__c,Accreditation_Endorsement_Status_code__c
+            FROM AMS_Inspection__c
+            WHERE Account__c IN :agencyIds
+            AND ( Accreditation_Endorsement_organisation__r.Air_Code__c = 'ARC' OR
+                Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN')
+            ORDER By Account__c, Accreditation_Endorsement_Status_code__c ASC];
+
         Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c, Location_Class__c from Account where id IN :agencyIds]);
         List<Account> lsAgencies = [select Id, Status__c, Location_Class__c from Account where id IN :agencyIds];
         Set<Account> accountsToUpdate = new Set<Account>();
@@ -48,9 +56,21 @@ public class AMS_InspectionHelper {
             for(AMS_Inspection__c i:iataInspections) {
                 Integer status = Integer.valueOf(i.Accreditation_Endorsement_Status_code__c.charAt(0));
                 // accountToProcess = mapAgencies.get(i.Account__c);
+                if(i.Account__c == accountToProcess.Id){
                 Boolean found = false;
                 String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
-                if(i.Account__c == accountToProcess.Id){
+                    for(AMS_Inspection__c o : oldInspections) {
+                        if((accountToProcess.Location_Class__c=='W' && airlines.get(o.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('ARC'))
+                        || (accountToProcess.Location_Class__c!='W' && airlines.get(o.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('IATAN'))
+                             ) {
+                            if(i.Account__c == o.Account__c && i.Accreditation_Endorsement_organisation__c == o.Accreditation_Endorsement_organisation__c) {
+                                Integer oldStatus = Integer.valueOf(o.Accreditation_Endorsement_Status_code__c.charAt(0));
+                                if(maxStatus < oldStatus) {
+                                    maxStatus = oldStatus;
+                                }
+                            }
+                        }
+                    }
                     // for ARC
                     if((accountToProcess.Location_Class__c=='W' && airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('ARC'))
                     || (accountToProcess.Location_Class__c!='W' && airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('IATAN'))
@@ -67,8 +87,6 @@ public class AMS_InspectionHelper {
                                 found = true;
                             }
                         }
-                    } else {
-                        found = true;
                     }
 
                     if(found) {
@@ -83,17 +101,17 @@ public class AMS_InspectionHelper {
                             accountToProcess.Expiry_Date__c = i.Date_Organisation_Status_attained__c;
                         }
                         accountToProcess.Date_Organisation_Status_attained__c = i.Date_Organisation_Status_attained__c;
-                    }
-
                 //accordng to the type of airline, the status can be diff, so let's divide and conquer.
 
-                accountsToUpdate.add(accountToProcess);
 
                 if(newStatus != null && accountToProcess.Status__c <> newStatus){
 
                     accountToProcess.Status__c = newStatus;
 
                 }
+                        accountsToUpdate.add(accountToProcess);
+                    }
+
 
             }
         }
