@@ -262,11 +262,36 @@ private class IEC_Payment_Test {
 			Zuora__AuthTransactionId__c = controller.sfOrder.Zuora_Transaction_Id__c
 		);
 
+		Zuora__Payment__c zuoraPaymentInsert3 = new Zuora__Payment__c(
+			Name = 'P-99990003',
+			Zuora__Account__c = account.Id,
+			Zuora__Amount__c = controller.sfOrder.Total_Amount__c,
+			Zuora__ReferenceId__c = controller.sfOrder.Payment_Transaction_Number__c,
+			Zuora__PaymentMethod__c = 'Credit Card ' + controller.card.creditCardMaskNumber,
+			Zuora__BillingAccount__c = billingAccount.Id,
+			Zuora__EXT_ID__c = 'bbefbfbab1235bfaebecerfrc5413425',
+			Zuora__Status__c = 'Processed',
+			Zuora__AuthTransactionId__c = controller.sfOrder.Zuora_Transaction_Id__c,
+			Bypass_Trigger_Logic__c = true
+		);
+
 		try {
 			insert zuoraPaymentInsert2;
 		} catch (Exception e) {
 		}
 		
+		try {
+			zuoraPaymentInsert2.Bypass_Trigger_Logic__c = true;
+
+			update zuoraPaymentInsert2;
+		} catch (Exception e) {
+		}
+
+		try {
+			insert zuoraPaymentInsert3;
+		} catch (Exception e) {
+		}
+
 		Test.stopTest();
 	}
 
@@ -359,13 +384,15 @@ private class IEC_Payment_Test {
 		Zuora.zObject zi = new Zuora.zObject('Invoice');
 		Zuora.zObject zs = new Zuora.zObject('Subscription');
 
-		trgHndlrIECPayment.zObjectSetString(zp, 'Id', '1231231313123');
-		trgHndlrIECPayment.zObjectSetDate(zp, 'CreatedDate', System.today());
-		trgHndlrIECPayment.zObjectSetDecimal(zp, 'Amount', 0.0);
+		List<IEC_Error_Log__c> errorLogList = new List<IEC_Error_Log__c>();
 
-		trgHndlrIECPayment.zObjectSetString(zi, 'Id', '1231231313123');
+		zp.setValue('Id', '1231231313123');
+		zp.setValue('CreatedDate', System.today());
+		zp.setValue('Amount', 0.0);
 
-		trgHndlrIECPayment.zObjectSetString(zs, 'Id', '1231231313123');
+		zi.setValue('Id', '1231231313123');
+
+		zs.setValue('Id', '1231231313123');
 
 		List<Zuora.zObject> zPaymentList = new List<Zuora.zObject>();
 		List<Zuora.zObject> zInvoiceList = new List<Zuora.zObject>();
@@ -375,9 +402,9 @@ private class IEC_Payment_Test {
 		zInvoiceList.add(zi);
 		zSubscriptionList.add(zs);
 
-		trgHndlrIECPayment.zuoraDeletePayments(zPaymentList);
-		trgHndlrIECPayment.zuoraDeleteInvoices(zInvoiceList);
-		trgHndlrIECPayment.zuoraDeleteSubscriptions(zSubscriptionList);
+		trgHndlrIECPayment.zuoraDeletePayments(zPaymentList, errorLogList);
+		trgHndlrIECPayment.zuoraDeleteInvoices(zInvoiceList, errorLogList);
+		trgHndlrIECPayment.zuoraDeleteSubscriptions(zSubscriptionList, errorLogList);
 
 		Test.stopTest();
 	}

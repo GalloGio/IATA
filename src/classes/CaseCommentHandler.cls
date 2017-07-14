@@ -15,25 +15,21 @@ public with sharing class CaseCommentHandler {
             - Incoming case comment is public
     **/
     private static void preventInsertionInClosedCases(list<CaseComment> listComments) {
-        System.debug('*** listComments ' + listComments);
         Set<Id> caseIds = new Set<Id>();
         for (CaseComment caseComment : listComments) {
             caseIds.add(caseComment.parentId);
         }
-        System.debug('*** caseIds ' + caseIds);
+
         Map<Id, Case> casesMap = new Map<Id, Case>([
             SELECT Id, ClosedDate
             FROM Case
             WHERE Id IN :caseIds
             AND RecordType.DeveloperName IN :EmailMessageHandler.LIST_VALID_RT]);
-        
-        System.debug('*** casesMap ' + casesMap);
+
         List<CaseComment> caseComments = new List<CaseComment>();
         for (CaseComment caseComment : listComments) {
             Case parentCase = casesMap.get(caseComment.ParentId);
-            System.debug('*** > parentCase ' + parentCase);
             if (caseComment.IsPublished && parentCase!=null && parentCase.ClosedDate < Date.today().addDays(-14)) {
-                System.debug('*** > parentCase PREVENTED');
                 caseComment.addError('Case Comment ignored because the parent case is closed for more than 2 weeks'); // prevent insertion
             }
         }
