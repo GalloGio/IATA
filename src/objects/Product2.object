@@ -2040,7 +2040,7 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -6775,7 +6775,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9777,7 +9777,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12739,7 +12739,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulation</fullName>
+                <fullName>Live Animals Regulations</fullName>
                 <default>false</default>
             </values>
             <values>

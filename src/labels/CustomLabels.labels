@@ -5994,6 +5994,13 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
+        <fullName>IEC_Required_Field_Error_Msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IEC Required Field Error Msg</shortDescription>
+        <value>&lt;strong&gt;Error:&lt;/strong&gt; You must enter a value</value>
+    </labels>
+    <labels>
         <fullName>IEC_SAP_Customer_Address_Issue</fullName>
         <language>en_US</language>
         <protected>false</protected>

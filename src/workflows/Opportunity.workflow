@@ -97,6 +97,10 @@
             <recipient>wangw@iata.org</recipient>
             <type>user</type>
         </recipients>
+        <recipients>
+            <recipient>wyattj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
         <senderType>CurrentUser</senderType>
         <template>MACS_Admin/MMAlertonClosedDealsNrcrm</template>
     </alerts>
