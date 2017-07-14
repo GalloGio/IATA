@@ -2780,6 +2780,10 @@
                 <fullName>Closed – 3-month freeze period</fullName>
                 <default>false</default>
             </picklistValues>
+			<picklistValues>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
@@ -23618,6 +23622,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -26118,6 +26126,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29260,6 +29272,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -31764,6 +31780,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35798,6 +35818,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -38038,6 +38062,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43549,6 +43577,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -46180,6 +46212,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50637,6 +50673,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -55003,6 +55043,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -57747,6 +57791,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -60174,6 +60222,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -62599,6 +62651,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65400,6 +65456,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73058,6 +73118,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_HE_RiskHistoryAssessment</picklist>
@@ -77364,6 +77428,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+			<values>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
