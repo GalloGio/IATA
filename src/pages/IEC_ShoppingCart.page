@@ -8,6 +8,36 @@
 	    <html lang="en" class="ie ie9">
 	<![endif]-->
 	<!--[if !IE]><!-->
+
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.min.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.blockui,'/blockui/jquery.blockUI.js')}"/>
+   <apex:stylesheet value="{!URLFOR($Resource.blockui,'/blockui/jquery-ui.css')}"/>
+
+   <script type="text/javascript">
+    j$ = jQuery.noConflict(); 
+   function blockme() {
+       j$.blockUI({ css: {
+           border: 'none',
+           padding: '15px',
+           backgroundColor: '#000',
+           '-webkit-border-radius': '10px',
+           '-moz-border-radius': '10px',
+           opacity: .5,
+           color: '#fff'
+           } }); 
+     }
+
+    function redirectToCustomerInformation() {
+        var current = window.self.location.href;
+        
+        var prefix = current.substr(0, current.lastIndexOf("/"));
+
+        window.location.href = prefix + '/IEC_CustomerInformation';
+    }
+   </script>
+
+
 	
 	<html lang="{!language}">
 	<!--<![endif]-->
@@ -99,7 +129,9 @@
                                         <apex:param name="quantity" assignTo="{!quantity}" value="" />
                                     </apex:actionFunction>
 
+<!--
                                     <apex:actionFunction name="startCheckout" action="{!startCheckout}" status="startCheckoutStatus" reRender="inner_wrapper" />
+-->
 
                                     <!-- Custom integer Error Message  -->
                                     <apex:outputPanel id="customerMessageBlock">
@@ -233,12 +265,17 @@
 					        	    <ul class="list actions">
 						                <li><a href="{!$Site.BaseUrl}/IEC_ProductList" class="button secondary">{!$Label.Button_Continue_Shopping}</a></li>
 						                <li>
+											<!--
 						                	<button class="button" onclick="startCheckout();">
 						                		{!$Label.Button_Proceed_Checkout}
 												<apex:actionStatus id="startCheckoutStatus">
 					                                <apex:facet name="start"><img src="{!$Resource.IEC_progress}" style="margin-top: 5px; margin-left: 5px;" alt="x" /></apex:facet>
 					                            </apex:actionStatus>
 						                	</button>
+											-->
+											<apex:form >
+                                        		<apex:commandButton styleClass="button" onclick="blockme();" oncomplete="j$.unblockUI(); redirectToCustomerInformation();" action="{!startCheckout}" value="{!$Label.Button_Proceed_Checkout}" />
+											</apex:form>
 					                	</li>
 						            </ul>
 						        </div>

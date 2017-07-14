@@ -3597,6 +3597,17 @@ albam@iata.org</description>
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
+        <fullName>First_Campaign__c</fullName>
+        <description>Because the leads loss the campaign ID after creation (as a lead can be linked to many Campaigns), the idea is to keep track and be able to report on the campaign at the origin of this lead)</description>
+        <externalId>false</externalId>
+        <label>First Campaign</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>First_Name_A__c</fullName>
         <externalId>false</externalId>
         <label>First Name (A)</label>
@@ -4713,7 +4724,15 @@ albam@iata.org</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Africa &amp; Middle East</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Asia Pacific</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China &amp; North Asia</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4721,7 +4740,15 @@ albam@iata.org</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Latin America</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>MENA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Middle East &amp; North Africa</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -4737,7 +4764,7 @@ albam@iata.org</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia &amp; CIS</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -7575,7 +7602,7 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia %26 CIS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8549,7 +8576,7 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia %26 CIS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9606,7 +9633,7 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia %26 CIS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10704,7 +10731,15 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Asia Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10712,7 +10747,15 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Latin America</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>MENA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Middle East %26 North Africa</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10728,7 +10771,7 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia %26 CIS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11834,7 +11877,7 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Russia and CIS</fullName>
+                <fullName>Russia %26 CIS</fullName>
                 <default>false</default>
             </values>
             <values>
