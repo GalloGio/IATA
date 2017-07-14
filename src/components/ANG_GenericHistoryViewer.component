@@ -37,7 +37,7 @@
 
 			<apex:column >
 				<apex:facet name="header">Action</apex:facet>
-					<apex:outputPanel rendered="{!AND(row.fieldName <> 'created',row.fieldName <> 'parent')}">
+					<apex:outputPanel rendered="{!AND(row.fieldName <> 'created',row.fieldName <> 'Parent')}">
 						<b>{!row.fieldName}</b> changed from&nbsp;
                          <b>
                              <apex:outputField rendered="{!row.isLookUpValueOld}" value="{!row.oldObj[row.fieldAPIName]} "/>
