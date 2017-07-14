@@ -19,7 +19,9 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		manageDowngrades();
 	}
-	public void onAfterUpdate() {}
+	public void onAfterUpdate() {
+		runRiskAssessment();
+	}
 
 	public void onBeforeDelete(){}
 	public void onAfterDelete() {}
@@ -206,4 +208,16 @@ public class ANG_AccountTriggerHandler {
 		private Case commCase;
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
+
+	private static void runRiskAssessment() {
+        
+        Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+        for(account acc : triggerNew){  
+            if(acc.ANG_LimitCashConditions__c!= oldMap.get(acc.Id).ANG_LimitCashConditions__c && !acc.ANG_LimitCashConditions__c) involvedAccounts.put(acc.id,null);
+        }
+
+        if(involvedAccounts.isEmpty()) return;
+
+        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+    }
 }

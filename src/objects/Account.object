@@ -2857,6 +2857,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_LimitCashConditions__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>
@@ -4088,7 +4096,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
+        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.BSP_Country_free_text__c, &apos;&apos;)</formula>
         <label>BSP Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -4909,7 +4917,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CASS_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
+        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.CASS_Country_free_text__c, &apos;&apos;)</formula>
         <label>CASS Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
