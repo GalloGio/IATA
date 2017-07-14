@@ -254,7 +254,7 @@ public class ANG_AccountTriggerHandler {
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
 
-	private static void runRiskAssessment() {
+	private void runRiskAssessment() {
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(account acc : triggerNew){  
