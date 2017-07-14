@@ -84,7 +84,7 @@ public with sharing class ANG_GenericHistoryViewerController {
             String tmpOld = history.get('Old_Value__c') != null ? String.valueOf(history.get('Old_Value__c')) : '<blank>';
             String tmpNew = history.get('New_Value__c') != null ? String.valueOf(history.get('New_Value__c')) : '<blank>';
             
-		boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
+        boolean isLookupValue = ( (tmpOld == null || tmpOld == '' || tmpOld == '<blank>') ? false : isLookUpValueMap.get(tmpOld)) || ((tmpNew == null || tmpNew == '' || tmpNew == '<blank>')? false : isLookUpValueMap.get(tmpNew));
             
             mergedHistoric.add(new GenericHistoryWrapper(
                                 history.get('CreatedById'),
@@ -99,33 +99,27 @@ public with sharing class ANG_GenericHistoryViewerController {
 
         Map<String, Schema.SObjectField> objFieldsMap = Schema.getGlobalDescribe().get(trackedObjApiName).getDescribe().fields.getMap();
 
-        //Set<String> duplicated = new Set<String>();
-
-
-
         //add the standard history 
         //(2017/03/29 note: test classes do not create history record in the standard history table and
         //we cannot insert records in these tables, this is why this code is not covered)
         for(Sobject history : standardHistoryRecords){
 
 
-
             String tmpOld = history.get('OldValue') != null ? String.valueOf(history.get('OldValue')) : '<blank>';
             String tmpNew = history.get('NewValue') != null ? String.valueOf(history.get('NewValue')) : '<blank>';
 
             String trackedFieldApiName = (String)history.get('Field') == 'TextName' ? 'Name' : (String)history.get('Field'); String trackedFieldLabel = trackedFieldApiName;
-            System.debug('trackedFieldApiName ' + trackedFieldApiName);
 
-            if(trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType') 
+            if(objFieldsMap.get(trackedFieldApiName) != null && trackedFieldApiName != 'created' && trackedFieldApiName != 'RecordType'){
                 trackedFieldLabel = objFieldsMap.get(trackedFieldApiName).getDescribe().getLabel();
-
-			/*
+            }
+            /*
             if(duplicated.contains(String.valueOf(history.get('CreatedDate')) + history.get('CreatedById') + trackedFieldApiName))
                 continue;
             else
                 duplicated.add(String.valueOf(history.get('CreatedDate')) + history.get('CreatedById') + trackedFieldApiName);
-			*/
-			
+            */
+            
             //for some reason record type changes generate 2 records in history table???!!! one has the values with Ids of the record types
             //and the other has the value with the label of the record type. we just want to keep the one with the names
             if((trackedFieldLabel == 'RecordType' && tmpOld.startsWith('012') )|| trackedFieldApiName == 'created' )
@@ -188,7 +182,7 @@ public with sharing class ANG_GenericHistoryViewerController {
         public String fieldName {get; set;}
         public Boolean isCustom {get; set;}
         public Boolean isLookUpValueNew {get; set;}
-		public Boolean isLookUpValueOld {get; set;}
+        public Boolean isLookUpValueOld {get; set;}
 
         public sObject oldObj {get; set;}
         public sObject newObj {get; set;}
@@ -196,7 +190,7 @@ public with sharing class ANG_GenericHistoryViewerController {
         public GenericHistoryWrapper(Object createdById, String createdByName, String createdDate, Object oldValue, Object newValue, String fieldName, Boolean isCustom, String fieldAPIName, boolean isLookUpValueIn){
             
             this.isLookUpValueOld = (isLookUpValueIn && oldValue != '<blank>');
-			this.isLookUpValueNew = (isLookUpValueIn && newValue != '<blank>');
+            this.isLookUpValueNew = (isLookUpValueIn && newValue != '<blank>');
             
             //System.debug('Creating new GenericHistoryWrapper with values|oldValue:'+oldValue + '|newValue:'+newValue + '|fieldName:'+fieldName + '|fieldAPIName:'+fieldAPIName + '|isLookUpValue:' +isLookUpValue);
 
@@ -207,23 +201,27 @@ public with sharing class ANG_GenericHistoryViewerController {
             this.oldValue = oldValue;
             this.newValue = newValue;
             
-			Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
+            Id idOfTheObject = ApexPages.currentPage().getParameters().get('id');
             
             //small little pirate hack :)
             if(fieldAPIName == 'RecordType')
-            	fieldAPIName = 'RecordTypeId';
+                fieldAPIName = 'RecordTypeId';
+            if(fieldAPIName == 'Parent')
+                fieldAPIName = 'ParentId';
+
+
             
             if(isLookUpValueOld){
                 this.oldObj = idOfTheObject.getSObjectType().newSObject();
                 oldObj.put(String.valueOf(fieldAPIName), oldValue);
-			}
+            }
             
             if(isLookUpValueNew){
-				this.newObj = idOfTheObject.getSObjectType().newSObject();    
+                this.newObj = idOfTheObject.getSObjectType().newSObject();    
                 newObj.put(String.valueOf(fieldAPIName), newValue);
             }
 
- 			this.fieldName = fieldName;
+            this.fieldName = fieldName;
             this.isCustom = isCustom;
         }
 
