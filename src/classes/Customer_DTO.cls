@@ -1,5 +1,22 @@
 public class Customer_DTO 
 {
+    // Ecommerce Enhancements
+    private static Boolean isLoginEvent = false;
+    private static Customer_DTO loginEventSingleton = null;
+    private static Id loginContactId = null;
+
+    public static void setLoginEvent(Id contactId) {
+        isLoginEvent = true;
+        loginContactId = contactId;
+    }
+
+    public static void resetLoginEvent() {
+        isLoginEvent = false;
+        loginContactId = null;
+    }
+
+    // Ecommerce Enhancements end
+
     private static Customer_DTO singleton = null;
 
     public User sfUser { get; set; }
@@ -127,6 +144,7 @@ public class Customer_DTO
     return false;
 }
 
+/*
     public static Customer_DTO getLoggedCustomer()
     {
         //-- If logged user 
@@ -149,6 +167,58 @@ public class Customer_DTO
             return null; 
         }   
     }
+*/
+
+    // Ecommerce Enhancements - new version to hook on login event
+    public static Customer_DTO getLoggedCustomer()
+    {
+        if (isLoginEvent == false) {
+            // Existing behaviour (default)
+            //-- If logged user 
+            if(UserInfo.getUserType() == 'PowerPartner')
+            {
+                if(singleton == null)
+                {
+                    Customer_DTO customer = getCustomerByUser(UserInfo.getUserId());  
+                    
+                    //-- Build Customer addresses 
+                    setCustomerAddresses(customer);
+                    singleton = customer; 
+                }
+
+                return singleton;
+            }
+            //-- Non logged user 
+            else
+            {
+                return null; 
+            }   
+        } else {
+            // New Behaviour, create simulation of logged in user on login event
+            if (loginEventSingleton == null) {
+                Customer_DTO customer = getCustomerByContact(loginContactId);
+
+                setCustomerAddresses(customer);
+                loginEventSingleton = customer;
+            }
+
+            return loginEventSingleton;
+        }
+    }
+
+    public static Customer_DTO getCustomerByContact(Id contactId) {
+        List<User> userList = [SELECT Id, ContactId FROM User WHERE ContactId = :contactId];
+
+        if (userList != null && userList.isEmpty() == false) {
+            User user = userList[0];
+
+            return getCustomerByUser(user.Id);
+        } else {
+            return null;
+        }
+    }
+
+    // Ecommerce Enhancements end
 
     public static Customer_DTO getCustomerByUser(Id userId)
     {
