@@ -75,7 +75,6 @@ public with sharing class EmailMessageHandler {
 	public static final String ORG_ADDRESS_FROM = 'noreply@iata.org';
 	public static final list<String> LIST_VALID_RT = new list<String>{'CasesEurope','CasesAmericas','CasesMENA','ExternalCasesIDFSglobal','Cases_China_North_Asia','ComplaintIDFS'};
 	public static void sendEmailToSenderWhenCaseClosed(list<EmailMessage> listNewEmail) {
-        System.debug('*** listNewEmail ' + listNewEmail);
 		// create a map with parent cases as key and their emails as value
 		map<Id,list<EmailMessage>> mapCaseIdEmail = new map<Id,list<EmailMessage>>();
 		for (EmailMessage em : listNewEmail) {
@@ -88,7 +87,7 @@ public with sharing class EmailMessageHandler {
 				mapCaseIdEmail.put(em.ParentId, listEmails);
 			}
 		}
-		System.debug('*** mapCaseIdEmail ' + mapCaseIdEmail);
+		
 		// find, in previously selected cases, those that fit the conditions:
 		// a valid RT and closed fror more than 2 weeks
 		map<Id,Case> mapCases = new map<Id,Case>();
@@ -99,12 +98,11 @@ public with sharing class EmailMessageHandler {
 				WHERE id IN :mapCaseIdEmail.keyset()
 				AND RecordType.DeveloperName IN :LIST_VALID_RT]
 				) {
-            System.debug('*** > cse ' + cse);
 			if (cse.ClosedDate < Date.today().addDays(-14)) {
 				mapCases.put(cse.Id, cse);
 			}
 		}
-		System.debug('*** mapCases ' + mapCases);
+		
 		if (mapCases.isEmpty()) return;
 		
 		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE address = :ORG_ADDRESS_FROM];
@@ -128,7 +126,7 @@ public with sharing class EmailMessageHandler {
 				}
 			}
 		}
-        System.debug('*** listSendEmail ' + listSendEmail);
+
 		// send emails created if exist
 		if (!listSendEmail.isEmpty()) Messaging.sendEmail(listSendEmail);
 	}
