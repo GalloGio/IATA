@@ -521,13 +521,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public boolean hasTopLocationType(Id acctId){
 		
+		
+		Account a = [Select Id, Location_Type__c from Account where Id = :acctId];
+
+		/*
 		for(HierarchyItem item:hierarchyValues){
 			if(item.acc.Id == acctId && item.acc.Location_Type__c == AMS_Utils.HE)
 				return true;
 		}
 
-		return false;
 
+		return false;
+		*/
+
+		return a.Location_Type__c == AMS_Utils.HE;
 	}
 
 	public boolean isJustOneAgencySelected(){

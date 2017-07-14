@@ -37,16 +37,28 @@ public with sharing class ANG_AgencyChangesHelper {
 
         public void runUpsert(){
 
-        	if(relationsMap != null && !relationsMap.isEmpty())
-        		upsert relationsMap.values();
+        	System.debug('[ANG_AgencyChangesHelper] Running upsert');
+
+        	AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
+
+            if(relationsMap != null && !relationsMap.isEmpty()){
+        		System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
+                upsert relationsMap.values();
+            }
         	
 
-        	if(accountsMap != null && !accountsMap.isEmpty())
-        		upsert accountsMap.values();
+            if(accountsMap != null && !accountsMap.isEmpty()){
+        		System.debug('[ANG_AgencyChangesHelper] Upserting following accounts:'+accountsMap);
+                upsert accountsMap.values();
+            }
 
         	if(changeCodesToCreate != null && !changeCodesToCreate.isEmpty())
         		insert changeCodesToCreate;
         	
+        	AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
+
+			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
+
         }
 
 		public void addChangesStruct(Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> changesStruct){
@@ -89,12 +101,17 @@ public with sharing class ANG_AgencyChangesHelper {
 				sanityCheckValidations(oscar, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
-
-				if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.Process__c))
+				
+                System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
+                
+				if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 
-				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.Process__c))
+				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet);
+
+	 			if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
+                    changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 
@@ -122,7 +139,11 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet) {
-
+		
+        System.debug('[ANG_AgencyChangesHelper] - Entering ProcessHierarchyChanges Method');
+        System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
+        System.debug('[ANG_AgencyChangesHelper] - ChangesContainer is'+changesContainer);
+        
 		Set<String> tocList = new Set<String>();
 		tocList.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
 
@@ -158,6 +179,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
+				parentAccount.Top_Parent__c = oscarToProcess.Account__c;
 
 				Account childAccount = new Account(Id = rel.Child_Account__c);
 
@@ -168,6 +190,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				childAccount.ANG_HE_CashCondition__c = parentAccount.ANG_HE_CashCondition__c;
 				childAccount.ANG_HE_RiskHistoryAssessment__c = parentAccount.ANG_HE_RiskHistoryAssessment__c;
 				childAccount.ANG_HE_RiskStatus__c = parentAccount.ANG_HE_RiskStatus__c;
+				childAccount.Top_Parent__c = null;
 
 				parentAccount.ANG_IEP_HE_AccntNum__c = null;
 				parentAccount.ANG_IEP_Status__c = null;
@@ -182,7 +205,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			} else{
 
-				Account relAccount = new Account(Id = rel.Child_Account__c, ParentId = oscarToProcess.Account__c);
+				Account relAccount = new Account(Id = rel.Child_Account__c, Top_Parent__c = oscarToProcess.Account__c, ParentId = oscarToProcess.Account__c);
 				toReturn.addAccount(relAccount);
 
 			}
@@ -230,6 +253,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account oscarAccount = new Account(Id = oscarToProcess.Account__c);
 			oscarAccount.Location_Type__c = AMS_Utils.AE;
 			oscarAccount.ParentId = oscarToProcess.New_parent__c;
+			oscarAccount.Top_Parent__c = oscarToProcess.New_parent__c;
 			oscarAccount.ANG_IEP_HE_AccntNum__c = null;
 			oscarAccount.ANG_IEP_Status__c = null;
 			oscarAccount.ANG_HE_CashCondition__c = false;
@@ -286,6 +310,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				Account newHe = new Account(Id = oscarToProcess.New_parent__c);
 				newHe.Location_Type__c = AMS_Utils.HE;
 				newHe.ParentId = null;
+				newHe.Top_Parent__c = null;
 				newHe.ANG_IEP_HE_AccntNum__c = null;
 				newHe.ANG_IEP_Status__c = 'No IEP Account';
 				newHe.ANG_HE_CashCondition__c = false;
@@ -300,7 +325,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = accountID , Parent_Account__c = oscarToProcess.New_parent__c, Hierarchy__c = newH.Id);
 			toReturn.addRelation(rel);
 			
-			Account a = new Account(id = accountID, ParentId = oscarToProcess.New_parent__c, Location_Type__c = AMS_Utils.AE);
+			Account a = new Account(id = accountID, Top_Parent__c = oscarToProcess.New_parent__c, ParentId = oscarToProcess.New_parent__c, Location_Type__c = AMS_Utils.AE);
 
 			a.ANG_IEP_HE_AccntNum__c = null;
 			a.ANG_IEP_Status__c = null;

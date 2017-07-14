@@ -27,7 +27,6 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
         req.setHeader('Content-Type', 'application/json');
 	 	req.setMethod(action);
 	 	req.setTimeout(120000);
-
 		//req.setEndpoint('https://iata-agencies-process.cloudhub.io'+endPointCredential+body+'?client_id=6235b6a786ae4e6c88526cd20fd3d2d0&client_secret=d629863C84E5458dB25778e8f7351d02');
 		req.setEndpoint('callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret);
 
@@ -35,7 +34,26 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
    
         
 		Http http = new Http();
-		HTTPResponse res = http.send(req);	
+		HTTPResponse res;
+
+		try{
+			res = http.send(req);	
+		}catch(CalloutException e){
+
+			System.debug('ANG_CalloutIEPMasterdata: Exception:'+e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
+
+			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+			log.Agency_Applied_Change_code__c = changeCodeId;
+			log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+			log.Method__c = action;
+			log.Web_Service__c = String.valueOf(req);
+			log.Error_Code__c = 'Exception sending request';
+			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
+			log.Success__c = false;
+			insert log;
+
+			return;
+		}
 
 		System.debug('ANG_CalloutIEPMasterdata: Request Status:'+res.getStatus());
 		System.debug('ANG_CalloutIEPMasterdata: Request Code:'+res.getStatusCode());

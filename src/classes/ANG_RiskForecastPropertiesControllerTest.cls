@@ -10,7 +10,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
         insert ctry ;
 
         Id accountAgencyRT = AMS_Utils.getId('Account', 'IATA_Agency');
-        Account a1 = new Account(Remittance_frequency__c = 'Every 5 days' , Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        Account a1 = new Account(Remittance_frequency__c = 'Every 5 days' , ANG_Accreditation_Model__c = 'Cash', Financial_Review_Result__c = 'Satisfactory - No Action' ,ANG_HE_CashCondition__c = false , ANG_HE_RiskStatus__c = 'B' , IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = 'Approved');
         insert a1;
         
         Case sidraLiteCase = new Case();
