@@ -2723,6 +2723,14 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>ANG_LimitCashConditions__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), TEXT(ANG_HE_RiskStatus__c), TEXT(Parent.ANG_HE_RiskStatus__c))</formula>
