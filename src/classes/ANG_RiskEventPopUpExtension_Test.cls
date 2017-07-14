@@ -5,8 +5,7 @@ public class ANG_RiskEventPopUpExtension_Test{
 		ANG_Risk_Event_Type__c ret1= new ANG_Risk_Event_Type__c(
 			name= 'Risk Type 1',
 			ANG_Risk_ID__c='1',
-			ANG_Expiration__c=12,
-			ANG_isMultiple__c=true
+			ANG_Expiration__c=12
 		);
 		insert ret1;
 
