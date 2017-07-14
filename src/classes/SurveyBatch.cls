@@ -9,7 +9,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
   global list<Case> cases;
   global Set<Id> ContactIds;
   //global List<Email> MyEmailToBeSent;
-  global map<string, Id> templates = new map<string, Id>();
+  global map<string, Id> templates = new map<string, Id>(); 
   //global String RoleName;
   global string log;
 

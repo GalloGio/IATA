@@ -8,7 +8,7 @@ public class SurveyBatchTest {
   public static final ID FDS_ICCS_Email_to_CaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('FDS_ICCS_Email_to_Case');
   public static final ID Cases_SIS_Help_DeskRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Cases_SIS_Help_Desk');
   public static final ID processRTId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
-  public static final ID aCAId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application');
+  public static final ID aCAId = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Coding_Application'); 
 
 
   @testSetup
