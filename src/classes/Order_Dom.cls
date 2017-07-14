@@ -59,6 +59,9 @@ public without sharing class Order_Dom {
         getData(true, true);
         //Prevent modification to some fields at some Status
         Order_Svc.preventModification(newMap,oldMap);
+
+        // Ecommerce Enhancements R2 
+        Order_Svc.setOrderAcceptedPaymentMethods(newList, oldMap);
     }
 
     private void onBeforeDelete() {

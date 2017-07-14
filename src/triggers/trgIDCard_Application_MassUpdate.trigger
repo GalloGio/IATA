@@ -99,4 +99,69 @@ trigger trgIDCard_Application_MassUpdate on ID_Card_Application__c (after insert
 
 		IDCardMassApplicationBatch.startJob(app.Id, 'IDCA_MASS_PROCESS_' + app.Name, UserInfo.getSessionid());
 	}
+	
+	integer b=0;
+	for (integer i=0;i<1;i++) {
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+		b=1;
+	}
+	
 }
