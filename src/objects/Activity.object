@@ -313,7 +313,6 @@
         <label>Today&apos;s Tasks</label>
     </listViews>
     <searchLayouts>
-        <listViewButtons>Close_Task</listViewButtons>
         <searchResultsAdditionalFields>TASK.SUBJECT</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TASK.CREATED_DATE</searchResultsAdditionalFields>
