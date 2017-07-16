@@ -123,7 +123,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		String toReturn = 'SELECT ' + fields + ', RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+		String toReturn = 'SELECT ' + fields + ', RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, AMS_Online_Accreditation__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
 		
         System.debug('Returning ' + toReturn);
         return toReturn;
