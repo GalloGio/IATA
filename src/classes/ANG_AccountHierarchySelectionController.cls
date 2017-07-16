@@ -125,6 +125,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'Mixed types of changes',
 					'If you are performing a change of Hierarchy and Accreditation Type, you must selected a New Parent from the source hierarchy.'
 				);
+
+				errorMessages.put(
+					'Terminated Accounts',
+					'The destination agency cannot be a terminated account.'
+				);
+
 				
 
 				
@@ -379,6 +385,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
 			if(oscar.New_parent__c == null)
 				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
+
+			if(oscar.New_parent__c != null && isTerminatedAccount(oscar.New_parent__c))
+				errorChecks.put('Terminated Accounts', true);
 			if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected())
 				errorChecks.put('Orphan Accounts', true);
 			if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c))
@@ -535,6 +544,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		*/
 
 		return a.Location_Type__c == AMS_Utils.HE;
+	}
+
+	public boolean isTerminatedAccount(Id acctId){
+
+		Account a = [Select Id, Status__c from Account where Id = :acctId];
+
+		return a.Status__c == 'Terminated';
+
 	}
 
 	public boolean isJustOneAgencySelected(){
