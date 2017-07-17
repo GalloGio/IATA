@@ -6542,7 +6542,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
         for(String iataCode : agencySelectedBranches){
             Account accConcerned =  agencies.get(iataCode);
-            if(accConcerned.Id != newCase.Account_Concerned__c){
+            if(accConcerned.Id != newCase.Account_Concerned__c && accConcerned.Id != newCase.AccountId){
                 
                 Case child = newCase.clone(false, true);
                  
