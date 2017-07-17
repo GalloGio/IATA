@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_New_comment_on_case_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn;accaisis2develop@acca.com.cn</ccEmails>
+        <ccEmails>accabspdevelop@acca.com.cn;accaisis2develop@acca.com.cn.testsandbox</ccEmails>
         <description>ACCA: New comment on case (ISIS2 &amp; ISIS2D)</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -10,7 +10,7 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Customer_Service_Request_Comment</fullName>
-        <ccEmails>rdpc.support@acca.com.cn</ccEmails>
+        <ccEmails>rdpc.support@acca.com.cn.testsandbox</ccEmails>
         <description>ACCA: Notification on new Customer Service Request Comment</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -64,7 +64,7 @@
     </alerts>
     <alerts>
         <fullName>New_comment_notification_on_ACR_ISIS2_D_to_IATA_migration_team</fullName>
-        <ccEmails>isis2@iata.org</ccEmails>
+        <ccEmails>isis2@iata.org.testsandbox</ccEmails>
         <description>New comment notification on ACR ISIS2-D to IATA migration team</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -72,7 +72,7 @@
     </alerts>
     <alerts>
         <fullName>New_comment_on_case</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accabspdevelop@acca.com.cn.testsandbox</ccEmails>
         <description>ACCA: New comment on case</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
@@ -91,7 +91,7 @@
             <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>SIS_Help_Desk/SIS_HD_New_Case_Comment</template>
     </alerts>
     <alerts>
@@ -103,7 +103,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>SIS_Help_Desk/SIS_HD_New_Case_Comment</template>
     </alerts>
     <alerts>
@@ -592,16 +592,8 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( $User.Id &lt;&gt; Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ), 
-OR ( 
-Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;, 
-Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;, 
-Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;, 
-Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;, 
-Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;, 
-Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;, 
-Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos; ),
-DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
+        <formula>AND ( $User.Id  &lt;&gt;  Parent.Owner:User.Id, ISPICKVAL(Parent.Status, &apos;Closed&apos; ), OR ( Parent.RecordType.DeveloperName = &apos;CasesEurope&apos;, Parent.RecordType.DeveloperName = &apos;CasesAmericas&apos;, Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;, Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;, Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;, Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;, Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos;,
+Parent.RecordType.Name = &quot;Cases - IFG&quot; ) )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -611,7 +603,8 @@ DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot; ))</formula>
+        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot;,
+Parent.RecordType.Name = &quot;Cases - IFG&quot;))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

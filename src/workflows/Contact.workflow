@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered</fullName>
-        <ccEmails>noreply@iata.org</ccEmails>
+        <ccEmails>noreply@iata.org.testsandbox</ccEmails>
         <description>Alert admins that a contact has registered</description>
         <protected>false</protected>
         <recipients>
@@ -10,12 +10,12 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/Notify_Admin_of_user_creationVF</template>
     </alerts>
     <alerts>
         <fullName>Alert_admins_that_a_contact_has_registered_cns</fullName>
-        <ccEmails>noreply@iata.org</ccEmails>
+        <ccEmails>noreply@iata.org.testsandbox</ccEmails>
         <description>Alert admins that a contact has registered - CNS</description>
         <protected>false</protected>
         <recipients>
@@ -23,12 +23,12 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/Notify_Admin_of_user_creationVF_cns</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Client_EF_Contact_Deactivation</fullName>
-        <ccEmails>efs@iata.org</ccEmails>
+        <ccEmails>efs@iata.org.testsandbox</ccEmails>
         <description>E&amp;F : Email Notification On Client E&amp;F Contact Deactivation</description>
         <protected>false</protected>
         <recipients>
@@ -36,12 +36,12 @@
             <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
         <fullName>EF_Email_Notification_On_Operator_EF_Contact_Deactivation</fullName>
-        <ccEmails>efs@iata.org</ccEmails>
+        <ccEmails>efs@iata.org.testsandbox</ccEmails>
         <description>E&amp;F : Email Notification On Operator E&amp;F Contact Deactivation</description>
         <protected>false</protected>
         <recipients>
@@ -49,7 +49,7 @@
             <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>unfiled$public/EF_Contact_Deactivation_Notification</template>
     </alerts>
     <alerts>
@@ -61,7 +61,7 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
     </alerts>
     <alerts>
@@ -73,7 +73,7 @@
             <type>accountTeam</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_BSP_CASS_Payment_contact</template>
     </alerts>
     <alerts>
@@ -85,7 +85,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_T_Dashboard_granted</template>
     </alerts>
     <alerts>
@@ -97,7 +97,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_TDpremium_granted</template>
     </alerts>
     <alerts>
@@ -109,7 +109,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Notify_contact_of_TDpremium_granted_First</template>
     </alerts>
     <alerts>
@@ -121,7 +121,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_Portal_User_Status_Change_Inac_VF</template>
     </alerts>
     <alerts>
@@ -133,7 +133,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
     </alerts>
     <alerts>
@@ -145,7 +145,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISSP_Alert_If_Contact_Info_Is_Modified</template>
     </alerts>
     <alerts>
@@ -157,7 +157,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF</template>
     </alerts>
     <alerts>
@@ -169,12 +169,12 @@
             <type>email</type>
         </recipients>
         <senderAddress>cns_noreply@cnsc.us</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ISS_Portal/ISS_Portal_User_Status_Change_VF_CNS</template>
     </alerts>
     <alerts>
         <fullName>Renewal_Email_alert</fullName>
-        <ccEmails>emailtosalesforce@63lv520ssbnqnqm4j9qg25k5r.2-8tfeay.eu3.le.salesforce.com</ccEmails>
+        <ccEmails>emailtosalesforce@63lv520ssbnqnqm4j9qg25k5r.2-8tfeay.eu3.le.salesforce.com.testsandbox</ccEmails>
         <description>Renewal Email alert</description>
         <protected>false</protected>
         <recipients>
@@ -182,7 +182,7 @@
             <type>email</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>ID_Card_templates/IDCard_RenewalEmail</template>
     </alerts>
     <fieldUpdates>
@@ -309,6 +309,19 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Record</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
     <rules>
         <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
         <actions>
@@ -373,6 +386,16 @@
         </criteriaItems>
         <description>Updates &quot;Email Status Update &quot; field whenever changes in Email changes field.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Update_Record</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_RenewalNotice</fullName>
