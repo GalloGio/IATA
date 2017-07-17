@@ -1,3 +1,4 @@
+@isTest
 public without sharing class TestObjectCreator {
 
     public static List<FAQ__kav> createFAQArticles(Integer size)
