@@ -126,7 +126,7 @@ private class AMS_InspectionHelperTest {
 
         insert agencylist;
 
-        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATAN');
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATA');
         insert ao;
 
         Test.startTest();
@@ -210,7 +210,7 @@ private class AMS_InspectionHelperTest {
 
         insert agencyInspectionList;
 
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__c IN :agencyList];
         for(AMS_Inspection__c i:inspections)
         {
             if(i.Accreditation_Endorsement_Status_code__c == '0')
@@ -240,7 +240,7 @@ private class AMS_InspectionHelperTest {
         updateAll.add(ins5);
         update updateAll;
 
-        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
+        inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Account__c IN :agencyList];
         for(AMS_Inspection__c i:inspections)
         {
             if(i.Accreditation_Endorsement_Status_code__c == '0')
