@@ -52,6 +52,7 @@ private class ISSP_PortalUserStatusChangeTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
+        con.Community__c = 'E-Commerce';
         insert con;
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(con));
 
@@ -111,6 +112,7 @@ private class ISSP_PortalUserStatusChangeTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
+        con.Community__c = 'E-Commerce';
         insert con;
         ISSP_PortalUserStatusChange controler = new ISSP_PortalUserStatusChange(new Apexpages.Standardcontroller(con));
         controler.contactId = con.Id;
@@ -166,6 +168,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test1@test.com';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Portal_Applications__c portalApp = new Portal_Applications__c();
@@ -260,6 +263,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Portal_Applications__c portalApp = new Portal_Applications__c();
@@ -343,6 +347,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Rejected';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Test.startTest();
