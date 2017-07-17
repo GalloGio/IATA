@@ -64,8 +64,9 @@ public class clsCaseCommentManager {
                     
                     // ********* ACR &  DPC SR cases Notifications **************
                     // Added by shai Fisher in 31/07/14
-                    if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)') ||
-                        (cm.Parent.RecordType.Name == 'Application Change Request (DPC System)')) {
+                    if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)') ||    
+                        (cm.Parent.RecordType.Name == 'Application Change Request (DPC System)') ||
+                        (cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems) - ACCA')) {
                         if (cm.Parent.Owner.Email != null)
                             ccaddress.add(cm.Parent.Owner.Email);
                             

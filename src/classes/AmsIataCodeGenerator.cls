@@ -127,6 +127,7 @@ global class AmsIataCodeGenerator{
                 theAccreditation.A_Code__c = theAccreditation.IATACode__c.subString(2, 3);
                 theAccreditation.N_Code__c = theAccreditation.IATACode__c.subString(3, 7);
                 checkDigitCreation(theAccreditation, theAccount, false);
+                theAccount.Site = theAccreditation.IATACode__c;
                 theAccreditation.IATACode__c = theAccreditation.IATACode__c+theAccreditation.Chk_Dgt__c;
                 
                 theAccount.IATACode__c = theAccreditation.SAAM_Case__r.OSCAR__r.Account__r.Top_Parent__r.IATACode__c.subString(0, 7)+theAccreditation.CASS_Number__c;

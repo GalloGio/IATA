@@ -4092,7 +4092,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
+        <formula>IATA_ISO_Country__r.Name</formula>
         <label>BSP Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -4913,7 +4913,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CASS_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.Name, &apos;&apos;)</formula>
+        <formula>IATA_ISO_Country__r.Name</formula>
         <label>CASS Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -70073,7 +70073,27 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-days</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
