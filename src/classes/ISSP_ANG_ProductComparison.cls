@@ -3,9 +3,8 @@ public with sharing class ISSP_ANG_ProductComparison {
     public list<string> lsAllFeatures {get; set;}
 
 	public List<String> headers {get; set;}
-	public List<List<String>> lines {get; set;}
-    public Map<String, List<String>> linesMap {get; set;}
-    public List<String> applyNowLine {get; set;}
+	public List<List<TableCell>> lines {get; set;}
+    public Map<String, List<TableCell>> linesMap {get; set;}
 
     public map<string, Product2> mapProd {get;set;}
     public map<string, Product_Component__c> mapFeatures {get; set;}
@@ -17,11 +16,13 @@ public with sharing class ISSP_ANG_ProductComparison {
     
     public ISSP_ANG_ProductComparison() {
     	pricebook2 thePricebook;
-    	lsAllFeatures = new list<string>();
-    	mapProd = new map<string, Product2>();
-    	mapFeatures = new map<string, Product_Component__c>();
-    	linesMap = new Map<String, List<String>>();
-    	
+    	lsAllFeatures = new List<string>();
+    	mapProd = new Map<string, Product2>();
+    	mapFeatures = new Map<string, Product_Component__c>();
+
+    	Map<String, String> mapProductLabels = new Map<String, String>();
+    	Map<String, String> mapTooltipLabels = new Map<String, String>();
+
     	list<Pricebook2> lsPB = [select id from Pricebook2 where name='NewGen Accreditation Models'];
     	if(!lsPB.isEmpty())	thePricebook = lsPB.get(0);
     	
@@ -32,15 +33,15 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    		setProdId.add(pbe.Product2Id);
 	    	}
 	    	
-	    	for(Product2 pr:[select id, ANG_HE_Application_Registration_Fees__c, ANG_AE_Application_Registration_Fees__c, ANG_ApplyNowUrl__c, Name,
+	    	/*for(Product2 pr:[select id, ANG_HE_Application_Registration_Fees__c, ANG_AE_Application_Registration_Fees__c, ANG_ApplyNowUrl__c, Name,
 	    					 ANG_CountrySpecRequirementsURL__c, ANG_AE_Fees_First_10_locations__c, ANG_HE_AnnualFees_Large_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c
 	    					 , ANG_AE_Fees_Next_15_Locations__c, ANG_HE_AnnualFees_Small_Agents__c
 	    					 from Product2 where Id in:setProdId]) {
 	    		mapProd.put(pr.Name, pr);
-	    	}
+	    	}*/
 	    	
 	    	if(!setProdId.isEmpty()) {
-	    		list<Product2> lsProd = [select Id, Name, (select id, Related_Product__r.Name, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r) from Product2 where id in:setProdId];
+	    		list<Product2> lsProd = [select Id, Name, ANG_Description_Label__c, ANG_Tooltip__c, ANG_HE_ApplicationFee__c, ANG_HE_AnnualFee__c, ANG_Additional_AE_ApplicationFee__c, ANG_Additional_AE_AnnualFee__c,  (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r) from Product2 where id in:setProdId];
 	    		
 	    		if(!lsProd.isEmpty()) {
 	    			//First loop: get ALL available features univoquely and add into a list (ordered...)
@@ -62,60 +63,98 @@ public with sharing class ISSP_ANG_ProductComparison {
     					for(string sf : setAllFeatures) {
     						boolean bExists = false;
     						for(Product_Component__c pc : prod.Product_BOM__r) {
+
+	  							if(!mapTooltipLabels.containsKey(pc.ANG_Description__c)) {
+    								mapTooltipLabels.put(pc.ANG_Description__c, getCustomLabel(pc.ANG_Tooltip__c));
+    							}
+
+    							if(!mapProductLabels.containsKey(pc.ANG_Description__c)) {
+    								mapProductLabels.put(pc.ANG_Description__c, getCustomLabel(pc.ANG_Description_Label__c));
+    							}
+
     							if(sf == pc.Related_Product__r.Name) bExists = true;
     						}
-    						lsTmp.add(new ProdFeature(sf, bExists));
+    						lsTmp.add(new ProdFeature(sf,
+    												  bExists, 
+    												  new Fees(prod.ANG_HE_ApplicationFee__c,
+    												  	       prod.ANG_HE_AnnualFee__c,
+    												  	       prod.ANG_Additional_AE_ApplicationFee__c, 
+    												  	       prod.ANG_Additional_AE_AnnualFee__c)
+    												  ));
     					}
+
+						if(!mapTooltipLabels.containsKey(prod.Name)) {
+							mapTooltipLabels.put(prod.Name, getCustomLabel(prod.ANG_Tooltip__c));
+						}
+
+
+						if(!mapProductLabels.containsKey(prod.Name)) {
+							mapProductLabels.put(prod.Name, getCustomLabel(prod.ANG_Description_Label__c));
+						}
 	    				
 	    				allFeaturesPerProduct.put(prod.Name, lsTmp);
 	    			}
 	    		}
 
+				linesMap = new Map<String, List<TableCell>>();
 	    		headers = new List<String>();
-	    		lines = new List<List<String>>();
-	    		applyNowLine = new List<String>();
+	    		lines = new List<List<TableCell>>();
 	    		headers.add('');
 
-	    		for(String key : allFeaturesPerProduct.keySet()) {
-	    			headers.add(key);
+	    		// headers
+	    		for(String key : allFeaturesPerProduct.keySet()) { 
+	    			headers.add(mapProductLabels.get(key));
+
 	    			for(ProdFeature l : allFeaturesPerProduct.get(key)) {
 						if(!linesMap.containsKey(l.sFeature)) {
-							linesMap.put(l.sFeature, new List<String>());
+							linesMap.put(l.sFeature, new List<TableCell>());
 						}
-						linesMap.get(l.sFeature).add(String.valueOf(l.bActive));
+						linesMap.get(l.sFeature).add(new TableCell(String.valueOf(l.bActive),'', l.fees, mapProductLabels.get(l.sFeature), ''));
 	    			}
 	    		}
+
 	    		Boolean first = true;
 	    		for(String key : linesMap.keySet()) {
 	    			if(first) {
-		    			List<String> lst = new List<String>();	    		
-		    			lst.add('');
-		    			for(String str : linesMap.get(key)) {
-		    				lst.add('applyNow');
+		    			List<TableCell> lst = new List<TableCell>();	    		
+		    			lst.add(new TableCell('','','',''));
+		    			Integer i = 1;
+		    			for(TableCell tc : linesMap.get(key)) {
+		    				lst.add(new TableCell('applyNow', translateKeyAccreditation(headers.get(i)), tc.sLabel, tc.tooltip));
+		    				i++;
 		    			}
 		    			lines.add(lst);
 		    			first = false;	    				
 	    			}
-	    			List<String> lst = new List<String>();	    		
-	    			lst.add(key);
+
+	    			System.debug('key---->' + key + '----->' + mapProductLabels.get(key) + '----->' + mapTooltipLabels.get(key));
+
+	    			List<TableCell> lst = new List<TableCell>();		
+	    			lst.add(new TableCell(key, '', mapProductLabels.get(key), mapTooltipLabels.get(key)));
 	    			lst.addAll(linesMap.get(key));
 	    			lines.add(lst);
 	    		}
 
 	    		for(String key : linesMap.keySet()) {
-	    			List<String> lst = new List<String>();	    		
-	    			lst.add('Country Specific Requirements');
-	    			for(String str : linesMap.get(key)) {
-	    				lst.add('link');
+	    			List<TableCell> lst = new List<TableCell>();	    		
+	    			lst.add(new TableCell('Country Specific Requirements','','Country Specific Requirements',''));
+
+	    			Integer i = 1;
+	    			for(TableCell tc : linesMap.get(key)) {
+	    				lst.add(new TableCell('link',translateKeyCountryRequirements(headers.get(i)), tc.sLabel, tc.tooltip));
+						i++;
 	    			}
 	    			lines.add(lst);
 
-	    			lst = new List<String>();	    		
-	    			lst.add('Cost');
-	    			for(String str : linesMap.get(key)) {
-	    				lst.add('very expensive');
+	    			lst = new List<TableCell>();	 
+	    			//Add label here   		
+	    			lst.add(new TableCell('Cost','','Cost',''));
+
+	    			for(TableCell tc : linesMap.get(key)) {
+	    				lst.add(new TableCell('Application Fee','',tc.fees, tc.sLabel, tc.tooltip));
 	    			}
 	    			lines.add(lst);
+
 	    			break;
 	    		}
 
@@ -123,16 +162,90 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    		System.debug('lines-->' + lines);
 	    	}
     	}
-    	
-    	//system.debug('DTULLO --> mapFeatures ' + mapFeatures);
+    }
+
+    public class Fees {
+    	public String HE_applicationFee {get;set;}
+    	public String HE_AnnualFee {get;set;}
+    	public String Additional_AE_applicationFee {get;set;}
+    	public String Additional_AE_AnnualFee {get;set;}
+
+    	public Fees(String HE_applicationFee, String HE_AnnualFee, String Additional_AE_applicationFee, String Additional_AE_AnnualFee) {
+	    	this.HE_applicationFee = HE_applicationFee;
+	    	this.HE_AnnualFee = HE_AnnualFee;
+	    	this.Additional_AE_applicationFee = Additional_AE_applicationFee;
+	    	this.Additional_AE_AnnualFee = Additional_AE_AnnualFee;
+    	}
     }
     
     public class ProdFeature {
-    	public string sFeature {get;set;}
-    	public boolean bActive {get; set;}
-    	public ProdFeature(string sFeature, boolean bActive) {
+    	public String sFeature {get;set;}
+    	public Boolean bActive {get; set;}
+    	public Fees fees {get;set;}
+
+    	public ProdFeature(string sFeature, boolean bActive, Fees fees) {
     		this.sFeature = sFeature;
     		this.bActive = bActive;
+    		this.fees = fees;
+    	}
+    }
+
+    public class TableCell {
+    	public String name {get;set;}
+    	public String sLabel {get;set;}
+    	public String attribute {get;set;}
+    	public Boolean flagFees {get;set;}
+    	public Fees fees {get;set;}
+    	public String tooltip {get;set;}
+
+    	public TableCell(String name, String attribute, String sLabel, String tooltip) {
+    		this.name = name;
+			this.sLabel = sLabel;
+    		this.attribute = attribute;
+    		this.flagFees = false;
+    		this.tooltip = tooltip;
+    	}
+
+    	public TableCell(String name, String attribute, Fees fees, String sLabel, String tooltip) {
+    		this.flagFees = true;
+    		this.sLabel = sLabel;
+    		this.fees = fees;
+    		this.name = name;
+    		this.attribute = attribute;
+    		this.tooltip = tooltip;
+    	}
+    }
+
+    public String getCustomLabel(String labelName) {
+
+    	System.debug('labelName---->' + labelName);
+
+    	if(labelName != null && labelName != '') {
+			Component.Apex.OutputText output = new Component.Apex.OutputText();
+			output.expressions.value = '{!$Label.' + labelName + '}';
+			return string.valueOf(output.value);
+		} else {
+			return labelName;
+		}
+    }
+
+    private String translateKeyAccreditation(String key) {
+    	if(key == Label.ANG_ISSP_ProductStandardAccreditationWithCash) {
+    		return 'New HE standard - Standard with Cash';
+    	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithNoCash) {
+    		return 'New HE lite - Standard no Cash';
+    	} else {
+    		return '';
+    	}
+    }
+
+    private String translateKeyCountryRequirements(String key) {
+    	if(key == Label.ANG_ISSP_ProductStandardAccreditationWithCash) {
+    		return AMS_Utils.ACCREDITATIONMODEL_CASH;
+    	} else if (key == Label.ANG_ISSP_ProductStandardAccreditationWithNoCash) {
+    		return AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+    	} else {
+    		return '';
     	}
     }
 }

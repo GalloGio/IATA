@@ -257,6 +257,11 @@ public without sharing class ISSP_AMS_Accreditation {
         isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
         String defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
+        String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
+
+        if (defaultAmsLocationType != null && defaultAmsLocationType != '') {
+            amsLocationType = defaultAmsLocationType;
+        }
         
         //newCase.IFAP_Country_ISO__c = hqCountryISOCode;
         //isocountry = fetchISOCountry(hqCountryISOCode);
@@ -475,7 +480,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     sectorValue = newForm.Operation_Type__c;
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
-                
+                 
                 SYSTEM.DEBUG('sectorValue init: ' + sectorValue);
 
                 if (sectorValue != null) {

@@ -75,18 +75,30 @@
 			}
 
 			table {
-				padding: 10px;
+			    table-layout: fixed;
+    			margin-left:auto; 
+    			margin-right:auto;			    
+			   /*width: 100%;*/
 			}
 
-			tr th {
+			tr th {				
+				padding: 10px;
+				min-width:200px;
  			   	background-color: #999999;
     		   	color: white;
     		   	border: 1px solid white;
+    		   	text-align: center;
+    		   	white-space: normal;
+    		   	word-wrap:break-word;
 			}
 
 			tr td {
+				min-width:300px;
+				padding: 5px;
 			    text-align: center;
 			    border-bottom: 1px solid #ddd;
+    		   	white-space: normal;
+    		   	word-wrap:break-word;			    
 			}
 		</style>
 	
@@ -110,45 +122,60 @@
 							<div class="ProdCompwrapper">
 								<table>
 									<tr>
-									<apex:repeat value="{!headers}" var="header">
+									<apex:repeat value="{! headers}" var="header">
 										<apex:outputPanel rendered="{! header == ''}">
 											<th style="background-color: white;">
-												&nbsp;&nbsp;<b>{!header}</b>&nbsp;&nbsp;
+												
 											</th>
 										</apex:outputPanel>										
 										<apex:outputPanel rendered="{! header != ''}">
-											<th style="padding: 10px">
-												&nbsp;&nbsp;<b>{!header}</b>&nbsp;&nbsp;
+											<th>
+												<b>{!header}</b>
 											</th>										
 										</apex:outputPanel>										
 									</apex:repeat>									
 									</tr>
-									<apex:repeat value="{!lines}" var="line">
+									<apex:repeat value="{! lines}" var="line">
 										<tr>
-										<apex:repeat value="{!line}" var="cell">
-											<apex:outputPanel rendered="{! cell == 'applyNow'}">
+										<apex:repeat value="{! line}" var="cell">
+											<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
 												<td>
-													<apex:outputLink styleClass="btn btn_iata_primary" value="/bla">Apply Now</apex:outputLink>
+													<apex:outputLink styleClass="btn btn_iata_primary" 
+														value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}">Apply Now</apex:outputLink>
 												</td>
 											</apex:outputPanel>
 
-											<apex:outputPanel rendered="{! cell == 'true' || cell == 'false'}">
+											<apex:outputPanel rendered="{! cell.name == 'true' || cell.name == 'false'}">
 												<td style="padding-top: 10px; padding-bottom: 10px;">
-													<apex:image value="/img/msg_icons/confirm32.png" rendered="{! cell == 'true'}"/>
+													<apex:image value="/img/msg_icons/confirm32.png" rendered="{! cell.name == 'true'}"/>
 												</td>
 											</apex:outputPanel>
 
-											<apex:outputPanel rendered="{! cell == 'link'}">
+											<apex:outputPanel rendered="{! cell.name == 'link'}">
 												<td>
-													<a href="/ISSP_Country_Requirements?comp=true">View here</a>
+													<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}">View here</a>
 												</td>
 											</apex:outputPanel>
 
-											<apex:outputPanel rendered="{! cell != 'link' && cell != 'true' && cell != 'false' && cell != 'applyNow'}">
-												<td style="text-align: right;">
-													<b>{!cell}</b>
+											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">
+												<td style="text-align: right; padding-right: 10px; padding-left: 10px;">
+													<apex:outputLabel value="{! cell.slabel}"/>
+													<apex:outPutpanel rendered="{!!(cell.tooltip =='')}">
+														<div class="tooltip">(i)<span class="tooltiptext">{! cell.tooltip}</span></div>
+													</apex:outPutpanel>
 												</td>
 											</apex:outputPanel>
+
+											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && cell.flagFees}">
+												<td style="text-align: left;">
+													<b>Head Entity : </b><br/>
+													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.HE_applicationFee}</p>
+													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.HE_AnnualFee}</p>
+													<b>For each additional Associate Entity : </b><br/>
+													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.Additional_AE_applicationFee}</p>
+													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.Additional_AE_AnnualFee}</p>
+												</td>
+											</apex:outputPanel>											
 										</apex:repeat>
 										</tr>
 									</apex:repeat>

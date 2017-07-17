@@ -78,6 +78,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         clearFilters();
 
         try {
+
+            accreditationType = ApexPages.currentPage().getParameters().get('accredType');
         
             getUser();
 
@@ -179,6 +181,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             agentType = 'IATA Cargo Agent';
 
             setAccreditationTypes();
+
+            if (accreditationType != null && accreditationType != '') accredModel = accreditationType;
 
         } catch (Exception e) {
             System.debug(LoggingLevel.ERROR, 'Exception caught : ' + e.getMessage());
