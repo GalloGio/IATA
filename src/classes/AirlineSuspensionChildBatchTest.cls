@@ -4,8 +4,7 @@
 @isTest
 private class AirlineSuspensionChildBatchTest {
     
-    @TestSetup
-    static void loadData(){
+    static Case loadData(){
         // Create a new ISO Country
         IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
         insert country_fr;
@@ -38,13 +37,14 @@ private class AirlineSuspensionChildBatchTest {
 
         insert new Case_Reason_Service__c(Name = 'BSP Participation', Service__c = 'BSP Participation', Provider_Required__c = false);
 
-        Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
-        insert airline;
+        //Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
+        //insert airline;
+        return cs;
     } 
     
     public static testMethod void testBatch_CreateCountrySupensionCases() {
-        Case cs = [Select Id from Case limit 1];
-
+        Case cs = loadData();
+        
         test.startTest();
         // instantiate the suspension page controller
         ApexPages.StandardController std = new ApexPages.StandardController(cs);
@@ -67,7 +67,7 @@ private class AirlineSuspensionChildBatchTest {
     }
     
     public static testMethod void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
-        Case cs = [Select Id, RecordtypeId from Case limit 1];
+        Case cs = loadData();
         Id AirlineDeactivationRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
         cs.RecordtypeId = AirlineDeactivationRT;
         update cs;
@@ -83,18 +83,18 @@ private class AirlineSuspensionChildBatchTest {
     }
     
     public static testMethod void testBatch_CloseAllChildSuspensionCases() {
-        Case child = [Select Id, ParentId from Case limit 1];
+        Case child = loadData();
         Case parent = child.clone();
         insert parent;
         child.ParentId = parent.Id;
         update child;
         
-        Airline_Suspension__c suspension = new Airline_Suspension__c();
-        suspension.ChildSuspensionCasesGenerated__c = 'No';
-        suspension.Reason_for_Suspension__c = 'Debt to IATA';
-        suspension.Settle_Directly_To__c = 'IATA'; 
-        suspension.Case__c = parent.Id;
-        insert suspension;
+        //Airline_Suspension__c suspension = new Airline_Suspension__c();
+        //suspension.ChildSuspensionCasesGenerated__c = 'No';
+        //suspension.Reason_for_Suspension__c = 'Debt to IATA';
+        //suspension.Settle_Directly_To__c = 'IATA'; 
+        //suspension.Case__c = parent.Id;
+        //insert suspension;
 
         test.startTest();
         // instantiate the suspension page controller
