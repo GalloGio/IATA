@@ -3,9 +3,9 @@
  */
 @isTest
 private class AirlineSuspensionChildBatchTest {
-    public static testMethod void testBatch() {
-        // CREATE TEST DATA
-
+    
+    @TestSetup
+    static void loadData(){
         // Create a new ISO Country
         IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
         insert country_fr;
@@ -38,28 +38,21 @@ private class AirlineSuspensionChildBatchTest {
 
         insert new Case_Reason_Service__c(Name = 'BSP Participation', Service__c = 'BSP Participation', Provider_Required__c = false);
 
-        //Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
-        //insert airline;
-
-        // FINISHED CREATING TEST DATA
-
-
+        Airline_Suspension__c airline = new Airline_Suspension__c(Case__c = cs.id, Participates_in_IATA_Governance_Groups__c = 'Not Applicable' );
+        insert airline;
+    } 
+    
+    public static testMethod void testBatch_CreateCountrySupensionCases() {
+        Case cs = [Select Id from Case limit 1];
 
         test.startTest();
-
         // instantiate the suspension page controller
         ApexPages.StandardController std = new ApexPages.StandardController(cs);
         AirlineSuspensionCaseController controller = new AirlineSuspensionCaseController(std);
 
         // call the method that calls the batch process
         controller.CreateCountrySuspensionCases();
-
         test.stopTest();
-
-
-        // instantiate the child cases list page controller
-        std = new ApexPages.StandardController(cs);
-        AirlineSuspensionChildCasesController controller2 = new AirlineSuspensionChildCasesController(std);
 
         list<Airline_Suspension__c> lstASrecords = [SELECT Id, ChildSuspensionCasesGenerated__c FROM Airline_Suspension__c];
         system.assertEquals(1, lstASrecords.size());
@@ -72,4 +65,45 @@ private class AirlineSuspensionChildBatchTest {
         // the batch process should ave generated 4 child cases: 1 partipation X (1 case for Airline Participation + 1 case for Customer Service) + 1 general case for AP + 1 for Coding
         system.assertEquals(6, lstAllCases.size());
     }
+    
+    public static testMethod void testBatch_CreateCountrySupensionCases_AirlineDeactivation() {
+        Case cs = [Select Id, RecordtypeId from Case limit 1];
+        Id AirlineDeactivationRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('Airline_Deactivation');
+        cs.RecordtypeId = AirlineDeactivationRT;
+        update cs;
+
+        test.startTest();
+        // instantiate the suspension page controller
+        ApexPages.StandardController std = new ApexPages.StandardController(cs);
+        AirlineSuspensionCaseController controller = new AirlineSuspensionCaseController(std);
+
+        // call the method that calls the batch process
+        controller.CreateCountrySuspensionCases();
+        test.stopTest();
+    }
+    
+    public static testMethod void testBatch_CloseAllChildSuspensionCases() {
+        Case child = [Select Id, ParentId from Case limit 1];
+        Case parent = child.clone();
+        insert parent;
+        child.ParentId = parent.Id;
+        update child;
+        
+        Airline_Suspension__c suspension = new Airline_Suspension__c();
+        suspension.ChildSuspensionCasesGenerated__c = 'No';
+        suspension.Reason_for_Suspension__c = 'Debt to IATA';
+        suspension.Settle_Directly_To__c = 'IATA'; 
+        suspension.Case__c = parent.Id;
+        insert suspension;
+
+        test.startTest();
+        // instantiate the suspension page controller
+        ApexPages.StandardController std = new ApexPages.StandardController(parent);
+        AirlineSuspensionCaseController controller = new AirlineSuspensionCaseController(std);
+
+        // call the method that calls the batch process
+        controller.CloseAllChildSuspensionCases();
+        test.stopTest();
+    }
+
 }
