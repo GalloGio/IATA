@@ -50,7 +50,7 @@ public class AMS_InspectionHelper {
         // Account accountToProcess;
 
         for(Account accountToProcess : lsAgencies ) {
-
+            AMS_Inspection__c maxInspection;
             Integer maxStatus = -1;
             Date maxDate = null;
             for(AMS_Inspection__c i:iataInspections) {
@@ -58,7 +58,7 @@ public class AMS_InspectionHelper {
                 // accountToProcess = mapAgencies.get(i.Account__c);
                 if(i.Account__c == accountToProcess.Id){
                 Boolean found = false;
-                String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
+                    // String newStatus = getDecodedStatus(i.Accreditation_Endorsement_Status_code__c,airlines.get(i.Accreditation_Endorsement_organisation__c).Air_Code__c);
                     for(AMS_Inspection__c o : oldInspections) {
                         if((accountToProcess.Location_Class__c=='W' && airlines.get(o.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('ARC'))
                         || (accountToProcess.Location_Class__c!='W' && airlines.get(o.Accreditation_Endorsement_organisation__c).Air_Code__c.equalsIgnoreCase('IATAN'))
@@ -79,30 +79,39 @@ public class AMS_InspectionHelper {
                             accountToProcess.Date_Organisation_Status_attained__c = i.Date_Organisation_Status_attained__c;
                             status = maxStatus;
                             found = true;
+                            maxInspection = i;
                         }
                         else if(maxStatus == status) {
                             if(maxDate == null || maxDate < i.Date_Organisation_Status_attained__c) {
                                 accountToProcess.Date_Organisation_Status_attained__c = i.Date_Organisation_Status_attained__c;
                                 maxDate = i.Date_Organisation_Status_attained__c;
                                 found = true;
+                                maxInspection = i;
                             }
                         }
                     }
 
                     if(found) {
 
-                        if((i.Accreditation_Endorsement_Status_code__c == '7' && i.Previous_status_code__c == '0') ||
-                        (i.Accreditation_Endorsement_Status_code__c == '7' && i.Previous_status_code__c == '2') ) {
-                            accountToProcess.Original_Approval_DAte__c = i.Date_Organisation_Status_attained__c;
-                            accountToProcess.Accreditation_date__c = i.Date_Organisation_Status_attained__c;
                         }
-                        if((i.Accreditation_Endorsement_Status_code__c == '0' && i.Previous_status_code__c == '7') ||
-                        (i.Accreditation_Endorsement_Status_code__c == '7' && i.Previous_status_code__c == '2') ) {
-                            accountToProcess.Expiry_Date__c = i.Date_Organisation_Status_attained__c;
-                        }
-                        accountToProcess.Date_Organisation_Status_attained__c = i.Date_Organisation_Status_attained__c;
-                //accordng to the type of airline, the status can be diff, so let's divide and conquer.
 
+
+                        }
+        }
+        //////
+        if(maxInspection != null) {
+            if((maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == '0') ||
+            (maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == '2') ) {
+                accountToProcess.Original_Approval_DAte__c = maxInspection.Date_Organisation_Status_attained__c;
+                accountToProcess.Accreditation_date__c = maxInspection.Date_Organisation_Status_attained__c;
+            }
+            if((maxInspection.Accreditation_Endorsement_Status_code__c == '0' && maxInspection.Previous_status_code__c == '7') ||
+            (maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == '2') ) {
+                accountToProcess.Expiry_Date__c = maxInspection.Date_Organisation_Status_attained__c;
+            }
+            accountToProcess.Date_Organisation_Status_attained__c = maxInspection.Date_Organisation_Status_attained__c;
+                //accordng to the type of airline, the status can be diff, so let's divide and conquer.
+            String newStatus = getDecodedStatus(maxInspection.Accreditation_Endorsement_Status_code__c,airlines.get(maxInspection.Accreditation_Endorsement_organisation__c).Air_Code__c);
 
                 if(newStatus != null && accountToProcess.Status__c <> newStatus){
 
@@ -112,9 +121,6 @@ public class AMS_InspectionHelper {
                         accountsToUpdate.add(accountToProcess);
                     }
 
-
-            }
-        }
     }
 
         if(!accountsToUpdate.isEmpty())
