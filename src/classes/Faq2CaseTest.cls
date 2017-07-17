@@ -718,8 +718,8 @@ private class Faq2CaseTest {
           
           //   ISSP_FAQ2CaseLiveAgentTopics__c topicsSetting = new ISSP_FAQ2CaseLiveAgentTopics__c(name = '1', value__c = '0.CGO_Bank_Guarantees__c');
           //   insert topicsSetting;
-          //   LiveAgentButtonSettings__c sectorSetting = new LiveAgentButtonSettings__c(name = 'AirlineEnglish',sectors__c='Airline');
-          //   insert sectorSetting;
+         // LiveAgentButtonSettings__c sectorSetting = new LiveAgentButtonSettings__c(name = 'AirlineEnglish',sectors__c='Airline');
+          //  insert sectorSetting;
           //   LiveAgent_Countries_Per_Button__c codeSetting = new LiveAgent_Countries_Per_Button__c(Button_Name__c = 'AirlineEnglish', Iso_Code__c = 'GB');
           //   insert codeSetting;
           
@@ -792,8 +792,8 @@ private class Faq2CaseTest {
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
           setCCOthersEmail(controller,'fake@email.com');
           controller.save();
-          setCCOthersEmail(controller,'Test@test11.com');
-          controller.save();
+          //setCCOthersEmail(controller,'Test@test11.com');
+          //controller.save();
 		}
 		Test.stopTest();
     }
@@ -862,8 +862,8 @@ private class Faq2CaseTest {
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
           setCCOthersEmail(controller,'fake@email.com');
           controller.saveAttach();
-          setCCOthersEmail(controller,'Test@test11.com');
-          controller.saveAttach();
+          //setCCOthersEmail(controller,'Test@test11.com');
+          //controller.saveAttach();
 		}
 		Test.stopTest();
     }
@@ -929,5 +929,58 @@ private class Faq2CaseTest {
               }
           }
       }
+    }
+
+
+     static testMethod void testNew() {
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'Airline';
+        child.Top_Parent__c = parent.Id;
+        insert child;
+        System.debug('child Id: ' + child.Id);
+        Contact con = ISSP_ObjectFactory.createNewContact();
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
+        insert country;
+
+        String recordTypeId = [SELECT Id FROM RecordType WHERE Name = 'DPC Service Request'].Id;
+
+        Case c=new Case(Subject='test 1',Status='Open', AccountId=parent.id, ContactId=con.id,Region__c = 'Europe', IFAP_Country_ISO__c ='t1' , RecordTypeId = recordTypeId);
+        insert c;
+
+        con.AccountId= child.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
+        System.debug('con Id: ' + con.Id);
+         User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        System.debug('newUser Id: ' + newUser.Id);
+        con.OwnerId = newUser.Id;
+        update con;
+
+
+            List<FAQ__kav> lstFaqs = TestObjectCreator.createFAQArticles(2);
+        Test.startTest();
+        System.runAs(newUser){
+          vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+          controller.pageLoad();
+          LiveAgentButtonSettings__c sectorSetting = new LiveAgentButtonSettings__c(name = 'AirlineEnglish',sectors__c='Airline');
+          //  insert sectorSetting;
+          controller.isAllowedSector('AirlineEnglish');
+          controller.calculateViewAndSatisfied(lstFaqs.get(0));
+          Integer topCatGroupIndex = getIndexWithChildes(controller.DataCategoryContainer);
+          controller.topic = String.valueOf(topCatGroupIndex);
+          controller.subtopic = getSubCat(controller.DataCategoryContainer, topCatGroupIndex);
+          controller.createArticleStatisticsRecords(lstFaqs.get(0), ENV.ArticleStatType.UnSatisfied);
+
+        }
     }
 }
