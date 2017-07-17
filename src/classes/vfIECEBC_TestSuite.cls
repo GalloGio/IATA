@@ -174,6 +174,8 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+        newContact.Phone='5142640908';
+        newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -287,6 +289,8 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+        newContact.Phone='5142640908';
+        newContact.Email='campaigns@iata.com';
         newContact.LastName = 'w00t';
         insert newContact;
         
