@@ -126,7 +126,7 @@ private class AMS_InspectionHelperTest {
         
         insert agencylist;
 
-        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATA');
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATAN');
         insert ao;
 
         Test.startTest();
@@ -149,20 +149,8 @@ private class AMS_InspectionHelperTest {
         List<AMS_Inspection__c> inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
         {            
-            if(i.Accreditation_Endorsement_Status_code__c == '0')
-                System.assertEquals('Terminated', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '4')
-                System.assertEquals('Listed', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '5')
-                System.assertEquals('Cash basis/no commission', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '6')
-                System.assertEquals('Cash basis/with commission', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '7')
-                System.assertEquals('Under review', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '8')
-                System.assertEquals('Changes processed', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '9')
-                System.assertEquals('Approved', i.Account__r.Status__c);
+            // IATA appointment is not synchronized with the account!
++           System.assertEquals(null, i.Account__r.Status__c);
         }
 
         ins1.Accreditation_Endorsement_Status_code__c='0';
@@ -184,20 +172,8 @@ private class AMS_InspectionHelperTest {
         inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATA'];
         for(AMS_Inspection__c i:inspections)
         {
-            if(i.Accreditation_Endorsement_Status_code__c == '0')
-                System.assertEquals('Terminated', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '4')
-                System.assertEquals('Listed', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '5')
-                System.assertEquals('Cash basis/no commission', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '6')
-                System.assertEquals('Cash basis/with commission', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '7')
-                System.assertEquals('Under review', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '8')
-                System.assertEquals('Changes processed', i.Account__r.Status__c);
-            if(i.Accreditation_Endorsement_Status_code__c == '9')
-                System.assertEquals('Approved', i.Account__r.Status__c);
+            // IATA appointment is not synchronized with the account!
++           System.assertEquals(null, i.Account__r.Status__c);
         }
 
         agencylist = new List<Account>();
@@ -233,22 +209,22 @@ private class AMS_InspectionHelperTest {
         agencyInspectionList.add(ins5);
         
         insert agencyInspectionList;
-        /*
+
         inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
         for(AMS_Inspection__c i:inspections)
         {
             if(i.Accreditation_Endorsement_Status_code__c == '0')
-                System.assertEquals('Terminated', i.Account__r.Status__c);
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('0'), i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '4')
-                System.assertEquals('Listed', i.Account__r.Status__c);
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('4'), i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '5')
-                System.assertEquals('ARC registered', i.Account__r.Status__c);
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('5'), i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '6')
-                System.assertEquals('Review', i.Account__r.Status__c);
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('6'), i.Account__r.Status__c);
             if(i.Accreditation_Endorsement_Status_code__c == '7')
-                System.assertEquals('Endorsed', i.Account__r.Status__c);
+                System.assertEquals(AMS_Utils.getIATANReadableStatus('7'), i.Account__r.Status__c);
         }
-        */
+
         ins1.Accreditation_Endorsement_Status_code__c='9';
         ins2.Accreditation_Endorsement_Status_code__c='8';
         ins3.Accreditation_Endorsement_Status_code__c='5';
@@ -263,22 +239,22 @@ private class AMS_InspectionHelperTest {
         updateAll.add(ins4);
         updateAll.add(ins5);
         update updateAll;
-         /*     
+
         inspections = [select Accreditation_Endorsement_Status_code__c, Account__r.Status__c from AMS_Inspection__c insp where  insp.Account__r.Main_Accreditation_Organization__c = 'IATAN'];
         for(AMS_Inspection__c i:inspections)
         {
                 if(i.Accreditation_Endorsement_Status_code__c == '0')
-                    System.assertEquals('Terminated', i.Account__r.Status__c);
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('0'), i.Account__r.Status__c);
                 if(i.Accreditation_Endorsement_Status_code__c == '4')
-                    System.assertEquals('Listed', i.Account__r.Status__c);
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('4'), i.Account__r.Status__c);
                 if(i.Accreditation_Endorsement_Status_code__c == '5')
-                    System.assertEquals('ARC registered', i.Account__r.Status__c);
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('5'), i.Account__r.Status__c);
                 if(i.Accreditation_Endorsement_Status_code__c == '6')
-                    System.assertEquals('Review', i.Account__r.Status__c);
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('6'), i.Account__r.Status__c);
                 if(i.Accreditation_Endorsement_Status_code__c == '7')
-                    System.assertEquals('Endorsed', i.Account__r.Status__c);
+               System.assertEquals(AMS_Utils.getIATANReadableStatus('7'), i.Account__r.Status__c);
         }
-    */
+
         Boolean isFalse = AMS_InspectionHelper.compareAmsInspectionRecords_IgnoringLastSyncDate(ins1,ins1);
 
         System.assertEquals(isFalse,false);
