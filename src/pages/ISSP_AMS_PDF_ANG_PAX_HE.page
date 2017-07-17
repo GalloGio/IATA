@@ -57,58 +57,113 @@
             <!-- ****************************************************************************** -->
 		    <!-- ***** SECTION 1 - IDENTIFICATION OF AGENCY FOR WHICH APPROVAL REQUESTED ****** -->
 		    <!-- ****************************************************************************** -->
-		    
-            <div style="page-break-after:always;">
-                <table class="aptable">
-                    <tr>
-                        <td colspan="3" class="bluebg">
-                            <p class="whitetext">
-                                {!$Label.ISSP_AMS_STEP_3_1_Identi_Appro_Req}
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
-                        <td colspan="2">{!hqAccount.Name}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
-                        <td colspan="2">{!hqAccount.TradeName__c}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$Label.ISSP_Office_Phone}</td>
-                        <td colspan="2">{!hqAccount.Phone}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$ObjectType.Account.fields.Email__c.Label}</td>
-                        <td colspan="2">{!hqAccount.Email__c}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$ObjectType.Account.fields.Mobile__c.Label}</td>
-                        <td colspan="2">{!hqAccount.Mobile__c}</td>
-                    </tr>
-					<tr>
-                        <td class="label">{!$ObjectType.Account.fields.Website.Label}</td>
-                        <td colspan="2">{!hqAccount.Website}</td>
-                    </tr>
-                    <tr>
-                        <td class="label">{!$ObjectType.Account.fields.Fax.Label}</td>
-                        <td colspan="2">{!hqAccount.Fax}</td>
-                    </tr>                    
-                    <tr style="display: {!IF(isocountry.Hide_Tax_Number_VAT__c,'none','')}">
-                        <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}</td>
-                        <td colspan="2">{!newForm.ISSP_AMS_VAT_number__c}</td>
-                    </tr>
-                   	<tr>
-                        <td class="label" width="40%">{!$Label.ISSP_AMS_Step3_Office_FullAddress}</td>
-                        <td colspan="2">
-                            {!hqAccount.BillingStreet} <br/>
-                            {!hqAccount.BillingCity},&nbsp;{!hqAccount.BillingPostalCode} <br/>
-                            {!hqAccount.BillingState},&nbsp;{!hqAccount.BillingCountry}                 
-                        </td>
-                    </tr>
-                 </table>
-            </div>    
+		    <apex:outputPanel rendered="{!AND(NOT(isTerminatedAgent), NOT(isNewHOforAccredAgent))}">
+                <div style="page-break-after:always;">
+                    <table class="aptable">
+                        <tr>
+                            <td colspan="3" class="bluebg">
+                                <p class="whitetext">
+                                    {!$Label.ISSP_AMS_STEP_3_1_Identi_Appro_Req}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.Account.fields.Legal_name__c.Label}</td>
+                            <td colspan="2">{!hqAccount.Name}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.Account.fields.TradeName__c.Label}</td>
+                            <td colspan="2">{!hqAccount.TradeName__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$Label.ISSP_Office_Phone}</td>
+                            <td colspan="2">{!hqAccount.Phone}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.Account.fields.Email__c.Label}</td>
+                            <td colspan="2">{!hqAccount.Email__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.Account.fields.Mobile__c.Label}</td>
+                            <td colspan="2">{!hqAccount.Mobile__c}</td>
+                        </tr>
+    					<tr>
+                            <td class="label">{!$ObjectType.Account.fields.Website.Label}</td>
+                            <td colspan="2">{!hqAccount.Website}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.Account.fields.Fax.Label}</td>
+                            <td colspan="2">{!hqAccount.Fax}</td>
+                        </tr>                    
+                        <tr style="display: {!IF(isocountry.Hide_Tax_Number_VAT__c,'none','')}">
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}</td>
+                            <td colspan="2">{!newForm.ISSP_AMS_VAT_number__c}</td>
+                        </tr>
+                       	<tr>
+                            <td class="label" width="40%">{!$Label.ISSP_AMS_Step3_Office_FullAddress}</td>
+                            <td colspan="2">
+                                {!hqAccount.BillingStreet} <br/>
+                                {!hqAccount.BillingCity},&nbsp;{!hqAccount.BillingPostalCode} <br/>
+                                {!hqAccount.BillingState},&nbsp;{!hqAccount.BillingCountry}                 
+                            </td>
+                        </tr>
+                     </table>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}">
+                <div style="page-break-after:always;">
+                    <table class="aptable">
+                        <tr>
+                            <td colspan="3" class="bluebg">
+                                <p class="whitetext">
+                                    {!$Label.ISSP_AMS_STEP_3_1_Identi_Appro_Req}
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Account_Name__c.Label}</td>
+                            <td colspan="2">{!newForm.Account_Name__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}</td>
+                            <td colspan="2">{!newForm.Trade_Name__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}</td>
+                            <td colspan="2">{!newForm.Branch_Office_Phone__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Email__c.Label}</td>
+                            <td colspan="2">{!newForm.Branch_Office_Email__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Mobile__c.Label}</td>
+                            <td colspan="2">{!newForm.Mobile__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}</td>
+                            <td colspan="2">{!newForm.Website__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Fax_National__c.Label}</td>
+                            <td colspan="2">{!newForm.Branch_Office_Fax_National__c}</td>
+                        </tr>                    
+                        <tr style="display: {!IF(isocountry.Hide_Tax_Number_VAT__c,'none','')}">
+                            <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}</td>
+                            <td colspan="2">{!newForm.ISSP_AMS_VAT_Number_Input__c}</td>
+                        </tr>
+                        <tr>
+                            <td class="label" width="40%">{!$Label.ISSP_AMS_Step3_Office_FullAddress}</td>
+                            <td colspan="2">
+                                {!newForm.Branch_Office_Street_name_number__c} <br/>
+                                {!newForm.Branch_Office_City__c},&nbsp;{!newForm.Branch_Office_Postal_code__c} <br/>
+                                {!newForm.State_Province__c},&nbsp;{!isocountry.Name}                 
+                            </td>
+                        </tr>
+                     </table>
+                </div>
+            </apex:outputPanel>
 
 	        <!-- ************************************************* -->
 	        <!-- ******** SECTION 2 - GENERAL INFORMATION ******** -->
@@ -313,9 +368,17 @@
 	                                <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
 	                            </td>
 	                        </tr>
+
+                            <tr>
+                                <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
+                                <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
+                            </tr>
+                            <tr>
+                                <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
+                                <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
+                            </tr>
 	                    	<tr>
-		                        <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>
-		                       	<td class="label">{!$Label.ISSP_Credit_Card_Form}</td>
+		                        <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>		                       	
 	                        	<td style="padding:10px 10px">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
 	                    	</tr>
 	                    	 <tr style="display:{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c != 'Yes','none','')}">
@@ -324,8 +387,7 @@
 	                        </tr>
 
 	                        <tr>
-		                        <td class="label">{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}</td>
-		                       	<td class="label">{!$Label.ISSP_Credit_Card_Form}</td>
+		                        <td class="label">{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}</td>		                       	
 	                        	<td style="padding:10px 10px">{!IF(newForm.IATA_Registered_IATAN_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
 	                    	</tr>
 	                    	 <tr style="display:{!IF(newForm.IATA_Registered_IATAN_Agent__c != 'Yes','none','')}">
