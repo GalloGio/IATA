@@ -1048,7 +1048,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 if (isocountry.Region__c != 'Americas')
                     options.add(new SelectOption('New BR Abroad - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD));
             } else { //Not an Accredited PAX Agent, or any type of Cargo Agent
-                options.add(new SelectOption('New HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_HO));  //can only apply for PAX HO
+                options.add(new SelectOption('New HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_HO));
+                options.add(new SelectOption('New HO - TIDS', Label.ISSP_AMS_OPTION_TIDS_HO));
             }
         }
        

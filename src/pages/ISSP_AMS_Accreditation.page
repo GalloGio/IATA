@@ -180,7 +180,19 @@
                     $('#brabroadcountries').show();                   
                 }
             }
-                 
+
+            function toggleIsGsa(v) {
+                console.log('toggling GSA; passed value: ' + v);
+                if (v==undefined || v.indexOf('TIDS')==-1){
+                    console.log('trying to show');
+                    $('#isGSA').show();
+                }
+                else{
+                    console.log('trying to hide');
+                    $('#isGSA').hide();
+                }
+            }
+            
             function toggleOfficeTypes(officeSelect, ctrylistid) {
                 
                 //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
@@ -522,7 +534,7 @@
                     <div class="form-group"> 
                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</label>
                         <div class="col-lg-9">
-                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
+                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleIsGsa(this.value);toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
                             </apex:selectList>                           
                         </div>
