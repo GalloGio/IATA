@@ -1,40 +1,34 @@
 @isTest
 public class ANG_RiskEventHistoryExtension_Test {  
 
-
 	@testSetup static void testSetup(){
 
 		ANG_Risk_Event_Type__c ret1= new ANG_Risk_Event_Type__c(
-			name= 'Risk Type 1',
+			Name = 'Risk Type 1',
 			ANG_Risk_ID__c='1',
-			ANG_Expiration__c=12,
-			ANG_isMultiple__c=true
+			ANG_Expiration__c=12
 		);
 		insert ret1;
 
-		list<account> accountList= new list<account>();
-
 		Account acc1 = new Account(
-			name='acc1',
+			Name ='acc1',
 			Location_Type__c='HE',
 			Location_Class__c='P',
 			Remittance_frequency__c='Monthly',
 			ANG_Accreditation_Model__c ='Cash',
 			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 		);
-		accountList.add(acc1);
 		Account acc2 = new Account(
-			name='acc2',
+			Name ='acc2',
 			Location_Type__c='HE',
 			Location_Class__c='P',
 			Remittance_frequency__c='Monthly',
 			ANG_Accreditation_Model__c ='Cash',
 			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
 		);
-		accountList.add(acc2);
-		insert accountList;
+		insert new List<Account>{acc1, acc2};
 
-		case case1= new Case(
+		Case case1= new Case(
 			Subject='Test',
 			BSP_CASS__c='BSP',
 			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite')
@@ -42,7 +36,7 @@ public class ANG_RiskEventHistoryExtension_Test {
 		insert case1;
 	}
 
-	private static void generateRiskEvent(id accId, id riskEventTypeId, Date reDate,ID caseId){
+	private static void generateRiskEvent(Id accId, Id riskEventTypeId, Date reDate,ID caseId){
 		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
 		ANG_AccountId__c=accId,
 		ANG_HE_AccountId__c=accId,
@@ -56,17 +50,17 @@ public class ANG_RiskEventHistoryExtension_Test {
 
 	static testmethod void testPageInitialization(){
  	// tests the page construction and paginator reset/initializing
-		account acc1 = [select id,Location_Type__c from account where name='acc1'];
-		account acc2 = [select id,Location_Type__c from account where name='acc2'];
+		Account acc1 = [SELECT Id,Location_Type__c FROM Account WHERE Name ='acc1'];
+		Account acc2 = [SELECT Id,Location_Type__c FROM Account WHERE Name ='acc2'];
 
-		generateRiskEvent(acc1.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today(),[select id from case limit 1].id);
-		generateRiskEvent(acc2.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today(),[select id from case limit 1].id);
+		generateRiskEvent(acc1.Id,[SELECT Id FROM ANG_Risk_Event_Type__c WHERE Name = 'Risk Type 1'].Id, System.today(),[SELECT Id FROM Case limit 1].Id);
 
 		Test.startTest();
+
 			ANG_RiskEventHistoryExtension reE = new ANG_RiskEventHistoryExtension(new ApexPages.standardController(acc1));
 			List<ANG_RiskEventHistoryPagination.RiskEvent> listRE =reE.getRecords();
 			reE.resetPaginator();
-			Map<String, Boolean> reHeMap=reE.IsNumberField;
+			Map<String, Boolean> reHeMap = reE.IsNumberField;
 
 		Test.stopTest();
 
@@ -74,13 +68,13 @@ public class ANG_RiskEventHistoryExtension_Test {
 
 	static testmethod void deleteRiskEvent(){
  		//tests the risk event deletion
-		account acc = [select id from account where name='acc1'];
-		generateRiskEvent(acc.id,[select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.today(),null);
+		Account acc = [SELECT Id FROM Account WHERE Name ='acc1'];
+		generateRiskEvent(acc.Id,[SELECT Id FROM ANG_Risk_Event_Type__c WHERE Name = 'Risk Type 1'].Id, System.today(),null);
 
-		list<ANG_Agency_Risk_Event__c> reList =[select id from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
-		integer nRecordBeforeDelete = reList.size();
-		ANG_RiskEventHistoryExtension.deleteRecord(reList.get(0).id);
+		List<ANG_Agency_Risk_Event__c> reList =[SELECT Id FROM ANG_Agency_Risk_Event__c WHERE ANG_AccountId__c=:acc.Id];
+		Integer nRecordBeforeDelete = reList.size();
+		ANG_RiskEventHistoryExtension.deleteRecord(reList.get(0).Id);
 
-		system.assertEquals((nRecordBeforeDelete-1),[select id from ANG_Agency_Risk_Event__c].size(),'Record was not deleted');
+		System.assertEquals((nRecordBeforeDelete-1),[SELECT Id FROM ANG_Agency_Risk_Event__c].size(),'Record was not deleted');
 	}
 }

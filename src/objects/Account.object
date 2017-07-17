@@ -2861,6 +2861,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_LimitCashConditions__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
+        <label>Limit Cash Conditions</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
         <externalId>false</externalId>
         <label>AOC Expiry Date</label>

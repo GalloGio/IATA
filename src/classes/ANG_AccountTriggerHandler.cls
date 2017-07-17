@@ -19,7 +19,10 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		manageDowngrades();
 	}
-	public void onAfterUpdate() {}
+	public void onAfterUpdate() {
+		runRiskAssessment();
+		UpdateRiskEventStatus();
+	}
 
 	public void onBeforeDelete(){}
 	public void onAfterDelete() {}
@@ -201,9 +204,65 @@ public class ANG_AccountTriggerHandler {
 	    update oscars;
 	}
 
+	public void UpdateRiskEventStatus (){
+		set<Id> inactiveAccsIdSet = new set<Id>();
+		set<Id> activeAccsIdSet = new set<Id>();
+		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
+		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
+
+		//get just account ids where status changed to Terminated 
+		for(Account a : triggerNew){
+		    if(a.status__c == 'Terminated' && oldMap.get(a.id).status__c != a.Status__c)
+		        inactiveAccsIdSet.add(a.id);
+		    else if( oldMap.get(a.id).status__c != a.Status__c)
+		        activeAccsIdSet.add(a.id);
+		}
+
+		//get all related risk Events 
+		for(ANG_Agency_Risk_Event__c re : [select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]){
+			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c))
+				riskEventsToInactiveList.add(re);
+
+			else if (activeAccsIdSet.contains(re.ANG_AccountId__c))
+				riskEventsToActiveList.add(re);
+
+		}
+
+		//Inactive Risk Events
+		for(ANG_Agency_Risk_Event__c re : riskEventsToInactiveList){
+		    if(re.ang_event_status__c == 'Active' || (re.ang_event_status__c == 'Inactive' && re.ANG_Issued_Date__c > system.Today())  ){
+		        re.ang_event_status__c = 'Inactive_TER';
+		        upsertRiskEventsList.add(re);
+		    }
+		}
+
+		//Active Risk Events
+		for(ANG_Agency_Risk_Event__c re : riskEventsToActiveList){
+		    if(re.ang_event_status__c == 'Inactive_TER' ){
+		        re.ang_event_status__c = 'Active';
+		        upsertRiskEventsList.add(re);
+		    }
+		}
+
+		update upsertRiskEventsList;
+	}
+
 	private class OscarObjects{
 		private AMS_OSCAR__c oscar;
 		private Case commCase;
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
+
+	private void runRiskAssessment() {
+        
+        Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
+        for(account acc : triggerNew){  
+            if(acc.ANG_LimitCashConditions__c!= oldMap.get(acc.Id).ANG_LimitCashConditions__c && !acc.ANG_LimitCashConditions__c) involvedAccounts.put(acc.id,null);
+        }
+
+        if(involvedAccounts.isEmpty()) return;
+
+        new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
+    }
 }
