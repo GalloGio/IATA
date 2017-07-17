@@ -137,7 +137,10 @@ public with sharing class ISSP_ANG_ProductComparison {
 
 	    		for(String key : linesMap.keySet()) {
 	    			List<TableCell> lst = new List<TableCell>();	    		
-	    			lst.add(new TableCell('Country Specific Requirements','','Country Specific Requirements',''));
+	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCountrySpecificRequirements,
+	    								  '',
+	    								  Label.ANG_ISSP_ProductComparisonCountrySpecificRequirements,
+	    								  ''));
 
 	    			Integer i = 1;
 	    			for(TableCell tc : linesMap.get(key)) {
@@ -148,7 +151,10 @@ public with sharing class ISSP_ANG_ProductComparison {
 
 	    			lst = new List<TableCell>();	 
 	    			//Add label here   		
-	    			lst.add(new TableCell('Cost','','Cost',''));
+	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCost,
+	    								  '',
+	    								  Label.ANG_ISSP_ProductComparisonCost,
+	    								  ''));
 
 	    			for(TableCell tc : linesMap.get(key)) {
 	    				lst.add(new TableCell('Application Fee','',tc.fees, tc.sLabel, tc.tooltip));

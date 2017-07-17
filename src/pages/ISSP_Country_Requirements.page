@@ -23,7 +23,8 @@
     </script>
 
     <body>
-
+      <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.4-dist/css/bootstrap.min.css')}" />
+      <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
       
       <div class="container">
         <c:ISSP_CustomNavigation />
@@ -216,7 +217,9 @@
                 <div class="panel-body" id="body-results">
                   <div class="row">
                     <div class="col-md-12">                
-                      <h4><a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
+                      <h4>
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
                       </h4>
                     </div>                          
                   </div>
