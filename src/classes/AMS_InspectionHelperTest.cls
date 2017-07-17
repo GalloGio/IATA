@@ -126,7 +126,7 @@ private class AMS_InspectionHelperTest {
 
         insert agencylist;
 
-        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATA');
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATAN');
         insert ao;
 
         Test.startTest();
