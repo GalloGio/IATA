@@ -383,26 +383,27 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.ANG_ACCREDITATION_TYPE, true);
 
 		if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
-			if(oscar.New_parent__c == null)
+			if(oscar.New_parent__c == null){
 				errorChecks.put(AMS_Utils.ANG_HIERARCHY, true);
+			}else{
+				if(isTerminatedAccount(oscar.New_parent__c))
+					errorChecks.put('Terminated Accounts', true);
+				if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected())
+					errorChecks.put('Orphan Accounts', true);
+				if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c))
+					errorChecks.put('Top Location Type', true);
+				if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected() )
+					errorChecks.put('Location Type Change Detected', true);
+				if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c) )
+					errorChecks.put('Must include New Parent', true);
+				if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
+					errorChecks.put('Multiple Hierarchies', true);
 
-			if(oscar.New_parent__c != null && isTerminatedAccount(oscar.New_parent__c))
-				errorChecks.put('Terminated Accounts', true);
-			if(isMovingTopLocationTypeAccount()  && !isAllHierarchySelected())
-				errorChecks.put('Orphan Accounts', true);
-			if(diffDestination(oscar.New_parent__c)  && !hasTopLocationType(oscar.New_parent__c))
-				errorChecks.put('Top Location Type', true);
-			if(!diffDestination(oscar.New_parent__c) && isAllHierarchySelected() )
-				errorChecks.put('Location Type Change Detected', true);
-			if(!diffDestination(oscar.New_parent__c) && !newParentIncluded(oscar.New_parent__c) )
-				errorChecks.put('Must include New Parent', true);
-			if(diffDestination(oscar.New_parent__c) && !isSingleDestinationHierarchy(oscar.New_parent__c))
-				errorChecks.put('Multiple Hierarchies', true);
+				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)){
 
-			if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)){
-
-				if(diffDestination(oscar.New_parent__c))
-					errorChecks.put('Mixed types of changes', true);
+					if(diffDestination(oscar.New_parent__c))
+						errorChecks.put('Mixed types of changes', true);
+				}
 			}
 		}
 
