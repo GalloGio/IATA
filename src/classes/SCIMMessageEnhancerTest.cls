@@ -22,6 +22,25 @@
 @isTest
 private class SCIMMessageEnhancerTest {
 
+    static testMethod void test_generic_SCIMMessage() {
+
+        Map<String,Object> inputParams = new Map<String,Object>();
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_FIRSTNAME, 'givenName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_LASTNAME, 'familyName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EMAIL, 'email');        
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_USERNAME, 'userName');
+        inputParams.put(SCIMUserAttributeGenerator.PARAM_EXTERNALID, 'externalid');
+
+        Process.PluginRequest request = new Process.PluginRequest(inputParams);
+
+        SCIMMessageEnhancer message = new SCIMMessageEnhancer('SCIMMessageEnhancer');
+        SCIMMessageEnhancer message_noConstructor = new SCIMMessageEnhancer();
+
+        Test.startTest();
+        message.enhanceMessage(request);
+        Test.stopTest();
+    }
+
     static testMethod void test_CopaMessage() {
 
         Map<String,Object> inputParams = new Map<String,Object>();
