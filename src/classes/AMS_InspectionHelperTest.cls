@@ -126,7 +126,7 @@ private class AMS_InspectionHelperTest {
 
         insert agencylist;
 
-        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATAN');
+        AMS_Accreditation_Organization__c ao = new AMS_Accreditation_Organization__c(Air_Code__c = 'IATA');
         insert ao;
 
         Test.startTest();
@@ -150,7 +150,7 @@ private class AMS_InspectionHelperTest {
         for(AMS_Inspection__c i:inspections)
         {
             // IATA appointment is not synchronized with the account!
-+           System.assertEquals(null, i.Account__r.Status__c);
+            System.assertEquals(null, i.Account__r.Status__c);
         }
 
         ins1.Accreditation_Endorsement_Status_code__c='0';
@@ -173,7 +173,7 @@ private class AMS_InspectionHelperTest {
         for(AMS_Inspection__c i:inspections)
         {
             // IATA appointment is not synchronized with the account!
-+           System.assertEquals(null, i.Account__r.Status__c);
+            System.assertEquals(null, i.Account__r.Status__c);
         }
 
         agencylist = new List<Account>();
