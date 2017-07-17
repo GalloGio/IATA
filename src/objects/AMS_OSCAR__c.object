@@ -203,6 +203,28 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>ANG_Type_of_change_hidden__c</fullName>
+        <externalId>false</externalId>
+        <formula>BR() + 
+IF( ISBLANK(ANG_Type_Of_Change__c) , &quot;No types of change selected.&quot;, &quot;&quot; ) +
+IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location&quot;), &quot;Location&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location type&quot;), &quot;Location type+BR()&quot;, NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal name&quot;), &quot;Legal name&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal status&quot;), &quot;Legal status&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Ownership&quot;), &quot;Ownership&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Hierarchy&quot;), &quot;Hierarchy&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Major shareholding&quot;), &quot;Major shareholding&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Minor shareholding&quot;), &quot;Minor shareholding&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Type of change</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>

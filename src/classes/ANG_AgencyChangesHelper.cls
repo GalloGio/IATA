@@ -104,13 +104,16 @@ public with sharing class ANG_AgencyChangesHelper {
 				
                 System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
                 
-				if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))
+				//if(Pattern.matches(AMS_Utils.ANG_ACCREDITATION_TYPE, oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c))
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 
-				if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
+				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c))
 					changesContainer = processHierarchyChanges(oscar, changesContainer, accountIdsInvolvedSet);
 
-	 			if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
+	 			//if(Pattern.matches(AMS_Utils.ANG_OWNERSHIP + '|' + AMS_Utils.ANG_MINOR_SHAREHOLDING + '|' + AMS_Utils.ANG_MAJOR_SHAREHOLDING, oscar.ANG_Type_Of_Change__c))
+				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
                     changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
@@ -137,6 +140,20 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 	}
+
+	public static boolean containsChange(List<String> changesAllowed, String changesSelected){
+
+		List<String> splitChangesList= new List<String>(changesSelected.split(';'));
+
+		Set<String> changesAllowedSet = new Set<String>(changesAllowed);
+
+		For(String change: splitChangesList){
+			if(changesAllowedSet.contains(change))
+				return true;
+		}
+
+		return false;
+	} 
 
 	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet) {
 		
