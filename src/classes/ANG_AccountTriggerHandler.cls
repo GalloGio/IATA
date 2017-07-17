@@ -103,6 +103,13 @@ public class ANG_AccountTriggerHandler {
 		return oldAcc.Financial_Review_Result__c != newAcc.Financial_Review_Result__c || oldAcc.ANG_HE_RiskHistoryAssessment__c != newAcc.ANG_HE_RiskHistoryAssessment__c;
 	}
 
+
+	private class OscarObjects{
+		private AMS_OSCAR__c oscar;
+		private Case commCase;
+		private AMS_Pax_Accreditation_Form__c stagingArea;
+	}
+
 	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 
@@ -113,8 +120,8 @@ public class ANG_AccountTriggerHandler {
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 		for(Account acc : accounts){
 			objects.put(acc.Id, new OscarObjects());
-
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+			//descomentar sem falta AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
 			oscars.add(oscar);
 
 			objects.get(acc.Id).oscar = oscar;
@@ -213,46 +220,34 @@ public class ANG_AccountTriggerHandler {
 
 		//get just account ids where status changed to Terminated 
 		for(Account a : triggerNew){
-		    if(a.status__c == 'Terminated' && oldMap.get(a.id).status__c != a.Status__c)
+		    if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
 		        inactiveAccsIdSet.add(a.id);
-		    else if( oldMap.get(a.id).status__c != a.Status__c)
+		    else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
 		        activeAccsIdSet.add(a.id);
 		}
 
+		
+		//create set with modified Accs
+		set<id> accIdSet = new set<id>(activeAccsIdSet);
+		accIdSet.addAll(inactiveAccsIdSet);
+
 		//get all related risk Events 
-		for(ANG_Agency_Risk_Event__c re : [select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c]){
-			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c))
-				riskEventsToInactiveList.add(re);
-
-			else if (activeAccsIdSet.contains(re.ANG_AccountId__c))
-				riskEventsToActiveList.add(re);
-
-		}
-
-		//Inactive Risk Events
-		for(ANG_Agency_Risk_Event__c re : riskEventsToInactiveList){
-		    if(re.ang_event_status__c == 'Active' || (re.ang_event_status__c == 'Inactive' && re.ANG_Issued_Date__c > system.Today())  ){
-		        re.ang_event_status__c = 'Inactive_TER';
-		        upsertRiskEventsList.add(re);
-		    }
-		}
-
-		//Active Risk Events
-		for(ANG_Agency_Risk_Event__c re : riskEventsToActiveList){
-		    if(re.ang_event_status__c == 'Inactive_TER' ){
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in ('Active','Inactive','Inactive_TER')];
+		
+		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
+			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
+				&& (re.ang_event_status__c == 'Active' || (re.ang_event_status__c == 'Inactive' && re.ANG_Issued_Date__c > system.Today()))){
+			        re.ang_event_status__c = 'Inactive_TER';
+				
+			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == 'Inactive_TER'){
 		        re.ang_event_status__c = 'Active';
-		        upsertRiskEventsList.add(re);
-		    }
+			}
+
 		}
 
-		update upsertRiskEventsList;
+		update reToUpdateList;
 	}
 
-	private class OscarObjects{
-		private AMS_OSCAR__c oscar;
-		private Case commCase;
-		private AMS_Pax_Accreditation_Form__c stagingArea;
-	}
 
 	private void runRiskAssessment() {
         
