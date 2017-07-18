@@ -19954,55 +19954,6 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <shortDescription>ANG_ISSP_AccreditationTypeTitle</shortDescription>
         <value>Type of accreditation</value>
     </labels>
-
-    <labels>
-        <fullName>ANG_ISSP_ProductCreditCardTransactions</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductCreditCardTransactions</shortDescription>
-        <value>Credit Card Transactions (Label)</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ProductAnnualFinancialReviews</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductAnnualFinancialReviews</shortDescription>
-        <value>Annual Financial Reviews (Label)</value>
-    </labels>    
-    <labels>
-        <fullName>ANG_ISSP_ProductIATAEasyPayTransactions</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductIATAEasyPayTransactions</shortDescription>
-        <value>IATA EasyPay Transactions (Label)</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ProductCashFacility</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductCashFacility</shortDescription>
-        <value>Cash Facility (Label)</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationWithCash</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>Standard Accreditation with Cash (Label)</value>
-    </labels>
-    <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>Standard Accreditation with no Cash (Label)</value>
-    </labels>
     <labels>
         <fullName>ANG_ISSP_ProductComparisonCountrySpecificRequirements</fullName>
         <categories>ISSP</categories>
@@ -20052,31 +20003,21 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Comparison of Travel Agency Accreditation Types</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCashTooltip</fullName>
+        <fullName>ANG_ISSP_ProductStandardAccreditationWithCash</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCashTooltip</shortDescription>
-        <value>This is the end, beautiful friend
-This is the end, my only friend, the end
-Of our elaborate plans, the end
-Of everything that stands, the end
-No safety or surprise, the end
-I'll never look into your eyes, again
-Can you picture what will be, so limitless and free
-Desperately in need, of some, stranger's hand
-In a, desperate land
-Lost in a Roman wilderness of pain
-And all the children are insane, all the children are insane
-Waiting for the summer rain, yeah
-There's danger on the edge of town
-Ride the King's highway, baby
-Weird scenes inside the gold mine
-Ride the highway west, baby
-Ride the snake, ride the snake
-To the lake, the ancient lake, baby
-The snake is long, seven miles</value>
+        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
+        <value>Standard Accreditation with Cash (Label)</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
+        <value>Standard Accreditation with no Cash (Label)</value>
+    </labels>    
     <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>

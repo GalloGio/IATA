@@ -127,7 +127,7 @@ public with sharing class ISSP_ANG_ProductComparison {
 		    			first = false;	    				
 	    			}
 
-	    			System.debug('key---->' + key + '----->' + mapProductLabels.get(key) + '----->' + mapTooltipLabels.get(key));
+	    			//System.debug('key---->' + key + '----->' + mapProductLabels.get(key) + '----->' + mapTooltipLabels.get(key));
 
 	    			List<TableCell> lst = new List<TableCell>();		
 	    			lst.add(new TableCell(key, '', mapProductLabels.get(key), mapTooltipLabels.get(key)));
@@ -149,6 +149,8 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    			}
 	    			lines.add(lst);
 
+	    			/*
+
 	    			lst = new List<TableCell>();	 
 	    			//Add label here   		
 	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCost,
@@ -161,11 +163,13 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    			}
 	    			lines.add(lst);
 
+	    			*/
+
 	    			break;
 	    		}
 
-	    		System.debug('Headers-->' + headers);
-	    		System.debug('lines-->' + lines);
+	    		//System.debug('Headers-->' + headers);
+	    		//System.debug('lines-->' + lines);
 	    	}
     	}
     }
@@ -223,9 +227,6 @@ public with sharing class ISSP_ANG_ProductComparison {
     }
 
     public String getCustomLabel(String labelName) {
-
-    	System.debug('labelName---->' + labelName);
-
     	if(labelName != null && labelName != '') {
 			Component.Apex.OutputText output = new Component.Apex.OutputText();
 			output.expressions.value = '{!$Label.' + labelName + '}';
