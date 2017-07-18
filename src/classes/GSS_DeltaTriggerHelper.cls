@@ -287,9 +287,8 @@ public class GSS_DeltaTriggerHelper {
         // update in related objects of GDP_Products_Account_View will only be recorded in delta if they are still active
         // therefore, we need to have some info on GDP_Products_Account_View 
         Map<Id, GDP_Products_Account_View__c> pvaIdToObjectMap = null; //new Map<Id, GDP_Products_Account_View__c> ();
-        if (!OBJECT_ACCOUNTVIEW) { 
-            pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);
-        }
+        if (!OBJECT_ACCOUNTVIEW) { pvaIdToObjectMap = getRelatedProductAccountView(oldRecords, NewRecords, sourceObjectName);}
+        if (OBJECT_ACCOUNTVIEW) { for ( SObject obj : newRecords ) { pvaIdToObjectMap = new Map<Id, GDP_Products_Account_View__c> (); GDP_Products_Account_View__c objb = (GDP_Products_Account_View__c) obj; pvaIdToObjectMap.put(objb.id, objb);} }
         //Generic treatment for aby type of objects.
         //Iterate on records, fields, and File specification to detect change and add change code as needed
         //Iterate the list of new records to find if there are modifications
@@ -373,7 +372,7 @@ public class GSS_DeltaTriggerHelper {
                         if (newRecord.get(ds.FieldName)!=oldRecords[position].get(ds.FieldName)) LogDelta=true;
                     if (ISINSERT || ISDELETE) LogDelta=true;
                     
-                    
+                    System.debug('field : '+ds.FieldName+' Delta: '+LogDelta);
                     if (LogDelta)
                         for(String SpecificationId : ds.SpecficationFile)
                         {
@@ -413,7 +412,9 @@ public class GSS_DeltaTriggerHelper {
                     if (LogDelta) break;
                     
                 }
-                catch(Exception e) {}
+                catch(Exception e) {
+                System.debug('field : '+ds.FieldName+' Error: '+e.getMessage());
+                }
             }   
             
            // position++;
