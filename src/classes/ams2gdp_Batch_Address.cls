@@ -36,6 +36,19 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		};
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
+			if(extraIds[0]=='none'){
+				conditions.add('Id=null');
+			}
+			else{
+				//Run batch on specific Ids
+				List<String> specificIds = new List<String>();
+				for(String s: extraIds)
+				{
+					if(s.length() >= 15) specificIds.add(s.left(15));
+				}
+
+				if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');
+			}
 		}else{
 			// idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
 			// idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
