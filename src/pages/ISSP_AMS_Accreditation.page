@@ -275,8 +275,11 @@
                     
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
                     
-                    console.log('countryList ' + countryList);     
-                    var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    var isAllowedCountry = false;
+                    console.log('countryList ' + countryList);
+                    if(defaultHQCountry != null && countryList != undefined) {
+                        var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    }
                     console.log('isAllowedCountry ' + isAllowedCountry);
                     ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';

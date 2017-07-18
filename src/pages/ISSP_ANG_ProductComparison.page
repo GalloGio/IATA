@@ -1,0 +1,144 @@
+<apex:page controller="ISSP_ANG_ProductComparison" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+	<html>
+		<style>	
+			.scrollBar {
+			    width: auto;
+			    overflow-x: scroll;
+			    overflow-y: hidden;
+			    white-space: nowrap;
+			}
+
+			.ProdCompwrapper{
+				padding: 10px;
+				margin-top: 20px;
+				margin-bottom: 40px;
+    		}
+
+			table {
+			    table-layout: fixed;
+    			margin-left:auto; 
+    			margin-right:auto;			    
+			   /*width: 100%;*/
+			}
+
+			tr th {				
+				padding: 10px;
+				min-width:200px;
+ 			   	background-color: #999999;
+    		   	color: white;
+    		   	border: 1px solid white;
+    		   	text-align: center;
+    		   	white-space: normal;
+    		   	word-wrap:break-word;
+			}
+
+			tr td {
+				min-width:300px;
+				padding: 5px;
+			    text-align: center;
+			    border-bottom: 1px solid #ddd;
+    		   	white-space: normal;
+    		   	word-wrap:break-word;			    
+			}
+		</style>
+
+		<script>
+			$(document).ready(function(){
+			    $('[data-toggle="tooltip"]').tooltip();   
+			});
+		</script>		
+	
+		<c:ISSP_Header ></c:ISSP_Header>   
+	 	<body>
+	 		<link rel="stylesheet" href="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.4-dist/css/bootstrap.min.css')}" />
+	 		<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
+
+	     	<!--apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" /-->
+
+	 		<div class="container">
+		 		<c:ISSP_CustomNavigation communityName="{!communityName}"/>
+				<apex:form>
+				    <div class="col-md-12" id="results2">
+				      <div class="panel panel-primary">
+				        <div class="panel-heading">
+				          <h3>{! $Label.ANG_ISSP_ProductComparisonTitle1}</h3>
+				          <b>{! $Label.ANG_ISSP_ProductComparisonTitle2}</b>
+				        </div>
+
+				        <div class="panel-body scrollBar" id="body-results">
+							<div class="ProdCompwrapper">
+								<table>
+									<tr>
+									<apex:repeat value="{! headers}" var="header">
+										<apex:outputPanel rendered="{! header == ''}">
+											<th style="background-color: white;">
+												
+											</th>
+										</apex:outputPanel>										
+										<apex:outputPanel rendered="{! header != ''}">
+											<th>
+												<b>{!header}</b>
+											</th>										
+										</apex:outputPanel>										
+									</apex:repeat>									
+									</tr>
+									<apex:repeat value="{! lines}" var="line">
+										<tr>
+										<apex:repeat value="{! line}" var="cell">
+											<apex:outputPanel rendered="{! cell.name == 'applyNow'}">
+												<td>
+													<apex:outputLink styleClass="btn btn_iata_primary" 
+														value="/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonApplyNow}</apex:outputLink>
+												</td>
+											</apex:outputPanel>
+
+											<apex:outputPanel rendered="{! cell.name == 'true' || cell.name == 'false'}">
+												<td style="padding-top: 10px; padding-bottom: 10px;">
+													<apex:image value="/img/msg_icons/confirm32.png" rendered="{! cell.name == 'true'}"/>
+												</td>
+											</apex:outputPanel>
+
+											<apex:outputPanel rendered="{! cell.name == 'link'}">
+												<td>
+													<a href="/ISSP_Country_Requirements?comp=true&accredType={! cell.attribute}">{! $Label.ANG_ISSP_ProductComparisonViewHere}</a>
+												</td>
+											</apex:outputPanel>
+
+											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">
+												<td style="text-align: right; padding-right: 10px; padding-left: 10px;">
+													<apex:outPutpanel rendered="{!(cell.tooltip =='')}">
+														<apex:outputLabel value="{! cell.slabel}"/>
+													</apex:outPutpanel>
+
+													<apex:outPutpanel rendered="{!!(cell.tooltip =='')}">
+														<apex:outputLabel value = "{! cell.slabel}" />
+														&nbsp;
+														<apex:image value="/img/msg_icons/info16.png" title="{! cell.tooltip}" html-data-placement="right" html-data-toggle="tooltip"/>														
+													</apex:outPutpanel>
+												</td>
+											</apex:outputPanel>
+
+											<!--apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && cell.flagFees}">
+												<td style="text-align: left;">
+													<b>Head Entity : </b><br/>
+													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.HE_applicationFee}</p>
+													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.HE_AnnualFee}</p>
+													<b>For each additional Associate Entity : </b><br/>
+													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.Additional_AE_applicationFee}</p>
+													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.Additional_AE_AnnualFee}</p>
+												</td>
+											</apex:outputPanel-->
+										</apex:repeat>
+										</tr>
+									</apex:repeat>
+								</table>
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				</apex:form>
+				<c:ISSP_CustomFooter communityName="{!communityName}"/>
+			</div>
+		</body>	   	
+    </html>
+</apex:page>

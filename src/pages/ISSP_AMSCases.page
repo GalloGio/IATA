@@ -66,7 +66,7 @@
                     } else {
                         if(typeAccredSelected == 'Travel_Agent') {
                             // New page
-                            navigateToUrl('/ISSP_ANG_AMS_Comparison?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                            navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
                         } else {
                             navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent','LIST_VIEW','newCase');
                         }
