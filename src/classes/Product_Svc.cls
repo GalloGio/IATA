@@ -968,6 +968,7 @@ public class Product_Svc
         return (str == null || str.length() == 0 || str.trim().length() == 0);
     }
 
+    @testVisible
     private static Boolean isEqual(String str1, String str2) {
         String s1;
         String s2;
@@ -984,28 +985,4 @@ public class Product_Svc
 
         return s1.equals(s2);
     }
-	
-	public static void codecoverage() {
-		Integer k = 0;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;
-		k++;	
-	}
-	
 } //*** end of class
