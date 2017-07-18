@@ -191,6 +191,19 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Chronology_of_event_days__c</fullName>
+        <externalId>false</externalId>
+        <formula>round(Confirmation_of_the_Event__c - Occurence_of_Event__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Chronology of event (days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Comments__c</fullName>
         <description>Comments for the Funds Management section.</description>
         <externalId>false</externalId>
@@ -235,6 +248,76 @@
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>GDS_1_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 1 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_2_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24)) +
+(((((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_2__c -  Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 2 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_3_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_3__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 3 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_4_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_4__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 4 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_5_Confirmation_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>(floor((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24)) + 
+(((((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24)-floor((Receipt_Confirmation_from_GDS_5__c - Suspension_Instructions_Sent_to_GDS__c)*24))*60)/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>GDS 5 Confirmation time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>GDS_Name_2__c</fullName>
@@ -804,6 +887,25 @@
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Overall_GDS_confirm_within_time__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+OR
+(GDS_1_Confirmation_time__c &gt; 3,
+GDS_2_Confirmation_time__c &gt; 3,
+GDS_3_Confirmation_time__c &gt; 3,
+GDS_4_Confirmation_time__c &gt; 3,
+GDS_5_Confirmation_time__c &gt; 3),0,1)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overall GDS confirm within time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Participates_in_IATA_Governance_Groups__c</fullName>
         <externalId>false</externalId>
         <label>Participates in IATA Governance Groups</label>
@@ -1077,6 +1179,32 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Suspension_time_spent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Round(Case__r.ClosedDate - SVP_FDS_Approval__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Suspension time spent (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Suspension_time_spent_with_AP_Days__c</fullName>
+        <externalId>false</externalId>
+        <formula>round(Confirmation_BSPlink_CASSlink_suspension__c - Suspension_Instructions_Sent_to_AP_Team__c,2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Suspension time spent with AP (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Total_amount_due__c</fullName>
