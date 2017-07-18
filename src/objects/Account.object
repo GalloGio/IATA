@@ -2692,7 +2692,15 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
+        <formula>IF(
+  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+  IF(
+    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+    false,
+    ANG_HE_CashCondition__c
+  ),
+  Parent.ANG_HE_CashCondition__c
+)</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
@@ -2708,12 +2716,40 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_LimitCashConditions__c</fullName>
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
         <label>Limit Cash Conditions</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+  IF(
+    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
+    &apos;Not Applicable&apos;,
+    TEXT(ANG_HE_RiskHistoryAssessment__c)
+  ),
+  TEXT(Parent.ANG_HE_RiskHistoryAssessment__c)
+)</formula>
+        <label>Risk History Assessment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AOC_Expiry_Date__c</fullName>
@@ -25797,6 +25833,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -28810,6 +28861,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -31185,6 +31251,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35122,6 +35203,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -37241,6 +37337,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -42627,6 +42738,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -45129,6 +45255,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -49461,6 +49602,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -53700,6 +53856,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -56317,6 +56488,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -58617,6 +58803,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Account_Type__c</picklist>
             <values>
                 <fullName>ATC</fullName>
@@ -60913,6 +61114,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -63587,6 +63803,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -71092,6 +71323,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -75269,6 +75515,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
