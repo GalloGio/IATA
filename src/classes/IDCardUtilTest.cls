@@ -231,6 +231,14 @@ private class IDCardUtilTest {
     
     TestMethod static void CreateIDCardObjectFromApplicationTest(){
         
+         IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
+        country.Name = 'Canada';
+        country.AIMS_Area_Name__c = 'CANADA';
+        country.ISO_Code_Numeric__c = 990;
+        country.AIMS_Area_ID__c = '1';
+        country.ISO_Code__c = 'CA';
+        insert country; 
+
         Account theAccount = new Account();
         theAccount.RecordTypeId = '012w0000000QBMW';
         theAccount.Name = 'UnitTest Account';
@@ -260,6 +268,24 @@ private class IDCardUtilTest {
         update theAccount;
         
         ID_Card__c newCard2 = IDCardUtil.CreateIDCardObjectFromApplication(application);
+
+        application.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_RENEWAL;
+        update application;
+        Test.startTest();
+        long VER = IDCardUtil.generateVERforMultipleAccounts(new List<Account>{theAccount}).get('Canada');
+        Contact c = new Contact(LastName = 'Contact', Email = 'ase@asd.asd', AccountId = theAccount.id, UIR__c = IDCardUtil.generateUIR(theAccount), VER_Number_2__c = String.valueOf(VER));
+        insert c;
+
+        ID_Card__c newCard3 = IDCardUtil.CreateIDCardObjectFromApplication(application, c);
+
+        application.Type_of_application__c = IDCardUtil.APPLICATIONTYPE_REISSUE;        
+        update application;
+
+         ID_Card__c newCard4 = IDCardUtil.CreateIDCardObjectFromApplication(application, c);
+
+        Test.stopTest();
+
+
         
     }
     
@@ -429,6 +455,7 @@ private class IDCardUtilTest {
         Test.startTest();   
         IDCardUtil.renameIDCardPhotoOfContact(application.ID, '',Userinfo.getSessionId());
         IDCardUtil.renameIDCardPhotoOfContact(application.ID, 'CA039011.jpg',Userinfo.getSessionId());
+        IDCardUtil.AWSImageAuthorizationLink('CA039011.jpg');
         
         
         IDCardCroppingToolWebService.RenameImageResponse_element rep = new IDCardCroppingToolWebService.RenameImageResponse_element ();
@@ -634,11 +661,15 @@ private class IDCardUtilTest {
     }
     
     TestMethod static void UpdateCaseToApproved_RejectedTest(){
-        Case aCase = new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID);
+        list<Case> listc = new list<Case>();
+        listc.add(new Case(RecordTypeId = IDCardUtil.IDCardcaseRecordTypeID));
         
-        insert acase;
+        insert listc;
         
-        IDCardUtil.UpdateCaseToApproved_Rejected(aCase.casenumber,true);
+        IDCardUtil.UpdateCaseToApproved_Rejected(listc[0].casenumber,true);
+        Case[] c = [ Select c.ContactId , c.ID_Card_Status__c, c.OwnerId, c.Related_ID_Card_Application__c, c.ID From Case c where c.CaseNumber = :listc[0].casenumber and c.RecordTypeId = :IDCardUtil.IDCardcaseRecordTypeID  limit 1];
+        System.AssertEquals(c, listc);
+
     }
     
     TestMethod static void getIDCardApplicationTest(){
@@ -679,6 +710,53 @@ private class IDCardUtilTest {
         
         // Existing country
         IDCardUtil.GetIATAISOCountryOfContact('67504242');
+    }
+
+    TestMethod static void GetIATAISOCountryFromAccounts(){
+        List<Account> acc = new List<Account>();
+        IATA_ISO_Country__c aCountry = new IATA_ISO_Country__c();
+                
+        // Existing country
+        IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
+        country.Name = 'Canada';
+        country.AIMS_Area_Name__c = 'CANADA';
+        country.ISO_Code_Numeric__c = 990;
+        country.AIMS_Area_ID__c = '1';
+        country.ISO_Code__c = 'CA';
+        insert country; 
+        
+        Account a = new Account(Name = 'TestAccount', BillingCountry = 'Canada');
+        acc.add(a);
+        insert acc;
+
+        IDCardUtil.GetIATAISOCountryFromAccounts(acc);
+    }
+
+    TestMethod static void GetAccountListFromIATACodes(){
+        Set<String> iataCodes = new Set<String>();
+        iataCodes.add('67504242');
+        IDCardUtil.GetAccountListFromIATACodes(iataCodes);
+    }
+
+    TestMethod static void calculateDisplayedName(){
+        IDCardUtil.calculateDisplayedName('firstName', 'middleInitial', 'lastName');
+    }
+
+    TestMethod static void setTobeapproved(){
+         ID_Card_Application__c application = new ID_Card_Application__c();
+        
+        insert application;
+        
+        IDCardUtil.setTobeapproved(application.id);
+    }
+
+    TestMethod static void GetMonthStringValue(){
+        Set<String> iataCodes = new Set<String>();
+        IDCardUtil.GetMonthStringValue(12);
+    }
+
+     TestMethod static void formatNumbersWithSeparators(){
+        IDCardUtil.formatNumbersWithSeparators(Decimal.valueof(String.valueof('67504242')),'');
     }
     
     TestMethod static void generateVERsAndUIRs(){
