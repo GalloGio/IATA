@@ -34,12 +34,16 @@ public class ANG_RiskAssessmentEngine{
         private boolean hasLimitCashCondition;
         private string remitanceFrequency;
         private string accreditantionModel;
-        public accHelperClass(Integer nAdjs, boolean hasCashCond,boolean hasLimitCashCond,String remitFreq, String accrModel){
+        private string financialReviewResult;
+        private string status;
+        public accHelperClass(Integer nAdjs, boolean hasCashCond,boolean hasLimitCashCond,String remitFreq, String accrModel, String financialReviewRes,String stats){
             nrAdjustedRE=nAdjs;
             hasCashCondition=hasCashCond;
             hasLimitCashCondition=hasLimitCashCond;
             remitanceFrequency=remitFreq;
             accreditantionModel=accrModel;
+            financialReviewResult=financialReviewRes;
+            status=stats;
         }
     }
 
@@ -47,14 +51,15 @@ public class ANG_RiskAssessmentEngine{
         get{
             if(accInfoMap==null){
                 accInfoMap = new map<id,accHelperClass>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_LimitCashConditions__c,ANG_Accreditation_Model__c ,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
+                for(account acc:[select id,name, remittance_frequency__c,ANG_LimitCashConditions__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
                     integer nAdjs=0;
                     boolean hasCashCond=false;
                     for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
                         if(are.ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes') nAdjs++;
                         hasCashCond=hasCashCond||are.ANG_Risk_Type__r.Limit_Cash_conditions__c;
                     }
-                    accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c));
+                    accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c));
+
                 }
             }
             return accInfoMap;
@@ -85,32 +90,16 @@ public class ANG_RiskAssessmentEngine{
 
 
     //============================FORECASTING VARIABLES ==========================================
-    private map<id,ang_risk_event_type__c> reTypeId2CalcMap{ //map adjusted risk calculations
+    private map<string,ang_risk_event_type__c> reType2CalcMap{ //map adjusted risk calculations
         get{
-            if(reTypeId2CalcMap==null){
-                reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
-                reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
-                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
-                    reTypeId2CalcMap.put(ret.id,ret);
-                    reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
+            if(reType2CalcMap==null){
+                reType2CalcMap = new map<string,ang_risk_event_type__c>();
+                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,Limit_Cash_conditions__c from ang_risk_event_type__c]){
+                    reType2CalcMap.put(ret.id,ret);
+                    reType2CalcMap.put(ret.ANG_Risk_ID__c,ret);
                 }
             }
-            return reTypeId2CalcMap;
-        }
-        private set;
-    }
-
-    private map<string,ang_risk_event_type__c> reTypeKeyId2CalcMap{ //map adjusted risk calculations
-        get{
-            if(reTypeKeyId2CalcMap==null){
-                reTypeId2CalcMap = new map<id,ang_risk_event_type__c>();
-                reTypeKeyId2CalcMap = new map<string,ang_risk_event_type__c>();
-                for(ang_risk_event_type__c ret:[select id,ANG_Risk_ID__c,ANG_Agency_Risk_Calculation__c,ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c from ang_risk_event_type__c]){
-                    reTypeId2CalcMap.put(ret.id,ret);
-                    reTypeKeyId2CalcMap.put(ret.ANG_Risk_ID__c,ret);
-                }
-            }
-            return reTypeKeyId2CalcMap;
+            return reType2CalcMap;
         }
         private set;
     }
@@ -133,7 +122,6 @@ public class ANG_RiskAssessmentEngine{
     //============================ CONSTRUCTORS ====================================================
 
     public ANG_RiskAssessmentEngine(map<id,Map<id,integer>> AccMap){ // account -> calculation- Occurrence nr
-
         if(AccMap ==null) return;
         accCalcMap.putAll(AccMap);
         string accId=null;
@@ -154,81 +142,78 @@ public class ANG_RiskAssessmentEngine{
         }
 
         for(id accountId:accInfoMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel=='Legacy' ||  accInfoMap.get(accountId).accreditantionModel=='Cashless')){
+            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel=='Legacy' ||  accInfoMap.get(accountId).accreditantionModel=='Cashless') || accInfoMap.get(accountId).status=='Terminated'){
                 accCalcMap.remove(accountId);
             }
-
         }
     }
 
-    public ANG_RiskAssessmentEngine(list<ANG_Agency_Risk_Event__c> reList, Account acc, list<String> newReKeyIdList){
-        nrAdjustedRe=0;
 
-        forecastAccount=acc;
-
-        forecastCalcMap = new map<id,integer>();
-
-        //MAP <config ID; integer>
-        for(ANG_Agency_Risk_Event__c are:reList){
-            if(are.ANG_Risk_Type__c==null || are.ANG_Event_Status__c!='Active')continue;
-            ang_risk_event_type__c ret=(ang_risk_event_type__c)reTypeId2CalcMap.get(are.ANG_Risk_Type__c);
-            id calcId=ret.ANG_Agency_Risk_Calculation__c;
-            if(forecastCalcMap.containsKey(calcId)){
-                Integer nOcc=(integer)forecastCalcMap.get(calcId)+1;
-                forecastCalcMap.remove(calcId);
-                forecastCalcMap.put(calcId,nOcc);
-            }else{
-                forecastCalcMap.put(calcId,1);
+    public ANG_RiskAssessmentEngine(map<account,list<string>> accRiskEventsMap){
+        //list<string>> accRiskEventsMap -> list of strings containg the risk Type Id or de risk type UniqueKey
+        for(account acc:accRiskEventsMap.KeySet()){
+            if(acc.ANG_Accreditation_Model__c=='Legacy' ||  acc.ANG_Accreditation_Model__c=='Cashless' || acc.status__c=='Terminated'){
+                accCalcMap.put(acc.id,null);// to return the assessment
+                continue;
+            } 
+            boolean hasCashCond=false;
+            integer nrAdjustedRe=0;
+            map<id,integer> tempCalcMap = new map<id,integer>();
+            for(string reid:(list<string>)accRiskEventsMap.get(acc)){
+                ang_risk_event_type__c ret=(ang_risk_event_type__c)reType2CalcMap.get(reid);
+                id calcId=ret.ANG_Agency_Risk_Calculation__c;
+                if(tempCalcMap.containsKey(calcId)){
+                    Integer nOcc=(integer)tempCalcMap.get(calcId)+1;
+                    tempCalcMap.remove(calcId);
+                    tempCalcMap.put(calcId,nOcc);
+                }else{
+                    tempCalcMap.put(calcId,1);
+                }
+                if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                    nrAdjustedRe+=1;
+                }
+                hasCashCond=hasCashCond||ret.Limit_Cash_conditions__c;
             }
-            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
-                nrAdjustedRe+=1;
-            }
-        }
-
-        for(String retKey : newReKeyIdList){
-            if(!reTypeKeyId2CalcMap.containsKey(retKey))continue;
-            ang_risk_event_type__c ret=(ang_risk_event_type__c)reTypeKeyId2CalcMap.get(retKey);
-            id calcId=ret.ANG_Agency_Risk_Calculation__c;
-            if(forecastCalcMap.containsKey(calcId)){
-                Integer nOcc=(integer)forecastCalcMap.get(calcId)+1;
-                forecastCalcMap.remove(calcId);
-                forecastCalcMap.put(calcId,nOcc);
-            }else{
-                forecastCalcMap.put(calcId,1);
-            }
-            if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
-                nrAdjustedRe+=1;
-            }
-        }
-
+            accCalcMap.put(acc.id,tempCalcMap);
+            accInfoMap.put(acc.id,new accHelperClass(nrAdjustedRe,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C));
+      }
     }
 
     //============================ END CONSTRUCTORS ====================================================
 
     //============================ PUBLIC METHODS ====================================================
 
-    public void assessment(){
-        list<account> AccUpdList= new list<account>();
-        for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
-            Account updAcc=new Account(id=accKey);
-            Integer accParentOccs=0;
-            map<id,integer> groupingMap = accCalcMap.get(accKey);
-            AccUpdList.add(updAcc);  
-            updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap,(String)accInfoMap.get(accKey).remitanceFrequency,accInfoMap.get(accKey).nrAdjustedRE);            
-            updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
-        }
-
-        System.debug(loggingLevel.FINEST, '____ [cls ANG_RiskEventGenerator - checkRequisites] - AccUpdList ' + AccUpdList);
-        update AccUpdList;
+    public void assessment(){      
+        update assessAccounts();
     }
 
-    public String forecastAssessment(){
+    public list<account> forecastAssessment(){    
+        return assessAccounts();
+    }
+
+
+   /* public String forecastAssessment(){
         return calculateRiskHistoryAssessment(forecastCalcMap,forecastAccount.Remittance_frequency__c,nrAdjustedRe);
-    }
+    }*/
 
     //============================ END PUBLIC METHODS ====================================================
 
     //============================ PRIVATE METHODS ====================================================
+
+    private list<account> assessAccounts(){
+        list<account> AccUpdList= new list<account>();
+        for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
+            Account updAcc=new Account(id=accKey);
+            AccUpdList.add(updAcc);         
+            map<id,integer> groupingMap = accCalcMap.get(accKey);
+            updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap,(String)accInfoMap.get(accKey).remitanceFrequency,accInfoMap.get(accKey).nrAdjustedRE);            
+            updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
+            updAcc.Financial_Review_Result__c=accInfoMap.get(accKey).financialReviewResult;
+        }
+        AccUpdList =updateRiskStatus(AccUpdList);
+        return AccUpdList;  
+    }
+ 
      private String calculateRiskHistoryAssessment(map<id,integer> groupingMap,String remiFreq, Integer nrAdjusRe){
         String result ='Passed';
         if(groupingMap==null)return result;
@@ -252,7 +237,6 @@ public class ANG_RiskAssessmentEngine{
                     break;
                 }
             }
-
             if(risCalAdjcMap.containsKey(reRec)){ //validate adjusted REC
                 if(risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){
                     for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
@@ -277,4 +261,20 @@ public class ANG_RiskAssessmentEngine{
         return accInfoMap.get(accId).hasCashCondition||accInfoMap.get(accId).hasLimitCashCondition;
     }
      //============================ END PRIVATE METHODS ====================================================
+
+    public List<Account> updateRiskStatus(List<Account> accs){
+
+        Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
+        Map<String,String> calculationTable = new Map<String,String>();
+        for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
+            calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc.ANG_Risk_History__c);
+        }
+        if(!calculationTable.isEmpty()){
+            for(Account acc : accs){              
+                acc.ANG_HE_RiskStatus__c = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
+                if(acc.ANG_HE_RiskStatus__c=='C') acc.ANG_HE_CashCondition__c=true;
+            }
+        }
+        return accs;
+    }
  }
