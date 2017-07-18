@@ -2739,7 +2739,7 @@
         <description>To show analysts information about Easy Pay’s account status</description>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Parent.ANG_IEP_Status__c))</formula>
-		<formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2780,7 +2780,7 @@
                 <fullName>Closed – 3-month freeze period</fullName>
                 <default>false</default>
             </picklistValues>
-			<picklistValues>
+            <picklistValues>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </picklistValues>
@@ -23627,7 +23627,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -26098,7 +26098,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -29207,7 +29207,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -31682,7 +31682,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -35712,7 +35712,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -37923,7 +37923,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -43402,7 +43402,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -46004,7 +46004,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -50428,7 +50428,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -54764,7 +54764,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -57477,7 +57477,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -59873,7 +59873,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -62269,7 +62269,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -65039,7 +65039,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -70081,27 +70081,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3-days</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly - Bi-Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -72657,7 +72637,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
@@ -76935,7 +76915,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
+            <values>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </values>
