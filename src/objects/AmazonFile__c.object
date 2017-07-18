@@ -782,14 +782,14 @@
         <columns>RECORDTYPE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Case__c</field>
-            <operation>equals</operation>
-            <value>08034468</value>
-        </filters>
-        <filters>
             <field>RECORDTYPE</field>
             <operation>equals</operation>
-            <value>AmazonFile__c.AMS_File</value>
+            <value>AmazonFile__c.EF_File</value>
+        </filters>
+        <filters>
+            <field>sObject_Id__c</field>
+            <operation>equals</operation>
+            <value>800w0000005LzxbAAC</value>
         </filters>
         <label>. by case#</label>
         <language>en_US</language>
