@@ -855,7 +855,7 @@
         <fields>ANG_Risk_Type__c</fields>
         <fields>ANG_Issued_Date__c</fields>
         <fields>ANG_Source__c</fields>
-        <fields>ANG_Expiration_Date__c</fields>
+        <fields>ANG_Expiration_Date_ff__c</fields>
         <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
