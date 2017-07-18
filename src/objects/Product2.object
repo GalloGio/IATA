@@ -3269,6 +3269,22 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>C-Web Application</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Windows</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Book &amp; Windows</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Book &amp; Mobile</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -7547,6 +7563,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -7627,6 +7651,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -7656,6 +7684,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10553,6 +10585,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -10645,6 +10685,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -10674,6 +10718,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13499,6 +13547,14 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Book %26 Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Book %26 Windows</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -13579,6 +13635,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -13608,6 +13668,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
