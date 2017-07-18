@@ -26191,6 +26191,20 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
         <errorMessage>In order to close the agency, make sure all previous steps have been completed</errorMessage>
     </validationRules>
     <webLinks>
+        <fullName>ANG_Edit_the_accounts_involved</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Edit the accounts involved</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if (sforce.console.isInConsole()) { 
+   srcUp(&quot;/apex/ANG_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+} else { 
+   window.open(&quot;/apex/ANG_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+}</url>
+    </webLinks>
+    <webLinks>
         <fullName>CongaSession</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
