@@ -394,6 +394,10 @@ Id
                 <default>false</default>
             </values>
             <values>
+                <fullName>Inactive_TER</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Inactive_Withdrawn</fullName>
                 <default>false</default>
             </values>
