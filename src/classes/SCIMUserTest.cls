@@ -30,13 +30,10 @@ public class SCIMUserTest {
         );
         insert user;
 
-
-        SCIMUser anUser = new SCIMUser(user.userName, user.lastName, user.firstname, user.email, user.email, 'test');
+        SCIMUser anUser = new SCIMUser(user.userName, user.lastName, user.firstname, user.email, user.email);
         SCIMUserAttributeGenerator attG = new SCIMUserAttributeGenerator();
         String payload = attG.getSerializedAttributes(anUser);
 
-
         System.debug(payload);
-
     }
 }
