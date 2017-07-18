@@ -208,7 +208,7 @@
         <formula>BR() + 
 IF( ISBLANK(ANG_Type_Of_Change__c) , &quot;No types of change selected.&quot;, &quot;&quot; ) +
 IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location&quot;), &quot;Location&quot;+BR(), NULL)+ 
-IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location type&quot;), &quot;Location type+BR()&quot;, NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c , &quot;Location type&quot;), &quot;Location type&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal name&quot;), &quot;Legal name&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Legal status&quot;), &quot;Legal status&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Ownership&quot;), &quot;Ownership&quot;+BR(), NULL)+ 

@@ -90,7 +90,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>New_HE_is_different_legal_entity__c</field>
+                <field>NewHeDifferentLegalEntity__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
