@@ -36,7 +36,9 @@ public class AMS_InspectionHelper {
 
 
         List<AMS_Inspection__c> oldInspections =
-            [SELECT Id,Account__c,Accreditation_Endorsement_organisation__c,Accreditation_Endorsement_Status_code__c
+            [SELECT Id,Account__c,Accreditation_Endorsement_organisation__c,
+                Accreditation_Endorsement_Status_code__c,Date_Organisation_Status_attained__c,
+                Previous_status_code__c
             FROM AMS_Inspection__c
             WHERE Account__c IN :agencyIds
             AND ( Accreditation_Endorsement_organisation__r.Air_Code__c = 'ARC' OR
@@ -67,6 +69,7 @@ public class AMS_InspectionHelper {
                                 Integer oldStatus = Integer.valueOf(o.Accreditation_Endorsement_Status_code__c.charAt(0));
                                 if(maxStatus < oldStatus) {
                                     maxStatus = oldStatus;
+                                    maxInspection = o;
                                 }
                             }
                         }
