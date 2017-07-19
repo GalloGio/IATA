@@ -94,6 +94,13 @@ private class ISSP_LoginTest {
 		am.TeamMemberRole = 'Portal Administrator';
 
 		insert am;
+        
+        system.runAs(newUser){
+	    	Apexpages.currentPage().getParameters().put('retURL', '/test');
+	    	ISSP_Login ctrl = new ISSP_Login();
+	    	ctrl.username = 'issp_login_test_class.testclass.testclass@partner.iata.org';
+            ctrl.login();
+    	}
 
 		/*
     	Contact contact2 = ISSP_ObjectFactory.createNewContact();

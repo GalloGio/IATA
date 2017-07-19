@@ -1,4 +1,15 @@
-trigger ISSP_UserTrigger on User (before insert, before update) {
+trigger ISSP_UserTrigger on User (before insert, before update, after insert) {
+    
+    if(ANG_UserTriggerHandler.doNotRun) return;
+
+	if(AMS_TriggerExecutionManager.checkExecution(User.getSObjectType(), 'ISSP_UserTrigger')) { 
+		ANG_UserTriggerHandler handler = new ANG_UserTriggerHandler();
+
+		//add other validations if necessary (and add on the trigger declaration as well)
+		if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
+		if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
+		if(Trigger.isAfter && Trigger.isInsert) handler.onAfterInsert();
+	}
     
     if(ISSP_UserTriggerHandler.preventTrigger)
         return;
