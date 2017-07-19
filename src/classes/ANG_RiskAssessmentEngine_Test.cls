@@ -289,39 +289,52 @@ public class ANG_RiskAssessmentEngine_Test{
 
     TestMethod static void testPassForecastAssessment(){
     	//Passes agency risk forecast
-    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
-    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
-    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
+    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c from account where name ='acc1' limit 1];
+    	list<string> areList = new list<string>();
+    	for(ANG_Agency_Risk_Event__c are:[select ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id]){
+    		areList.add(are.ANG_Risk_Type__c);
+    	}
+    	
+    	map<account,list<string>> forecastMap  = new map<account,list<string>>{acc =>areList};
 		Test.startTest();
-			String result=new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'2'}).forecastAssessment();
-			system.assertEquals('Passed',result);
+			system.assertEquals('Passed',new ANG_RiskAssessmentEngine(forecastMap).forecastAssessment().get(0).ANG_HE_RiskHistoryAssessment__c);
 		Test.stopTest();
     }
-    TestMethod static void testFailedForecastAssessment(){
+   TestMethod static void testFailedForecastAssessment(){
     	//Fails agency risk forecast
-    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
+    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c from account where name ='acc1' limit 1];
     	
-    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
 
-    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
+    	list<string> areList = new list<string>();
+    	for(ANG_Agency_Risk_Event__c are:[select ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id]){
+    		areList.add(are.ANG_Risk_Type__c);
+    	}
+    	areList.add('2');//risk Event Type with unique key 2
+
+    	map<account,list<string>> forecastMap  = new map<account,list<string>>{acc =>areList};
 		Test.startTest();
-			String result=new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'2'}).forecastAssessment();
-			system.assertEquals('Failed',result);
+			system.assertEquals('Failed',new ANG_RiskAssessmentEngine(forecastMap).forecastAssessment().get(0).ANG_HE_RiskHistoryAssessment__c);
 		Test.stopTest();
     }
     TestMethod static void testFailedForecastAssessmentWithAdjusted(){
     	// fails agency risk forecast with adjusted RE
-    	account acc= [select id,Remittance_frequency__c from account where name ='acc1' limit 1];
+    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c from account where name ='acc1' limit 1];
     	
-    	list<ang_agency_risk_Event__c> areList = new list<ang_agency_risk_Event__c>();
+    
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 4 Adjusted'].id, system.Today());
 
-    	list<ANG_Agency_Risk_Event__c> reList=[select id,ANG_Event_Status__c,ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id];
+    	list<string> areList = new list<string>();
+    	for(ANG_Agency_Risk_Event__c are:[select ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id]){
+    		areList.add(are.ANG_Risk_Type__c);
+    	}
+    	areList.add('4');//risk Event Type with unique key 2
+    	areList.add('4');//risk Event Type with unique key 2
+    	map<account,list<string>> forecastMap  = new map<account,list<string>>{acc =>areList};
 		Test.startTest();
-			system.assertEquals('Failed',new ANG_RiskAssessmentEngine(reList,acc, new list<string>{'4','4'}).forecastAssessment());
+			system.assertEquals('Failed',new ANG_RiskAssessmentEngine(forecastMap).forecastAssessment().get(0).ANG_HE_RiskHistoryAssessment__c);
 		Test.stopTest();
     }
 }
