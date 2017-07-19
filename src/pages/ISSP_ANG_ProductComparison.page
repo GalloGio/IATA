@@ -104,30 +104,43 @@
 												</td>
 											</apex:outputPanel>
 
-											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">
-												<td style="text-align: right; padding-right: 10px; padding-left: 10px;">
-													<apex:outPutpanel rendered="{!(cell.tooltip =='')}">
+											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && NOT cell.flagFees}">											
+												<apex:outputPanel rendered="{! cell.name == 'Cost'}">
+													<td style="text-align: left; vertical-align: top; padding-right: 10px; padding-left: 10px;">
 														<apex:outputLabel value="{! cell.slabel}"/>
-													</apex:outPutpanel>
+													</td>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{! cell.name != 'Cost'}">
+													<td style="text-align: left; padding-right: 10px; padding-left: 10px;">
+														<apex:outPutpanel rendered="{!(cell.tooltip =='')}">
+															<apex:outputLabel value="{! cell.slabel}"/>
+														</apex:outPutpanel>
 
-													<apex:outPutpanel rendered="{!!(cell.tooltip =='')}">
-														<apex:outputLabel value = "{! cell.slabel}" />
-														&nbsp;
-														<apex:image value="/img/msg_icons/info16.png" title="{! cell.tooltip}" html-data-placement="right" html-data-toggle="tooltip"/>														
-													</apex:outPutpanel>
-												</td>
+														<apex:outPutpanel rendered="{!!(cell.tooltip =='')}">
+															<apex:outputLabel value = "{! cell.slabel}" />
+															&nbsp;
+															<apex:image value="/img/msg_icons/info16.png" title="{! cell.tooltip}" html-data-placement="right" html-data-toggle="tooltip"/>														
+														</apex:outPutpanel>
+													</td>
+												</apex:outputPanel>
 											</apex:outputPanel>
 
-											<!--apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && cell.flagFees}">
+											<apex:outputPanel rendered="{! cell.name != 'link' && cell.name != 'true' && cell.name != 'false' && cell.name != 'applyNow' && cell.flagFees}">
 												<td style="text-align: left;">
-													<b>Head Entity : </b><br/>
-													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.HE_applicationFee}</p>
-													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.HE_AnnualFee}</p>
-													<b>For each additional Associate Entity : </b><br/>
-													<p>&nbsp;&nbsp;Application Fee : {! cell.fees.Additional_AE_applicationFee}</p>
-													<p>&nbsp;&nbsp;Annual Fee : {! cell.fees.Additional_AE_AnnualFee}</p>
+													<p><b>{! $Label.ANG_ISSP_HeadEntity}</b></p>
+													<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_HE_Application_Registration_Fees__c.Label} : {! cell.fees.HE_Application_Registration_Fees}</p>
+													<p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Small_Agents__c.Label} : {! cell.fees.HE_AnnualFees_Small_Agents}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Medium_Agents__c.Label} : {! cell.fees.HE_AnnualFees_Medium_Agents}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_HE_AnnualFees_Large_Agents__c.Label} : {! cell.fees.HE_AnnualFees_Large_Agents}</p>
+													<p><b>{! $Label.ANG_ISSP_AssociateEntity}</b></p>
+													<p style="padding-left: 20px">{!$ObjectType.Product2.fields.ANG_AE_Application_Registration_Fees__c.Label} : {! cell.fees.AE_Application_Registration_Fees}</p>
+													<p style="padding-left: 20px">{! $Label.ANG_ISSP_AnnualFees}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_First_10_locations__c.Label}  : {! cell.fees.AE_Fees_First_10_locations}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Next_15_Locations__c.Label} : {! cell.fees.AE_Fees_Next_15_Locations}</p>
+													<p style="padding-left: 40px">{!$ObjectType.Product2.fields.ANG_AE_Fees_Additional_Locations__c.Label} : {! cell.fees.AE_Fees_Additional_Locations}</p>
 												</td>
-											</apex:outputPanel-->
+											</apex:outputPanel>
 										</apex:repeat>
 										</tr>
 									</apex:repeat>
