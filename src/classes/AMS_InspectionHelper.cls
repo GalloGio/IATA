@@ -104,6 +104,7 @@ public class AMS_InspectionHelper {
         //////
         if(maxInspection != null) {
             if((maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == '0') ||
+              (maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == null) ||
             (maxInspection.Accreditation_Endorsement_Status_code__c == '7' && maxInspection.Previous_status_code__c == '2') ) {
                 accountToProcess.Original_Approval_DAte__c = maxInspection.Date_Organisation_Status_attained__c;
                 accountToProcess.Accreditation_date__c = maxInspection.Date_Organisation_Status_attained__c;
