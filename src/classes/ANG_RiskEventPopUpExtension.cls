@@ -7,7 +7,7 @@ public class ANG_RiskEventPopUpExtension {
         this.risk = (ANG_Agency_Risk_Event__c)stdController.getRecord();
     }
 
-    public List<Account> getAccounts() {
-        return [SELECT Id, Name, IATACode__c, Location_Type__c FROM Account WHERE Id IN (SELECT ANG_AccountId__c FROM ANG_Agency_Risk_Event__c WHERE ANG_Source_Id__c = :risk.ANG_Source_Id__c AND ANG_Risk_Type__c = :risk.ANG_Risk_Type__c)];
+    public List<ANG_Agency_Risk_Event__c> getRiskEvents() {
+        return [SELECT ANG_Name_Link_FF__c, ANG_AccountId__r.Name, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c FROM ANG_Agency_Risk_Event__c WHERE ANG_Source_Id__c = :risk.ANG_Source_Id__c AND ANG_Risk_Type__c = :risk.ANG_Risk_Type__c];
     }
 }
