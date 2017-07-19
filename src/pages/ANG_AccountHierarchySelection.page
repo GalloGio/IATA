@@ -108,7 +108,9 @@
 					</apex:inputField>
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
-					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}"/>
+					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes" action="{!FetchNewParent}"/>
+					</apex:inputField>
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields2">
 					<apex:inputField value="{!oscar.NewHeDifferentLegalEntity__c}" rendered="{!showNewHeDifferentLegalEntity}"/>
