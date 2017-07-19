@@ -128,14 +128,12 @@
                         <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
             </apex:outputText>
 
-            <apex:pageBlockSection columns="2">
-             	<apex:outputPanel >
-            	<apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg}</strong></apex:outputText>
-             	</apex:outputPanel>
-             	<apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
+            <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
+            <br></br>
+            
             	<apex:outputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px"/>
             	<apex:outputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;"/>   
-            </apex:pageBlockSection>
+            
 
         </apex:pageBlockSection>
 

@@ -159,7 +159,7 @@
         </tr>
         <tr>
           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Country__c.Label}</td>
-          <td colspan="2">{!newForm.Branch_Office_Country__c}</td>
+          <td colspan="2">{!isocountry.Name}</td>
         </tr>
         <tr>
           <td colspan="3"><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></td>
@@ -174,7 +174,11 @@
         </tr>
         <tr>
           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}</td>
-          <td colspan="2">{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}</td>
+          <td colspan="2">
+            <apex:outputText value="{0,date, MMMM d,  yyyy}">
+              <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+            </apex:outputText>
+          </td>
         </tr>
         <tr>
           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}</td>
@@ -186,11 +190,19 @@
         </tr>
         <tr>
           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}</td>
-          <td colspan="2">{!newForm.ISSP_AMS_Date_license_granted__c}</td>
+            <td colspan="2">
+              <apex:outputText value="{0,date, MMMM d,  yyyy}">
+               <apex:param value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
+              </apex:outputText>
+            </td>
         </tr>
         <tr>
           <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}</td>
-          <td colspan="2">{!newForm.ISSP_AMS_Date_Registration_granted__c}</td>
+          <td colspan="2">
+              <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                  <apex:param value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
+              </apex:outputText>
+          </td>
         </tr>
 
       </table>

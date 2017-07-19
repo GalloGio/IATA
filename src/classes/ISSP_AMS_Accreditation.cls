@@ -1732,10 +1732,16 @@ public without sharing class ISSP_AMS_Accreditation {
         }
 
         SFDCAccount.Location_Class__c = getLocationClass();
-        SFDCAccount.Location_Type__c = 'BR';
+
+        if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
+            SFDCAccount.Location_Type__c = 'AE';    
+        }else{
+            SFDCAccount.Location_Type__c = 'BR';    
+        }
+        
         SFDCAccount.Reason_for_creation__c = 'Created by customer';
         
-        if(newCase.Reason1__c == 'New BR Abroad') {
+        if(newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             SFDCAccount.Name = newForm.Account_Name__c;
             SFDCAccount.TradeName__c = newForm.Trade_Name__c;
         } else {
@@ -5229,7 +5235,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
 
             //checking if the Phone number is fill
-            if(hqAccount.Phone == null){
+            if(hqAccount.Phone == null && hqAccount.Status__c != 'Terminated'){
                 hqAccount.Phone.addError(Label.ISSP_YouMustEnter);
                 ngErrorFound = true;
             }
@@ -6535,7 +6541,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) {
             np = new PageReference('/ISSP_AMS_PDF_ApplicationForm?caseid=' + newCase.id);
         }
-        else if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH)) { //NEWGEN - 605            
+        else if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) { //NEWGEN - 605            
             np = new PageReference('/ISSP_AMS_PDF_ANG_PAX_HE?caseid=' + newCase.id);
 
         }else if (sectorValue.StartsWith('Travel_Agent') && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD)) {

@@ -980,9 +980,10 @@
            <strong>
                <apex:outputPanel rendered="{!NOT(isNoticeOfChange)}">
                {!IF(BEGINS(sectorValue, 'Travel_Agent'),
-               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks)),
-               IF(amsOfficeType=='HO',
-               $Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,
+               IF(newCase.Reason1__c =='New AE', $Label.ISSP_ANG_StepFinal_AE_Thanks,               
+               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, 
+               IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks))),
+               IF(amsOfficeType=='HO',$Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,               
                $Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR)
                )}
                </apex:outputPanel>
