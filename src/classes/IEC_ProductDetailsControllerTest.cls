@@ -1,6 +1,6 @@
 @isTest
 private class IEC_ProductDetailsControllerTest {
-	
+	/*
 	@isTest(SeeAllData=true)
 	static void test_all() {
 		//-- Generate Ecom Products
@@ -36,7 +36,6 @@ private class IEC_ProductDetailsControllerTest {
 		ApexPages.currentPage().getParameters().put('id', selectedProduct.ProductNumber);
 		IEC_ProductDetailsController ctrl;
 
-		//*** cover case of Publication product 
 		system.runAs(usr)
 		{
 			ctrl = new IEC_ProductDetailsController();
@@ -45,7 +44,6 @@ private class IEC_ProductDetailsControllerTest {
 			//ctrl.addToCart();
 		}
 
-		//*** cover case of GDP product
 		//products = Product_Sel.getEComProduct(null, true, 'IEC_Product_Information__c != null', null, false);
 		if (products.size() > 0)
 		{
@@ -54,5 +52,5 @@ private class IEC_ProductDetailsControllerTest {
 			//ctrl.onLoadAction();
 		}
 	}
-	
+	*/
 }
