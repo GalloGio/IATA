@@ -279,7 +279,7 @@ public class ISSP_PortalService_Test {
         ctrl3.getContacts();
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
-        //ctrl3.CreateNewPortalAccess();
+        ctrl3.CreateNewPortalAccess();
 	}
 
 	/*public static testMethod void unitTest5() {
