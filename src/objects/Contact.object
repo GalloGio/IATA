@@ -3022,7 +3022,7 @@ IF(TEXT(EF_Status__c)=&quot;Active&quot;,IMAGE(&quot;/resource/EF_contact_image&
         <fullName>Authorized_Signatory__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Authorized Signatory</label>
+        <label>Legal Authorized Signatory</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
