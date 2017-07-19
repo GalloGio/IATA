@@ -167,7 +167,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -343,7 +343,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet, false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -460,7 +460,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -578,7 +578,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -708,7 +708,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -809,7 +809,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
@@ -926,7 +926,7 @@ public class ANG_AgencyChangesHelperTest {
 		Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
 		accountIdsInvolvedSet.add(oscar.Account__c);
 
-		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet);
+		ANG_AgencyChangesHelper.AChangeStructure struct = ANG_AgencyChangesHelper.applyChangeOfHierarchy(oscar,null,accountIdsInvolvedSet,false);
 
         List<AMS_Agencies_relationhip__c> relationsMap = struct.relationsMap.values();
 		List<Account> accountsMap = struct.accountsMap.values();
