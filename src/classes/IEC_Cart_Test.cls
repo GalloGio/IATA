@@ -72,7 +72,7 @@ private class IEC_Cart_Test {
 		}
 	}
 
-	@isTest(seeAllData=true)
+	/*@isTest(seeAllData=true)
 	static void test3() {
 		IEC_Cart cart;
 		IEC_Cart.CartItem cartItem;
@@ -152,6 +152,6 @@ private class IEC_Cart_Test {
 		}
 		
 		ecomProductList = cart.getEcomProductsByProductIdList(productIdList);
-	}
+	}*/
 
 }
