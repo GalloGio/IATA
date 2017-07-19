@@ -34,4 +34,30 @@ private class ANG_RiskEventTest {
         System.assertEquals(Date.newInstance(2017, 10, 15), riskEvents[0].ANG_Expiration_Date__c);
     }
     
+    static testMethod void test_RiskEventStatusAccordingAccountStatus() {
+        Account acc = [SELECT Id FROM Account ];
+
+        Test.startTest();
+
+        acc.Status__c = 'Terminated';
+        update acc;
+
+        
+
+        String statusRiskEvent = [SELECT ang_event_status__c FROM ANG_Agency_Risk_Event__c].ang_event_status__c;
+        System.assertEquals('Inactive_TER', statusRiskEvent);
+
+        
+
+        acc.Status__c = 'Approved';
+        update acc;
+
+        Test.stopTest();
+
+        statusRiskEvent = [SELECT ang_event_status__c FROM ANG_Agency_Risk_Event__c].ang_event_status__c;
+        
+        //Inactive and not Active because AddDays(5)
+        System.assertEquals('Inactive', statusRiskEvent);
+
+    }
 }
