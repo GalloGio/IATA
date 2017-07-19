@@ -216,6 +216,8 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 /* NEWGEN ANG_ContactHandler */
                 ANG_ContactHandler angHandler = new ANG_ContactHandler();
                 angHandler.handleBeforeUpdate();
+                /* NEWGEN ANG_ContactHandler */
+                
             }
             /*Contacts Trigger.BeforeUpdate*/
 
