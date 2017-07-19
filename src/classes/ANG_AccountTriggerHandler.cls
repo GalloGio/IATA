@@ -77,6 +77,7 @@ public class ANG_AccountTriggerHandler {
 			c.ContactId = portalAdmins.get(acc.Id);
 			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
 			c.Region__c = acc.Region_formula__c;
+			c.BSPCountry__c = acc.BillingCountry;
 			c.Origin = 'Internal case';
 			c.CaseArea__c = 'Risk Management Process'; 
 			c.Reason1__c = 'Financial Security Update';
@@ -89,7 +90,7 @@ public class ANG_AccountTriggerHandler {
 		if(!newCases.isEmpty()) insert newCases;
 		
 		//downgrade from B to C
-		createVMFROscars(downGradeBtoC, portalAdmins);
+		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, portalAdmins);
 	}
 
 
@@ -120,8 +121,7 @@ public class ANG_AccountTriggerHandler {
 		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
 		for(Account acc : accounts){
 			objects.put(acc.Id, new OscarObjects());
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-			//descomentar sem falta AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = acc.Id,  Process__c = AMS_Utils.NGCHANGES, Status__c='Open', Type_of_change__c = AMS_Utils.VFMR);
 			oscars.add(oscar);
 
 			objects.get(acc.Id).oscar = oscar;
