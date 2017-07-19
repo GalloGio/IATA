@@ -113,7 +113,7 @@ private class IEC_Cart_Test {
 
 		System.runAs(oUser) {
 			try {
-				cart.saveOrderAndCartItemsToDatabase(cart.getCartOrder(), cart.cartItemMap.values());
+				//cart.saveOrderAndCartItemsToDatabase(cart.getCartOrder(), cart.cartItemMap.values());
 			} catch (Exception e) {
 			}
 
