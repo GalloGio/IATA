@@ -37,13 +37,21 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_HE_ApplicationFee__c</field>
+                <field>ANG_HE_Application_Registration_Fees__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_HE_AnnualFee__c</field>
+                <field>ANG_HE_AnnualFees_Small_Agents__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_HE_AnnualFees_Medium_Agents__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_HE_AnnualFees_Large_Agents__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -52,17 +60,25 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>For each Associate Entity</label>
+        <label>Associate Entity(s)</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Additional_AE_ApplicationFee__c</field>
+                <field>ANG_AE_Application_Registration_Fees__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_Additional_AE_AnnualFee__c</field>
+                <field>ANG_AE_Fees_First_10_locations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_AE_Fees_Next_15_Locations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_AE_Fees_Additional_Locations__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

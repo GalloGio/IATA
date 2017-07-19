@@ -20159,12 +20159,28 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <value>Standard Accreditation with Cash (Label)</value>
     </labels>
     <labels>
-        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
+        <fullName>ANG_ISSP_HeadEntity</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
-        <value>Standard Accreditation with no Cash (Label)</value>
+        <shortDescription>ANG_ISSP_HeadEntity</shortDescription>
+        <value>Head Entity :</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_AssociateEntity</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AssociateEntity</shortDescription>
+        <value>Associate Entity(s) :</value>
+    </labels>    
+    <labels>
+        <fullName>ANG_ISSP_AnnualFees</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_AnnualFees</shortDescription>
+        <value>Annual Fees :</value>
     </labels>    
     <labels>
         <fullName>Iata_service_request</fullName>
