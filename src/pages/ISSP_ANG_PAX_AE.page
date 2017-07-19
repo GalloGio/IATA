@@ -845,6 +845,9 @@
                   .text-label-no-margin {
                     margin-left: 0px !important;
                   }
+                  .legal-status-style {
+                    padding-left: 6px;
+                  }
                 </style>
                 <div class="apcontainer" style="border: 1px solid #ececec;">
                   <span id="nav_one"></span>
@@ -869,7 +872,7 @@
 
                             <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
                               <apex:outputPanel >
-                                <apex:outputlabel value="* {!$ObjectType.Account.fields.Legal_name__c.Label}"/>
+                                <apex:outputlabel value="{!$ObjectType.Account.fields.Legal_name__c.Label} *"/>
 
                                 <div style="width: 174.4px; float: left; margin-left: 10px;">
                                   <apex:inputField value="{!newForm.Account_Name__c}" />
@@ -879,8 +882,11 @@
 
                             <apex:inputfield value="{!newForm.Trade_Name__c}" />
 
-                            <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');" />
 
+                            <apex:pageBlockSectionItem >
+                              <apex:outputLabel id="LegalStatusLabel" style="padding-left: 6px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" />
+                              <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');" />
+                            </apex:pageBlockSectionItem>
 
                             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                               <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
@@ -888,7 +894,7 @@
 
                             <apex:outputPanel id="VatNumberInput">
                               <apex:pageblocksectionitem >
-                                <apex:outputlabel value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
+                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
                                   <div style="display:inline-block; width: 213px;">
@@ -920,7 +926,7 @@
                               <DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" 
                                                   FieldGroupName="Branch Address" Edit="true" 
                                                   FormGroupStyle="form-group" RowStyle="row" 
-                                                  LabelStyle="label labelCol test-label" 
+                                                  LabelStyle="label labelCol test-label address-label" 
                                                   InputStyle="test-input" 
                                                   StatusStyle="test-status" 
                                                   FormControlStyle="apcontainer">
@@ -929,8 +935,8 @@
                             <apex:pageBlockSection columns="1" id="subbranchsection">
                               <apex:pageBlockSectionItem id="branchphonefields">
                               <apex:outputPanel >
-                              <div class="label labelCol" style="width: 173px;text-align: left;float: left;">
-                                <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
+                              <div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
+                                <apex:outputText id="office-phone-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Phone__c.Label}"/>
                               </div>
                                 <apex:outputPanel layout="none">
                                 <apex:inputHidden value="{!newForm.Branch_Office_Phone__c}" id="phonebranch" />
@@ -1009,15 +1015,41 @@
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
                             </apex:outputtext>
-                            <apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}" />
-                            <apex:inputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-                            <apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" />
-                            <apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" />
+                            <apex:inputfield id="license-no" value="{!newForm.ISSP_AMS_License_No__c}" />
+                            <apex:inputfield id="trade-reg-no" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
+                            <apex:inputfield id="date-license-granted" value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" />
+                            <apex:inputfield id="date-reg-granted" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" />
                           </apex:pageBlockSection>
                         </apex:pageBlock>
                       </div>
                     </apex:outputpanel>
                   </apex:pageblock>
+                  <script>
+                    $j( document ).ready(function() {
+                      const legalStatus = $j('[id$=LegalStatusLabel]')[0],
+                         dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
+                         licenseNo = $j('[for$=license-no]')[0],
+                         tradeRegNo = $j('[for$=trade-reg-no]')[0],
+                         dateLicenseGranted = $j('[for$=date-license-granted]')[0],
+                         dateRegGranted = $j('[for$=date-reg-granted]')[0],
+                         vatNumber = $j('[id$=vat-number]')[0],
+                         officePhoneLabel = $j('[id$=office-phone-label]')[0],
+                         labelBillStreet = $j('.address-label')[0].childNodes[0],
+                         labelBillCity = $j('.address-label')[1].childNodes[0];
+
+                        legalStatus.textContent = legalStatus.textContent.replace('* ', '') + ' *';
+                        
+                        dateOpenedAsTravelAgency.textContent = dateOpenedAsTravelAgency.textContent.replace('* ', '') + ' *';
+                        licenseNo.textContent = licenseNo.textContent.replace('* ', '') + ' *';
+                        tradeRegNo.textContent = tradeRegNo.textContent.replace('* ', '') + ' *';
+                        dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
+                        dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
+                        officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
+                        vatNumber.textContent = vatNumber.textContent + ' *';
+                        labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
+                        labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;  
+                      });
+                  </script>
 
                   <!-- ****************************************************************************** -->
                   <!-- ************************ SECTION 3 – Agency Contacts  ************************ -->
@@ -1174,7 +1206,7 @@
                   <table>
                     <tr>
                       <td class="col-lg-10" style="padding-top:15px;{!IF(AND(isValError, newForm.ISSP_AMS_Previous_default__c==null), 'border:2px red solid;', '')}">
-                        <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Previous_Default_2}" />
+                        <apex:outputText id="previous-default-label" escape="false" value="{!$Label.ISSP_AMS_Previous_Default_2}" />
                       </td>
                       <td class="col-lg-2">
                         <apex:selectRadio label="" style="width:100px" styleClass="{!IF(AND(isValError, newForm.ISSP_AMS_Previous_default__c==null), 'requiredIndicator', '')}" value="{!newForm.ISSP_AMS_Previous_default__c}" id="previouslyDefaulted" onchange="toggleDefaultDetails('{!$Component.previouslyDefaulted}');">
@@ -1187,7 +1219,7 @@
                   <div id="txtDefaultDetails" style="{!IF(newForm.ISSP_AMS_Previous_default__c == 'Yes', 'border: 0px !important;', 'display:none')}">
                     <apex:pageBlockSection columns="1">
                       <apex:pageBlockSectionItem labelStyle="width:50%" dataStyle="width:50%;">
-                        <apex:outputLabel value="{!$Label.ISSP_AMS_Previous_Default_Details}" style="width:95%; text-align: justify;"/>
+                        <apex:outputLabel id="previous-default-details-label" value="{!$Label.ISSP_AMS_Previous_Default_Details}" style="width:95%; text-align: justify;"/>
                         <apex:inputField value="{!newForm.ISSP_AMS_Prev_default_explanation__c}" style="width:95%" />
                       </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
@@ -1231,7 +1263,14 @@
                       </apex:pageBlockTable>
                     </apex:pageBlockSection>
                   </div>
-
+                  <script>
+                   $j( document ).ready(function() {
+                      const prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
+                         prevDef = $j('[id$=previous-default-label]')[0];
+                      prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
+                      prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
+                    });
+                  </script>
                   <!-- ****************************************************************************** -->
                   <!-- ************ SECTION 4 – Security of Electronic Tickets ********************** -->
                   <!-- ****************************************************************************** -->
@@ -1288,7 +1327,7 @@
 
 
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
+                      <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                         <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
@@ -1304,7 +1343,7 @@
                     </apex:actionFunction>
                     <apex:pageBlockSection columns="2">
                       <apex:pageBlockSectionItem dataStyle="width:20%">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
+                        <apex:outputLabel id="cargo-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
                         <apex:inputField id="iataCodeCargoInput" value="{!newForm.IATA_Cargo_Code__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
                         <apex:outputPanel id="cargoagentdetails">
@@ -1327,7 +1366,7 @@
                   <!--NG-663 START -->
                   <apex:pageBlockSection >
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
+                      <apex:outputlabel id="is-agency-iatan-label" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                         <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
@@ -1337,7 +1376,7 @@
                   <div id="iatacodeIATAN" style="{!IF(newForm.IATA_Registered_IATAN_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
                     <apex:pageBlockSection columns="2">
                       <apex:pageBlockSectionItem dataStyle="width:20%">
-                        <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
+                        <apex:outputLabel id="iatan-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
                         <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchCargoAgent1(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
                         <apex:outputPanel id="iatantravelagen">
@@ -1360,7 +1399,7 @@
 
                   <apex:pageblocksection columns="1">
                     <apex:pageblocksectionitem >
-                      <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
+                      <apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
                       <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
                     <apex:outputtext rendered="false">
@@ -1375,6 +1414,18 @@
               </apex:pageBlock>
               <script>
                 setPortalAdmin('{!$Component.PortalAdminId}');
+                 $j( document ).ready(function() {
+                    const dgsLabel = $j('[id$=dgs-label]')[0],
+                       isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
+                       iatanCode = $j('[id$=iatan-code-label]')[0],
+                       isCargo = $j('[id$=is-cargo-label]')[0],
+                       cargoCode = $j('[id$=cargo-code-label]')[0];
+                    dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
+                    isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
+                    iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *';
+                    isCargo.textContent = isCargo.textContent.replace('* ', '') + ' *';
+                    cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *';
+                  });
               </script>
             </apex:form>
             <!-- EO AMS Form -->
@@ -1674,7 +1725,6 @@
                     </div>
 
                     <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}">
-                      
                       function closeModalByCommandButton()
                       {          
                           closeModal();
@@ -1685,7 +1735,6 @@
                       
                       var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
                       var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
-                      console.log('aqui natphone ' + natphone + ' phone ' + phone);
                       natphone.intlTelInput({
                           nationalMode: true,
                           defaultCountry: defaultHQCountry,
@@ -1719,7 +1768,6 @@
                       natfax.intlTelInput("setNumber", fax.val());
                   
                       function setInternationalPhoneNo(p) {
-                        console.log('aqui p ' + p);
                           if(p=='phone') {
                               phone.val(natphone.intlTelInput("getNumber"));
                           } else if(p=='mobile') {
