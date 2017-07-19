@@ -74,6 +74,7 @@ public class ANG_AccountTriggerHandler {
 			c.ContactId = portalAdmins.get(acc.Id);
 			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
 			c.Region__c = acc.Region_formula__c;
+			c.BSPCountry__c = acc.BillingCountry;
 			c.Origin = 'Internal case';
 			c.CaseArea__c = 'Risk Management Process'; 
 			c.Reason1__c = 'Financial Security Update';
@@ -86,7 +87,7 @@ public class ANG_AccountTriggerHandler {
 		if(!newCases.isEmpty()) insert newCases;
 		
 		//downgrade from B to C
-		createVMFROscars(downGradeBtoC, portalAdmins);
+		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, portalAdmins);
 	}
 
 
