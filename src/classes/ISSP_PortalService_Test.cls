@@ -103,7 +103,7 @@ public class ISSP_PortalService_Test {
         Test.stopTest();
 	}
 	
-	public static testMethod void unitTest2() {
+	/*public static testMethod void unitTest2() {
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
         insert ISO_Country;
@@ -161,7 +161,7 @@ public class ISSP_PortalService_Test {
         ctrl3.getContacts();
 
         Test.stopTest();
-	}
+	}*/
 	
 	public static testMethod void unitTest3() {
 
@@ -282,7 +282,7 @@ public class ISSP_PortalService_Test {
         //ctrl3.CreateNewPortalAccess();
 	}
 
-	public static testMethod void unitTest5() {
+	/*public static testMethod void unitTest5() {
 		ISSP_PortalService_Test.createTestData();
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
         insert ISO_Country;
@@ -329,7 +329,7 @@ public class ISSP_PortalService_Test {
 
         test.stopTest();
         //ctrl3.CreateNewPortalAccess();
-	}	
+	}*/
 
 	
     /*
