@@ -123,9 +123,10 @@
         <label>Send To Zuora Listener</label>
     </fieldSets>
     <fields>
-        <fullName>ANG_Additional_AE_AnnualFee__c</fullName>
+        <fullName>ANG_AE_Application_Registration_Fees__c</fullName>
+        <description>Stores fees for application &amp; registration for AEs</description>
         <externalId>false</externalId>
-        <label>Annual Fee</label>
+        <label>Application &amp; Registration Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -133,10 +134,32 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_Additional_AE_ApplicationFee__c</fullName>
-        <description>Application fee for each additional Associate Entity</description>
+        <fullName>ANG_AE_Fees_Additional_Locations__c</fullName>
+        <description>N/A. Placeholder</description>
         <externalId>false</externalId>
-        <label>Application Fee</label>
+        <label>Any Additional Locations</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_AE_Fees_First_10_locations__c</fullName>
+        <description>AE: Annual fees for first 20 locations</description>
+        <externalId>false</externalId>
+        <label>First 10 locations</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_AE_Fees_Next_15_Locations__c</fullName>
+        <description>AE: Annual fees for Next 15 locations</description>
+        <externalId>false</externalId>
+        <label>Next 15 locations</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -154,9 +177,10 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_HE_AnnualFee__c</fullName>
+        <fullName>ANG_HE_AnnualFees_Large_Agents__c</fullName>
+        <description>HE: Annual fees for large agents</description>
         <externalId>false</externalId>
-        <label>Annual Fee</label>
+        <label>Large agents</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -164,9 +188,32 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_HE_ApplicationFee__c</fullName>
+        <fullName>ANG_HE_AnnualFees_Medium_Agents__c</fullName>
+        <description>HE: Annual fees for medium agents</description>
         <externalId>false</externalId>
-        <label>Application Fee</label>
+        <label>Medium agents</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_AnnualFees_Small_Agents__c</fullName>
+        <description>HE: Fees for small agents</description>
+        <externalId>false</externalId>
+        <label>Small Agents</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_Application_Registration_Fees__c</fullName>
+        <description>Stores fees for application &amp; registration for new HE</description>
+        <externalId>false</externalId>
+        <label>Application &amp; Registration Fees</label>
         <length>25</length>
         <required>false</required>
         <trackHistory>false</trackHistory>

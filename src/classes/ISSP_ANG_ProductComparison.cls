@@ -33,15 +33,13 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    		setProdId.add(pbe.Product2Id);
 	    	}
 	    	
-	    	/*for(Product2 pr:[select id, ANG_HE_Application_Registration_Fees__c, ANG_AE_Application_Registration_Fees__c, ANG_ApplyNowUrl__c, Name,
-	    					 ANG_CountrySpecRequirementsURL__c, ANG_AE_Fees_First_10_locations__c, ANG_HE_AnnualFees_Large_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c
-	    					 , ANG_AE_Fees_Next_15_Locations__c, ANG_HE_AnnualFees_Small_Agents__c
-	    					 from Product2 where Id in:setProdId]) {
-	    		mapProd.put(pr.Name, pr);
-	    	}*/
-	    	
 	    	if(!setProdId.isEmpty()) {
-	    		list<Product2> lsProd = [select Id, Name, ANG_Description_Label__c, ANG_Tooltip__c, ANG_HE_ApplicationFee__c, ANG_HE_AnnualFee__c, ANG_Additional_AE_ApplicationFee__c, ANG_Additional_AE_AnnualFee__c,  (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r) from Product2 where id in:setProdId];
+	    		list<Product2> lsProd = [select Id, Name, ANG_Description_Label__c, ANG_Tooltip__c,	    										
+										    	ANG_HE_Application_Registration_Fees__c, ANG_HE_AnnualFees_Small_Agents__c, ANG_HE_AnnualFees_Medium_Agents__c,
+										    	ANG_HE_AnnualFees_Large_Agents__c, ANG_AE_Application_Registration_Fees__c, ANG_AE_Fees_First_10_locations__c,
+										    	ANG_AE_Fees_Next_15_Locations__c, ANG_AE_Fees_Additional_Locations__c,
+	    									    (select id, Related_Product__r.Name, ANG_Tooltip__c, ANG_Description__c, ANG_Description_Label__c from Product_BOM__r)
+	    								  from Product2 where id in:setProdId];
 	    		
 	    		if(!lsProd.isEmpty()) {
 	    			//First loop: get ALL available features univoquely and add into a list (ordered...)
@@ -75,11 +73,15 @@ public with sharing class ISSP_ANG_ProductComparison {
     							if(sf == pc.Related_Product__r.Name) bExists = true;
     						}
     						lsTmp.add(new ProdFeature(sf,
-    												  bExists, 
-    												  new Fees(prod.ANG_HE_ApplicationFee__c,
-    												  	       prod.ANG_HE_AnnualFee__c,
-    												  	       prod.ANG_Additional_AE_ApplicationFee__c, 
-    												  	       prod.ANG_Additional_AE_AnnualFee__c)
+    												  bExists,
+    												  new Fees(prod.ANG_HE_Application_Registration_Fees__c,
+														       prod.ANG_HE_AnnualFees_Small_Agents__c,
+														       prod.ANG_HE_AnnualFees_Medium_Agents__c,
+														       prod.ANG_HE_AnnualFees_Large_Agents__c,
+														       prod.ANG_AE_Application_Registration_Fees__c,
+														       prod.ANG_AE_Fees_First_10_locations__c,
+														       prod.ANG_AE_Fees_Next_15_Locations__c,
+														       prod.ANG_AE_Fees_Additional_Locations__c)
     												  ));
     					}
 
@@ -149,10 +151,9 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    			}
 	    			lines.add(lst);
 
-	    			/*
-
+	    			
 	    			lst = new List<TableCell>();	 
-	    			//Add label here   		
+	    			
 	    			lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCost,
 	    								  '',
 	    								  Label.ANG_ISSP_ProductComparisonCost,
@@ -162,8 +163,6 @@ public with sharing class ISSP_ANG_ProductComparison {
 	    				lst.add(new TableCell('Application Fee','',tc.fees, tc.sLabel, tc.tooltip));
 	    			}
 	    			lines.add(lst);
-
-	    			*/
 
 	    			break;
 	    		}
@@ -175,16 +174,29 @@ public with sharing class ISSP_ANG_ProductComparison {
     }
 
     public class Fees {
-    	public String HE_applicationFee {get;set;}
-    	public String HE_AnnualFee {get;set;}
-    	public String Additional_AE_applicationFee {get;set;}
-    	public String Additional_AE_AnnualFee {get;set;}
+	    public String HE_Application_Registration_Fees {get;set;}
+	    public String HE_AnnualFees_Small_Agents {get;set;}
+	    public String HE_AnnualFees_Medium_Agents {get;set;}
+	    public String HE_AnnualFees_Large_Agents {get;set;}
 
-    	public Fees(String HE_applicationFee, String HE_AnnualFee, String Additional_AE_applicationFee, String Additional_AE_AnnualFee) {
-	    	this.HE_applicationFee = HE_applicationFee;
-	    	this.HE_AnnualFee = HE_AnnualFee;
-	    	this.Additional_AE_applicationFee = Additional_AE_applicationFee;
-	    	this.Additional_AE_AnnualFee = Additional_AE_AnnualFee;
+	    public String AE_Application_Registration_Fees {get;set;}
+	    public String AE_Fees_First_10_locations {get;set;}
+	    public String AE_Fees_Next_15_Locations {get;set;}
+	    public String AE_Fees_Additional_Locations {get;set;}
+
+    	public Fees(String HE_Application_Registration_Fees, String HE_AnnualFees_Small_Agents, String HE_AnnualFees_Medium_Agents, String HE_AnnualFees_Large_Agents,
+    			    String AE_Application_Registration_Fees, String AE_Fees_First_10_locations, String AE_Fees_Next_15_Locations, String AE_Fees_Additional_Locations) {
+
+		    this.HE_Application_Registration_Fees = HE_Application_Registration_Fees;
+		    this.HE_AnnualFees_Small_Agents = HE_AnnualFees_Small_Agents;
+		    this.HE_AnnualFees_Medium_Agents = HE_AnnualFees_Medium_Agents;
+		    this.HE_AnnualFees_Large_Agents = HE_AnnualFees_Large_Agents;
+
+		    this.AE_Application_Registration_Fees =	AE_Application_Registration_Fees;
+		    this.AE_Fees_First_10_locations = AE_Fees_First_10_locations;
+		    this.AE_Fees_Next_15_Locations = AE_Fees_Next_15_Locations;
+		    this.AE_Fees_Additional_Locations = AE_Fees_Additional_Locations;
+
     	}
     }
     
