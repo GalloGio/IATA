@@ -720,4 +720,10 @@ private class AMS_UtilsTest {
         Test.stopTest();
 
     }
+    
+    @isTest static void testCaseChildHelperFake(){
+
+        CaseChildHelper.newgenfakemethod();
+
+     }
 }
