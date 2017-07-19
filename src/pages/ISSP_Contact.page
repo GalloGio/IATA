@@ -171,6 +171,7 @@
                             <apex:outputLink value="/apex/ISSP_PortalService?id={!o.Portal_Application__r.Id}{!if(communityName=='CNS','&CommunityName='+communityName,'')}">{!o.Portal_Application__r.ServiceName__c}</apex:outputLink>
                         </apex:column>
                         <apex:column value="{!o.Right__c}" style="text-align: center;" headerClass="ct" />
+                        <apex:column value="{!o.ANG_Portal_Service_Role__c}" style="text-align: center;" headerClass="ct" />                      
                       
                    </apex:pageBlockTable>
                   
