@@ -150,7 +150,7 @@
 						
 						<!-- Exceptional rendering for multiple agencies type -->
 						<apex:outputPanel layout="none" rendered="{!AND(r.accountsInvolved.size > 1, OR(fld == 'Name', fld == 'ANG_Name_Link_FF__c', fld == 'ANG_Account_IATA_Code__c'))}">
-							<apex:outputLink styleclass="preventRedirection" onclick="return openPopUp('{!r.risk.Id}');">Multiple Agencies</apex:outputLink>
+							<apex:outputLink styleclass="preventRedirection" onclick="return openPopUp('{!r.risk.Id}');">{!IF(fld == 'ANG_Account_IATA_Code__c', 'Multiple Agencies', r.risk.Name)}</apex:outputLink>
 						</apex:outputPanel>
 						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'Name', fld != 'ANG_Name_Link_FF__c', fld != 'ANG_Account_IATA_Code__c'))}">
 							<apex:outputField value="{!r.risk[fld]}"/>
