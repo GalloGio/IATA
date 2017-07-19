@@ -199,8 +199,7 @@ public without sharing class AMS_Utils {
     public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
-    public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
-    public static final String CASE_REASON_AE_LITE = 'New AE lite';
+    public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
