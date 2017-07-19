@@ -1,5 +1,16 @@
 public with sharing class ANG_AccountHierarchySelectionController {
 
+	private Account newParent{
+		get{
+			
+			if(newParent == null && oscar.New_parent__c != null)
+				return [Select Id, ANG_Accreditation_Model__c, Name from Account where ID = :oscar.New_parent__c];
+			else 
+				return null;
+		}
+		set;
+	}
+
 	private String oscarId{
 		get{
 			if(String.isEmpty(oscarId)) oscarId = ApexPages.currentPage().getParameters().get('Id');
@@ -56,8 +67,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null){
-					notes.add('New parent = internal AE : The selected agencies will be grouped into a new hierarchy, having as HE the "New parent". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
-					notes.add('New parent = external HE : The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX".');
+
+					if(newParent != null && !diffDestination(oscar.New_parent__c)){
+						notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
+					}else{
+						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
+					}
 				}
 				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
 				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
@@ -282,8 +297,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					accountIds.add(r.Parent_Account__c);
 				}
 				
+				/* Don't know exactly why this is here, but for future issues, we'll just leave it here commented.
 				if(oscar.New_parent__c != null)
 					accountIds.add(oscar.New_parent__c);
+				*/
 
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',')+', CNS_Agency__c FROM Account WHERE Id IN :accountIds AND Status__c != \''+AMS_Utils.ACC_S0_TERMINATED+'\'')){
 					Boolean main = (a.Id == oscar.Account__c);
@@ -471,6 +488,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				oscar.Account__c = hi.acc.Id;
 			}
 		}
+	}
+
+	public PageReference FetchNewParent(){
+
+		if(oscar.New_parent__c != null)
+			newParent = [Select Id, ANG_Accreditation_Model__c, Name from Account where ID = :oscar.New_parent__c];
+
+		return null;
 	}
 
     public PageReference Beginning() { //user clicked beginning
