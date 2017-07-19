@@ -55,8 +55,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)) notes.add('Change of location type will swap the current agency with the current HE. The User has to check if the new HE is the same legal entity as the current HE or not.');				
 				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null){
+					notes.add('New parent = internal AE : The selected agencies will be grouped into a new hierarchy, having as HE the "New parent". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
+					notes.add('New parent = external HE : The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX".');
+				}
 				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
-				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy');
+				if(tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
 			
 			}
 
@@ -581,7 +585,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public boolean newParentIncluded(Id newParent){
 
 		for(HierarchyItem item:hierarchyValues){
-			if(item.acc.Id == newParent && item.selected)
+			if(item.acc.Id == newParent && (item.selected || item.main))
 				return true;
 		}
 
