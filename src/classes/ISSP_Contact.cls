@@ -63,7 +63,7 @@ public class ISSP_Contact{
                     isPortalAdminUser = false;
             }
          
-         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
+         appsGrantedList = new List<Portal_Application_Right__c>([ Select p.Application_Name__c, p.ANG_Portal_Service_Role__c, p.Portal_Application__r.ServiceName__c ,p.Portal_Application__r.Description__c,p.Portal_Application__r.Requestable__c,p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,p.Right__c, p.Portal_Application__r.Application_icon_URL__c, p.Portal_Application__r.Name, p.Portal_Application__c, p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c ,p.Case_creation_record_Type__c ,p.Portal_Application__r.Application_icon__c
                                                                    From Portal_Application_Right__c p 
                                                                    where p.Contact__c =: ContactId and 
                                                                        
