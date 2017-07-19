@@ -264,7 +264,7 @@
 
                     console.log('vOfficeType goto '+vOfficeType);
                     
-                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) ) {
+                    if( (vOfficeType.substring(idx + 3).trim() == 'Legacy Accreditation') || (vOfficeType.includes('Standard')) || (vOfficeType.includes('AE'))){
                         operationType = 'Travel_Agent';
                     } else {
                         operationType = 'Cargo_Agent';
@@ -275,8 +275,11 @@
                     
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];
                     
-                    console.log('countryList ' + countryList);     
-                    var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    var isAllowedCountry = false;
+                    console.log('countryList ' + countryList);
+                    if(defaultHQCountry != null && countryList != undefined) {
+                        var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
+                    }
                     console.log('isAllowedCountry ' + isAllowedCountry);
                     ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
@@ -980,9 +983,10 @@
            <strong>
                <apex:outputPanel rendered="{!NOT(isNoticeOfChange)}">
                {!IF(BEGINS(sectorValue, 'Travel_Agent'),
-               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks)),
-               IF(amsOfficeType=='HO',
-               $Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,
+               IF(newCase.Reason1__c =='New AE', $Label.ISSP_ANG_StepFinal_AE_Thanks,               
+               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, 
+               IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks))),
+               IF(amsOfficeType=='HO',$Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,               
                $Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR)
                )}
                </apex:outputPanel>
