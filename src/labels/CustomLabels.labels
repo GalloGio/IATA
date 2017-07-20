@@ -20163,8 +20163,16 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ProductStandardAccreditationWithCash</shortDescription>
-        <value>Standard Accreditation with Cash (Label)</value>
+        <value>Standard Accreditation with Cash</value>
     </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductStandardAccreditationWithNoCash</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductStandardAccreditationWithNoCash</shortDescription>
+        <value>Standard Accreditation with no Cash</value>
+    </labels>    
     <labels>
         <fullName>ANG_ISSP_HeadEntity</fullName>
         <categories>ISSP</categories>
