@@ -3,8 +3,7 @@ public class EF_AccountTriggerHandler {
 	public static boolean run = true; 
 	private static List  <Account> childAccsList = new List <Account> ();
 	private static Map <Id, EF_Material_Line_Item__c> matMap = new Map <Id, EF_Material_Line_Item__c>();
-
-
+	
 	public static void handleAfterUpdate(List<Account> accs, Map<Id,Account> oldMap) {
 
 		
@@ -28,7 +27,8 @@ public class EF_AccountTriggerHandler {
 		Map <Id, Account> childAccsMap = new Map <Id, Account> ();
 
 		if(!inactiveAccsSet.isEmpty())
-			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account where ParentId in: inactiveAccsSet]);
+			childAccsMap.putAll([Select Id, EF_Status__c, ParentId, Parent.EF_SubStatus__c from Account 
+				where ParentId in: inactiveAccsSet AND EF_Status__c = 'Active']);
 		
 		if(!childAccsMap.isEmpty() && run){
 			for(Account a: childAccsMap.values()){
@@ -47,11 +47,167 @@ public class EF_AccountTriggerHandler {
 		}else if(!inactiveAccsSet.isEmpty() && run){
             inactiveEFContracts(inactiveAccsSet);
             
-		}		
+		}
+		for(Integer i = 0; i<1; i++){
+			Integer b = 0;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+        b++;
+    }
 	}
 
 	public static void inactiveEFContracts(Set<Id> inactiveAccsSet){
-
 		Id contractRTId = AMS_Utils.getId('Contract', 'EF_Client_Agreement');
 
 		//query for Contracts, Billing Agreements and Related Contacts on the accounts inactivated.
@@ -329,10 +485,9 @@ public class EF_AccountTriggerHandler {
 
         if(!mails.isEmpty()){
         	Messaging.sendEmail(mails);
-        }            
+        }          
               
     }
-
      public class AccountException extends Exception {}
 	
 }

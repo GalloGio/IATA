@@ -367,12 +367,15 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 				//*** country/state change -> deactivate old location and create a new one
 					billingLocationOld = billingLocation; 
 					billingLocationOld.Active__c = false; 
-					
+
 					//*** create new location -> cancel action on error
+					billingLocation = getNewLocation(billingLocation, billingAddress, vfOrder.billToAddress.email, vfOrder.billToAddress.phone, vfOrder.billToAddress.vatNumber);
+/*
 					billingLocation = new Location__c(Active__c = true, Type__c = IECConstants.BILLTO, Address__c = billingAddress.Id, Address__r = billingAddress
 					                                , Account__c = billingLocation.Account__c, Account__r = billingLocation.Account__r
 					                                , Contact__c = billingLocation.Contact__c, Contact__r = billingLocation.Contact__r
 					                                , Email__c = vfOrder.billToAddress.email, Phone__c = vfOrder.billToAddress.phone , VAT_Number__c = vfOrder.billToAddress.vatNumber);
+*/
 				List<IEC_Error_Log__c> lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{billingLocation}, null, false);
 				if (lstSyncResult[0] != null)
 				{
@@ -519,5 +522,22 @@ global without sharing class IEC_CustomerInformationController extends IEC_PageC
 			WHERE Full_Address__c LIKE :str 
 			LIMIT 10
 		];
+	}
+
+	@testVisible					
+	private static Location__c getNewLocation(Location__c billingLocation, IECAddress__c billingAddress, String email, String phone, String vatNumber) {
+		return new Location__c (
+			Active__c = true,
+			Type__c = IECConstants.BILLTO,
+			Address__c = billingAddress.Id,
+			Address__r = billingAddress,
+			Account__c = billingLocation.Account__c,
+			Account__r = billingLocation.Account__r,
+			Contact__c = billingLocation.Contact__c,
+			Contact__r = billingLocation.Contact__r,
+			Email__c = email,
+			Phone__c = phone,
+			VAT_Number__c = vatNumber
+		);
 	}
 }

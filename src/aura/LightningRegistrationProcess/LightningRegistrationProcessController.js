@@ -837,7 +837,7 @@
 							"url": $A.get("$Label.c.OneId_URL_javaScript") + '/s/login/'
                         });
                         urlEvent.fire();
-                    },  5000);
+                    },  15000);
                     //} 
                 }
                 //var thisWidth = jQuery('.cLightningRegistrationProcess').width();
