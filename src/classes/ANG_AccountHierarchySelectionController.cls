@@ -1,12 +1,12 @@
 public with sharing class ANG_AccountHierarchySelectionController {
 
-	private Account newParent{
+	public Account newParent{
 		get{
 			
 			if(newParent == null && oscar.New_parent__c != null)
-				return [Select Id, ANG_Accreditation_Model__c, Name from Account where ID = :oscar.New_parent__c];
+				return [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
 			else 
-				return null;
+				return newParent;
 		}
 		set;
 	}
@@ -68,10 +68,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null){
 
-					if(newParent != null && !diffDestination(oscar.New_parent__c)){
-						notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
-					}else{
-						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
+					if(newParent != null && diffDestination(oscar.New_parent__c)){
+						notes.add('The selected agencies will be transformed into AE and linked to the "New parent: '+newParent.Name+'('+ newParent.IATACode__c+')'+'", therefore they will automatically get the Accreditation type "'+newParent.ANG_Accreditation_Model__c+'".');
+						}else{
+							if(newParent != null && !diffDestination(oscar.New_parent__c))
+								notes.add('The selected agencies will be grouped into a new hierarchy, having as HE the "New parent: '+newParent.Name+'('+newParent.IATACode__c+')". The new hierarchy will keep the actual accreditation type, unless the User selects also change of "Accreditation type".');
 					}
 				}
 				if(tocList.contains(AMS_Utils.ANG_VMFR)) notes.add('VMFR must be applied to the full hierarchy');
@@ -493,7 +494,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public PageReference FetchNewParent(){
 
 		if(oscar.New_parent__c != null)
-			newParent = [Select Id, ANG_Accreditation_Model__c, Name from Account where ID = :oscar.New_parent__c];
+			newParent = [Select Id, ANG_Accreditation_Model__c, Name, IATACode__c from Account where ID = :oscar.New_parent__c];
 
 		return null;
 	}

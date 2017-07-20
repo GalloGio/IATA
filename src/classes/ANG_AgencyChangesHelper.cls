@@ -289,7 +289,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		System.debug('[ANG_AgencyChangesHelper] - doesItContainAccreditationType is set to ' + doesItContainAccreditationType);
 
 		String newAccreditationModel = '';
+		String newRemittanceFrequency = '';
 		Boolean switchAccreditationModel = false;
+		Boolean switchRemittanceFrequency = false;
 		Set<Id> accountsAffected = new Set<Id>();
 
 		if(toReturn == null)
@@ -299,25 +301,31 @@ public with sharing class ANG_AgencyChangesHelper {
 			New parent = external HE
 			The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX"
 		*/
-		if(!doesItContainAccreditationType && (!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
+		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
 
 			//Map<Id,Account> accountsMap;
 
 			Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
 
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 			if(oscarAccount == null)
-				oscarAccount = [Select Id , ANG_Accreditation_Model__c from Account where Id = :oscarToProcess.Account__c];
+				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c from Account where Id = :oscarToProcess.Account__c];
 
-			if(newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
+			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 
 				switchAccreditationModel = true;
 				newAccreditationModel = newHEaccount.ANG_Accreditation_Model__c;
 
+			}
+
+			if(newHEaccount.Remittance_frequency__c != oscarAccount.Remittance_frequency__c){
+
+				switchRemittanceFrequency = true;
+				newRemittanceFrequency = newHEaccount.Remittance_frequency__c;
 			}
 		}
 
@@ -359,6 +367,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				oscarAccount.ANG_Accreditation_Model__c = newAccreditationModel;
 				accountsAffected.add(oscarToProcess.Account__c);
 			}
+
+			if(switchRemittanceFrequency){
+				oscarAccount.Remittance_frequency__c = newRemittanceFrequency;
+			}
+
 
 			toReturn.addAccount(oscarAccount);
 
@@ -456,9 +469,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				accountsAffected.add(accountID);
 			}
 
+			if(switchRemittanceFrequency){
+				a.Remittance_frequency__c = newRemittanceFrequency;
+			}
+
 			toReturn.addAccount(a);
-
-
 			
 
 		}
@@ -503,7 +518,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(!toUpsert.isEmpty())
 				upsert toUpsert;
 		}
-
+		
 		return toReturn;
 	}
 
