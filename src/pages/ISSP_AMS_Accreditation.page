@@ -180,18 +180,6 @@
                     $('#brabroadcountries').show();                   
                 }
             }
-
-            function toggleIsGsa(v) {
-                console.log('toggling GSA; passed value: ' + v);
-                if (v==undefined || v.indexOf('TIDS')==-1){
-                    console.log('trying to show');
-                    $('#isGSA').show();
-                }
-                else{
-                    console.log('trying to hide');
-                    $('#isGSA').hide();
-                }
-            }
             
             function toggleOfficeTypes(officeSelect, ctrylistid) {
                 
@@ -482,6 +470,9 @@
         <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="langGSA,officetypelist,chinatypeofagent">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
+        <apex:actionFunction action="{!null}" name="refreshGsaQuestion" reRender="langGSA">
+            <apex:param value="" assignTo="{!amsLocationType}" name="amsLocationType"/>
+        </apex:actionFunction>
         <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
         </apex:actionFunction>
         <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
@@ -534,7 +525,7 @@
                     <div class="form-group"> 
                         <label for="approval focus" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Approval_Sought}</label>
                         <div class="col-lg-9">
-                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleIsGsa(this.value);toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
+                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:45%" value="{!amsLocationType}" onchange="refreshGsaQuestion(this.value);toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
                             </apex:selectList>                           
                         </div>
@@ -649,13 +640,12 @@
                                     </div>
                                 </apex:outputpanel>
                            
-                                
-                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
-                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">
+                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(OR(BEGINS(sectorValue,'Cargo_Agent'),CONTAINS(amsLocationType,'New HO - TIDS')))}">
                                         <div class="form-group" id="isGSA">
                                             <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
                                             <div class="col-lg-9" style="padding-top:7px">
-                                                <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
+                                                <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" > <!-- required="{!isGSARequired}"> HANDLED IN CONTROLLER NOW -->
                                                     <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
                                                     <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
                                                 </apex:selectradio>

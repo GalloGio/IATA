@@ -1074,8 +1074,13 @@ public without sharing class ISSP_AMS_Accreditation {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
         } else if (sectorValue.StartsWith('Travel_Agent')) {
-            includedPageName = 'ISSP_AMS_Pax_Form';
-            includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
+            if (newForm.Agent_Type__c == 'TIDS') {
+                includedPageName = 'ISSP_AMS_Pax_Form';  // TO CHANGE
+                includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly'; // TO CHANGE
+            } else {
+                includedPageName = 'ISSP_AMS_Pax_Form';
+                includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
+            }
         } else if (sectorValue.StartsWith('Cargo_Agent') && (newForm.Agent_Type__c == 'IATA Cargo Agent' || newForm.Agent_Type__c == 'EACP Intermediary')  && newCase.Reason1__c == 'New HO') {
             includedPageName = 'ISSP_AMS_Cargo_Form';
             includedSummaryPage = 'ISSP_AMS_CGO_ReadOnly';
@@ -1098,6 +1103,11 @@ public without sharing class ISSP_AMS_Accreditation {
         
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
+            return null;
+        }
+        SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
+        if (getIsGSARequired() && amsIsGSA == null) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
             return null;
         }
         if (isNoticeOfChange != true) {
@@ -1758,6 +1768,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 locationClass = 'I';
             else if (newForm.Agent_Type__c == 'Courier')
                 locationClass = 'Q';
+        } else { // Travel_Agent
+            if (newForm.Agent_Type__c == 'TIDS') {
+                locationClass = 'T';
+            }
         }
 
         return locationClass;
@@ -6396,7 +6410,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public boolean getIsGSARequired() {
         Boolean isreq;
 
-        if (sector == 'Travel Agent') {
+        if (sector == 'Travel Agent' && amsLocationType != null && amsLocationType != 'New HO - TIDS') {
             isreq = true;
         } else {
             isreq = false;
