@@ -138,7 +138,7 @@ public class ANG_RiskEventGenerator {
 		Boolean reQuery = false;
 		List<SObject> objToEvaluate = new List<SObject>();
 		Set<Id> objectIds = new Set<Id>();
-		Set<String> fields = new Set<String>();
+		Set<String> fields = new Set<String>{accountFields.get(objectName)};
 
 		for(SObject o : newObjects){
 			for(ANG_Risk_Event_Configuration__c config : configs){
