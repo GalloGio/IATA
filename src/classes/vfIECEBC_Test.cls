@@ -1,6 +1,6 @@
 @isTest (seeAllData=true)
 public class vfIECEBC_Test {
-    
+    /*
     public static testMethod void testCampaignConfirm() {
         vfIECEBC_TestSuite.testCampaignConfirm();
     }
@@ -67,7 +67,7 @@ public class vfIECEBC_Test {
     public static testMethod void testCleanOutOfDateOptOut() {
         vfIECEBC_TestSuite.testCleanOutOfDateOptOut();
     }
-    
+    */
      
     /*
      * Those methods become useless once we test the Pay Using Credits
