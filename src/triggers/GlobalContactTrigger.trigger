@@ -421,8 +421,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                 Set<Id> conEmailIdSet = new Set<Id>();//TF - SP9-A5
                 Map<Id, String> conFirstNameMap = new Map<Id, String>();//TF - SP9-A5
                 Map<Id, String> conLastNameMap = new Map<Id, String>();//TF - SP9-A5
+                /*IFG deployment
                 //Mconde
                 Set<Id> actListToReview = new Set<Id>();
+                /*IFG deployment*/
                 set<Id> conIdSet = new set<Id>();
 
                 for(Contact con : trigger.new){
@@ -447,8 +449,10 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                             conLastNameMap.put(con.Id, con.LastName);
                         }
                     }
+                    /*IFG deployment
                     if(con.accountId != null) 
                         actListToReview.add(con.accountId);
+                    /*IFG deployment*/
                 }
                 if(conIdSet.size()>0){
                     ISSP_Constant.UserAccountChangeParent = true;
@@ -462,10 +466,12 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     if(!ISSP_UserTriggerHandler.preventTrigger)
                         ISSP_UserTriggerHandler.changeEmailFromContact (conEmailMap, conFirstNameMap, conLastNameMap, conEmailIdSet);
                 }
+                /*IFG deployment
                 //Mconde
                 if(actListToReview.size()> 0 && (!System.isFuture() && !System.isBatch())){
                     SCIMServProvManager.reviewIFGAccountSharing(actListToReview);
                 }
+                /*IFG deployment*/
             }
             /*ISSP_ContactUpdaetPortalUser Trigger.AfterUpdate*/
 
