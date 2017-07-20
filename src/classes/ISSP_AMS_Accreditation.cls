@@ -2184,6 +2184,11 @@ public without sharing class ISSP_AMS_Accreditation {
                 hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
                 accountUpdated = false;
             }
+            if (hqAccount.Email__c == null) {
+                hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                accountUpdated = false;
+            }
+
             if (!accountUpdated)
                 return;
             if (!validateCharactersInAgencyWindow()) {
