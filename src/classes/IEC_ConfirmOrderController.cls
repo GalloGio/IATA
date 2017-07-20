@@ -283,6 +283,16 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 				
 				if(orderItemsRes != null)
 				{
+					// Ecommerce Enhancements R2, flag the order as failed in case of error.
+					Order updateOrder = new Order(Id = vfOrder.orderId, Status = 'Transaction Failed');
+
+					try {
+						update updateOrder;
+					} catch (Exception e) {
+						// TODO: remove the following addErrorMessage
+						addErrorMessage('Error updating the order status: ' + e.getMessage());
+					}
+					
 					addErrorMessage(Label.Order_transaction_failed_message);
 					addErrorMessage(orderItemsRes);
 					return null;
@@ -417,8 +427,12 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			return null;
 		}
 		
-		//Clear the customer cookies
-		IECOrder_Svc.deleteAllCookies();
+		if (newShoppingCart == false) {
+			//Clear the customer cookies
+			IECOrder_Svc.deleteAllCookies();
+		} else {
+			storeCart.submitEvent();
+		}
 		
 		return null;
 	}

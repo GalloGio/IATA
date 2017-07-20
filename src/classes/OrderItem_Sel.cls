@@ -88,7 +88,7 @@ public with sharing class OrderItem_Sel  extends Selector
 		Map<Id, List<OrderItem>> ret = new Map<Id, List<OrderItem>>(); 
 
 		String query = String.format(
-            'SELECT {0}, Order.Payment_Type__c ' + 
+            'SELECT {0}, Order.Payment_Type__c, PricebookEntry.Product2.SAP_Material_Number__c ' + 
         	', (SELECT Zuora_Rate_Plan_Id__c,Zuora_Rate_Plan_Charge_Id__c,Name,Discount_Type__c,Discount_Amount__c FROM Order_Item_Charges__r) ' +
             'FROM {1} ' + 
             'WHERE OrderId IN :orderIds ' , 
