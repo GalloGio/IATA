@@ -8601,6 +8601,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>If your travel agency is owned by an organization other than the Head Entity mentioned above, answer the following with respect to the parent organization:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AN_Step1_AE_Full_Address</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AN_Step1_AE_Full_Address</shortDescription>
+        <value>Full Address of the Associate Entity for which Application for Approval is made</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Assoc_Entity</fullName>
         <language>en_US</language>
         <protected>false</protected>
