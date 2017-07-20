@@ -438,13 +438,12 @@
               height: 32px;
               position: relative;
               left: 50%;
-              top: 75%;
           }
       </style>
 
       <script type="text/javascript">
           function startLoading(){
-              $('#load_scrl').css('top', $(document).scrollTop() + 200);
+              $('#load_scrl').css('top', $(document).scrollTop() - 200);
               $('.loadingBox').show();
           }
           function endLoading(){
