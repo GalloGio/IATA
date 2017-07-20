@@ -804,7 +804,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <criteriaItems>
-            <field>Account.ANG_LimitCashConditions__c</field>
+            <field>Account.ANG_Limit_Cash_Condition__c</field>
             <operation>equals</operation>
             <value>True</value>
         </criteriaItems>

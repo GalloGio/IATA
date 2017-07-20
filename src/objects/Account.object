@@ -2362,6 +2362,11 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
+            <field>ANG_HE_CashCondition__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Company_Type__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -2453,6 +2458,11 @@
         </displayedFields>
         <displayedFields>
             <field>ANG_HE_RiskStatus__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ANG_HE_RiskHistoryAssessment__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -2690,6 +2700,55 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Model__c</fullName>
+        <description>To store Accreditation Model selected by the agency.</description>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Accreditation_Models</globalPicklist>
+        <label>Accreditation Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_CashCondition__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
+        <label>Cash Condition</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Financial_Review__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(CONTAINS(Financial_Review_Result__c , &apos;Unsatisfactory&apos;),&apos;Failed&apos;,&apos;Passed&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Financial Review</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_CashCondition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Cash Condition HE</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_HE_RiskStatus__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Risk_Status</globalPicklist>
@@ -2700,25 +2759,116 @@
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>ANG_LimitCashConditions__c</fullName>
+        <fullName>ANG_IEP_Account_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
-        <label>Limit Cash Conditions</label>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Parent.ANG_IEP_HE_AccntNum__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEP Account Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_IEP_HE_AccntNum__c</fullName>
+        <description>To store HE EasyPay Account Number</description>
+        <externalId>true</externalId>
+        <inlineHelpText>EasyPay Account Number</inlineHelpText>
+        <label>IEP HE Account Number</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_IEP_Status_FF__c</fullName>
+        <description>To show analysts information about Easy Pay’s account status</description>
+        <externalId>false</externalId>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Parent.ANG_IEP_Status__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEP Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_IEP_Status__c</fullName>
+        <description>To store HE easy pay status</description>
+        <externalId>false</externalId>
+        <label>IEP HE Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed – 2-year freeze period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed – 3-month freeze period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_IsNewGenAgency__c</fullName>
+        <description>To show information to analyst. To simplify triggers and classes.</description>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_Country__r.ANG_Enable_NewGen__c  &amp;&amp;  OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Limit Cash Condition</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), TEXT(ANG_HE_RiskHistoryAssessment__c), TEXT(Parent.ANG_HE_RiskHistoryAssessment__c))</formula>
+        <label>Risk History Assessment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_RiskStatus__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(
-  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-  IF(
-    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-    &apos;Not Applicable&apos;,
-    TEXT(ANG_HE_RiskStatus__c)
-  ),
-  TEXT(Parent.ANG_HE_RiskStatus__c)
-)</formula>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), TEXT(ANG_HE_RiskStatus__c), TEXT(Parent.ANG_HE_RiskStatus__c))</formula>
         <label>Risk Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -3957,7 +4107,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.Name</formula>
+        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.BSP_Country_free_text__c, &apos;&apos;)</formula>
         <label>BSP Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -4778,7 +4928,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CASS_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IATA_ISO_Country__r.Name</formula>
+        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.CASS_Country_free_text__c, &apos;&apos;)</formula>
         <label>CASS Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -5250,6 +5400,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
@@ -7442,6 +7596,12 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>DandbCompanyId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -7479,15 +7639,6 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Date_Organisation_Status_attained__c</fullName>
-        <externalId>false</externalId>
-        <label>Date Organisation Status attained</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Date</type>
     </fields>
     <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
@@ -7581,6 +7732,11 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>DunsNumber</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
@@ -9193,7 +9349,7 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>FDS AGM checks if the branch account is in a different country to the parent&apos;s.</description>
         <externalId>false</externalId>
         <formula>IF(
- AND(RecordType.Name = &quot;Agency&quot; , ispickval(Location_Type__c, &quot;BR&quot;)),
+ AND(RecordType.Name = &quot;Agency&quot; , OR(ispickval(Location_Type__c, &quot;BR&quot;),ispickval(Location_Type__c, &quot;AE&quot;))),
  IF(AND(Parent.IATA_ISO_Country__c &lt;&gt; IATA_ISO_Country__c, NOT(CNS_Agency__c)),
   &quot;Yes&quot;,
   &quot;No&quot;
@@ -9755,6 +9911,10 @@ J-Joint Vent</inlineHelpText>
         <label>Location Type</label>
         <picklist>
             <picklistValues>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>AO</fullName>
                 <default>false</default>
             </picklistValues>
@@ -9776,6 +9936,10 @@ J-Joint Vent</inlineHelpText>
             </picklistValues>
             <picklistValues>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>HE</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -9939,17 +10103,6 @@ J-Joint Vent</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Main_Accreditation_Organization__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF( ISPICKVAL( Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Main Accreditation Organization</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Manager_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Manager First Name</label>
@@ -10089,6 +10242,16 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NaicsCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>NaicsDesc</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -10894,7 +11057,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008gLy&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
 IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
@@ -11083,19 +11246,27 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
                 <default>false</default>
             </picklistValues>
             <picklistValues>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
                 <fullName>Weekly</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <fullName>Every 5 days</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>3-days</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>10 days</fullName>
+                <fullName>Every 3 days</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -11322,17 +11493,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>SanctionNotice__c</fullName>
-        <description>Sanction Notice for AMP Team, Account Managers and direct reports</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Sanction Notice for AMP Team, Account Managers and direct reports</inlineHelpText>
-        <label>SanctionNotice</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Search_Code__c</fullName>
@@ -13748,6 +13908,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Tradestyle</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
@@ -14295,6 +14460,11 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Website</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>YearStarted</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Zuora_Temp_ID__c</fullName>
@@ -23420,6 +23590,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
@@ -23431,10 +23666,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -25063,19 +25294,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25814,6 +26049,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27987,19 +28287,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -28846,6 +29150,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30716,13 +31085,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -30745,6 +31114,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -31248,6 +31621,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -31339,25 +31796,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -33366,10 +33804,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -33619,6 +34053,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -33640,6 +34078,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -35168,6 +35610,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36812,10 +37319,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -37314,6 +37817,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -37405,25 +37992,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -39977,10 +40545,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -39999,6 +40563,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -40021,6 +40589,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -42715,6 +43287,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
@@ -44449,19 +45086,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -45240,6 +45881,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -45331,25 +46056,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -47194,13 +47900,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -47223,6 +47929,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -49587,6 +50297,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -49678,25 +50472,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -51505,10 +52280,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -51527,6 +52298,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -51549,6 +52324,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -53845,6 +54624,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
             <values>
                 <fullName>A</fullName>
@@ -55841,13 +56685,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -55870,6 +56714,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -56477,6 +57325,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -58225,13 +59138,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -58254,6 +59167,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -58796,6 +59713,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60544,13 +61526,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -60573,6 +61555,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -61115,6 +62101,71 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Publically-held</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62971,19 +64022,23 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>BR</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -63812,6 +64867,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -63903,25 +65042,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -68061,10 +69181,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -68314,6 +69430,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -68335,6 +69455,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68824,11 +69948,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3-days</fullName>
+                <fullName>4 times per month</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -68836,7 +69956,19 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>Fortnightly - Bi-Monthly</fullName>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -71352,6 +72484,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -71443,25 +72659,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -73560,13 +74757,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>AO</fullName>
                 <default>false</default>
@@ -73589,6 +74786,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -75552,6 +76753,90 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Closed %E2%80%93 2-year freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed %E2%80%93 3-month freeze period</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No IEP Account</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected by IEP Supplier</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
@@ -75643,25 +76928,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Risk_Status</picklist>
-            <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77935,10 +79201,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Volume %28Local%29</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -78188,6 +79450,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Location_Type__c</picklist>
             <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>AO</fullName>
                 <default>false</default>
             </values>
@@ -78209,6 +79475,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -78632,7 +79902,35 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -80421,7 +81719,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
@@ -80446,6 +81744,18 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
 Source_System__c &lt;&gt;&apos;AIMS&apos; 
 )</errorConditionFormula>
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos;
+),
+TEXT(Location_Type__c) = &apos;AE&apos;,
+TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;
+)</errorConditionFormula>
+        <errorMessage>An Associate Entity must have a parent account with location type HE</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
@@ -80522,13 +81832,10 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         OR(ISCHANGED(Name),ISCHANGED(BillingStreet),
           ISCHANGED(BillingCity),ISCHANGED(BillingState),
           ISCHANGED(BillingCountry),ISCHANGED(BillingPostalCode),
-          ISCHANGED(BillingCountry),ISCHANGED(IATATrainingUrl__c),
-          ISCHANGED(BillingCountry),ISCHANGED(Website),
           ISCHANGED(IATA_ISO_Country__c)),
         RecordType.DeveloperName = &apos;IATA_Airline&apos;,
         NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
-        NOT($User.Profile_Name__c =&apos;Account management team&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
         NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
         NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
@@ -80601,7 +81908,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     </validationRules>
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
         <errorConditionFormula>AND(
     ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),
