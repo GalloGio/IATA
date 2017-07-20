@@ -51,14 +51,14 @@ public class ANG_RiskAssessmentEngine{
         get{
             if(accInfoMap==null){
                 accInfoMap = new map<id,accHelperClass>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_LimitCashConditions__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
+                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
                     integer nAdjs=0;
                     boolean hasCashCond=false;
                     for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
                         if(are.ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes') nAdjs++;
                         hasCashCond=hasCashCond||are.ANG_Risk_Type__r.Limit_Cash_conditions__c;
                     }
-                    accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c));
+                    accInfoMap.put(acc.id,new accHelperClass(nAdjs,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c));
 
                 }
             }
@@ -175,7 +175,7 @@ public class ANG_RiskAssessmentEngine{
                 hasCashCond=hasCashCond||ret.Limit_Cash_conditions__c;
             }
             accCalcMap.put(acc.id,tempCalcMap);
-            accInfoMap.put(acc.id,new accHelperClass(nrAdjustedRe,hasCashCond,acc.ANG_LimitCashConditions__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C));
+            accInfoMap.put(acc.id,new accHelperClass(nrAdjustedRe,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C));
       }
     }
 
@@ -210,7 +210,9 @@ public class ANG_RiskAssessmentEngine{
             updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
             updAcc.Financial_Review_Result__c=accInfoMap.get(accKey).financialReviewResult;
         }
-        AccUpdList =updateRiskStatus(AccUpdList);
+        AccUpdList =ANG_Risk_Helper.updateRiskStatus(AccUpdList);
+        for(account a : AccUpdList) a.ANG_HE_CashCondition__c = a.ANG_Limit_Cash_Condition__c || accInfoMap.get(a.id).hasCashCondition;
+        
         return AccUpdList;  
     }
  
@@ -261,20 +263,4 @@ public class ANG_RiskAssessmentEngine{
         return accInfoMap.get(accId).hasCashCondition||accInfoMap.get(accId).hasLimitCashCondition;
     }
      //============================ END PRIVATE METHODS ====================================================
-
-    public List<Account> updateRiskStatus(List<Account> accs){
-
-        Id riskStatusAssessmentRT = AMS_Utils.getRecordType('ANG_Agency_Risk_Calculation__c', 'Risk_Status_Assessment').Id;
-        Map<String,String> calculationTable = new Map<String,String>();
-        for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
-            calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc.ANG_Risk_History__c);
-        }
-        if(!calculationTable.isEmpty()){
-            for(Account acc : accs){              
-                acc.ANG_HE_RiskStatus__c = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
-                if(acc.ANG_HE_RiskStatus__c=='C') acc.ANG_HE_CashCondition__c=true;
-            }
-        }
-        return accs;
-    }
  }
