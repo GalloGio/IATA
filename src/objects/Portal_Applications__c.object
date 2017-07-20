@@ -682,7 +682,7 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Pre-Production&quot;),
+        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
 $User.IFG_Account_Member__c
 ,
 OR( 
