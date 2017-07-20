@@ -12812,7 +12812,23 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(   SIDRA_exchange_rate_updated__c,   RecordType.DeveloperName = &apos;SIDRA&apos;,   ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),    NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),     Short_Payment_Amount_USD__c &gt; 50,     Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),     Short_Payment_Amount_USD__c &lt;= 150000  )</formula>
+        <formula>AND( 
+SIDRA_exchange_rate_updated__c, 
+RecordType.DeveloperName = &apos;SIDRA&apos;, 
+Short_Payment_Amount_USD__c &gt; 50, 
+NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)), 
+
+OR(AND( 
+ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), 
+CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;), 
+Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100), 
+Short_Payment_Amount_USD__c &lt;= 150000 ), 
+
+AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;), 
+CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;), 
+Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100), 
+Short_Payment_Amount_USD__c &lt;= 10000, 
+NOT(ISPICKVAL(Account.Category__c,&quot;CASS Associate&quot;)))))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
