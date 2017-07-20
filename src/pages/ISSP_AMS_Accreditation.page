@@ -527,7 +527,7 @@
                     </div>
 
                     <div class="form-group"> 
-                    <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label> 
+                    <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                         <div class="col-lg-9">
                             <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
