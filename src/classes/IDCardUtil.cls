@@ -402,7 +402,7 @@ public static String generateVER(Account theAccount) {
                                        From IATA_ISO_Country__c i
                                        where i.AIMS_Area_Name__c = :theAccount.BillingCountry
                                                limit 1];
-        string last12months = String.valueOf(System.now().addyears(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\''));
+        //string last12months = String.valueOf(System.now().addyears(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\''));
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
