@@ -394,6 +394,7 @@ It is the version of the username seen by the end user.</description>
         <columns>Primary_Contact_Name__c</columns>
         <columns>Email_Balance__c</columns>
         <columns>Notification_Date__c</columns>
+        <columns>Notification_Type__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCEPTED_PAYMENT_METHODS_MANDATORY</shortDescription>
+        <value>The accepted payment methods is mandatory, please select one or more values.</value>
+    </labels>
+    <labels>
+        <fullName>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</shortDescription>
+        <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
+    </labels>
+    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -700,7 +716,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddressDoctorValidate</shortDescription>
-        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D5E0000008wRK&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
     </labels>
     <labels>
         <fullName>AddressDoctorValidate2</fullName>
@@ -17873,6 +17889,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <value>You will be redirected to the starting page in 5 seconds.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Registration_Redirection15s</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Redirection15s</shortDescription>
+        <value>You will be redirected to the starting page in 15 seconds.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Registration_RegistrationProcess</fullName>
         <categories>ISSP, registration</categories>
         <language>en_US</language>
@@ -17903,6 +17926,13 @@ If you do not have an IATA Code please go back and select ‘Other Company’ as
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
         <value>Thank you for your registration.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Registration_Thank_you_GeneralAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Registration_Thank_you_GeneralAccount</shortDescription>
+        <value>As requested, you will be associated with the selected account type. Please check the mailbox for the email address you have registered with to complete the registration.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_Title_Bubble</fullName>
@@ -20777,7 +20807,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
-        <value>N/A</value>
+        <value>In order to complete your request, please go back to the previous tab and proceed with the next steps.</value>
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_3</fullName>
@@ -21104,6 +21134,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <value>http://www.iata.org/</value>
     </labels>
     <labels>
+        <fullName>OneId_Thank_you_for_requesting_access_to_our_service</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId_Thank you for requesting access to our service.</shortDescription>
+        <value>Thank you for requesting access to our service. You will be informed by email shortly about the status of your request. Please check your mailbox to proceed with the next steps.</value>
+    </labels>
+    <labels>
         <fullName>OneId_Thank_you_for_subscribing_to_this_new_service</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -21158,6 +21196,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>OneId_Your request has been successfully sent</shortDescription>
         <value>Your request has been successfully sent</value>
+    </labels>
+    <labels>
+        <fullName>Oneid_request_acess_to_a_new_service</fullName>
+        <categories>Oneid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Oneid_request_acess_to_a_new_service</shortDescription>
+        <value>REQUEST ACCESS TO A NEW SERVICE</value>
     </labels>
     <labels>
         <fullName>Only_one_subscription_can_be_purchased</fullName>
@@ -21296,6 +21342,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>Overall maximum size</shortDescription>
         <value>Overall maximum size: 20MB</value>
+    </labels>
+    <labels>
+        <fullName>PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY</shortDescription>
+        <value>The parent product accepted payment methods has not been selected. Before updating this product, please update the parent product accepted payment methods.</value>
     </labels>
     <labels>
         <fullName>PKB2M_aTypeConfig</fullName>

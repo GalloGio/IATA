@@ -635,6 +635,10 @@ ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
+)),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;

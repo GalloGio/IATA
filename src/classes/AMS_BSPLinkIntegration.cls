@@ -68,10 +68,11 @@ global class AMS_BSPLinkIntegration {
 			}
 		}
 		
-		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation')){
+		if(bCaseToUpd && (sProcess=='Deactivation' || sProcess=='Reactivation' || sProcess=='DeactivationUndo')){
 			for(Case c:lsCase){
 				if(sProcess=='Deactivation') c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 				if(sProcess=='Reactivation') c.Open_TKT_System__c = system.now();
+				if(sProcess=='DeactivationUndo') c.Open_TKT_System__c = system.now();
 			}
 			update lsCase;
 		}

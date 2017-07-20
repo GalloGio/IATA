@@ -76,6 +76,10 @@
                 <behavior>Readonly</behavior>
                 <field>IEC_Subscribe_to_Zuora__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Accepted_Payment_Methods__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -548,6 +552,16 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Campaign_Product__c.Swapping_Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Customer_Type__c</fields>
+        <fields>Swapped_Product__c</fields>
+        <fields>Released__c</fields>
+        <fields>Nb_Customer__c</fields>
+        <fields>Sales_Amout__c</fields>
+        <fields>Sales_Quantity__c</fields>
+        <relatedList>IEC_Event_Release__c.Product__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
