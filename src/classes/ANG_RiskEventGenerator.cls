@@ -351,7 +351,7 @@ public class ANG_RiskEventGenerator {
 				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = false;
 			}
 
-			if(condition.equalsIgnoreCase('Includes')){
+			if(condition.equalsIgnoreCase('Includes') && fieldValue != null){
 				for(String cv : checkValue.split('\\s*[;,]\\s*')){
 					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
 						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = true;
@@ -360,9 +360,11 @@ public class ANG_RiskEventGenerator {
 			}
 			else if(condition.equalsIgnoreCase('Does not Include')){
 				configResult = true;
-				for(String cv : checkValue.split('\\s*[;,]\\s*')){
-					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
-						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = false;
+				if(fieldValue != null){
+					for(String cv : checkValue.split('\\s*[;,]\\s*')){
+						for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
+							if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = false;
+						}
 					}
 				}
 			}
