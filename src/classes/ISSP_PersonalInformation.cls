@@ -46,6 +46,7 @@ public with sharing class ISSP_PersonalInformation {
 	public String ValidatedAirlineUser_Str {get;set;}
 	
 	public Boolean hasIdCard {get;set;}
+    public boolean showIEPStatus {get;set;}    
     
     public List<AccountTeamMember> portalAdmins { 
         get {
@@ -89,6 +90,7 @@ public with sharing class ISSP_PersonalInformation {
         isIATAAgencyAcctBR = false;
         isTerminatedAgent = false;
         isTerminatedAgentBR = false;
+        showIEPStatus = false;
         isCNSAccount = false;
         
     	String confirmParameter = ApexPages.currentPage().getParameters().get('confirm');
@@ -155,7 +157,11 @@ public with sharing class ISSP_PersonalInformation {
 		if (UserPortalAccountSector == 'Airline' && (UserPortalStatus == 'Approved User' || UserPortalStatus == 'Approved Admin'))
 		{
 			isValidatedAirlineUser = true ;
-		}
+		}        
+        
+        if(con.Account.Sector__c == AMS_UTILS.CATEGORY_TRAVEL_AGENT && (con.Account.Category__c == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT || con.Account.Category__c == AMS_UTILS.CATEGORY_DOMESTIC_AGENT) && con.Account.IATA_ISO_Country__r.ANG_Portal_Service__c != null){
+            showIEPStatus = true;
+        }
        
         //AEF: portalAdmins is filled in extensions controller ISSP_PersonalInformationWithoutSharing 
     }
