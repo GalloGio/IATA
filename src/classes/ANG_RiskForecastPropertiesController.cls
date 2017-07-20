@@ -18,7 +18,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         this.myCase = (Case)stdController.getRecord();
         riskOpt = null;
 
-        this.myCase = [Select Id, Account.Name,Account.Remittance_frequency__c, Account.Financial_Review_Result__c, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, recordTypeId from Case where Id =:myCase.Id];
+        this.myCase = [Select Id, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, recordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c from Case where Id =:myCase.Id];
     }
 
     public list<selectoption> getriskOption(){
@@ -60,14 +60,14 @@ public with sharing class ANG_RiskForecastPropertiesController {
             
             System.debug('Starting forecasting for account ' + myCase.AccountId);
 
-            List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_AccountId__r.Location_Type__c, ANG_AccountId__r.ANG_LimitCashConditions__c, ANG_AccountId__r.Remittance_frequency__c,ANG_AccountId__r.ANG_Accreditation_Model__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.Financial_Review_Result__c , ANG_Created_from__c, ANG_Event_Status__c, ANG_Expiration_Date__c, ANG_expiration_date_ff__c, ANG_Expired__c, ANG_HE_AccountId__c, ANG_Account_IATA_Code__c, ANG_Issued_Date__c, ANG_Manual__c, ANG_Name_Link_FF__c, ANG_Source__c, ANG_CaseId__c, ANG_ChangeCode__c, ANG_Source_Id__c, ANG_OscarId__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_UniqueKey__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
+            List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Created_from__c, ANG_Event_Status__c, ANG_Expiration_Date__c, ANG_expiration_date_ff__c, ANG_Expired__c, ANG_HE_AccountId__c, ANG_Account_IATA_Code__c, ANG_Issued_Date__c, ANG_Manual__c, ANG_Name_Link_FF__c, ANG_Source__c, ANG_CaseId__c, ANG_ChangeCode__c, ANG_Source_Id__c, ANG_OscarId__c, ANG_Risk_Type__c, ANG_Risk_ID__c, ANG_UniqueKey__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c = :myCase.AccountId and ANG_Event_Status__c = 'Active' ];
 
             Account a = new Account(id = myCase.AccountId);
-            a.Location_Type__c = riskEvents.get(0).ANG_AccountId__r.Location_Type__c;
-            a.Remittance_frequency__c = riskEvents.get(0).ANG_AccountId__r.Remittance_frequency__c;
-            a.ANG_Accreditation_Model__c = riskEvents.get(0).ANG_AccountId__r.ANG_Accreditation_Model__c;
-            a.Status__c = riskEvents.get(0).ANG_AccountId__r.Status__c;            
-            a.Financial_Review_Result__c = riskEvents.get(0).ANG_AccountId__r.Financial_Review_Result__c;
+            a.Location_Type__c = myCase.Account.Location_Type__c;
+            a.Remittance_frequency__c = myCase.Account.Remittance_frequency__c;
+            a.ANG_Accreditation_Model__c = myCase.Account.ANG_Accreditation_Model__c;
+            a.Status__c = myCase.Account.Status__c;
+            a.Financial_Review_Result__c = myCase.Account.Financial_Review_Result__c;
 
             Map<Account,List<String>> mapAccountListStuff = new Map<Account,List<String>>();
 
