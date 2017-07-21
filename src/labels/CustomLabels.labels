@@ -20198,6 +20198,86 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <value>Annual Fees :</value>
     </labels>    
     <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature1</shortDescription>
+        <value>Feature 1</value>
+    </labels>        
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature2</shortDescription>
+        <value>Feature 2</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature3</shortDescription>
+        <value>Feature 3</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature4</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature4</shortDescription>
+        <value>Feature 4</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature5</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature5</shortDescription>
+        <value>Feature 5</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature1Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature1Tooltip</shortDescription>
+        <value>Feature 1 Tooltip</value>
+    </labels>        
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature2Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature2Tooltip</shortDescription>
+        <value>Feature 2 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature3Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature3Tooltip</shortDescription>
+        <value>Feature 3 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature4Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature4Tooltip</shortDescription>
+        <value>Feature 4 Tooltip</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProductComparisonFeature5Tooltip</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProductComparisonFeature5Tooltip</shortDescription>
+        <value>Feature 5 Tooltip</value>
+    </labels>
+    <labels>
         <fullName>Iata_service_request</fullName>
         <language>en_US</language>
         <protected>false</protected>
