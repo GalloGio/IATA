@@ -33,7 +33,18 @@ global with sharing class ANG_ConversionHelper {
         -7 => 'Hierarchies with agencies missing top parent',
         -8 => 'Orphan Branches (BR)',
 		-9 => 'Different Top Parent in the Hierarchies'
-    };   
+    };
+
+    public static Map<Integer, String> errorMessagesLongDescription = new Map<Integer, String> {
+        -2 => Label.ANG_Conversion_Tool_Error_2,
+        -3 => Label.ANG_Conversion_Tool_Error_3,
+        -4 => Label.ANG_Conversion_Tool_Error_4,
+        -5 => Label.ANG_Conversion_Tool_Error_5,
+        -6 => Label.ANG_Conversion_Tool_Error_6,
+        -7 => Label.ANG_Conversion_Tool_Error_7,
+        -8 => Label.ANG_Conversion_Tool_Error_8,
+		-9 => Label.ANG_Conversion_Tool_Error_9
+    };
 
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
             
