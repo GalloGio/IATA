@@ -30,6 +30,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					, 'Change_of_location_type_behavior__c'
 					, 'STEP6__c'
 					, 'Process__c'
+					, 'NewHeDifferentLegalEntity__c'
 				};
 			}
 			return oscarFields;
@@ -64,6 +65,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				
 				if(tocList.contains(AMS_Utils.ANG_LEGAL_NAME) || tocList.contains(AMS_Utils.ANG_LEGAL_STATUS) || tocList.contains(AMS_Utils.ANG_MINOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING) || tocList.contains(AMS_Utils.ANG_OWNERSHIP)) notes.add('Change of legal name / legal status / shareholding / ownership can be applied to any agency in the current hierarchy');
 				if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)) notes.add('Change of location type will swap the current agency with the current HE. The User has to check if the new HE is the same legal entity as the current HE or not.');				
+				if(tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) && oscar.NewHeDifferentLegalEntity__c == '') notes.add('To perform a change of location type, tou need to select if the new HE is a different Legal Entity.');							
 				if(tocList.contains(AMS_Utils.ANG_LOCATION)) notes.add('Change of location can be applied only to a single agency.');				
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) notes.add('Change of hierarchy will move all the selected agencies under the "New parent". The user must select a new parent which should be a HE of another hierarchy or one of the selected AE.');
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY) && oscar.New_parent__c != null){

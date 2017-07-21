@@ -7,12 +7,14 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> changesStruct;
 		public List<Agency_Applied_Change_code__c> changeCodesToCreate;
 
+		public Set<Id> accountsChanged;
+
 		public AChangeStructure(){
 
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();			
 			accountsMap = new Map<Id, Account>();
 			changeCodesToCreate = new List<Agency_Applied_Change_code__c>();
-
+			accountsChanged = new Set<Id>();
 		}
 
 		public AChangeStructure(Map<Id,AMS_Agencies_relationhip__c> relationsMap,  Map<Id,Account> accountsMap, List<Agency_Applied_Change_code__c> changeCodesToCreate){
@@ -25,6 +27,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void addAccount(Account account){
 				this.accountsMap.put(account.Id, account);
+				this.accountsChanged.add(account.Id);
 		}
 
 		public void addRelation(AMS_Agencies_relationhip__c relation){
@@ -35,30 +38,47 @@ public with sharing class ANG_AgencyChangesHelper {
             this.changeCodesToCreate.add(changeCode);
         }
 
-        public void runUpsert(){
+        public Boolean runUpsert(){
 
         	System.debug('[ANG_AgencyChangesHelper] Running upsert');
+        	
+        	Boolean hasUpserted = false;
 
         	AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 
             if(relationsMap != null && !relationsMap.isEmpty()){
         		System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
                 upsert relationsMap.values();
+                hasUpserted = true;
             }
         	
 
-            if(accountsMap != null && !accountsMap.isEmpty()){
-        		System.debug('[ANG_AgencyChangesHelper] Upserting following accounts:'+accountsMap);
-                upsert accountsMap.values();
+            if(accountsMap != null && !accountsMap.isEmpty() && !accountsChanged.isEmpty()){
+
+        		List<Account> toUpsert = new List<Account>();
+
+        		for(Id accountId: accountsChanged){
+        			if(accountsMap.get(accountID) != null)
+        				toUpsert.add(accountsMap.get(accountID));
+        		}
+
+        		if(!toUpsert.isEmpty()){
+					System.debug('[ANG_AgencyChangesHelper] Upserting following accounts:'+toUpsert);
+                	upsert toUpsert;
+                	hasUpserted = true;
+                }
             }
 
-        	if(changeCodesToCreate != null && !changeCodesToCreate.isEmpty())
+        	if(changeCodesToCreate != null && !changeCodesToCreate.isEmpty()){
         		insert changeCodesToCreate;
+				hasUpserted = true;
+        	}
         	
         	AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = false;
 
 			System.debug('[ANG_AgencyChangesHelper] Upsert has run.');
 
+			return hasUpserted;
         }
 
 		public void addChangesStruct(Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> changesStruct){
@@ -78,8 +98,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
 
-			String currHEAccount = oscar.Account__r.ParentId == null ? oscar.Account__c : oscar.Account__r.ParentId;
-			
+
 			Boolean isAllHierarchySelected = false;
 			Set<Id> accountHierarchyRelationships = new Set<Id>();
 
@@ -94,7 +113,10 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> accountIdsInvolvedSet = ANG_AgencyChangesHelper.fetchAccountIdsToBeProcessed(oscar.Id);
   			accountIdsInvolvedSet.add(oscar.Account__c);
 
-  			changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
+	  		changesContainer.accountsMap = getAccounts(accountIdsInvolvedSet);
+
+			String currHEAccount = changesContainer.accountsMap.get(oscar.Account__c).ParentId == null ? oscar.Account__c : changesContainer.accountsMap.get(oscar.Account__c).ParentId;
+			
   			AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = getAccreditation(oscar.AMS_Online_Accreditation__c);
 
   			//map accountId -> active change code
@@ -133,11 +155,18 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 
+				System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
+
+				performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
+
+				System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
+
+
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.AUTH_APPROVAL, accountIdsInvolvedSet, changesContainer);
+				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);
 
 			} else if (oldOSCAR.STEP4__c <> AMS_Utils.PASSED && oscar.STEP4__c == AMS_Utils.PASSED) {
 
@@ -150,12 +179,11 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			if(changesContainer != null){
-				System.debug('Upserting following container:'+changesContainer);
+				
 				changesContainer.runUpsert();
+
 			}
-
-			//performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
-
+			
 		}
 
 	}
@@ -197,7 +225,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure processHierarchyChanges(AMS_OSCAR__c oscar, AChangeStructure changesContainer, Set<Id> accountIdsInvolvedSet, Boolean doesItContainAccreditationType) {
 		
-        System.debug('[ANG_AgencyChangesHelper] - Entering ProcessHierarchyChanges Method with container ' + changesContainer);
         System.debug('[ANG_AgencyChangesHelper] - Accounts involved are:'+accountIdsInvolvedSet);
         System.debug('[ANG_AgencyChangesHelper] - ChangesContainer is'+changesContainer);
         
@@ -209,8 +236,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			changesContainer = applyChangeOfLocationType(oscar, changesContainer);
 		else if (tocList.contains(AMS_Utils.ANG_HIERARCHY))
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet,doesItContainAccreditationType);
-
-        System.debug('[ANG_AgencyChangesHelper] - Exiting ProcessHierarchyChanges Method with container ' + changesContainer);
 
 		return changesContainer;
 	}
@@ -710,7 +735,6 @@ public with sharing class ANG_AgencyChangesHelper {
 	public static AChangeStructure applyChangeOfAccreditationType(AMS_OSCAR__c oscarToProcess, Set<Id> accountsAffected, AChangeStructure toReturn){
 	
 		System.debug('[ANG_AgencyChangesHelper] Performing change of Accreditation Type');
-		System.debug('[ANG_AgencyChangesHelper] container going in:'+toReturn);
 
 		if(toReturn == null)
 			toReturn = new AChangeStructure();
@@ -726,8 +750,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
         if(!toUpsert.isEmpty())
         	upsert toUpsert;
-
-		System.debug('[ANG_AgencyChangesHelper] container going out:'+toReturn);
 
 		return toReturn;
 	}
@@ -866,13 +888,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static ANG_AgencyChangesHelper.AChangeStructure generateNewGenChangeCodes(AMS_OSCAR__c oscar, AMS_Utils.AgChangesConfig config, Map<Id, Agency_Applied_Change_code__c> accountsPrevChangeCode, String action, Set<Id> allHierarchyAccountsToApplyCC, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
 
-        List<AMS_OSCAR_JSON.ChangeCode> changeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
-        List<Account> accts = new List<Account>();
-
         AMS_OSCAR_JSON.ChangeCode changeCodeDef;
         Agency_Applied_Change_code__c changeCode;
         String changeCodeIdentifier;
-
 
         if (action == AMS_Utils.SANITYCHECK)
             changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getSanityCheckChangeCode(config.config);
@@ -882,6 +900,7 @@ public with sharing class ANG_AgencyChangesHelper {
             changeCodeIdentifier = ANG_AgencyChangesConfigHelper.getWithdrawalChangeCode(config.config);
 
         system.debug('[ANG_AgencyChangesHelper] : Change code to apply: ' + changeCodeIdentifier);
+
         if (changeCodeIdentifier != null) {
 
             for (Id acc : allHierarchyAccountsToApplyCC) {
@@ -900,9 +919,6 @@ public with sharing class ANG_AgencyChangesHelper {
             }
 
         }
-
-        system.debug('[ANG_AgencyChangesHelper] : changeCodes: ' + changeCodes);
-        system.debug('[ANG_AgencyChangesHelper] : ' + accts);
 
         return changesContainer;
     }
@@ -972,7 +988,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-		return new Map<Id, Account>([SELECT Status__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		return new Map<Id, Account>([SELECT Status__c,ParentId, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
 		        BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 		        ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
