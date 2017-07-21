@@ -111,8 +111,24 @@ public class ANG_AccountTriggerHandler {
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
 
-	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
+	private static Set<Id> downgradedAccounts{
+		get{
+			if(downgradedAccounts == null) downgradedAccounts = new Set<Id>();
+			return downgradedAccounts;
+		}
+		set;
+	}
+
+	private void createVMFROscars(List<Account> allAccounts, Map<Id, Id> contacts){
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
+
+		//filter accounts
+		List<Account> accounts = new List<Account>();
+		for(Account acc : allAccounts){
+			if(downgradedAccounts.add(acc.Id)) accounts.add(acc);
+		}
+
+		if(accounts.isEmpty()) return;
 
 		//create object reference map
 		Map<Id, OscarObjects> objects = new Map<Id, OscarObjects>();
