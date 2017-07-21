@@ -253,7 +253,7 @@ public class ANG_AccountTriggerHandler {
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
         for(account acc : triggerNew){  
-            if(acc.ANG_LimitCashConditions__c!= oldMap.get(acc.Id).ANG_LimitCashConditions__c && !acc.ANG_LimitCashConditions__c) involvedAccounts.put(acc.id,null);
+            if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc.id,new map<id,integer>());
         }
 
         if(involvedAccounts.isEmpty()) return;

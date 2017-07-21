@@ -2885,10 +2885,11 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_LimitCashConditions__c</fullName>
+        <fullName>ANG_Limit_Cash_Condition__c</fullName>
+        <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ISPICKVAL(ANG_HE_RiskStatus__c,&apos;C&apos;), false)</formula>
-        <label>Limit Cash Conditions</label>
+        <label>Limit Cash Condition</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
