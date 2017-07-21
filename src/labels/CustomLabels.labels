@@ -655,6 +655,70 @@
         <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
         <value>Perform Correction</value>
     </labels>
+        <labels>
+        <fullName>ANG_Conversion_Tool_Error_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 2</shortDescription>
+        <value>The system identified some Agencies with a wrong record type within the hierarchies listed below. The correct record type should be &apos;Standard Account&apos; for agencies with application in progress and &apos;Agency&apos; for all the agencies with an IATA code. Please fix this issue before proceeding with the conversion.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 3</shortDescription>
+        <value>The system identified some hierarchies with a branch abroad. Note that the branches abroad will not be marked as &quot;NewGen Agency&quot; if the country they&apos;re based in are not marked as &quot;NewGen country&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 4</shortDescription>
+        <value>The system found some Agencies with a non-NewGen location class within the hierarchies listed below. Note that only Agencies with class &apos;P&apos; or &apos;D&apos; will be marked as &quot;NewGen Agency&quot;</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 5</shortDescription>
+        <value>The system found some Agencies belonging to multiple hierarchies (considering the custom hierarchy: objects &quot;AMS hierarchy&quot; and &quot;AMS relationships&quot;). Please fix this issue before proceeding.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 6</shortDescription>
+        <value>The system found some Agencies with a wrong value for the &quot;Sector&quot; field. It should be &quot;Travel Agent&quot; or &quot;Cargo Agent&quot;. This is not a blocking issue but consider fixing this error before proceeding.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 7</shortDescription>
+        <value>The system found some Agencies without a &quot;Top parent&quot;. This may cause some issues while adjusting the hierarchy. Please set the proper &quot;Top parent&quot; value for all the Agencies before proceeding.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 8</shortDescription>
+        <value>The system found some orphan branches within the selected country. This is not causing any major issue but you can decide to convert them to NewGen or not.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Error_9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Error 9</shortDescription>
+        <value>The system found some mismatches in the hierarchies listed below: each of them includes agencies having a different value in the &quot;Top parent&quot; field. To guarantee a clean conversion, please fix this issue by setting the same &quot;Top parent&quot; in all the accounts within each hierarchy.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_Conversion_Tool_Workaround</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG Conversion Tool Workaround</shortDescription>
+        <value>For what regards the workaround I would say to show always the same message: 
+&quot;The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
+    </labels>
     <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
