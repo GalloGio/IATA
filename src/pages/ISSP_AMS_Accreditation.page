@@ -943,14 +943,14 @@
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
-                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
+                        <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
                         <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm"/>
-                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
-                 	</apex:outputPanel></apex:facet>
+                        <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
+                    </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                         <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
                         <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
-                    	<apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                        <apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
                     </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>
