@@ -447,6 +447,10 @@
                 <behavior>Readonly</behavior>
                 <field>IATA_Membership_History__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

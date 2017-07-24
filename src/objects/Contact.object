@@ -1682,6 +1682,41 @@
         <label>Lead Convert Fields</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ISSP_Contacts_GovernanceRepresentatives</fullName>
+        <description>ISSP_ContactList.page</description>
+        <displayedFields>
+            <field>ISSP_Contact_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Contact_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Account_site__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP_Contacts_GovernanceRepresentatives</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Contacts_MyCompanyContacts</fullName>
         <description>ISSP_ContactList.page</description>
         <displayedFields>
@@ -5562,14 +5597,6 @@ IF(Account.IATACode__c != &apos;&apos;
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
-        <fullName>Designated_Authorized_Signatory__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Authorized Signatory</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Designated_IFAP_Contact__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -6499,6 +6526,73 @@ TotalRows-Successes-Errors</description>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IFG_PreProduction__c</fullName>
+        <description>1 - The user has access to IFG Pre-Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Pre-Production Service.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1 - The user has access to IFG Pre-Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Pre-Production Service.</inlineHelpText>
+        <label>IFG PreProduction</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
+            <operation>equals</operation>
+            <value>IFG Pre-Production</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Requested, Access Granted</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>IFG_Production__c</fullName>
+        <description>1 - The user has access to IFG Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Production Service.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1 - The user has access to IFG Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Production Service.</inlineHelpText>
+        <label>IFG Production</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
+            <operation>equals</operation>
+            <value>IFG Production</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted, Access Requested</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>IFG_User_Status__c</fullName>
+        <description>IFG Production Active User
+IFG PreProduction Active User
+IFG Production and PreProduction Active User
+Inactive User</description>
+        <externalId>false</externalId>
+        <formula>IF(IFG_Production__c + IFG_PreProduction__c == 2, &apos;IFG Production and PreProduction Active User&apos;,
+IF(IFG_Production__c == 1, &apos;IFG Production Access&apos;,
+IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
+&apos;Inactive User&apos;
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFG User Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -7776,6 +7870,39 @@ TotalRows-Successes-Errors</description>
         <label>Primary Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Record_Sharing_Criteria_AUX__c</fullName>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
+        <externalId>false</externalId>
+        <label>Record Sharing Criteria AUX</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Sharing_Criteria__c</fullName>
+        <description>Used to share contacts with IFG Support Team through Sharing Settings</description>
+        <externalId>false</externalId>
+        <label>Record Sharing Criteria</label>
+        <picklist>
+            <picklistValues>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region_10__c</fullName>
@@ -11959,6 +12086,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -13244,6 +13382,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -14461,6 +14610,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -15642,6 +15802,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16948,6 +17119,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -18242,6 +18424,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -19427,6 +19620,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21776,6 +21980,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24305,6 +24520,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27032,6 +27258,17 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -10,22 +10,22 @@
         </recipients>
         <recipients>
             <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
+			<type>user</type>
+		</recipients>
+		<recipients>
+		<recipient>osinskan@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
-            <type>user</type>
-        </recipients>
+		<recipients>
+			<recipient>szajkod@iata.org</recipient>
+			<type>user</type>
+		</recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
     </alerts>
     <alerts>
@@ -48,12 +48,12 @@
             <recipient>pietranget@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
-            <type>user</type>
-        </recipients>
+		<recipients>
+			<recipient>szajkod@iata.org</recipient>
+			<type>user</type>
+		</recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching2</template>
     </alerts>
     <alerts>
@@ -81,7 +81,7 @@
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
     </alerts>
     <alerts>
@@ -92,7 +92,7 @@
             <type>accountOwner</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
+        <senderType>CurrentUser</senderType>
         <template>unfiled$public/SURVEY_a1Q20000000UD7AEAW</template>
     </alerts>
     <fieldUpdates>
@@ -104,6 +104,18 @@
         <name>AIMS Accounts RT Assignment</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Acc Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -656,6 +668,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>
+    <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Acc_Update_Record_Sharing_Criteria_AUX</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>	
     <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
         <actions>
