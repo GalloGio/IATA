@@ -1,7 +1,7 @@
 @isTest
 private class AMS_ChangeCodesHelperTest {
-	
-	@testSetup 
+
+	@testSetup
 	static void setup(){
 
 		String SECTORPAX = 'Travel Agent';
@@ -21,32 +21,32 @@ private class AMS_ChangeCodesHelperTest {
         ID rtAgency = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Agency').getRecordTypeId();
         IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
         insert italy;
-        
 
-      
-        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id, 
-                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+
+
+        Account HO1 = new Account(RecordTypeId = rtAgency, Name = 'My Travels', IATAcode__c = '1111110', IATA_ISO_Country__c = italy.id,
+                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
                          Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
                          Short_Name__c = 'Short name', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe3.com'
                          );
-      
+
         insert HO1;
 
-        Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels 2', IATAcode__c = '1111112', IATA_ISO_Country__c = italy.id, 
-                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS), 
+        Account HO2 = new Account(RecordTypeId = rtAgency, Name = 'My Travels 2', IATAcode__c = '1111112', IATA_ISO_Country__c = italy.id,
+                         Sector__c = (isPax ? SECTORPAX : SECTORCASS), Category__c = (isPax ? CATEGORYPAX : CATEGORYCASS),
                          Location_Class__c = (isPax ? LOCCLASSPAX : LOCCLASSCASS), Location_Type__c = 'HO', Status__c = 'Approved',
                          Short_Name__c = 'Short name 2 ', BillingCity = 'Lisbon', Email__c = 'testeteste@fefe4.com'
                          );
-      
+
         insert HO2;
-        
+
 
 
     }
 
 	static testMethod void VR_Change_Codes() {
 		List<Account> accountLst = [SELECT ID, Status__c, Location_Class__c from Account ];
-		
+
 		Account acc = accountLst.get(0);
 		Set<Id> accountsInvolved = new Set<Id>{acc.Id};
 		Map<Id, Account> accounts = new Map<Id, Account>{acc.Id => acc};
@@ -80,15 +80,15 @@ private class AMS_ChangeCodesHelperTest {
 		System.assertEquals('VRW', sanityCheckWithDrawal.changeCodes[0].name);
 		System.assertEquals('NTW', suspensionWithdrawal.changeCodes[0].name);
 		System.assertEquals('REI', terminationWithdrawal.changeCodes[0].name);
-		
+
 		System.assertEquals(aacc.Reason_Code__c, suspensionWithdrawalChanges.changeCodes[0].reasonCode);
 	}
 
     static testMethod void TestChangesCodesCreation() {
 
- 
+
         List<Account> accountLst = [SELECT ID, Status__c from Account ];
-		
+
         if(accountLst.isEmpty())
             System.assert(true,false);
 
@@ -96,7 +96,7 @@ private class AMS_ChangeCodesHelperTest {
 
         if(accountLst.isEmpty())
             System.assert(true,false);
-        
+
         Account acc1 = accountLst.get(0);
         Account acc2 = accountLst.get(0);
 
@@ -128,19 +128,19 @@ private class AMS_ChangeCodesHelperTest {
 
 
 		AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_ChangeCodesHelper.ObjectChangesStruct> {objChangeListStruct1,objChangeListStruct2},
-		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null}, 
-		                                          new List<Account> {acc1,acc2}, 
+		                                          new List <AMS_OSCAR_JSON.ChangeCode> {changeCode1,changeCode2},new List<AMS_OSCAR__c>{null,null},
+		                                          new List<Account> {acc1,acc2},
 		                                          false);
 
-   
+
         Test.stopTest();
 
         /*****************************/
         /******** Assert Equals ******/
         /*****************************/
-        
+
         //System.assertEquals();
-    
+
 
 	}
 }
