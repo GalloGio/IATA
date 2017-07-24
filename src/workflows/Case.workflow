@@ -12827,8 +12827,7 @@ Short_Payment_Amount_USD__c &lt;= 150000 ),
 AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;), 
 CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;), 
 Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100), 
-Short_Payment_Amount_USD__c &lt;= 10000, 
-NOT(ISPICKVAL(Account.Category__c,&quot;CASS Associate&quot;)))))</formula>
+Short_Payment_Amount_USD__c &lt;= 10000)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
