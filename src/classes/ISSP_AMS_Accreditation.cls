@@ -1075,8 +1075,8 @@ public without sharing class ISSP_AMS_Accreditation {
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
         } else if (sectorValue.StartsWith('Travel_Agent')) {
             if (newForm.Agent_Type__c == 'TIDS') {
-                includedPageName = 'ISSP_AMS_Pax_Form';  // TO CHANGE
-                includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly'; // TO CHANGE
+                includedPageName = 'ISSP_AMS_TIDS_Form';
+                includedSummaryPage = 'ISSP_AMS_TIDS_ReadOnly';
             } else {
                 includedPageName = 'ISSP_AMS_Pax_Form';
                 includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';

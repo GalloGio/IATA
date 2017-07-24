@@ -12021,6 +12021,41 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Submit to IATA</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Member</shortDescription>
+        <value>If you are a member of the National Travel Agent Association in your country, please indicate the association name(s) and your membership number(s) (please provide proof of membership such as confirmation letter from the association)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Names</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Names</shortDescription>
+        <value>Indicate the association name(s)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_National_Association_Not_Member</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_National_Association_Not_Member</shortDescription>
+        <value>If you are not a member of your national travel agents&apos; association, please provide two (2) letters of recommendation from a TIDS sponsor (hotel, car rental company) or one (1) letter from an IATA Member Airline or a Global Distribution System.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step2_Type_of_Business</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step2_Type_of_Business</shortDescription>
+        <value>Type of business (e.g. Travel Agency, Tour Operator, Conference or Event Organiser etc.)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Step3_5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Step3_5_Other_Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
