@@ -6834,6 +6834,40 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Name</value>
     </labels>
     <labels>
+        <fullName>IFG_Prov_Declined</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Prov_Declined</shortDescription>
+        <value>Provision declined externally by IFG</value>
+    </labels>
+    <labels>
+        <fullName>IFG_Prov_Failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Prov_Failed</shortDescription>
+        <value>IFG Provision Falied</value>
+    </labels>
+    <labels>
+        <fullName>IFG_SP</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG SP</shortDescription>
+        <value>Solution Provided</value>
+    </labels>
+    <labels>
+        <fullName>IFG_Thanks_for_request</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Thanks_for_request</shortDescription>
+        <value>Thanks for you request. 
+You have just received an email confirming your request.
+Regards,
+IFG Customer Services</value>
+    </labels>
+    <labels>
         <fullName>ISSP</fullName>
         <categories>S-control</categories>
         <language>en_US</language>
@@ -13365,6 +13399,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Access to Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Access_Under_Provisioning</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Access_Under_Provisioning</shortDescription>
+        <value>Access under Provisioning</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Access_to_services</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -13651,6 +13693,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP_HomePage</shortDescription>
         <value>Do you really want to delete this notification?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Area_of_Concern</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Area_of_Concern</shortDescription>
+        <value>Area of Concern</value>
     </labels>
     <labels>
         <fullName>ISSP_Article</fullName>
@@ -14967,6 +15017,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Edit Section</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouFeedback</shortDescription>
+        <value>Thank you for your feedback.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_EmailChanged</fullName>
         <categories>ISSP, ISSP_Email</categories>
         <language>en_US</language>
@@ -15238,12 +15295,40 @@ Please add below all your company valid email domains, including different ones 
         <value>CNS Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Case</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Case</shortDescription>
+        <value>Case</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_CaseClosed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CaseClosed</shortDescription>
+        <value>Case Closed</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_CaseComment_Subject</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseComment_Subject</shortDescription>
         <value>New comment on case n°</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_CaseResolution</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CaseResolution</shortDescription>
+        <value>Case Resolution</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ClickGoToCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ClickGoToCase</shortDescription>
+        <value>Click here to go to the related case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Comment</fullName>
@@ -15260,6 +15345,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_Congratulations</shortDescription>
         <value>Congratulations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ConsultCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ConsultCase</shortDescription>
+        <value>Please consult the case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_DearAdmin</fullName>
@@ -15317,12 +15409,26 @@ Please add below all your company valid email domains, including different ones 
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_GiveUsFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_GiveUsFeedback</shortDescription>
+        <value>and give us your feedback.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Granted_Reason</fullName>
         <categories>ISSP Emails</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_Granted_Reason</shortDescription>
         <value>Reason for service being granted:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_HasBeenClosed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_HasBeenClosed</shortDescription>
+        <value>has been closed.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Here</fullName>
@@ -15436,6 +15542,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Access to Portal requested</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_PleaseContactUs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_PleaseContactUs</shortDescription>
+        <value>Please contact us if you have further questions.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_PleaseLogin</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -15540,6 +15653,20 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for contacting CNS</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_ThankYouFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouFeedback</shortDescription>
+        <value>Thank you for your feedback.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ThankYouForYourFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_IFGSolutionProvided</shortDescription>
+        <value>The IFG Team provided a solution for your case.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_ThankYouInAdvance</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -15586,6 +15713,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_YouCanAccess</shortDescription>
         <value>To respond to this comment, please access it on your</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_YourCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_YourCase</shortDescription>
+        <value>Your case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_YourCompanyAdmin</fullName>
@@ -18998,6 +19132,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Simplified_Interline_Settlement</shortDescription>
         <value>Simplified Interline Settlement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Solution_Provided</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Solution_Provided</shortDescription>
+        <value>Solution Provided</value>
     </labels>
     <labels>
         <fullName>ISSP_Status</fullName>
