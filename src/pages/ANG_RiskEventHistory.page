@@ -109,7 +109,7 @@
 
 		<apex:pageBlock title="{!$ObjectType.ANG_Agency_Risk_Event__c.LabelPlural}" mode="detail" id="pageBlock">
 
-			<apex:pageBlockButtons location="top" rendered="{!Account.ANG_IsNewGenAgency__c}">
+			<apex:pageBlockButtons location="top" rendered="{!Account.ANG_IsNewGenAgency__c && $ObjectType.ANG_Agency_Risk_Event__c.createable}">
 				<input type="button" onclick="return navigate('{!newLink}', 'New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}');" class="btn newButton" value="New {!$ObjectType.ANG_Agency_Risk_Event__c.Label}"/>
 			</apex:pageBlockButtons>
 
