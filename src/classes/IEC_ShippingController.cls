@@ -245,7 +245,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         sfOrder.EndDate = sfOrder.EffectiveDate.addDays(Utility.getIntegerSetting('Quote Nb Days Valid'));
         update sfOrder;
 
-        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber;
+        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber + '<br /> You will receive an email with a PDF copy of your Quote. <br /> Please follow the instructions contained in the e-mail to confirm and pay for your Quote.';
         
         quote = sfOrder;//new Order_Sel().getQuoteDetails(sfOrder.Id);
 
