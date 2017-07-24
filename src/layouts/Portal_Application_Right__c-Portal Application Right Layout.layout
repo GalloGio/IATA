@@ -16,6 +16,10 @@
                 <behavior>Required</behavior>
                 <field>Portal_Application__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Portal_Service_Role__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
