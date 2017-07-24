@@ -2711,6 +2711,43 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>ANG_CashCondition__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
+        <label>Cash Condition</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_CashCondition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Cash Condition HE</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_RiskStatus__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <label>Risk Status HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_IEP_Account_Number__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Parent.ANG_IEP_HE_AccntNum__c)</formula>
@@ -2739,7 +2776,7 @@
         <description>To show analysts information about Easy Pay’s account status</description>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Parent.ANG_IEP_Status__c))</formula>
-		<formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2780,7 +2817,7 @@
                 <fullName>Closed – 3-month freeze period</fullName>
                 <default>false</default>
             </picklistValues>
-			<picklistValues>
+            <picklistValues>
                 <fullName>Blocked</fullName>
                 <default>false</default>
             </picklistValues>
@@ -2801,43 +2838,6 @@
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_CashCondition__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
-        <label>Cash Condition</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_CashCondition__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Cash Condition HE</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
-        <label>Risk History Assessment HE</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_RiskStatus__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Risk_Status</globalPicklist>
-        <label>Risk Status HE</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
@@ -23593,7 +23593,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -23622,25 +23641,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -23654,41 +23654,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>C</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-        <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26099,7 +26064,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -26128,25 +26112,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -26164,41 +26129,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29243,7 +29173,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -29272,25 +29221,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -29308,41 +29238,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31753,7 +31648,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -31782,25 +31696,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -31818,41 +31713,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35789,7 +35649,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -35818,25 +35697,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -35854,41 +35714,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -38035,7 +37860,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -38064,25 +37908,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -38100,41 +37925,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43548,7 +43338,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -43577,25 +43386,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -43613,41 +43403,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46185,7 +45940,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -46214,25 +45988,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -46250,41 +46005,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50644,7 +50364,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -50673,25 +50412,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -50709,41 +50429,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -55014,7 +54699,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -55043,25 +54747,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -55079,41 +54764,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57762,7 +57412,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -57791,25 +57460,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -57827,41 +57477,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -60193,7 +59808,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -60222,25 +59856,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -60258,41 +59873,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62624,7 +62204,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -62653,25 +62252,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -62689,41 +62269,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65429,7 +64974,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -65458,25 +65022,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -65494,41 +65039,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -70532,33 +70042,13 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
+            <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>Daily</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
+                <fullName>Monthly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -73089,7 +72579,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -73118,25 +72627,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -73154,41 +72644,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -77401,7 +76856,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -77430,25 +76904,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-			<values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -77466,41 +76921,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -80572,37 +79992,9 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Remittance_Frequency</picklist>
-            <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
+            <picklist>Remittance_frequency__c</picklist>
             <values>
                 <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Montly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
