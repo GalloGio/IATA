@@ -307,9 +307,11 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Regional Administrator';
         controller.con = con;
         controller.saveNewStatus();
+        
+        Test.stopTest();
+
         System.assert([SELECT Id, ProfileId FROM User WHERE ProfileId = :profileMap.get('ISS Portal Delegated Admin User').Id].size() > 0, 'User should have been created');
 
-        Test.stopTest();
 
     }
 

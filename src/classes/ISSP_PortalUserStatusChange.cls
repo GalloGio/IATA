@@ -795,10 +795,8 @@ public with sharing class ISSP_PortalUserStatusChange {
                         update idCardList;
                     }
                 }
-                catch(Exception e){
-                    system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                catch(Exception e){                    
+                    return AMS_Utils.errorMessageBeautifyer(e);                     
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
