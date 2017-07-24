@@ -46,16 +46,24 @@ public without sharing class AMS_AgencyUpdateHelper {
         List<AMS_Agency_Updates__c> invalidAgencyUpdateToInsert = new List<AMS_Agency_Updates__c>();
         List<AMS_Agency_Updates__c> reEvaluateAgencyUpdate = new List<AMS_Agency_Updates__c>();
         List<AMS_Agency_Updates__c> toRemoveAgencyUpdate = new List<AMS_Agency_Updates__c>();
-        
 
-        Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>(); 
+        //get the change code settings to skip agency update generation
+        Set<String> codesToSkipUpdate = new Set<String>();
+        for(AMS_ChangeCodes__c codeConf :[SELECT Change_Code__c FROM AMS_ChangeCodes__c WHERE Skip_Agency_Update__c = true]){
+            codesToSkipUpdate.add(codeConf.Change_Code__c);
+        }
+
+        Map<Id, Agency_Applied_Change_code__c> mAgencyChangeCode= new Map<Id, Agency_Applied_Change_code__c>();
         Set<Id> agencyIds = new Set<Id>();
         for(SObject obj: updatedRecords){
-            if(obj.getSObjectType() != Schema.Account.getSObjectType()){
-                agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
+            //only create update if the change code corresponding change code setting is not flagged to skip agency update;
+            if (obj.getSObjectType().getDescribe().getName() == 'Agency_Applied_Change_code__c' && !codesToSKipUpdate.contains((String)obj.get(Schema.Agency_Applied_Change_code__c.Change_Code__c))){
+                if(obj.getSObjectType() != Schema.Account.getSObjectType()){
+                    agencyIds.add((Id)obj.get('Account__c'));//all the fields relating to Agency in every other object as API name Agency__c
+                }
+                else
+                    agencyIds.add(obj.Id);
             }
-            else
-                agencyIds.add(obj.Id);
         }
 
 
@@ -92,9 +100,7 @@ public without sharing class AMS_AgencyUpdateHelper {
                     break;
                 }
             }
-            if(bAlreadyUpdated){
-                agenciesAlreadyUpdated.add(au.Id);
-            }
+            if(bAlreadyUpdated) agenciesAlreadyUpdated.add(au.Id);
 
             //Checks if there's a record on update status that needs to be rechecked
             for(AMS_Agency_Updates__c au2: au.AMS_Agency_Updates__r){
@@ -392,8 +398,7 @@ System.debug('au3: ' + au3);
             insert invalidAgencyUpdateToInsert;    
 
 
-        if(agencyUpdateToUpdate.size() > 0)
-            update agencyUpdateToUpdate;  
+        if(agencyUpdateToUpdate.size() > 0) update agencyUpdateToUpdate;  
 
         return;
     }
