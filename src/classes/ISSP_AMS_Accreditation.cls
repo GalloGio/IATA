@@ -117,6 +117,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean isValError {get; set;}
     public boolean isNoticeOfChange {get; set;}
     public boolean bIsAdmin {get; set;}     //identify if a user is an administrator or not
+    public boolean isHOcontact {get; set;}  // identify whether a user is from the HO account or not
 
     public boolean isStep1 {get; set;}
     public boolean isStep2 {get; set;}
@@ -274,6 +275,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 isHOAccredited = true; //This is an accredited  Agency Account
                 isUserAccAccredited = true;
             }
+            isHOcontact = true;
         } else { //Get Id for HQ Account when user's Account is a branch office
             vHQAccountId = con.Account.Top_Parent__c;
             fetchHQAccountDetails();
@@ -283,6 +285,8 @@ public without sharing class ISSP_AMS_Accreditation {
             
             if (hqAccount.RecordType.DeveloperName == 'IATA_Agency' && hqAccount.Status__c != 'Terminated' && hqAccount.Status__c != 'Not accreditated' && hqAccount.Status__c != 'No longer a customer' && hqAccount.Status__c != 'New application pending')
                 isHOAccredited = true; //This is an accredited  Agency Account
+
+            isHOcontact = false;
         }
         
         if(hqAccount.Status__c == 'Terminated')
@@ -363,7 +367,7 @@ public without sharing class ISSP_AMS_Accreditation {
         if(isBankAccountChange) {
             newForm.Is_change_bank_account_details__c = true;
         } else {
-            newForm.Scope_of_Change__c = 'HO Only'; //Set default
+            newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
             newForm.Is_change_legal_name__c = true;
             newForm.Is_change_location__c = true;
             newForm.Is_change_ownership_or_shareholding__c = true;
@@ -375,7 +379,7 @@ public without sharing class ISSP_AMS_Accreditation {
             isStep1 = true;
         }
         
-        newForm.Scope_of_Change__c = 'HO Only'; //Set default
+        newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
        
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 
@@ -856,12 +860,20 @@ public without sharing class ISSP_AMS_Accreditation {
          if(newForm.Agency_Codes_Concerned__c != null && !fullHierarchy) //Exclude already selected branches
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
         
-        
-        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
-                                      FROM Account
-                                      WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
-                                              ORDER BY Name, IATACode__c
-                                     ];
+        if (isHOcontact) {
+            return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+                        FROM Account
+                        WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
+                        ORDER BY Name, IATACode__c
+                    ];
+        } else { // BR contacts can only apply for changes to their own BR and SAs of their BR
+            return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+                        FROM Account
+                        WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes) 
+                            AND (Id = :con.AccountId OR ParentId =: con.AccountId )
+                        ORDER BY Name, IATACode__c
+                    ];
+        }
     }
     
     private List<Account> getSelectedBranchList(List<String> branchCodes) {
