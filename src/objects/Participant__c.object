@@ -380,7 +380,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <language>en_US</language>
     </listViews>
     <nameField>
-        <displayFormat>APJC Participant - {0000}</displayFormat>
+        <displayFormat>Group Participant - {0000}</displayFormat>
         <label>Participant Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
