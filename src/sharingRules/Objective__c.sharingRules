@@ -66,10 +66,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Argentina</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerArgentinaParaguayUruguay</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerArgentina</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerArgentinaParaguayUruguay</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerArgentina</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -88,10 +88,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Australia</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestPacific</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerAustralia</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthWestPacific</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerAustralia</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -154,10 +154,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Bulgaria</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerKazakhstanKyrgyzstanUzbekistanTajikistan</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerBulgaria</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerKazakhstanKyrgyzstanUzbekistanTajikistan</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerBulgaria</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -365,10 +365,10 @@
         <description>Share Account Issues and Priorities and Key Account Plan items between the Country Manager for Germany and the Staff  - Germany members</description>
         <label>Account Management Germany</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerCentralEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerGermany</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerCentralEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerGermany</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -464,10 +464,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Italy</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerSouthernEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerItaly</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerSouthernEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerItaly</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -501,6 +501,17 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerKorea</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Account_Management_LK_MY_BD_MV_BN</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management LK,MY,BD,MV,BN</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>AsiaPacificHubLeader</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>AsiaPacificHubLeader</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -618,10 +629,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Peru</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerPeruBolivia</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerPeru</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerPeruBolivia</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerPeru</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -673,10 +684,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Romania &amp; Moldova</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerEasternEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerRomaniaMoldova</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerEasternEurope</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerRomaniaMoldova</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -849,10 +860,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Trinidad &amp; Tobago</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerCaribbean</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerTrinidadTobago</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerCaribbean</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerTrinidadTobago</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -860,10 +871,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Turkey</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerTR_TM_AZ</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerTurkey</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerTR_TM_AZ</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerTurkey</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -882,10 +893,10 @@
         <accessLevel>Edit</accessLevel>
         <label>Account Management Ukraine</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerUkraineGeorgiaArmenia</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerUkraine</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerUkraineGeorgiaArmenia</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerUkraine</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
@@ -911,14 +922,25 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Account_Management_United_States</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Account Management United States</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>Country_Manager_United_States</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>Country_Manager_United_States</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Account_Management_Venezuela</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Venezuela</label>
         <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerVenezuelaCuba</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerVenezuela</roleAndSubordinatesInternal>
         </sharedTo>
         <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerVenezuelaCuba</roleAndSubordinatesInternal>
+            <roleAndSubordinatesInternal>CountryManagerVenezuela</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

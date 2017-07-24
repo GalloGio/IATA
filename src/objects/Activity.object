@@ -203,6 +203,13 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>Support_Required_from_Account__c</fullName>
         <externalId>false</externalId>
         <label>Support Required from Account</label>
@@ -313,7 +320,6 @@
         <label>Today&apos;s Tasks</label>
     </listViews>
     <searchLayouts>
-        <listViewButtons>Close_Task</listViewButtons>
         <searchResultsAdditionalFields>TASK.SUBJECT</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.LAST_NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>TASK.CREATED_DATE</searchResultsAdditionalFields>

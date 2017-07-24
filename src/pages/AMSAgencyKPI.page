@@ -1,45 +1,127 @@
 <apex:page standardController="Account" extensions="AMSAgencyKPIController" showHeader="false" sidebar="false">
   <!-- Begin Default Content REMOVE THIS -->
-<style>
-  head {
-    font-size: 16 pt;
-}
-body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPageBlock .pbBody .data2Col, body .print .topics-label, body .print .topics-list{
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
-</style>
-<apex:pageBlock rendered="{!AND(NOT(isBranch),OR(HO != null, ag != null))}">
-<apex:pageBlockSection >
-      <apex:outputText value="{!HO.Name}" label="Legal Name"/><apex:outputText value="{!HO.RecordType.Name}" label="Record Type"/><!--<apex:outputText value="{!HQ.Primary_address__r.Address_1__c}"/>-->
-      <apex:outputText value="{!HO.IATACode__c}"/><apex:outputText value="{!HO.IATA_ISO_Country__r.Name}" label="Country"/>
-      <apex:outputText value="{!HO.Status__c}" label="Agency Status/Reason"/><!--<apex:outputText value="{!HQ.Primary_address__r.City__c}"/>-->
-      <apex:outputText value="{!HO.TradeName__c}"/><!--<apex:outputText value="{!HQ.Primary_address__r.AMS_ZipCode__c}"/>-->
-      <apex:outputText value="{!HO.Accumulated_Irregularities__c}"/><apex:outputField value="{!HO.Guaranteed_amount__c}" label="Financial Security - Amount"/>
-              
-              
-              
+  <style>
+    head {
+      font-size: 16 pt;
+  }
+  body .bPageBlock .pbBody .labelCol, body .bPageBlock .pbBody .dataCol, body .bPageBlock .pbBody .data2Col, body .print .topics-label, body .print .topics-list{
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
 
-          <!--<table>
-                  <tr><td><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAbFBMVEX///95tX1xsXV0snh6tX5xrnWhy6Rsr3He7N1wsXRtsHDC3cSFvIhtrnKWxJfN4s+x1LPH38m+2sBlq2dlq2uw07aNwJS42Lqqz6m31rTr9eyq0K6MwZKAuYSgyZ/M5dHX6Nfo9ej19/Td797yRmV4AAABKUlEQVQ4jb2S2XLCMAxFkeUljrdsYJoNCv//jw2xgSxmOtOH3snk5R7LV5IPh39Vq7jtT6PP0vbVEpMTQozItdrbtzE3CFFE6G2VljawFBPlxjewFjYrQucbHyjmi1u67fkHIfU7IME9AFS8eilEwgd4l9AkCYC5xxY++JD7ALhdC88KPABVoocA2F8AGQGXbmKqMAbgLj8BXZwTRSAMpw8YQfa6kIpLnIOVaL22vgfPB39+jhXpLQKu7h3nlXfVuTurirNYgL+Xefo6+dJ1Crwf+yqERtm+gIwoVVa6PpaXwjk7T5Y2xeI9eGFhAESrwfYhQ2NXT+pYTyunMP3C6rHpD2spthwXWQR86tsaMZ9GFGJwO/8RtdMoicRhvKTsWW12vbYf3T/qB3reDjWFLAGCAAAAAElFTkSuQmCC' /></td><td>RISK</td>
-                  <td><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAsVBMVEX////NUBPyZSHXVhfaVxjdWRnfWhriXBvVVBbSUxXlXhzoXx3QURTOUBTqYR7tYh/vYyDxZCD2lGTOVBnzbi7z1MX23tPsu6P1hE3RXib86+PwuZ798uz1zbrocjjvr5DnZynglG/TZzLlooLbf1PejGTtwazXcUDsbzL449ri3970f0bNrJz2j130eDzUm4C/lYDdj2jalXLpxrXAtrHEim3zpYDxm3Lss5f1iVX6xq3yCG7cAAAA6UlEQVQ4jcXS23aCMBAF0IhaL7VVRwJR6gXxHo20VVv9/w/TtSYKxJln9+s5gWQSIXI22/R4TNPDRpB+f8D6TonKOgbYKW2MVjuA+dbNhwBq5Vm+BtgX8wucfS/HV5AU12vPYeA/ywdguk98kI/CWHUI5u9xgHObpIa2EK0+SZOTLcA7Q3/hFkdNxgS3KWusCw7hjTXGQpWFBVlhRbjJMssOYlpnNPCYImkwZvdRtxiL+2XEH6Rldt39EiW7biF7RB7ln9TiuVF4crdvOH/phcIxmOfzWeDmN0EyxbQfSyLGiQRhKKnFr3UF4W0eivigW3MAAAAASUVORK5CYII='/></td><td>Next visit: 2015/08/12</td></tr>
-                  <tr>
-                      <td><img src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3NDc3Nzc3NDc3Nzc3LDQ3NDc3Nzc3NDc3NzM3NDc3LDQ3Nzc0NzQ3LDQ0MjcuNTc1NP/AABEIACAAIAMBEQACEQEDEQH/xAAYAAEBAAMAAAAAAAAAAAAAAAAHBQIDBv/EAC0QAAECBQIDBwUBAAAAAAAAAAECAwAEBQYREiExQYETUVKRkqGxI0Jh0fAV/8QAGgEAAgMBAQAAAAAAAAAAAAAABAYCAwUBAP/EACcRAAEEAQQBAwUBAAAAAAAAAAEAAgMEEQUSITFhUXGBIiRBkfAT/9oADAMBAAIRAxEAPwBVui42KDLpGntZtwfTazy8Su4fPmRXJIGBF1Kj7LsDgDso5nblrc+7qcn3mgeCGFFsAd22565gQzPP5W82hWjGNuT5W6n3JWZFWpM866kcUzBLgPnuOhEdbM8FRl0+u5vWPZd7btdFaJUhHZOowHWicgDvHWC2PDhlL9iu6B2Cjy5ZpU9XJyYdWNAcKUknYITsPbfrAcpy8kpjpM/zga1vZ5/aiOVFhvZtKnD38BFBeFoNru7Kw/1CcHsABxzqj2/C4a+/jKu2pXUs1yS0trbUt0NEA5BSo4IPz0EXQS/WgNSqfbk+nKmXiy/K3BOSjo0oQ6S2kc0ndJ/OxEVWAQ8hGaY5jqzXjvo/CjJRzMVdIw5eeFmE5MR7UydvCs2jJLnbikGWxsl5Lijjkk5PxBFcbpB4Wbqkgiquz2eP74SPeFrG4NLjZQ3ONJwhw5CVpznB/toOliEg8pao3nVXerT2EZz1AqlPcKJuRebA+7TlPqG3vGc6CQHkJqi1Gq9uWvA9+Fsp9Bqk+tLcpJPLB+8pwn1HaOtgkdwAoyajVhG4vyfHKULPtdugMKcdUl2ddGFrHBI8Kf3zjQhhEQwErXrz7b9x4A6C/9k='/></td><td>IFAP Assetment</td>
-                      <td></td>
-                  </tr>
-              </table> -->
-          
-          <!--<td><img src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxQTEhUTEBQWFhUWFyIVFhgXFyAXGBcYHR0XHh8dGR8aKCgjHBwmICAYIjEhMSkuLi4vGiQzODMsNy0tLisBCgoKDg0OGxAQGiwkICQ3LC01LCw0LCw0LC00LCwtLSwsLS8sLCwsLSwsLCwtLCwsLCwsNCwsNCwrLCwsLCwsL//AABEIAE4ATgMBEQACEQEDEQH/xAAaAAACAgMAAAAAAAAAAAAAAAAABAMGAQIF/8QANhAAAQMDAgMGAggHAAAAAAAAAQACEQMSIQQxIkFxBRMyUWGBQpEjQ1JyobHB0QYUYoKiwvD/xAAaAQACAwEBAAAAAAAAAAAAAAAAAQIDBAUG/8QALxEAAgIBAwIEBQIHAAAAAAAAAAECEQMSITFBUQQTImFxgZGx8BQyI0KhwdHh8f/aAAwDAQACEQMRAD8AspNMGKhDBjOHycSOAEggTvvCveSXYpUF3G+zq8hgNNuRxkvYbTGRAz7LPlUn6kWxaW1jbn0qIPe2Bp8LjHPkJXMwS/TycJv0veL+6+RoyuMo6vrZHSfSqMqONW0ye7ba2HAAWmbcgnmuntKNmch7OrXPtr/Ry0m4FjmzMAABs7J7BQy5lL6QCqTa5tmAy4EC7NomM/JDCiBrGZ4Ac/FUDif8Vn/T4nJyatv5/wDC3zJVQ63S6cui+BZOAPHJkTbmMJPw+NtSW1dmLXKiGnVYC5oDTG/G0/6+SujKNtJ79d/yiLTH6LGOc3unB3BLsCAZbGY+98lGdv8Aa/6jVdSvC4kNFRrGhzaguaTxNcI2O05PotmRb2ZoPoaUHE8bjl0O8owOqsjGkRk7exj+IWCppy4+KmC4NEy4x4RGc+i5Xicajk0dZbr29iySeXHSdUM/wbVrVNOy+1tMAtDQTfcCbrvLM4QoWtD2o0KCjsWOk8xufXPNTjwDGaLZ3mVYhGNZVghLgLE36l7SGiYcYBnY7568llc5Y8lP9r+43xsR1Gvm4OIdsP6uqrz4JOXmY3U+Pj7MnjnS0z3RnS620kmZ2I8jlS8HlWRPo+q7P/HYeSGnjgrzGS6DTNTEwIxkeZG4wuzkMEDTT+FpOeEZ9lYuCDGKD4IjzkdVj8bhc8dx5juWYp6XuY7OqtpamowuPd1h34n4Xza6I5HdYfDvzo+62/uvpx8DbNpRTZY9Oz4mn33Ct8px4ZC0yc1nAi6I8wnqa5FQx3bXQ7eNlNUxMS11DLInxcv1WXxCdxa7kkTNYZudGOSvSd6pCOf2hpbnXNw479PZYPGeGcpa8bab5rr2LseRJVJWcDO4LmmI4XFuPIwvROKZzE2ga2AANhgKQjICQBq9QKdtQlt9I3Eb3MduD1GR0XP8hLJ/D/m+/wDs2wl6akWbR9p6d3DSc0iLhbtGP3TncW9QL2J6moG7RPT9VBNNWuBi9HUOD/CYeCWg7C2J285WOM5LNUeGSrYlr1ncLiAIODv+avnKSabQjV9UxxOaOfqpPXV8L6gQ09TBuwScY5fJEFJby6ik0V1dYwggAQBLS1BBBkxzHIhVZceqDS5ZOM6Y12LVLHOoTgcdPGTTPL+0rnxm5JN89TbJcNHaIHOEOEXyiNkVSpbVM5IYLJ8ieKPXZZ+M/q+Q3xaJKtWeGDnyWiUlwFCVbRFzx4BH2mB55bHfbCjidPS0Joe0nZwBc5wbJ5tbafc81cKirLomIEACABAEldxsbUb46RkD7Tfib7ifkubPHpyP6m3FP00/gdUa1j4fTuIcPsnb91Fpc6kiMk74JqtUEAw6PLny2hU5NOrfcl0JqNZvTqpwlFcDsnp8Th6Ap8yS7D6DIYfOFYIpS6RhBAAgASAd7LcLs+h/HP4LH4yPpUu32Zfge9DPYIt72kPq6hj7ruILPSTo1S3Q+8gwcTJBUJVakQi7MVAOUZTnT2XJIb0rYiY9v1VkVSI79Sdr55KQFJXRMIIAEAbNfH/R+Si42SUqMtqZBz7OIx0Vc8ScaJLJTGKIeNa0l/BUYTAGSWNgN/GZVXnYv0+hx9af4zVcnunsdL+YYBBd8ROQc5WWWO0KLo2oaljyW03C4Z2iOsolirdDsdo5iPdOLtWA0aZjhHzUtxMpK6RiBAAgAQAJMB3W0HW06jQS6k4PwCZbBDhPRc+WHVka7m7HKobnWYQ9tzJg5HIH1Vc8VWtws3awwHNz6EqKTpUxm7Ozae5DpOTD3DPsQrY7IRqezKQ3Dx6Co7907FRWF0TECABAAgASAa0dc3AGCNj0WbxMUoOfYuxSd0N9gGDWp/DSqcPo1wmPbKzyk5tt/nQ1NJUdjSbNUMfCIszqapbMQIBO0nAlTFRzXCqPrAfW2Dtzyo61bVcD0n//2Q=='/></td>-->      
-</apex:pageBlockSection>
-</apex:pageBlock>
-<apex:pageBlock rendered="{!isBranch}">
-<apex:pageBlockSection >
-      <apex:outputText value="{!ag.Name}" label="Legal Name"/><apex:outputText value="{!ag.RecordType.Name}" label="Record Type"/>
-      <!--<apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>-->
-      <apex:outputText value="{!ag.IATACode__c}"/><apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>
-      <apex:outputText value="{!ag.Status__c}" label="Agency Status/Reason"/>
-      <apex:outputText value="{!ag.TradeName__c}"/>
-      <apex:outputText value="{!HO.Accumulated_Irregularities__c}" label="Head Office Accumulated Irregularities"/><apex:outputField value="{!HO.Guaranteed_amount__c}" label="Head Office Financial Security - Amount"/>
-</apex:pageBlockSection>
-</apex:pageBlock>
+      .tableStyle {border-collapse: collapse; border-spacing: 0px 0px; }
+      .colStyle1 { width: 16.5%;text-align:right; padding-top:5px; padding-bottom:5px}
+      .colStyle2 { width: 10%; padding-left:20px; padding-top:5px; padding-bottom:5px}
+      .colStyle3 { width: 10%;text-align:right; padding-top:5px; padding-bottom:5px}
+      .colStyle4 { width: 21%; padding-left:20px; padding-top:5px; padding-bottom:5px}
+      .colStyle5 { width: 10%;text-align:right; padding-top:5px; padding-bottom:5px}
+      .colStyle6 { width: 32%; padding-left:20px; padding-top:5px; padding-bottom:4px}
+      .rowstyle { border-bottom-style:solid; border-bottom-width:1px;border-bottom-color:#E8E8E8 }
+
+  </style>
+  <apex:pageBlock rendered="{!AND(NOT(isBranch),OR(HO != null, ag != null))}">
+    <apex:pageBlockSection columns="1">
+      <!--apex:pageBlockSection>
+        <apex:outputText value="{!HO.Name}" label="Legal Name"/>
+
+        <apex:outputText value="{!HO.RecordType.Name}" label="Record Type"/>
+        <! --<apex:outputText value="{!HQ.Primary_address__r.Address_1__c}"/>- ->
+        <apex:outputText value="{!HO.IATACode__c}"/>
+        <apex:outputText value="{!HO.IATA_ISO_Country__r.Name}" label="Country"/>
+        <apex:outputText value="{!HO.Status__c}" label="Agency Status/Reason"/>
+        <! --<apex:outputText value="{!HQ.Primary_address__r.City__c}"/>- ->
+        <apex:outputText value="{!HO.TradeName__c}"/>
+        <! --<apex:outputText value="{!HQ.Primary_address__r.AMS_ZipCode__c}"/>- ->
+        <apex:outputText value="{!HO.Accumulated_Irregularities__c}"/>
+        <apex:outputText value="{!HO.Guaranteed_amount__c}" label="Financial Security - Amount"/>
+        <apex:outputText value="{!HO.Key_Customer__c}" label="Key Customer" escape="false"/>
+      </apex:pageBlockSection-->
+      <apex:panelGrid columns="6" border="0" styleClass="tableStyle" width="100%" columnClasses="colStyle1,colStyle2,colStyle3,colStyle4,colStyle5,colStyle6" rowClasses="rowstyle">
+
+        <apex:outputLabel value="Legal Name" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Name}"/>
+
+        <apex:outputLabel value="Record Type" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.RecordType.Name}"/>
+
+        <apex:outputLabel value="{!$ObjectType.Account.fields.IATACode__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.IATACode__c}"/>
+        
+        <!--************************************************************************-->
+
+        <apex:outputLabel value="Country" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.IATA_ISO_Country__r.Name}"/>
+
+        <apex:outputLabel value="Agency Status/Reason" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Status__c}"/>
+        
+        <apex:outputLabel value="{!$ObjectType.Account.fields.TradeName__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.TradeName__c}"/>
+
+        <!--************************************************************************-->
+
+        <apex:outputLabel value="{!$ObjectType.Account.fields.Accumulated_Irregularities__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Accumulated_Irregularities__c}"/>
+
+        <apex:outputLabel value="Financial Security - Amount" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Guaranteed_amount__c}"/>
+        
+        <apex:outputLabel value="{!$ObjectType.Account.fields.Key_Customer__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Key_Customer__c}"/>
+
+      </apex:panelGrid>
+    </apex:pageBlockSection>
+  </apex:pageBlock>
+
+  <apex:pageBlock rendered="{!isBranch}">
+    <!--apex:pageBlockSection >
+          <apex:outputText value="{!ag.Name}" label="Legal Name"/>
+          <apex:outputText value="{!ag.RecordType.Name}" label="Record Type"/>
+          <!- -<apex:outputText value="{!ag.IATACode__c}"/>
+          <apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>- ->
+          <apex:outputText value="{!ag.IATACode__c}"/>
+          <apex:outputText value="{!ag.IATA_ISO_Country__r.Name}" label="Country"/>
+          <apex:outputText value="{!ag.Status__c}" label="Agency Status/Reason"/>
+          <apex:outputText value="{!ag.TradeName__c}"/>
+          <apex:outputText value="{!HO.Accumulated_Irregularities__c}" label="Head Office Accumulated Irregularities"/>
+          <apex:outputField value="{!HO.Guaranteed_amount__c}" label="Head Office Financial Security - Amount"/>
+          <apex:outputText value="{!ag.Key_Customer__c}" label="Key Customer" escape="false"/>
+    </apex:pageBlockSection-->
+    <apex:pageBlockSection columns="1">
+      <apex:panelGrid columns="6" border="0" styleClass="tableStyle" width="100%" columnClasses="colStyle1,colStyle2,colStyle3,colStyle4,colStyle5,colStyle6" rowClasses="rowstyle">
+
+        <apex:outputLabel value="Legal Name" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.Name}"/>
+
+        <apex:outputLabel value="Record Type" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.RecordType.Name}"/>
+
+        <apex:outputLabel value="{!$ObjectType.Account.fields.IATACode__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.IATACode__c}"/>
+        
+        <!--************************************************************************-->
+
+        <apex:outputLabel value="Country" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.IATA_ISO_Country__r.Name}"/>
+
+        <apex:outputLabel value="Agency Status/Reason" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.Status__c}"/>
+        
+        <apex:outputLabel value="{!$ObjectType.Account.fields.TradeName__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.TradeName__c}"/>
+
+        <!--************************************************************************-->
+
+        <apex:outputLabel value="Head Office Accumulated Irregularities" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Accumulated_Irregularities__c}"/>
+
+        <apex:outputLabel value="Head Office Financial Security - Amount" styleClass="labStyle"/>
+        <apex:outputField value="{!HO.Guaranteed_amount__c}"/>
+        
+        <apex:outputLabel value="{!$ObjectType.Account.fields.Key_Customer__c.Label}" styleClass="labStyle"/>
+        <apex:outputField value="{!ag.Key_Customer__c}"/>
+
+      </apex:panelGrid>
+    </apex:pageBlockSection>
+  </apex:pageBlock>
 </apex:page>

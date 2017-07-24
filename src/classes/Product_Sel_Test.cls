@@ -96,10 +96,12 @@ private class Product_Sel_Test
         
         //-- Generate Test Data
         Product2 ProdA = new Product2(
-            Name = 'Product A'
+            Name = 'Product A',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         Product2 ProdB = new Product2(
-            Name = 'Product B'
+            Name = 'Product B',
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         insert new List<Product2>{ProdA, ProdB};
 
@@ -130,7 +132,8 @@ private class Product_Sel_Test
             Description = 'Description for Product A',
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
-            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
         Product2 ProdB = new Product2(
             Name = 'Product B',
@@ -138,7 +141,8 @@ private class Product_Sel_Test
             SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
             Zuora_Id__c = TestDataGenerator.generateZuoraFakeId(),
             Effective_From__c = TestDataGenerator.DEFAULT_EFFECTIVE_START_DATE,
-            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE
+            Effective_To__c = TestDataGenerator.DEFAULT_EFFECTIVE_END_DATE,
+            Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'
         ); 
 
         List<Product2> lst = new List<Product2>{ProdA, ProdB};
@@ -165,9 +169,9 @@ private class Product_Sel_Test
         TestDataGenerator.generateUtilitySetting();
 
         List<Product2> listProd = new List<Product2>();
-        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1', Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78'));
-        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12'));
-        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98'));
+        listProd.add(new Product2(Name='Test 1', Product_Section__c='tst111', Division__c='division 1', Sales_Channel__c='channel 1',SAP_Material_Number__c='1245-78', Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 2', Product_Section__c='tst222', Division__c='division 2',Status__c='A',SAP_Material_Number__c='7845-12',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
+        listProd.add(new Product2(Name='Test 3', Division__c='division 1', Sales_Channel__c='channel 2',Status__c='A',SAP_Material_Number__c='3265-98',Accepted_Payment_Methods__c = 'Bank Transfer; Credit Card; IATA Clearing House'));
         insert listProd;
 
         new Product_Sel().updateProducts(listProd);

@@ -28,7 +28,7 @@ public with sharing class AMS_XML_Generator {
     public Map<Id, Id> mEmp_VS_Contact;
     public Map<Id, String> mAg_VS_Segment;
     public Map<Id, List<AMS_Account_Role__c>> mAg_VS_Employees;
-    
+    public Map<Id, String> mAg_VS_DPCSystem;
     public Map<Id, Id> mAg_VS_HO;
 
     public List<AMS_Agency_Updates__c> lAgencyUpdates;  
@@ -147,14 +147,25 @@ public with sharing class AMS_XML_Generator {
         Date dToday = Date.today();
         Datetime dtToday = Datetime.now(); // Returns the current Datetime based on a GMT calendar.
 
+        //Get 1st and last day of month - AMSU-97
+        Date dFirstDayOfMonth = Date.today().toStartOfMonth();
+        Date dLastDayOfMonth = dfirstDayOfMonth.addDays(Date.daysInMonth(dfirstDayOfMonth.year(), dfirstDayOfMonth.month()) - 1);
+        Datetime dtFirstDayOfMonth = datetime.newInstance(dFirstDayOfMonth.year(), dFirstDayOfMonth.month(),dFirstDayOfMonth.day());
+        Datetime dtLastDayOfMonth = datetime.newInstance(dLastDayOfMonth.year(), dLastDayOfMonth.month(),dLastDayOfMonth.day());
+
         //for(Account ag : agencies){
         for(Agency_Applied_Change_code__c ag : agencies){
             Dom.Xmlnode liNode = rootNode.addChildElement('line_item', null, null);
           
             getElementNode(liNode, 'agency_id', ag.Account__r.IATACode__c );
             getElementNode(liNode, 'hub', ag.Account__r.IATA_ISO_Country__r.IATA_Regional_Office__c);
-            getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
-            getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+            
+            //Changed on AMSU-97
+            //getElementNode(liNode, 'period_from', dtToday.format('yyyyMMdd'));
+            //getElementNode(liNode, 'period_to', dtToday.format('yyyyMMdd'));
+            getElementNode(liNode, 'period_from', dtFirstDayOfMonth.format('yyyyMMdd'));
+            getElementNode(liNode, 'period_to', dtLastDayOfMonth.format('yyyyMMdd'));
+
             getElementNode(liNode, 'product_id', ag.Account__r.Location_Class__c + ag.Change_Code__c); 
             getElementNode(liNode, 'quantity', '1');
         }
@@ -879,6 +890,9 @@ public with sharing class AMS_XML_Generator {
             }
         }
         
+
+        mAg_VS_DPCSystem = new Map<Id, String>();
+
         //Order the agencies in order to return on the same order they were asked!
         for(Integer i=0;i<orderedAgencyIds.size();i++){
 
@@ -889,6 +903,10 @@ public with sharing class AMS_XML_Generator {
                     List<Account> l = mAuxAgDPC.get(sDPC);
 
                     for(Account auxL: l){
+
+                        //Stores the DPC System info for the agencies
+                        mAg_VS_DPCSystem.put(auxL.Id, sDPC);
+
                         if(String.valueOf(auxL.Id).equalsIgnoreCase(orderedAgencyIds[i])){
                             List<Account> aux1 = new List<Account>();
                             aux1.add(auxL);
@@ -901,6 +919,7 @@ public with sharing class AMS_XML_Generator {
             }
         } 
 
+        System.debug('mAg_VS_DPCSystem : ' + mAg_VS_DPCSystem);
         //System.debug('bsp_dpc_ag: ' + bsp_dpc_ag);
         //System.debug('bsp_dpc_ag_Ordered: ' + bsp_dpc_ag_Ordered);
 
@@ -1131,6 +1150,12 @@ public with sharing class AMS_XML_Generator {
                         }
                             
 
+                        Datetime dtDefault_date = ag.Default_date__c == Null ? Null : Datetime.newInstance(ag.Default_date__c.year(), ag.Default_date__c.month(),ag.Default_date__c.day());
+                        getElementNode(agEndorsementNode, 'organization_last_change_date', dtDefault_date == Null ? Null : String.valueOf(dtDefault_date.format('yyyyMMdd')));
+
+                        /* 
+                        //FM 19-04-2017 - removed by enhancement AMSU-18
+                        
                         Datetime dtOrganization_Last_Change_Date = ag.Organization_Last_Change_Date__c == Null ? Null : Datetime.newInstance(ag.Organization_Last_Change_Date__c.year(), ag.Organization_Last_Change_Date__c.month(),ag.Organization_Last_Change_Date__c.day());
                         getElementNode(agEndorsementNode, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
@@ -1169,7 +1194,7 @@ public with sharing class AMS_XML_Generator {
                             getElementNode(agEndorsementNodeDEF, 'organization_last_change_date', dtOrganization_Last_Change_Date == Null ? Null : String.valueOf(dtOrganization_Last_Change_Date.format('yyyyMMdd')));
                     
                         }
-
+                        */
                     }
                    
                     Boolean bHier = False;
@@ -1306,6 +1331,15 @@ public with sharing class AMS_XML_Generator {
             parentAg = new Account();
         }
      
+        /*
+            AMSU-79 - 
+            IF DPC_System = MAESTRO we send the values...
+            IF NOT DPC_System = MAESTRO we send the fields empty
+        */
+        String sAgDPC = mAg_VS_DPCSystem.get(agency.Id);
+        
+
+
         //Get:
         // - "Manager" first and last name 
         // - "Lang"
@@ -1327,13 +1361,19 @@ public with sharing class AMS_XML_Generator {
                     } 
                 }
 
-                //get Manager first and Last name, 1st record where Financial_Assessment_Contact__c is set to true is the one to be used
-                if( iQmp == null && auxContact.Financial_Assessment_Contact__c ){
-                    iQmp = auxContact.Id;
-                    sQmpf_name = auxContact.FirstName;
-                    sQmpl_name = auxContact.LastName;
+                //Only fills Manager name when the DPC is "Maestro"
+                if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
+                    //get Manager first and Last name, 1st record where Financial_Assessment_Contact__c is set to true is the one to be used
+                    if( iQmp == null && auxContact.Financial_Assessment_Contact__c ){
+                        iQmp = auxContact.Id;
+                        
+                        //FM - 24-05-2017 - AMSU-92
+                        //sQmpf_name = auxContact.FirstName;
+                        //sQmpl_name = auxContact.LastName;
+                        sQmpf_name = 'UNKNOWN';
+                        sQmpl_name = 'UNKNOWN';
+                    }
                 }
-
             }
 
         }
@@ -1370,57 +1410,69 @@ public with sharing class AMS_XML_Generator {
             }
         }
     
-        //Get:
-        // - Manager first and Last name, but only if no manager was found on the account contacts
-        // - Ticketing agent first and Last name
-        // both from Person object or contact related to the account role
-        for(AMS_Account_Role__c emp : lEmployee){    
-            if(emp.Account__c == agency.Id){
+        //Only fills Manager name when the DPC is "Maestro"
+        if(sAgDPC != null && sAgDPC.equalsIgnoreCase('Maestro')){
+                
+            //Get:
+            // - Manager first and Last name, but only if no manager was found on the account contacts
+            // - Ticketing agent first and Last name
+            // both from Person object or contact related to the account role
+            for(AMS_Account_Role__c emp : lEmployee){    
+                if(emp.Account__c == agency.Id){
 
-                if(emp.Person__c != null){
-                    if(mEmp_VS_Person.containsKey(emp.Id)){
-                        oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
-                    }else{
-                        oEmpPerson = new AMS_Person__c();
-                        oEmpPerson.First_Name__c = '';
-                        oEmpPerson.Lastname__c = '';
-                    }
+                    if(emp.Person__c != null){
+                        if(mEmp_VS_Person.containsKey(emp.Id)){
+                            oEmpPerson = (AMS_Person__c) msObject.get(mEmp_VS_Person.get(emp.Id));
+                        }else{
+                            oEmpPerson = new AMS_Person__c();
+                            oEmpPerson.First_Name__c = '';
+                            oEmpPerson.Lastname__c = '';
+                        }
 
-                    if(iQmp == null && emp.isManager__c){
-                        iQmp = oEmpPerson.Id;
-                        sQmpf_name = oEmpPerson.First_Name__c;
-                        sQmpl_name = oEmpPerson.Lastname__c;
-                    }
-                    if(emp.isTicketingAgent__c){
-                        iQta = oEmpPerson.Id;
-                        sQtaf_name = oEmpPerson.First_Name__c;
-                        sQtal_name = oEmpPerson.Lastname__c;
-                    }
-                }
+                        if(iQmp == null && emp.isManager__c){
+                            iQmp = oEmpPerson.Id;
 
-                if(emp.Contact__c != null){
-                    if(mEmp_VS_Contact.containsKey(emp.Id)){
-                        oEmpContact = (Contact) msObject.get(mEmp_VS_Contact.get(emp.Id));
-                    }else{
-                        oEmpContact = new Contact();
-                        oEmpContact.FirstName = '';
-                        oEmpContact.LastName = '';
+                            //FM - 24-05-2017 - AMSU-92
+                            //sQmpf_name = oEmpPerson.First_Name__c;
+                            //sQmpl_name = oEmpPerson.Lastname__c;
+                            sQmpf_name = 'UNKNOWN';
+                            sQmpl_name = 'UNKNOWN';
+                        }
+                        if(emp.isTicketingAgent__c){
+                            iQta = oEmpPerson.Id;
+                            sQtaf_name = oEmpPerson.First_Name__c;
+                            sQtal_name = oEmpPerson.Lastname__c;
+                        }
                     }
 
-                    if(iQmp == null && emp.isManager__c){
-                        iQmp = oEmpContact.Id;
-                        sQmpf_name = oEmpContact.FirstName;
-                        sQmpl_name = oEmpContact.LastName;
-                    }
-                    if(emp.isTicketingAgent__c){
-                        iQta = oEmpContact.Id;
-                        sQtaf_name = oEmpContact.FirstName;
-                        sQtal_name = oEmpContact.LastName;
+                    if(emp.Contact__c != null){
+                        if(mEmp_VS_Contact.containsKey(emp.Id)){
+                            oEmpContact = (Contact) msObject.get(mEmp_VS_Contact.get(emp.Id));
+                        }else{
+                            oEmpContact = new Contact();
+                            oEmpContact.FirstName = '';
+                            oEmpContact.LastName = '';
+                        }
+
+                        if(iQmp == null && emp.isManager__c){
+                            iQmp = oEmpContact.Id;
+
+                            //FM - 24-05-2017 - AMSU-92
+                            //sQmpf_name = oEmpContact.FirstName;
+                            //sQmpl_name = oEmpContact.LastName;
+                            sQmpf_name = 'UNKNOWN';
+                            sQmpl_name = 'UNKNOWN';
+                        }
+                        if(emp.isTicketingAgent__c){
+                            iQta = oEmpContact.Id;
+                            sQtaf_name = oEmpContact.FirstName;
+                            sQtal_name = oEmpContact.LastName;
+                        }
                     }
                 }
             }
         } 
-        
+    
         /*Agencies Section*/
         String sRec_id = Null;
         String sChangeCode = Null;

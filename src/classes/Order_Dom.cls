@@ -59,6 +59,9 @@ public without sharing class Order_Dom {
         getData(true, true);
         //Prevent modification to some fields at some Status
         Order_Svc.preventModification(newMap,oldMap);
+
+        // Ecommerce Enhancements R2 
+        Order_Svc.setOrderAcceptedPaymentMethods(newList, oldMap);
     }
 
     private void onBeforeDelete() {
@@ -89,6 +92,9 @@ public without sharing class Order_Dom {
 
         //Email notification when the Order is sold
         Order_Svc.sendEmailWhenOrderIsSold(newMap, oldMap);
+
+        //Email notification when the Order is Payment Error
+        Order_Svc.sendEmailWhenPaymentDeclined(newMap, oldMap);
         
         //-- Call SAP SalesOrder Interface if status become Ready for SAP or PAID
         Order_Sel orderSelector = new Order_Sel(); 

@@ -230,13 +230,6 @@
                                                 </apex:selectList>
                                             </apex:pageBlockSectionItem>
  
-                                            <apex:pageBlockSectionItem >
-                                              <b>{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Month__c.Label}:</b>
-                                                <apex:selectList value="{!currentRecords[key].startmonth}"  size="1"  styleclass="drawRedBar">
-                                                    <apex:selectOptions value="{!months}"/>
-                                                </apex:selectList>
-                                            </apex:pageBlockSectionItem>
- 
                                             <apex:pageBlockSectionItem > 
                                               <apex:outputLabel >{!$ObjectType.ID_Card_Application__c.Fields.Start_Date_Agency_Year__c.Label}:</apex:outputLabel>
                                               <apex:inputText value="{!currentRecords[key].startyear}"  styleclass="drawRedBar" id="year"/>

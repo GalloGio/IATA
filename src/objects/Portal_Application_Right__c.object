@@ -90,8 +90,25 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ANG_Portal_Service_Role__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>ISSP Access to Service List View</label>
     </fieldSets>
+    <fields>
+        <fullName>ANG_Portal_Service_Role__c</fullName>
+        <description>Selected service portal role</description>
+        <externalId>false</externalId>
+        <label>Portal Service Role</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Access_Status_Reason__c</fullName>
         <externalId>false</externalId>
@@ -310,6 +327,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Enable_Notifications__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Activates the notification service for current application</description>
+        <externalId>false</externalId>
+        <label>Enable Notifications</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -457,6 +484,9 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
+&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 Name
@@ -819,6 +849,17 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
         <errorConditionFormula>$User.ProfileId = &apos;00ew0000001QRzC&apos; &amp;&amp; Portal_Application__r.Name = &apos;IFAP&apos; &amp;&amp; (allowAssignFinContactFlowChange__c = False) &amp;&amp;  ISCHANGED(Right__c) &amp;&amp; NOT(ISPICKVAL(PRIORVALUE(Right__c), &apos;Access Requested&apos;)) &amp;&amp; ISPICKVAL(Right__c, &apos;Access Denied&apos;)</errorConditionFormula>
         <errorDisplayField>Right__c</errorDisplayField>
         <errorMessage>Please click on &apos;Cancel&apos; and use the &apos;Assign Financial Assessment Contact&apos; button on the Contact in order to Grant or Deny IFAP access.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Restrict_internal_selection</fullName>
+        <active>true</active>
+        <description>Services with the field ANG_Restrict_internal_selection__c = true can&apos;t be added or modified.</description>
+        <errorConditionFormula>AND(
+Portal_Application__r.ANG_Restrict_internal_selection__c = true,
+Text(Right__c) = &apos;Access Granted&apos;,
+NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+)</errorConditionFormula>
+        <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SIS_cannot_be_approved_by_admin</fullName>

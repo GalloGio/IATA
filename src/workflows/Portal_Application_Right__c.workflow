@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Application_IEP_Portal_Service_Role_Change</fullName>
+        <description>Application IEP Portal Service Role Change</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>ISS_Portal/Notify_contact_Portal_Serv_Role_ChangeVF</template>
+    </alerts>
+    <alerts>
         <fullName>Application_access_granted</fullName>
         <description>Application access granted</description>
         <protected>false</protected>
@@ -622,23 +634,8 @@ Field update of user &apos;Treasury Dashboard User&apos; = True</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND NOT(3)</booleanFilter>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Requested</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>notEqual</operation>
-            <value>Treasury Dashboard</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Community__c</field>
-            <operation>startsWith</operation>
-            <value>CNS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <formula>AND(  TEXT(Right__c) = &apos;Access Requested&apos;,   Portal_Application__r.Name != &apos;Treasury Dashboard&apos;,    OR( ISBLANK(Contact__r.Community__c),  NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;)) ),    OR(  AND(BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;), Contact__r.Account.ANG_IEP_Status_FF__c  = &quot;Open&quot;), NOT(BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;)) ), Contact__c = $User.ContactId )</formula>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Notify contact of access request - CNS</fullName>

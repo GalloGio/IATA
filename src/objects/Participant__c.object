@@ -325,6 +325,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <fullName>Representing__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
+        <inlineHelpText>Name of the account that the participant represents for this specific group, if applicable.</inlineHelpText>
         <label>Representing</label>
         <lookupFilter>
             <active>true</active>
@@ -634,6 +635,10 @@ ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
+)),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;

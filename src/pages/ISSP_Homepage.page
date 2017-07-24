@@ -356,11 +356,6 @@
                                                                     <span class="">
                                                                         <apex:outPutField value="{!not.Subject__c}" />
                                                                     </span>
-                                                                    <span class="modalDate">
-                                                                        <apex:outputText value="{0, date, short}">
-                                                                            <apex:param value="{!not.CreatedDate}" />
-                                                                        </apex:outputText>
-                                                                    </span>
                                                                   </div>
                                                                   <div class="modal-body">
                                                                       <apex:outPutField value="{!not.Message__c}" />
@@ -473,7 +468,27 @@
                                                 <h5 class="blueback">{!$Label.ISSP_External_Links}</h5>
 
                                                 <apex:repeat value="{!externalLinksList}" var="app">
-                                                <apex:outputPanel rendered="{!OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false))}">
+                                                <apex:outputPanel rendered="{!app.Name == 'CNS Endorsement & Changes'}" >
+                                                    <a  id="app{!app.Id}" class="subject color_"  href="javascript:void(0)" onclick="checkEligibility();">
+                                                        <h5>{!app.Name}</h5>
+                                                    </a>
+                                                    <script>
+                                                    if('{!JSENCODE(app.Service_Description__c)}'!=''){
+                                                        var htmlCont = '<div class="sfdc_richtext">'+'{!JSENCODE(app.Service_Description__c)}'+'</div>';
+                                                        $('#app{!app.Id}').popover({trigger:'hover' ,html:true,content:htmlCont, placement:'top'});
+                                                    }
+                                                    function checkEligibility(){
+                                                        if ('{!app.Name}' === 'CNS Endorsement & Changes'){
+                                                            bootbox.confirm("{!JSEncode($Label.ISSP_AMS_Step1_GoTo_Cargo_CNS)}", function(result) {
+                                                                if(result) {
+                                                                    window.open('https://mycnsc.com/accreditation/step1', '_blank');
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                    </script>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!AND(app.Name != 'CNS Endorsement & Changes', OR(AND(communityName=='CNS',app.VisibleCNS__c==true), AND(communityName!='CNS',app.VisibleCNS__c==false)))}">
                                                     <ul class="nav1">
                                                         <span class="appfocus">
                                                               <li id="Serv3"  class="left-color">
