@@ -28,6 +28,7 @@
                 <field>ANG_Parent_Occurences__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

@@ -122,7 +122,7 @@
                 <behavior>Edit</behavior>
                 <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
-			<layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_AIMS_Account__c</field>
             </layoutItems>

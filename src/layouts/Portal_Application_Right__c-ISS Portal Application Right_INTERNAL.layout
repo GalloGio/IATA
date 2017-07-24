@@ -15,7 +15,7 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Portal_Application__c</field>
-            </layoutItems>  
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Application_Start_URL__c</field>
