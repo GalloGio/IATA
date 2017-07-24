@@ -61,7 +61,7 @@ public with sharing class ANG_Risk_Helper{
 			for(Account acc : accs){
 				ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
 				acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
-                acc.ANG_Limit_Cash_Condition__c = arc==null?null:arc.ANG_Limit_Cash_Condition__c;
+                acc.ANG_Limit_Cash_Condition__c = arc==null?false:arc.ANG_Limit_Cash_Condition__c;
 	           
 			}
 		}
