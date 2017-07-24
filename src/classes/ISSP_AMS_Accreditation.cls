@@ -5241,13 +5241,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
 
             //checking if the Billing Street is fill
-            if (hqAccount.BillingStreet == null){
+            if (hqAccount.BillingStreet == null && hqAccount.Status__c != 'Terminated'){
                 hqAccount.BillingStreet.addError(Label.ISSP_YouMustEnter);
                 accountUpdated = false;
             }
 
             //checking if the Billing City is fill
-            if (hqAccount.BillingCity == null){
+            if (hqAccount.BillingCity == null && hqAccount.Status__c != 'Terminated'){
                 hqAccount.BillingCity.addError(Label.ISSP_YouMustEnter);
                 accountUpdated = false;
             }
