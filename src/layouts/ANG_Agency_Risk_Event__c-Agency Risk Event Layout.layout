@@ -62,7 +62,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ANG_remarks__c</field>
+                <field>ANG_Remarks__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
