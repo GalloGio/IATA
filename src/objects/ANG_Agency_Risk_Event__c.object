@@ -162,7 +162,7 @@
         <externalId>false</externalId>
         <globalPicklist>ANG_Event_Status</globalPicklist>
         <label>Event Status</label>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -203,7 +203,7 @@
         <defaultValue>TODAY()</defaultValue>
         <externalId>false</externalId>
         <label>Issued Date</label>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -242,6 +242,15 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_Remarks__c</fullName>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>ANG_Risk_Configuration__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -273,7 +282,7 @@
         <referenceTo>ANG_Risk_Event_Type__c</referenceTo>
         <relationshipLabel>Risk Events</relationshipLabel>
         <relationshipName>Risk_Events</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -343,15 +352,6 @@ Id
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_Remarks__c</fullName>
-        <externalId>false</externalId>
-        <label>Remarks</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>TextArea</type>
     </fields>
     <label>Agency Risk Event</label>
     <listViews>
