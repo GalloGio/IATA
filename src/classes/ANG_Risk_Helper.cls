@@ -52,7 +52,7 @@ public with sharing class ANG_Risk_Helper{
 		
 		Map<String,ANG_Agency_Risk_Calculation__c> calculationTable = new Map<String,ANG_Agency_Risk_Calculation__c>();
 		for(ANG_Agency_Risk_Calculation__c arc: [SELECT Id, ANG_Financial_Review_Result__c , ANG_Risk_History_Assessment__c,ANG_Risk_History__c,ANG_Limit_Cash_Condition__c from ANG_Agency_Risk_Calculation__c where recordTypeId = :riskStatusAssessmentRT]){
-        	calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
+			calculationTable.put(arc.ANG_Financial_Review_Result__c + arc.ANG_Risk_History_Assessment__c , arc);
 		}
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_Risk_Helper - updateRiskStatus] calculationTable - ' + calculationTable);
@@ -60,9 +60,8 @@ public with sharing class ANG_Risk_Helper{
 		if(!calculationTable.isEmpty()){
 			for(Account acc : accs){
 				ANG_Agency_Risk_Calculation__c arc = calculationTable.get(acc.Financial_Review_Result__c + acc.ANG_HE_RiskHistoryAssessment__c);
-				acc.ANG_HE_RiskStatus__c = arc==null?null:arc.ANG_Risk_History__c;
-                acc.ANG_Limit_Cash_Condition__c = arc==null?null:arc.ANG_Limit_Cash_Condition__c;
-	           
+				acc.ANG_HE_RiskStatus__c = arc== null ? null : arc.ANG_Risk_History__c;
+				acc.ANG_Limit_Cash_Condition__c = arc== null ? null : arc.ANG_Limit_Cash_Condition__c;
 			}
 		}
 
