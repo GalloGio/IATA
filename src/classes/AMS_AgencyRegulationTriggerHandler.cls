@@ -23,7 +23,16 @@ public class AMS_AgencyRegulationTriggerHandler {
         for(AMS_Agency_Regulation__c agReg: agencyRegulations){
             accountIds.add(agReg.Account__c);
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
+            //FM 07-07-2017 - AMSU-14 - add new test for "Notification Date" change
+            if( (
+                (!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c)  
+                || (agReg.Notification_Date__c != null &&
+                    oldAgRegulationValues.get(agReg.Id).Notification_Date__c != agReg.Notification_Date__c)
+                )
+                && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR 
+                    || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA 
+                    || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) 
+                && agReg.Handling_Account__c)
                 dgrRegulationsExpiringIn90Days.add(agReg);
                 if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
                     renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
@@ -44,7 +53,9 @@ public class AMS_AgencyRegulationTriggerHandler {
             //check if the account is an AO or HO to get the contacts of TopParent
             for(Account ac: allAccounts){
                 if(ac.Location_Type__c != 'HO' && ac.Location_Type__c != 'AO'){
-                    accountIds.remove(ac.Id);
+                    
+                    //FM 07-07-2017 - AMSU-14 - need to be able to send to the BR also
+                    //accountIds.remove(ac.Id);
                     accountIdsHOs.add(ac.Top_Parent__c);
                     if(!parentPerBR.containsKey(ac.Top_Parent__c))
                         parentPerBR.put(ac.Top_Parent__c, new Set<Id>());
@@ -52,6 +63,8 @@ public class AMS_AgencyRegulationTriggerHandler {
                     parentPerBR.get(ac.Top_Parent__c).add(ac.Id);
                 }
             }
+
+            system.debug('accountIds: ' + accountIds);
 
             //get contacts of first accounts
             if(!accountIds.isEmpty()) {
@@ -65,6 +78,7 @@ public class AMS_AgencyRegulationTriggerHandler {
                 }
             }
 
+            system.debug('accountIdsHOs: ' + accountIdsHOs);
             //get contacts of topParents and relate them with first account
             if(!accountIdsHOs.isEmpty()){
                 List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
@@ -84,7 +98,7 @@ public class AMS_AgencyRegulationTriggerHandler {
                     }
                 }
             }
-
+            system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
             AMS_AgencyRegulationAutoRenewal b = new AMS_AgencyRegulationAutoRenewal(dgrRegulationsExpiringIn90Days, keyContactsPerAccount, renewalCertPerAccount);
             database.executebatch(b,1);
         }
