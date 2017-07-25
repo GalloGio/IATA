@@ -1,5 +1,7 @@
 public without sharing class AMS_Utils {
 
+    public static Boolean runningContactInsertUpdateFromOSCAR = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -96,12 +98,26 @@ public without sharing class AMS_Utils {
     public static final String REMOVALTRADENAME = 'CNS - Removal of trade name';
 
 
+    public static final String ANG_LEGAL_NAME = 'Legal name';
+    public static final String ANG_LEGAL_STATUS =  'Legal status';
+    public static final String ANG_MINOR_SHAREHOLDING = 'Minor shareholding';
+    public static final String ANG_MAJOR_SHAREHOLDING = 'Major shareholding';
+    public static final String ANG_OWNERSHIP =  'Ownership';
+    public static final String ANG_LOCATION_TYPE =  'Location type';
+    public static final String ANG_LOCATION =  'Location';
+    public static final String ANG_HIERARCHY =  'Hierarchy';
+    public static final String ANG_VMFR =  'VMFR';
+    public static final String ANG_ACCREDITATION_TYPE = 'Accreditation type';
+
     public static final String OSCAR_CLOSED = 'Closed (Closed)';
 
     public static final String BR = 'BR';
     public static final String HO = 'HO';
     public static final String AO = 'AO';
     public static final String SA = 'SA';
+    public static final String HE = 'HE';
+    public static final String AE = 'AE';
+
 
     //Processes of type NEW
     public static final String new_HO           = 'NEW.HO.1.0'      ;
@@ -124,6 +140,14 @@ public without sharing class AMS_Utils {
     public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
     public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
 
+    //Process of type NewGen
+    public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
+    public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
+    public static final String NEWAE            = 'ANG.NEW.AE.1.0';
+    public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
+
+    public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES};
+
     //other types of process
     public static final String CERTIFICATE      = 'CER.1.0'         ;
 
@@ -134,12 +158,19 @@ public without sharing class AMS_Utils {
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
-    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-    public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
-    public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_NEW        = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+    public static final String RECTYPE_CERT       = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
+    public static final String RECTYPE_OSCARCOMM  = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_NEWHE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+    public static final String RECTYPE_NEWAE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
+    public static final String RECTYPE_NGCHANGES  = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+    public static final String RECTYPE_IATAAGENCY = Schema.SObjectType.Account.getRecordTypeInfosByName().get('IATA_Agency').getRecordTypeId();
+    public static final String RECTYPE_SIDRALITE  = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA_Lite').getRecordTypeId();
+    public static final String RECTYPE_SAAM       = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ProcessEuropeSCE').getRecordTypeId();
+    public static final String RECTYPE_SIDRA      = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR};
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
 
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
@@ -168,6 +199,17 @@ public without sharing class AMS_Utils {
     public static final String SECTOR_PASSENGER = 'Travel Agent';
     public static final String CATEGORY_CASSASSOCIATE = 'CASS Associate';
 
+    public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
+    public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
+    public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
+    public static final String CASE_REASON_HE_LITE = 'New HE lite';
+    public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
+    public static final String CASE_REASON_AE_LITE = 'New AE lite';
+
+    public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
+    public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
+    public static final String CATEGORY_DOMESTIC_AGENT = 'Domestic Agent';
+
     public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
     public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
     public static final String TYPECHANGE_LOCATION = 'Location';
@@ -182,6 +224,21 @@ public without sharing class AMS_Utils {
     public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
     public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X'};
     public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO'};
+
+    public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
+    public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+
+    //Account - ANG_Accreditation_Model__c
+    public static final String ACCREDITATIONMODEL_CASH = 'Cash';
+    public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
+    public static final String ACCREDITATIONMODEL_LEGACY = 'Legacy';
+    public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
+
+    public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
+
+
+    //Account - Location_Class__c
+    public static final String LC_PASSENGER = 'P';
 
 
     static {
