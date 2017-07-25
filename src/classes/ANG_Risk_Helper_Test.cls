@@ -5,7 +5,6 @@ private class ANG_Risk_Helper_Test{
         IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US');
         insert ctry;
 
-        //Id accountAgencyRT = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get(ANG_Risk_Helper.IATA_AGENCY_RECORDTYPE_NAME);
         Id accountAgencyRT = AMS_utils.RECTYPE_IATAAGENCY;
         Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c= AMS_Utils.BR, Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT, Location_Class__c = AMS_Utils.LC_PASSENGER);
         Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c= AMS_Utils.BR, Name='Test3 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT, Location_Class__c = AMS_Utils.LC_PASSENGER);

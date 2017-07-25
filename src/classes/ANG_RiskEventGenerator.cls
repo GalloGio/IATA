@@ -138,7 +138,7 @@ public class ANG_RiskEventGenerator {
 		Boolean reQuery = false;
 		List<SObject> objToEvaluate = new List<SObject>();
 		Set<Id> objectIds = new Set<Id>();
-		Set<String> fields = new Set<String>();
+		Set<String> fields = new Set<String>{accountFields.get(objectName)};
 
 		for(SObject o : newObjects){
 			for(ANG_Risk_Event_Configuration__c config : configs){
@@ -351,7 +351,7 @@ public class ANG_RiskEventGenerator {
 				for(String v : checkValue.split('\\s*[;,]\\s*')) if(v.trim().equalsIgnoreCase(String.valueOf(fieldValue))) configResult = false;
 			}
 
-			if(condition.equalsIgnoreCase('Includes')){
+			if(condition.equalsIgnoreCase('Includes') && fieldValue != null){
 				for(String cv : checkValue.split('\\s*[;,]\\s*')){
 					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
 						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = true;
@@ -360,9 +360,11 @@ public class ANG_RiskEventGenerator {
 			}
 			else if(condition.equalsIgnoreCase('Does not Include')){
 				configResult = true;
-				for(String cv : checkValue.split('\\s*[;,]\\s*')){
-					for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
-						if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = false;
+				if(fieldValue != null){
+					for(String cv : checkValue.split('\\s*[;,]\\s*')){
+						for(String fv : String.valueOf(fieldValue).split('\\s*[;,]\\s*')){
+							if(cv.trim().equalsIgnoreCase(String.valueOf(fv))) configResult = false;
+						}
 					}
 				}
 			}
