@@ -50,8 +50,8 @@ public class ANG_RiskAssessmentEngine{
     private map<id,accHelperClass> accInfoMap{ //map adjusted risk calculations
         get{
             if(accInfoMap==null){
-            accInfoMap = new map<id,accHelperClass>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_LimitCashConditions__c,ANG_Accreditation_Model__c ,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c= :Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
+                accInfoMap = new map<id,accHelperClass>();
+                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
                     integer nAdjs=0;
                     boolean hasCashCond=false;
                     for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
