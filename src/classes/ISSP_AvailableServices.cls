@@ -192,6 +192,10 @@ public with sharing class ISSP_AvailableServices{
                     }
                 }
 
+                if (!isIEPAccountEnable) {
+                    isModalErrorMessageEnable = true;
+                }
+
                 if(contAcc.Account.Is_Branch_Abroad__c == 'Yes') {
                     isModalErrorMessageEnable = true;
                     modalErrorMessage = Label.ANG_ISSP_IEP_Abroad_Account_error_msg;

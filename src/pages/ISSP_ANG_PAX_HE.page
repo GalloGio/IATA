@@ -23,8 +23,6 @@
         <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
         
     <style>
-
-
         .datePicker{
             z-index:9999;
         }
@@ -1213,7 +1211,6 @@
                     </apex:pageBlockSection>
                 </apex:outputPanel>
                 
-                <!-- -->
                 <apex:outputPanel rendered="{!OR(amsOfficeType!='HO',newCase.Reason1__c=='New BR Abroad')}">
                     <apex:pageBlockSection columns="1">
                         <apex:pageblocksectionitem >

@@ -148,7 +148,6 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
 					renewalCertificatesPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, renewalCertificatesPerAccount.get(agReg.Account__c+agReg.Type_of_Certificate__c) + 1);
-
 				}
 			}
 			else if(agReg.Type_Of_Certificate__c == AMS_Utils.CERT_CATA){

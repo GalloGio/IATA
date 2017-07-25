@@ -406,8 +406,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
             //Retrieve information linked to the case Id
             vSAAMCaseId = ApexPages.currentPage().getParameters().get('caseId');
-            system.debug('URL vSAAMCaseId: ' + vSAAMCaseId);            
-            fetchCase(vSAAMCaseId);            
+            system.debug('URL vSAAMCaseId: ' + vSAAMCaseId);
+            fetchCase(vSAAMCaseId);
 
             if (newCase != null) {
                 system.debug('newCase.IFAP_Country_ISO__c ' + newCase.IFAP_Country_ISO__c);
@@ -480,7 +480,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     sectorValue = newForm.Operation_Type__c;
                     amsLocationType = newCase.Reason1__c + ' - ' + newForm.Agent_Type__c;
                 }
-                 
+                
                 SYSTEM.DEBUG('sectorValue init: ' + sectorValue);
 
                 if (sectorValue != null) {
@@ -1118,7 +1118,6 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private void selectPageName() {
-        
         amsAgentType = newForm.Agent_Type__c;
         if (isNoticeOfChange) {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
@@ -1217,11 +1216,11 @@ public without sharing class ISSP_AMS_Accreditation {
             newcase.Case_Language__c = applyLanguage;
             newCase.Visible_on_ISS_Portal__c = true;
 
-            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);            
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
             if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
                                                 (newForm.Agent_Type__c != 'CASS Associate' && newForm.Agent_Type__c != 'Import Agent' && newForm.Agent_Type__c != 'Courier')))
                 RECORD_TYPE_ID = OSCAR_RECORD_TYPE_ID;
-            
+
             newCase.recordTypeId = RECORD_TYPE_ID;
             newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
             //newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c ;
@@ -2299,7 +2298,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 return;
             }
-            system.debug('aqui accountUpdated 2' + accountUpdated);
             upsert hqAccount;
         } catch (DmlException ex) {
             accountUpdated = false;
@@ -3168,7 +3166,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                                    FROM Case
                                    WHERE Id = :vCaseId
                                ];
-        if (newCases.size() > 0) {            
+        if (newCases.size() > 0) {
             isNewCase = false;
             newCase = newCases[0];
             if (newCase.Status != 'Draft') {
@@ -3921,7 +3919,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
 
         qCargoCode = iatacode + '%';
-        List <Account> agentaccounts = null;        
+
+        List <Account> agentaccounts = null;
         system.debug('agentsector:' + agentsector);
         system.debug('accountType:' + accountType);
         system.debug('amsOfficeType:' + amsOfficeType);
@@ -4069,7 +4068,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND 
                 (Reason1__c = 'New HO' OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_LITE OR Reason1__c = :AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) 
             ];
-
             system.debug('getter draftHQCaseExists dupeDrafts.size(): ' + dupeDrafts.size());
             if (dupeDrafts.size() > 0) {
                 isNewCase = false;

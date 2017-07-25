@@ -4,7 +4,7 @@
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
 	<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
-	<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00N6E000000Uy1x'=Account.Name, 'CF00N6E000000Uy1x_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
+	<apex:variable var="newLink" value="{!URLFOR($Action.ANG_Agency_Risk_Event__c.New, null, ['CF00Nw0000008gnwL'=Account.Name, 'CF00Nw0000008gnwL_lkid'=Account.Id, 'retURL'=accountLink, 'saveURL'=accountLink])}"/>
 
 	<style>
 		.alignLeft{

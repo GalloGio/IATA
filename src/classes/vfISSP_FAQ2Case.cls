@@ -76,9 +76,8 @@ public without sharing class vfISSP_FAQ2Case
     public Boolean isTopicDefault = false; // INC263231
 
     public list<String> errorMessage {get; set;}
-	
-	public String iataCode {get;set;}
 
+    public String iataCode {get;set;}
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
@@ -1266,7 +1265,8 @@ public without sharing class vfISSP_FAQ2Case
             }
             // current account value as default
             this.newCase.IATACode__c = currentAccount.IATAcode__c;
-			iataCode = this.newCase.IATACode__c;			
+            iataCode = this.newCase.IATACode__c;
+
         } catch (Exception e) {
             System.debug(e.getMessage());
         }

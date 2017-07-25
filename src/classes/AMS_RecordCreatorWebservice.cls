@@ -78,7 +78,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             }
 
-
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
                 //return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';

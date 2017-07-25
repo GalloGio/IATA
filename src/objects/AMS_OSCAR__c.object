@@ -2395,7 +2395,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-	<fields>
+    <fields>
         <fullName>NewHeDifferentLegalEntity__c</fullName>
         <externalId>false</externalId>
         <label>New HE is different legal entity</label>
@@ -3591,6 +3591,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <fullName>SDG</fullName>
                 <default>false</default>
             </picklistValues>
+            <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
@@ -3599,18 +3600,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
-        <fullName>Sanity_Check_Passed__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Used to validate if the sanity check had been already passed. If so, it should not be allowed to pass again.</description>
-        <externalId>false</externalId>
-        <label>Sanity_Check_Passed</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-		<fullName>Reconsideration_date__c</fullName>
+        <fullName>Reconsideration_date__c</fullName>
         <externalId>false</externalId>
         <label>Reconsideration date</label>
         <required>false</required>
@@ -5489,6 +5479,17 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>Sanity_Check_Passed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to validate if the sanity check had been already passed. If so, it should not be allowed to pass again.</description>
+        <externalId>false</externalId>
+        <label>Sanity_Check_Passed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sanity_check_deadline__c</fullName>
         <externalId>false</externalId>
         <label>Deadline Date</label>
@@ -6440,7 +6441,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
         <active>true</active>
         <description>New Gen Agency Changes Record Type</description>
         <label>NG Agency Changes</label>
-                <picklistValues>
+            <picklistValues>
             <picklist>Received_Bank_Guarantee_currency__c</picklist>
             <values>
                 <fullName>AED</fullName>
@@ -11349,7 +11350,7 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Approval letter sent</fullName>
+                <fullName>In Progress</fullName>
                 <default>false</default>
             </values>
             <values>

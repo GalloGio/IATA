@@ -2711,6 +2711,43 @@
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>ANG_CashCondition__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Parent.ANG_HE_CashCondition__c)</formula>
+        <label>Cash Condition</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_CashCondition__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Cash Condition HE</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
+        <label>Risk History Assessment HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>ANG_HE_RiskStatus__c</fullName>
+        <externalId>false</externalId>
+        <globalPicklist>ANG_Risk_Status</globalPicklist>
+        <label>Risk Status HE</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_IEP_Account_Number__c</fullName>
         <externalId>false</externalId>
         <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Parent.ANG_IEP_HE_AccntNum__c)</formula>
@@ -2801,52 +2838,6 @@
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_CashCondition__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(
-  ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
-  IF(
-    ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;),
-    false,
-    ANG_HE_CashCondition__c
-  ),
-  Parent.ANG_HE_CashCondition__c
-)</formula>
-        <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
-        <label>Cash Condition equal to FS</label>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_CashCondition__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Cash Condition HE</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_RiskHistoryAssessment__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
-        <label>Risk History Assessment HE</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>ANG_HE_RiskStatus__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Risk_Status</globalPicklist>
-        <label>Risk Status HE</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_RiskHistoryAssessment__c</fullName>
@@ -5418,6 +5409,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <controllingFieldValues>Non-Airline Transportation</controllingFieldValues>
                 <controllingFieldValues>Recreational</controllingFieldValues>
                 <controllingFieldValues>Travel Agent</controllingFieldValues>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other Equipment Manufacturer</fullName>
+                <default>false</default>
             </picklistValues>
             <picklistValues>
                 <fullName>Other Private Sector Association</fullName>
@@ -23623,7 +23618,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -23650,25 +23664,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26094,7 +26089,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -26121,25 +26135,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -29203,7 +29198,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -29230,25 +29244,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -31678,7 +31673,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -31707,25 +31721,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -31746,7 +31741,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -35708,7 +35702,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -35735,25 +35748,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -37919,7 +37913,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -37948,25 +37961,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -37987,7 +37981,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -43398,7 +43391,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -43425,25 +43437,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46000,7 +45993,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -46027,25 +46039,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50424,7 +50417,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -50453,25 +50465,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -50492,7 +50485,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -54760,7 +54752,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -54787,25 +54798,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57473,7 +57465,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -57500,25 +57511,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -59869,7 +59861,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -59896,25 +59907,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -62265,7 +62257,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -62292,25 +62303,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Suspended</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -65035,7 +65027,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -65064,25 +65075,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -65103,7 +65095,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -72633,7 +72624,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -72662,25 +72672,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -72701,7 +72692,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -76911,7 +76901,26 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -76940,25 +76949,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Suspended</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Blocked</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_HE_RiskHistoryAssessment</picklist>
-            <values>
-                <fullName>Failed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not Applicable</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Passed</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Risk_Status</picklist>
@@ -76979,7 +76969,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
         </picklistValues>
-        
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -81867,7 +81856,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
                NOT(
                OR(
                    REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{2}&quot;)),
+                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
                    AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
                    
                    )
