@@ -427,10 +427,12 @@ public class ams2gdp_TestDataGenerator
 
 		List<AMS_Account_Role__c> result= new List<AMS_Account_Role__c>();
 		List<Account> accounts = generateAccounts(nb,true);
+		Recordtype rt = [SELECT Id FROM Recordtype WHERE SObjectType='AMS_Account_Role__c' AND DeveloperName='Ownership'];
 
 		for(Integer x=0;x<nb;x++)
 		{
 			result.add(new AMS_Account_Role__c(
+				RecordtypeId = rt.Id,
 				Account__c = accounts[x].Id,
 				Owner_Name__c= 'Test Owner',
 				Percentage__c= 10.25,
