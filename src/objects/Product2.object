@@ -231,6 +231,31 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Accepted_Payment_Methods__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Please choose the allowed payment methods for the product (hierarchy).</inlineHelpText>
+        <label>Accepted Payment Methods</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Activity_Code__c</fullName>
         <description>This is the 4 digit code used for accounting purposes by IATA</description>
         <externalId>false</externalId>
@@ -5441,6 +5466,21 @@ The product will only appear on the Online Store when the date entered in this f
         <active>true</active>
         <label>GDP</label>
         <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
                 <fullName>Directories</fullName>
@@ -8379,6 +8419,21 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>NewGen_Accreditation</fullName>
         <active>true</active>
         <label>NewGen Accreditation</label>
+        <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
@@ -11434,6 +11489,21 @@ The product will only appear on the Online Store when the date entered in this f
         <active>true</active>
         <label>Publication</label>
         <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
                 <fullName>Airlines</fullName>
@@ -14432,6 +14502,21 @@ The product will only appear on the Online Store when the date entered in this f
         <fullName>Unclassified</fullName>
         <active>true</active>
         <label>Unclassified</label>
+        <picklistValues>
+            <picklist>Accepted_Payment_Methods__c</picklist>
+            <values>
+                <fullName>Bank Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Category_Group__c</picklist>
             <values>
