@@ -6,8 +6,29 @@
   */
 @isTest(SeeAllData=true)
 private class IECUserManager_tst {
+    static void setup() {
+      List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T1',
+          Tax_ID_Mandatory__c = TRUE,
+          VAT_Validation_Required__c = TRUE
+        ),
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T2',
+          Tax_ID_Mandatory__c = FALSE,
+          VAT_Validation_Required__c = FALSE
+        )
+      };
+
+      insert countryList;
+    }
+
     static testMethod void test3() {
       final String TEST_USERNAME = 'notfoundxpto@email.com';
+
+      setup();
 
       IEC_Functionality__c newShoppingCartFunctionality = new IEC_Functionality__c(
         Name =                  'New Shopping Cart',
@@ -127,6 +148,8 @@ private class IECUserManager_tst {
     static testMethod void test2() {
       final String TEST_USERNAME = 'notfoundxpto@email.com';
 
+      setup();
+
       IEC_Functionality__c newShoppingCartFunctionality = new IEC_Functionality__c(
         Name =                  'New Shopping Cart',
         Functionality_Name__c = 'New Shopping Cart',
@@ -169,10 +192,26 @@ private class IECUserManager_tst {
       IECUserManager.reactivateUser(currentUser.Username);
 
       Boolean zbool = IECUserManager.userAlreadyExists(currentUser.Username);
-      IATA_ISO_Country__c country0 = [SELECT Id, Name, ISO_Code__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c FROM IATA_ISO_Country__c LIMIT 1];
+      IATA_ISO_Country__c country0 = [
+        SELECT
+          Id, Name, ISO_Code__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c
+        FROM
+          IATA_ISO_Country__c
+        LIMIT
+          1
+      ];
       country0.Tax_ID_Mandatory__c = true;
       update country0;
-      IATA_ISO_Country__c country = [SELECT Id, Name, ISO_Code__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c FROM IATA_ISO_Country__c WHERE Tax_ID_Mandatory__c = TRUE LIMIT 1];
+      IATA_ISO_Country__c country = [
+        SELECT
+          Id, Name, ISO_Code__c, Tax_1_Label__c, Tax_2_Label__c, Tax_ID_Mandatory__c, VAT_Validation_Required__c
+        FROM
+          IATA_ISO_Country__c
+        WHERE
+          Tax_ID_Mandatory__c = TRUE
+        LIMIT
+          1
+      ];
       zid = IECUserManager.getCustomerPermissionSetId();
       Account account = IECUserManager.getAccountById(currentContact.AccountId);
       User zuser = IECUserManager.getUserByContactId(currentContact.Id);
