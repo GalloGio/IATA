@@ -15,7 +15,7 @@ global class ANG_RiskEventHistoryExtension {
         get{
             Set<String> fieldsToQuery = new Set<String>{'Id', 'Name', 'ANG_AccountId__c', 'ANG_Source_Id__c', 'ANG_Risk_Type__c'};
             fieldsToQuery.addAll(fieldNames);
-            return Database.query('SELECT '+String.join(new List<String>(fieldsToQuery), ', ')+' FROM ANG_Agency_Risk_Event__c WHERE '+(acc.Location_Type__c == 'HE' ? 'ANG_HE_AccountId__c' : 'ANG_AccountId__c')+' = :accId ORDER BY ANG_Issued_Date__c DESC, CreatedDate DESC');
+            return Database.query('SELECT '+String.join(new List<String>(fieldsToQuery), ', ')+' FROM ANG_Agency_Risk_Event__c WHERE '+(acc.Location_Type__c == AMS_Utils.HE ? 'ANG_HE_AccountId__c' : 'ANG_AccountId__c')+' = :accId ORDER BY ANG_Issued_Date__c DESC');
         }
     }
 

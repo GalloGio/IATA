@@ -4,7 +4,7 @@ private class ANG_RiskEventTest {
     @testSetup static void createData() {
         Account a = new Account(
             Name = 'Test',
-            recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+            recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
         );
         insert a;
 
