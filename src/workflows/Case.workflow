@@ -7098,7 +7098,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SNOW_Incident</fullName>
         <apiVersion>35.0</apiVersion>
         <description>SNOW Incident</description>
-        <endpointUrl>https://iata.test.com/SFDC_Case.do.preprod?SOAP.com.preprod</endpointUrl>
+        <endpointUrl>https://iata.service-now.com/SFDC_Case.do?SOAP</endpointUrl>
         <fields>Assigned_To__c</fields>
         <fields>CaseArea__c</fields>
         <fields>CaseNumber</fields>
