@@ -707,6 +707,29 @@ public class ams2gdp_BusinessLogic
  	}
 
  	/**
+ 	 * This function format a List of Account Role (AMS) records to Agency Owner (GDP) records
+ 	 * to delete
+ 	 * Biggest percentage => Rank 1 ...
+ 	 * @param  List<AMS_Account_Role__c>
+ 	 * @return List<Agency_Owner__c>
+ 	 * @author Aku Luukka <luukkaa@iata.org>
+ 	 */
+ 	public static List<Agency_Owner__c>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
+ 	{
+ 		Set<String> accountIds = new Set<String>();
+
+ 		for(AMS_Account_Role__c arole: roles)
+ 		{
+ 			if(arole.Account__c != null){accountIds.add(arole.Account__c);}
+			//userNameList.add(arole.Owner_Name__c);
+ 		}
+
+		List<Agency_Owner__c> result= [SELECT Id FROM Agency_Owner__c WHERE Related_Account__c IN :accountIds];
+
+ 		return result;
+ 	}
+
+ 	/**
  	 * This function format a List of Agency Airport (AMS) records to Adjacent Airport (GDP) records 
  	 * @param  List<AMS_Agency_Airport__c>
  	 * @return List<Adjacent_Airport__c>
