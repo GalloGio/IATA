@@ -9129,6 +9129,14 @@ IFG Customer Services</value>
         <value>6. Trained Staff</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
+        <value>MSO Appointments</value>
+    </labels>
+	
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
