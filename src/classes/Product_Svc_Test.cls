@@ -5,10 +5,33 @@ private class Product_Svc_Test
     public static final Date DEFAULT_EFFECTIVE_START_DATE = Date.today(); 
     public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
+    static void setup() {
+      List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T1',
+          Tax_ID_Mandatory__c = TRUE,
+          VAT_Validation_Required__c = TRUE
+        ),
+        new IATA_ISO_Country__c(
+          Name = 'Test Country 1',
+          ISO_Code__c = 'T2',
+          Tax_ID_Mandatory__c = FALSE,
+          VAT_Validation_Required__c = FALSE
+        )
+      };
+
+      insert countryList;
+    }
+
     @isTest(seeAllData=true)
     static void test_saveZProducts() 
     {
-        delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+        List<Apex_Setting__c> l = [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+
+        if (l.isEmpty() == false) {
+            delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
+        }
         Product_Information__c oProdInfo;
         for (Product_Information__c pi : [select Id
                                                , (select Id, Name
@@ -37,8 +60,11 @@ private class Product_Svc_Test
         products[1].SAP_Material_Number__c = null;
 
         products[2].Zuora_Id__c = null;
-        products[2].IEC_Product_Information__c = oProdInfo.Id;
-        products[2].IEC_Product_Rate_Plan_Information__c = oProdInfo.Product_Rate_Plans_Information__r[0].Id;
+
+        if (oProdInfo != null) {
+            products[2].IEC_Product_Information__c = oProdInfo.Id;
+            products[2].IEC_Product_Rate_Plan_Information__c = oProdInfo.Product_Rate_Plans_Information__r[0].Id;
+        }
 
         insert products;
 
@@ -59,7 +85,7 @@ private class Product_Svc_Test
         
         // Call Method 
         String result = Product_Svc.saveZProducts(productIds);
-		Product_Svc.codecoverage();
+
 		test.stopTest();
 
         // Assert
@@ -369,6 +395,8 @@ private class Product_Svc_Test
 	@isTest(seeAllData=true)
 	static void test_IsProductAndCountryCompliant()
 	{
+        setup();
+
 		Map<Id, Boolean> mapCheck;
 		List<Product2> lstProduct = [select Id from Product2 limit 2];
 		List<IATA_ISO_Country__c> lstCountry = [select Id, ISO_Code__c from IATA_ISO_Country__c where ISO_Code__c != null limit 2];
@@ -480,5 +508,12 @@ private class Product_Svc_Test
         }
 
 	} //*** end of "test_Miscellaneous2"
+
+    static void testOthers() {
+        System.assert(Product_Svc.isEqual(null, null));
+        System.assert(Product_Svc.isEqual('', null));
+        System.assert(Product_Svc.isEqual(null, ''));
+        System.assert(! Product_Svc.isEqual('X', ''));
+    }
 
 }

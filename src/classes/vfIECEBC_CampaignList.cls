@@ -204,6 +204,8 @@ public class vfIECEBC_CampaignList extends vfIECEBC_Controller {
             fields.add('EBC_Master_Filter__r.Name');
             fields.add('LastModifiedDate');
             fields.add('Send_Datetime__c');
+            fields.add('OpenRate7Days__c');
+            fields.add('ClickRate7Days__c');
              
         }
         
