@@ -165,10 +165,10 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWHE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
     public static final String RECTYPE_NEWAE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
     public static final String RECTYPE_NGCHANGES  = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
-    public static final String RECTYPE_IATAAGENCY = Schema.SObjectType.Account.getRecordTypeInfosByName().get('IATA_Agency').getRecordTypeId();
-    public static final String RECTYPE_SIDRALITE  = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA_Lite').getRecordTypeId();
-    public static final String RECTYPE_SAAM       = Schema.SObjectType.Case.getRecordTypeInfosByName().get('ProcessEuropeSCE').getRecordTypeId();
-    public static final String RECTYPE_SIDRA      = Schema.SObjectType.Case.getRecordTypeInfosByName().get('SIDRA').getRecordTypeId();
+    public static final String RECTYPE_IATAAGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+    public static final String RECTYPE_SIDRALITE  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+    public static final String RECTYPE_SAAM       = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+    public static final String RECTYPE_SIDRA      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
 
