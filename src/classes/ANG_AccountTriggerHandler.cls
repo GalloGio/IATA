@@ -55,21 +55,21 @@ public class ANG_AccountTriggerHandler {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_CashCondition__c);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_CashCondition__c);
 
-			if(acc.ANG_HE_RiskStatus__c == 'B' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'A' && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
-			if(acc.ANG_HE_RiskStatus__c == 'C' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'B') downGradeBtoC.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B) downGradeBtoC.add(acc);
 		}
 
 		if(downGradeAtoB.isEmpty() && downGradeBtoC.isEmpty()) return;
 
 		//fetch portal admins
 		Map<Id, Id> portalAdmins = new Map<Id, Id>();
-		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = 'Approved Admin' AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
+		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
 			portalAdmins.put(c.AccountId, c.Id);
 		}
 
 		//create cases
 		List<Case> newCases = new List<Case>();
-		Id saamRecordType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+		Id saamRecordType = AMS_Utils.RECTYPE_SAAM;
 		for(Account acc : downGradeAtoB){
 			Case c = new Case();
 			c.RecordTypeId = saamRecordType;
@@ -77,10 +77,9 @@ public class ANG_AccountTriggerHandler {
 			c.ContactId = portalAdmins.get(acc.Id);
 			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
 			c.Region__c = acc.Region_formula__c;
-			c.BSPCountry__c = acc.BillingCountry;
-			c.Origin = 'Internal case';
-			c.CaseArea__c = 'Risk Management Process'; 
-			c.Reason1__c = 'Financial Security Update';
+			c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS; 
+			c.Reason1__c = ANG_Risk_Helper.CASE_REASON_FINANCIAL_SECURITY_UPDATE;
 			c.Visible_on_ISS_Portal__c = false;
 
 			newCases.add(c);
@@ -157,7 +156,7 @@ public class ANG_AccountTriggerHandler {
 			c.Account_Concerned__c = acc.Id;
 			c.BSPCountry__c = acc.BillingCountry;
 			c.Region__c = acc.Region_formula__c;
-			c.CaseArea__c = 'Accreditation Process';
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
 			c.Reason1__c = 'Change of '+AMS_Utils.VFMR;
 			c.ContactId = contacts.get(acc.Id);
 
@@ -248,15 +247,15 @@ public class ANG_AccountTriggerHandler {
 		accIdSet.addAll(inactiveAccsIdSet);
 
 		//get all related risk Events 
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in ('Active','Inactive','Inactive_TER')];
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 		
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
 			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
-				&& (re.ang_event_status__c == 'Active' || (re.ang_event_status__c == 'Inactive' && re.ANG_Issued_Date__c > system.Today()))){
-			        re.ang_event_status__c = 'Inactive_TER';
+				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
+			        re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
 				
-			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == 'Inactive_TER'){
-		        re.ang_event_status__c = 'Active';
+			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
+		        re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}
 
 		}
