@@ -750,6 +750,20 @@ OR(
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>EasyPay</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>ServiceName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>IATA EasyPay</value>
+        </filters>
+        <label>EasyPay</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>My_Company_Applications</fullName>
         <columns>Application_icon__c</columns>
         <columns>NAME</columns>
