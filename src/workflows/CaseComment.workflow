@@ -600,7 +600,8 @@ Parent.RecordType.DeveloperName = &apos;CasesMENA&apos;,
 Parent.RecordType.DeveloperName = &apos;ExternalCasesIDFSglobal&apos;, 
 Parent.RecordType.DeveloperName = &apos;Cases_China_North_Asia&apos;, 
 Parent.RecordType.DeveloperName = &apos;ComplaintIDFS&apos;, 
-Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos; ),
+Parent.RecordType.DeveloperName = &apos;Invoicing_Collection_Cases&apos; ,
+Parent.RecordType.DeveloperName = &apos;Cases_IFG&apos; ),
 DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
@@ -611,7 +612,8 @@ DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14)</formula>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot; ))</formula>
+        <formula>AND( CreatedById &lt;&gt;  Parent.OwnerId ,  not(Parent.IsClosed),  OR( Parent.RecordType.Name = &quot;Cases - Europe&quot;,  Parent.RecordType.Name = &quot;Cases - Americas&quot;,  Parent.RecordType.Name = &quot;Cases - Africa &amp; Middle East&quot;,  Parent.RecordType.Name = &quot;Cases - Asia &amp; Pacific&quot;,  Parent.RecordType.Name = &quot;Cases - China &amp; North Asia&quot;,  Parent.RecordType.Name = &quot;Cases - SIS Help Desk&quot;,   Parent.RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, Parent.RecordType.Name = &quot;Invoicing Collection Cases&quot;,
+Parent.RecordType.Name = &quot;Cases - IFG&quot;))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
