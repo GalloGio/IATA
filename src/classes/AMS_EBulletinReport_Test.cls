@@ -234,7 +234,7 @@ private class AMS_EBulletinReport_Test {
 
         Test.startTest();
 
-        AMS_EBulletinReportWebservice.generateEBulletinReport(dailyProfile,fromDate, dT , '');
+        //AMS_EBulletinReportWebservice.generateEBulletinReport(dailyProfile,fromDate, dT , '');
 
         Test.stopTest();
 
@@ -261,7 +261,7 @@ private class AMS_EBulletinReport_Test {
 		
         Test.startTest();
 
-        AMS_EBulletinReportWebservice.generateEBulletinReport(dailyProfile,fromDate, dT , 'Last');
+        //AMS_EBulletinReportWebservice.generateEBulletinReport(dailyProfile,fromDate, dT , 'Last');
 
         Test.stopTest();
 
