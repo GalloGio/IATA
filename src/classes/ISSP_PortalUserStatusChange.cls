@@ -922,8 +922,8 @@ public with sharing class ISSP_PortalUserStatusChange {
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                    errorMessageResult = AMS_utils.errorMessageBeautifyer(e);
+                    return errorMessageResult.remove('ERROR: ');
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
@@ -953,8 +953,8 @@ public with sharing class ISSP_PortalUserStatusChange {
                 }
                 catch(Exception e){
                     system.debug('ERROR: ' + e.getMessage());
-                    errorMessageResult = e.getMessage();
-                    return errorMessageResult;
+                    errorMessageResult = AMS_utils.errorMessageBeautifyer(e);
+                    return errorMessageResult.remove('ERROR: ');
                 }
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];

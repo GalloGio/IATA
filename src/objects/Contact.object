@@ -27590,7 +27590,7 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
         <active>true</active>
         <description>Contact first Community</description>
         <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c),ISBLANK(Community__c))</errorConditionFormula>
-        <errorMessage>Select a value for community</errorMessage>
+        <errorMessage>Please select a value for Community</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Validate_FA_Contact_creation</fullName>
