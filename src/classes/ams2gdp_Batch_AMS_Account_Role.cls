@@ -40,6 +40,7 @@
             , 'Account__r.CNS_Agency__c = false'
 			, 'Account__r.CNS_Account__c = false'
             , 'Active__c = true'
+            , 'RecordType.Name = \'Ownership\''
 			// , 'Account__c IN ('+accreditation_condition+')'
 		}; 
 
@@ -134,8 +135,15 @@
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
    		List<Agency_Owner__c> records2Save = new List<Agency_Owner__c>();
+
+        // delete the old ones
+   		List<Agency_Owner__c> records2Delete = ams2gdp_BusinessLogic.getAgencyOwnersToDelete(scope);
+        Savepoint sp = Database.setSavepoint();
+
    		try
    		{
+            delete records2Delete;
+
    			records2Save=ams2gdp_BusinessLogic.formatAccountRole2AgencyOwner(scope);
 
    			//-- Raise exception for Unit Tests
@@ -143,6 +151,7 @@
    		}
    		catch(Exception ex)
    		{
+            Database.rollback(sp);
    			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
    		}
 
