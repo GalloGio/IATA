@@ -157,6 +157,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					'To perform a change of location type, tou need to select if the new HE is a different Legal Entity.'	
 				);
 
+				errorMessages.put(
+					'Location Type on TOP Agency',
+					'You cannot perform a change of location type on a Top Level Agency.'	
+				);
 						
 			}
 			return errorMessages;
@@ -400,7 +404,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			if(!isJustOneAgencySelected())
 				errorChecks.put(AMS_Utils.ANG_LOCATION_TYPE, true);
 			if(oscar.NewHeDifferentLegalEntity__c == null)
-				errorChecks.put('Different Legal Entity Not Filled', true);				 
+				errorChecks.put('Different Legal Entity Not Filled', true);
+			if(hasTopLocationType(oscar.Account__c))
+				errorChecks.put('Location Type on TOP Agency', true);				 
 		}
 		
 		if(tocList.contains(AMS_Utils.ANG_VMFR))
