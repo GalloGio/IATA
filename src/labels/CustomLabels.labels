@@ -20119,7 +20119,7 @@ Please &lt;a href="/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_IEP_OpeningInProgress</shortDescription>
-        <value>A Portal Adminitstrator from the Head Entity has already initiated the opening of your Agency's IEP Account. Once the IEP Account is successfully you will e able to acccess this service.</value>
+        <value>An Authorised Signatory from your Head Entity has already initiated the opening of your Agency's IEP Account. Once the IEP Account is successfully opened you will be able to access this service.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_TypeAccreditadionQuestion</fullName>
