@@ -133,7 +133,7 @@ public class Customer_DTO
         {
             if ( check.Account.ParentId != null && (check.Account.Parent.ICH_Member__c == true || check.Account.Parent.ACH_Member__c == true))      
                 return true;
-            if(check.Account.ICH_Member__c == true || check.Account.Parent.ACH_Member__c == true)
+            if(check.Account.ICH_Member__c == true || check.Account.ACH_Member__c == true)
                 return true;
         }
         else
