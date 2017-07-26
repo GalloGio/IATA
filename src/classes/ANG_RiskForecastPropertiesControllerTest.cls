@@ -88,7 +88,7 @@ private class ANG_RiskForecastPropertiesControllerTest {
 
  		Test.setCurrentPageReference(pageRef);
  		
-		Case sidraLiteCase = [Select Id from Case];
+		Case sidraLiteCase = [Select Id from Case where RecordType.developerName='SIDRA_Lite'];
 
 		ApexPages.StandardController sc = new ApexPages.StandardController(sidraLiteCase);
 
