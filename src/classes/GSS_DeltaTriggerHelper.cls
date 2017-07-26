@@ -387,11 +387,11 @@ public class GSS_DeltaTriggerHelper {
                             Delta.GDP_File_Description__c = SpecificationId;
                             Delta.DeltaLastModifiedDate__c = System.Today();
                             Delta.Change_Code__c = 'C';
-                            
+                            boolean IsDeltaList = false;
                             //This is the parent object
                             if(OBJECT_ACCOUNTVIEW) {
                                 Delta.Related_GDP_Product_Account_View__c = newrecord.id; 
-                                if (ISINSERT) Delta.Change_Code__c = 'A';
+                                if (ISINSERT) {IsDeltaList = true; Delta.Change_Code__c = 'A';}
                                 if (ISDELETE) Delta.Change_Code__c = 'D';                                 
                             }
                             else{ //Case of a child object, the "Standard" lookup field name is Related_GDP_Products_Account_View__c. Could fail otherwise.
@@ -402,12 +402,13 @@ public class GSS_DeltaTriggerHelper {
                             }
                             // change other than Accreditation__c.Status will be only recorded in delta
                             // if the GDP_Products_Account_View is not inactive
+                            
                             if((Delta.Related_GDP_Product_Account_View__c != null)
                                 && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c) != null)
-                                && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0))
-                            {
-                                DeltaList.add(Delta);
-                            }
+                               && (pvaIdToObjectMap.get(Delta.Related_GDP_Product_Account_View__c).Agency_Status_Code_Interpreted__c != 0)) {isDeltaList=true;}
+                            
+                            If (IsDeltaList)  DeltaList.add(Delta);
+                            
                         }
                     if (LogDelta) break;
                     
