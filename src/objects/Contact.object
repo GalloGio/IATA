@@ -6502,6 +6502,52 @@ TotalRows-Successes-Errors</description>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IFG_PreProduction__c</fullName>
+        <description>1 - The user has access to IFG Pre-Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Pre-Production Service.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1 - The user has access to IFG Pre-Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Pre-Production Service.</inlineHelpText>
+        <label>IFG PreProduction</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
+            <operation>equals</operation>
+            <value>IFG Pre-Production</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Requested, Access Granted</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>IFG_Production__c</fullName>
+        <description>1 - The user has access to IFG Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Production Service.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>1 - The user has access to IFG Production Service.
+0 - The user doesn&apos;t have access or has a pending access request to IFG Production Service.</inlineHelpText>
+        <label>IFG Production</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
+            <operation>equals</operation>
+            <value>IFG Production</value>
+        </summaryFilterItems>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted, Access Requested</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>IRMS_Accredited_Representative__c</fullName>
         <description>Field used for MGR Tariff Conferences</description>
         <externalId>false</externalId>

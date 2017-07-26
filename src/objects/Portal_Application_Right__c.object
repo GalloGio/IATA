@@ -169,6 +169,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Application_Name_Text_Field__c</fullName>
+        <description>Application name to be used in roll-up fields.</description>
+        <externalId>false</externalId>
+        <label>Application Name Text Field</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Application_Name__c</fullName>
         <externalId>false</externalId>
         <formula>Portal_Application__r.Name</formula>
