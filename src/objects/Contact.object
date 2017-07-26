@@ -5561,6 +5561,14 @@ IF(Account.IATACode__c != &apos;&apos;
         <fullName>Description</fullName>
         <trackHistory>false</trackHistory>
     </fields>
+     <fields>
+     <fullName>Designated_Authorized_Signatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Authorized Signatory</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>	
     <fields>
         <fullName>Designated_Authorized_Signatory__c</fullName>
         <defaultValue>false</defaultValue>
