@@ -21,6 +21,7 @@ public class ams2gdp_TestDataGenerator
                 BillingCountry='Canada',
                 ShippingStreet ='42 Edmond',
                 ShippingCity= 'Montreal',
+				Status__c = 'Terminated',
                 ShippingPostalCode ='h1v1f8',
                 ShippingState='Quebec',
                 ShippingCountry='Canada',
@@ -53,8 +54,7 @@ public class ams2gdp_TestDataGenerator
             	accreditations.add(new Accreditation__c(
             		Related_Account__c = acc.Id,
             		Accreditation_ID__c = 1,
-            		Status__c = tblStatus.Id,
-            		Endorsed_Accredited_By__c = tblEndorse.Id
+            		Status__c = tblStatus.Id
         		));
             }
             insert accreditations;
@@ -427,10 +427,12 @@ public class ams2gdp_TestDataGenerator
 
 		List<AMS_Account_Role__c> result= new List<AMS_Account_Role__c>();
 		List<Account> accounts = generateAccounts(nb,true);
+		Recordtype rt = [SELECT Id FROM Recordtype WHERE SObjectType='AMS_Account_Role__c' AND DeveloperName='Ownership'];
 
 		for(Integer x=0;x<nb;x++)
 		{
 			result.add(new AMS_Account_Role__c(
+				RecordtypeId = rt.Id,
 				Account__c = accounts[x].Id,
 				Owner_Name__c= 'Test Owner',
 				Percentage__c= 10.25,
@@ -569,7 +571,7 @@ public class ams2gdp_TestDataGenerator
 		return result;
 	}
 
-      // SELECT AMS_GDP_Key__c, RecordType.Name, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By__r.Code__c
+      // SELECT AMS_GDP_Key__c, RecordType.Name, AIMS_Id__c, Webstar_Id__c, Accreditation_ID__c, Endorsed_Accredited_By_Formula__c
 
 	public static List<Accreditation__c> generateAccreditations(Integer nb, Boolean doInsert)
 	{
@@ -587,7 +589,7 @@ public class ams2gdp_TestDataGenerator
 		//		AMS_GDP_Key__c = 'C'+x,
 		//		AIMS_Id__c=(Math.mod(x, 2)==0) ? null:'ABCD123' + x,
 		//		Webstar_Id__c=(Math.mod(x, 2)==0) ?'ABCD123'+x:null,
-		//		Endorsed_Accredited_By__c= refTable[x].Id,
+		//		Endorsed_Accredited_By_Formula__c= refTable[x].Id,
 		//		Related_Account__c=accounts[x].Id,
 		//		RecordTypeId=recordTypes.get('Live')
 		//	));
@@ -600,7 +602,6 @@ public class ams2gdp_TestDataGenerator
 				AMS_GDP_Key__c = 'C'+x,
 				AIMS_Id__c=(Math.mod(x, 2)==0) ? null:'ABCD123' + x +'GDP',
 				Webstar_Id__c=(Math.mod(x, 2)==0) ?'ABCD123'+x + 'GDP':null,
-				Endorsed_Accredited_By__c= refTable[x].Id,
 				Related_GDP_Products_Account_View__c=gdpProducts[x].Id,
 				RecordTypeId=recordTypes.get('GDP')
 			));
