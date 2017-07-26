@@ -287,9 +287,30 @@ public class ANG_RiskAssessmentEngine_Test{
 		Test.stopTest();
     }
 
+    TestMethod static void testIgnoreAssessmentForTerminatedAccounts(){
+    	//Ignores assessment for terminated Accounts
+    	   	Account acc = new Account(
+        	name='acc4',
+        	Location_Type__c='HE',
+        	Location_Class__c='P',
+        	Remittance_frequency__c='Monthly',
+        	ANG_Accreditation_Model__c ='Cash',
+        	Status__c='Terminated',
+        	ANG_HE_RiskHistoryAssessment__c='Passed',
+        	recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+        	);	
+
+        insert acc;	
+		Test.startTest();
+			generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 1'].id, system.Today());
+			system.assertEquals('Passed',[select ANG_HE_RiskHistoryAssessment__c from account where name ='acc4' limit 1].ANG_HE_RiskHistoryAssessment__c);
+			
+		Test.stopTest();
+    }
+
     TestMethod static void testPassForecastAssessment(){
     	//Passes agency risk forecast
-    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+    	account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
     	list<string> areList = new list<string>();
     	for(ANG_Agency_Risk_Event__c are:[select ANG_Risk_Type__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c=:acc.id]){
     		areList.add(are.ANG_Risk_Type__c);
@@ -302,7 +323,7 @@ public class ANG_RiskAssessmentEngine_Test{
     }
    TestMethod static void testFailedForecastAssessment(){
     	//Fails agency risk forecast
-    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+    	account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
     	
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
 
@@ -319,7 +340,7 @@ public class ANG_RiskAssessmentEngine_Test{
     }
     TestMethod static void testFailedForecastAssessmentWithAdjusted(){
     	// fails agency risk forecast with adjusted RE
-    	account acc= [select id,Remittance_frequency__c,ANG_LimitCashConditions__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
+    	account acc= [select id,Remittance_frequency__c,Financial_Review_Result__c,ANG_Accreditation_Model__c, Status__c,ANG_Limit_Cash_Condition__c from account where name ='acc1' limit 1];
     	
     
     	generateRiskEvent(acc.id, [select id from ANG_Risk_Event_Type__c where name= 'Risk Type 2'].id, system.Today());
