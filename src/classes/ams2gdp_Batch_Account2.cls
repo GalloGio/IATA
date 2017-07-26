@@ -10,6 +10,8 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 	public Boolean processNextBatch;
 	public Boolean throwException;
 	public String batchName;
+	Set<String> locationsSet;
+	Set<String> statusSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -26,16 +28,30 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		String idsCondition;
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
-		}else{
-			idsCondition = 'Id IN (SELECT Related_Account__c FROM Accreditation__c WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\'))';
+		} else {
+			idsCondition = 'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') ';
+			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+				idsCondition += ' AND Status__c IN  :statusSet ';
 
-			
+			}
+			if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+				idsCondition += ' AND Location_Class__c IN:  locationsSet';
+			}
 		}
+		// else if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+		// 	locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Location_Class__c IN:  locationsSet';
+		// } else {
+		// 	idsCondition = 'Status__c IN (\'Terminated\',\'Not Accredited\',\'New application pending\',\'Not in Operation\',\'Listed\',\'Cash basis/No commission\',\'Cash basis/With commission\',\'Under review\',\'Changes processed\',\'Approved\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\')';
+		// }
 
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			,	'IATACode__c != null'
 			, 	'CNS_Agency__c = false'
+			, 	'CNS_Account__c = false'
 			,	idsCondition
 		}; 
 
@@ -44,7 +60,7 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		{
 			//Run only on the deltas 
 			String deltaConditions = String.format('LastModifiedDate >= {0}'
-				,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+				,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 			if(String.isNotBlank(batchInfo.Failed_Records__c))
 			{
@@ -91,7 +107,6 @@ global class ams2gdp_Batch_Account2 implements Database.Batchable<sObject> , Dat
 		totalRecords = 0;
 		failed_records = new List<String>();
 		syncStartedDate =Datetime.now();
-
 		return Database.getQueryLocator(query);
 	}
 
