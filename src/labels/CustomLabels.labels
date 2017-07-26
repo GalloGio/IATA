@@ -2817,6 +2817,13 @@ Case description: {!Case.Description}
         <value>Email To</value>
     </labels>
     <labels>
+        <fullName>Email_To_Case_Replier</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email-To-Case Replier</shortDescription>
+        <value>ifgcare@iata.org</value>
+    </labels>
+    <labels>
         <fullName>Email_address</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -3042,7 +3049,7 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
         <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
-You may retrieve the Quote details from the Account Information section.</value>
+You will receive an email with a copy of your quote or you can retrieve the quote details from the “Account Information” section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -9129,14 +9136,6 @@ IFG Customer Services</value>
         <value>6. Trained Staff</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
-        <value>MSO Appointments</value>
-    </labels>
-	
-    <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9347,6 +9346,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Local Details Title</shortDescription>
         <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
+        <value>GSA Appointments</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
