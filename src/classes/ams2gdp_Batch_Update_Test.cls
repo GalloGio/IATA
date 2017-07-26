@@ -123,7 +123,6 @@ private class ams2gdp_Batch_Update_Test {
 		accreditations.add(new Accreditation__c(AIMS_ID__c = 'AIMS001ACC1GDP'
 			, Accreditation_ID__c =1
 			, Class__c = classTables[0].Id
-			, Endorsed_Accredited_By__c = airCodeTables[0].Id
 			, Status__c = statusTables[0].Id
 			, RecordTypeID = accreditationRecordTypes.get('GDP')
 			, Related_Account__c = accounts[0].Id
@@ -132,7 +131,6 @@ private class ams2gdp_Batch_Update_Test {
 		accreditations.add(new Accreditation__c(Webstar_Id__c = 'WEBSTAR001ACC1GDP'
 			, Accreditation_ID__c =2
 			, Class__c = classTables[0].Id
-			, Endorsed_Accredited_By__c = airCodeTables[0].Id
 			, Status__c = statusTables[0].Id
 			, RecordTypeID = accreditationRecordTypes.get('GDP')
 			, Related_Account__c = accounts[0].Id
