@@ -59,7 +59,7 @@ public with sharing class ANG_Risk_Helper{
 
 	//Account - ANG_HE_RiskHistoryAssessment__c
 	public static final String RISK_ASSESSMENT_PASSED = 'Passed';
-    public static final String RISK_ASSESSMENT_FAILED = 'Failed';
+	public static final String RISK_ASSESSMENT_FAILED = 'Failed';
 
 
 	public class changeAgencyRiskEvent implements Queueable{
