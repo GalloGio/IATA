@@ -6548,27 +6548,6 @@ TotalRows-Successes-Errors</description>
         <type>Summary</type>
     </fields>
     <fields>
-        <fullName>IFG_User_Status__c</fullName>
-        <description>IFG Production Active User
-IFG PreProduction Active User
-IFG Production and PreProduction Active User
-Inactive User</description>
-        <externalId>false</externalId>
-        <formula>IF(IFG_Production__c + IFG_PreProduction__c == 2, &apos;IFG Production and PreProduction Active User&apos;,
-IF(IFG_Production__c == 1, &apos;IFG Production Access&apos;,
-IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
-&apos;Inactive User&apos;
-)
-)
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>IFG User Status</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>IRMS_Accredited_Representative__c</fullName>
         <description>Field used for MGR Tariff Conferences</description>
         <externalId>false</externalId>
@@ -7843,39 +7822,6 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <label>Primary Contact</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>Record_Sharing_Criteria_AUX__c</fullName>
-        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
-        <externalId>false</externalId>
-        <label>Record Sharing Criteria AUX</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Record_Sharing_Criteria__c</fullName>
-        <description>Used to share contacts with IFG Support Team through Sharing Settings</description>
-        <externalId>false</externalId>
-        <label>Record Sharing Criteria</label>
-        <picklist>
-            <picklistValues>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>None</fullName>
-                <default>false</default>
-            </picklistValues>
-            <restrictedPicklist>true</restrictedPicklist>
-            <sorted>false</sorted>
-        </picklist>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>MultiselectPicklist</type>
-        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region_10__c</fullName>
@@ -12059,17 +12005,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -13355,17 +13290,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -14583,17 +14507,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -15775,17 +15688,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17092,17 +16994,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -18397,17 +18288,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Region_10__c</picklist>
             <values>
                 <fullName>1%2E Africa</fullName>
@@ -19593,17 +19473,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21953,17 +21822,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24493,17 +24351,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -27231,17 +27078,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             </values>
             <values>
                 <fullName>Spanish</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Record_Sharing_Criteria__c</picklist>
-            <values>
-                <fullName>IFG Active Users</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>None</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

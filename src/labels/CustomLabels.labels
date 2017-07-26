@@ -711,7 +711,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
-        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&gt;FAQ&lt;/a&gt; above describes how you can manage user access.</value>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
@@ -2817,6 +2817,13 @@ Case description: {!Case.Description}
         <value>Email To</value>
     </labels>
     <labels>
+        <fullName>Email_To_Case_Replier</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email-To-Case Replier</shortDescription>
+        <value>ifgcare@iata.org</value>
+    </labels>
+    <labels>
         <fullName>Email_address</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -3042,7 +3049,7 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
         <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
-You may retrieve the Quote details from the Account Information section.</value>
+You will receive an email with a copy of your quote or you can retrieve the quote details from the “Account Information” section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -9129,14 +9136,6 @@ IFG Customer Services</value>
         <value>6. Trained Staff</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_MSO_GSA_MSO_Service_Name</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AMS_MSO_GSA_MSO_Service_Name</shortDescription>
-        <value>MSO Appointments</value>
-    </labels>
-	
-    <labels>
         <fullName>ISSP_AMS_LeftNav_Section7</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -9347,6 +9346,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Local Details Title</shortDescription>
         <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
+        <value>GSA Appointments</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -15330,13 +15336,6 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseResolution</shortDescription>
         <value>Case Resolution</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Email_ClickGoToCase</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Email_ClickGoToCase</shortDescription>
-        <value>Click here to go to the related case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Comment</fullName>
