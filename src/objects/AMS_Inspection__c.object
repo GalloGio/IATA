@@ -383,15 +383,15 @@
         <fullName>Valid_Code_For_GDP_Replication__c</fullName>
         <externalId>false</externalId>
         <formula>IF( 
-Accreditation_Endorsement_organisation__c != &apos;&apos;, 
-Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
-IF(Account__r.IATA_code_Lenght__c &gt; 3
-, False
-, IF(AND(Account__r.IATA_code_Lenght__c = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
-,False
-,True
-)
-)
+    Accreditation_Endorsement_organisation__c != &apos;&apos;, 
+      Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
+      IF(Account__r.IATA_code_Lenght__c  &gt; 3
+        , False
+        , IF(AND(Account__r.IATA_code_Lenght__c  = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
+          ,False
+          ,True
+        )
+      )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Valid Code For GDP Replication</label>
