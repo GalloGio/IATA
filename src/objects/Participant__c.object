@@ -380,7 +380,7 @@ HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_
         <language>en_US</language>
     </listViews>
     <nameField>
-        <displayFormat>APJC Participant - {0000}</displayFormat>
+        <displayFormat>Group Participant - {0000}</displayFormat>
         <label>Participant Number</label>
         <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
@@ -679,7 +679,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;
-))</errorConditionFormula>
+))</errorConditionFormula>    
         <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>
     <validationRules>

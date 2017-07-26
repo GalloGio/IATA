@@ -17,6 +17,7 @@ private class IEC_ShoppingCartControllerTest
 		);
 
 		insert f;
+		IECQuotePDFEmailNotification_Ctrl.fakemethod(); 
 	}
 
 	static void testSetupOldShoppingCart() {

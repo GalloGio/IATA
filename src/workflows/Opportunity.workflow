@@ -62,6 +62,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>auragh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>bertolusj@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -138,6 +142,10 @@
         </recipients>
         <recipients>
             <recipient>astridgec@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>auragh@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
