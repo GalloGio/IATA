@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Mapping between cases subtopics and areas of concern</description>
+    <fields>
+        <fullName>SubTopic__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>SubTopic</label>
+        <length>150</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>IFG_AreasOfConcernMapp</label>
+    <pluralLabel>IFG_AreasOfConcernMapp</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

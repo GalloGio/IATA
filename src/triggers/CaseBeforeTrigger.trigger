@@ -104,12 +104,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ISS_Portal_New_Case_RT');//TF - SP9-C5
     ID CSRcaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('BSPlink Customer Service Requests (CSR)');
     ID PortalRecordTypeID  = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
+	ID ifgCaseRecordTypeID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('Cases - IFG');
     /*Record type*/
     
     /*Variables*/
     Date OneYearAgo = Date.today().addYears(-1);
     Datetime Last24Hours = Datetime.now().addDays(-1);
     final static string SMALLAMOUNT = 'Small Amount (<50USD)';
+	public static final String IFG_TEAM_CASE_GROUP_NAME = 'IFG Team';
     final static string MINORPOLICY = 'Minor error policy';
     Profile profile;
     Profile IFAPcurrentUserProfile;
@@ -834,6 +836,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                     system.debug('##ROW##');
                     cse.Groups__c = 'Default';
                 }
+                if(cse.RecordTypeId == ifgCaseRecordTypeID) {
+                    cse.Groups__c = IFG_TEAM_CASE_GROUP_NAME;
+                }				
             }   
         }
         /*trgBeforeInsertUpdate Trigger*/

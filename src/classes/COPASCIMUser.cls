@@ -102,8 +102,8 @@ global with sharing class COPASCIMUser extends SCIMUser {
 
     private void fillUpSCIMMessage(String email){
 
-
-        User userIn = [select name, id,contact.account.name, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,Phone,CommunityNickname, TimeZoneSidKey,LanguageLocaleKey,Title,MobilePhone from user where email = :email and IsActive = true limit 1];
+        //basto1p added new required field for IFG
+        User userIn = [select name, id,contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,Phone,CommunityNickname, TimeZoneSidKey,LanguageLocaleKey,Title,MobilePhone from user where email = :email and IsActive = true limit 1];
 
         if(userIn != null){
             this.id = userIn.id;
@@ -131,17 +131,31 @@ global with sharing class COPASCIMUser extends SCIMUser {
             Entitlements enB = new Entitlements();
             enB.value = userIn.contact.account.Category__c;
             enB.type = 'Account Category';
+            
+            //basto1p added new required field for IFG
+            Entitlements enC = new Entitlements();
+            enC.value = userIn.contact.account.IATACode__c;
+            enC.type = 'Account Code';
           
+
+			Entitlements enDa = new Entitlements();
+            enDa.value = userIn.contact.account.id;
+            enDa.type = 'Account Id';			
 
             if(this.entitlements == null) {
                 this.entitlements = new List<Entitlements>();
                 this.entitlements.add(enA);
                 this.entitlements.add(enB);
+                this.entitlements.add(enC);
+				this.entitlements.add(enDa);
             }else{
 
                 this.entitlements.add(enA);
                 this.entitlements.add(enB);
+                this.entitlements.add(enC);
+				this.entitlements.add(enDa);
             }
+			
             Photos aPhoto = new Photos();
             aPhoto.type = 'photo';
             aPhoto.value = userIn.SmallPhotoUrl;
