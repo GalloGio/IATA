@@ -79543,10 +79543,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
-                <fullName>W</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>X</fullName>
                 <default>false</default>
             </values>

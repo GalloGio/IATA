@@ -702,7 +702,7 @@ AND(
     <fields>
         <fullName>IEPPayload__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(Account__r.ANG_IEP_Status_FF__c = &apos;No IEP Account&apos;, null, 
+        <formula>IF(OR(Account__r.ANG_IEP_Status_FF__c = &apos;No IEP Account&apos;, ISBLANK(Account__r.ANG_IEP_Status_FF__c)) , null, 
 IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;))),Account__r.IATACode__c,IF(AND(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),NOT(OR(ISPICKVAL(Account__r.Location_Type__c,&apos;HO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;AO&apos;),ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;)))),Account__r.IATACode__c,IF(NOT(OR(ISPICKVAL(Change_Code__c,&apos;FIN&apos;),ISPICKVAL(Change_Code__c , &apos;IEP&apos;))),Account__r.IATACode__c,null))))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEPPayload</label>
