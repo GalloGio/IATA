@@ -27556,6 +27556,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Contact_First_name_mandatory</fullName>
+        <active>true</active>
+        <description>Forcing the standard field (first name) mandatory</description>
+        <errorConditionFormula>TRIM (FirstName) == &apos;&apos;</errorConditionFormula>
+        <errorMessage>Please insert the first name</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
         <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
