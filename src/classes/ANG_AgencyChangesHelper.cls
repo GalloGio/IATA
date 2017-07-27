@@ -17,14 +17,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountsChanged = new Set<Id>();
 		}
 
-		public AChangeStructure(Map<Id,AMS_Agencies_relationhip__c> relationsMap,  Map<Id,Account> accountsMap, List<Agency_Applied_Change_code__c> changeCodesToCreate){
-
-			this.relationsMap = relationsMap;
-			this.accountsMap = accountsMap;
-			this.changeCodesToCreate = changeCodesToCreate;
-
-		}
-
 		public void addAccount(Account account){
 				this.accountsMap.put(account.Id, account);
 				this.accountsChanged.add(account.Id);
