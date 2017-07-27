@@ -15338,6 +15338,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Case Resolution</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_ClickGoToCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ClickGoToCase</shortDescription>
+        <value>Click here to go to the related case</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Comment</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
