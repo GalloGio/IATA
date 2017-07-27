@@ -5,6 +5,9 @@ public with sharing class ISSP_SearchResultCO {
 
 	public Enum SearchValueType { Numeric, Text, Other }
 
+	//basto1p
+	public Map<String,String> mapFieldsValue {get;set;}
+
 	private static List<String> sortedObjNameList; 
     private static Map<String, List<Schema.FieldSetMember>> objName2tableColumnMap;  
 	private static Map<String, List<Schema.FieldSetMember>> object2SearchFieldMap; 
@@ -171,9 +174,10 @@ public with sharing class ISSP_SearchResultCO {
 			if(!generalFieldName.equalsIgnoreCase(tbMember.getFieldPath())) 
 				soqlQuery += ',' + tbMember.getFieldPath();
 		}
-		
+
+		//basto1p
 		if (objectName == 'Case')
-			soqlQuery += ', Contact.Name';
+			soqlQuery += ', Contact.Name, Status';
 		
 		soqlQuery = 'SELECT ' + soqlQuery + ' FROM '+ objectName;
         if(String.isNotBlank(conditional)){
@@ -188,7 +192,29 @@ public with sharing class ISSP_SearchResultCO {
         else
         	soqlQuery += ' Limit 10000';
         system.debug('soqlQuery >> ' + soqlQuery);
-		return (List<SObject>)Database.query(soqlQuery);
+
+		//basto1p
+		List<SObject> objList=new List<Case>();
+		objList=Database.query(soqlQuery);
+
+		if (objectName == 'Case') {
+			system.debug('basto1p - getCases.casesList='+objList);
+
+
+			mapFieldsValue=new Map<String, String>();
+			String statusFieldValMapKey='';
+			for (SObject Item : objList) {
+
+				System.debug('basto1p - Item.get(Status)='+Item.get('Status'));
+				//Add mapping for Status field
+				statusFieldValMapKey = ISSP_Case.STATUS_FLD_NAME + Item.get('Status');
+				mapFieldsValue.put(statusFieldValMapKey,
+						ISSP_Case.getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME, (String)Item.get('Status')));
+
+				system.debug('basto1p - mapFieldsValue='+mapFieldsValue);
+			}
+		}
+		return objList;
 	}
 
     private String operator(Schema.FieldSetMember fsMember) {
