@@ -129,7 +129,7 @@ global class BtchGDPReplicateAccountCategory implements Database.Batchable<sObje
 				btchProc.dtSystemNow = btchRepAcc.Last_Modified_Date__c;
 				btchProc.query =
 					'SELECT AIMS_ID__c, WebStar_ID__c, Accreditation_ID__c, Class__c'
-					+ '		, Endorsed_Accredited_By__c, Last_change_date__c, Last_re_inspection_date__c'
+					+ '		, Endorsed_Accredited_By_Formula__c, Last_change_date__c, Last_re_inspection_date__c'
 					+ '		, Original_approval_date__c, Status__c, Date__c'
 					+ '		, Related_Account__r.AIMS_ID__c, Related_Account__r.WebStar_ID__c, Related_Account__r.IATACode__c'
 					+ '	FROM Accreditation__c'
@@ -137,7 +137,7 @@ global class BtchGDPReplicateAccountCategory implements Database.Batchable<sObje
 					+ '		AND LastModifiedDate < ' + btchRepAcc.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 					+ '		AND (AIMS_ID__c != null OR Webstar_ID__c != null)'
 					+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('Accreditation__c', 'Live') + '\''
-					+ '		AND Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null';
+					+ '		AND Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\') AND Class__r.Code__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Related_Account__r.Id != null';
 				
 				System.debug('SSS: SOQL Query: ' + btchProc.query);
 	
