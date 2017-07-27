@@ -12,16 +12,32 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	}
 	
-	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId){
+	global static void doCallOut(Object obj, ANG_CalloutMapping__c mappingObj, String changeCodeId, Boolean isRunningBatch){
 		
 		String body = serializeData(obj);
 
-		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId);
+		sendCallout(body,mappingObj.Action__c, mappingObj.Named_Credential__c, fetchEndPoint(mappingObj),mappingObj.client_id__c,mappingObj.client_secret__c,changeCodeId, isRunningBatch);
 
 	}
 
+	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId, Boolean isRunningBatch){
+
+		if(isRunningBatch)
+			executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId);
+		else
+			executeCalloutFuture(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId);
+	}
+
+
 	@future (callout=true)
-	private static void sendCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId){
+	private static void executeCalloutFuture(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId){
+
+		executeCallout(body, action, namedCredential, endPointCredential, clientId, clientSecret, changeCodeId);
+
+	}
+
+
+	private static void executeCallout(String body, String action, String namedCredential, String endPointCredential, String clientId, String clientSecret, String changeCodeId){
 
 		HttpRequest req = new HttpRequest();
         req.setHeader('Content-Type', 'application/json');
@@ -39,9 +55,20 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		try{
 			res = http.send(req);	
 		}catch(CalloutException e){
+
 			System.debug('ANG_CalloutIEPMasterdata: Exception:'+e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage()));
-			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();log.Agency_Applied_Change_code__c = changeCodeId;log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;log.Method__c = action;
-			log.Web_Service__c = String.valueOf(req);log.Error_Code__c = 'Exception sending request';log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());log.Success__c = false;insert log;return;
+
+			ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+			log.Agency_Applied_Change_code__c = changeCodeId;
+			log.Web_Service__c = 'callout:'+namedCredential+endPointCredential+body+'?client_id='+clientId+'&client_secret='+clientSecret;
+			log.Method__c = action;
+			log.Web_Service__c = String.valueOf(req);
+			log.Error_Code__c = 'Exception sending request';
+			log.Error_Message__c = e.getStackTraceString() + ' Cause:' + String.valueOf(e.getMessage());
+			log.Success__c = false;
+			insert log;
+
+			return;
 		}
 
 		System.debug('ANG_CalloutIEPMasterdata: Request Status:'+res.getStatus());
@@ -71,5 +98,4 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 
 	}
-
 }
