@@ -20,7 +20,7 @@
         <label>ipinfo call enabled</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
-    </fields>	
+    </fields>
     <label>OneId Global Settings</label>
     <visibility>Protected</visibility>
 </CustomObject>

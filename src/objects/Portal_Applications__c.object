@@ -724,8 +724,7 @@ OR(
     AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
     AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;))
 )
-)
-</formula>
+)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
         <trackTrending>false</trackTrending>
@@ -941,14 +940,6 @@ OR(
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
-        <fullName>SCIM_Type_Check</fullName>
-        <active>true</active>
-        <description>Checks if SCIM_App_Name__c is not empty when Provisioning_Type__c=SCIM</description>
-        <errorConditionFormula>AND(ISPICKVAL(Provisioning_Type__c , &apos;SCIM&apos;),  ISBLANK(SCIM_App_Name__c))</errorConditionFormula>
-        <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
-        <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Restrict_by_Agency_Category</fullName>
         <active>true</active>
         <description>Only allow to save when Restrict by Agency Category is not empty IF Agency checkbox = TRUE</description>
@@ -967,5 +958,13 @@ NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c))
  TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
 )</errorConditionFormula>
         <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Sector.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SCIM_Type_Check</fullName>
+        <active>true</active>
+        <description>Checks if SCIM_App_Name__c is not empty when Provisioning_Type__c=SCIM</description>
+        <errorConditionFormula>AND(ISPICKVAL(Provisioning_Type__c , &apos;SCIM&apos;),  ISBLANK(SCIM_App_Name__c))</errorConditionFormula>
+        <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
+        <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
     </validationRules>
 </CustomObject>

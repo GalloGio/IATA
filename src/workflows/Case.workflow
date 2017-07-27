@@ -1991,7 +1991,7 @@
         <senderType>OrgWideEmailAddress</senderType>
         <template>IFAP_Email_Templates/IFAP</template>
     </alerts>
-<alerts>
+    <alerts>
         <fullName>IFG_Case_closed_by_Support_Team</fullName>
         <description>IFG - Case closed by Support Team</description>
         <protected>false</protected>
@@ -2024,7 +2024,7 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
-    </alerts>	
+    </alerts>
     <alerts>
         <fullName>ISSP_Send_DPC_HP_ACR_email_notification</fullName>
         <description>ISSP Send DPC HP ACR email notification</description>
@@ -5540,7 +5540,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <operation>LookupValue</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>	
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>IRR_Withdrawal_ApprovalDate_Reset</fullName>
         <description>SIDRA</description>
@@ -14570,7 +14570,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         </criteriaItems>
         <description>IFG - Send email notification for Customer when case is closed</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>    
+    </rules>
     <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>

@@ -553,7 +553,7 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <required>false</required>
         <type>Text</type>
         <unique>false</unique>
-    </fields>	
+    </fields>
     <fields>
         <fullName>Employee_Number_PPD__c</fullName>
         <description>IATA Employee Number</description>
@@ -746,7 +746,7 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IFG Account Member</label>
         <type>Checkbox</type>
-    </fields>	
+    </fields>
     <fields>
         <fullName>ISSP_Contact_Language__c</fullName>
         <externalId>false</externalId>
