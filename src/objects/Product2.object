@@ -256,31 +256,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Accepted_Payment_Methods__c</fullName>
-        <externalId>false</externalId>
-        <inlineHelpText>Please choose the allowed payment methods for the product (hierarchy).</inlineHelpText>
-        <label>Accepted Payment Methods</label>
-        <picklist>
-            <picklistValues>
-                <fullName>Bank Transfer</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Credit Card</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>IATA Clearing House</fullName>
-                <default>false</default>
-            </picklistValues>
-            <sorted>false</sorted>
-        </picklist>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <type>MultiselectPicklist</type>
-        <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
         <fullName>Activity_Code__c</fullName>
         <description>This is the 4 digit code used for accounting purposes by IATA</description>
         <externalId>false</externalId>
@@ -310,17 +285,6 @@
         <required>false</required>
         <trackHistory>true</trackHistory>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Any_additional_Locations__c</fullName>
-        <description>AE: Annual fees for Any additional Locations</description>
-        <externalId>false</externalId>
-        <label>Any additional Locations</label>
-        <length>25</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Author__c</fullName>
@@ -2184,7 +2148,7 @@ SIS Charge Code Type.</description>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Live Animals Regulations</fullName>
+                <fullName>Live Animals Regulation</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -3413,22 +3377,6 @@ IF(Name = &quot;ICH&quot;, HYPERLINK(&quot;https://iata--iccs.cs18.my.salesforce
                 <fullName>C-Web Application</fullName>
                 <default>false</default>
             </picklistValues>
-            <picklistValues>
-                <fullName>Mobile</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Windows</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Book &amp; Windows</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>Book &amp; Mobile</fullName>
-                <default>false</default>
-            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -4473,7 +4421,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Source</label>
         <length>20</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -4543,7 +4491,7 @@ The product will only appear on the Online Store when the date entered in this f
         <relationshipLabel>Products</relationshipLabel>
         <relationshipName>ZProduct</relationshipName>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -4553,7 +4501,7 @@ The product will only appear on the Online Store when the date entered in this f
         <label>Zuora Id</label>
         <length>32</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>true</unique>
     </fields>
@@ -10088,10 +10036,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>World Air Transport Statistics</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>eAWBLink</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IEC_Cart_Option__c</picklist>
@@ -10631,10 +10575,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Multilingual</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Norwegian</fullName>
                 <default>false</default>
             </values>
@@ -10757,14 +10697,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>C-Data File</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C-Web Application</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -10797,19 +10729,11 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Email Service</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Excel Spreadsheet</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Floating License</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10845,15 +10769,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>PDF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PDF %26 Excel files</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10878,10 +10794,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eBook</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11030,10 +10942,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Kato Christophe</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Laurent Delarue</fullName>
                 <default>false</default>
             </values>
@@ -11104,10 +11012,6 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Product_Marketing_Manager__c</picklist>
-            <values>
-                <fullName>BERTOLUS Julie</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Eve-Marie Morgo</fullName>
                 <default>false</default>
@@ -11312,13 +11216,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>QuantityUnitOfMeasure</picklist>
-            <values>
-                <fullName>Each</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Refinement_Format__c</picklist>
             <values>
                 <fullName>Digital</fullName>
@@ -11345,10 +11242,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>German</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Multilingual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13022,7 +12915,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulations</fullName>
+                <fullName>Live Animals Regulation</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13798,14 +13691,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Book %26 Mobile</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Book %26 Windows</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -13898,10 +13783,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mobile</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -13931,10 +13812,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16000,7 +15877,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Live Animals Regulations</fullName>
+                <fullName>Live Animals Regulation</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -16760,14 +16637,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Book %26 Mobile</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Book %26 Windows</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Book and CD-ROM</fullName>
                 <default>false</default>
             </values>
@@ -16848,10 +16717,6 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>Mobile</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Newsletter</fullName>
                 <default>false</default>
             </values>
@@ -16881,10 +16746,6 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>WEB Seminar</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Windows</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
