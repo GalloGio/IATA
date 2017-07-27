@@ -3777,12 +3777,7 @@
               {
                 "Name": "STEP6",
                 "Required": [],
-                "Actions": [
-                  {
-                    "FunctionName": "checkAccountHierarchyCorrection",
-                    "ActionLabel": "AMS_OSCAR_Action6",
-                    "args": ["oscarid"]
-                  }
+                "Actions": [],
                 "Automations": [
                   {
                     "Status": "Passed",
