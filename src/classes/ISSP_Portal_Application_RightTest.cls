@@ -1,5 +1,10 @@
 @isTest
 public class ISSP_Portal_Application_RightTest {
+
+	public static testMethod void myUnitTest_1bis() {
+		Portal_Applications__c apptest = new Portal_Applications__c(Name = 'SIS'); 
+	    insert apptest;
+	}
 	
 	public static testMethod void myUnitTest_1() {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
