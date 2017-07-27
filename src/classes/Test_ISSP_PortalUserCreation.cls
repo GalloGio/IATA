@@ -12,6 +12,7 @@ private class Test_ISSP_PortalUserCreation {
         ApexPages.currentPage().getParameters().put('retUrl', '');
         ISSP_PortalUserCreation ctrl = new ISSP_PortalUserCreation();
         Contact con = ctrl.con;
+        ctrl.FirstName = 'Name';
         ctrl.LastName = 'Test';
         ctrl.accountId = acc.id;
         ctrl.emailAddress = 'iss.portal.test.class@Test.com';

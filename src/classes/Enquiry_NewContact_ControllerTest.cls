@@ -3,7 +3,7 @@ public class Enquiry_NewContact_ControllerTest{
 
   	public static	list<IATA_ISO_Country__c> isoCountries = new list<IATA_ISO_Country__c>();
 	public static PageReference pageRef = Page.Enquiry_NewContact;  
-	public static contact c = new contact(email ='some@email.org', Lastname = 'myName' );
+	public static contact c = new contact(email ='some@email.org', Lastname = 'myName', firstname = 'Name' );
 	public static list<LogAnEnquiryUtil__c> LOGs  = new list<LogAnEnquiryUtil__c>();
 	public static map<string,map<string,id>> RtIDsPerDeveloperNamePerObj  = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account','Contact'});
 	
@@ -120,6 +120,7 @@ public class Enquiry_NewContact_ControllerTest{
     		createData();
     		contact con = new contact(	email ='some@email.org', 
    										Lastname = 'myName' ,
+   										firstname = 'Name' ,
    										recordtypeID = RtIDsPerDeveloperNamePerObj.get('Contact').get('Standard_Contact'),
    										ISO_Country__c = isoCountries[0].id,
    										phone = '123'

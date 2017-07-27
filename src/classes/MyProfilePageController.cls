@@ -89,6 +89,7 @@ public with sharing class MyProfilePageController {
             System.assert(controller.isEdit == false);
             
             Contact c = new Contact();
+            c.FirstName = 'Name';
             c.LastName = 'TestContact';
             insert c;
             

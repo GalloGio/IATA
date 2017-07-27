@@ -174,6 +174,7 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+        newContact.FirstName = 'Name';
         newContact.LastName = 'w00t';
         insert newContact;
         
@@ -287,6 +288,7 @@ public class vfIECEBC_TestSuite {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+        newContact.FirstName = 'Name';
         newContact.LastName = 'w00t';
         insert newContact;
         
