@@ -106,7 +106,7 @@
         <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
-<fieldUpdates>
+    <fieldUpdates>
         <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
         <description>This field is updated with Record Sharing Criteria values</description>
         <field>Record_Sharing_Criteria_AUX__c</field>
@@ -117,7 +117,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>	
+    </fieldUpdates>
     <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
         <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
@@ -633,7 +633,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <timeLength>-90</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>	
+    </rules>
     <rules>
         <fullName>FDS Coding AOC Expiry date alert 30 days before</fullName>
         <active>true</active>
@@ -677,7 +677,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>false</active>
         <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>	
+    </rules>
     <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
         <actions>

@@ -8901,6 +8901,15 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Percent</type>
     </fields>
     <fields>
+        <fullName>IFG_Member__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IFG Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ISS_SIS_TC_Accepted_Date__c</fullName>
         <externalId>false</externalId>
         <label>SIS TC Accepted Date</label>
@@ -11144,15 +11153,6 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
     </fields>
-    <fields>
-        <fullName>IFG_Member__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>IFG Member</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>	
     <fields>
         <fullName>Record_Sharing_Criteria_AUX__c</fullName>
         <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
