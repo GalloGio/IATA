@@ -414,9 +414,9 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
 
                 system.debug('newCase.Reason1__c ' + newCase.Reason1__c);
-                if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad') {
+                if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New TIDS HO') {
                     amsOfficeType = 'HO'; //Branches Abroad have same country requirements as HO in that country
-                } else if (newCase.Reason1__c == 'New BR / IP') {
+                } else if (newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New TIDS BR') {
                     amsOfficeType = 'Branch';
                 }
                 
@@ -627,9 +627,9 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Accreditation NewForm Sector: ' + sectorValue);
         }
 
-        if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad') {
+        if (newCase.Reason1__c == 'New HO' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New TIDS HO') {
             amsOfficeType = 'HO';
-        } else if (newCase.Reason1__c == 'New BR / IP') {
+        } else if (newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New TIDS BR') {
             amsOfficeType = 'Branch';
         }
 
@@ -1043,13 +1043,14 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         } else if (sectorValue.StartsWith('Travel_Agent')) { //User has selected Travel in STEP A
-            if (isHOAccredited && con.Account.Category__c == 'IATA Passenger Sales Agent') { //And this is an Accredited PAX Agent
+            if (isHOAccredited && (con.Account.Category__c == 'IATA Passenger Sales Agent' || con.Account.Category__c == 'TIDS Agent') ) { //And this is an Accredited PAX Agent
                 options.add(new SelectOption('New BR / IP - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH));
                 if (isocountry.Region__c != 'Americas')
                     options.add(new SelectOption('New BR Abroad - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH_ABROAD));
+                options.add(new SelectOption('New TIDS BR - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_TIDS_BR));
             } else { //Not an Accredited PAX Agent, or any type of Cargo Agent
                 options.add(new SelectOption('New HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_HO));
-                options.add(new SelectOption('New HO - TIDS', Label.ISSP_AMS_OPTION_TIDS_HO));
+                options.add(new SelectOption('New TIDS HO - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_TIDS_HO));
             }
         }
        
@@ -1074,7 +1075,7 @@ public without sharing class ISSP_AMS_Accreditation {
             includedPageName = 'ISSP_AMS_Notice_Of_Change';
             includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
         } else if (sectorValue.StartsWith('Travel_Agent')) {
-            if (newForm.Agent_Type__c == 'TIDS') {
+            if (newCase.Reason1__c == 'New TIDS HO' || newCase.Reason1__c == 'New TIDS BR') {
                 includedPageName = 'ISSP_AMS_TIDS_Form';
                 includedSummaryPage = 'ISSP_AMS_TIDS_ReadOnly';
             } else {
@@ -1209,7 +1210,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     
                     newForm.Branch_Office_Country__c = isocountry.ID;
                     
-                    if(newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New BR Abroad') {
+                    if(newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == 'New TIDS BR') {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
                         
                         SYSTEM.DEBUG('Set BR Abroad Legal Name: ' + hqAccount.Name);
@@ -1419,6 +1420,8 @@ public without sharing class ISSP_AMS_Accreditation {
             system.debug('newCase.Reason1__c: ' + newCase.Reason1__c);
             if (newCase.Reason1__c == 'New HO') {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - HO').RecordTypeId;
+            } else if (newCase.Reason1__c == 'New TIDS HO' || newCase.Reason1__c == 'New TIDS BR') {
+                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('General Online Accreditation').RecordTypeId;
             } else if (newCase.Reason1__c == 'New BR / IP') {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Travel Agent - Branch').RecordTypeId;
             } else if (newCase.Reason1__c == 'New BR Abroad') {
@@ -1769,7 +1772,7 @@ public without sharing class ISSP_AMS_Accreditation {
             else if (newForm.Agent_Type__c == 'Courier')
                 locationClass = 'Q';
         } else { // Travel_Agent
-            if (newForm.Agent_Type__c == 'TIDS') {
+            if (newCase.Reason1__c == 'New TIDS HO' || newCase.Reason1__c == 'New TIDS BR') {
                 locationClass = 'T';
             }
         }
@@ -2650,6 +2653,8 @@ public without sharing class ISSP_AMS_Accreditation {
             String typeOfProcess = 'NEW.HO.1.0';
             if (newCase.Reason1__c == 'New BR Abroad')
                 typeOfProcess = 'NEW.BR.ABROAD';
+            else if (newCase.Reason1__c == 'New TIDS HO' || newCase.Reason1__c == 'New TIDS BR')
+                typeOfProcess = 'NEW.TIDS.1.0';
             else if (!isNoticeOfChange && amsOfficeType == 'Branch')
                 typeOfProcess = 'NEW.BR';
             else if (isNoticeOfChange && isBankAccountChange)
@@ -2714,7 +2719,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void accountStagingFieldMapping(Account sourceAccount, String strReason, Boolean alreadyAccredited) {  //Field mapping to be used when updating staging area from HO Account for HO Applications
         Map<String, String> mapAccountToAccrFormFields;
         
-        if(strReason == 'New HO' && !alreadyAccredited) {
+        if((strReason == 'New HO' || strReason == 'New TIDS HO') && !alreadyAccredited) {
             mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'IATACode__c' => 'IATACode__c', 'Short_Name__c' => 'Short_Name__c',
                 'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
                 'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
@@ -2724,7 +2729,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
                 'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c' 
                 };    
-        } else if(strReason == 'New HO' && alreadyAccredited) {
+        } else if((strReason == 'New HO' || strReason == 'New TIDS HO') && alreadyAccredited) {
             mapAccountToAccrFormFields = new Map<String, String> {'Name' => 'Account_Name__c', 'Short_Name__c' => 'Short_Name__c',
                 'Location_Class__c' => 'Location_Class__c', 'Location_Type__c' => 'Location_Type__c', 'TradeName__c' => 'Trade_Name__c',
                 'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
@@ -3081,6 +3086,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_Reason_New_Branch;
         } else if (r == 'New BR Abroad') {
             return Label.ISSP_AMS_Reason_Branch_Abroad;
+        } else if (r == 'New TIDS HO') {
+            return Label.ISSP_AMS_Reason_New_TIDS_HO;
+        } else if (r == 'New TIDS BR') {
+            return Label.ISSP_AMS_Reason_New_TIDS_BR;
         } else {
             return Label.ISSP_AMS_Reason_New_HO;
         }
@@ -3114,6 +3123,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             return Label.ISSP_AMS_OPTION_COURIER_HO;
         } else if (amsLocationType == 'New BR / IP - Courier') {
             return Label.ISSP_AMS_OPTION_COURIER_BRANCH;
+        } else if (amsLocationType == 'New TIDS HO - IATA Passenger Sales Agent') {
+            return Label.ISSP_AMS_OPTION_TIDS_HO;
+        } else if (amsLocationType == 'New TIDS BR - IATA Passenger Sales Agent') {
+            return Label.ISSP_AMS_OPTION_TIDS_BR;
         } else if (amsLocationType == 'New HO - IATA Passenger Sales Agent') {
             return Label.ISSP_AMS_OPTION_PAX_HO;
         } else if (amsLocationType == 'New BR Abroad - IATA Passenger Sales Agent') {
@@ -3584,7 +3597,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                 FROM Case
                 WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication') AND (Status = 'Draft' OR (Status Not In :closedStatusesList AND Case.ContactId = :con.Id)) AND Origin = 'Portal'
-                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN ('New HO', 'New BR / IP', 'New BR Abroad', 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update', 'IRIS Bank Detail Update', 'Major Change')
+                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN ('New HO', 'New BR / IP', 'New TIDS HO', 'New TIDS BR', 'New BR Abroad', 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'Bank Detail Update', 'IRIS Bank Detail Update', 'Major Change')
                 ORDER BY CaseNumber DESC]));
             }
             return setConn;
@@ -3639,7 +3652,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     [SELECT Id, CaseNumber, CreatedDate, Account.Name, Country_concerned_by_the_query__c, Subject, Status, Portal_Case_Status__c, Priority, Reason1__c, CaseArea__c, Account.Billing_Address_formated__c
                 FROM Case
                 WHERE RecordType.Name IN ('SAAM', 'OSCAR Communication') AND (Status != 'Draft') AND Origin = 'Portal'
-                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN ('New HO', 'New BR / IP', 'New BR Abroad', 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'IRIS Bank Detail Update', 'Bank Detail Update', 'Major Change')
+                AND ((Case.AccountId = :con.AccountId) OR (Case.Account_Concerned__r.Top_Parent__c = :con.AccountId)) AND Case.Reason1__c IN ('New HO', 'New BR / IP', 'New TIDS HO', 'New TIDS BR', 'New BR Abroad', 'CHL - Change of Location', 'CHN - Change of Name', 'CHO / CHS – Change of Ownership / Legal Status', 'IRIS Bank Detail Update', 'Bank Detail Update', 'Major Change')
                 ORDER BY CaseNumber DESC]));
             }
             return setConnNotDraft;
@@ -3976,7 +3989,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public void getCountriesMap() {
         List<IATA_ISO_Country__c> isoList;
 
-        isoList = [SELECT Name, Id, ISO_Code__c, Travel_Branch_Country__c, Travel_HO_Country__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, Branches_abroad_not_allowed__c
+        isoList = [SELECT Name, Id, ISO_Code__c, Travel_Branch_Country__c, Travel_HO_Country__c, AMS_Country_Configuration__c, Cargo_Branch_Country__c, Cargo_HO_Country__c, Branches_abroad_not_allowed__c
                    FROM IATA_ISO_Country__c
                    WHERE Case_BSP_Country__c != null
                    AND Case_BSP_Country__c != ''
@@ -3986,18 +3999,23 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         List<String> notAllowedCountries = new List<String>();
         Integer idx = 0;
         for (IATA_ISO_Country__c iso : isoList) {
+            if (iso.AMS_Country_Configuration__c == null) iso.AMS_Country_Configuration__c = ''; // avoid null pointer exception when applying contains() method
             if (idx == 0) {
                 mapCountriesList.put('Cargo_Agent-New BR / IP', iso.ISO_Code__c + ':' + iso.Cargo_Branch_Country__c);
                 mapCountriesList.put('Cargo_Agent-New HO', iso.ISO_Code__c + ':' + iso.Cargo_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New BR / IP', iso.ISO_Code__c + ':' + iso.Travel_Branch_Country__c);
                 mapCountriesList.put('Travel_Agent-New BR Abroad', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New HO', iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS HO', iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS HO'));//iso.Travel_TIDS_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS BR', iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS BR'));//iso.Travel_TIDS_BR_Country__c);
             } else {
                 mapCountriesList.put('Cargo_Agent-New BR / IP', mapCountriesList.get('Cargo_Agent-New BR / IP') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_Branch_Country__c);
                 mapCountriesList.put('Cargo_Agent-New HO', mapCountriesList.get('Cargo_Agent-New HO') + ',' + iso.ISO_Code__c + ':' + iso.Cargo_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New BR / IP', mapCountriesList.get('Travel_Agent-New BR / IP') + ',' + iso.ISO_Code__c + ':' + iso.Travel_Branch_Country__c);
                 mapCountriesList.put('Travel_Agent-New BR Abroad', mapCountriesList.get('Travel_Agent-New BR Abroad') + ',' + iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
                 mapCountriesList.put('Travel_Agent-New HO', mapCountriesList.get('Travel_Agent-New HO') + ',' + iso.ISO_Code__c + ':' + iso.Travel_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS HO', mapCountriesList.get('Travel_Agent-New TIDS HO') + ',' + iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS HO'));//iso.Travel_TIDS_HO_Country__c);
+                mapCountriesList.put('Travel_Agent-New TIDS BR', mapCountriesList.get('Travel_Agent-New TIDS BR') + ',' + iso.ISO_Code__c + ':' + iso.AMS_Country_Configuration__c.contains('TIDS BR'));//iso.Travel_TIDS_BR_Country__c);
             }
             ++idx;
             if (iso.Branches_abroad_not_allowed__c)
@@ -5261,23 +5279,25 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         }
                     }
 
-                    if (newForm.ISSP_AMS_Online_Agency_Application__c == null) {
-                        newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null) {
-                        newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
+                    if(!newCase.Reason1__c.startsWith('New TIDS'))  { // these validations don't apply to TIDS}
+                        if (newForm.ISSP_AMS_Online_Agency_Application__c == null) {
+                            newForm.ISSP_AMS_Online_Agency_Application__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
+                        if (newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes' && newForm.ISSP_AMS_Online_Agency_URL__c == null) {
+                            newForm.ISSP_AMS_Online_Agency_URL__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
 
-                    if (CountryCheckList.Statement_of_International_Sales__c && newForm.International_Sales_in_last_Year__c == null) {
-                        newForm.International_Sales_in_last_Year__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    
-                    if (newForm.ISSP_AMS_Pax_Office_Open_Date__c == null) {
-                        newForm.ISSP_AMS_Pax_Office_Open_Date__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
+                        if (CountryCheckList.Statement_of_International_Sales__c && newForm.International_Sales_in_last_Year__c == null) {
+                            newForm.International_Sales_in_last_Year__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
+                        
+                        if (newForm.ISSP_AMS_Pax_Office_Open_Date__c == null) {
+                            newForm.ISSP_AMS_Pax_Office_Open_Date__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
                     }
                     
                     if (newForm.ISSP_AMS_VAT_Number_Input__c == null && isocountry.Hide_Tax_Number_VAT__c == false) {
@@ -5285,33 +5305,35 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
                     
-                    if (newForm.ISSP_AMS_Registered_Capital__c == null) {
-                        newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    
-                    if (newForm.ISSP_AMS_Paidup_capital__c == null) {
-                        newForm.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    
-                    if (newForm.ISSP_AMS_Min_Paidup_capital__c == null) {
-                        newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
+                    if(!newCase.Reason1__c.startsWith('New TIDS'))  { // these validations don't apply to TIDS}
+                        if (newForm.ISSP_AMS_Registered_Capital__c == null) {
+                            newForm.ISSP_AMS_Registered_Capital__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
+                        
+                        if (newForm.ISSP_AMS_Paidup_capital__c == null) {
+                            newForm.ISSP_AMS_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
+                        
+                        if (newForm.ISSP_AMS_Min_Paidup_capital__c == null) {
+                            newForm.ISSP_AMS_Min_Paidup_capital__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
 
-                    if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
-                        newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_YouMustEnter);
-                        errorFound = true;
-                    }
-                    if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes' && newForm.Cargo_Agent_Account__c == null) {
-                        newForm.IATA_Cargo_Code__c.addError(Label.ISSP_AMS_Validation_Cargo_Code);
-                        errorFound = true;
-                    }
-                    
-                    if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
-                        newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent);
-                        errorFound = true;
+                        if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
+                            newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_YouMustEnter);
+                            errorFound = true;
+                        }
+                        if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes' && newForm.Cargo_Agent_Account__c == null) {
+                            newForm.IATA_Cargo_Code__c.addError(Label.ISSP_AMS_Validation_Cargo_Code);
+                            errorFound = true;
+                        }
+                        
+                        if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
+                            newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent);
+                            errorFound = true;
+                        }
                     }
                     
                     if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
@@ -5335,7 +5357,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         errorFound = true;
                     }
 
-                    if (cntIFAPContacts == 0) {
+                    if (cntIFAPContacts == 0 && !newCase.Reason1__c.startsWith('New TIDS') ) {
                         ApexPages.Message myMsg;
                         myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Financial_Contact);
                         ApexPages.addMessage(myMsg);
@@ -5424,33 +5446,35 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
             
-            if (newForm.ISSP_AMS_Previous_default__c == null) {
-                newForm.ISSP_AMS_Previous_default__c.addError(Label.ISSP_YouMustEnter);
-                errorFound = true;
-            }
-            if (newForm.ISSP_AMS_Previous_default__c == 'YES' && newForm.ISSP_AMS_Prev_default_explanation__c == null) {
-                newForm.ISSP_AMS_Prev_default_explanation__c.addError(Label.ISSP_AMS_Previous_Default_Details);
-                errorFound = true;
-            }
+            if(!newCase.Reason1__c.startsWith('New TIDS'))  { // these validations don't apply to TIDS}
+                if (newForm.ISSP_AMS_Previous_default__c == null) {
+                    newForm.ISSP_AMS_Previous_default__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
+                if (newForm.ISSP_AMS_Previous_default__c == 'YES' && newForm.ISSP_AMS_Prev_default_explanation__c == null) {
+                    newForm.ISSP_AMS_Prev_default_explanation__c.addError(Label.ISSP_AMS_Previous_Default_Details);
+                    errorFound = true;
+                }
 
-            if (newForm.ISSP_AMS_Premises_located_at_airport__c == null) {
-                newForm.ISSP_AMS_Premises_located_at_airport__c.addError(Label.ISSP_YouMustEnter);
-                errorFound = true;
-            }
+                if (newForm.ISSP_AMS_Premises_located_at_airport__c == null) {
+                    newForm.ISSP_AMS_Premises_located_at_airport__c.addError(Label.ISSP_YouMustEnter);
+                    errorFound = true;
+                }
 
-            if (newForm.ISSP_AM_Means_Identified_Travel_Agency__c == null) {
-                newForm.ISSP_AM_Means_Identified_Travel_Agency__c.addError(Label.ISSP_AMS_Means_Agency_Identified);
-                errorFound = true;
-            }
+                if (newForm.ISSP_AM_Means_Identified_Travel_Agency__c == null) {
+                    newForm.ISSP_AM_Means_Identified_Travel_Agency__c.addError(Label.ISSP_AMS_Means_Agency_Identified);
+                    errorFound = true;
+                }
 
-            if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null) {
-                newForm.ISSP_AMS_Gross_Amnt_First_year__c.addError(Label.ISSP_AMS_Gross_Amnt_First_year);
-                errorFound = true;
-            }
-            
-            if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null) {
-                newForm.ISSP_AMS_Gross_Amnt_Second_year__c.addError(Label.ISSP_AMS_Gross_Amnt_Second_year);
-                errorFound = true;
+                if (newForm.ISSP_AMS_Gross_Amnt_First_year__c == null) {
+                    newForm.ISSP_AMS_Gross_Amnt_First_year__c.addError(Label.ISSP_AMS_Gross_Amnt_First_year);
+                    errorFound = true;
+                }
+                
+                if (newForm.ISSP_AMS_Gross_Amnt_Second_year__c == null) {
+                    newForm.ISSP_AMS_Gross_Amnt_Second_year__c.addError(Label.ISSP_AMS_Gross_Amnt_Second_year);
+                    errorFound = true;
+                }
             }
             
             //EO Travel Agency Form Validation, start of CGO HO validation
@@ -6410,7 +6434,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public boolean getIsGSARequired() {
         Boolean isreq;
 
-        if (sector == 'Travel Agent' && amsLocationType != null && amsLocationType != 'New HO - TIDS') {
+        if (sector == 'Travel Agent' && amsLocationType != 'New TIDS HO - IATA Passenger Sales Agent' && amsLocationType != 'New TIDS BR - IATA Passenger Sales Agent') {
             isreq = true;
         } else {
             isreq = false;

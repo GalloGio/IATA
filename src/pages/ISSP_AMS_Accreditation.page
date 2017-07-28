@@ -273,7 +273,8 @@
                    
                     var countryList = countriesMap[operationType+'-'+vOfficeType.substring(0, idx)];     
                     var isAllowedCountry = countryList[countryList.indexOf(defaultHQCountry)+3]; 
-                    
+                    console.log('countryList ' + countryList);
+                    console.log('isAllowedCountry ' + isAllowedCountry);
                     ///alert( $('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
                     var langId = '{!$Component.step1Form.step1Block.applylanguage}';
                     var langSel = $('select[name="' + langId + '"]');
@@ -641,7 +642,7 @@
                                 </apex:outputpanel>
                            
                                 <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">
-                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(OR(BEGINS(sectorValue,'Cargo_Agent'),CONTAINS(amsLocationType,'New HO - TIDS')))}">
+                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(OR(BEGINS(sectorValue,'Cargo_Agent'),CONTAINS(amsLocationType,'New TIDS')))}">
                                         <div class="form-group" id="isGSA">
                                             <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
                                             <div class="col-lg-9" style="padding-top:7px">
@@ -978,7 +979,7 @@
            <strong>
                <apex:outputPanel rendered="{!NOT(isNoticeOfChange)}">
                {!IF(BEGINS(sectorValue, 'Travel_Agent'),
-               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks)),
+               IF(amsOfficeType!='HO', IF(CONTAINS(amsLocationType,'New TIDS'),$Label.ISSP_AMS_StepFinal_TIDS_BR,$Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks), IF(newCase.Reason1__c!='New BR Abroad', IF(CONTAINS(amsLocationType,'New TIDS'),$Label.ISSP_AMS_StepFinal_TIDS_HO,$Label.ISSP_AMS_StepFinal_Thanks), $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks)),
                IF(amsOfficeType=='HO',
                $Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,
                $Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR)

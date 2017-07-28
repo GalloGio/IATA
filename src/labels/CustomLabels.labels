@@ -10221,12 +10221,20 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>IATA Passenger Sales - New Head Office</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_OPTION_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS OPTION TIDS BR</shortDescription>
+        <value>Travel Industry Designator Service (TIDS) - New Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_OPTION_TIDS_HO</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION TIDS HO</shortDescription>
-        <value>Travel Agent - Travel Industry Designator Service (TIDS)</value>
+        <value>Travel Industry Designator Service (TIDS) - New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Office_Full_Address</fullName>
@@ -10420,6 +10428,22 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Reason New HO</shortDescription>
         <value>New Head Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS BR</shortDescription>
+        <value>New TIDS Branch Office</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Reason_New_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Reason New TIDS HO</shortDescription>
+        <value>New TIDS Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Registration_Number</fullName>
@@ -11898,6 +11922,22 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Thank you for submitting your Accreditation application for your Travel Agency Branch Office.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_BR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS BR Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Branch Office.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_StepFinal_TIDS_HO</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS StepFinal TIDS HO Thanks</shortDescription>
+        <value>Thank you for submitting your Accreditation application for your TIDS Head Office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_StepFinal_Thanks</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -12054,6 +12094,13 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_AMS_TIDS_Step3_5_Other_Info</shortDescription>
         <value>SECTION 5 - Other Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_TIDS_Travel_Industry_Designator_Service</shortDescription>
+        <value>Travel Industry Designator Service (TIDS)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_T_Cs1</fullName>

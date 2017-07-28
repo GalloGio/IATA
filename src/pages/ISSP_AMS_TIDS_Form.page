@@ -728,7 +728,8 @@
                             {!IF(AND(amsOfficeType == 'HO', newCase.Reason1__c!='New BR Abroad'), $Label.ISSP_AMS_STEP_3_1_HO_Title, IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title))}
                         </apex:outputpanel>
                         </apex:facet>
-                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(amsOfficeType=='HO',IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_Step3_HO_Location, $Label.ISSP_AMS_Step3_Branch_Abroad), $Label.ISSP_AMS_Step3_Branch_Location)}"/> <!-- TO CHANGE to add TIDS -->
+                    <!--<apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!$Label.ISSP_AMS_TIDS_Travel_Industry_Designator_Service}"/>-->
+                    <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(amsOfficeType=='HO',IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_Step3_HO_Location, $Label.ISSP_AMS_Step3_Branch_Abroad), $Label.ISSP_AMS_Step3_Branch_Location)}"/>
                     <!--<apex:actionFunction name="setHeaderLabels" action="{!setPageLegalStatusLabels}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" reRender="contactList, newContact">
                         <apex:param name="setlegalstatus" assignTo="{!legalstatus}" value="" />
                     </apex:actionFunction>
@@ -1235,16 +1236,18 @@
                         <apex:outputlabel value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
                         <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
+                    <!--
                     <apex:outputtext rendered="false">
                         <strong>Bank account details:</strong>
                     </apex:outputtext>
                     <apex:inputfield value="{!newForm.ISSP_AMS_IBAN__c}" rendered="false" />
                     <apex:inputfield value="{!newForm.ISSP_AMS_SWIFT__c}" rendered="false" />
-                    <apex:inputfield value="{!newForm.ISSP_AMS_Bank_account__c}" rendered="false" />
+                    <apex:inputfield value="{!newForm.ISSP_AMS_Bank_account__c}" rendered="false" />-->
                 </apex:pageblocksection>
                 
+                <!--
                 <span id="nav_seven"></span>
-                   <apex:pageBlockSection id="sectionSeven" collapsible="false" columns="1" rendered="{!OR(AND(countryCheckList.Statement_of_International_Sales__c, amsOfficeType == 'HO'),AND(countryCheckList.Statement_of_International_Sales_Branch__c, amsOfficeType != 'HO'))}">
+               	<apex:pageBlockSection id="sectionSeven" collapsible="false" columns="1" rendered="{!OR(AND(countryCheckList.Statement_of_International_Sales__c, amsOfficeType == 'HO'),AND(countryCheckList.Statement_of_International_Sales_Branch__c, amsOfficeType != 'HO'))}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                            {!$Label.ISSP_AMS_International_Sales}
@@ -1257,7 +1260,7 @@
                             <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
                     </apex:selectRadio>
                     </apex:pageBlockSectionItem>
-                    </apex:pageBlockSection>
+                </apex:pageBlockSection>
                 <div id="InternationalSales" style="{!IF(OR(newForm.International_Sales_in_last_Year__c == '', newForm.International_Sales_in_last_Year__c == 'No'), 'display:none', 'border: 0px !important;')}">
                     <apex:pageBlockSection columns="3">
                         <apex:outputPanel >
@@ -1298,7 +1301,7 @@
                         <apex:actionFunction name="deleteInternationalSale" action="{!deleteInternationalSales}" rerender="salesList">
                             <apex:param value="" name="recordId" assignTo="{!editSalesId}" />
                         </apex:actionFunction>
-                </div>
+                </div>--->
 
             </div>  <!-- EO APContainer -->
          </apex:pageBlock>
