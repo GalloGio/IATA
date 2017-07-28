@@ -860,6 +860,7 @@
         <fields>ANG_Issued_Date__c</fields>
         <fields>ANG_Source__c</fields>
         <fields>ANG_expiration_date_ff__c</fields>
+        <fields>ANG_Event_Status__c</fields>
         <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
