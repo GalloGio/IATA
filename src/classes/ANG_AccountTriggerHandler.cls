@@ -70,6 +70,10 @@ public class ANG_AccountTriggerHandler {
 		//create cases
 		List<Case> newCases = new List<Case>();
 		Id saamRecordType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		dmlOpts.assignmentRuleHeader.useDefaultRule = true;
+
 		for(Account acc : downGradeAtoB){
 			Case c = new Case();
 			c.RecordTypeId = saamRecordType;
@@ -82,6 +86,9 @@ public class ANG_AccountTriggerHandler {
 			c.CaseArea__c = 'Risk Management Process'; 
 			c.Reason1__c = 'Financial Security Update';
 			c.Visible_on_ISS_Portal__c = false;
+
+			//make sure that the default assignment rule is used
+			c.setOptions(dmlOpts);
 
 			newCases.add(c);
 		}
