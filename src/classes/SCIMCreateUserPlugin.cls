@@ -98,8 +98,6 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
             upal.add(upa);
         }
 
-        System.debug(LoggingLevel.ERROR, '------->' + upal);
-
         insert upal;
 
     }    
