@@ -50,7 +50,7 @@ global class ANG_ActivatePortalUsersBatch implements Database.Batchable<sObject>
                 
                 List <User> userList = [select Id, ContactId, UserType from User where ContactId = :conId AND UserType = 'PowerPartner'];
                 if (!userList.isEmpty()){
-                    ISSP_PortalUserStatusChange.updateUser(conId, true, currentEmail, profileId);
+                    ISSP_PortalUserStatusChange.updateUser(conId, true, currentEmail, profileId, '');
                     //ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new Set<Id>{userList[0].Id});
                 }
                 else{
