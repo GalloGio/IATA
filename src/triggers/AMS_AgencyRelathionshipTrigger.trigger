@@ -2,6 +2,9 @@ trigger AMS_AgencyRelathionshipTrigger on AMS_Agencies_relationhip__c (after ins
 
     if(!AMS_TriggerExecutionManager.checkExecution(AMS_Agencies_relationhip__c.getSObjectType(), 'AMS_AgencyRelathionshipTrigger')) { return; }
     
+    if(!AMS_AgencyRelationshipTriggerHandler.isToRunTrigger)
+    	return;
+
     if (Trigger.isAfter && Trigger.isInsert) {
         AMS_AgencyRelationshipTriggerHandler.handleAfterInsert(Trigger.new);
     } else if (Trigger.isAfter && Trigger.isUpdate) {

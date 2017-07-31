@@ -31,6 +31,16 @@ public class AMS_OSCAR_ProcessViewerController {
         }
     }
 
+    public Boolean isNotNewGenProcess{
+        get{
+            return (
+                oscar != null
+                && oscar.Process__c != AMS_Utils.NEWHELITE
+                && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+            );
+        }
+    }
+
     private Boolean dueDiligenceBlocked {
         get{
             return (
@@ -65,6 +75,16 @@ public class AMS_OSCAR_ProcessViewerController {
     }
     public boolean getIsAgencyChange(){
         return oscar.RecordType.DeveloperName == 'CHANGE';
+    }
+
+    public Boolean isValidationCompleted {
+        get{
+            return (
+                oscar != null
+                && (oscar.STEP15__c == AMS_Utils.PASSED || oscar.STEP15__c == AMS_Utils.FAILED
+                ||oscar.STEP25__c == AMS_Utils.PASSED || oscar.STEP25__c == AMS_Utils.FAILED)
+            );
+        }
     }
 
     public AMS_OSCAR_ProcessViewerController() {
@@ -263,7 +283,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name  FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
