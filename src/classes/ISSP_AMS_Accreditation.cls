@@ -5381,12 +5381,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             }
         }
 
-            if (amsOfficeType == 'Branch') {
-                if (newForm.Wholly_owned_by_this_Head_Office__c == null) {
+            if (amsOfficeType == 'Branch') { 
+                if (newForm.Wholly_owned_by_this_Head_Office__c == null && !newCase.Reason1__c.startsWith('New TIDS')) { // not for TIDS
                     newForm.Wholly_owned_by_this_Head_Office__c.addError(Label.ISSP_YouMustEnter);
                     errorFound = true;
                 }
-                if (newForm.Wholly_managed_by_this_Head_Office__c == null) {
+                if (newForm.Wholly_managed_by_this_Head_Office__c == null && !newCase.Reason1__c.startsWith('New TIDS')) { // not for TIDS
                     newForm.Wholly_managed_by_this_Head_Office__c.addError(Label.ISSP_YouMustEnter);
                     errorFound = true;
                 }

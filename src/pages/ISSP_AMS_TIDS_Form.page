@@ -736,6 +736,28 @@
                     
                     <apex:inputField value="{!newForm.ISSP_AMS_Legal_Status__c}" id="LegalStatus" onchange="toggleLegalStatus('{!$Component.LegalStatus}');" rendered="{!AND(amsOfficeType=='HO', newCase.Reason1__c!='New BR Abroad')}"/>-->
                 </apex:pageBlockSection>
+
+                <apex:outputPanel rendered="{!OR(amsOfficeType!='HO',newCase.Reason1__c=='New BR Abroad')}">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageblocksectionitem >
+                            <apex:outputlabel value="{!$Label.ISSP_CompanyName}" />
+                            <apex:outputfield value="{!hqAccount.Name}" />
+                        </apex:pageblocksectionitem>
+                        <apex:outputField value="{!hqAccount.TradeName__c}"/>
+                        <apex:outputText value="{0}<br/>{1}<br/>{2}" escape="false" label="{!$Label.ISSP_AMS_Step3_HO_Full_Address}">
+                            <apex:param value="{!hqAccount.BillingStreet}" />
+                            <apex:param value="{!hqAccount.BillingCity}{!IF(hqAccount.BillingPostalCode!='', ', ' + hqAccount.BillingPostalCode, '')}" />
+                            <apex:param value="{!IF(hqAccount.BillingState!='',hqAccount.BillingState + ',&nbsp;','')}{!hqAccount.BillingCountry}" />
+                        </apex:outputText>                       
+                        <apex:outputField value="{!hqAccount.Website}"/>
+                        <apex:outputField value="{!hqAccount.Phone}" label="{!$Label.ISSP_Registration_BusinessPhone}"/>
+                        <apex:outputField value="{!hqAccount.Email__c}" label="{!$Label.ISSP_Office_Email}"/>
+                        <apex:outputField value="{!hqAccount.Mobile__c}"/>
+                        <apex:outputField value="{!hqAccount.Fax}"/>
+                        <apex:outputField value="{!hqAccount.IATACode__c}"/>
+                        <!--<apex:outputField value="{!newForm.Map_Company_Type_to_Legal_Status__c}"/>-->
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
         		
                 <span id="nav_two"></span>
                  <apex:pageBlockSection columns="2" collapsible="false">
@@ -783,6 +805,7 @@
               
               	<!--
                 <apex:outputPanel rendered="{!OR(NOT(amsOfficeType=='HO'),newCase.Reason1__c=='New BR Abroad')}">
+                	
                     <apex:outputText rendered="{!amsOfficeType=='Branch'}">
                     <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Section_2_SubSection_1}</strong></div>
                     </apex:outputText>
@@ -848,7 +871,7 @@
                     <apex:inputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" showdatepicker="true" rendered="{!AND(OR(amsOfficeType=='HO',amsOfficeType=='Branch'), countryCheckList.License_required__c==true)}" />                
                     <apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" showdatepicker="true" rendered="{!AND(OR(amsOfficeType=='HO',amsOfficeType=='Branch'), countryCheckList.Registration_required__c==true)}" /> 
                </apex:pageBlockSection>
-               <!--
+               
                <apex:pageBlockSection columns="2" id="branchphonefax" rendered="{!OR(newCase.Reason1__c=='New BR Abroad', amsOfficeType=='Branch', isTerminatedAgent, isNewHOforAccredAgent)}">
                     <apex:outputText value="{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}" style="font-weight:bold"/>
                     <apex:outputtext ></apex:outputtext>
@@ -908,8 +931,8 @@
                         </DSE:DS_DataQuality>
                     </apex:pageBlockSection>
                 </apex:pageBlockSection>
-               -->
-               <!--
+               
+               
                <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isocountry.Local_language_Agency_details_required__c}">
                     <apex:facet name="header">
                         <apex:outputpanel >
@@ -954,7 +977,7 @@
                        <apex:inputField value="{!newForm.Local_Postal_Address_Area__c}" styleClass="PostalArea"/>
                        <apex:outputText value="{!CASE(isocountry.ISO_Code__c, 'KR', isocountry.IATA_Contry_KR__c, 'JP', isocountry.IATA_Country_JP__c, 'BR', isocountry.IATA_Country_PT__c, isocountry.IATA_Country_ZH__c)}" label="Country"/>
                    </apex:pageBlockSection>
-                </apex:pageBlockSection> -->
+                </apex:pageBlockSection> 
                 
                <span id="nav_three"></span>
                 <apex:pageblocksection columns="1" collapsible="false">
@@ -1215,8 +1238,8 @@
                      </apex:pageBlockTable>
                 </apex:pageBlockSection>
                 </div>-->
-            <span id="nav_five"></span>
-                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
+            	<span id="nav_five"></span>
+            	<apex:pageBlockSection id="sectionSix" collapsible="false" columns="1"  rendered="{!amsOfficeType=='HO'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             {!$Label.ISSP_AMS_TIDS_Step3_5_Other_Info}
@@ -1225,7 +1248,7 @@
                 </apex:pageBlockSection>
 
                 
-                <apex:pageBlockSection columns="1" >
+                <apex:pageBlockSection columns="1"  rendered="{!amsOfficeType=='HO'}">
                 	<apex:outputlabel value="{!$Label.ISSP_AMS_TIDS_National_Association_Member}" />
                 	<apex:inputField value="{!newForm.Give_the_name_of_the_association_s__c}" style="width:350px;" label="{!$Label.ISSP_AMS_TIDS_National_Association_Names}"/>
                 	<apex:outputlabel value="{!$Label.ISSP_AMS_TIDS_National_Association_Not_Member}" />
