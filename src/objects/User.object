@@ -545,7 +545,7 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
     </fields>
     <fields>
         <fullName>EmailForSSO__c</fullName>
-        <description>This is a copy of the standard email field. Required for SSO and the connected app configuration.</description>
+        <description>This is a copy of the standard email field. Required for the connected app configuration.</description>
         <externalId>false</externalId>
         <formula>Email</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -737,6 +737,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <externalId>false</externalId>
         <label>IFAP Close from any Status</label>
         <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IFG_Account_Member__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.IFG_Member__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IFG Account Member</label>
         <type>Checkbox</type>
     </fields>
     <fields>
