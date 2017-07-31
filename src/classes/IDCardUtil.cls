@@ -405,6 +405,7 @@ public static String generateVER(Account theAccount) {
         if (country.ISO_Code_Numeric__c == null)
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
+        string newValue = 'New';
         // If there are other VER numbers for this Country I just increase the highest
         List<Contact> c = database.query('SELECT Ver_Number_2__c ' +
                                          'FROM Contact ' +
@@ -413,8 +414,8 @@ public static String generateVER(Account theAccount) {
                                          'ORDER BY Ver_Number_2__c DESC LIMIT 1  ');
         List<ID_Card_Application__c> a = database.query('SELECT Ver_Number__c ' +
                                          'FROM ID_Card_Application__c ' +
-                                         'WHERE  Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
-                                         'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\' ' +
+                                         'WHERE  Type_of_application__c = :newValue AND (Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
+                                         'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\')' +
                                          'ORDER BY Ver_Number__c DESC LIMIT 1  ');
 
 
@@ -434,6 +435,7 @@ public static String generateVER(Account theAccount) {
 
         string formattedCounter = String.valueOf(counter).right(6).leftpad(6).replace(' ', '0');
         string newVER = 'Z5' + formattedIsoCodeNumeric + formattedCounter;
+        system.debug('VER# '+ newVER);
         return newVer;
     }
 

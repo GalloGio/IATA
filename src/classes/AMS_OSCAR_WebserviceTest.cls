@@ -173,4 +173,20 @@ public class AMS_OSCAR_WebserviceTest {
         Test.stopTest();
     }
 
+    static testMethod void test_riskEventCreation() {
+        
+        setup();
+        
+        Test.startTest();
+
+        String resultcreateSIDRALiteERROR = AMS_OSCAR_Webservice.createRiskEvent(oscar.Id);
+
+        Test.stopTest();
+
+        oscar = [SELECT Risk_event_creation_date__c, STEP36__c FROM AMS_OSCAR__c WHERE Id =: oscar.Id];
+
+        system.assertEquals(oscar.Risk_event_creation_date__c, System.today());
+        system.assertEquals(oscar.STEP36__c, AMS_Utils.PASSED);
+    }
+
 }

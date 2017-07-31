@@ -98,7 +98,7 @@
     <fields>
         <fullName>Accredited_By__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By__r.Definition__c</formula>
+        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By_Formula__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accredited By</label>
         <required>false</required>

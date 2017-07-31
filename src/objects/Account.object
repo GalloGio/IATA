@@ -2719,17 +2719,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Financial_Review__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(CONTAINS(Financial_Review_Result__c , &apos;Unsatisfactory&apos;),&apos;Failed&apos;,&apos;Passed&apos;)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Financial Review</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>ANG_HE_CashCondition__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2826,6 +2815,10 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Closed – 3-month freeze period</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Blocked</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>
@@ -4107,7 +4100,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <fields>
         <fullName>BSP_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF ( BSP_Participant_formula__c = &apos;Yes&apos;, IATA_ISO_Country__r.BSP_Country_free_text__c, &apos;&apos;)</formula>
+        <formula>IATA_ISO_Country__r.Name</formula>
         <label>BSP Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -4928,7 +4921,7 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
     <fields>
         <fullName>CASS_Name__c</fullName>
         <externalId>false</externalId>
-        <formula>IF (  Cass_Participant_formula__c  = &apos;Yes&apos;, IATA_ISO_Country__r.CASS_Country_free_text__c, &apos;&apos;)</formula>
+        <formula>IATA_ISO_Country__r.Name</formula>
         <label>CASS Name</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -7596,12 +7589,6 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>DandbCompanyId</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -7639,6 +7626,15 @@ V - Co-operative</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Date_Organisation_Status_attained__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Organisation Status attained</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
     </fields>
     <fields>
         <fullName>Date_of_most_recent_name_change__c</fullName>
@@ -7732,11 +7728,6 @@ V - Co-operative</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>DunsNumber</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>EF_Additional_SAP_Nr__c</fullName>
@@ -8919,6 +8910,15 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Percent</type>
     </fields>
     <fields>
+        <fullName>IFG_Member__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IFG Member</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ISS_SIS_TC_Accepted_Date__c</fullName>
         <externalId>false</externalId>
         <label>SIS TC Accepted Date</label>
@@ -9867,6 +9867,10 @@ J-Joint Vent</inlineHelpText>
                 <fullName>J</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>W</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
@@ -10103,6 +10107,17 @@ J-Joint Vent</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Main_Accreditation_Organization__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Location_Class__c , &quot;W&quot;) , &quot;ARC&quot;, IF( ISPICKVAL(Location_Class__c, &quot;D&quot;) , &quot;DOM&quot;, IF( NOT(ISBLANK(WebStar_ID__c)) , &quot;IATAN&quot;, &quot;IATA&quot;) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Accreditation Organization</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Manager_First_Name__c</fullName>
         <externalId>false</externalId>
         <label>Manager First Name</label>
@@ -10242,16 +10257,6 @@ J-Joint Vent</inlineHelpText>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>NaicsCode</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
-        <fullName>NaicsDesc</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Name</fullName>
@@ -11057,7 +11062,7 @@ J-Joint Vent</inlineHelpText>
     <fields>
         <fullName>Quality__c</fullName>
         <externalId>false</externalId>
-        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D7E0000008gLy&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
+        <formula>If( ISPICKVAL (ACLI_Status__c,&apos;Inactive Company&apos;),IMAGE(&quot;/servlet/servlet.ImageServer?id=015w0000001yjh0&amp;oid=00D2000000008TF&amp;lastMod=1394110707000&quot;,&quot;Inactive Airline&quot;),
 IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.DeveloperName = &quot;IATA_Agency&quot; || RecordType.DeveloperName = &quot;IATA_Airline_BR&quot; || RecordType.DeveloperName = &quot;Others&quot; || RecordType.DeveloperName = &quot;Operator&quot; ||RecordType.DeveloperName = &quot;IATA_GSA&quot; ),IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000001yCfW&quot;,&quot;YES&quot;),&quot;&quot;)
 )</formula>
         <label>Verified</label>
@@ -11156,6 +11161,45 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Record_Sharing_Criteria_AUX__c</fullName>
+        <description>Auxiliary field of field &quot;Record Sharing Criteria&quot; used to share accounts with IFG Support Team through Sharing Settings</description>
+        <externalId>false</externalId>
+        <label>Record Sharing Criteria AUX</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Sharing_Criteria__c</fullName>
+        <description>Used to share accounts with IFG Support Team through Sharing Settings</description>
+        <externalId>false</externalId>
+        <label>Record Sharing Criteria</label>
+        <picklist>
+            <picklistValues>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TIP User</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
@@ -11493,6 +11537,17 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SanctionNotice__c</fullName>
+        <description>Sanction Notice for AMP Team, Account Managers and direct reports</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sanction Notice for AMP Team, Account Managers and direct reports</inlineHelpText>
+        <label>SanctionNotice</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Search_Code__c</fullName>
@@ -13908,11 +13963,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Tradestyle</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-    </fields>
-    <fields>
         <fullName>Type</fullName>
         <picklist>
             <picklistValues>
@@ -14460,11 +14510,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <fullName>Website</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
-    </fields>
-    <fields>
-        <fullName>YearStarted</fullName>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
     </fields>
     <fields>
         <fullName>Zuora_Temp_ID__c</fullName>
@@ -23626,6 +23671,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
             <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
             </values>
@@ -25294,6 +25343,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -25644,6 +25697,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -26088,6 +26156,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -28287,6 +28359,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -28637,6 +28713,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -29189,6 +29280,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -31085,6 +31180,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -31200,6 +31299,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -31656,6 +31770,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -33804,6 +33922,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -34046,6 +34168,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>X</fullName>
                 <default>false</default>
             </values>
@@ -34209,6 +34335,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -35649,6 +35790,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -37319,6 +37464,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -37406,6 +37555,17 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -37852,6 +38012,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -40545,6 +40709,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -40987,6 +41155,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -43323,6 +43506,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
             <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
             </values>
@@ -45086,6 +45273,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -45436,6 +45627,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -45916,6 +46122,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -47900,6 +48110,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -48064,6 +48278,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -50333,6 +50562,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
             <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
             </values>
@@ -52280,6 +52513,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -52455,6 +52692,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -54660,6 +54912,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
             <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
             </values>
@@ -56685,6 +56941,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -56800,6 +57060,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -57364,6 +57639,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -59138,6 +59417,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -59253,6 +59536,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -59752,6 +60050,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -61526,6 +61828,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -61641,6 +61947,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -62140,6 +62461,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -64022,6 +64347,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -64372,6 +64701,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <values>
                 <fullName>Not applicable</fullName>
                 <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -64902,6 +65246,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -69181,6 +69529,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -69907,6 +70259,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region__c</picklist>
             <values>
                 <fullName>Africa</fullName>
@@ -69948,27 +70315,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>Remittance_frequency__c</picklist>
             <values>
-                <fullName>4 times per month</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Daily</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 10 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 3 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Every 5 days</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fortnightly</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -72520,6 +72867,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
             <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
             </values>
@@ -74757,6 +75108,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Location_Type__c</picklist>
@@ -75176,6 +75531,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -76788,6 +77158,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </picklistValues>
         <picklistValues>
             <picklist>ANG_IEP_Status__c</picklist>
+            <values>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Closed %E2%80%93 2-year freeze period</fullName>
                 <default>false</default>
@@ -79201,6 +79575,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <fullName>Volume</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Volume %28Local%29</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Level_of_risk__c</picklist>
@@ -79869,6 +80247,21 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Record_Sharing_Criteria__c</picklist>
+            <values>
+                <fullName>IFG Active Users</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP User</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -81832,10 +82225,13 @@ ID_Card_Key_Account_Discount__c &gt; 1))</errorConditionFormula>
         OR(ISCHANGED(Name),ISCHANGED(BillingStreet),
           ISCHANGED(BillingCity),ISCHANGED(BillingState),
           ISCHANGED(BillingCountry),ISCHANGED(BillingPostalCode),
+          ISCHANGED(BillingCountry),ISCHANGED(IATATrainingUrl__c),
+          ISCHANGED(BillingCountry),ISCHANGED(Website),
           ISCHANGED(IATA_ISO_Country__c)),
         RecordType.DeveloperName = &apos;IATA_Airline&apos;,
         NOT($User.Profile_Name__c =&apos;System Administrator&apos;),
         NOT($User.Profile_Name__c =&apos;MER Membership&apos;),
+        NOT($User.Profile_Name__c =&apos;Account management team&apos;),
         NOT($User.Profile_Name__c =&apos;System administrator - Stakeholders&apos;),
         NOT($User.Profile_Name__c =&apos;System Administrator - automated processes&apos;),
         NOT($User.Profile_Name__c =&apos;Developer&apos;)),       
@@ -81908,7 +82304,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
     </validationRules>
     <validationRules>
         <fullName>PreventEFStatusActiveIfParentInactive</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If Parent EF_Status is Inactive the child can&apos;t be active.</description>
         <errorConditionFormula>AND(
     ISPICKVAL(Parent.EF_Status__c, &apos;Inactive&apos;),

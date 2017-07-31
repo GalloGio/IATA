@@ -1,5 +1,7 @@
 public without sharing class AMS_Utils {
 
+    public static Boolean runningContactInsertUpdateFromOSCAR = false;
+
     public static Set<Id> AMSPROFILES {
         get {
             Set<Id> toReturn = new Set<Id>();
@@ -153,7 +155,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWAE    = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
     public static final String RECTYPE_NGCHANGES= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
@@ -982,11 +984,13 @@ public without sharing class AMS_Utils {
 
             if (previousIFAPCase.Financial_Security_Amount__c <> updatedIFAPCase.Financial_Security_Amount__c) {
                 oscar[0].Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
+                oscar[0].Requested_Bank_Guarantee_amount__c = updatedIFAPCase.Financial_Security_Amount__c;
                 mustUpdateOSCAR = true;
             }
 
             if (previousIFAPCase.Financial_Security_Currency__c <> updatedIFAPCase.Financial_Security_Currency__c) {
                 oscar[0].Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
+                oscar[0].Requested_Bank_Guarantee_Currency__c = updatedIFAPCase.Financial_Security_Currency__c;
                 mustUpdateOSCAR = true;
             }
 
@@ -1070,7 +1074,7 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c
+                Link_agent_name__c, ANG_Accreditation_Model__c
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1131,6 +1135,9 @@ public without sharing class AMS_Utils {
                 acc.ShippingCountry = onlineAcc.Shipping_ISO_Country__r.Name;
                 acc.ShippingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.Shipping_ISO_State__r.Name : null;
                 acc.BillingState = onlineAcc.IATA_ISO_State__r.Valid_for_Address__c == true ? onlineAcc.IATA_ISO_State__r.Name : null;
+                
+                acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
+
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
@@ -1162,6 +1169,22 @@ public without sharing class AMS_Utils {
         
         return null;
         
+    }
+
+    private static string decodeAMFromOscarProcess(String oscarProcess, String oldAccountValue){
+
+        if(oscarProcess == NEWHELITE){
+
+            return ACCREDITATIONMODEL_CASHLESS;
+        
+        }else if(oscarProcess == NEWHESTANDARD){
+
+            return ACCREDITATIONMODEL_CASH;
+
+        }
+
+        return oldAccountValue;
+
     }
 
     private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
@@ -2022,9 +2045,42 @@ public static String fetchTypeOfCustomer (String locationType , String category)
                 return (sObj.get(field) == null) ? '' : sObj.get(field);
     }
 
-    /** 
-     Wrapper Object for Mapping the Entity for Field 
-     Example : change_code__r.Account__r.name 
+    /**
+    Will trigger the integration with EasyPay and generate a change code
+    **/
+    public static void startIntegration(List<Account> newAccs, Map<Id,Account> oldMap){
+
+        System.debug('startIntegration initiated.');
+        // get the configurations for the change code
+        Map<Account,AMS_ChangeCodes__c> mapAccCodeConf = AMS_ChangeCodesHelper.fetchChangeCodeConfiguration(newAccs, oldMap);
+
+        //only run if there are codes to be created
+        if(!mapAccCodeConf.keySet().isEmpty()){
+
+        //first insert change codes
+            Map<Account, Agency_applied_change_code__c> accChangeCodeMap = new Map<Account, Agency_applied_change_code__c>();
+            for(Account acc :mapAccCodeConf.keySet()){
+                accChangeCodeMap.put(acc,AMS_ChangeCodesHelper.generateIntegrationChangeCode(acc, mapAccCodeConf.get(acc)));
+        }
+
+            if(!accChangeCodeMap.values().isEmpty()){
+                insert accChangeCodeMap.values();
+        }
+
+            //do call only after the change codes are succesfully inserted - commented since this is now handled via Process Builder.
+            /* for(Account acc :accChangeCodeMap.keySet()){
+                if(!Test.isRunningTest()){
+                    ANG_IEP_CalloutHelper.invokeCustomImpl(accChangeCodeMap.get(acc).change_code__c,acc);
+                }
+           } */
+        }
+    }
+
+
+
+    /**
+     Wrapper Object for Mapping the Entity for Field
+     Example : change_code__r.Account__r.name
 
     */
     private class wrapperData {
@@ -2166,4 +2222,58 @@ public static String fetchTypeOfCustomer (String locationType , String category)
           return this;   
        }
     }
+
+    // compares two values in diff rates
+    // if firstValue < secondValue , returns 1
+    // if firstValue = secondValue , returns 0
+    // if secondvalue < firstValuue , returns 2
+    // if there is a rate problem, return -1
+    // if there is a amount problem, return -2
+    public static Integer compareRates(String firstCurrencyISOCode, Decimal firstValue,String secondCurrencyISOCode, Decimal secondValue ){
+
+        if(firstValue == null || secondValue == null){
+            System.debug('Returning -2');
+            return -2;
+        }
+
+        Set<String> currencies = new Set<String>{firstCurrencyISOCode, secondCurrencyISOCode};
+
+        List<CurrencyType> types = [SELECT Id, ConversionRate, DecimalPlaces, IsoCode FROM  CurrencyType where IsoCode in :currencies and IsActive = true];
+
+        if(types.size() != currencies.size()){
+            System.debug('Returning -1');
+            return -1;
+        }
+
+        Map<String,Double> rates = new Map<String,Double>();
+
+        rates.put(types.get(0).IsoCode, types.get(0).ConversionRate);
+        
+        if(types.size() > 1)
+            rates.put(types.get(1).IsoCode, types.get(1).ConversionRate);
+
+        if(firstValue / rates.get(firstCurrencyISOCode) < secondvalue / rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 1');
+            return 1;
+        }
+
+        if(firstValue / rates.get(firstCurrencyISOCode) > secondvalue / rates.get(secondCurrencyISOCode)){
+            System.debug('Returning 2');
+            return 2;
+        }
+
+        System.debug('Returning 0');
+        return 0;
+    
+    }
+
+    public static Contact getIEPContact(String conId) {
+        return [SELECT User_Portal_Status__c,
+                       Account.Location_Type__c,
+                       Account.Top_Parent__r.Location_Type__c, 
+                       Account.ANG_IEP_Status_FF__c,
+                       Account.Is_Branch_Abroad__c
+                  FROM Contact WHERE Id = :conId limit 1];                  
+    }
+
 }
