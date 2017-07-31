@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email to notify the Account IEP Status change from In Progress to Open</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP_Change_IEP_Status_InProgress_to_Open</name>
+    <style>none</style>
+    <subject>Confirmation of opening of your agency&apos;s IATA EasyPay Account</subject>
+    <textOnly>{!ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Mail}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

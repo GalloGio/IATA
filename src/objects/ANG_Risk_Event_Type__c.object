@@ -56,6 +56,19 @@
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
+        <fullName>ANG_Agency_Risk_Calculation__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Agency Risk Calculation</label>
+        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
+        <relationshipLabel>Risk Event Types</relationshipLabel>
+        <relationshipName>Agency_Risk_Calculation</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ANG_Description__c</fullName>
         <description>The full name of this type</description>
         <externalId>false</externalId>
@@ -92,11 +105,51 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <fields>
+        <fullName>ANG_nr_occurence_ff__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(!ISBLANK(ANG_Agency_Risk_Calculation__c) &amp;&amp; !ISPICKVAL(ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,&apos;Yes&apos;),TEXT(ANG_Agency_Risk_Calculation__r.ANG_Occurrence_Num__c),&apos;Adjusted&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nr Occurences</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Grouping_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Grouping Number</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Limit_Cash_conditions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Limit Cash conditions</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Risk Event Type</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>ANG_Risk_ID__c</columns>
+        <columns>NAME</columns>
+        <columns>ANG_Expiration__c</columns>
+        <columns>Limit_Cash_conditions__c</columns>
+        <columns>ANG_Description__c</columns>
+        <columns>ANG_nr_occurence_ff__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Short Name</label>
@@ -110,6 +163,7 @@
         <customTabListAdditionalFields>ANG_Expiration__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Description__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Risk_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ANG_nr_occurence_ff__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ANG_Expiration__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ANG_Description__c</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ANG_Risk_ID__c</lookupPhoneDialogsAdditionalFields>

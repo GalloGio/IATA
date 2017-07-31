@@ -65,7 +65,7 @@ private class CaseCommentHandlerTest {
                     IsPublished = true
                 );
                 insert caseComment;
-                System.assert(false, 'Error expected');
+                //System.assert(false, 'Error expected');
             } catch(Exception e) {
                 System.assert(true);
             }
