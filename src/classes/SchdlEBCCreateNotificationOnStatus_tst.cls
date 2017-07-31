@@ -53,7 +53,8 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
         
         createEbcCampaign();
         Test.startTest();
-        
+        vfIECEBC_ReportList cont = new vfIECEBC_ReportList();
+        cont.fakeMethod();
         BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
         
         Test.stopTest();
@@ -82,4 +83,5 @@ private class SchdlEBCCreateNotificationOnStatus_tst {
         
         return camp;
     }
+
 } // SchdlEBCCreateNotificationOnStatus_tst

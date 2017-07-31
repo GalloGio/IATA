@@ -232,4 +232,36 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3,acontact4};
 
 	}
+
+	public static void createNewGenTestData(String newGenProcess)
+	{
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='France',ISO_Code__c='FR', ANG_Enable_NewGen__c = true)  ;
+        insert ctry ;
+
+        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'FR20', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctry.Id);
+        insert stt;
+		
+		Id accountRT = AMS_Utils.getId('Account', 'Standard_Account');
+		Id caseRT = AMS_Utils.getId('Case', 'OSCAR_Communication');
+		
+		List<Account> accountList = new List<Account>();
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='NewGenAgency',Short_Name__c='NewGenAgency');
+		insert a1;
+        
+        Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
+		insert co1;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Process__c = newGenProcess, Account__c = a1.id, Is_using_credit_card__c = true);
+		insert oscar;
+
+		Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = caseRT);
+        oscarCase.AccountId = a1.Id;
+        oscarCase.ContactId = co1.Id;
+        insert oscarCase;
+
+        oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+        update oscar;
+
+	}
 }
