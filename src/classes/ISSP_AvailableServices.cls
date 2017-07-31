@@ -405,9 +405,9 @@ public with sharing class ISSP_AvailableServices{
             List<Portal_Application_Right__c> appsGrantedList = new List<Portal_Application_Right__c>([Select p.Application_Name__c, p.PortalServiceTranslatedName__c ,p.Portal_Application__r.Description__c,
                                                                                                     p.Portal_Application__r.Requestable__c,
                                                                                                     p.Application_icon_del__c, p.Portal_Application__r.New_Window__c,
-                                                                                                    p.Right__c, p.Portal_Application__r.Application_icon_URL__c,
+                                                                                                    p.Right__c, p.IsSCIMIFG__c, p.Portal_Application__r.Application_icon_URL__c,
                                                                                                     p.Portal_Application__r.Name, p.Portal_Application__c,
-                                                                                                    p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,
+                                                                                                    p.My_Apps__c, p.Contact__c, p.Application_Start_URL__c,Technical_Provisioning_Status__c, //Mconde
                                                                                                     p.Case_creation_record_Type__c, p.Portal_Application__r.Service_Description__c
                                                                                                    From Portal_Application_Right__c p 
                                                                                                    where p.Contact__c =: currentPortalUser.ContactId and 
@@ -415,6 +415,14 @@ public with sharing class ISSP_AvailableServices{
                                                                                                         (p.Right__c = 'Access Granted'  or p.Right__c = 'Access Requested' or p.Right__c =: 'Access denied') and
                                                                                                          p.Portal_Application__r.Hide_on_Homepage__c = false ]);   
             if(appsGrantedList != null && appsGrantedList.size() > 0){
+                //MConde
+                if(appsGrantedList[0].Right__c != null && appsGrantedList[0].Technical_Provisioning_Status__c != null) {
+
+                    if(appsGrantedList[0].Right__c.equals('Access Granted') && appsGrantedList[0].Technical_Provisioning_Status__c.equals('IATA Access Granted') && appsGrantedList[0].IsSCIMIFG__c == true){
+                        return 'Access Under Provisioning';
+                    }
+
+                }
                 return appsGrantedList[0].Right__c;
             }else{
                 return null ;

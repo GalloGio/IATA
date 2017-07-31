@@ -578,7 +578,17 @@
                                         <!-- END SURVEY BUTTON -->
                                         
                                         <apex:outputfield value="{!newCase.CaseNumber}" rendered="{!NOT(isIFAPCase)}"/>
-                                        <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" />
+                                        <!-- basto1p -->
+                                        <apex:outputfield styleclass="lbl" value="{!newCase.Portal_Case_Status__c}" rendered="{!IF(statusValMapped=='NO_FIELD_MAP',true,false)}"/>
+                                        <apex:outputPanel rendered="{!IF(statusValMapped!='NO_FIELD_MAP',true,false)}">
+                                            <tr>
+                                                <th class="labelCol vfLabelColTextWrap  first " scope="row">{!$Label.Status}</th>
+                                                <td class="data2Col  first ">
+                                                    <span id="j_id0:existingCaseForm:j_id146:j_id187:j_id191">{!statusValMapped}</span>
+                                                </td>
+                                            </tr>
+                                        </apex:outputPanel>
+
                                         <apex:outputfield value="{!newCase.Subject}" />
                                         <apex:outputfield value="{!newCase.Description}" rendered="{!NOT(isOSCARCase)}" />
                                         <!-- 222 STATUS = {!newCase.status}<br />PortalStatus = {!newCase.Portal_Case_Status__c }<br />caseType = {!caseType}<br />PWCCase = {!isPWCCase}<br />isDPCuser = {!isDPCUser}<br />isPWCProfile = {!isPWCProfile}-->

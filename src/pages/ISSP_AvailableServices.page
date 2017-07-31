@@ -237,7 +237,7 @@
                   </apex:column>
             </apex:repeat>
             <apex:column headerValue="{!$Label.ISSP_Status}">
-                  <apex:outputtext value="{!CASE(item.Status, 'Access Granted', $Label.ISSP_Access_Granted, 'Access Denied', $Label.ISSP_Access_Denied, $Label.ISSP_Access_Requested)}" rendered="{!IF(item.Status != null , true,false)}"/>
+                  <apex:outputtext value="{!CASE(item.Status, 'Access Under Provisioning', $Label.ISSP_Access_Under_Provisioning, 'Access Granted', $Label.ISSP_Access_Granted, 'Access Denied', $Label.ISSP_Access_Denied, $Label.ISSP_Access_Requested)}" rendered="{!IF(item.Status != null , true,false)}"/>
 
                   <a onclick="doRequest('{!item.recordService.Id}')"   class="pull-right btn_iata_success btn btn-block"  
                   style="display:{!IF(item.Status == null || item.Status =='' , '','none')}">
@@ -495,7 +495,10 @@
           </div>
           <div class="modal-body">
             <p>
-              <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_Thanks_for_request_cns,$Label.ISSP_Thanks_for_request)}"/>
+                <!-- basto1p SCIM_App_Name__c -->
+              <apex:outputText value="{!IF(communityName=='CNS',$Label.ISSP_Thanks_for_request_cns,
+              IF(   Serv.recordService.Name=='IFG Production'
+                 || Serv.recordService.Name=='IFG Pre-Production',$Label.IFG_Thanks_for_request,$Label.ISSP_Thanks_for_request))}"/>
             </p>
           </div>
         </div>

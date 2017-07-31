@@ -18,11 +18,12 @@ global class AMS_UpdateExpiryDate implements Database.Batchable<sObject> {
             agencyIDS.add(s.ID);
             agencies.put(s.ID, (AMS_Agency__c)s);
         }
-
-        List<AMS_Inspection__c> inspections = [select id, Accreditation_Endorsement_organisation__c, Accreditation_Endorsement_Status_code__c, Agency__c, Date_Organisation_Status_attained__c
+        system.debug('agencies -->' + [select id, Accreditation_Endorsement_organisation__c, Account__r.Main_Accreditation_Organization__c, Account__r.Date_Organisation_Status_attained__c, Accreditation_Endorsement_Status_code__c, Agency__c, Date_Organisation_Status_attained__c
+                                                from AMS_Inspection__c LIMIT 2]);
+        List<AMS_Inspection__c> inspections = [select id, Accreditation_Endorsement_organisation__c, Account__r.Main_Accreditation_Organization__c,  Account__r.Date_Organisation_Status_attained__c, Accreditation_Endorsement_Status_code__c, Agency__c, Date_Organisation_Status_attained__c
                                                 from AMS_Inspection__c where Accreditation_Endorsement_Status_code__c = '0'
                                                                         AND Agency__c IN :agencyIDS
-                                                                        AND (Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATA' OR Accreditation_Endorsement_organisation__r.Air_Code__c = 'DOM')];
+                                                                        AND (Account__r.Main_Accreditation_Organization__c = 'IATA' OR Account__r.Main_Accreditation_Organization__c = 'DOM')];
 
         Map<String, AMS_Inspection__c> agencyToInspection = new Map<String, AMS_Inspection__c>();
         for(AMS_Inspection__c i:inspections){
@@ -30,7 +31,7 @@ global class AMS_UpdateExpiryDate implements Database.Batchable<sObject> {
                 agencyToInspection.put(i.Agency__c, i);
             }
             else{
-                if(agencyToInspection.get(i.Agency__c).Date_Organisation_Status_attained__c < i.Date_Organisation_Status_attained__c){
+                if(agencyToInspection.get(i.Agency__c).Account__r.Date_Organisation_Status_attained__c < i.Account__r.Date_Organisation_Status_attained__c){
                     agencyToInspection.put(i.Agency__c,i);
                 }
             }
@@ -38,7 +39,7 @@ global class AMS_UpdateExpiryDate implements Database.Batchable<sObject> {
 
         for(AMS_Inspection__c i:agencyToInspection.values()){
             if(agencies.get(i.Agency__c) != null){
-                agencies.get(i.Agency__c).Recert_Expiry_Date__c = i.Date_Organisation_Status_attained__c;
+                agencies.get(i.Agency__c).Recert_Expiry_Date__c = i.Account__r.Date_Organisation_Status_attained__c;
                 agenciesToUpdate.add(agencies.get(i.Agency__c));
             }
         }

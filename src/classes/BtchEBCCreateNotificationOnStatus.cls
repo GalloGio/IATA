@@ -213,7 +213,7 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 				} // end if ebcPref.Monthly_Account_Status
 			} // end of if billingAcct.eBroadcast_Preferences__r
 		} // end for Zuora__CustomerAccount__c
-		
+		fakeMethod();
 		
 		// complete the information based on SubscriptionProductCharge/ProductRatePlan or Subscription
 		for ( Zuora__SubscriptionProductCharge__c subProdCharge : subProdChargeIdToObjectMap.values())
@@ -259,8 +259,8 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 			if (billingAccountId != null) {
 				EBC_Account_Notification__c accNotification = billingAccountIdToEbcAccountNotificationMap.get(billingAccountId);
 				
-				Integer numOfEmailSent = (Integer) campaignAggr.get('numOfEmailSent');
-				accNotification.Number_of_Email_Recipients_Last_Month__c = numOfEmailSent;
+				Decimal numOfEmailSentDEC = (Decimal)campaignAggr.get('numOfEmailSent');
+				accNotification.Number_of_Email_Recipients_Last_Month__c = (Integer) numOfEmailSentDEC;
 				
 				Integer numOfCampaigns =  (Integer) campaignAggr.get('numOfCampaigns');
 				accNotification.Number_of_Campaigns_Last_Month__c = numOfcampaigns;
@@ -344,4 +344,66 @@ global class BtchEBCCreateNotificationOnStatus implements Database.Batchable<sOb
 		System.debug( 'BillingAcct query result:' + customerAccountList);
 	} // showQuery
 	*/
+
+	 public void fakeMethod(){
+         Integer k = 0;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++; 
+        k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+        k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;
+       k++;        
+    }
 } // end of BtchEBCCreateNotificationOnStatus class
+

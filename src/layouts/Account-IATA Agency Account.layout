@@ -124,6 +124,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_CashCondition__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -245,6 +249,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Financial_Review_Result__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ICCS_Membership_Status__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
