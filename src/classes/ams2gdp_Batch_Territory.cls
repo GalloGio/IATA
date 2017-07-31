@@ -9,6 +9,8 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 	public Datetime syncStartedDate;
 	public Boolean processNextBatch;
 	public Boolean throwException;
+	Set<String> locationsSet;
+	Set<String> statusSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -20,16 +22,29 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		String fields = ' Id, Name, Comments__c, Appointment__c, Appointment__r.Account__c, Appointment__r.Accreditation_Endorsement_Status_code__c, Appointment__r.Date_Organisation_Status_attained__c, Appointment__r.Legacy_External_ID__c '
 			+', Appointment__r.Account__r.Location_Class__c, Appointment__r.Account__r.Check_Digit__c, Appointment__r.Account__r.IATACode__c, Appointment__r.AMS_Appointment_Type__c ' 
 			+', Appointment__r.Account__r.Organization_Last_Change_Date__c, Appointment__r.Account__r.Verification_Date__c,  Appointment__r.Account__r.Original_Approval_DAte__c '
-			+', Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c, Appointment__r.Accreditation_Endorsement_organisation__r.Name  '
+			+', Appointment__r.Account__r.Main_Accreditation_Organization__c, Appointment__r.Accreditation_Endorsement_organisation__r.Name  '
 			+',  ISO_Country__r.ISO_Code__c,  ISO_Country__r.Name, ISO_Country__r.ISO_Country_Short_Name__c,  ISO_State__r.ISO_Code__c '
 			+', Appointment__r.Account__r.IATA_ISO_Billing_State__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c, Appointment__r.Account__r.IATA_ISO_Country__r.Name, Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c, Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c' 
+			+', Appointment__r.Airline__r.IATACode__c, Appointment__r.Airline__r.Name, Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c '
 			+', Appointment__r.Account__r.state_numeric_code__c';
 
 		//-- Query conditions 
 		List<String> conditions = new List<String>{'Appointment__r.Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Appointment__r.Account__r.IATACode__c != null'
-			, 'Appointment__r.Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Valid_Code_For_GDP_Replication__c = true '
+			, 'Appointment__r.Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+			, 'Appointment__r.Account__r.CNS_Agency__c = false '
+			, 'Appointment__r.Account__r.CNS_Account__c = false '
 		}; 
+
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+			statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+			conditions.add(' Appointment__r.Account__r.Status__c IN :  statusSet');
+		}
+		if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+			locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+			conditions.add(' Appointment__r.Account__r.Location_Class__c IN :  locationsSet');
+		}
 
 		if(extraIds!=null && extraIds.size() > 0) {
 			 if(extraIds[0]=='none'){	
@@ -51,7 +66,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{
@@ -73,7 +88,7 @@ global class ams2gdp_Batch_Territory implements Database.Batchable<sObject> , Da
 		query = String.format('SELECT {0} '
 			+	'FROM AMS_Territory__c '
 			+ 	'WHERE {1} '
-			+	'ORDER BY Appointment__r.Account__c, Appointment__r.Accreditation_Endorsement_organisation__r.Air_Code__c', 
+			+	'ORDER BY Appointment__r.Account__c, Appointment__r.Account__r.Main_Accreditation_Organization__c', 
 			new List<String>{fields,String.join(conditions, ' AND ')}
 		);
 	}

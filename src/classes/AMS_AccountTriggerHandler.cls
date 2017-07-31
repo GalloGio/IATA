@@ -71,6 +71,8 @@ public class AMS_AccountTriggerHandler {
                     ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
                 }
             }
+            if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
+                ag.Date_Organisation_Status_attained__c = Date.today();
         }
 
        System.debug('Start CASS verification');
@@ -84,6 +86,8 @@ public class AMS_AccountTriggerHandler {
        }else{
             System.debug('Not Handling minor changes');
        }
+
+       AMS_Utils.startIntegration(accs,oldMap);
 
     }
 

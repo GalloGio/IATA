@@ -13,10 +13,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ANG_Order__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>ANG_Occurrence_Num__c</field>
             </layoutItems>
         </layoutColumns>
@@ -24,10 +20,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Adjusted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>ANG_Accreditation_Model__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -64,9 +56,20 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ANG_Remittance_Frequency__c</fields>
+        <fields>ANG_Parent_Occurences__c</fields>
         <fields>ANG_Occurrence_Num__c</fields>
-        <fields>ANG_Points__c</fields>
         <relatedList>ANG_Agency_Risk_Calculation__c.ANG_Calculation_Rule__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_Description__c</fields>
+        <fields>ANG_Risk_ID__c</fields>
+        <fields>ANG_Expiration__c</fields>
+        <fields>Limit_Cash_conditions__c</fields>
+        <relatedList>ANG_Risk_Event_Type__c.ANG_Agency_Risk_Calculation__c</relatedList>
+        <sortField>ANG_Risk_ID__c</sortField>
+        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -74,7 +77,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h7E000000JrBW</masterLabel>
+        <masterLabel>00h6E000000Rj3h</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
