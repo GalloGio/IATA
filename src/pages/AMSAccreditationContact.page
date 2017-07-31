@@ -376,7 +376,7 @@
                                             <table class="slds-table slds-table--bordered slds-max-small-table--stacked-horizontal slds-no-row-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_owner__c.Label}&nbsp;&nbsp;
                                                             <apex:actionRegion >
                                                                 <apex:inputCheckbox value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" disabled="{!blockOwnershipEdit}">
@@ -389,21 +389,29 @@
                                                             <!-- <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" rendered="{!blockOwnershipEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Agency_owner__c}" onChange="changeOwnershipServer({!acIndex})" id="agencyOwner" rendered="{!NOT(blockOwnershipEdit)}"/> -->
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Agency_role__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Agency_role__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Agency_role__c}" id="agencyRole" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Authorised_signatory__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Authorised_signatory__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Authorised_signatory__c}" id="authorizedSignatory" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
-                                                        <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
                                                             {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Financial_Assessment_Contact__c.Label}&nbsp;&nbsp;
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" rendered="{!s.blockEdit}" html-disabled=""/>
                                                             <apex:inputField value="{!s.ac.Financial_Assessment_Contact__c}" id="financialAssessment" rendered="{!NOT(s.blockEdit)}"/>
                                                         </th>
+                                                        <th class="slds-text-heading--label slds-size--1-of-5" scope="col">
+                                                            <apex:outputPanel rendered="{!isNewGenProcess}">
+                                                                {!$ObjectType.AMS_Accreditation_Contact__c.Fields.Portal_administrator__c.Label}&nbsp;&nbsp;
+                                                            </apex:outputPanel>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" rendered="{!AND(s.blockEdit,isNewGenProcess)}" html-disabled=""/>
+                                                            <apex:inputField value="{!s.ac.Portal_administrator__c}" id="portalAdmin" rendered="{!AND(NOT(s.blockEdit), isNewGenProcess)}"/>
+                                                        </th>
+                                                        
                                                     </tr>
                                                 </thead>
                                             </table>

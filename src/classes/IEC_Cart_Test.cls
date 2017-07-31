@@ -72,7 +72,7 @@ private class IEC_Cart_Test {
 		}
 	}
 
-	@isTest(seeAllData=true)
+	/*@isTest(seeAllData=true)
 	static void test3() {
 		IEC_Cart cart;
 		IEC_Cart.CartItem cartItem;
@@ -113,7 +113,7 @@ private class IEC_Cart_Test {
 
 		System.runAs(oUser) {
 			try {
-				cart.saveOrderAndCartItemsToDatabase(cart.getCartOrder(), cart.cartItemMap.values());
+				//cart.saveOrderAndCartItemsToDatabase(cart.getCartOrder(), cart.cartItemMap.values());
 			} catch (Exception e) {
 			}
 
@@ -152,6 +152,6 @@ private class IEC_Cart_Test {
 		}
 		
 		ecomProductList = cart.getEcomProductsByProductIdList(productIdList);
-	}
+	}*/
 
 }

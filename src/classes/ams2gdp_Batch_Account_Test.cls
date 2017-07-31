@@ -129,5 +129,21 @@ private class ams2gdp_Batch_Account_Test
  			Database.executeBatch(batch);
 		Test.stopTest();
 	}
-	
+
+	@isTest static void positiveTestAccount2Batch3() {
+        TestData.ForReplicatePhone testData = new TestData.ForReplicatePhone();
+		
+        System.runAs(testData.user) {
+			
+			AMS_2_GDP_Settings__c setting = new AMS_2_GDP_Settings__c();
+			setting.Location_Classes__c = 'D';
+			insert setting;
+			Test.startTest(); 
+				ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false);
+					batch.throwException = true; 
+				Database.executeBatch(batch);
+			Test.stopTest();
+			// system.assert(batch.query, '5');
+		}
+	}
 }

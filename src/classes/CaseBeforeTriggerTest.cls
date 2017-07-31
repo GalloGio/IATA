@@ -178,7 +178,7 @@ private class CaseBeforeTriggerTest {
         insert c;
     }
 
-
+/*
     @isTest static void unitTestPortal() {
         ID hqrt = Schema.SObjectType.Account.RecordTypeInfosByName.get('Airline Headquarters').RecordTypeId ;
         ID PortalsharingRTID = clsCaseRecordTypeIDSingleton.getInstance().RecordTypes.get('External Cases (InvoiceWorks)');
@@ -310,6 +310,7 @@ private class CaseBeforeTriggerTest {
         
 
     }
+	*/
     //*********************************
 
     @isTest static void unitTest2() {
