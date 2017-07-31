@@ -59,14 +59,14 @@ public class ams2gdp_Selector
 		return result;
 	}
 
-	public static List<String> getAMS_InspectionIdsByAccountIds(List<String> accountIds)
+	/*public static List<String> getAMS_InspectionIdsByAccountIds(List<String> accountIds)
 	{
 		List<String> result = new List<String>(); 
 		for(AMS_Inspection__c item:[SELECT Id FROM AMS_Inspection__c WHERE Account__c IN:accountIds])
 			result.add(item.Id);
 		
 		return result;	
-	}
+	}*/
 
 	public static List<String> getAMS_TerritoryIdsByAccountIds(List<String> accountIds)
 	{

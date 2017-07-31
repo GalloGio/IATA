@@ -15,6 +15,8 @@
 	public Boolean throwException;
 	public String batchName;
 	public List<String> extraIds;
+    Set<String> locationsSet;
+    Set<String> statusSet;
 
 	public void init(Boolean runNext, List<String> ids)
 	{
@@ -27,15 +29,18 @@
 		String fields = ' Id, GR_Item__c,GR_Code__c, AMS_Agency_Profile__c.Account__c';
 
 		//-- Query conditions 
-		String accreditation_condition = 'SELECT Related_Account__c '
-			+	'FROM Accreditation__c '
-			+	'WHERE Endorsed_Accredited_By__r.Code__c IN (\'IATA\',\'IATAN\',\'DOM\')'
-			+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
+		// String accreditation_condition = 'SELECT Related_Account__c '
+		// 	+	'FROM Accreditation__c '
+		// 	+	'WHERE Endorsed_Accredited_By_Formula__c IN (\'IATA\',\'IATAN\',\'DOM\')'
+		// 	+	'	AND Status__r.Code__c IN (\'0\',\'4\',\'5\',\'6\',\'7\',\'8\',\'9\') ';
 
 		List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+recordTypes.get('Agency')+'\''
 			, 'Account__r.IATACode__c != null'
 			, 'GR_Item__c !=null'
-			, 'Account__c IN ('+accreditation_condition+')'
+            , 'Account__r.Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+            , 'Account__r.CNS_Agency__c = false'
+			, 'Account__r.CNS_Account__c = false'
+			// , 'Account__c IN ('+accreditation_condition+')'
 		}; 
 
 		if(extraIds!=null && extraIds.size() > 0) {
@@ -52,12 +57,21 @@
 
 			if(specificIds.size() > 0)	conditions.add('Id IN (\''+String.join(specificIds,'\', \'')+'\')');}
 		}else{
+            if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
+                statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
+                conditions.add('Account__r.Status__c IN  :statusSet ');
+
+            }
+            if(!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
+                locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
+                conditions.add('Account__r.Location_Class__c IN:  locationsSet');
+            }
 			AMS_GDP_Batch__c batchInfo = ams2gdp_Selector.getBatchInfo(batchName);
 			if(batchInfo != null)
 			{
 				//Run only on the deltas 
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'')});
+					,new List<String>{batchInfo.Last_Sync_Start_Date__c.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'','GMT')});
 
 				if(String.isNotBlank(batchInfo.Failed_Records__c))
 				{

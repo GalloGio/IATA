@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification e-mail HTML sent when a internal case is closed (English)</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>IFG_Internal Case Close confirmation - e-mail HTML (English)</name>
+    <style>freeForm</style>
+    <subject>Internal Case Closed - Case {!Case.CaseNumber}  {!Case.Subject}</subject>
+    <textOnly>Note that this is an auto-reply message. Please do not respond to this email.
+ 
+Dear Customer, 
+
+Thank you for your recent enquiry. Case #{!Case.CaseNumber}: &quot;{!Case.Subject}&quot; has now been created and a Customer Service Representative will contact you shortly. Please ensure you refer to this Case Number in any further contact with us about this enquiry. 
+
+Best regards, 
+IATA Customer Service
+
+
+ 
+ 
+ 
+ 
+ 
+{!Case.Thread_Id}</textOnly>
+    <type>html</type>
+</EmailTemplate>

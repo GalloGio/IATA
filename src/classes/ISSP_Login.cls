@@ -97,6 +97,10 @@ public without sharing class ISSP_Login {
             system.debug('Portal_User_Frozen_Checkbox__c: ' + oneUser.Portal_User_Frozen_Checkbox__c);
             if(String.isNotBlank(retURL))
                 pageLink = retURL + commParam;
+            if (oneUser.Portal_User_Frozen_Checkbox__c && String.isNotBlank(retURL) && retUrl.toLowerCase().contains('iec')){
+                ISSP_Login.reactivateIECUser(oneUser);
+                return null;
+            }
 			if (oneUser.Portal_User_Frozen_Checkbox__c){
 				show90Days = true;
 				ISSP_Login.reactivateUser(oneUser);
@@ -160,6 +164,15 @@ public without sharing class ISSP_Login {
         }
         //return null;
         */
+    }
+
+
+    public static void reactivateIECUser(User thisUser){
+
+        thisUser.IsActive = true;
+        thisUser.Portal_User_Frozen_Checkbox__c = false;
+        update thisUser;
+        Boolean success = Comm_User_Helper.resetPassword(thisUser.email, Comm_User_Helper.IEC, false);
     }
 
     @future

@@ -269,7 +269,8 @@ public class ISSP_PortalService_Test {
 		cl.add(con3);		
 
 		insert cl;
-
+   
+        
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
         test.stopTest();
@@ -280,6 +281,7 @@ public class ISSP_PortalService_Test {
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
         ctrl3.CreateNewPortalAccess();
+        
 	}
 
 	/*public static testMethod void unitTest5() {

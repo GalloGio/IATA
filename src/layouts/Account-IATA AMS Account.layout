@@ -200,6 +200,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_RiskHistoryAssessment__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -303,6 +307,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Location_Category__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Main_Accreditation_Organization__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Date_Organisation_Status_attained__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Organization_Last_Change_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -178,7 +178,7 @@ public without sharing class MITA_PortalMyAgreementsCtrl {
     public String getSuggestionTable(boolean isMITA){
         String saTable = '';
         for(SuggestedAirline sa : suggestedAirlines.values()){
-            if((isMITA && sa.getTypes(isMITA)!='')) {
+            if((isMITA && sa.mita) || (!isMITA && sa.bieta)) {
                 saTable += '<tr id="'+sa.Id+'">'+
                                 '<td>'+escape(sa.dcode)+ '</td>'+
                                 '<td>'+escape(sa.ncode)+ '</td>'+

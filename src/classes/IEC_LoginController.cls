@@ -115,6 +115,13 @@ public without sharing class IEC_LoginController extends IEC_PageController {
                     return pr;
                 }//end
 
+                if(( ApexPages.currentPage().getUrl().contains('IEC_ViewQuotes'))){ //start SA-INC324413
+                    retUrl = '/IEC_ViewQuotes';
+                    pr  = IECUserManager.login(username, password, retURL);
+
+                    return pr;
+                }//end
+
                 // Ecommerce Enhancements - do not redirect via redirect, use JavaScript to allow cookies to store
                 if (pr != null) {
                     redirectUrl = pr.getUrl();

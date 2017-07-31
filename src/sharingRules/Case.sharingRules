@@ -254,6 +254,18 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingOwnerRules>
+        <fullName>Case_Sharing_Rule_with_IFG_Support_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Share cases between IFG Team</description>
+        <label>Case Sharing Rule with IFG Support Team</label>
+        <sharedTo>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>IFG_Team</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>CentralBilling</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Central Billing</label>

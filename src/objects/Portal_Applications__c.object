@@ -441,6 +441,26 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Provisioning_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisioning Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>WebService</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>SCIM</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Record_type_for_App_Rigth__c</fullName>
         <defaultValue>&quot;012w0000000QC2Z&quot;</defaultValue>
         <externalId>false</externalId>
@@ -468,6 +488,17 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <label>Restricted App</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCIM_App_Name__c</fullName>
+        <description>Name of Salesforce Connected SCIM App Name</description>
+        <externalId>false</externalId>
+        <label>SCIM App Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ServiceName__c</fullName>
@@ -658,7 +689,11 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>OR( 
+        <formula>IF(OR(Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
+$User.IFG_Account_Member__c
+,
+OR( 
+   
     AND( 
     Agency__c = true, 
     $User.Customer_type__c=&quot;Agency&quot; 
@@ -687,7 +722,8 @@ Name
     ), 
     AND(Name = &quot;Payment Link&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
     AND(Name = &quot;Paypal&quot;,$User.CNS_Account_or_Agency__c),
-    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;)) 
+    AND(Name = &quot;Resource Center&quot;, NOT($User.Customer_type__c=&quot;CNS Agency&quot;))
+)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
@@ -711,6 +747,20 @@ Name
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>EasyPay</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>ServiceName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>IATA EasyPay</value>
+        </filters>
+        <label>EasyPay</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>My_Company_Applications</fullName>
@@ -796,6 +846,17 @@ Name
             </values>
             <values>
                 <fullName>Travel Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Provisioning_Type__c</picklist>
+            <values>
+                <fullName>SCIM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebService</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -897,5 +958,13 @@ NOT(ISBLANK(ANG_Restrict_by_Agency_Category__c))
  TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
 )</errorConditionFormula>
         <errorMessage>Please select to restrict visibility by Agency in order to Restrict by Agency Sector.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SCIM_Type_Check</fullName>
+        <active>true</active>
+        <description>Checks if SCIM_App_Name__c is not empty when Provisioning_Type__c=SCIM</description>
+        <errorConditionFormula>AND(ISPICKVAL(Provisioning_Type__c , &apos;SCIM&apos;),  ISBLANK(SCIM_App_Name__c))</errorConditionFormula>
+        <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
+        <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
     </validationRules>
 </CustomObject>
