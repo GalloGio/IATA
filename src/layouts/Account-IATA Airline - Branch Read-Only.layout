@@ -84,6 +84,10 @@
                 <behavior>Readonly</behavior>
                 <field>HQ_Due_Dilingence_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

@@ -246,7 +246,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>7/13/2017 12:00 AM</value>
+            <value>7/14/2017 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

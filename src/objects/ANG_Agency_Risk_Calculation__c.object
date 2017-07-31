@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -61,7 +61,7 @@
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
         <label>Accreditation Model</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -86,7 +86,7 @@
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -95,11 +95,21 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Rule</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>You can only select an Agency Risk Calculation with Rules record type.</errorMessage>
+            <filterItems>
+                <field>ANG_Agency_Risk_Calculation__c.RecordType.DeveloperName</field>
+                <operation>equals</operation>
+                <value>Rules</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
         <relationshipLabel>Adjustments</relationshipLabel>
         <relationshipName>ANG_Adjustments</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -109,7 +119,7 @@
         <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
         <label>Financial Review Result</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -118,9 +128,9 @@
         <externalId>false</externalId>
         <label>Number of occurrence</label>
         <precision>5</precision>
-        <required>true</required>
+        <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -145,7 +155,7 @@
         <precision>5</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
@@ -168,7 +178,7 @@
         <globalPicklist>ANG_Remittance_Frequency</globalPicklist>
         <label>Remittance Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -178,7 +188,7 @@
         <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
         <label>Risk History Assessment</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -188,7 +198,7 @@
         <globalPicklist>ANG_Risk_Status</globalPicklist>
         <label>Risk History</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
     </fields>
@@ -204,56 +214,41 @@
         <type>Text</type>
         <unique>true</unique>
     </fields>
-    <fields>
-        <fullName>Agency_Risk_Calculation_Model__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Agency Risk Calculation</label>
-        <referenceTo>ANG_Agency_Risk_Calculation__c</referenceTo>
-        <relationshipLabel>Agency Risk Calculations (Agency Risk Calculation)</relationshipLabel>
-        <relationshipName>Agency_Risk_Calculation_Model</relationshipName>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Financial_Review_Result__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_Financial_Review_Result</globalPicklist>
-        <label>Financial Review Result</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Risk_History_Assessment__c</fullName>
-        <externalId>false</externalId>
-        <globalPicklist>ANG_HE_RiskHistoryAssessment</globalPicklist>
-        <label>Risk History Assessment</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-    </fields>
     <label>Agency Risk Calculation</label>
     <listViews>
-        <fullName>All</fullName>
+        <fullName>Risk_Assessment</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Financial_Review_Result__c</columns>
+        <columns>ANG_Risk_History_Assessment__c</columns>
+        <columns>ANG_Risk_History__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Risk_Status_Assessment</value>
+        </filters>
+        <label>Risk Assessment</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Rules</fullName>
         <columns>NAME</columns>
         <columns>ANG_Accreditation_Model__c</columns>
-        <columns>ANG_Order__c</columns>
         <columns>ANG_Occurrence_Num__c</columns>
         <columns>ANG_Adjusted__c</columns>
-        <columns>ANG_Calculation_Rule__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ANG_Agency_Risk_Calculation__c.Rules</value>
+        </filters>
+        <label>Rules</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>ARC-{00000000}</displayFormat>
         <label>Agency Risk Calculation Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Agency Risk Calculations</pluralLabel>
@@ -293,33 +288,6 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -412,6 +380,25 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Risk_Status_Assessment</fullName>
@@ -448,33 +435,6 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -626,33 +586,6 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>ANG_Event_Status</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Inactive_CHO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Migrated</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Revoked</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive_Withdrawn</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>ANG_Financial_Review_Result</picklist>
             <values>
                 <fullName>Satisfactory</fullName>
@@ -741,8 +674,31 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_Status</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>ANG_Occurrence_Num__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Parent_Occurences__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ANG_Remittance_Frequency__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>ANG_Occurrence_Num_cant_be_negative</fullName>
