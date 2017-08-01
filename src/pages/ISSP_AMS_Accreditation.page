@@ -589,12 +589,22 @@
                                     <div class="form-group">
                                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_NoC_Change_for}</label>
                                     <div class="col-lg-9" style="padding-top:7px">
-                                        <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
-                                            <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" />
-                                            <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}" />
-                                            <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
-                                            <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
-                                        </apex:selectRadio>
+                                        <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
+                                            <apex:selectRadio required="true" id="LegacyLocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
+                                                <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!con.Account.Location_Type__c != 'AE'}"/>
+                                                <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(con.Account.Location_Type__c != 'AE', OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
+                                                <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_Some_Branches}" rendered="{!AND(con.Account.Location_Type__c != 'AE', OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
+                                                <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                            </apex:selectRadio>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
+                                            <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');"> 
+                                                <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" rendered="{!con.Account.Location_Type__c != 'AE'}"/>
+                                                <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!AND(con.Account.Location_Type__c != 'AE', OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
+                                                <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!AND(con.Account.Location_Type__c != 'AE', OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}"/>
+                                                <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
+                                            </apex:selectRadio>
+                                        </apex:outputPanel>
                                     </div>
                                     </div>
 
@@ -602,14 +612,14 @@
                                     <div class="form-group"> 
                                         <label for="approval focus" class="col-lg-3 control-label"></label>
                                         <div class="col-lg-9">
-                                            <c:MultiselectPicklist leftLabel="{!$Label.ISSP_AMS_NoC_Choose_Branch_Account}" 
-                                                                   leftOptions="{!BranchAccounts}"
-                                                                   rightLabel="{!$Label.ISSP_AMS_Selected_Branch_Offices}"
-                                                                   rightOptions="{!agencyCodesConcerned}"
-                                                                   size="8"
-                                                                   width="300px"
-                                                                   btn_up_down="false"
-                                            />
+                                                <c:MultiselectPicklist leftLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_NoC_Choose_Branch_Account, $Label.ISSP_AMS_NoC_Choose_Associate_Entities)}" 
+                                                                    leftOptions="{!BranchAccounts}"
+                                                                    rightLabel="{!IF(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), $Label.ISSP_AMS_Selected_Branch_Offices, $Label.ISSP_AMS_Selected_Associate_Entities)}"
+                                                                    rightOptions="{!agencyCodesConcerned}"
+                                                                    size="8"
+                                                                    width="300px"
+                                                                    btn_up_down="false"
+                                                />
                                         </div>
                                     </div>  
                                     </apex:outputPanel>

@@ -9986,6 +9986,13 @@ For each section below either:&lt;br/&gt;
         <value>Agency Information</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Associate_Entity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Associate Entity</shortDescription>
+        <value>Associate Entities, excluding Head Entity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Authorized_Signature</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -10147,6 +10154,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Change is submitted for</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Choose_Associate_Entities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Choose Associate Entities</shortDescription>
+        <value>Accredited Associate Entities</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Choose_Branch_Account</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -10227,6 +10241,20 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Direct Debit Change</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_HE_All_Branches</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE All Branches</shortDescription>
+        <value>Head Entity &amp; All Associate Entities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE Some Branches</shortDescription>
+        <value>Head Entity &amp; one or more Associate Entities</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_HO_All_Branches</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -10241,6 +10269,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC HO Some Branches</shortDescription>
         <value>Head Office &amp; one or more Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Head_Entity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Head Entity</shortDescription>
+        <value>Head Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Head_Office</fullName>
@@ -11375,6 +11410,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Section 2 SubSection 2</shortDescription>
         <value>Section 2.2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Selected Associate Entities</shortDescription>
+        <value>* Selected Associate Entities</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Selected_Branch_Offices</fullName>

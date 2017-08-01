@@ -894,7 +894,7 @@ public without sharing class ISSP_AMS_Accreditation {
             selectedBranchCodes = newForm.Agency_Codes_Concerned__c.split(',');
         
         
-        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+        return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Legal_name__c, ANG_Accreditation_Model__c
                                       FROM Account
                                       WHERE Top_Parent__c = :vHQAccountId AND IATACode__c != null AND RecordType.DeveloperName IN ('IATA_Agency') AND (Status__c NOT IN ('Terminated','Not accreditated', 'No longer a customer', 'New application pending')) AND (IATACode__c NOT IN : selectedBranchCodes)
                                               ORDER BY Name, IATACode__c
@@ -921,7 +921,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         for (Account thisAccount : accountList) {
             String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + thisAccount.Location_Type__c + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+            theLabel = thisAccount.IATACode__c + ' - ' + ((thisAccount.ANG_Accreditation_Model__c == null || thisAccount.ANG_Accreditation_Model__c == 'Legacy') ? thisAccount.Location_Type__c : thisAccount.Legal_name__c) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
