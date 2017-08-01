@@ -1,21 +1,27 @@
 global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Database.Stateful {
 	
-	global static final Set<String> oscarAMSProcessesToMigrate = new Set <String>{AMS_Utils.new_HO,AMS_Utils.new_BR,AMS_Utils.new_BR_ABROAD,AMS_Utils.new_SA};
+	global static final Set<String> oscarAMSProcessesToMigrate = new Set <String>{AMS_Utils.new_HO,AMS_Utils.new_BR,AMS_Utils.new_BR_ABROAD,AMS_Utils.new_SA,AMS_Utils.COR,AMS_Utils.AGENCYCHANGES};
 
 	global static final Set<String> invalidOscarStatus = new Set<String>{'Closed (Closed)','Closed (Closed)','Closed','Closed_ Not Accepted','Closed_Rejected','Closed_Withdrawn'};
+
+	global static final Set<Id> availableOscarRecordTypes = new Set<Id>{AMS_Utils.RECTYPE_CHANGE,AMS_Utils.RECTYPE_NEW, AMS_Utils.RECTYPE_CORRECTION};
 
     global static final Map<String,String> oscarProcessMap = new Map<String, String> {
         AMS_Utils.new_HO => AMS_Utils.NEWHESTANDARD,
         AMS_Utils.new_BR => AMS_Utils.NEWAE,
         AMS_Utils.new_BR_ABROAD => AMS_Utils.NEWAE,
-        AMS_Utils.new_SA => AMS_Utils.NEWAE
+        AMS_Utils.new_SA => AMS_Utils.NEWAE,
+        AMS_Utils.AGENCYCHANGES => AMS_Utils.NGCHANGES,
+        AMS_Utils.COR => AMS_Utils.NGCORRECTION
 	};
 
     global static final Map<String,Id> oscarRecordTypeMap = new Map<String, Id> {
         AMS_Utils.new_HO => AMS_Utils.RECTYPE_NEWHE,
         AMS_Utils.new_BR => AMS_Utils.RECTYPE_NEWAE,
         AMS_Utils.new_BR_ABROAD => AMS_Utils.RECTYPE_NEWAE,
-        AMS_Utils.new_SA => AMS_Utils.RECTYPE_NEWAE
+        AMS_Utils.new_SA => AMS_Utils.RECTYPE_NEWAE,
+        AMS_Utils.AGENCYCHANGES => AMS_Utils.RECTYPE_NGCHANGES,
+      	AMS_Utils.COR => AMS_Utils.RECTYPE_NGCORRECTION
 	};
 
     global static final Map<String,String> locationTypeMap = new Map<String, String> {
@@ -42,9 +48,9 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 		this.countryToSearch = countryToSearch;
 
 		if(countryToSearch != null)
-			this.query = 'SELECT Id, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
+			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and account__r.IATA_ISO_Country__r.Name = :countryToSearch and recordTypeId in :availableOscarRecordTypes';
 		else
-			this.query = 'SELECT Id, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and Name = :oscarName and recordTypeId = \''+AMS_Utils.RECTYPE_NEW +'\'';
+			this.query = 'SELECT Id,New_parent__c,AMS_Target_Agency__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, RecordTypeId, Process__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Status__c not in:invalidOscarStatus and Process__c in :oscarAMSProcessesToMigrate and account__r.ANG_IsNewGenAgency__c = true and Name = :oscarName and recordTypeId in :availableOscarRecordTypes';
 
 	}
 	
@@ -105,6 +111,19 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
     		if(oscarToProcess.get(step + '__c') == null)
         		oscarToProcess.put(step + '__c', 'Not Started');
 		}
+
+		if(oscarToProcess.Process__c == AMS_Utils.NGCHANGES || oscarToProcess.Process__c == AMS_Utils.NGCORRECTION){
+			
+			oscarToProcess.New_parent__c = oscarToProcess.AMS_Target_Agency__c;
+
+			if(oscarToProcess.Type_of_change__c == 'Ownership to IATA Agent' || oscarToProcess.Type_of_change__c == 'Ownership to non-IATA Agent')
+				oscarToProcess.ANG_Type_Of_Change__c = 'Hierarchy;Ownership';
+			else if(oscarToProcess.Type_of_change__c == 'Location with inspection'){
+				oscarToProcess.ANG_Type_Of_Change__c = 'Location';
+			} else{ 
+				oscarToProcess.ANG_Type_Of_Change__c = oscarToProcess.Type_of_change__c;
+			}
+		}
         
         return oscarToProcess;
 	}
@@ -123,7 +142,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		fields = fields.substring(0,fields.lastIndexOf(','));
 
-		String toReturn = 'SELECT ' + fields + ', RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, AMS_Online_Accreditation__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
+		String toReturn = 'SELECT ' + fields + ', Type_of_change__c, New_parent__c, AMS_Target_Agency__c, RecordTypeId, Process__c, Account__r.ANG_IsNewGenAgency__c, Account__r.Location_Type__c, Account__r.Name, Name, AMS_Online_Accreditation__c FROM AMS_OSCAR__c where Id = \''+oscarToProcessId+'\' LIMIT 1';
 		
         System.debug('Returning ' + toReturn);
         return toReturn;
@@ -143,7 +162,7 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		Case toReturn = null;
 
-		List<Case> caseLst = [SELECT Id,Subject, CaseArea__c, Reason1__c from Case where RecordType.DeveloperName='OSCAR_Communication' and OSCAR__c = :oscarToProcess.Id and Subject like 'New%' and CaseNumber =: oscarToProcess.Name];
+		List<Case> caseLst = [SELECT Id,Subject, CaseArea__c, Reason1__c from Case where RecordType.DeveloperName='OSCAR_Communication' and OSCAR__c = :oscarToProcess.Id and CaseNumber =: oscarToProcess.Name];
 		
 		if(!caseLst.isEmpty()){
 
@@ -155,10 +174,16 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 				toReturn.Subject = 'New HE standard' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New HE standard';
 			}
-			else{
+			else if(!(oscarToProcess.Process__c == AMS_Utils.NGCHANGES)){
 				toReturn.Subject = 'New AE' + ' - ' + oscarToProcess.Account__r.Name;
 				toReturn.Reason1__c = 'New AE';
 			}
+			else if(oscarToProcess.Process__c == AMS_Utils.NGCHANGES){
+				toReturn.Subject = toReturn.Reason1__c + ' - ' + oscarToProcess.Account__r.Name;
+				toReturn.CaseArea__c = 'Accreditation process';
+			}
+
+
 
 		}
 

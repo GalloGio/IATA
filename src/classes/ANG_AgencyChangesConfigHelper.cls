@@ -118,9 +118,10 @@ public class ANG_AgencyChangesConfigHelper{
 			System.debug('[ANG_AgencyChangesConfigHelper] - matchingFieldSet:'+matchingFieldSet);
 			System.debug('[ANG_AgencyChangesConfigHelper] - field set:' + Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap());
 			Schema.FieldSet fieldSet = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap().get(matchingFieldSet);
-			System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
-			if(fieldSet!=null)
+			if(fieldSet!=null){
+				System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
 				fieldsToMigrate.addAll(getFieldSetFieldsApiName(fieldSet));
+			}
 		}
 
 		return fieldsToMigrate;
