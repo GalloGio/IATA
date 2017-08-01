@@ -335,18 +335,63 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Previous_status_code__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous status code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Valid_Code_For_GDP_Replication__c</fullName>
         <externalId>false</externalId>
         <formula>IF( 
-Accreditation_Endorsement_organisation__c != &apos;&apos;, 
-Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
-IF(Account__r.IATA_code_Lenght__c &gt; 3
-, False
-, IF(AND(Account__r.IATA_code_Lenght__c = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
-,False
-,True
-)
-)
+    Accreditation_Endorsement_organisation__c != &apos;&apos;, 
+      Accreditation_Endorsement_organisation__r.Valid_Code_For_GDP_Replication__c, 
+      IF(Account__r.IATA_code_Lenght__c  &gt; 3
+        , False
+        , IF(AND(Account__r.IATA_code_Lenght__c  = 3, RIGHT(Account__r.IATACode__c ,1)!=&apos;*&apos;)
+          ,False
+          ,True
+        )
+      )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Valid Code For GDP Replication</label>

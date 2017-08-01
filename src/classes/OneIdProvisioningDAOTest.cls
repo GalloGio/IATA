@@ -46,7 +46,11 @@ private class OneIdProvisioningDAOTest {
 
         OneIdProvisioningDAO.getAppPermissionSetListForSSO();
         
-        Test.stopTest();   
+        List<String> aa = new List<String>();
+        aa.add('vm1');
+        OneIdProvisioningDAO.getAppPermissionSetListForISSP(aa);
+
+        Test.stopTest();
 
     }
 

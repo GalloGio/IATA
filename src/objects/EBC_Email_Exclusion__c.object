@@ -225,7 +225,7 @@
         <filters>
             <field>Source_Campaign__c</field>
             <operation>contains</operation>
-            <value>TRAVEL AGENT FAMS NEW</value>
+            <value>Silvercar. Car rental the way it should be</value>
         </filters>
         <label>Exclusion Search By Source Campaign</label>
         <language>en_US</language>

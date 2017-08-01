@@ -462,4 +462,26 @@ global class AMS_OSCAR_Webservice {
         }
     }
 
+    WebService static String createRiskEvent(String oscarId){
+
+        try{
+
+            List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c from AMS_OSCAR__c where Id =: oscarId];
+            if(oscar!=null && oscar.size()>0){
+
+                oscar[0].Risk_event_creation_date__c = System.today();
+                oscar[0].STEP36__c = 'Passed';
+                update oscar;
+
+                return 'Risk Event generated successfully';
+
+            }
+
+            return 'ERROR: OSCAR not found.';
+
+        }catch(Exception ex){
+            return AMS_Utils.errorMessageBeautifyer(ex);
+        }
+    }
+
 }

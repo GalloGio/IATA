@@ -18,6 +18,7 @@ global without sharing class AMS_RecordCreatorWebservice {
     public static String NEWAHA_PV = 'NEW.AHA.1.0';
     public static String NEWMSO_PV = 'NEW.MSO.1.0';
     public static String NEWSA_PV = 'NEW.SA.1.0';
+    public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
 
 
     public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -58,7 +59,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
             Id ownerId = null;
-
+ 
             if(!cases.isEmpty()){
                 ownerId = cases.get(0).OwnerId;
             }
@@ -67,14 +68,13 @@ global without sharing class AMS_RecordCreatorWebservice {
             if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
 
                 String selectedAccount = cases.get(0).Account_Concerned__c;
-                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+                oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId);
 
             } else {
 
-                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId);
+                oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId);
 
             }
-
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
@@ -240,6 +240,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWCER_PV))
             return oscarRT.get('CERTIFICATE');
 
+        if(typeOfProcess.equalsIgnoreCase(NEWNGLITE))
+            return oscarRT.get('ANG_New_HE');
+
         return null;
     
     }
@@ -260,7 +263,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
     } 
 
-    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner){
+    private Static String createOscar(String accountId, String processType, String recordTypeId, String oscarStatus, String accreditationId, Id owner, Id caseId){
 
         AMS_OSCAR__c oscar;
         AMS_Pax_Accreditation_Form__c accreditationObj;
@@ -284,6 +287,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             oscar.Type_of_change__c = typeOfChange;
 
+        }
+
+        // this needs to be fetched from Accreditation Object. For now just use this.
+        if(processType == NEWNGLITE){
+            oscar.Is_using_credit_card__c = true;
+            oscar.Oscar_Communication_Case_Id__c = caseId;
         }
         
         insert oscar;
@@ -638,7 +647,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             AMS_MigrationToolHelper.createAccreditationContacts(accreditationObj, parentAccount.Id, typeOfProcess);
 
-            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId);
+            oscarId = createOscar(newSAAccount.Id,  typeOfProcess, oscarRecordType ,  'Open',  accreditationObj.ID, ownerId, null);
 
             if(String.isBlank(oscarId))
                 throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
