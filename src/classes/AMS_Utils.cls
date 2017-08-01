@@ -158,13 +158,17 @@ public without sharing class AMS_Utils {
     public static final String CERT_TSA         = 'TSA';
 
     //Record Types
-    public static final String RECTYPE_NEW      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
-    public static final String RECTYPE_CHANGE   = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
-    public static final String RECTYPE_CERT     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
-    public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
-    public static final String RECTYPE_NEWHE    = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
-    public static final String RECTYPE_NEWAE    = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
-    public static final String RECTYPE_NGCHANGES= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+    public static final String RECTYPE_NEW        = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NEW').getRecordTypeId();
+    public static final String RECTYPE_CHANGE     = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CHANGE').getRecordTypeId();
+    public static final String RECTYPE_CERT       = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CERTIFICATION').getRecordTypeId();
+    public static final String RECTYPE_OSCARCOMM  = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_NEWHE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
+    public static final String RECTYPE_NEWAE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
+    public static final String RECTYPE_NGCHANGES  = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+    public static final String RECTYPE_IATAAGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
+    public static final String RECTYPE_SIDRALITE  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
+    public static final String RECTYPE_SAAM       = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+    public static final String RECTYPE_SIDRA      = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA');
 
     public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
@@ -200,6 +204,8 @@ public without sharing class AMS_Utils {
     public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
     public static final String CASE_REASON_HE_LITE = 'New HE lite';
     public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
+    public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
+    public static final String CASE_REASON_AE_LITE = 'New AE lite';
 
     public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';
     public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
@@ -222,9 +228,18 @@ public without sharing class AMS_Utils {
 
     public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
     public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+
+    //Account - ANG_Accreditation_Model__c
     public static final String ACCREDITATIONMODEL_CASH = 'Cash';
     public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
+    public static final String ACCREDITATIONMODEL_LEGACY = 'Legacy';
+    public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
+
     public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
+
+
+    //Account - Location_Class__c
+    public static final String LC_PASSENGER = 'P';
 
 
     static {
