@@ -8383,6 +8383,13 @@ IFG Customer Services</value>
         <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Attach File&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Cases_Notify_IATA_Changes_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Cases Notify IATA Changes Error</shortDescription>
+        <value>Only users from your Agency’s Head Entity (Head Office) can notify IATA of changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_City</fullName>
         <language>en_US</language>
         <protected>false</protected>
