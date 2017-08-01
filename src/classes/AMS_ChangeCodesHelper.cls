@@ -198,7 +198,7 @@ public class AMS_ChangeCodesHelper {
         return accountsToUpdateList;
     }
 
-
+   
 /** 
      Create Change Codes History
     */
@@ -252,7 +252,7 @@ public class AMS_ChangeCodesHelper {
      Add Change Code to be Created NeW method with Change Code History
     */
 
-    private static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
+    public static ChangeCodeStruct createAAChangeCode(ObjectChangesStruct objectChangesByChangeCode, AMS_OSCAR_JSON.ChangeCode changeCode, AMS_OSCAR__c oscar, Account oscarAgency, Boolean isActive) {
 
 
         Id oscarId = null;
@@ -418,7 +418,7 @@ public class AMS_ChangeCodesHelper {
             for (Id acc : allHierarchyAccountsToApplyCC) {
                 Account accToUpdateStatus = accounts.get(acc);
                 if (accToUpdateStatus != null
-					&& !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
+                    && !( (accToUpdateStatus.Status__c == null || Integer.valueOf(AMS_Utils.getIATANumericStatus(accToUpdateStatus.Status__c)) < 8 ) && oscar.Process__c == AMS_Utils.AGENCYCHANGES && 
                     (oscar.Type_of_change__c.contains(AMS_Utils.MAJ_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.MIN_SHAREHOLDING) || oscar.Type_of_change__c.contains(AMS_Utils.VFMR)) )
                     ) {
                     changeCode = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(changeCodeIdentifier, config.typesOfChange, accToUpdateStatus.Status__c, accountsPrevChangeCode.get(accToUpdateStatus.Id), action);
@@ -585,7 +585,7 @@ public class AMS_ChangeCodesHelper {
             string sValue = null;
                 sValue = (string)NewAccountValues.get(sFieldToCheck);
 
-            if(sValue==null)	 return false;
+            if(sValue==null)     return false;
             setValues.addAll((condition.right(condition.length()-'VALUES:'.length())).split(';'));
             if(setValues.contains(sValue.toUpperCase()))
                 return true;

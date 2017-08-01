@@ -1856,7 +1856,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_Type_Of_Change__c = 'Location type';
-		oscar.NewHeDifferentLegalEntity__c = 'No';
 
 		update oscar;
 

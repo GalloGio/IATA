@@ -40,6 +40,10 @@
         <fullName>Accreditation type</fullName>
         <default>false</default>
     </globalPicklistValues>
+    <globalPicklistValues>
+        <fullName>Location type to different legal entity</fullName>
+        <default>false</default>
+    </globalPicklistValues>
     <masterLabel>ANG Types of Change</masterLabel>
     <sorted>false</sorted>
 </GlobalPicklist>
