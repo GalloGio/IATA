@@ -104,6 +104,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_MAJOR_SHAREHOLDING = 'Major shareholding';
     public static final String ANG_OWNERSHIP =  'Ownership';
     public static final String ANG_LOCATION_TYPE =  'Location type';
+    public static final String ANG_LOCATION_TYPE_DIFFLEGALENTITY =  'Location type to different legal entity';
     public static final String ANG_LOCATION =  'Location';
     public static final String ANG_HIERARCHY =  'Hierarchy';
     public static final String ANG_VMFR =  'VMFR';
@@ -145,6 +146,7 @@ public without sharing class AMS_Utils {
     public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
+    public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES};
 

@@ -93,8 +93,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             oscar.Dossier_Reception_Date__c = Date.today();
 
             if(oscar.Process__c == AMS_Utils.new_HO || oscar.Process__c == AMS_Utils.new_BR_ABROAD || oscar.Process__c == AMS_Utils.new_BR || oscar.Process__c == AMS_Utils.new_SA){
-            	oscar.Sanity_check_deadline__c = Date.today() + 30;
-            	oscar.OSCAR_Deadline__c = Date.today() + 30;
+                oscar.Sanity_check_deadline__c = Date.today() + 30;
+                oscar.OSCAR_Deadline__c = Date.today() + 30;
             }
             else if(oscar.Process__c == AMS_Utils.new_TIDS){
                 oscar.Sanity_check_deadline__c = Date.today()+3;
@@ -278,30 +278,30 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                     if(allHierarchyAccountIds.size()>0 && !AMS_HierarchyHelper.checkHierarchyIntegrity(new Map<Id, Set<Id>>{updatedOscar.Id => allHierarchyAccountIds}))
                         throw new AMS_ApplicationException('This operation cannot be performed because the ownership in this hierarchy is not aligned. It is advised to perform a change of ownership to align the owners in this hierarchy.');
 
-					if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
+                    if(updatedOscar.AMS_Correction_change_code__c == 'COR' || updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-						changeCode.status  = null;
-	
-	                    // If the picklist is set create a COR change code.
-	                    if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
+                        changeCode.status  = null;
+    
+                        // If the picklist is set create a COR change code.
+                        if(updatedOscar.AMS_Correction_change_code__c == 'COR') {
                         changeCode.name = 'COR';
                         changeCode.memoText = 'Correction';
                         changeCode.publishedOnEBulletin = false;
                         }
                     // If the picklist is set create a CAD change code.
-	                    else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
+                        else if(updatedOscar.AMS_Correction_change_code__c == 'CAD'){
                         changeCode.name = 'CAD';
                         changeCode.memoText = 'Minor Changes';
-                    	}
-						// If the picklist is set create a LET change code.
-	                    /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
-	                        changeCode.name = 'LET';
-	                        changeCode.memoText = '';
-                    	}*/
+                        }
+                        // If the picklist is set create a LET change code.
+                        /*else if(updatedOscar.AMS_Correction_change_code__c == 'LET'){
+                            changeCode.name = 'LET';
+                            changeCode.memoText = '';
+                        }*/
 
-						List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
+                        List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: updatedOscar.Account__c AND Active__c = TRUE];                    
 
                         if(accountActiveChangeCode.size() > 0){
                             changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
@@ -604,9 +604,10 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
                 && !tocList.contains(AMS_Utils.ANG_LEGAL_STATUS)
                 && !tocList.contains(AMS_Utils.ANG_MAJOR_SHAREHOLDING)
                 && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE)
+                && !tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY)
                 && !tocList.contains(AMS_Utils.ANG_OWNERSHIP)
             ){
-                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP);
+                updatedOSCAR.addError('Penalty fees can only be applied for \n-'+AMS_Utils.ANG_LEGAL_NAME+'\n-'+AMS_Utils.ANG_LEGAL_STATUS+'\n-'+AMS_Utils.ANG_MAJOR_SHAREHOLDING+'\n-'+AMS_Utils.ANG_LOCATION_TYPE+'\n-'+AMS_Utils.ANG_OWNERSHIP+'\n-'+AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY);
             }
         }
 
