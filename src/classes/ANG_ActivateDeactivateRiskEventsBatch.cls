@@ -2,7 +2,7 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
     private String query;
     
     public ANG_ActivateDeactivateRiskEventsBatch(List<string> regionList){
-        query='select id,ANG_Issued_Date__c,ANG_Expiration_Date__c,ANG_Event_Status__c,ANG_Expired__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.Region_formula__c  IN '+regionList+' AND ((ANG_Issued_Date__c <= TODAY AND ANG_Expiration_Date__c> TODAY AND ANG_Event_Status__c =\'Inactive\') OR (ANG_Expiration_Date__c<=TODAY AND ANG_Event_Status__c=\'Active\'))';
+        query='select id,ANG_Issued_Date__c,ANG_Expiration_Date__c,ANG_Event_Status__c,ANG_Expired__c from ANG_Agency_Risk_Event__c where ANG_AccountId__r.Region_formula__c  IN '+regionList+' AND ((ANG_Issued_Date__c <= TODAY AND ANG_Expiration_Date__c> TODAY AND ANG_Event_Status__c =\'' + ANG_Risk_Helper.STATUS_INACTIVE+'\') OR (ANG_Expiration_Date__c<=TODAY AND ANG_Event_Status__c=\'' + ANG_Risk_Helper.STATUS_ACTIVE+'\'))';
     }
 
    
@@ -55,12 +55,12 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
      
     public  void  execute(Database.BatchableContext context, List<ANG_Agency_Risk_Event__c> scope){
         for(ANG_Agency_Risk_Event__c are :scope ){
-            if(are.ANG_Issued_Date__c <=system.today() && are.ANG_Expiration_Date__c>system.today()&& are.ANG_Event_Status__c.equalsIgnoreCase('Inactive')){
-               are.ANG_Event_Status__c='Active';
+            if(are.ANG_Issued_Date__c <=system.today() && are.ANG_Expiration_Date__c>system.today()&& are.ANG_Event_Status__c.equalsIgnoreCase(ANG_Risk_Helper.STATUS_INACTIVE)){
+               are.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_ACTIVE;
             }
-            if(are.ANG_Expiration_Date__c<=system.today() && are.ANG_Event_Status__c=='Active' ){
+            if(are.ANG_Expiration_Date__c<=system.today() && are.ANG_Event_Status__c==ANG_Risk_Helper.STATUS_ACTIVE ){
                are.ANG_Expired__c=true;    
-               are.ANG_Event_Status__c='Inactive';
+               are.ANG_Event_Status__c=ANG_Risk_Helper.STATUS_INACTIVE;
             }
         }
         update scope;
