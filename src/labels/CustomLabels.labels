@@ -6762,6 +6762,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <shortDescription>ISSP AMS Branch Office address details</shortDescription>
         <value>Branch Office address details:</value>
     </labels>
+     <labels>
+        <fullName>ISSP_ANG_Branch_Office_address_details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG Branch Office address details</shortDescription>
+        <value>Associated Entity address details:</value>
+    </labels>
     <labels>
         <fullName>ISSP_AMS_Branch_Offices</fullName>
         <categories>ISSP, Portal, AMS</categories>
