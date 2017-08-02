@@ -56,6 +56,7 @@ private class ISSP_CurrencyCenterHomeControllerTest {
         System.debug('newUser Id: ' + newUser.Id);
         con.OwnerId = newUser.Id;
         con.User_Portal_Status__c = 'Approved User';
+        con.Community__c = 'ISS Customer Portal';
         update con;
 
         Portal_Applications__c app = new Portal_Applications__c(Application_URL__c='/ISSP_TDNavigation');

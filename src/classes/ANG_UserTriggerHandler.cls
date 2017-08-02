@@ -33,10 +33,13 @@ public class ANG_UserTriggerHandler {
     // ************************************************************
 	
 	private void assignContactFederationId(){
-		for(User u : triggerNew){
-			u.FederationIdentifier = u.contactId;
-		}
-	}
+        for(User u : triggerNew){
+            String fedID = String.valueOf(u.contactId).left(15);
+            u.FederationIdentifier = fedID;
+                system.debug('contact ID' + u.contactId);
+                system.debug('fedID' + fedID);
+        }
+    }
 
 	private void assignUserFederationId() {
 
