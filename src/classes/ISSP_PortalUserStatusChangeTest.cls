@@ -394,6 +394,7 @@ private class ISSP_PortalUserStatusChangeTest {
         con.User_Portal_Status__c = 'Rejected';
         con.Email = 'test1@test.com';
         con.Preferred_Language__c = 'English';
+        con.Community__c = 'E-Commerce';
         insert con;
 
         Test.startTest();
