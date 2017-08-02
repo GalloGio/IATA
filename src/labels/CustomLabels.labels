@@ -9977,6 +9977,27 @@ For each section below either:&lt;br/&gt;
         <value>New Head Office address details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Accreditation_Type_Cash</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Accreditation Type Cash</shortDescription>
+        <value>Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Accreditation_Type_Cashless</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Accreditation Type Cashless</shortDescription>
+        <value>Cashless</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
+        <value>1. Accreditation type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -10198,6 +10219,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Curr_Company_Owner</shortDescription>
         <value>Current Company Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Current Accreditation Type</shortDescription>
+        <value>Current Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Current_Companies</fullName>
@@ -10813,6 +10841,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Type_Of_Person</shortDescription>
         <value>Please select the role of this person in the Agency.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Updated_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Updated Accreditation Type</shortDescription>
+        <value>Updated Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>

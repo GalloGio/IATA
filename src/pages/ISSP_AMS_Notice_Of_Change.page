@@ -711,7 +711,7 @@
 				<span id="nav_one"></span>
 				<apex:pageBlockSection columns="1" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c && PDFPerRegionCS!=null}">
 					<apex:facet name="header">
-						<apex:outputpanel >
+						<apex:outputpanel>
 							{!$Label.ISSP_AMS_NoC_Change_Bank_Details}
 						</apex:outputpanel>
 					</apex:facet>
@@ -732,12 +732,42 @@
 				</apex:pageBlockSection>
 
 				<span id="nav_two"></span>
+				<apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
+					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
+						<apex:facet name="header">
+							<apex:outputpanel >
+								{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}
+							</apex:outputpanel>
+						</apex:facet>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
+						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
+					
+						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_accreditation_type_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_accreditation_type_are_correct__c.Label}" style="color:black;font-size:110%"/>
+							<apex:inputCheckbox html-data-group="agencyAccreditationType" value="{!newForm.Confirm_accreditation_type_are_correct__c}"/>
+						</apex:pageBlockSectionItem>
+							
+						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
+							<apex:inputCheckbox html-data-group="agencyAccreditationType" html-data-controls="agencyAccreditationTypeComponent" value="{!newForm.Notify_Change_Accreditation_Type__c}"/>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSection columns="1">	
+							<apex:pageBlockSectionItem labelStyle="width:26%">
+								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
+								<apex:outputText value="{!IF((con.Account.ANG_Accreditation_Model__c == 'Cash'), $Label.ISSP_AMS_NoC_Accreditation_Type_Cash, $Label.ISSP_AMS_NoC_Accreditation_Type_Cashless)}" />
+							</apex:pageBlockSectionItem>
+						</apex:pageBlockSection>
+					</apex:pageBlockSection>
+				</apex:outputPanel>
 				<div style="display:{!IF(newform.Is_change_legal_name__c==true,'','none')}">
 					<apex:pageBlockSection columns="2" collapsible="false" id="legalNameSection">
 
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
+								<span class="section-header">
+									{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}
+								</span>
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Current_Legal_details}</apex:outputPanel>
@@ -815,7 +845,9 @@
 					<apex:pageBlockSection columns="2" id="locationSection" collapsible="false">
 						<apex:facet name="header">
 							<apex:outputpanel >
-								{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_of_Location_New,$Label.ISSP_AMS_NoC_Change_of_Location)}
+								<span class="section-header">
+									{!IF(newlabels,$Label.ISSP_AMS_NoC_Change_of_Location_New,$Label.ISSP_AMS_NoC_Change_of_Location)}
+								</span>
 							</apex:outputpanel>
 						</apex:facet>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!IF(newlabels, $Label.ISSP_AMS_NOC_Current_Location_New, $Label.ISSP_AMS_NOC_Current_Location)}</apex:outputPanel>
@@ -963,7 +995,9 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
+							<span class="section-header">
+								{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}
+							</span>
 						</apex:outputpanel>
 					</apex:facet>
                     
@@ -1341,7 +1375,9 @@
 						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false}">
 							<apex:facet name="header">
 								<apex:outputpanel >
-									{!$Label.ISSP_AMS_NoC_Additional_Information}
+									<span class="section-header">
+										{!$Label.ISSP_AMS_NoC_Additional_Information}
+									</span>
 								</apex:outputpanel>
 							</apex:facet>
 
@@ -1832,6 +1868,16 @@
 		<c:ISSP_CustomFooter communityName="{!communityName}"/>
 		</div>
 		<script>
+			$( document ).ready(function() {
+				const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}';
+				if (accreditationModel.toLowerCase() === 'legacy' || accreditationModel) {
+					for (let header of $j('[class=section-header]')) {
+						const cont = header.innerText,
+							sectionNumber = parseInt(cont[0]) + 1;
+						header.innerText =  sectionNumber + cont.slice(1);
+					};
+				}
+			});
 						
 		var natmobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemMobile.locationmobileinput}']");                
 							var mobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationmobile}']");
