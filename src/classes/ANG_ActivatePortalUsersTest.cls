@@ -59,10 +59,6 @@ private class ANG_ActivatePortalUsersTest {
         ac.Contact__c = c1.id;
         insert ac;
 
-        Contact c = [SELECT Id, Email FROM Contact WHERE Email = 'unique@email.com'];
-        c.Community__c = 'ISS Customer Portal';
-        update c;
-
         List<ISSP_CS__c> cs = new List<ISSP_CS__c>();
         cs.add(new ISSP_CS__c(Name = 'ISS_Portal_Agency_Delegated_Admin',value__c = '00ew0000001QRzC'));
         cs.add(new ISSP_CS__c(Name = 'Host',value__c = 'portal.iata.org'));
