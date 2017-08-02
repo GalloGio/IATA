@@ -8387,7 +8387,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Cases Notify IATA Changes Error</shortDescription>
-        <value>Only users from your Agency’s Head Entity (Head Office) can notify IATA of changes.</value>
+        <value>Only users from your Agency’s Head Entity can notify IATA of changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
