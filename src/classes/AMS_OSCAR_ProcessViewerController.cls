@@ -24,9 +24,9 @@ public class AMS_OSCAR_ProcessViewerController {
             If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
                 return (
                     oscar != null
-                    && oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
+                    && (oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
 
-                    && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+                    || !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c)
                 );
             }
             return (
