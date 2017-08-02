@@ -745,7 +745,8 @@ public with sharing class ISSP_PortalUserStatusChange {
      public static String runAction(Id conId, String currentEmail, String theAction, String newValue, String inactiveReason, List<String> firstCommunity){
         ISSP_ContactList.avoidContactStatusTrigger = true;
         system.debug('firstCommunity: ' + firstCommunity);
-        if(firstCommunity == null || firstCommunity.isEmpty()){            
+        if(firstCommunity == null || firstCommunity.isEmpty()){        
+            firstCommunity = new List<String>();   
             firstCommunity.add('');
             firstCommunity.add('');
             system.debug('firstCommunity!!!: ' + firstCommunity);
