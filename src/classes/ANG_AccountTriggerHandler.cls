@@ -18,7 +18,9 @@ public class ANG_AccountTriggerHandler {
 	public void onBeforeUpdate(){
 		updateRiskStatus();
 		manageDowngrades();
+		createAgencyOperations();
 	}
+	
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
@@ -283,4 +285,54 @@ public class ANG_AccountTriggerHandler {
 
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
+
+    private void createAgencyOperations() {
+
+    	List<Account> accountsToLink;
+    	Set<Id> countryIds = new Set<Id>();
+
+    	for(Account acc: triggerNew) {
+
+    		if(acc.ANG_IsNewGenAgency__c && acc.IATACode__c != null && oldMap.get(acc.id).IATACode__c == null && acc.RecordTypeId == ANG_ConversionHelper.ACCOUNT_AGENCY_RT && oldMap.get(acc.id).RecordTypeId == ANG_ConversionHelper.ACCOUNT_STANDARD_RT){   			
+    			accountsToLink.add(acc);
+    			countryIds.add(acc.IATA_ISO_Country__c);
+    		}
+    	}
+
+    	if(!accountsToLink.isEmpty()) {
+    		List<AMS_Operation__c> auxList;
+    		List<AMS_Operation__c> operationCodes = [SELECT Id, Country__c FROM AMS_Operation__c WHERE Country__c in :countryIds AND Settlement__r.RecordType.Name = 'BSP'];
+
+    		//we can have more than 1 operation code per country so we'll put them on a map
+    		Map<Id,List<AMS_Operation__c>> operationCodesPerCountry = new Map<Id,List<AMS_Operation__c>>();
+
+    		for(AMS_Operation__c operationCode: operationCodes) {
+    			if (operationCodesPerCountry.Keyset().contains(operationCode.Country__c)) {   				
+    				operationCodesPerCountry.get(operationCode.Country__c).add(operationCode);
+    			}else {
+    				auxList = new List<AMS_Operation__c>();
+    				auxList.add(operationCode);
+    				operationCodesPerCountry.put(operationCode.Country__c, auxList);   				
+    			}
+    		}
+
+    		if(!operationCodesPerCountry.isEmpty()){
+    			AMS_Agency_Operations__c agencyOp;
+    			List<AMS_Agency_Operations__c> agencyOpsToInsert = new List<AMS_Agency_Operations__c>();
+
+    			for(Account a: accountsToLink){
+    				for(AMS_Operation__c op: operationCodesPerCountry.get(a.IATA_ISO_Country__c)){
+    					agencyOp = new AMS_Agency_Operations__c(Agency__c = a.id, Operation__c = op.Id);
+    					agencyOpsToInsert.add(agencyOp);
+    				}
+    			}
+
+    			if(!agencyOpsToInsert.isEmpty()){
+    				insert agencyOpsToInsert;
+    			}
+    		}
+    	}
+    }
+
+
 }
