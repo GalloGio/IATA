@@ -37,7 +37,10 @@
 								
 				<apex:inputField value="{!newcase.Origin}" required="true" />
 				<apex:pageBlockSectionItem />
-								
+
+				<apex:inputField value="{!newcase.Case_Language__c}" required="true" />
+				<apex:pageBlockSectionItem />
+
 				<apex:inputField value="{!newcase.Phone_Redirected_to_Web__c}" />
 				<apex:pageBlockSectionItem />
 				
