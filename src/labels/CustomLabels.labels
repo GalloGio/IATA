@@ -7298,6 +7298,13 @@ IFG Customer Services</value>
         <value>Thank you for submitting your Accreditation application for your Cargo Agency Head Office.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_AE_NoC_Change_for</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS AE NoC Change for</shortDescription>
+        <value>Change of bank details for</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Accept_TOS</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>

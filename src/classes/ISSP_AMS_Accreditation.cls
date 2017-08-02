@@ -927,6 +927,15 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         return options;
     }
+
+    public String getContactAccount() {
+        List<SelectOption> options = new List<SelectOption>();
+        Account conAccount = con.Account;
+        String optionLabel =  conAccount.IATACode__c + ' - ' + ((conAccount.ANG_Accreditation_Model__c == null || conAccount.ANG_Accreditation_Model__c == 'Legacy') ? conAccount.Location_Type__c : conAccount.Legal_name__c) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
+        options.add(new SelectOption(conAccount.IATACode__c, optionLabel));
+        agencyCodesConcerned = options;
+        return optionLabel;
+    }
     
     public List<SelectOption> getAgencyCodesConcerned() {
         List <Account> accountList;
