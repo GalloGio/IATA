@@ -205,6 +205,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public boolean newAccreditationModels {get; set;}   
 
     public String accredidationType {get; set;}
+    public List<AMS_Accreditation_Contact__c> checkAllOwners {get; set;}    
 
     public Boolean getnewlabels() {
         if (isocountry==null) return false;
@@ -1257,9 +1258,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     system.debug('after trigger newCase dupe: ' + newCase);
                     system.debug('after trigger newCase.Id dupe: ' + newCase.Id);
                     system.debug('after trigger agentType dupe: ' + agentType);
-
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) //NEWGEN-1249
+                        upsert newform;
                     //upsert newCase;
                     fetchAMSProcessForm();
+                    
                 }
                 // Creation of first draft case (either HO or BR)
                 upsert newCase; 
@@ -1270,21 +1273,26 @@ public without sharing class ISSP_AMS_Accreditation {
                     
                     newForm.Branch_Office_Country__c = isocountry.ID;
                     
-                    if(newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New BR Abroad') {
+                    if(newCase.Reason1__c == 'New BR / IP' || newCase.Reason1__c == 'New BR Abroad' || newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD ) {
                         newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
-                        
-                        SYSTEM.DEBUG('Set BR Abroad Legal Name: ' + hqAccount.Name);
-                        if(newCase.Reason1__c == 'New BR Abroad') //Legal name is editable for BR Abroad, so set default value
+
+                        SYSTEM.DEBUG('Set BR Abroad Legal Name: ' + hqAccount.Name + ' newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c + ' hqAccount.Name ' + hqAccount.Name);
+                        if(newCase.Reason1__c == 'New BR Abroad' || newForm.AE_separate_Legal_Entity__c == 'Yes'){  //Legal name is editable for BR Abroad, so set default value                            
                             newForm.Account_Name__c = hqAccount.Name;
+                        }   
                         
                         saveAMSForm();
-                        setOwners('Branch');
+                        if(newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null)
+                            setOwners('Branch');
                     } else { //Insert current user as default contatc for HO applications
                         saveAMSForm();
                         insertDefaultContact();
                     }
                 } else {
-                     saveAMSForm();
+                    if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && newForm.AE_separate_Legal_Entity__c == 'No') //NEWGEN-1249
+                        setOwners('Branch');
+
+                    saveAMSForm();
                 }
 
             } catch (DmlException ex) {
@@ -1628,6 +1636,13 @@ public without sharing class ISSP_AMS_Accreditation {
             upsert hqAccount;
         }
         //NEWGEN - 604 END
+        
+        //NEWGEN-1249
+        fetchAMSContact();
+        system.debug('aqui ownersList ' + checkAllOwners);
+        if(newform.AE_separate_Legal_Entity__c == 'Yes' && checkAllOwners != null){
+            delete checkAllOwners;
+        }
 
         try {
            
@@ -3424,7 +3439,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c,AE_separate_Legal_Entity__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -3432,6 +3447,20 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         if (newForms.size() > 0) {
             newForm = newForms[0];
         }
+    }
+
+    public void fetchAMSContact() { //NEWGEN-1249
+    
+        List<AMS_Accreditation_Contact__c> allOwners = [
+            SELECT Name, RecordType.DeveloperName, Financial_interest__c
+            FROM AMS_Accreditation_Contact__c
+            WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id];
+
+        if(allOwners.size() > 0){
+            checkAllOwners = allOwners;
+        }
+    
+        system.debug('[NG] - checkAllOwners ' + checkAllOwners);
     }
 
     public IATA_ISO_Country__c fetchISOCountry(string isocode) {
@@ -4066,8 +4095,9 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         get {
             List<Case> dupeDrafts = [
                 SELECT Id, IFAP_Country_ISO__c, Reason1__c, CaseArea__c FROM Case WHERE RecordTypeId = :RECORD_TYPE_ID AND Status IN ('Draft') AND AccountId = :vHQAccountId AND 
-                (Reason1__c = 'New HO' OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_LITE OR Reason1__c = :AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) 
+                (Reason1__c = 'New HO' OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_STANDARD OR Reason1__c = :AMS_UTILS.CASE_REASON_HE_LITE) 
             ];
+
             system.debug('getter draftHQCaseExists dupeDrafts.size(): ' + dupeDrafts.size());
             if (dupeDrafts.size() > 0) {
                 isNewCase = false;
