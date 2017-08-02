@@ -3,8 +3,6 @@
     <customSettingsType>List</customSettingsType>
     <description>Newgen ISS - Agency Changes Configuration with fields to migrated, change codes and possible combinations.</description>
     <enableFeeds>false</enableFeeds>
-    <label>ANG Agency Changes Configuration</label>
-    <visibility>Protected</visibility>
     <fields>
         <fullName>TCA_Application_withdrawal__c</fullName>
         <description>Change Code to be applied after application withdrawal</description>
@@ -52,6 +50,22 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>TC_Accreditation_Type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Accreditation Type</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hierarchy</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>TC_Legal_Name__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -68,26 +82,10 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>TC_Minor_Shareholding__c</fullName>
+        <fullName>TC_Location_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Minor Shareholding</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>TC_Major_Shareholding__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Major Shareholding</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>TC_Ownership__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Ownership</label>
+        <label>Location Type</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -100,10 +98,34 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>TC_Location_Type__c</fullName>
+        <fullName>TC_Location_type_diff_legal_ent__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Location Type</label>
+        <label>Location type to different legal entity</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Major_Shareholding__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Major Shareholding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Minor_Shareholding__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Minor Shareholding</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TC_Ownership__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Ownership</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -115,20 +137,6 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <fields>
-        <fullName>TC_Hierarchy__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Hierarchy</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>TC_Accreditation_Type__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Accreditation Type</label>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
+    <label>ANG Agency Changes Configuration</label>
+    <visibility>Protected</visibility>
 </CustomObject>
