@@ -79,6 +79,7 @@
 }
 .table-bordered>tbody>tr>td, .table-bordered>thead>tr>th {
     border: 1px solid #D4D9DB;
+    {!IF(strRenderAs == 'PDF', 'font-size: 11px;','')}
 }
 .hm-table .table>thead>tr>th a, .hm-table .table>thead>tr>th a:hover {
 	color: #444444;
