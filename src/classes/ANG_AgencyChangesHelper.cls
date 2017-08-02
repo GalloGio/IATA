@@ -86,7 +86,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Map<String, String>> configs = ANG_AgencyChangesConfigHelper.getAgencyChangesConfigData();
 
 
-		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.ANG_Type_Of_Change__c != null && validateTypeOfChange(oscar, configs)){
+		if((oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && oscar.ANG_Type_Of_Change__c != null && validateTypeOfChange(oscar, configs)){
 
 			System.debug('[ANG_AgencyChangesHelper][handleNewGenChangesProcess] -- PROCESSING agency changes');
 
@@ -129,7 +129,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 
 				//if(Pattern.matches(AMS_Utils.ANG_LOCATION_TYPE + '|' + AMS_Utils.ANG_HIERARCHY, oscar.ANG_Type_Of_Change__c))
-				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
+				if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE,AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY, AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 					
 					if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 						accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c}).keySet();
@@ -145,14 +145,63 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_OWNERSHIP, AMS_Utils.ANG_MINOR_SHAREHOLDING, AMS_Utils.ANG_MAJOR_SHAREHOLDING},oscar.ANG_Type_Of_Change__c))
                     changesContainer = applyChangeOfOwnership(oscar, accountIdsInvolvedSet, changesContainer, true);
 
-				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
+				if(oscar.Process__c == AMS_Utils.NGCHANGES){
+					
+					changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.SANITYCHECK, accountIdsInvolvedSet, changesContainer);
 
-				System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
+					System.debug('[ANG_AgencyChangesHelper] Starting Risk Actions');
 
-				performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
+					performRiskEventActions(oscar,currHEAccount,isAllHierarchySelected);
 
-				System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
+					System.debug('[ANG_AgencyChangesHelper] Risk Actions Ended');
+				}
 
+				if(oscar.Process__c == AMS_Utils.NGCORRECTION){
+
+					List<Account> accountsToUpdate = new List<Account>();
+
+					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
+                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+                        AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+                        changeCode.status  = null;
+    
+                        if(oscar.AMS_Correction_change_code__c == 'COR') {
+	                        changeCode.name = 'COR';
+	                        changeCode.memoText = 'Correction';
+	                        changeCode.publishedOnEBulletin = false;
+                    	}
+                    	else if(oscar.AMS_Correction_change_code__c == 'CAD'){
+                        	changeCode.name = 'CAD';
+                        	changeCode.memoText = 'Minor Changes';
+                    	}
+
+			    		List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: oscar.Account__c AND Active__c = TRUE];                    
+
+					    if(accountActiveChangeCode.size() > 0){
+					        changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
+					        changeCode.reasonDesc = accountActiveChangeCode[0].Reason_Description__c;
+					        changeCode.status = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
+					    }
+			    		
+			    		changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+					}
+			
+					if(oscar.AMS_Correction_change_code__c == 'LET') {
+
+					    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
+					    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+
+					    changeCode.name = 'LET';
+					    changeCode.reasonCode = '91';
+					    changeCode.memoText = '';
+					    changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+					    changeCode.status  = '9';
+
+					    changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
+					}
+
+				}
 
 			}else if (oldOSCAR.RPM_Approval__c <> AMS_Utils.AUTH_APPROVAL && oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL) {
 
@@ -182,7 +231,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static void performRiskEventActions(AMS_OSCAR__c oscar, String oldParentHierarchyId, Boolean isAllHierarchySelected){
 
-		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE},oscar.ANG_Type_Of_Change__c))
+		if(containsChange(New List<String>{AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY},oscar.ANG_Type_Of_Change__c))
 			System.enqueueJob(new ANG_Risk_Helper.changeAgencyRiskEvent(new Map<Id,Id>{oldParentHierarchyId => oscar.Account__c}));
 
 		if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c) && isAllHierarchySelected)
@@ -224,7 +273,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		tocList.addAll(oscar.ANG_Type_Of_Change__c.split(';'));
 
 
-		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE))
+		if (tocList.contains(AMS_Utils.ANG_LOCATION_TYPE) || tocList.contains(AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY))
 			changesContainer = applyChangeOfLocationType(oscar, changesContainer);
 		else if (tocList.contains(AMS_Utils.ANG_HIERARCHY))
 			changesContainer = applyChangeOfHierarchy(oscar, changesContainer, accountIdsInvolvedSet,doesItContainAccreditationType);
@@ -906,7 +955,8 @@ public with sharing class ANG_AgencyChangesHelper {
                     changesContainer.addChangeCode(changeCode);
                     
                     accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
-                    changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus);
+                    //changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus); REMOVED THIS BECAUSE WE MUST USE THE addAccount METHOD !!
+                    changesContainer.addAccount(accToUpdateStatus);
                 }
             }
 
@@ -988,5 +1038,74 @@ public with sharing class ANG_AgencyChangesHelper {
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
+
+	    /** 
+
+     Create Change Codes NEW Method that creates Change Code History Objects
+
+    */
+
+    public static ANG_AgencyChangesHelper.AChangeStructure ANGcreateAAChangeCodes(List<AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges, List<AMS_OSCAR_JSON.ChangeCode> changeCodes, List<AMS_OSCAR__c> oscars, List<Id> oscarAgencies, Boolean isToUpdateAccounts, ANG_AgencyChangesHelper.AChangeStructure changesContainer) {
+
+        Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
+
+        Set<Account> accountsToUpdate = new Set<Account>();        
+        
+        List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
+        
+        AMS_ChangeCodesHelper.ObjectChangesStruct objectChangesByChangeCode = null;
+        
+        //Account ID => Change Code Struct
+        Map<ID,AMS_ChangeCodesHelper.ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,AMS_ChangeCodesHelper.ChangeCodeStruct> ();
+
+        for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
+
+            Integer index = 0;
+
+            for(Id acctId: oscarAgencies){
+
+                Account acct = changesContainer.accountsMap.get(acctId) != null ?  changesContainer.accountsMap.get(acctId) : new Account(Id = acctId);
+
+                Boolean isActive = false;
+
+                if (!accountsChecker.containsKey(acct)) {
+                    accountsChecker.put(acct, false);
+                    isActive = true;
+                }
+                
+                if(objectChanges != null && !objectChanges.isEmpty())
+                    objectChangesByChangeCode = objectChanges.get(index);
+                
+                AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), acct, isActive);
+
+                aaccToInsert.add(changeCodeResult.changeCode);
+                
+            
+                aaccHistoryToProcess.put(acct.Id, changeCodeResult);
+                
+                System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
+                
+                if (!accountsToUpdate.contains(changeCodeResult.acct)){
+                    changesContainer.addAccount(changeCodeResult.acct);
+                }
+            }
+            
+            index++;
+        }
+
+
+        if (!aaccToInsert.isEmpty()) {
+
+            System.debug('The list of Change Codes to add is ' + aaccToInsert.size());
+
+            insert aaccToInsert;
+        }
+
+       // Add the IDs of the Change Codes after they are inserted
+
+        AMS_ChangeCodesHelper.createAAChangeCodesHistory( aaccToInsert, aaccHistoryToProcess.values());
+     
+        return changesContainer;
+    }
 
 }

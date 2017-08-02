@@ -1234,6 +1234,7 @@ public class AMS_OSCARTriggerHandler {
 				|| oscar.OwnerId != oldMap.get(oscar.Id).OwnerId
 				|| (oscar.Sanity_check_results__c == AMS_Utils.PASSED && oldMap.get(oscar.Id).Sanity_check_results__c != AMS_Utils.PASSED && oscar.Process__c != AMS_Utils.VOLRELINQUISH)
 				|| (oscar.Termination_Date__c != oldMap.get(oscar.Id).Termination_Date__c && oscar.Process__c == AMS_Utils.VOLRELINQUISH)
+				|| (oscar.Process__c == AMS_Utils.NGCHANGES && newMap.get(oscar.Id).ANG_Type_Of_Change__c != oldMap.get(oscar.Id).ANG_Type_Of_Change__c )
 			){
 				updatedOscars.add(oscar);
 			}
@@ -1271,11 +1272,46 @@ public class AMS_OSCARTriggerHandler {
         		c.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
         		caseChanged = true;
         	}
+        	if(newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c ){
+        		
+        		String newReason = fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c);
+        		
+        		if(newReason != null){
+					c.Reason1__c = newReason;
+        			caseChanged = true;
+        		}
+        	}
 
 		    if(caseChanged) casesToUpdate.add(c);
 		}
 
 		if(!casesToUpdate.isEmpty()) update casesToUpdate;
+	}
+
+	public static String fetchCaseReason(String typeOfChange){
+
+		if(typeOfChange == null || typeOfChange == '')
+			return 'Agency Changes';
+		if(typeOfChange.contains('Location type')) 
+			return 'CHG – Data Maintenance';
+		if(typeOfChange.contains('Ownership') || typeOfChange.contains('Legal status')) 
+			return 'CHO / CHS – Change of Ownership / Legal Status';
+		if(typeOfChange.contains('Major Shareholding')) 
+			return 'CHC – Change of Shareholding';
+		if(typeOfChange.contains('Location') || typeOfChange.contains('Location type to different legal entity')) 
+			return 'CHL - Change of Location';
+		if(typeOfChange.contains('Legal Name')) 
+			return 'CHN - Change of Name';
+		if(typeOfChange.contains('VMFR')) 
+			return 'VMFR Setup/Update';
+		if(typeOfChange.contains('Minor Shareholding')) 
+			return 'CHG – Data Maintenance';
+		if(typeOfChange.contains('Hierarchy')) 
+			return 'Change of Hierarchy';
+		if(typeOfChange.contains('Accreditation Type'))
+			return 'Accreditation Type';
+
+		return null;
 	}
 
 	//TD: udpate case reason. Used for calculating KPIs

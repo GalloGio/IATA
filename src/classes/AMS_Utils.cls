@@ -104,6 +104,7 @@ public without sharing class AMS_Utils {
     public static final String ANG_MAJOR_SHAREHOLDING = 'Major shareholding';
     public static final String ANG_OWNERSHIP =  'Ownership';
     public static final String ANG_LOCATION_TYPE =  'Location type';
+    public static final String ANG_LOCATION_TYPE_DIFFLEGALENTITY =  'Location type to different legal entity';
     public static final String ANG_LOCATION =  'Location';
     public static final String ANG_HIERARCHY =  'Hierarchy';
     public static final String ANG_VMFR =  'VMFR';
@@ -145,6 +146,7 @@ public without sharing class AMS_Utils {
     public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
     public static final String NEWAE            = 'ANG.NEW.AE.1.0';
     public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
+    public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 
     public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES};
 
@@ -165,6 +167,8 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_NEWHE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
     public static final String RECTYPE_NEWAE      = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New AE').getRecordTypeId();
     public static final String RECTYPE_NGCHANGES  = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG Agency Changes').getRecordTypeId();
+    public static final String RECTYPE_NGCORRECTION= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NGCORRECTION').getRecordTypeId();
+    public static final String RECTYPE_CORRECTION = Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('CORRECTION').getRecordTypeId();
     public static final String RECTYPE_IATAAGENCY = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency');
     public static final String RECTYPE_SIDRALITE  = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('SIDRA_Lite');
     public static final String RECTYPE_SAAM       = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');

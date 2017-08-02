@@ -6001,6 +6001,45 @@
             ]
           }
         ]
+      },
+      {
+        "Name": "NGCORRECTION.1.0",
+        "Flows": [
+          {
+            "Name": "AMS_OSCAR_APPLICATIONRECEIPT",
+            "Steps": [
+              {
+                "Name": "STEP6",
+                "Required": [],
+                "Actions": [
+                  {
+                    "FunctionName": "ANG_checkAccountHierarchy",
+                    "ActionLabel": "AMS_OSCAR_Action6",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }
+                ],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_succeeded"
+                  },
+                  {
+                    "Status": "Failed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step6_failed"
+                  }
+                ],
+                "DisplayFields": [
+                  "ANG_Type_of_change_hidden__c",
+                  "STEP6__c",
+                  "AMS_Correction_change_code__c"                  
+                ],
+                "IsDependent": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }

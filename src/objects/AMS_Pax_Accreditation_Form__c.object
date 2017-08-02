@@ -14002,9 +14002,20 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Other_Changes</fullName>
+        <fullName>New_Gen_Changes</fullName>
         <active>true</active>
-        <label>Other Changes</label>
+        <label>New Gen Changes</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
