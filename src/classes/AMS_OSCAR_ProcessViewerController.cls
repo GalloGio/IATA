@@ -20,12 +20,22 @@ public class AMS_OSCAR_ProcessViewerController {
 
     public Boolean showRequiredOverlay{
         get{
+            // NG Processes specific conditions
+            If(AMS_Utils.oscarNewGenProcesses.contains(oscar.Process__c)) {
+                return (
+                    oscar != null
+                    && oscar.AMS_Online_Accreditation__r.Remittance_frequency__c == null
+
+                    && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
+                );
+            }
             return (
                 oscar != null
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH
                 && oscar.Process__c != AMS_Utils.VOLRELINQUISH_CA
                 && oscar.Process__c != AMS_Utils.CERTIFICATION
                 && oscar.Process__c != AMS_Utils.CERTIFICATE
+
                 && !oscar.AMS_Online_Accreditation__r.Ready_for_Accreditation__c
             );
         }
@@ -293,7 +303,7 @@ public class AMS_OSCAR_ProcessViewerController {
         }
         fields = fields.substring(0,fields.lastIndexOf(','));
         
-        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
+        return 'SELECT ' + fields + ', AMS_Online_Accreditation__r.Ready_for_Accreditation__c , RecordType.Name, RecordType.DeveloperName, Account__r.Name, AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c FROM AMS_OSCAR__c where Id =: oscarId LIMIT 1';
     }
 
     private AMS_OSCAR__c fetchOscarFields(ID oscarId){
