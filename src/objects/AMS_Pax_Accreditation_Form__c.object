@@ -928,6 +928,27 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Accreditation_Model_to_Change__c</fullName>
+        <externalId>false</externalId>
+        <label>Accreditation Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>ANG_Accreditation_type__c</fullName>
         <externalId>false</externalId>
         <globalPicklist>ANG_Accreditation_Models</globalPicklist>
@@ -1490,7 +1511,7 @@
         <fullName>Confirm_accreditation_type_are_correct__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Confirm accreditation type are correct</label>
+        <label>Confirm accreditation type is correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4806,6 +4827,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Associate - Branch</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5543,6 +5575,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>CASS_Associate_HO</fullName>
         <active>true</active>
         <label>CASS Associate - HO</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -6282,6 +6325,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Import - Branch</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -7019,6 +7073,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>CASS_Import_HO</fullName>
         <active>true</active>
         <label>CASS Import - HO</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -7758,6 +7823,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>IATA Cargo Agent (Res 801/805) Branch applications</description>
         <label>Cargo Agent - Branch</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -8509,6 +8585,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>IATA Cargo Agent (Res 801/805) HO applications</description>
         <label>Cargo Agent - HO</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9258,6 +9345,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>EACP Intermediary (Res 805zz) Branch applications</description>
         <label>Cargo EACP - Branch</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -10009,6 +10107,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>EACP Intermediary (Res 805zz) HO applications</description>
         <label>Cargo EACP - HO</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10757,6 +10866,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Change_of_Bank_Account_Details</fullName>
         <active>true</active>
         <label>Change of Bank Account Details</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -11622,6 +11742,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Courier - Branch</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -12370,6 +12501,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Courier_HO</fullName>
         <active>true</active>
         <label>Courier - HO</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -13120,6 +13262,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>General Online Accreditation Record Type</description>
         <label>General Online Accreditation</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -14024,6 +14177,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Other Changes</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -14907,6 +15071,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Enable_Credit_Card_FOP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15310,11 +15485,22 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
     </recordTypes>
-	<recordTypes>
+    <recordTypes>
         <fullName>Travel_Agent_Associate_Entity</fullName>
         <active>true</active>
         <label>Travel Agent - Associate Entity</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>
@@ -16226,6 +16412,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - Branch</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -16963,6 +17160,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Branch_Abroad</fullName>
         <active>true</active>
         <label>Travel Agent - Branch Abroad</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -17817,6 +18025,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - HO</label>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -18554,7 +18773,18 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_no_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard no Cash</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>
@@ -19465,7 +19695,18 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_with_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard with Cash</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>

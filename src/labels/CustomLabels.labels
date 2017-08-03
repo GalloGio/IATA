@@ -1097,6 +1097,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Please select the portal role you would like to have in this portal service.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Picklist_None</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Picklist None</shortDescription>
+        <value>--None--</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_PortalRoleErrorMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9977,20 +9984,6 @@ For each section below either:&lt;br/&gt;
         <value>New Head Office address details</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_NoC_Accreditation_Type_Cash</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NoC Accreditation Type Cash</shortDescription>
-        <value>Cash</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_AMS_NoC_Accreditation_Type_Cashless</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS NoC Accreditation Type Cashless</shortDescription>
-        <value>Cashless</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -14071,6 +14064,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Active agreements</shortDescription>
         <value>Active agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Add_FAP_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Add FAP Contact</shortDescription>
+        <value>Add Financial Assessment Contact</value>
     </labels>
     <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>

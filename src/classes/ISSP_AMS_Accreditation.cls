@@ -936,6 +936,22 @@ public without sharing class ISSP_AMS_Accreditation {
         agencyCodesConcerned = options;
         return optionLabel;
     }
+
+    public List<SelectOption> getAccreditationModelToChange() {
+        
+        List<SelectOption> options = new List<SelectOption>();
+
+        Schema.DescribeFieldResult aModelsDescribed = AMS_Pax_Accreditation_Form__c.ANG_Accreditation_Model_to_Change__c.getDescribe();
+        List<Schema.PicklistEntry> plEntries = aModelsDescribed.getPicklistValues();
+        options.add(new SelectOption('', Label.ANG_ISSP_Picklist_None));        
+        for( Schema.PicklistEntry f : plEntries)
+        {
+            if (f.getValue() != con.Account.ANG_Accreditation_Model__c) {
+                options.add(new SelectOption(f.getValue(), f.getLabel()));
+            }
+        }  
+        return options;
+    }
     
     public List<SelectOption> getAgencyCodesConcerned() {
         List <Account> accountList;
