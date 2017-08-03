@@ -621,7 +621,10 @@ public class AMS_AgencyHelper {
         
          //new operations to create
         List<AMS_Agency_Operations__c> newAgencyOperations = new List<AMS_Agency_Operations__c>();
-        Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
+
+        Map<Id, Account> oldMap;
+        if(Trigger.isUpdate)
+            oldMap = (Map<Id,Account>) Trigger.oldMap;
 
         for(Account acc:operationHelpercandidate ){
            if(acc.Sector__c == 'Cargo Agent'){
