@@ -215,7 +215,8 @@ IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Ownership&quot;), &quot;Ownership&quot
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Hierarchy&quot;), &quot;Hierarchy&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Major shareholding&quot;), &quot;Major shareholding&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Minor shareholding&quot;), &quot;Minor shareholding&quot;+BR(), NULL)+
-IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Accreditation type&quot;), &quot;Accreditation type&quot;+BR(), NULL)+ 
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Accreditation type&quot;), &quot;Accreditation type&quot;+BR(), NULL)+
+IF(INCLUDES( ANG_Type_Of_Change__c, &quot;Location type to different legal entity&quot;), &quot;Location type to different legal entity&quot;+BR(), NULL)+ 
 IF(INCLUDES( ANG_Type_Of_Change__c, &quot;VMFR&quot;), &quot;VMFR&quot;, NULL)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Type of change</label>
