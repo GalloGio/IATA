@@ -1300,7 +1300,7 @@ public class AMS_OSCARTriggerHandler {
 			return 'CHC – Change of Shareholding';
 		if(typeOfChange.contains('Location') || typeOfChange.contains('Location type to different legal entity')) 
 			return 'CHL - Change of Location';
-		if(typeOfChange.contains('Legal Name')) 
+		if(typeOfChange.contains('Legal name')) 
 			return 'CHN - Change of Name';
 		if(typeOfChange.contains('VMFR')) 
 			return 'VMFR Setup/Update';

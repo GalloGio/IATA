@@ -62,6 +62,7 @@ public with sharing class ANG_AgencyChangesHelper {
             }
 
         	if(changeCodesToCreate != null && !changeCodesToCreate.isEmpty()){
+				System.debug('[ANG_AgencyChangesHelper] Creating following change codes:'+changeCodesToCreate);
         		insert changeCodesToCreate;
 				hasUpserted = true;
         	}
@@ -161,7 +162,6 @@ public with sharing class ANG_AgencyChangesHelper {
 					List<Account> accountsToUpdate = new List<Account>();
 
 					if(oscar.AMS_Correction_change_code__c == 'COR' || oscar.AMS_Correction_change_code__c == 'CAD'){
-                        system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
                         AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
                         changeCode.status  = null;
@@ -189,7 +189,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			
 					if(oscar.AMS_Correction_change_code__c == 'LET') {
 
-					    system.debug(LoggingLevel.ERROR,'applyChangeCodesWithDependencies() -> generate the change code');
 					    AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
 					    changeCode.name = 'LET';
@@ -961,7 +960,7 @@ public with sharing class ANG_AgencyChangesHelper {
             }
 
         }
-
+		            
         return changesContainer;
     }
 
@@ -1050,14 +1049,14 @@ public with sharing class ANG_AgencyChangesHelper {
         Map<Account, Boolean> accountsChecker = new Map<Account, Boolean>();
 
         Set<Account> accountsToUpdate = new Set<Account>();        
-        
-        List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
-        
+               
         AMS_ChangeCodesHelper.ObjectChangesStruct objectChangesByChangeCode = null;
         
         //Account ID => Change Code Struct
         Map<ID,AMS_ChangeCodesHelper.ChangeCodeStruct> aaccHistoryToProcess = new Map <ID,AMS_ChangeCodesHelper.ChangeCodeStruct> ();
-
+		
+        system.debug('[ANG_AgencyChangesHelper] The list of agencies to insert the change codes are the following:'+oscarAgencies);
+        
         for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
             Integer index = 0;
@@ -1078,13 +1077,10 @@ public with sharing class ANG_AgencyChangesHelper {
                 
                 AMS_ChangeCodesHelper.ChangeCodeStruct changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), acct, isActive);
 
-                aaccToInsert.add(changeCodeResult.changeCode);
-                
+                changesContainer.addChangeCode(changeCodeResult.changeCode);
             
                 aaccHistoryToProcess.put(acct.Id, changeCodeResult);
-                
-                System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
-                
+                                
                 if (!accountsToUpdate.contains(changeCodeResult.acct)){
                     changesContainer.addAccount(changeCodeResult.acct);
                 }
@@ -1093,18 +1089,6 @@ public with sharing class ANG_AgencyChangesHelper {
             index++;
         }
 
-
-        if (!aaccToInsert.isEmpty()) {
-
-            System.debug('The list of Change Codes to add is ' + aaccToInsert.size());
-
-            insert aaccToInsert;
-        }
-
-       // Add the IDs of the Change Codes after they are inserted
-
-        AMS_ChangeCodesHelper.createAAChangeCodesHistory( aaccToInsert, aaccHistoryToProcess.values());
-     
         return changesContainer;
     }
 
