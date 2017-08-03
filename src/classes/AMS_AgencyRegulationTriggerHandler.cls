@@ -20,13 +20,25 @@ public class AMS_AgencyRegulationTriggerHandler {
         Set<Id> accountIds = new Set<Id>();
         Set<String> regulationPerAccount = new Set<String>();
 
-        for(AMS_Agency_Regulation__c agReg: agencyRegulations){
-            accountIds.add(agReg.Account__c);
+        Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
+        for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
+        {
+            agencyRegulationsAccStatus.put(agRegStatus.Id, agRegStatus.Account__r.Status__c);
+        }
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
-                dgrRegulationsExpiringIn90Days.add(agReg);
-                if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
-                    renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
+        for(AMS_Agency_Regulation__c agReg: agencyRegulations){
+
+            if(agencyRegulationsAccStatus.get(agReg.Id) != AMS_Utils.ACC_S0_TERMINATED){
+
+                accountIds.add(agReg.Account__c);
+
+                if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
+                    dgrRegulationsExpiringIn90Days.add(agReg);
+                    if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+                        renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
+
+            }
+            
         }
 
         if(!dgrRegulationsExpiringIn90Days.isEmpty()){
