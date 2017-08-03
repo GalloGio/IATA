@@ -54,9 +54,12 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
                 result.put(UserProvisioningUtils.PARAM_STATUS, 'Completed');
 
                 SCIMCreateUserResponse respObj = SCIMCreateUserResponse.parse(responseStr);
+                userProvUtils.debug('SCIMCreateUserResponse result was ' + respObj);
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERID, respObj.id);
                 result.put(UserProvisioningUtils.PARAM_EXTERNAL_USERNAME, respObj.userName);
 
+                //MConde
+                userProvUtils.addExternalResponse(respObj);
 
                 assignDerivedOutputParameters(result, userPayload);
 

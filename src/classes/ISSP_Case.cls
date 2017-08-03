@@ -76,6 +76,11 @@ public without sharing class ISSP_Case {
     //Survey Handle
     public boolean mySurveyCompletedVariable  {get; set;}
 
+    //basto1p
+    public String statusValMapped  {get; set;}
+    public static final String  STATUS_FLD_NAME='Status';
+    public static final String  NO_FIELD_MAP='NO_FIELD_MAP';
+
     public static Boolean preventTrigger = false;
 
     public boolean isDPCInvestigateMode {get {
@@ -522,8 +527,27 @@ public without sharing class ISSP_Case {
                                     ORDER BY Milestone_Date__c ASC
                 ]);
 
+        //basto1p
+        statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
     }
 
+
+    //basto1p
+    public static String getFieldMappedValue(String filedName, String fieldValueToMapp){
+        String returnVal=ISSP_Case.NO_FIELD_MAP;
+
+        if (filedName!=null && fieldValueToMapp!=null){
+            if ( filedName.equalsIgnoreCase(ISSP_Case.STATUS_FLD_NAME) && fieldValueToMapp.equals('Solution Provided')){
+                returnVal=Label.ISSP_Solution_Provided;
+            }
+            /*
+            else if (filedName.equalsIgnoreCase('CaseType') && fieldValueToMapp.equals('Solution Provided')){
+
+            }
+            */
+        }
+        return returnVal;
+    }
 
     public List<SelectOption> getItems() {
         system.debug('LANGUAGE: ' + UserInfo.getLanguage());

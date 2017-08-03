@@ -79,10 +79,18 @@
                         
                        </apex:commandLink>
                     </apex:facet>
-                     <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.label!='Contact ID' && f.label!='Case Number',true,false)}"> <!-- && f.label!='Account Name' -->
+
+                      <!-- basto1p -->
+                     <apex:outputpanel rendered="{!IF(f.label!='Account ID' && f.fieldPath!='Portal_Case_Status__c' && f.label!='Contact ID' && f.label!='Case Number',true,false)}"> <!-- && f.label!='Account Name' -->
                         <apex:outputfield value="{!item[f.fieldPath]}" />
                      </apex:outputpanel>
-                    
+
+                      <!-- basto1p -->
+                      <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Case_Status__c',true,false)}">
+                          <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(mapFieldsValue['Status'+item.Status]=='NO_FIELD_MAP',true,false)}"/>
+                          <apex:outputpanel rendered="{!IF(mapFieldsValue['Status'+item.Status]!='NO_FIELD_MAP',true,false)}"> {!mapFieldsValue['Status'+item.Status]} </apex:outputpanel>
+                      </apex:outputpanel>
+
                      <apex:outputpanel rendered="{!IF(f.label=='Account ID',true,false)}"> 
                      <apex:outputLink value="/apex/ISSP_Account?Id={!item.AccountId}{!if(communityName=='CNS','&CommunityName='+communityName,'')}" target="_self">{!item.Account.name}</apex:outputLink>
                      </apex:outputpanel>
