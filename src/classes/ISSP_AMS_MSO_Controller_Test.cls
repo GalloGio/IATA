@@ -24,7 +24,9 @@ private class ISSP_AMS_MSO_Controller_Test {
         Contact con = new Contact (
 	        AccountId = acc.id,
 	        RecordTypeId = conRtId, 
+	        FirstName = 'Name',
 	        LastName = 'portalUser',
+	        Phone = '123456789',
 	        User_Portal_Status__c = 'Approved User'
 	        );
         insert con;
