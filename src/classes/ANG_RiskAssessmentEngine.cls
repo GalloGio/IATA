@@ -152,7 +152,7 @@ public class ANG_RiskAssessmentEngine{
     public ANG_RiskAssessmentEngine(map<account,list<string>> accRiskEventsMap){
         //list<string>> accRiskEventsMap -> list of strings containg the risk Type Id or de risk type UniqueKey
         for(account acc:accRiskEventsMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel==AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  accInfoMap.get(accountId).accreditantionModel==AMS_Utils.ACCREDITATIONMODEL_CASHLESS) || accInfoMap.get(accountId).status== AMS_Utils.ACC_S0_TERMINATED){
+            if(acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_CASHLESS || acc.status__c== AMS_Utils.ACC_S0_TERMINATED){
                 accCalcMap.put(acc.id,null);// to return the assessment
                 continue;
             } 
