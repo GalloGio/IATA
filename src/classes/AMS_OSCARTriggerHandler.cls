@@ -1296,19 +1296,19 @@ public class AMS_OSCARTriggerHandler {
 			return 'CHG – Data Maintenance';
 		if(typeOfChange.contains('Ownership') || typeOfChange.contains('Legal status')) 
 			return 'CHO / CHS – Change of Ownership / Legal Status';
-		if(typeOfChange.contains('Major Shareholding')) 
+		if(typeOfChange.contains('Major shareholding')) 
 			return 'CHC – Change of Shareholding';
 		if(typeOfChange.contains('Location') || typeOfChange.contains('Location type to different legal entity')) 
 			return 'CHL - Change of Location';
-		if(typeOfChange.contains('Legal Name')) 
+		if(typeOfChange.contains('Legal name')) 
 			return 'CHN - Change of Name';
 		if(typeOfChange.contains('VMFR')) 
 			return 'VMFR Setup/Update';
-		if(typeOfChange.contains('Minor Shareholding')) 
+		if(typeOfChange.contains('Minor shareholding')) 
 			return 'CHG – Data Maintenance';
 		if(typeOfChange.contains('Hierarchy')) 
 			return 'Change of Hierarchy';
-		if(typeOfChange.contains('Accreditation Type'))
+		if(typeOfChange.contains('Accreditation type'))
 			return 'Accreditation Type';
 
 		return null;
