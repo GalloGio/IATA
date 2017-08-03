@@ -283,7 +283,7 @@ public without sharing class vfISSP_FAQ2Case
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
              
              String areaOfConcernStr='';
-             if (areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
+             if (isIFG && areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
                 areaOfConcernStr='\n'+Label.ISSP_Area_of_Concern+' - '+areaOfConcern+'\n';
              }
             
