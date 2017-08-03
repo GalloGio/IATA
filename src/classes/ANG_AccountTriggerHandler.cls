@@ -322,7 +322,7 @@ public class ANG_AccountTriggerHandler {
 
     			for(Account a: accountsToLink){
     				for(AMS_Operation__c op: operationCodesPerCountry.get(a.IATA_ISO_Country__c)){
-    					agencyOp = new AMS_Agency_Operations__c(Agency__c = a.id, Operation__c = op.Id);
+    					agencyOp = new AMS_Agency_Operations__c(Account__c = a.id, Operation__c = op.Id);
     					agencyOpsToInsert.add(agencyOp);
     				}
     			}
