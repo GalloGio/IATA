@@ -90,10 +90,6 @@
                 <field>New_parent__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NewHeDifferentLegalEntity__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sanity_check_results__c</field>
             </layoutItems>

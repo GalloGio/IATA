@@ -7078,6 +7078,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
+                <fullName>Major shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Ownership</fullName>
                 <default>false</default>
             </values>
@@ -24419,6 +24423,10 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Minor shareholding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Major shareholding</fullName>
                 <default>false</default>
             </values>
             <values>
