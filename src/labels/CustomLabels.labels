@@ -173,6 +173,13 @@
         <value>Generate Risk Event</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_Action16</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action16</shortDescription>
+        <value>Forecast</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
         <language>en_US</language>
         <protected>false</protected>
