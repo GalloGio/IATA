@@ -526,8 +526,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else if (stepNumber == '3') {
                     isStep3 = true;
                     System.Debug('SAAM Case Id: ' + newCase.Id);
-                    refreshCntIFAPContacts();
                     
+                    if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != 'Cash') {
+                        refreshCntIFAPContacts();
+                    }
 
                     setOwnerAndRoleLabels();
 
@@ -6849,12 +6851,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     public void refreshCntIFAPContacts() {
-        if (isNoticeOfChange && con.Account.ANG_Accreditation_Model__c != 'Cash') {
-            cntIFAPContacts = [SELECT COUNT() 
-                                 FROM AMS_Accreditation_Contact__c
-                                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Financial_Assessment_Contact__c = true
-                                  AND Id != :newContact.Id];
-        }
+        cntIFAPContacts = [SELECT COUNT() 
+                             FROM AMS_Accreditation_Contact__c
+                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Financial_Assessment_Contact__c = true
+                              AND Id != :newContact.Id];
     }
 
     public class specialTraffic {
