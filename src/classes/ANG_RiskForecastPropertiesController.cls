@@ -18,7 +18,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         this.myCase = (Case)stdController.getRecord();
         riskOpt = null;
 
-        this.myCase = [Select Id, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, recordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c from Case where Id =:myCase.Id];
+        this.myCase = [Select Id, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c from Case where Id =:myCase.Id];
     }
 
     public list<selectoption> getriskOption(){
@@ -27,7 +27,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
 
                 options.add(new selectoption('Select Risk Option', 'Select Risk Option'));
 
-                if(myCase.recordTypeId == SIDRALITE){
+                if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRALITE){
 
                     options.add(new selectoption('5','Fail Financial Statements'));
                     options.add(new selectoption('7','Unreported Major Change'));
@@ -37,11 +37,40 @@ public with sharing class ANG_RiskForecastPropertiesController {
                 
                 }
 
-                if(myCase.recordTypeId == SIDRA){
+                if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){
 
                     options.add(new selectoption('2','Late/Short payment'));
                     options.add(new selectoption('3','Wrong currency payment'));
                     options.add(new selectoption('4','Payment Default'));
+                
+                }
+
+                if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NEWHESTANDARD){
+
+                    options.add(new selectoption('1','Auth. Cash Payment'));
+
+                    riskOpt = '1';
+                
+                }
+
+                if(myCase.RecordTypeId == AMS_Utils.RECTYPE_OSCARCOMM && myCase.OSCAR__r.Process__c == AMS_Utils.NGCHANGES){
+
+                    options.add(new selectoption('1','Auth. Cash Payment'));
+                    options.add(new selectoption('6','Major change (owner or legal)'));
+
+                    if(myCase.OSCAR__r.ANG_Type_Of_Change__c != null){
+                        List<String> majorChanges = new List<String>{
+                            AMS_Utils.ANG_OWNERSHIP,
+                            AMS_Utils.ANG_MAJOR_SHAREHOLDING,
+                            AMS_Utils.ANG_LOCATION_TYPE_DIFFLEGALENTITY,
+                            AMS_Utils.ANG_HIERARCHY,
+                            AMS_Utils.ANG_LEGAL_NAME,
+                            AMS_Utils.ANG_LEGAL_STATUS
+                        };
+
+                        if(ANG_AgencyChangesHelper.containsChange(majorChanges,myCase.OSCAR__r.ANG_Type_Of_Change__c)) riskOpt = '6';
+                        if(ANG_AgencyChangesHelper.containsChange(new List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},myCase.OSCAR__r.ANG_Type_Of_Change__c)) riskOpt = '1';
+                    }
                 
                 }
 
