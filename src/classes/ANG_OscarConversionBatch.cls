@@ -41,6 +41,15 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	global String oscarName;
 
 	global String countryToSearch;
+
+	global static final Map<String,String> typeOfChangeMap = new Map<String, String> {
+        'Ownership to non-IATA Agent' => 'Hierarchy;Ownership',
+        'Ownership to IATA Agent' => 'Hierarchy;Ownership',
+        'Location with inspection' => 'Location',
+        'Name' => 'Legal name',
+        'Major Shareholding' => 'Major shareholding',
+        'Minor Shareholding' => 'Minor shareholding'
+	};
 	
 	global ANG_OscarConversionBatch(String countryToSearch, String oscarName) {
 		
@@ -116,11 +125,11 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 			
 			oscarToProcess.New_parent__c = oscarToProcess.AMS_Target_Agency__c;
 
-			if(oscarToProcess.Type_of_change__c == 'Ownership to IATA Agent' || oscarToProcess.Type_of_change__c == 'Ownership to non-IATA Agent')
-				oscarToProcess.ANG_Type_Of_Change__c = 'Hierarchy;Ownership';
-			else if(oscarToProcess.Type_of_change__c == 'Location with inspection'){
-				oscarToProcess.ANG_Type_Of_Change__c = 'Location';
-			} else{ 
+			String typeOfChange = typeOfChangeMap.get(oscarToProcess.Type_of_change__c);
+
+			if(typeOfChange != null)
+				oscarToProcess.ANG_Type_Of_Change__c = typeOfChange;
+			else{ 
 				oscarToProcess.ANG_Type_Of_Change__c = oscarToProcess.Type_of_change__c;
 			}
 		}
