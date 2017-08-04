@@ -1992,6 +1992,40 @@
         <template>IFAP_Email_Templates/IFAP</template>
     </alerts>
     <alerts>
+        <fullName>IFG_Case_closed_by_Support_Team</fullName>
+        <description>IFG - Case closed by Support Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>ifgcare@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E2CP_CS_Portal/IFG_Case_Closed</template>
+    </alerts>
+    <alerts>
+        <fullName>IFG_Case_solution_provided_to_Customer_by_Support_Team</fullName>
+        <description>IFG - Case solution provided to Customer by Support Team</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>ifgcare@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>E2CP_CS_Portal/IFG_Case_Awaiting_Customer_Feedback</template>
+    </alerts>
+    <alerts>
+        <fullName>IFG_Internal_Case_Closed</fullName>
+        <description>IFG - Internal Case Closed</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
+    </alerts>
+    <alerts>
         <fullName>ISSP_Send_DPC_HP_ACR_email_notification</fullName>
         <description>ISSP Send DPC HP ACR email notification</description>
         <protected>false</protected>
@@ -5495,6 +5529,17 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IFG_Case_reopened_change_owner_to_SL1</fullName>
+        <field>OwnerId</field>
+        <lookupValue>Queue_IFG_Support_Level_1</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>IFG - Case reopened change owner to SL1</name>
+        <notifyAssignee>true</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IRR_Withdrawal_ApprovalDate_Reset</fullName>
@@ -12810,7 +12855,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(   SIDRA_exchange_rate_updated__c,   RecordType.DeveloperName = &apos;SIDRA&apos;,   ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),    NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),     Short_Payment_Amount_USD__c &gt; 50,     Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),     Short_Payment_Amount_USD__c &lt;= 150000  )</formula>
+        <formula>AND(  SIDRA_exchange_rate_updated__c,  RecordType.DeveloperName = &apos;SIDRA&apos;,  Short_Payment_Amount_USD__c &gt; 50,  NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   OR(AND(  ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),   AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14448,6 +14493,85 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>IFG - Assign reopen case to queue Support Level 1</fullName>
+        <actions>
+            <name>IFG_Case_reopened_change_owner_to_SL1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Reopen</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Internal Case Closed</fullName>
+        <actions>
+            <name>IFG_Internal_Case_Closed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>FG - Send email notification for IFG team when internal case is closed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Send email notification for Customer when a solution is provided</fullName>
+        <actions>
+            <name>IFG_Case_solution_provided_to_Customer_by_Support_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Solution Provided</value>
+        </criteriaItems>
+        <description>IFG - Send email notification for Customer when a solution is provided</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFG - Send email notification for Customer when case is closed</fullName>
+        <actions>
+            <name>IFG_Case_closed_by_Support_Team</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordType__c</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsClosed</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>IFG - Send email notification for Customer when case is closed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>ISS Key controls Dashboard AM</fullName>
         <actions>
             <name>Assign_to_Agency_Management_Europe_queue</name>
@@ -14587,7 +14711,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13))) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
+        <booleanFilter>(1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13)) AND 16) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>notEqual</operation>
@@ -14663,6 +14787,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>Customer Charge Request</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>Cases - IFG</value>
+        </criteriaItems>
         <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -14673,7 +14802,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12))) AND (5 AND 6)) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14)</booleanFilter>
+        <booleanFilter>((1 OR 2 OR 3 OR 4 OR (10 AND (11 OR 12))) AND (5 AND 6)) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -14743,6 +14872,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <field>Case.DPC_Software__c</field>
             <operation>notEqual</operation>
             <value>Maestro</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - IFG</value>
         </criteriaItems>
         <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>

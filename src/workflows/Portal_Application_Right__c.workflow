@@ -247,6 +247,15 @@
         <targetObject>Contact__c</targetObject>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Application_Name_Text_Field_Update</fullName>
+        <field>Application_Name_Text_Field__c</field>
+        <formula>Portal_Application__r.Name</formula>
+        <name>Application Name Text Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Application_uniqueness_for_contact</fullName>
         <description>Concatenate the contact ID and Application ID to ensure it&apos;s unique</description>
         <field>Application_uniqueness_for_contact__c</field>
@@ -341,6 +350,17 @@
             <operation>equals</operation>
             <value>Access Granted</value>
         </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Application Name Text Field Update</fullName>
+        <actions>
+            <name>Application_Name_Text_Field_Update</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates application name text field to be used in roll-up fields.</description>
+        <formula>true</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

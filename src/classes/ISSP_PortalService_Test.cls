@@ -255,17 +255,20 @@ public class ISSP_PortalService_Test {
 		con1.AccountId = acc.Id;
 		con1.User_Portal_Status__c = 'Pending Approval';
 		con1.Email = 'con1@test.test';
+		con1.Community__c = 'ISS Customer Portal';
 		cl.add(con1);		
 
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.AccountId = acc.Id;
 		con2.User_Portal_Status__c = 'Approved User';
 		con2.Email = 'con2@test.test';
+		con2.Community__c = 'ISS Customer Portal';
 		cl.add(con2);
 		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;
 		con3.Email = 'con3@test.test';
+		con3.Community__c = 'ISS Customer Portal';
 		cl.add(con3);		
 
 		insert cl;

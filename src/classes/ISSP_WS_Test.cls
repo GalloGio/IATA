@@ -168,7 +168,8 @@ private class ISSP_WS_Test {
         myInput.description = '';
         ISSP_WS_NewUser.createUser(myInput);
         
-        con.User_Portal_Status__c = 'Approved User';
+        con.User_Portal_Status__c = 'Approved User';         
+        con.Community__c = 'ISS Customer Portal';
         update con;
         ISSP_WS_NewUser.createUser(myInput);
     }
@@ -346,6 +347,7 @@ private class ISSP_WS_Test {
         con.LastName = 'test';
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test.issp.interface@testisspinterface.com';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         
         User thisUser = ISSP_ObjectFactory.createPortalUser(con);

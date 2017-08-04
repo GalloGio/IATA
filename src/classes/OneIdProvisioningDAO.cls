@@ -229,7 +229,7 @@
         Service_Bundle__r.Service_Provider_Name__c,
         (select id, Connected_App_Provisioning_Name__c, PermissionSet_Provisioning__c, PermissionSet_SSO__c,One_Id_Service_Provider_Config__r.id,One_Id_Service_Provider_Config__r.Service_Provider_Name__c,
         One_Id_Service_Provider_Config__r.Service_Bundle__r.id,One_Id_Service_Provider_Config__r.Service_Bundle__r.Service_Provider_Name__c from One_Id_App_Config_Details__r)
-        from One_Id_Service_Provider_Config__c where Is_Active__c = true and Service_Bundle__r.Is_Active__c = true and Service_Bundle__r.Portal_Visible__c = true
+        from One_Id_Service_Provider_Config__c where Is_Active__c = true and Service_Bundle__r.Is_Active__c = true //and Service_Bundle__r.Portal_Visible__c = true
         and Service_Bundle__r.RecordTypeid = :recTypeId limit 500];
 
 
@@ -245,6 +245,50 @@
             }
 
             if(!mapOfApps.isEmpty()) toReturn.addAll(mapOfApps.values());
+        }
+
+        return toReturn;
+
+    }
+
+    public static List<One_Id_App_Config_Detail__c> getAppPermissionSetListForISSP(List<String> bundleNames){
+
+
+        List<One_Id_Service_Provider_Config__c> temp = new List<One_Id_Service_Provider_Config__c>();
+        List<One_Id_App_Config_Detail__c> toReturn = new List<One_Id_App_Config_Detail__c>();
+        Map<String, One_Id_App_Config_Detail__c> mapOfApps = new Map<String, One_Id_App_Config_Detail__c>();
+
+        if(!bundleNames.isEmpty()) {
+
+            Id recTypeId = OneIdProvisioningDAO.AppRecordTypesConfig.get('One_Id_Service_Provider_Config__c').get(
+                    'Service_Bundle');
+
+            temp = [select id, Service_Provider_Name__c,Description__c,App_Picture_Url__c, License_Upgrade_Required__c, Profile_Id__c,
+                    Service_Bundle__r.Service_Provider_Name__c,
+                    (select id, Connected_App_Provisioning_Name__c, PermissionSet_Provisioning__c, PermissionSet_SSO__c,One_Id_Service_Provider_Config__r.id,One_Id_Service_Provider_Config__r.Service_Provider_Name__c,
+                            One_Id_Service_Provider_Config__r.Service_Bundle__r.id,One_Id_Service_Provider_Config__r.Service_Bundle__r.Service_Provider_Name__c from One_Id_App_Config_Details__r)
+                    from One_Id_Service_Provider_Config__c
+                    where Is_Active__c = true
+                    and Service_Bundle__r.Is_Active__c = true
+                    and Service_Bundle__r.Portal_Visible__c = false
+                    and Service_Bundle__r.RecordTypeid = :recTypeId
+                    and Service_Bundle__r.Service_Provider_Name__c = :bundleNames limit 500];
+
+            System.debug('basto1p - getAppPermissionSetListForISSP recTypeId='+recTypeId+'; bundleNames='+bundleNames);
+            System.debug('basto1p - getAppPermissionSetListForISSP config temp='+temp);
+            if(!temp.isEmpty()){
+
+                for(One_Id_Service_Provider_Config__c sp : temp){
+                    System.debug('sp ' + sp);
+                    for(One_Id_App_Config_Detail__c app : sp.One_Id_App_Config_Details__r){
+                        System.debug('app ' + app);
+                        mapOfApps.put(app.Connected_App_Provisioning_Name__c, app);
+                    }
+
+                }
+
+                if(!mapOfApps.isEmpty()) toReturn.addAll(mapOfApps.values());
+            }
         }
 
         return toReturn;

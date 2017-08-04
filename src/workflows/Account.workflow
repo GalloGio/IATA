@@ -107,6 +107,18 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
+        <description>This field is updated with Record Sharing Criteria values</description>
+        <field>Record_Sharing_Criteria_AUX__c</field>
+        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
+&amp;
+IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
+        <name>Acc Update Record Sharing Criteria AUX</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
         <description>Set the name of an IATA Airline Account, first using Trade Name, and in second place Name_on_AOC__c</description>
         <field>Name</field>
@@ -655,6 +667,16 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
             <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Field update with values of field Record Sharing Criteria</fullName>
+        <actions>
+            <name>Acc_Update_Record_Sharing_Criteria_AUX</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
