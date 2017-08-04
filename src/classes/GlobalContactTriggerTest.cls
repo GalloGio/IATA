@@ -63,6 +63,7 @@ private class GlobalContactTriggerTest {
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         String newContactId = con.Id;
 
@@ -101,6 +102,7 @@ private class GlobalContactTriggerTest {
         con.Senior_Contact_Email__c = 'senior@dev.com';
         con.AccountId= acc.Id;
         con.User_Portal_Status__c = 'Active';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         String newContactId = con.Id;
 

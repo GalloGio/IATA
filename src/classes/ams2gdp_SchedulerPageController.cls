@@ -1,20 +1,20 @@
-public with sharing class ams2gdp_SchedulerPageController 
+public with sharing class ams2gdp_SchedulerPageController
 {
 	public String jobName{get;set;}
     public String recordIds{get;set;}
     public Boolean processNext{get;set;}
     public String query{get;set;}
     public List<String> jobIds{get;set;}
-	
+
 	public List<SelectOption> availableJobs{get;set;}
 	public List<AsyncApexJob> jobs{get{
-		List<AsyncApexJob> theJobs; 
+		List<AsyncApexJob> theJobs;
 
 		if(jobIds.size() == 0)
 		{
 			Datetime dt = Datetime.now().addHours(-1);
 			theJobs =  [
-				SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors, ApexClass.Name, MethodName, CompletedDate, JobType FROM AsyncApexJob 
+				SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors, ApexClass.Name, MethodName, CompletedDate, JobType FROM AsyncApexJob
 				WHERE CreatedBy.Id = :UserInfo.getUserId() AND CompletedDate >= :dt
 	            ORDER BY Status, CompletedDate DESC
 			];
@@ -22,17 +22,17 @@ public with sharing class ams2gdp_SchedulerPageController
 		else
 		{
 			theJobs =  [
-				SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors, ApexClass.Name, MethodName, CompletedDate, JobType FROM AsyncApexJob 
+				SELECT Id, Status, JobItemsProcessed, TotalJobItems, NumberOfErrors, ApexClass.Name, MethodName, CompletedDate, JobType FROM AsyncApexJob
 				WHERE Id IN :jobIds
 			];
 		}
 
 		return theJobs;
-       
+
 	}set;}
 
 
-	public ams2gdp_SchedulerPageController() 
+	public ams2gdp_SchedulerPageController()
 	{
 		if(jobIds == null)
 		{
@@ -50,13 +50,13 @@ public with sharing class ams2gdp_SchedulerPageController
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Account_Role','Job 7: Agency Owner'));
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Agency_Airport','Job 8: Adjacent Airport'));
 			availableJobs.add(new SelectOption('ams2gdp_Batch_AMS_Agency_Profile','Job 9: Agency Profile and Specialization'));
-			
+
 			availableJobs.add(new SelectOption('ams2gdp_Batch_Update','=== Clear Error Logs ==='));
 	}
 
 	public void refresh()
 	{
-		
+
 	}
 
 	public void executeJob()
@@ -70,20 +70,22 @@ public with sharing class ams2gdp_SchedulerPageController
                 if(s.length() >=15) specificRecordIds.add(s.left(15));
             }
         }
-        
+
 		if(jobName == 'ams2gdp_Batch_Account')
 		{
-            
+
             if(processNext && specificRecordIds.size() >0)
             {
             	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(false,specificRecordIds);
-	            query = batch.query; 
+	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
 
 	            //Start Job 2
-	            List<String> ids2 = ams2gdp_Selector.getAMS_InspectionIdsByAccountIds(specificRecordIds);
+	            //New version of inspection batches runs receiving directly from a list of accounts
+	            List<String> ids2 = specificRecordIds;
 	            if(ids2.isEmpty()) ids2.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_Inspection(false,ids2)));
+
 
 	            //Start Job 3
 	            List<String> ids3 = ams2gdp_Selector.getAMS_TerritoryIdsByAccountIds(specificRecordIds);
@@ -118,63 +120,66 @@ public with sharing class ams2gdp_SchedulerPageController
 	            List<String> ids9 = ams2gdp_Selector.getAMS_Agency_ProfileIdsByAccountIds(specificRecordIds);
 	            if(ids9.isEmpty()) ids9.add('none');
 	            jobIds.add(Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Profile(false,ids9)));
+
+	            //Start Job 1 again
+				jobIds.add(Database.executeBatch(new ams2gdp_Batch_Account(false,specificRecordIds)));
             	
             }
             else
             {
             	ams2gdp_Batch_Account batch = new ams2gdp_Batch_Account(processNext,specificRecordIds);
-	            query = batch.query; 
+	            query = batch.query;
 	            jobIds.add(Database.executeBatch(batch));
             }
 		}
 		else if(jobName == 'ams2gdp_Batch_Account2')
 		{
             ams2gdp_Batch_Account2 batch = new ams2gdp_Batch_Account2(false,specificRecordIds);
-            query = batch.query; 
+            query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Address')
 		{
 			ams2gdp_Batch_Address batch = new ams2gdp_Batch_Address(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Agency_Affiliation')
 		{
 			ams2gdp_Batch_Agency_Affiliation batch = new ams2gdp_Batch_Agency_Affiliation(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Account_Role')
 		{
 			ams2gdp_Batch_AMS_Account_Role batch = new ams2gdp_Batch_AMS_Account_Role(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Airport')
 		{
 			ams2gdp_Batch_AMS_Agency_Airport batch = new ams2gdp_Batch_AMS_Agency_Airport(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_AMS_Agency_Profile')
 		{
 			ams2gdp_Batch_AMS_Agency_Profile batch = new ams2gdp_Batch_AMS_Agency_Profile(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Inspection')
 		{
 			ams2gdp_Batch_Inspection batch = new ams2gdp_Batch_Inspection(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
 		}
 		else if(jobName == 'ams2gdp_Batch_Territory')
 		{
 			ams2gdp_Batch_Territory batch = new ams2gdp_Batch_Territory(false,specificRecordIds);
-			query = batch.query; 
+			query = batch.query;
 			jobIds.add(Database.executeBatch(batch));
-		}	
+		}
 		else if(jobName == 'ams2gdp_Batch_Update')
 		{
 			jobIds.add(Database.executeBatch(new ams2gdp_Batch_Update('clearLogs', null)));
