@@ -684,21 +684,11 @@
     <fieldSets>
         <fullName>ANG_locationtype</fullName>
         <description>fields to be migrated when we have a change of location type process</description>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>NG Location Type</label>
     </fieldSets>
     <fieldSets>
         <fullName>ANG_locationtypetodifferentlegalentity</fullName>
         <description>fields to be migrated when we have a change of Location Type to Different Legal Entity</description>
-        <displayedFields>
-            <field>Location_Type__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
         <label>NG Location Type to Different Legal Entity</label>
     </fieldSets>
     <fieldSets>

@@ -19,6 +19,7 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		manageDowngrades();
 	}
+	
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
@@ -283,4 +284,6 @@ public class ANG_AccountTriggerHandler {
 
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
+
+
 }
