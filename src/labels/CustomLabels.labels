@@ -10858,6 +10858,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Witness:</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC error Accreditation Type</shortDescription>
+        <value>Please either confirm that the accreditation type is correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message1</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -18008,6 +18015,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP No</shortDescription>
         <value>No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
+        <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFound</fullName>

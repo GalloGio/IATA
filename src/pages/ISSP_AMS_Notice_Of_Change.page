@@ -609,6 +609,14 @@
 		});
 	} 
 
+	function confirmIFAPContactDelete(conid, conname, contype) {
+		msg = bootbox.confirm('{!$Label.ISSP_AMS_CONFIRM_DELETE}', function(result) {
+			if(result) {
+				deleteIFAPContact(conid);
+			}
+		});
+	} 
+
 	var ownerModalFields = [];
 	ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactFinInterest}";
 	//ownerModalFields[1] = "{!$Component.newContact.contactBlock.contactNumOfShares}";
@@ -690,6 +698,9 @@
 			<apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="currContactList,updated-company-owners,currOwnerSummaryList"> 
 				<apex:param value="" name="recordId" assignTo="{!editContactId}" />
 			</apex:actionFunction>
+			<apex:actionFunction name="deleteIFAPContact" action="{!deleteAgencyContact}" rerender="contactIFAPList, comandButtonAddAssContact, theMessages"> 
+				<apex:param value="" name="recordId" assignTo="{!editContactId}" />
+			</apex:actionFunction>
 			<apex:actionFunction name="cancelFormUpdate" action="{!cancelFormUpdate}" status="WaitingStatus" reRender="none"/>
             <apex:actionFunction name="fetchTravelAgent3" action="{!fetchAgentDetails}" status="loadingDetailsCompanyModal" reRender="companyModalIataCodeValidation">
                 <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
@@ -747,14 +758,14 @@
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
 						<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
 					
-						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_accreditation_type_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_accreditation_type_are_correct__c==false,newForm.Notify_Change_Accreditation_Type__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_accreditation_type_are_correct__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyAccreditationType" value="{!newForm.Confirm_accreditation_type_are_correct__c}"/>
+							<apex:inputCheckbox id="confirmAccType" html-data-group="agencyAccreditationType" value="{!newForm.Confirm_accreditation_type_are_correct__c}" onchange="accreditationModelChanged('isCorrect')"/>
 						</apex:pageBlockSectionItem>
 							
-						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false,newForm.Confirm_accreditation_type_are_correct__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyAccreditationType" html-data-controls="agencyAccreditationTypeComponent" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)"/>
+							<apex:inputCheckbox id="iataChangeAccType" html-data-group="agencyAccreditationType" html-data-controls="agencyAccreditationTypeComponent" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)"/>
 						</apex:pageBlockSectionItem>
 
 						<apex:pageBlockSection columns="1">	
@@ -766,12 +777,39 @@
 						<apex:pageBlockSection columns="1">	
 							<apex:pageBlockSectionItem labelStyle="width:26%"  >
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-								<apex:selectList id="allowedAccreditationModelSelect" size="1" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)">
-									<apex:selectOptions value="{!AccreditationModelToChange}"/>
-								</apex:selectList>
+								<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
 							</apex:pageBlockSectionItem>
-							<apex:outputPanel style="display: none;" id="addFinancialAssessmentContactItem" >
-								<apex:commandLink style="margin-right:5px" onfocus="showNewIFAPContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_Add_FAP_Contact}</apex:commandLink>
+							<apex:outputPanel style="display: {!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', '', 'none')};" id="addFinancialAssessmentContactItem" >
+								<apex:outputPanel id="comandButtonAddAssContact">
+									<script>
+										cntIFAPContacts = {!cntIFAPContacts};
+									</script>
+									<apex:commandLink rendered="{!(cntIFAPContacts < MAX_IFAP_Contacts)}" style="margin-right:5px" onfocus="showNewIFAPContactDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_Add_FAP_Contact}</apex:commandLink>
+									<apex:outputText rendered="{!(cntIFAPContacts >= MAX_IFAP_Contacts)}"><span style="margin-right:5px; opacity: 0.6; text-decoration: underline;"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_Add_FAP_Contact}</span></apex:outputText>
+								</apex:outputPanel>
+								<apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactIFAPList" styleClass="table-hover table table-condensed table-responsive">
+									<apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}" />
+									<apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}" />
+									<apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}" />
+									<apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}" />
+									<apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}" value="{!agencycon.Financial_Assessment_Contact__c}" />
+									<apex:column>
+										<apex:actionStatus id="actEditContact">
+											<apex:facet name="start">
+												<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
+											</apex:facet>
+										</apex:actionStatus>
+
+										<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewIFAPContactDialog();" rerender="contactIFAPList, newIFAPContact">
+											<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
+										</apex:commandLink>
+									</apex:column>
+									<apex:column>
+										<span id="agencyConIFAPContact" style="display: none;">{!agencycon.Id}</span>
+										<apex:commandLink onfocus="confirmIFAPContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
+									</apex:column>
+
+								</apex:pageBlockTable>
 							</apex:outputPanel>
 						</apex:pageBlockSection>
 					</apex:pageBlockSection>
@@ -1977,10 +2015,10 @@
 				</div>
 
 				<div class="modal-footer">
-					<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeIFAPModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
+					<apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeIFAPModalByCommandButton(); cancelAgentUpdate();} this.removeAttribute('disabled');" onclick="this.disabled='disabled';" reRender="contactIFAPList, theMessages, comandButtonAddAssContact">
 						<apex:param value="Person" name="persontype" assignTo="{!contactType}" />
 					</apex:commandButton>&nbsp;
-					<button type="button" class="btn btn-default" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+					<button type="button" class="btn btn-default" onclick="closeIFAPModalByCommandButton(); cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
 				</div>
 
 				<script>
@@ -2049,23 +2087,60 @@
 		</div>
 		<script>
 			$( document ).ready(function() {
+
+
 				const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}';
+					  
 				if (accreditationModel.toLowerCase() !== 'legacy' && accreditationModel) {
+					$("option[value='" + accreditationModel + "']").remove();
 					for (let header of $j('[class=section-header]')) {
 						const cont = header.innerText,
 							sectionNumber = parseInt(cont[0]) + 1;
 						header.innerText =  sectionNumber + cont.slice(1);
 					};
+					const contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
+					  scopeOfChange = '{!newForm.Scope_of_Change__c}';
+					if ((contactAccountNumberOfAEs > 0 && scopeOfChange !== "HO - All Branches") || (scopeOfChange !== "HO - All Branches" && scopeOfChange !== "HO Only")) {
+						bootbox.alert("{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
+						$j('[id$=iataChangeAccType]')[0].checked = false;
+						$j('[id$=iataChangeAccType]')[0].disabled = true;
+						$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+						if (cntIFAPContacts > 0) {
+							deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+						}
+					} else {
+						$j('[id$=iataChangeAccType]')[0].disabled = false;
+					}
+					
 				}
 			});
 
 			function accreditationModelChanged(event) {
-				if(event.checked === false)
-					$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
-				if (event.checked === false || event.value !== 'Cash') {
-					$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+				if (event === 'isCorrect') {
+					if (cntIFAPContacts > 0) {
+						bootbox.confirm('Are you sure?', function(result) {
+							if(result) {
+								deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+								$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
+								$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+							} else {
+								$j('[id$=confirmAccType]')[0].checked = false;
+								$j('[id$=iataChangeAccType]')[0].checked = true;
+							}
+						});
+						
+					} else {
+						$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
+						$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+					}
 				} else {
-					$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = '';
+					if(event.checked === false)
+						$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
+					if (event.checked === false || event.value !== 'Cash') {
+						$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+					} else {
+						$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = '';
+					}
 				}
 			}
 						
