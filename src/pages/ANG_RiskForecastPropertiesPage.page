@@ -1,4 +1,4 @@
-<apex:page showHeader="true" sidebar="false" standardController="Case" extensions="ANG_RiskForecastPropertiesController">
+<apex:page showHeader="false" sidebar="false" standardController="Case" extensions="ANG_RiskForecastPropertiesController">
 
     <apex:includeScript value="/support/console/34.0/integration.js"/>
     <apex:includeScript value="{!$Resource.jquery2_1_4}"/>
@@ -22,7 +22,7 @@
           });
         }
 
-	$(document).ready(function(){
+    $(document).ready(function(){
         $(".bPageBlock").css("background-color","white");
         $(".bPageBlock").css("border-color","white");
     });
@@ -54,28 +54,28 @@
 </style>
 
     <apex:form id="form">
-		
-		<apex:pageBlock>
+        
+        <apex:pageBlock >
 
- 			<apex:pageBlockSection columns="2">
+            <apex:pageBlockSection columns="2">
 
-				<apex:pageblockSectionItem>
-	                
-	                        <apex:outputLabel value="Action to be forecasted"/>
+                <apex:pageblockSectionItem >
+                    
+                            <apex:outputLabel value="Action to be forecasted"/>
 
-	                        <apex:outputPanel layout="block">
-	            	                            
-	                            <apex:selectList size="1" value="{!riskOpt}">
+                            <apex:outputPanel layout="block">
+                                                
+                                <apex:selectList size="1" value="{!riskOpt}">
 
-	                                <apex:selectoptions value="{!riskOption}"/>
-									<apex:actionSupport event="onchange" reRender="actionButton"/>
+                                    <apex:selectoptions value="{!riskOption}"/>
+                                    <apex:actionSupport event="onchange" reRender="actionButton"/>
 
-	                            
-	                            </apex:selectList>
+                                
+                                </apex:selectList>
 
-	                        </apex:outputPanel>
+                            </apex:outputPanel>
 
-	                    </apex:pageblockSectionItem>
+                        </apex:pageblockSectionItem>
 
                     <apex:pageBlockSectionItem id="buttonForecast">
     
@@ -83,30 +83,30 @@
                         
                     </apex:pageBlockSectionItem>
 
-			</apex:pageBlockSection>
-	
-			<apex:outputPanel id="popup" title="Risk Situation Forecast" layout="block">
+            </apex:pageBlockSection>
+    
+            <apex:outputPanel id="popup" title="Risk Situation Forecast" layout="block">
 
                 <apex:outputPanel title="Risk Situation Forecast" id="popInnerOutputPnl" styleClass="customPopup" layout="block" rendered="{!displayPopUp}">
 
                      <apex:pageblockSection title="Current Situation" columns="2">                         
                          
                          <apex:pageblockSectionItem >
-						
-							<apex:outputLabel value="Account"></apex:outputLabel>
-		                 	<apex:outputLink value="#" onclick="openPrimaryTab('/{!myCase.Account}?inContextPane=true','{!JSINHTMLENCODE(myCase.Account.Name)}');return false;" >{!myCase.Account.Name}</apex:outputLink>
+                        
+                            <apex:outputLabel value="Account"></apex:outputLabel>
+                            <apex:outputLink value="#" onclick="openPrimaryTab('/{!myCase.Account}?inContextPane=true','{!JSINHTMLENCODE(myCase.Account.Name)}');return false;" >{!myCase.Account.Name}</apex:outputLink>
 
                          </apex:pageblockSectionItem>
 
                           <apex:pageblockSectionItem >
 
-							<apex:outputLabel value="Cash Condition" />
+                            <apex:outputLabel value="Cash Condition" />
                             <apex:outputField id="AccountCashCondId" value="{!myCase.Account.ANG_CashCondition__c}"/>
                          </apex:pageblockSectionItem>
 
                          <apex:pageblockSectionItem >
-							<apex:outputLabel value="Risk Status" />
-							<apex:outputField id="AccountRiskStatusId" value="{!myCase.Account.ANG_RiskStatus__c}"/>
+                            <apex:outputLabel value="Risk Status" />
+                            <apex:outputField id="AccountRiskStatusId" value="{!myCase.Account.ANG_RiskStatus__c}"/>
                          </apex:pageblockSectionItem>
 
                      </apex:pageblockSection>
@@ -115,13 +115,13 @@
 
                           <apex:pageblockSectionItem >
 
-							<apex:outputLabel value="Cash Condition" />
+                            <apex:outputLabel value="Cash Condition" />
                             <apex:inputCheckbox id="AccountCashCondId2" value="{!newCashCondition}" disabled="true"/>
                          </apex:pageblockSectionItem>
 
                          <apex:pageblockSectionItem >
-							<apex:outputLabel value="Risk Status" />
-							<apex:outputText id="AccountRiskStatusId2" value="{!newRiskStatus}" />
+                            <apex:outputLabel value="Risk Status" />
+                            <apex:outputText id="AccountRiskStatusId2" value="{!newRiskStatus}" />
                          </apex:pageblockSectionItem>
 
 
@@ -136,6 +136,6 @@
 
           </apex:pageBlock>
 
-	</apex:form>
+    </apex:form>
 
 </apex:page>

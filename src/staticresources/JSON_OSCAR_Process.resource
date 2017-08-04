@@ -4931,6 +4931,13 @@
                     "args": [
                       "oscarid"
                     ]
+                  },
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
+                    "args": [
+                      "oscarid"
+                    ]
                   }
                 ],
                 "Automations": [],
@@ -5875,6 +5882,13 @@
                   {
                     "FunctionName": "createRiskEvent",
                     "ActionLabel": "AMS_OSCAR_Action15",
+                    "args": [
+                      "oscarid"
+                    ]
+                  },
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
                     "args": [
                       "oscarid"
                     ]
