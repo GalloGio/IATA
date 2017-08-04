@@ -40,7 +40,6 @@ public class ANG_UserTriggerHandler {
             u.FederationIdentifier = fedID;
                 system.debug('contact ID' + u.contactId);
                 system.debug('fedID' + fedID);
-            u.FederationIdentifier = u.contactId;
          }
      }
 
