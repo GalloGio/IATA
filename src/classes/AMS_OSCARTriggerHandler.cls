@@ -268,7 +268,7 @@ public class AMS_OSCARTriggerHandler {
 
 		for (AMS_Process_Detail__c pd : allProcessDetails) {
 			//TERMINATED AGENCIES IGNORED
-			if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
+			if(pd.Account__c != null && (pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED || pd.Account__r.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)){
 				if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
 					processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
 				else
