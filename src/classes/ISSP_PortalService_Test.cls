@@ -80,13 +80,15 @@ public class ISSP_PortalService_Test {
         appReq.Contact__c = con.Id;
         insert appReq;
         
-		Test.startTest();
+		
 
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
+		
+		Test.startTest();
         
         Apexpages.currentPage().getParameters().put('id', app.Id);
-        ISSP_PortalService ctrl2 = new ISSP_PortalService();
+        /*ISSP_PortalService ctrl2 = new ISSP_PortalService();
         ctrl2.RedirectToServiceAccess();
      
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
@@ -98,7 +100,7 @@ public class ISSP_PortalService_Test {
         ctrl3.DenyAccess();
         ctrl3.GrantAccess();
         ctrl3.RedirectToService();
-        ctrl3.getContacts();
+        ctrl3.getContacts();*/
 
         Test.stopTest();
 	}
