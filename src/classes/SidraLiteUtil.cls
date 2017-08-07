@@ -53,6 +53,17 @@ public with sharing class SidraLiteUtil{
         return TYPE_ACCOUNT_CARGO.contains(account.Type);
         //return account.type=='IATA Cargo Agent' || account.type=='CASS Associate';
     }
+    
+    /**
+        Return true if account is only CASS
+    **/
+    public static final set<String> TYPE_ACCOUNT_CASS = new set<String>{'CASS Associate'};
+    public static Boolean isCASS(Account account) {
+        if (account==null) {
+            throw new SidraLiteException('There is no related Account');
+        }
+        return TYPE_ACCOUNT_CASS.contains(account.Type);
+    }
 
     /**
         Return true if account is TIDS Agent
