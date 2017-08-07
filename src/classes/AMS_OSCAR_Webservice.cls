@@ -445,10 +445,11 @@ global class AMS_OSCAR_Webservice {
             Account acct = new Account(Id = agencyId);
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
+            changeCode.status  = null;
             changeCode.name = 'CER';
-            changeCode.reasonCode = '91';
-            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
-            changeCode.status  = '9';
+            //changeCode.reasonCode = '91';
+            //changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
+            //changeCode.status  = '9';
 
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
 
