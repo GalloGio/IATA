@@ -574,6 +574,16 @@
         <fields>Sales_Quantity__c</fields>
         <relatedList>IEC_Event_Release__c.Last_Version__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>Customer_Type__c</fields>
+        <fields>OWNER.FIRST_NAME</fields>
+        <fields>OWNER.LAST_NAME</fields>
+        <fields>Start_Date__c</fields>
+        <fields>Subscriber__c</fields>
+        <relatedList>IEC_Event_Subscription__c.Product__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>
