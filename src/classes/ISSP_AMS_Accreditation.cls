@@ -265,6 +265,11 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('issp ams con ' + con);
 
         sector = con.Account.Sector__c;
+
+        if (con.Account.Category__c == 'TIDS Agent') {
+            sector += ' - TIDS';
+        }
+
         agencyCategory = con.Account.Category__c;
 
         if (con.Account.Top_Parent__c == null) { //User is from HQ Account
@@ -295,7 +300,7 @@ public without sharing class ISSP_AMS_Accreditation {
         SYSTEM.DEBUG('HQ Ctry Code: ' + hqCountryISOCode);
         //Need to translate sector for display
 
-        if (sector == 'Travel Agent') {
+        if (sector.startsWith('Travel Agent')) {
             sectorDisplay = Label.ISSP_Travel_Agent;
             sectorValue = 'Travel_Agent';
         } else {
@@ -464,6 +469,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
                 if (sectorValue != null) {
                     sector = sectorValue.replace('_', ' ');
+
+                    if (newCase.Reason1__c.startsWith('New TIDS')) {
+                        sector += ' - TIDS';
+                    }
 
                     if (isNoticeOfChange) {
                         sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
@@ -640,6 +649,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 setFacilityList();
 
             sector = sectorValue.replace('_', ' ');
+
+            if (newCase.Reason1__c.startsWith('New TIDS')) {
+                sector += ' - TIDS';
+            }
             
             if(isNoticeOfChange) {
                 SYSTEM.DEBUG('Accreditation Attachment NoC Sector: ' + sectorValue);
@@ -1865,7 +1878,7 @@ public without sharing class ISSP_AMS_Accreditation {
             contactToUpsert.RecordTypeId = Schema.SObjectType.AMS_Accreditation_Contact__c.RecordTypeInfosByName.get(contactType).RecordTypeId;
         }
         
-        if (sector == 'Travel Agent') {
+        if (sector.startsWith('Travel Agent')) {
             //Clear the links to Prev Emp History Agencies, if they were set from prev selection
             if (newContact.Agencies_prev_worked_for__c == ''  || newContact.Agencies_prev_worked_for__c == 'none') {
                 newContact.Accredited_employer_1__c = null;
@@ -1953,7 +1966,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             system.debug('in 2' + contactSaved);
 
-            if (sector == 'Travel Agent' && !isNoticeOfChange) {
+            if (sector.startsWith('Travel Agent') && !isNoticeOfChange) {
                 if (
                     (((newContact.Agency_owner__c == true || newContact.Agency_role__c == true) && amsOfficeType == 'HO' && newCase.Reason1__c == 'New HO' && contactType != 'Company') || (newContact.Agency_owner__c == false && newContact.Agency_role__c == true && (amsOfficeType == 'Branch' || newCase.Reason1__c == 'New BR Abroad')))  && newContact.Agencies_prev_worked_for__c == null
                     ) {
@@ -3947,7 +3960,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     }
 
     public Void checkEligibilityForAChange() {
-        if ((sector == 'Travel Agent' && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == 'IATA Passenger Sales Agent')) ||
+        if ((sector.startsWith('Travel Agent') && (con.Account.Category__c == 'Non-IATA Travel Agent' || con.Account.Category__c == 'IATA Passenger Sales Agent')) ||
                 (sector == 'Cargo Agent' && (con.Account.Category__c == 'Non-IATA Cargo Agent' || con.Account.Category__c == 'IATA Cargo Agent' || con.Account.Category__c == 'CASS Associate' || con.Account.Category__c == 'CASS Associates' || con.Account.Category__c == 'Courier' || con.Account.Category__c == 'Import Agent')))
             isEligableForChange = true;
     }
@@ -6434,7 +6447,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public boolean getIsGSARequired() {
         Boolean isreq;
 
-        if (sector == 'Travel Agent' && amsLocationType != 'New TIDS HO - IATA Passenger Sales Agent' && amsLocationType != 'New TIDS BR - IATA Passenger Sales Agent') {
+        if (sector.startsWith('Travel Agent') && amsLocationType != 'New TIDS HO - IATA Passenger Sales Agent' && amsLocationType != 'New TIDS BR - IATA Passenger Sales Agent') {
             isreq = true;
         } else {
             isreq = false;
