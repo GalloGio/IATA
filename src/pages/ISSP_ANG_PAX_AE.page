@@ -515,7 +515,7 @@
           }
         }
       }
-
+      
       function toggleOnlineAgencyURL(myValue) {
 
         //alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
@@ -892,7 +892,7 @@
                             <apex:pageBlockSection columns="2">
                               <apex:inputField id="section2-when-incorporate" showDatePicker="true" value="{!newForm.ISSP_AMS_when_incorporated__c}" />
                               <apex:inputField id="section2-where-incorporate" value="{!newForm.ISSP_AMS_where_incorporated__c}" />
-                              <apex:pageBlockSectionItem>
+                              <apex:pageBlockSectionItem >
                                 <apex:outputLabel id="section2-shares-listed-label" value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}"/>
                                 <apex:selectRadio style="width:100px" id="shareholdersmsg" value="{!newForm.ISSP_AMS_Entity_with_listed_shares__c}" styleClass="{!IF(AND(isValError, newForm.ISSP_AMS_Entity_with_listed_shares__c==null), 'requiredIndicator', '')}" onchange="toggleShareholdersMsg('{!$Component.shareholdersmsg}');">
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -1018,7 +1018,7 @@
 
                           <apex:pageBlockSection columns="2" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}">
                             <apex:outputPanel >
-                              <apex:outputText><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
+                              <apex:outputText ><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
                             </apex:outputPanel>
                             <apex:outputtext >
                               <!--empty: move following field to next row -->
@@ -1087,7 +1087,7 @@
                     <div id="msgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
                       {!$Label.ISSP_AMS_Not_Listed_Msg}
                     </div>
-                    <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
+                    <apex:commandLink style="margin-right:5px" onfocus="showNewContactDialog();"><span class="glyphicon glyphicon-plus"></span>&nbsp;{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</apex:commandLink>
 
                     <apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactList" styleClass="table-hover table table-condensed table-responsive">
                       <apex:column ><span class="glyphicon glyphicon-plus" onclick="toggleContactDetails(this)" id="tog{!agencycon.Id}" /></apex:column>
@@ -1125,16 +1125,16 @@
                             <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
                           </apex:facet>
                         </apex:actionStatus>
-                       <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}">
+                       <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewContactDialog();" rerender="contactList, newContact" rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}">
                           <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
 
-                        <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog();" rerender="contactList, updateOwner" rendered="{!AND(OR(amsOfficeType='Branch',newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c)}">
+                        <apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showUpdateOwnerDialog();" rerender="contactList, updateOwner" rendered="{!AND(newForm.AE_separate_Legal_Entity__c == 'No',agencycon.Agency_owner__c)}">
                           <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
                         </apex:commandLink>
                       </apex:column>
-                      <apex:column >
-                        <apex:commandLink rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
+                      <apex:column rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}">
+                        <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
                       </apex:column>
                       <apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
                         <div class="col-md-5">
@@ -1444,22 +1444,22 @@
             </apex:form>
             <!-- EO AMS Form -->
 
-            <!-- Modal New HO Agency Contact - Person -->
+<!-- Modal New HO Agency Contact - Person -->
             <apex:form id="newContact">
               <div class="modal fade" id="addNewContactModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel">{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</h4>
+                      <h4 class="modal-title" id="myModalLabel">{!IF(newForm.AE_separate_Legal_Entity__c == 'No', $Label.ISSP_AMS_Add_Director, $Label.ISSP_AMS_Add_Person)}</h4>
                     </div>
-
                     <apex:pageMessages id="theMessages" />
-
                     <div class="modal-body">
                       <apex:pageBlock id="contactBlock">
                         <apex:pageBlockSection id="contactSection" columns="4">
-                          <apex:pageBlockSectionItem id="contactItemOwner" labelStyle="{!IF(AND(newCase.Reason1__c!='New BR Abroad'),'font-size:110%','font-size:110%;display:none')}" dataStyle="{!IF(AND(newCase.Reason1__c!='New BR Abroad'),'width:15%;','display:none;width:15%;')}">
+                          <apex:pageBlockSectionItem id="contactItemOwner" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" 
+                          labelStyle="{!IF(newCase.Reason1__c!='New BR Abroad','font-size:110%','font-size:110%;display:none')}" 
+                          dataStyle="{!IF(newCase.Reason1__c!='New BR Abroad','width:15%;','display:none;width:15%;')}">
                             <apex:outputLabel style="width:1%;" id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Agency_owner__c}" id="owner" onclick="toggleModalContactFields('{!$Component.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')" />
                           </apex:pageBlockSectionItem>
@@ -1472,13 +1472,9 @@
                             <apex:outputLabel style="width:1%;"> {!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                           </apex:pageBlockSectionItem>
-                          <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:100%" rendered="{!IF(AND(amsOfficeType=='HO', newForm.Agent_Type__c!='Standard no Cash'),true,false)}">
-                            <apex:outputLabel style="width:1%;">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
-                            <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />
-                          </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>
                         <table>
-                          <tr>
+                          <tr>                          
                             <td class="bg-info" colspan="3">{!$Label.ISSP_AMS_Step3_PersonModal_CheckBoxes}</td>
                           </tr>
                           <tr>
@@ -1555,7 +1551,7 @@
                               </table>
                             </td>
                             <td style="width:25%">
-                              <table>
+                              <table style="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes','','display:none;')}">                                
                                 <tr>
                                   <td class="modalrow">&nbsp;</td>
                                 </tr>
@@ -1738,7 +1734,8 @@
                       <button type="button" class="btn btn-default" onclick="cancelAgentUpdate();setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');$j( '.datePicker').css('position','absolute'); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
 
-                    <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}">
+                      <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"/>
+                      <script>
                       function closeModalByCommandButton()
                       {          
                           closeModal();
@@ -1749,6 +1746,7 @@
                       
                       var natphone = $j("input[name='{!$Component.newContact.contactBlock.contactphoneinput}']");
                       var phone = $j("input[name='{!$Component.newContact.contactBlock.contactphone}']");
+                      console.log('natphone ' + natphone);
                       natphone.intlTelInput({
                           nationalMode: true,
                           defaultCountry: defaultHQCountry,
@@ -1782,6 +1780,7 @@
                       natfax.intlTelInput("setNumber", fax.val());
                   
                       function setInternationalPhoneNo(p) {
+                        console.log('aqui p ' + p);
                           if(p=='phone') {
                               phone.val(natphone.intlTelInput("getNumber"));
                           } else if(p=='mobile') {
@@ -1948,7 +1947,7 @@
                   </div>
                 </div>
               </div>
-              <script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>
+              <!--<script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>-->
               <script>
 
                 const target = $j('.statusBox #recordstatuscontainer')[0],

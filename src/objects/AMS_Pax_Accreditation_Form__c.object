@@ -917,6 +917,27 @@
         <label>VMFR</label>
     </fieldSets>
     <fields>
+        <fullName>AE_separate_Legal_Entity__c</fullName>
+        <externalId>false</externalId>
+        <label>AE separate Legal Entity</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>AMS_Agency_Id__c</fullName>
         <externalId>false</externalId>
         <label>AMS Agency Id</label>
@@ -4788,6 +4809,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Associate - Branch</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5525,6 +5557,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>CASS_Associate_HO</fullName>
         <active>true</active>
         <label>CASS Associate - HO</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -6264,6 +6307,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Import - Branch</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -7001,6 +7055,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>CASS_Import_HO</fullName>
         <active>true</active>
         <label>CASS Import - HO</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -7740,6 +7805,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>IATA Cargo Agent (Res 801/805) Branch applications</description>
         <label>Cargo Agent - Branch</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -8491,6 +8567,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>IATA Cargo Agent (Res 801/805) HO applications</description>
         <label>Cargo Agent - HO</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9240,6 +9327,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>EACP Intermediary (Res 805zz) Branch applications</description>
         <label>Cargo EACP - Branch</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -9991,6 +10089,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>EACP Intermediary (Res 805zz) HO applications</description>
         <label>Cargo EACP - HO</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10739,6 +10848,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Change_of_Bank_Account_Details</fullName>
         <active>true</active>
         <label>Change of Bank Account Details</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -11604,6 +11724,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Courier - Branch</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -12352,6 +12483,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Courier_HO</fullName>
         <active>true</active>
         <label>Courier - HO</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -13102,6 +13244,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <description>General Online Accreditation Record Type</description>
         <label>General Online Accreditation</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -14006,6 +14159,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Other Changes</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -14889,6 +15053,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Enable_Credit_Card_FOP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15292,11 +15467,22 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
     </recordTypes>
-	<recordTypes>
+    <recordTypes>
         <fullName>Travel_Agent_Associate_Entity</fullName>
         <active>true</active>
         <label>Travel Agent - Associate Entity</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>
@@ -16208,6 +16394,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - Branch</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -16945,6 +17142,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Branch_Abroad</fullName>
         <active>true</active>
         <label>Travel Agent - Branch Abroad</label>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
@@ -17799,6 +18007,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - HO</label>
         <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -18536,7 +18755,18 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_no_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard no Cash</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>
@@ -19447,7 +19677,18 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_with_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard with Cash</label>
-		<picklistValues>
+        <picklistValues>
+            <picklist>AE_separate_Legal_Entity__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Cash</fullName>

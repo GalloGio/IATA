@@ -12136,7 +12136,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_AE_separate_Legal_Entity</shortDescription>
-        <value>* Is this Associate Entity a separate Legal entity than the Head Entity? (Yes / No)</value>
+        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step5_ProgressBar</fullName>
