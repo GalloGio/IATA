@@ -843,4 +843,47 @@ public without sharing class Utility {
     } //*** end of "removeNewline"
 
 
+	/****************************************************************************************************
+		Enhancement split address lines
+		Add adddress spliting logic
+	****************************************************************************************************/
+	public static List<String> splitAddress(String addressIn, Integer size) {
+		String addressLine1 = '';
+		String addressLine2 = '';
+		
+		if(!String.isBlank(addressIn)) {
+			String address = addressIn.replace(',', '');
+			List<String> elem = address.split(' ');
+			String prev= '';
+			addressLine1 = elem[0];
+			Integer counter = 1;
+			while(addressLine1.length() <= size && counter < elem.size()) {
+				String calc = addressLine1 + ' ' + elem[counter];
+				if(calc.length() < size) {
+					addressLine1 += ' ' + elem[counter];
+				} else {
+					break;
+				}
+				counter++;
+			}
+			
+			if(addressLine1.length() > size) {
+				addressLine1 = Utility.truncate(address, size);
+				addressLine2 = Utility.truncate(address, size, size);
+			} else {
+				while(counter < elem.size()) {
+					addressLine2 += elem[counter] + ' ';
+					counter++;
+				}
+				addressLine2 = addressLine2.trim();
+			}
+			
+			if(addressLine2.length() > size) {
+				addressLine1 = Utility.truncate(address, size);
+				addressLine2 = Utility.truncate(address, size, size);
+			}
+		}
+		
+		return new List<String> {addressLine1, addressLine2};
+	}
 } //*** end of class
