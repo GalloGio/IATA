@@ -803,7 +803,8 @@
                       
                       <div class="form-group col-lg-7" id="Phoneone">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Phone} <span class="required">*</span></label><br/>
-                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');$j('.phone').change();"/>
+                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" 
+                            onblur="setInternationalPhoneNo('phone');$j('.phone').change();" onkeyup="setLengthPhone(this,0)"/>
 
                             <DSE:DS_DataQuality id="phoneinput"
                                 RecordRef="{!acc}"
@@ -821,7 +822,8 @@
                       
                       <div class="form-group col-lg-7" id="Phonetwo">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Mobile}</label><span class="required"></span><br/>
-                        <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
+                        <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" 
+                        onblur="setInternationalPhoneNo('mobile');" onkeyup="setLengthPhone(this,1)"/>
                       </div>
 
                       <!-- <div class="form-group col-lg-6" id="DSEPhone">
@@ -840,7 +842,8 @@
                     
                       <div class="form-group col-lg-7" id="Phonethree">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Fax}</label><span class="required"></span><br/>
-                            <apex:inputField id="businessfaxinput" styleclass="form-control"  value="{!acc.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
+                            <apex:inputField id="businessfaxinput" styleclass="form-control"  value="{!acc.FAXNational__c}" 
+                            onblur="setInternationalPhoneNo('fax');" onkeyup="setLengthPhone(this,2)"/>
                       </div>
 
                       <div class="clearfix"></div>
@@ -1146,7 +1149,7 @@
         }
         $j('.rec').each(function (){
             $j(this).parents('.form-group').removeClass('has-error');
-            if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
+            if(isBlank($j(this).val())){// && ($(this).html() == '' || $(this).html() == null)){
                 if($j(this).css('display') != 'none'){
                     flag = false;
                     $j(this).parents('.form-group').addClass('has-error');
@@ -1502,6 +1505,30 @@
             */
         }
     }
+
+    /* iec functions */
+    //INC333196
+    function setLengthPhone(e, i) {
+    	var phoneVal = e.value;
+    	if(phoneVal && "{!sRefererCommunity}"=="iec") {	        	
+        	var formatedSize = phoneVal.length;
+        	var unformatedSize = phoneVal.replace(" ", "").replace("-","").length;
+			
+			if(phoneVal.charAt(0) == "+") {
+				$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+			} else {
+				var flagDrpd = $j($j(".flag-dropdown")[i]).find("div")[0];
+				if(flagDrpd && flagDrpd.title && flagDrpd.title.split("+")[1]) {
+					var selectedFlagLength = flagDrpd.title.split("+")[1].length;
+					$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize) - selectedFlagLength);
+				} else {
+					$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+				}	
+			}	        	
+    	}
+    }
+        
+    /******/
                   
 </Script>                 
 
