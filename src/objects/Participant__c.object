@@ -251,23 +251,17 @@ Contact__r.AccountId
     <fields>
         <fullName>Main_Account__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, HYPERLINK(&apos;/&apos; + Contact__r.AccountId,Contact__r.Account.Name ,&quot;_self&quot;), 
+        <formula>IF(Contact__r.Account.RecordType.Name = &quot;Airline Headquarters&quot;, Contact__r.Account.Name, 
+IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, Contact__r.Account.Parent.Name , 
+IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;, 
+IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)), 
+Contact__r.Account.Parent.Name , 
+Contact__r.Account.Name ), 
 
+Contact__r.Account.Name 
 
-IF(Contact__r.Account.RecordType.Name = &quot;Airline Branch&quot;, HYPERLINK(&apos;/&apos; + Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),
-
-
-IF(Contact__r.Account.RecordType.Name = &quot;Agency&quot;,
-
-	IF(NOT(ISBLANK(Contact__r.Account.Parent.Id)),
-
-		HYPERLINK(&apos;/&apos; +  Contact__r.Account.Parent.Id,Contact__r.Account.Parent.Name ,&quot;_self&quot;),		
-HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)),
-		
-HYPERLINK(&apos;/&apos; + Contact__r.AccountId, Contact__r.Account.Name ,&quot;_self&quot;)
-
-)
-)
+) 
+) 
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Account</label>
@@ -679,7 +673,7 @@ ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
 Group_RecordType__c = &quot;Local_Groups&quot;
-))</errorConditionFormula>    
+))</errorConditionFormula>
         <errorMessage>The new participant is not related to an Airline or an Agency or this group does not allow participants from Agencies</errorMessage>
     </validationRules>
     <validationRules>
