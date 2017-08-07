@@ -112,7 +112,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 
           if (SidraLiteUtil.isAccountActive(account)) {
               newCase.SIDRA_Lite_Default_Date__c = Date.today();
-              newCase.Reason_for_Default__c = 'Non payment of administrative charges';
+              newCase.Reason_for_Default__c = ADMIN_CHARGES;
               newCase.NOT_Date__c = Date.today();
               newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
           } else {
