@@ -18,7 +18,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
         this.myCase = (Case)stdController.getRecord();
         riskOpt = null;
 
-        this.myCase = [Select Id, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c from Case where Id =:myCase.Id];
+        this.myCase = [Select Id, SIDRA_Lite_Reason__c, Account.Name, Account.ANG_CashCondition__c, Account.ANG_RiskStatus__c, RecordTypeId, Account.Location_Type__c, Account.Remittance_frequency__c, Account.ANG_Accreditation_Model__c, Account.Status__c, Account.Financial_Review_Result__c, OSCAR__r.Process__c, OSCAR__r.ANG_Type_Of_Change__c from Case where Id =:myCase.Id];
     }
 
     public list<selectoption> getriskOption(){
@@ -34,7 +34,21 @@ public with sharing class ANG_RiskForecastPropertiesController {
                     options.add(new selectoption('9','Fail Financial Security'));
                     options.add(new selectoption('10','Common ownership default'));
                     options.add(new selectoption('11','Prejudiced collection'));
-                
+
+                    if(myCase.SIDRA_Lite_Reason__c == 'Financial Review Non-compliance' 
+                        || myCase.SIDRA_Lite_Reason__c ==  'Financial Review Non-compliance (OSCAR Change)'
+                        || myCase.SIDRA_Lite_Reason__c ==  'Sanity Check failure of financial statement')
+                        riskOpt ='5';
+                    
+                    else if (myCase.SIDRA_Lite_Reason__c == 'Financial Security Non-compliance' 
+                            || myCase.SIDRA_Lite_Reason__c == 'Financial Security Non-compliance (OSCAR Change)')
+                        riskOpt ='9';
+
+                    else if (myCase.SIDRA_Lite_Reason__c == 'Late/Absence of Notification of Change' )
+                        riskOpt ='6';
+
+                    else if (myCase.SIDRA_Lite_Reason__c == 'Prejudiced Collection of Funds' )
+                        riskOpt ='11';
                 }
 
                 if(myCase.RecordTypeId == AMS_Utils.RECTYPE_SIDRA){

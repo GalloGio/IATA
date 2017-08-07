@@ -177,7 +177,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action16</shortDescription>
-        <value>Forecast</value>
+        <value>Forecast Risk Properties</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
