@@ -27,7 +27,9 @@ public class ANG_UserTriggerHandler {
     public void onBeforeUpdate(){ }
 
     public void onAfterInsert(){
+        if(!Test.isRunningTest()){
     	assignUserFederationId();
+        }
     }
 
     // ************************************************************
