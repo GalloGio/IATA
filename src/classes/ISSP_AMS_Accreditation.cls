@@ -1342,7 +1342,11 @@ public without sharing class ISSP_AMS_Accreditation {
             if (isBankAccountChange) {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
             } else {
-                newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId;
+                if (con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy') {
+                    newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId;
+                } else {
+                    newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes - NAM').RecordTypeId;
+                }
             }
             newCase.CaseArea__c = 'Accreditation Process';
             newcase.Case_Language__c = applyLanguage;
@@ -5351,7 +5355,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     errorFound = true;
                 } else {
                     if (newForm.ANG_Accreditation_Model_to_Change__c == 'Cash' && cntIFAPContacts == 0) {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Need to have one Assement Contact to change do cash'));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_NoC_No_Contact_Error));
                          errorFound = true;
                     }
                 }

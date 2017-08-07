@@ -18024,6 +18024,20 @@ this is the tiess topic help</value>
         <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoC_No_Contact_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC No Contact Error</shortDescription>
+        <value>A Financial Assessment Contact must be added to SECTION 1 in order to convert to Standard Accreditation with Cash.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Switch_Selection_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Switch Selection Warning</shortDescription>
+        <value>Switching your selection will delete the Financial Assessment Contact that has been created. Do you wish to proceed?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoRecordsFound</fullName>
         <categories>ISSP, Registration</categories>
         <language>en_US</language>
