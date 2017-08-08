@@ -2118,7 +2118,11 @@
 						alertDiv.className = 'alert alert-warning text-justify';
 						alertDiv.role = 'alert';
 						alertDiv.appendChild(document.createTextNode("{!$Label.ISSP_NoC_HE_with_AEs_Warning}"));
-						$j('[id$=iataChangeAccType]').parent().parent().next().children()[1].appendChild(alertDiv);
+						$j('[id$=iataChangeAccType]').parent().parent().hover(function() {
+							$j(this).next().children().last().append(alertDiv);
+						}, function() {
+							$j(this).next().children().last().html('');
+						});
 						$j('[id$=iataChangeAccType]')[0].checked = false;
 						$j('[id$=iataChangeAccType]')[0].disabled = true;
 						$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
