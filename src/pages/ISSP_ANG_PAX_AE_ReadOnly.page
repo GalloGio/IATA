@@ -91,14 +91,15 @@
             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section1}" value="{!$Label.ISSP_EditSection}" id="Edit-Step1" style="float: right;" />
           </apex:outputpanel>
         </apex:facet>
-        <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!newForm.Account_Name__c}" />
-        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Trade_Name__c}" />
+        <apex:outputField label="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!newForm.Account_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
+        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Trade_Name__c.Label}" value="{!newForm.Trade_Name__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
 
-        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" />
+        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"/>
         <apex:outputtext ></apex:outputtext>
-        <apex:outputField label="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" />
+        <apex:outputtext rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"></apex:outputtext>
+        <apex:outputField label="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" style="float: right;"/>
         <apex:outputtext ></apex:outputtext>
-        <apex:outputText value="{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_AMS_Branch_Office_address_details)}" style="font-weight:bold" />
+        <apex:outputText value="{!IF(OR(isTerminatedAgent, isNewHOforAccredAgent), $Label.ISSP_AMS_New_HO_details, $Label.ISSP_ANG_Branch_Office_address_details)}" style="font-weight:bold" />
         <apex:outputtext ></apex:outputtext>
 
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Street_name_number__c.Label}" value="{!newForm.Branch_Office_Street_name_number__c}" />
@@ -116,13 +117,15 @@
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Country__c.Label}" value="{!newForm.Branch_Office_Country__c}" />
         <apex:outputtext ></apex:outputtext>
 
-        <apex:outputPanel >
+        <apex:outputPanel rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}">
           <apex:outputText ><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
         </apex:outputPanel>
+        
         <apex:outputtext ></apex:outputtext>
+        <apex:outputtext  rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"></apex:outputtext>
 
-        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" />
-        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" />
+        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"/>
+        <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"/>
 
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
         <apex:outputtext ></apex:outputtext>
