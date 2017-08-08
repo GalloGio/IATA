@@ -8,7 +8,6 @@ public class SidraLiteSendEmailControllerTest {
         rt.Record_Type_Developer_Name__c = 'SIDRA_Lite';
         rt.Country_Name__c = 'Default';
         rt.Case_Group__c = 'Default';
-        rt.Case_CNS__c = 'Default';
         rt.Email__c = 'noreply@iata.org';
         insert rt;
     }

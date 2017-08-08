@@ -155,7 +155,7 @@ public with sharing class SidraLiteSendEmailController {
 
     private String getURLCongaMerge() {
         // get 'From Email' using predefined custom setting 'RecordTypeEmail'
-        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.DeveloperName, cse.BSPCountry__c, cse.Case_Group__c, String.ValueOf(cse.CNSCase__c));
+        String fromEmail = IDFS_Util.getRecordTypeEmail(cse.Recordtype.DeveloperName, cse.BSPCountry__c, cse.Case_Group__c);
         list<OrgWideEmailAddress> listadd = [
             Select Id, DisplayName, Address
             From OrgWideEmailAddress

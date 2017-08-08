@@ -15,7 +15,7 @@ global class IDFS_Util
     }
 
     public static final String STR_DEFAULT = 'Default';
-    webService static String getRecordTypeEmail (String caseRecordType, String caseBSPCountry, String caseGroup, String caseCNS)
+    webService static String getRecordTypeEmail (String caseRecordType, String caseBSPCountry, String caseGroup)
     {
         List<RecordTypeEmail__c> lstFromEmails = RecordTypeEmail__c.getAll().values();
 
@@ -23,35 +23,23 @@ global class IDFS_Util
         for (RecordTypeEmail__c fromEmail : lstFromEmails)
         {
             if (fromEmail.Record_Type_Developer_Name__c != null && fromEmail.Email__c != null
-                && fromEmail.Case_Group__c != null && fromEmail.Case_CNS__c != null) {
-                String key = fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c + ' ' + fromEmail.Case_Group__c + ' ' + fromEmail.Case_CNS__c;
-            	mapFromEmailPerRTKey.put(key, fromEmail.Email__c);
+                && fromEmail.Case_Group__c != null) {
+                String key = fromEmail.Record_Type_Developer_Name__c + ' ' + fromEmail.Country_Name__c + ' ' + fromEmail.Case_Group__c;
+                mapFromEmailPerRTKey.put(key, fromEmail.Email__c);
             }
         }
         
         String email;
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + caseGroup + ' ' + caseCNS);
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + caseGroup);
         if (email!=null) return email;
         
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + caseGroup + ' ' + STR_DEFAULT);
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + STR_DEFAULT);
         if (email!=null) return email;
         
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + STR_DEFAULT + ' ' + caseCNS);
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + caseGroup);
         if (email!=null) return email;
         
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + caseBSPCountry + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT);
-        if (email!=null) return email;
-        
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + caseGroup + ' ' + caseCNS);
-        if (email!=null) return email;
-        
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + caseGroup + ' ' + STR_DEFAULT);
-        if (email!=null) return email;
-        
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT + ' ' + caseCNS);
-        if (email!=null) return email;
-        
-        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT);
+        email = mapFromEmailPerRTKey.get(caseRecordType + ' ' + STR_DEFAULT + ' ' + STR_DEFAULT);
         if (email!=null) return email;
         
         return '';
