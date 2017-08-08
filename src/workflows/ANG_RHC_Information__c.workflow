@@ -12,7 +12,7 @@
     <fieldUpdates>
         <fullName>Set_Unique_Key</fullName>
         <field>ANG_UniqueKey__c</field>
-        <formula>ANG_AccountId__c</formula>
+        <formula>CASESAFEID(ANG_AccountId__c) + RecordType.DeveloperName</formula>
         <name>Set Unique Key</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>

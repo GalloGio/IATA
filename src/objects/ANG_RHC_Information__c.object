@@ -222,7 +222,7 @@
         <caseSensitive>true</caseSensitive>
         <externalId>true</externalId>
         <label>Unique Key</label>
-        <length>18</length>
+        <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
