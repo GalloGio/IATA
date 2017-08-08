@@ -135,13 +135,28 @@ public class IECEBC_Utility {
         filterValue = '"' + String.escapeSingleQuotes(filterValue) + '"';
       }
       String filter = fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
-            if (cf.Field_Operator__c=='='){ 
-                filter='{"match": {"' + relationship + fieldName + '.keyword": ' + filterValue + '}}';
-            }
+        if (cf.Field_Operator__c=='='){ 
+            filter='{"match": {"' + relationship + fieldName + '.keyword": ' + filterValue + '}}';
+        }
         if (cf.Field_Operator__c=='!='){ 
                 filter='{"bool": {"must_not": [{"match": {"' + relationship +  fieldName + '.keyword": ' + filterValue + '}}]}}';
-            }
+        }
+        string dateformat='';
+        boolean dateflag=false;
+        if (dateflag) dateformat=',"format": "yyyy-mm-dd||yyyy"';
+        if (cf.Field_Operator__c=='>'){ 
+            filter='{"range": {"' + relationship + fieldName + '":{ "gt": ' + filterValue + dateformat+ '}}}';
+        }
+        if (cf.Field_Operator__c=='<'){ 
+            filter='{"range": {"' + relationship + fieldName + '":{ "lt": ' + filterValue + dateformat+  '}}}';
+        }
 
+        if (cf.Field_Operator__c=='>='){ 
+            filter='{"range": {"' + relationship + fieldName + '":{ "gte": ' + filterValue + dateformat+  '}}}';
+        }
+        if (cf.Field_Operator__c=='<='){ 
+            filter='{"range": {"' + relationship + fieldName + '":{ "lte": ' + filterValue + dateformat+  '}}}';
+        }
             /*
       if (af.Filter_RelatedList__c != null) {
         filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
