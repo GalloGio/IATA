@@ -2121,7 +2121,9 @@
 						$j('[id$=iataChangeAccType]').parent().parent().next().children()[1].appendChild(alertDiv);
 						$j('[id$=iataChangeAccType]')[0].checked = false;
 						$j('[id$=iataChangeAccType]')[0].disabled = true;
+						$j('[id$=allowedAccreditationModelSelect]')[0].value = '';
 						$j('[id$=addFinancialAssessmentContactItem]')[0].style.display = 'none';
+						$j('[id$=allowedAccreditationModelSelect]')[0].parentElement.parentElement.style.display = 'none';
 						if (cntIFAPContacts > 0) {
 							deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
 						}
