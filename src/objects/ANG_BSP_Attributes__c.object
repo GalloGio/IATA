@@ -173,6 +173,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Remittance_Frequency__c</fullName>
         <description>Account&apos;s Remittance Frequency</description>
         <externalId>false</externalId>
+        <globalPicklist>ANG_Remittance_Frequency</globalPicklist>
         <label>Remittance Frequency</label>
         <required>true</required>
         <trackTrending>false</trackTrending>
