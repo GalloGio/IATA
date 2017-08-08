@@ -134,7 +134,6 @@ public with sharing class ANG_Risk_Helper{
         return accs;
     }
 
-    @Future
     public static void createRHCInfo(Set<Id> accountIds, Boolean sumFS) {
         createRHCInfo([SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accountIds], sumFS);
     }
