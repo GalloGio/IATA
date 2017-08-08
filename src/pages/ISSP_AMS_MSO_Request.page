@@ -1,0 +1,43 @@
+<apex:page controller="ISSP_AMS_MSO_Request_Controller"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}"
+           >
+<html> 
+    <c:ISSP_Header communityName="{!communityName}" ></c:ISSP_Header>
+    <body>
+		<div class="container">
+			<div id="contentWrapper">
+
+				<c:ISSP_CustomNavigation communityName="{!communityName}"></c:ISSP_CustomNavigation>
+
+				<apex:form id="selCountryForm" >
+
+					<div class="form-group">
+			            <label for="countryconcerned" class="col-lg-3 control-label">* {!$Label.ISSP_CountryConcerned}</label>
+			            
+			            <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">                               
+			                <apex:selectList id="countrySelected" required="true" styleClass="form-control" style="width:40%" value="{!countrySelected}" size="1">
+			                        <apex:selectOptions value="{!countryISOCodeList}"/>
+			                </apex:selectList>
+			            </div>
+			            
+			            <!--<div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
+			                <apex:outputText value="{!amsAllLangCountryLabel}"/>
+			            </div>-->
+			        </div>
+
+		    	</apex:form>                    
+
+
+			</div>
+		    <c:ISSP_CustomFooter communityName="{!communityName}"/>
+		</div>
+    </body>  
+</html>
+
+</apex:page>
