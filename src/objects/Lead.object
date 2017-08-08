@@ -97,6 +97,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Open</fullName>
             <default>true</default>
         </values>
@@ -111,6 +115,10 @@
         <isActive>true</isActive>
         <values>
             <fullName>Contacted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4881,6 +4889,11 @@ albam@iata.org</description>
             </picklistValues>
             <picklistValues>
                 <fullName>Aborted</fullName>
+                <default>false</default>
+                <converted>false</converted>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost</fullName>
                 <default>false</default>
                 <converted>false</converted>
             </picklistValues>
