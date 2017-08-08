@@ -14521,7 +14521,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordType__c</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS)</value>
+            <value>Cases - IFG</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>

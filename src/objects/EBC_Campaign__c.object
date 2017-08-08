@@ -981,6 +981,25 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Pending_Review</fullName>
+        <columns>NAME</columns>
+        <columns>Campaign_ID__c</columns>
+        <columns>Status__c</columns>
+        <columns>Audience__c</columns>
+        <columns>Billing_Account__c</columns>
+        <columns>EBC_Master_Filter__c</columns>
+        <columns>Scheduled_Date__c</columns>
+        <columns>Exact_Target_Campaign_Id__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>PENDING_APPROVAL</value>
+        </filters>
+        <label>Pending Review</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Sent</fullName>
         <columns>NAME</columns>
         <columns>Campaign_ID__c</columns>
