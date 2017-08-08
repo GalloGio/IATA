@@ -13,11 +13,11 @@ public class ANG_RiskEventHistoryPagination_Test {
 
 		Account acc1 = new Account(
 			name='acc1',
-			Location_Type__c='HE',
-			Location_Class__c='P',
-			Remittance_frequency__c='Monthly',
-			ANG_Accreditation_Model__c ='Cash',
-			recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+			Location_Type__c=AMS_Utils.HE,
+			Location_Class__c=AMS_Utils.LC_PASSENGER,
+			Remittance_frequency__c=ANG_Risk_Helper.REMITTANCE_FREQUENCY_MONTHLY,
+			ANG_Accreditation_Model__c =AMS_Utils.ACCREDITATIONMODEL_CASH,
+			recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
 		);
 		insert acc1;
 
