@@ -27806,6 +27806,13 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
         <errorMessage>Please fill a phone number or an email address</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Required_Community</fullName>
+        <active>true</active>
+        <description>Contact first Community</description>
+        <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c),ISBLANK(Community__c))</errorConditionFormula>
+        <errorMessage>Please select a value for Community</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Validate_FA_Contact_creation</fullName>
         <active>true</active>
         <description>check if the account is BR and account is abroad; if yes, only users with custom permission &apos;Can Create FA Contact in BR Account&apos; in their profile can create FA contacts for BR if the account is abroad.</description>

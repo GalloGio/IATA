@@ -202,9 +202,22 @@ public with sharing class ISSP_CaseList {
                     fieldPathSet.add(f.getFieldPath());
                 }
                 //basto1p
-                String query = '  Account.Name , Contact.Name, Status   ';
+                String query = '  Account.Name , Contact.Name   ';
+                Boolean hasStatus = false;
+                
                 for(String fieldPath  : fieldPathSet) {
+
+                    if(fieldPath.trim() == 'Status')
+                    {
+                        hasStatus = true;
+                    }
+
                     query +=  ',' + fieldPath;
+                }
+
+                if(!hasStatus)
+                {
+                    query += ', Status';
                 }
                 
                 string queryString ;
