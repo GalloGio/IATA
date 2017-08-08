@@ -1087,6 +1087,7 @@ public without sharing class AMS_Utils {
         //Need to get Accounts and AMS Online Accreditation related to these oscars
         Set<Id> oscarAccountIds = new Set<Id>();
         Set<Id> oscarOnlineAccredIds = new Set<Id>();
+        List<Account> createRHCInfo = new List<Account>();
 
         for (AMS_OSCAR__c oscar : oscars) {
             oscarAccountIds.add(oscar.Account__c);
@@ -1098,7 +1099,8 @@ public without sharing class AMS_Utils {
                 ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
                 Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
                 ,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
-                Link_agent_name__c, ANG_Accreditation_Model__c
+                Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, 
+                (SELECT Id FROM RHC_Informations__r)
                 FROM Account
                 WHERE Id IN :oscarAccountIds]);
 
@@ -1162,6 +1164,8 @@ public without sharing class AMS_Utils {
                 
                 acc.ANG_Accreditation_Model__c = decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
+                if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
+
                 onlineAccToCreateAccountRole.add(onlineAcc);
 
                 accountsToUpdate.add(acc);
@@ -1182,6 +1186,8 @@ public without sharing class AMS_Utils {
 
             if(!stagingToAccount.isEmpty() && runOwnershipMigration)
                 AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true);
+
+            if(!createRHCInfo.isEmpty()) ANG_Risk_Helper.createRHCInfo(createRHCInfo, false);
 
             return changes;
 
