@@ -949,6 +949,7 @@ public without sharing class ISSP_AMS_Accreditation {
         String optionLabel =  conAccount.IATACode__c + ' - ' + ((conAccount.ANG_Accreditation_Model__c == null || conAccount.ANG_Accreditation_Model__c == 'Legacy') ? conAccount.Location_Type__c : conAccount.Legal_name__c) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
         options.add(new SelectOption(conAccount.IATACode__c, optionLabel));
         agencyCodesConcerned = options;
+        newForm.Scope_of_Change__c = 'Selected Branches Only';
         return optionLabel;
     }
     
