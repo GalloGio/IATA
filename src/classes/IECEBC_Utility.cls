@@ -203,8 +203,8 @@ public class IECEBC_Utility {
          //not and or
         queryWhereClauses.add('{"bool": {"must_not": [');
         queryWhereClauses.add(' {"bool": {"should": [');
-        queryWhereClauses.add('   {"bool":{"must": [{"match": {"EBC_Email_Exclusion_Relation__r.Is_Global__c": true}}]}},');
-        queryWhereClauses.add('   {"bool":{"must": [{"match": {"EBC_Email_Exclusion_Relation__r.Billing_Account__c": "' + masterFilter.Billing_Account__c + '"}}]}}');
+        queryWhereClauses.add('   {"bool":{"must": [{"match": {"EBC_Email_Exclusion__r.EBC_Email_Exclusion_Relation__r.Is_Global__c": true}}]}},');
+        queryWhereClauses.add('   {"bool":{"must": [{"match": {"EBC_Email_Exclusion__r.EBC_Email_Exclusion_Relation__r.Billing_Account__c.keyword": "' + masterFilter.Billing_Account__c + '"}}]}}');
         queryWhereClauses.add(' ]}}');
         queryWhereClauses.add(']}}');
         queryWhereClauses.add(']}}');       
@@ -231,7 +231,7 @@ public class IECEBC_Utility {
             if (String.isBlank(code)) continue;
                 //queryWhereClauses.add('IATA_Code__c in (\'' + String.join(limitedCodes, '\',\'') + '\')');
                 if (codeindex>0) nextline=',';
-                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match": {"IATA_Code__c": "'+code+'"}}]}}');
+                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match": {"IATA_Code__c.keyword": "'+code+'"}}]}}');
                 codeindex++;
       }
       queryWhereClauses.add(']}}');
