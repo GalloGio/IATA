@@ -39,7 +39,7 @@ private class ANG_RiskEventTest {
 
         Test.startTest();
 
-        acc.Status__c = ANG_Risk_Helper.STATUS_TERMINATED;
+        acc.Status__c = ANG_Risk_Helper.ACCOUNT_STATUS_TERMINATED;
         update acc;
 
         

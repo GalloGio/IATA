@@ -15,8 +15,11 @@ public with sharing class ANG_Risk_Helper{
 
 
 	//Account - Financial_Review_Result__c
-	public static final String FR_SATISFACTORY = 'Satisfactory';
-	public static final String FR_UNSATISFACTORY = 'Unsatisfactory - No action';
+	public static final String FR_SATISFACTORY                   = 'Satisfactory';
+	public static final String FR_UNSATISFACTORY                 = 'Unsatisfactory - No action';
+	public static final String ACCOUNT_STATUS_APPROVED           = 'Approved';
+	public static final String ACCOUNT_STATUS_TERMINATED         = 'Terminated';
+
 
 	//ANG_Agency_Risk_Event__c - ANG_Event_Status__c
 	public static final String STATUS_ACTIVE           = 'Active';
