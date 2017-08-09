@@ -15,6 +15,7 @@ public without sharing class ISSP_AMS_Accreditation {
     //private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
     private String vSAAMCaseId;
+    private Boolean isScopeOfChangeChanged = false;
     public String hqCountryISOCode;
     private Id vHQAccountId;
     public Id brAccountId {get; set;}
@@ -3454,7 +3455,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     Provide_explanation_for_change_locations__c, Will_such_change_affect_locations__c, Will_such_change_affect_the_managers__c, Will_such_change_affect_the_premises__c, Will_the_change_of_ownership_cause__c, Effective_Date_Of_Change__c, Give_details_for_authorization_to_act__c, Give_details_for_the_change_of_ownership__c, Have_any_having_authorization_to_act__c, Issued_share_capital__c,
                     Specify_Legal_Status_After_Change__c, Issued_share_capital_After_Change__c, Trade_Name__c, ISSP_AMS_Curr_Entity_with_listed_shares__c, ISSP_AMS_Total_Current_Ownership__c, ISSP_AMS_Total_Previous_Ownership__c, Is_your_firm_handling_Dangerous_Goods__c, Country__c, Account_Name__c,Scope_of_Change__c,Agency_Codes_Concerned__c,Billing_State__c,Website__c,
                     Confirm_Legal_Details_are_correct__c,Notify_Change_Legal_Details__c,Confirm_Location_Details_are_correct__c,Notify_Change_Location__c,Confirm_Ownership_details_are_correct__c,Notify_Change_Ownership__c,Map_Company_Type_to_Legal_Status__c,New_Head_Office_IATA_Code__c,Shipping_Street__c,Shipping_City__c,Shipping_Postal_Code__c,Shipping_State__c,HO_Account__c,RecordTypeId,
-                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c, ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c
+                    IATAN_Code__c,IATA_Registered_IATAN_Agent__c,Enable_Credit_Card_FOP__c,IATAN_Agent_Account__c, ANG_Accreditation_Model_to_Change__c, Notify_Change_Accreditation_Type__c, Confirm_accreditation_type_are_correct__c, Last_Scope_Of_Change__c
                     FROM AMS_Pax_Accreditation_Form__c
                     WHERE SAAM_Case__c = :newCase.Id
                                          LIMIT 1
@@ -3515,6 +3516,20 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
 
         get{
+            //NEWGEN-205
+            if (newForm.Last_Scope_Of_Change__c == null) {
+                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+            } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c && 
+                ( (newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
+                  (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) ) {
+                isScopeOfChangeChanged = true;
+                setOwners('NoC');
+                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+            } else {
+                isScopeOfChangeChanged = false;
+            }
+            //END NEWGEN-205
+
             List<AMS_Accreditation_Contact__c> cons = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
                 AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, CASS_contact__c, Invoicing_Contact__c, 
@@ -6980,13 +6995,16 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
         Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 
+        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
+        //NEWGEN-205
+        ID accountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
+        if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
+            delete countAccreditationContact;
+            countAccreditationContact = new List<AMS_Accreditation_Contact__c>();
+        }
+        // END NEWGEN-205
 
-        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id FROM AMS_Accreditation_Contact__c
-                                                                                WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
-
-        //Only create the owners if no owners exists
-        if(countAccreditationContact.size() == 0){        
-            
+        if (countAccreditationContact.size() == 0) { 
             List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
                 Employee_Name__c,Employee_type__c,Id,
                 Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
@@ -6997,12 +7015,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
-                where Account__c = :vHQAccountId 
+                where Account__c = :accountConcerned 
                 and RecordTypeId = :rtAccRoleOwnership
                 and Active__c = true
                 and Percentage__c > 0];
-
-            System.debug('amsOwners: ' + amsOwners);
             
             for(AMS_Account_Role__c accRole : amsOwners){
 
@@ -7022,6 +7038,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             System.debug('lstAccreditationContact: ' + lstAccreditationContact);
 
             upsert lstAccreditationContact; 
+            isScopeOfChangeChanged = false;
         }
     }
 
