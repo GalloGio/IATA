@@ -752,7 +752,7 @@
         <label>NG Minor Shareholding</label>
     </fieldSets>
     <fieldSets>
-        <fullName>ANG_name</fullName>
+        <fullName>ANG_legalname</fullName>
         <description>fields to be migrated when we have a change of name process</description>
         <displayedFields>
             <field>Account_Name__c</field>
