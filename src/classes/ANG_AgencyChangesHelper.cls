@@ -194,7 +194,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					    changeCode.name = 'LET';
 					    changeCode.reasonCode = '91';
 					    changeCode.memoText = '';
-					    changeCode.reasonDesc  = 'ACCREDITEDâ€“MEETSâ€“STANDARDS';
+					    changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
 					    changeCode.status  = '9';
 
 					    changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
@@ -953,9 +953,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
                     changesContainer.addChangeCode(changeCode);
                     
-                    accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
-                    //changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus); REMOVED THIS BECAUSE WE MUST USE THE addAccount METHOD !!
-                    changesContainer.addAccount(accToUpdateStatus);
+					if(changeCodeDef.status != null){
+                    	accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
+                    	//changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus); REMOVED THIS BECAUSE WE MUST USE THE addAccount METHOD !!
+                    	changesContainer.addAccount(accToUpdateStatus);
+					}
                 }
             }
 
