@@ -19,17 +19,13 @@ public class ANG_UserTriggerHandler {
     // ************************************************************
 
     public void onBeforeInsert(){
-    	if(!Test.isRunningTest()){
             assignContactFederationId();
-        }
     }
 
     public void onBeforeUpdate(){ }
 
     public void onAfterInsert(){
-        if(!Test.isRunningTest()){
     	assignUserFederationId();
-        }
     }
 
     // ************************************************************
@@ -38,10 +34,12 @@ public class ANG_UserTriggerHandler {
 	
 	private void assignContactFederationId(){
          for(User u : triggerNew){
+            if(u.contactId != null) {
             String fedID = String.valueOf(u.contactId).left(15);
             u.FederationIdentifier = fedID;
                 system.debug('contact ID' + u.contactId);
                 system.debug('fedID' + fedID);
+            }
          }
      }
 
