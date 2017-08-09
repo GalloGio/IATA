@@ -1399,6 +1399,20 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
                 
             }
+            //NEWGEN-205
+            if (newForm.Last_Scope_Of_Change__c == null) {
+                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+            } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
+                if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
+                    (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
+                    isScopeOfChangeChanged = true;
+                    setOwners('NoC');
+                }
+                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+            } else {
+                isScopeOfChangeChanged = false;
+            }
+            //END - NEWGEN-205
                 
             if (newCase.Account_Concerned__c==null) {
                 SYSTEM.DEBUG('HQ Account ID: ' + newForm.HO_Account__c);
@@ -3517,20 +3531,6 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
     public List<AMS_Accreditation_Contact__c> List_AgencyContacts {
 
         get{
-            //NEWGEN-205
-            if (newForm.Last_Scope_Of_Change__c == null) {
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c && 
-                ( (newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
-                  (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) ) {
-                isScopeOfChangeChanged = true;
-                setOwners('NoC');
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else {
-                isScopeOfChangeChanged = false;
-            }
-            //END NEWGEN-205
-
             List<AMS_Accreditation_Contact__c> cons = [
                 SELECT AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
                 AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, CASS_contact__c, Invoicing_Contact__c, 
@@ -6996,16 +6996,23 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
         Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 
-        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
+        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205
-        ID accountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
+        ID lAccountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
         if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
-            delete countAccreditationContact;
-            countAccreditationContact = new List<AMS_Accreditation_Contact__c>();
+            List<AMS_Accreditation_Contact__c> prevAndCurrOwnersList = new List<AMS_Accreditation_Contact__c>();
+            for (AMS_Accreditation_Contact__c lCont: countAccreditationContact) {
+                if (lCont.RecordTypeId == rtAccreditContPreviousOwner || lCont.RecordTypeId == rtAccreditContCurrentOwner) {
+                    prevAndCurrOwnersList.add(lCont);                    
+                }
+            }
+            if (prevAndCurrOwnersList.size() > 0) {
+                List<Database.DeleteResult> re = database.delete(prevAndCurrOwnersList, false);
+            }
         }
         // END NEWGEN-205
 
-        if (countAccreditationContact.size() == 0) { 
+        if (isScopeOfChangeChanged || countAccreditationContact.size() == 0) { 
             List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
                 Employee_Name__c,Employee_type__c,Id,
                 Owner_Account__c,Owner_Account__r.Name,Owner_Account__r.IATACode__c,Owner_Account__r.Email__c,
@@ -7016,7 +7023,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 Contact__r.OtherStreet,Contact__r.OtherCity,Contact__r.OtherPostalCode,Contact__r.OtherCountry,
                 Legacy_External_ID__c
                 FROM AMS_Account_Role__c
-                where Account__c = :accountConcerned 
+                where Account__c = :lAccountConcerned 
                 and RecordTypeId = :rtAccRoleOwnership
                 and Active__c = true
                 and Percentage__c > 0];
@@ -7036,11 +7043,10 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 }
                 
             } 
-            System.debug('lstAccreditationContact: ' + lstAccreditationContact);
 
             upsert lstAccreditationContact; 
-            isScopeOfChangeChanged = false;
         }
+        isScopeOfChangeChanged = false;
     }
 
 
