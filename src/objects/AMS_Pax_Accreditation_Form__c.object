@@ -352,36 +352,6 @@
         <label>Name</label>
     </fieldSets>
     <fieldSets>
-        <fullName>ANG_LegalName</fullName>
-        <description>fields to be migrated when we have a change of name process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Name</label>
-    </fieldSets>
-    <fieldSets>
         <fullName>AMS_ownershiptoiataagent</fullName>
         <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
@@ -820,36 +790,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>NG vmfr</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>ANG_LegalName</fullName>
-        <description>fields to be migrated when we have a change of name process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Name</label>
     </fieldSets>
     <fieldSets>
         <fullName>ChangeOfLegal</fullName>
