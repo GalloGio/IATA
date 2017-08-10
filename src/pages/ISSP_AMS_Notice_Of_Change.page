@@ -927,7 +927,7 @@
 						
 						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
+							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
 
 						<apex:pageBlockSection columns="1">
@@ -2100,6 +2100,26 @@
 		</div>
 		<script>
 			$( document ).ready(function() {
+
+				//NEWGEN-1227
+				const lScopeOfChange = '{!newForm.Scope_of_Change__c}',
+					checkb = $j('[id$=notifyChangeLocationCheckbox]'),
+					warning = '{!$Label.ISSP_NoC_Location_Warning}',
+					sizeOfSelected = {!agencyCodesConcernedSize};
+				if (lScopeOfChange === 'HO - All Branches' || sizeOfSelected > 1) {
+					checkb.prop('disabled', true);
+					const alertDiv = document.createElement('div');
+					alertDiv.className = 'alert alert-warning text-justify';
+					alertDiv.role = 'alert';
+					alertDiv.appendChild(document.createTextNode(warning));
+					checkb.parent().hover(function() {
+						$j(this).parent().next().children().last().append(alertDiv);
+					}, function() {
+						$j(this).parent().next().children().last().html('');
+					});
+				}
+
+				//END - NEWGEN 1227
 
 
 				const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}';

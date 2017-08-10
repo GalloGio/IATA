@@ -973,6 +973,10 @@ public without sharing class ISSP_AMS_Accreditation {
         return options;
     }
 
+    public Integer getAgencyCodesConcernedSize() {
+        return agencyCodesConcerned.size();
+    }
+
     public List<SelectOption> getOfficeTypes() {
         Boolean isUKTerritory;
         
