@@ -87,7 +87,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isEditable(String fieldName){
 
         //For newgen
-        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && !isAgencyChanges)
             if(notEditableForNEWGEN.contains(fieldName))
                 return false;
 

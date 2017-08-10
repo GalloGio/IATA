@@ -38,7 +38,7 @@ public with sharing class AMS_AccreditationContactController {
 
     };
 
-    public static final List<String> NGOWNEREDITABLECHANGES = new List<String>{'minor shareholding','ownership'};
+    public static final List<String> NGOWNEREDITABLECHANGES = new List<String>{'minor shareholding','major shareholding','ownership'};
 
     
     // TODO at a later stage: after having 100% ownershiprate in total and saving the owners, need to update OSCAR's field that states that the 
