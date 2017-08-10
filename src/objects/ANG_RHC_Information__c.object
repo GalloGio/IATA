@@ -70,6 +70,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>ANG_CashCondition__c</fullName>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.ANG_CashCondition__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cash Conditions Equal to FS</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_ConsumedRHC_Percent__c</fullName>
         <externalId>false</externalId>
         <label>Consumed RHC %</label>
@@ -105,7 +115,7 @@
         <externalId>false</externalId>
         <formula>IF(ANG_Minimum_Financial_Security__c  &gt; 0 , ANG_Financial_Security__c - ANG_Minimum_Financial_Security__c, null)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Exceeding Financial Security Amount</label>
+        <label>Exceeding FS Amount</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -116,7 +126,7 @@
     <fields>
         <fullName>ANG_Financial_Security__c</fullName>
         <externalId>false</externalId>
-        <label>Total Financial Security Provided</label>
+        <label>Total FS Provided</label>
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
@@ -136,15 +146,24 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ANG_Provisional_RHC_Last_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisional RHC Amount Last Update</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_RHC_Amount_Forecasted__c</fullName>
         <externalId>false</externalId>
         <formula>IF(
     ANG_AccountId__r.ANG_CashCondition__c &amp;&amp; ANG_Financial_Security__c &gt; 0,
     ANG_Financial_Security__c,
     IF(
-        ANG_Financial_Security__c  &gt; (ANG_RME_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c) ,
+        ANG_Financial_Security__c  &gt; (ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c) ,
         ANG_Financial_Security__c , 
-        ANG_RME_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c
+        ANG_RHC_Amount_Provisional__c + ANG_Exceeding_Financial_Security__c
     )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -153,6 +172,17 @@
         <required>false</required>
         <scale>2</scale>
         <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_RHC_Amount_Provisional__c</fullName>
+        <externalId>false</externalId>
+        <label>Provisional RHC Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
     </fields>
@@ -180,31 +210,11 @@
     <fields>
         <fullName>ANG_RHC_Effective_Date__c</fullName>
         <externalId>false</externalId>
-        <label>RHC Effective Date</label>
+        <label>RHC Amount Effective Date</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_RME_Amount_Last_Update__c</fullName>
-        <externalId>false</externalId>
-        <label>RME Amount Last Update</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>ANG_RME_Amount_Provisional__c</fullName>
-        <externalId>false</externalId>
-        <label>Provisional RME Amount</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>4</scale>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_RME_Amount__c</fullName>
@@ -224,7 +234,7 @@
         <label>Unique Key</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
@@ -237,7 +247,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>RHC Information Records</pluralLabel>
-    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>RHC_Information</fullName>
         <active>true</active>
@@ -245,4 +255,47 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Confirm_RHC</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Confirm Forecasted RHC</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
+rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+
+rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;));
+
+console.info(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;);
+console.info(rhcInfo);
+sforce.connection.update([rhcInfo]);
+
+window.location.reload();</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Request_RHC_Calculation</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Request RHC Calculation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
+rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+
+var newvalue = Math.floor((Math.random()*15)+20)*1000;
+
+rhcInfo.ANG_RHC_Amount_Provisional__c = newvalue;
+sforce.connection.update([rhcInfo]);
+
+window.location.reload();</url>
+    </webLinks>
 </CustomObject>
