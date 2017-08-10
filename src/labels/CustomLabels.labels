@@ -13879,13 +13879,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>SECTION 2 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Step1_HE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Step1_HE</shortDescription>
-        <value>&lt;strong&gt;Associate Entity &lt;/strong&gt; of the following IATA Approved agent:</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_Step1_Office_FullAddress</fullName>
         <language>en_US</language>
         <protected>false</protected>
