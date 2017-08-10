@@ -419,6 +419,8 @@ global with sharing class ANG_ConversionHelper {
 
 		Map<Id,AMS_Agencies_Hierarchy__c> allHierarchiesInvolvedMap = fetchAllHierarchiesInvolved(structures);
 
+		Set<Id> topParents = new Set<Id>();
+
 		for(ANG_ConversionHelper.HierarchyStructure struct: structures){
 
 			allAgencies = new Set<Account>();
@@ -442,6 +444,7 @@ global with sharing class ANG_ConversionHelper {
 			container.struct.migrated = true;
 
 			toReturn.add(container.struct);
+			topParents.add(container.struct.topParentId);
 
 		}
 
@@ -453,6 +456,8 @@ global with sharing class ANG_ConversionHelper {
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
+
+		ANG_Risk_Helper.createRHCInfo(topParents, true);
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;

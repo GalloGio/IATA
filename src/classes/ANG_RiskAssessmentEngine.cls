@@ -142,7 +142,7 @@ public class ANG_RiskAssessmentEngine{
         }
 
         for(id accountId:accInfoMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel== AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  accInfoMap.get(accountId).accreditantionModel==AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel== AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  accInfoMap.get(accountId).accreditantionModel==AMS_Utils.ACCREDITATIONMODEL_CASHLESS || accInfoMap.get(accountId).status== AMS_Utils.ACC_S0_TERMINATED)){
                 accCalcMap.remove(accountId);
             }
         }

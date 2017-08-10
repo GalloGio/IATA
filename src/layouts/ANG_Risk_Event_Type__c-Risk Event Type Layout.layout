@@ -48,10 +48,6 @@
                 <behavior>Edit</behavior>
                 <field>Limit_Cash_conditions__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ANG_isMultiple__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
