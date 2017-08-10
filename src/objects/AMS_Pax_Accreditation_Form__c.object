@@ -352,15 +352,10 @@
         <label>Name</label>
     </fieldSets>
     <fieldSets>
-        <fullName>AMS_ownershiptoiataagent</fullName>
-        <description>fields to be migrated when we have a change of ownership process</description>
+        <fullName>ANG_LegalName</fullName>
+        <description>fields to be migrated when we have a change of name process</description>
         <displayedFields>
             <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_Legal_Status__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -375,16 +370,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>ISSP_AMS_License_No__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_VAT_number__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Website__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -394,20 +379,10 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
-        <displayedFields>
-            <field>VAT_Number_2__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ISSP_AMS_Total_Ownership__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>OwnershipToIATAAgent</label>
+        <label>Name</label>
     </fieldSets>
     <fieldSets>
-        <fullName>AMS_ownershiptononiataagent</fullName>
+        <fullName>AMS_ownershiptoiataagent</fullName>
         <description>fields to be migrated when we have a change of ownership process</description>
         <displayedFields>
             <field>Account_Name__c</field>
@@ -845,6 +820,36 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>NG vmfr</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ANG_LegalName</fullName>
+        <description>fields to be migrated when we have a change of name process</description>
+        <displayedFields>
+            <field>Account_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Short_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Trade_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Website__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Abbreviated_name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Name</label>
     </fieldSets>
     <fieldSets>
         <fullName>ChangeOfLegal</fullName>
@@ -1287,6 +1292,27 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Accreditation_Model_to_Change__c</fullName>
+        <externalId>false</externalId>
+        <label>Accreditation Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_Accreditation_type__c</fullName>
@@ -1843,6 +1869,15 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Confirm Ownership details are correct</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Confirm_accreditation_type_are_correct__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Confirm accreditation type is correct</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3502,6 +3537,17 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>Last_Scope_Of_Change__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Scope Of Change</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Link_agent_name__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -3978,6 +4024,15 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notify_Change_Accreditation_Type__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Notify IATA of Change</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Notify_Change_Legal_Details__c</fullName>
@@ -5149,13 +5204,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Associate - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+    <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5898,13 +5964,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Associate - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+   <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6647,13 +6724,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Import - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7396,13 +7484,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>CASS Import - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8146,13 +8245,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>IATA Cargo Agent (Res 801/805) Branch applications</description>
         <label>Cargo Agent - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8907,13 +9017,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>IATA Cargo Agent (Res 801/805) HO applications</description>
         <label>Cargo Agent - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+	<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9668,13 +9789,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>EACP Intermediary (Res 805zz) Branch applications</description>
         <label>Cargo EACP - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10429,13 +10561,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>EACP Intermediary (Res 805zz) HO applications</description>
         <label>Cargo EACP - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+ <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11189,13 +11332,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Change of Bank Account Details</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12064,13 +12218,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Courier - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12824,13 +12989,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Courier - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13585,13 +13761,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <description>General Online Accreditation Record Type</description>
         <label>General Online Accreditation</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+ <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14521,6 +14708,911 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_a_sole_proprietor__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_director_or_had_a_financial__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_found_guilty_of_infringements__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Been_involved_in_a_bankruptcy__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_the_air_transportation_which_your__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_intend_to_request__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_now_share_or_intend__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_operate_a_cargo_cartage__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_sell_air_cargo__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Does_your_firm_use_its_own_vehicles__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Enable_Credit_Card_FOP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_firm_ever_held_a_Cargo_Agency__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Has_your_form_ever_held_CASS_Assoc_etc__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Have_any_having_authorization_to_act__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Head_Office_have_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Curr_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Entity_with_listed_shares__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_GDS_with_signed_contract__c</picklist>
+            <values>
+                <fullName>Abacus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Amadeus</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Axess</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deutsche Reiseburo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Farelogix</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Infini</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kiu System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Kotis Travel Info SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resiber</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SITA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sabre</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sirena</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Topas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Apollo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Galileo%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelport %28Worldspan%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travelsky</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_IATA_Registered_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Applicant_Parent__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Is_Make_Declarations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Legal_Status__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Nominee_Trustee__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Online_Agency_Application__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Premises_located_at_airport__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ISSP_AMS_Previous_default__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>If_yes_are_you_fully_and_legally__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>International_Sales_in_last_Year__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IsGSA__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_there_any_relationship__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Branch_becoming_a_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_this_Head_Office_becoming_a_Branch__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_General_Sales_Agent_GSA__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_a_member_of_a_national__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_acting_as_agent_for_surface__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_affiliated_directly__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_an_approved_IATA_Passenger__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_handling_Dangerous_Goods__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_firm_insured_to_cover__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_Agent_Type__c</picklist>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Type__c</picklist>
+            <values>
+                <fullName>AO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>Cargo_Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel_Agent</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Registered_to_hot_files__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Remittance_frequency__c</picklist>
+            <values>
+                <fullName>4 times per month</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 10 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 3 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Every 5 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fortnightly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Scope_of_Change__c</picklist>
+            <values>
+                <fullName>HO - All Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO - Selected Branches</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HO Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Selected Branches Only</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Separate_user_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specialize_in_particular_traffic_type__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Specify_Legal_Status_After_Change__c</picklist>
+            <values>
+                <fullName>Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Co-operative</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joint Venture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Company</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Limited Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>State Owned Enterprise</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trust Company</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Cargo_Agent__c</picklist>
+            <values>
+                <fullName>CASS Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Were_all_IATA_Members_fully_repaid__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_managed_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wholly_owned_by_this_Head_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_locations__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_managers__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_such_change_affect_the_premises__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Will_the_change_of_ownership_cause__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Other_Changes_NAM</fullName>
+        <active>true</active>
+        <label>Other Changes - NAM</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Been_a_sole_proprietor__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15404,17 +16496,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Enable_Credit_Card_FOP__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15822,7 +16903,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Associate_Entity</fullName>
         <active>true</active>
         <label>Travel Agent - Associate Entity</label>
-        <picklistValues>
+<picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15833,22 +16914,33 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16008,6 +17100,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         </picklistValues>
         <picklistValues>
             <picklist>Head_Office_have_access__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_Registered_IATAN_Agent__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -16745,13 +17848,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - Branch</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+ <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+ <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17494,13 +18608,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - Branch Abroad</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+ <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+<picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18358,13 +19483,24 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <active>true</active>
         <label>Travel Agent - HO</label>
         <picklistValues>
-            <picklist>AE_separate_Legal_Entity__c</picklist>
+<picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+ <picklistValues>
+            <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19106,7 +20242,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_no_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard no Cash</label>
-        <picklistValues>
+<picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -19117,22 +20253,33 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20028,7 +21175,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_with_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard with Cash</label>
-        <picklistValues>
+picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -20039,22 +21186,33 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
+		<picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
-                <fullName>Cash</fullName>
+                <fullName>Standard Accreditation with Cash</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cashless</fullName>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Models</picklist>
             <values>
                 <fullName>Legacy</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

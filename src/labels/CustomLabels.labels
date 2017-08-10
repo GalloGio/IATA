@@ -1104,6 +1104,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Please select the portal role you would like to have in this portal service.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_Picklist_None</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG ISSP Picklist None</shortDescription>
+        <value>--None--</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_PortalRoleErrorMessage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7305,6 +7312,13 @@ IFG Customer Services</value>
         <value>Thank you for submitting your Accreditation application for your Cargo Agency Head Office.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_AE_NoC_Change_for</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS AE NoC Change for</shortDescription>
+        <value>Change of bank details for</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Accept_TOS</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -8395,6 +8409,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case PDF Download</shortDescription>
         <value>Please download the PDF application form using the link below. Once completed submit to IATA using the &lt;strong&gt;Attach File&lt;/strong&gt; button.&lt;br/&gt;(Note: You can come back to this page from the &lt;a href=&quot;/ISSP_AMSCases&quot;&gt;IATA Accreditation&lt;/a&gt; page at any time to complete the upload)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Cases_Notify_IATA_Changes_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Cases Notify IATA Changes Error</shortDescription>
+        <value>Only users from your Agency’s Head Entity can notify IATA of changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
@@ -9977,6 +9998,13 @@ For each section below either:&lt;br/&gt;
         <value>New Head Office address details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Acreditation_Type_Section_Header</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Acreditation Type Section Header</shortDescription>
+        <value>1. Accreditation type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Additional_Information</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -9991,6 +10019,13 @@ For each section below either:&lt;br/&gt;
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Agency_Information</shortDescription>
         <value>Agency Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Associate_Entity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Associate Entity</shortDescription>
+        <value>Associate Entities, excluding Head Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Authorized_Signature</fullName>
@@ -10154,6 +10189,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Change is submitted for</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Choose_Associate_Entities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Choose Associate Entities</shortDescription>
+        <value>Accredited Associate Entities</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Choose_Branch_Account</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -10184,6 +10226,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Curr_Company_Owner</shortDescription>
         <value>Current Company Owner</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Current_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Current Accreditation Type</shortDescription>
+        <value>Current Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Current_Companies</fullName>
@@ -10234,6 +10283,20 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Direct Debit Change</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_HE_All_Branches</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE All Branches</shortDescription>
+        <value>Head Entity &amp; All Associate Entities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE Some Branches</shortDescription>
+        <value>Head Entity &amp; one or more Associate Entities</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_HO_All_Branches</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -10248,6 +10311,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC HO Some Branches</shortDescription>
         <value>Head Office &amp; one or more Branch Offices</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Head_Entity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Head Entity</shortDescription>
+        <value>Head Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Head_Office</fullName>
@@ -10780,6 +10850,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Please select the role of this person in the Agency.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Updated_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Updated Accreditation Type</shortDescription>
+        <value>Updated Accreditation Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10793,6 +10870,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Witness</shortDescription>
         <value>Witness:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_Accreditation_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC error Accreditation Type</shortDescription>
+        <value>Please either confirm that the accreditation type is correct or notify IATA of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message1</fullName>
@@ -11382,6 +11466,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Section 2 SubSection 2</shortDescription>
         <value>Section 2.2</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Selected_Associate_Entities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Selected Associate Entities</shortDescription>
+        <value>* Selected Associate Entities</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Selected_Branch_Offices</fullName>
@@ -14002,6 +14093,13 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Active agreements</shortDescription>
         <value>Active agreements</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Add_FAP_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Add FAP Contact</shortDescription>
+        <value>Add Financial Assessment Contact</value>
     </labels>
     <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
@@ -17939,6 +18037,27 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP No</shortDescription>
         <value>No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
+        <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_No_Contact_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC No Contact Error</shortDescription>
+        <value>A Financial Assessment Contact must be added to SECTION 1 in order to convert to Standard Accreditation with Cash.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Switch_Selection_Warning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Switch Selection Warning</shortDescription>
+        <value>Switching your selection will delete the Financial Assessment Contact that has been created. Do you wish to proceed?</value>
     </labels>
     <labels>
         <fullName>ISSP_NoRecordsFound</fullName>
