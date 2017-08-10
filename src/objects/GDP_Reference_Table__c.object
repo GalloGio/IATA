@@ -119,6 +119,15 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>Valid_for_GDP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid for GDP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>GDP Reference Table</label>
     <listViews>
         <fullName>AIRSYS_GDS</fullName>
