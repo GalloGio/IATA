@@ -1344,6 +1344,14 @@
                       </apex:outputpanel>
                     </apex:facet>
 
+                    <apex:outputText >
+                      <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
+                      <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
+                    </apex:outputText>         
+                    <apex:pageBlockSection>
+                      <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
+                      <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+                    </apex:pageBlockSection> 
 
                     <apex:pageblocksectionitem >
                       <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
