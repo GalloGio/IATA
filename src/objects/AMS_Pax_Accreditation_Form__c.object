@@ -9799,7 +9799,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-picklistValues>
+<picklistValues>
             <picklist>ANG_Accreditation_Model_to_Change__c</picklist>
             <values>
                 <fullName>Standard Accreditation with Cash</fullName>
