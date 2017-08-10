@@ -921,20 +921,49 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>MustSyncWithAIMS__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
             <field>Card_Status__c</field>
             <operation>notEqual</operation>
             <value>Cancelled</value>
+        </filters>
+        <filters>
+            <field>MustSyncWithAIMS__c</field>
+            <operation>equals</operation>
+            <value>1</value>
         </filters>
         <filters>
             <field>Sent_to_AIMS_on__c</field>
             <operation>equals</operation>
         </filters>
         <label>Must Sync</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Rejected_by_G_D</fullName>
+        <columns>MustSyncWithAIMS__c</columns>
+        <columns>NAME</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>Is_Expedite__c</columns>
+        <columns>Photo__c</columns>
+        <columns>Missing_Information__c</columns>
+        <columns>CIN__c</columns>
+        <columns>Sent_to_AIMS_on__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>equals</operation>
+            <value>ERROR Rejected by G&amp;D</value>
+        </filters>
+        <filters>
+            <field>MustSyncWithAIMS__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Rejected by G&amp;D</label>
         <language>en_US</language>
     </listViews>
     <listViews>

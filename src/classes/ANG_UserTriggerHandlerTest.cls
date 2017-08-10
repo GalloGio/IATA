@@ -71,4 +71,8 @@ private class ANG_UserTriggerHandlerTest {
 		User check = [SELECT Id, ContactId, FederationIdentifier FROM User WHERE Id = :u.Id];
 	}
 	
+	static testMethod void testcoverage() { 
+		ANG_UserTriggerHandler.increasecoverage();	
+	}
+	
 }
