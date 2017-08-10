@@ -9314,20 +9314,6 @@ IFG Customer Services</value>
         <value>&lt;strong&gt;Associate Entity &lt;/strong&gt; of the following IATA Approved agent:</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Step1_Office_FullAddress</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Step1_Office_FullAddress</shortDescription>
-        <value>Full Address of the Head Entity for which Application for Approval is made</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_OPTION_PAX_AE</shortDescription>
-        <value> IATA Passenger Sales - Associated Entity</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9349,13 +9335,6 @@ IFG Customer Services</value>
         <value>If your travel agency is owned by an organization other than the Head Entity mentioned above, answer the following with respect to the parent organization:</value>
     </labels>
     <labels>
-        <fullName>ISSP_AN_Step1_AE_Full_Address</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_AN_Step1_AE_Full_Address</shortDescription>
-        <value>Full Address of the Associate Entity for which Application for Approval is made</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_Assoc_Entity</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9368,13 +9347,6 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</shortDescription>
         <value>SECTION 1 - IATA Accredited Head Entity Details</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</fullName>        
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</shortDescription>
-        <value>SECTION 2 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_StepFinal_AE_Thanks</fullName>        
@@ -13893,32 +13865,11 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable:</value>
     </labels>
     <labels>
-        <fullName>ISSP_ANG_Assoc_Entity</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Assoc_Entity</shortDescription>
-        <value>New Associate Entity</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_LeftNav_Section1_AE_Details</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_LeftNav_Section1_AE_Details</shortDescription>
-        <value>1. IATA Accredited Head Entity Details</value>
-    </labels>
-    <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_AE</shortDescription>
         <value>IATA Passenger Sales - Associated Entity</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_STEP_1_Identi_Appro_Req_AE</shortDescription>
-        <value>SECTION 1 - IATA Accredited Head Entity Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</fullName>
@@ -13940,20 +13891,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP_ANG_Step1_Office_FullAddress</shortDescription>
         <value>Full Address of the Head Entity for which Application for Approval is made</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</shortDescription>
-        <value>If your travel agency is owned by an organization other than the Head Entity mentioned above, answer the following with respect to the parent organization:</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_ANG_StepFinal_AE_Thanks</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
-        <value>Thank you for submitting your Accreditation application for your Associated Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AN_Step1_AE_Full_Address</fullName>
