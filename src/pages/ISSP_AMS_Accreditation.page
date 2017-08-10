@@ -181,8 +181,7 @@
                 }
             }
                  
-            function toggleOfficeTypes(officeSelect, ctrylistid) {
-                
+            function toggleOfficeTypes(officeSelect, ctrylistid) {            
                 //var mySelectOptions = $('select[name="' + ctrylistid + '"] option');
                 //var mySelect = $('select[name="' + ctrylistid + '"]');         
                 var officeTypeSel = $('select[name="' + officeSelect + '"]');
@@ -476,7 +475,7 @@
             </div>
          
         </div> 
-        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="langGSA,officetypelist,chinatypeofagent,isSameLegal">
+        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="compare,langGSA,officetypelist,chinatypeofagent,isSameLegal">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
         <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
@@ -531,26 +530,39 @@
                     <div class="form-group"> 
                     <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
                         <div class="col-lg-9">
+                        
                             <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
                                 <apex:selectOptions value="{!OfficeTypes}"/>
                             </apex:selectList>
+
+                            <apex:outputPanel id="compare">
+                                <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent',!isHOAccredited)}">                            
+                                    <apex:outputLink value="/apex/ISSP_ANG_ProductComparison" >Compare Accreditation types</apex:outputLink>    
+                                </apex:outputPanel>
+                            </apex:outputPanel>
                         </div>
+
                     </div>
                  </apex:actionRegion>    
 
                 <!-- NEWGEN-1249-->
 
-                <apex:outputpanel id='isSameLegal' rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent')}">                 
+                <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent',isHOAccredited)}">                 
                     <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">                    
                         <div class="form-group" id='isLegal'>
                             <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
-                            <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step1_Lang_Display_Help}" html-data-placement="right" html-data-toggle="tooltip"/>                            
-                            <div class="col-md-10 col-lg-2" style="padding-top:7px">
-                                <apex:selectradio style="width:81%" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" required="{!isGSARequired}">
+                            
+                            <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
+                                <apex:selectradio style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" required="{!isGSARequired}">                                         
                                     <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
-                                    <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />                                    
-                                </apex:selectradio>                                
+                                    <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />        
+                                </apex:selectradio>
+                                                              
                             </div>
+                            <div style="float: left;padding-top:10px;padding-right: 30px;">
+                                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_ANG_Step1_Legal_Display_Help}" style="float:left" html-data-placement="right" html-data-toggle="tooltip"/>  
+                            </div>                          
+                            
                         </div>
                     </apex:outputpanel>  
                 </apex:outputpanel>
@@ -662,7 +674,6 @@
                                             <apex:selectOptions value="{!countryISOCodeList}"/>
                                     </apex:selectList><!--onchange="setIsPilotCountry(this.value);"-->
                                 </div>
-                                
                                 <div class="col-lg-9" id="brcountry" style="padding-top:7px;display:none">
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
                                 </div>
@@ -671,7 +682,7 @@
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
                                 <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
-             					    <div class="form-group"> 
+                                    <div class="form-group"> 
                                     <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
                                     <div class="col-lg-9">
                                         <apex:selectList styleClass="form-control" style="width:15%;float:left;" id="applylanguage" size="1" value="{!applyLanguage}" >
@@ -683,7 +694,7 @@
                                 </apex:outputpanel>
                            
                                 
-                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">  
+                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">                                 
                                     <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
                                         <div class="form-group" id="isGSA">
                                             <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
@@ -691,7 +702,7 @@
                                                 <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
                                                     <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
                                                     <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
-                                                </apex:selectradio>
+                                                </apex:selectradio>                                                
                                             </div>
                                         </div>
                                     </apex:outputpanel>  
@@ -899,7 +910,7 @@
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5PAX"/>
                     <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5PAX" reRender="PAXForm"/>
                     <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5PAX"/>
-                    	</apex:outputPanel></apex:facet>
+                        </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                     <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
                     <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
@@ -941,7 +952,7 @@
             <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5CGO"/>
             <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5CGO" reRender="CGOForm"/>
             <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5CGO"/>
-           	</apex:outputPanel></apex:facet>
+            </apex:outputPanel></apex:facet>
             <apex:facet name="start"><apex:outputPanel >
            <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" disabled="true"/>
             <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
@@ -988,14 +999,14 @@
                 <div style="text-align:center;">
                     <apex:actionStatus id="buttonLoadingStep5NoC">
                         <apex:facet name="stop"><apex:outputPanel >
-                    	<apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
+                        <apex:commandButton action="{!goToStep4}" value="{!$Label.ISSP_Back}" status="buttonLoadingStep5NoC"/>
                         <apex:commandButton action="{!goToFinalStep}" value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}" status="buttonLoadingStep5NoC" reRender="NoCForm"/>
-                    	<apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
-                 	</apex:outputPanel></apex:facet>
+                        <apex:commandButton action="{!saveAMSFormAndLeave}" value="{!$Label.ISSP_Save_Draft}" style="float:right" status="buttonLoadingStep5NoC"/>
+                    </apex:outputPanel></apex:facet>
                     <apex:facet name="start"><apex:outputPanel >
                         <apex:commandButton value="{!$Label.ISSP_Back}" disabled="true"/>
                         <apex:commandButton value="{!if(communityName=='CNS', $Label.ISSP_AMS_Submit_CNS, $Label.ISSP_AMS_Submit_IATA)}..." disabled="true"/>
-                    	<apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
+                        <apex:commandButton value="{!$Label.ISSP_Save_Draft}" style="float:right" disabled="true"/>
                     </apex:outputPanel></apex:facet>
                     </apex:actionStatus>
                 </div>

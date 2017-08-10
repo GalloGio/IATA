@@ -908,10 +908,12 @@
                             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                               <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
                             </apex:actionfunction>
-
+                            <apex:outputPanel rendered="{!isocountry.Hide_Tax_Number_VAT__c==true}">
+                              <apex:outputText value="{!$Label.ISSP_AMS_No_Vat_Number_Section}" style="font-weight:bold" />
+                            </apex:outputPanel>
                             <apex:outputPanel id="VatNumberInput">
                               <apex:pageblocksectionitem >
-                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
+                                <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)}" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
                                   <div style="display:inline-block; width: 213px;">
@@ -1242,6 +1244,7 @@
                       </apex:pageBlockSectionItem>
                     </apex:pageBlockSection>
                   </div>
+
                   <div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
                     <apex:pageBlockSection columns="1">
                       <div class="bg-info col-md-12" style="margin-top:15px;"><strong> {!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_2}</strong></div>
@@ -1457,9 +1460,9 @@
                     <div class="modal-body">
                       <apex:pageBlock id="contactBlock">
                         <apex:pageBlockSection id="contactSection" columns="4">
-                          <apex:pageBlockSectionItem id="contactItemOwner" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" 
-                          labelStyle="{!IF(newCase.Reason1__c!='New BR Abroad','font-size:110%','font-size:110%;display:none')}" 
-                          dataStyle="{!IF(newCase.Reason1__c!='New BR Abroad','width:15%;','display:none;width:15%;')}">
+                          <apex:pageBlockSectionItem id="contactItemOwner" 
+                          labelStyle="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes','font-size:110%','font-size:110%;display:none')}" 
+                          dataStyle="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes','width:15%;','display:none;width:15%;')}">
                             <apex:outputLabel style="width:1%;" id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
                             <apex:inputField value="{!newContact.Agency_owner__c}" id="owner" onclick="toggleModalContactFields('{!$Component.owner}','{!$Component.newContact.contactBlock.contactSection.contactItemDom.dom}', '{!$Component.newContact.contactBlock.prevWorkedFor}')" />
                           </apex:pageBlockSectionItem>
@@ -1834,8 +1837,8 @@
                         </apex:pageBlockSection>
                       </apex:pageBlock>
                     </div>
-
                     <div class="modal-footer">
+
                       <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}" oncomplete="if ({!contactSaved==true}){closeUpdateOwnerModal(); cancelOwnerUpdate();} this.removeAttribute('disabled');setPortalAdmin('{!$Component.AMSForm.PortalAdminId}');" onclick="this.disabled='disabled';" reRender="contactList, ownerList, theMessages">
                         <apex:param value="Person" name="persontype" assignTo="{!contactType}" />
                       </apex:commandButton>&nbsp;

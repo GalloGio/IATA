@@ -191,6 +191,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public AMS_Facility__c facilityInContext {get; set;}
     public String facilityRecordTypeName {get; set;}
     public String accountType {get; set;}
+    private String defaultSectorValue;
 
     // trained staff implementation for cargo form
     public AMS_Accreditation_Contact__c trainedStaffContact {get; set;}
@@ -260,7 +261,8 @@ public without sharing class ISSP_AMS_Accreditation {
         newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
         isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
-        String defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
+        defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
+        system.debug('aqui defaultSectorValue ' + defaultSectorValue);
         String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
 
         if (defaultAmsLocationType != null && defaultAmsLocationType != '') {
@@ -626,7 +628,8 @@ public without sharing class ISSP_AMS_Accreditation {
         if(isocountry.ANG_Enable_NewGen__c == true) 
             newAccreditationModels = true;
 
-        system.debug('sector value ' + sectorValue);
+        system.debug('sector value ' + sectorValue + ' defaultSectorValue ' + defaultSectorValue);
+
         selectPageName();
     }
 
@@ -984,9 +987,13 @@ public without sharing class ISSP_AMS_Accreditation {
         }
         
         system.debug('sectorValue before get from URL: ' + sectorValue);
+        system.debug('defaultSectorValue before get from URL: ' + defaultSectorValue);
 
-        if (Apexpages.currentPage().getParameters().get('sectorValue') != null)
-            sectorValue = Apexpages.currentPage().getParameters().get('sectorValue');
+        /*if (Apexpages.currentPage().getParameters().get('sectorValue') != null && defaultSectorValue == null)
+          sectorValue = Apexpages.currentPage().getParameters().get('sectorValue');
+        else {
+            sectorValue = defaultSectorValue;
+        }*/
 
         system.debug('sectorValue after get from URL: ' + sectorValue);
 
@@ -1119,7 +1126,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     } //NEWGEN - 552 END
                 }
             }else {
-                    if(isocountry.ANG_Enable_NewGen__c == true){
+                    if(isocountry.ANG_Enable_NewGen__c == true){                        
                         options.add(new SelectOption('New HE standard - Standard with Cash', Label.ISSP_AMS_Head_Entity_Cash));  //can only apply for New Accreditaiton Models enable
                         options.add(new SelectOption('New HE lite - Standard no Cash', Label.ISSP_AMS_Head_Entity_No_Cash));  //can only apply for New Accreditaiton Models enable
                     }else{    //Not an Accredited PAX Agent, or any type of Cargo Agent
@@ -1128,8 +1135,9 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
        
-        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);
-
+        defaultSectorValue = null;
+        sector = null;
+        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);        
         return options;
     }
 
@@ -1810,9 +1818,10 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.Location_Class__c = getLocationClass();
 
         if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
-            SFDCAccount.Location_Type__c = 'AE';    
-        }else{
             SFDCAccount.Location_Type__c = 'BR';    
+        }else{
+            SFDCAccount.Location_Type__c = 'AE';
+            SFDCAccount.ANG_Accreditation_Model__c = hqAccount.ANG_Accreditation_Model__c;     
         }
         
         SFDCAccount.Reason_for_creation__c = 'Created by customer';
@@ -2183,7 +2192,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             system.debug('contactSaved ' + contactSaved);
 
-             if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) newContact.ANG_AE_fromOnlineForm__c = true;
+             //if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) newContact.ANG_AE_fromOnlineForm__c = true;
 
             upsert contactToUpsert;
             if (contactToUpsert.Financial_Assessment_Contact__c && cntIFAPContacts < 1) {
@@ -3300,7 +3309,12 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else if (amsLocationType == 'New AE - Standard with Cash' || amsLocationType == 'New AE - Standard no Cash'){ //NEWGEN - 552
             return Label.ISSP_ANG_OPTION_PAX_AE;
         } 
-
+        else if (amsLocationType == 'New HE standard - Standard with Cash'){ 
+            return Label.ISSP_ANG_OPTION_PAX_HE_standard;
+        } 
+         else if (amsLocationType == 'New HE lite - Standard no Cash'){
+            return Label.ISSP_ANG_OPTION_PAX_HE_lite;
+        } 
 
         else {
             return Label.ISSP_AMS_OPTION_PAX_BRANCH;
@@ -3443,7 +3457,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                         Mobile__c, MobileNational__c , Location_Type__c, ParentId, ShippingStreet, ShippingCity, ShippingState,
                         ShippingPostalCode, ShippingCountry, VAT_Number__c, Short_Name__c, Location_Class__c, IATA_ISO_Country__c,
                         Iso_State__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c,
-                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c
+                        VAT_Number_2__c, CASS_Number__c,Company_Type__c,RecordType.DeveloperName,Status__c,IATA_ISO_Country__r.ISO_Code__c,ANG_Accreditation_Model__c
                         FROM Account
                         WHERE Id = :vHQAccountId
                                    LIMIT 1
@@ -3505,11 +3519,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public void resetOwnership() { //NEWGEN-1249
         List<AMS_Accreditation_Contact__c> allOwners = [
-            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_AE_fromOnlineForm__c
+            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
             FROM AMS_Accreditation_Contact__c
             WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
             AND Agency_owner__c = true
-            AND ANG_AE_fromOnlineForm__c = false];
+            AND ANG_contactFromAccount__c = true];
 
         checkAllOwners = new List<AMS_Accreditation_Contact__c>();
         
@@ -3520,11 +3534,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public void resetCreatedOwnership() { //NEWGEN-1249
         List<AMS_Accreditation_Contact__c> allOwners = [
-            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_AE_fromOnlineForm__c
+            SELECT Name, RecordType.DeveloperName, Financial_interest__c,ANG_contactFromAccount__c
             FROM AMS_Accreditation_Contact__c
             WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id
             AND Agency_owner__c = true
-            AND ANG_AE_fromOnlineForm__c = true];
+            AND ANG_contactFromAccount__c = false];
 
         checkAllOwners = new List<AMS_Accreditation_Contact__c>();
 
@@ -5383,6 +5397,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 ngErrorFound = true;
             }
 
+            if(newForm.Enable_Credit_Card_FOP__c == null){
+                newForm.Enable_Credit_Card_FOP__c.addError(Label.ISSP_YouMustEnter);
+                ngErrorFound = true;
+            }
+
         return ngErrorFound;        
     }
 
@@ -5400,8 +5419,47 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             ngErrorFoundBR = true;
         }
 
-        return ngErrorFoundBR;
-       
+        if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == null) {
+            newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c.addError(Label.ISSP_YouMustEnter);
+            ngErrorFoundBR = true;
+        }
+        if (newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes' && newForm.Cargo_Agent_Account__c == null) {
+            newForm.IATA_Cargo_Code__c.addError(Label.ISSP_AMS_Validation_Cargo_Code);
+            ngErrorFoundBR = true;
+        }
+
+        //checking if IATAN question is answered
+        if(newForm.IATA_Registered_IATAN_Agent__c == null){
+            newform.IATA_Registered_IATAN_Agent__c.addError(Label.ISSP_AMS_Step5_IATAN_Travel_Agent);
+            ngErrorFoundBR = true;
+        }
+            
+        //checking if IATAN code field is fill            
+        if (newForm.IATA_Registered_IATAN_Agent__c == 'Yes' && newForm.IATAN_Agent_Account__c == null) {
+            newForm.IATAN_Code__c.addError(Label.ISSP_AMS_Invalid_IATAN_Code);
+            ngErrorFoundBR = true;
+        }
+
+        if(newform.AE_separate_Legal_Entity__c == 'Yes' && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
+        ApexPages.Message myMsg;            
+            if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
+                if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship') {
+                    myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership);
+                } else {
+                        myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_Percent_Ownership2);
+                }
+            ApexPages.addMessage(myMsg);
+            ngErrorFoundBR = true;
+            }
+        }
+
+        if(newForm.Enable_Credit_Card_FOP__c == null){
+                newForm.Enable_Credit_Card_FOP__c.addError(Label.ISSP_YouMustEnter);
+                ngErrorFoundBR = true;
+        }
+        
+        return ngErrorFoundBR;       
+
      }
 
     private boolean validateForm(boolean includeErrorMsgs) {
@@ -5747,7 +5805,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                      }
                      
                     
-                if ((newCase.Reason1__c == 'New HO' || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE) && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
+                if ((newCase.Reason1__c == 'New HO' || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE ) && !(newForm.ISSP_AMS_Legal_Status__c == 'Corporation' && newForm.ISSP_AMS_Entity_with_listed_shares__c == 'Yes')) {
                     if (newForm.ISSP_AMS_Total_Ownership__c == null || newForm.ISSP_AMS_Total_Ownership__c < 99.99 || newForm.ISSP_AMS_Total_Ownership__c > 100 ) {
                         ApexPages.Message myMsg;
                         if (newForm.ISSP_AMS_Legal_Status__c == 'Sole Proprietorship') {
@@ -7073,16 +7131,18 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         }
         // END NEWGEN-205
 
-        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id FROM AMS_Accreditation_Contact__c, ANG_AE_fromOnlineForm__c
+        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c FROM AMS_Accreditation_Contact__c
                                                                                 WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
-	for(AMS_Accreditation_Contact__c amsAccCon : countAccreditationContact){ //NEWGEN-1249
-            if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && amsAccCon.ANG_AE_fromOnlineForm__c == false || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD  && notToAdd == false)){
+
+
+        for(AMS_Accreditation_Contact__c amsAccCon : countAccreditationContact){ //NEWGEN-1249
+            if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && amsAccCon.ANG_contactFromAccount__c == false){
                 notToAdd = true;
                 break;
             }
         }
         //Only create the owners if no owners exists
-        if(countAccreditationContact.size() == 0){        
+        if(countAccreditationContact.size() == 0 || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD  && notToAdd == true)){        
             
             List<AMS_Account_Role__c> amsOwners = [SELECT Account__c,Active__c,
                 Employee_Name__c,Employee_type__c,Id,
@@ -7138,6 +7198,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             auxAccreditCont.Financial_interest__c = accRole.Percentage__c;
             auxAccreditCont.Agency_owner__c = true;
             auxAccreditCont.RecordTypeId = rtRecordTypePerson;
+
             
         }else
         //Check if owner is contact
@@ -7186,6 +7247,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             auxAccreditCont.Email__c = accRole.Owner_Account__r.Email__c;
 
         }
+        auxAccreditCont.ANG_contactFromAccount__c = true;
         return auxAccreditCont;
     }
     
