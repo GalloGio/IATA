@@ -653,15 +653,19 @@
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null}">
 			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
+		<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
+		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
 			<p><a href="#nav_two">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_location__c==true}">
-			<p><a href="#nav_true">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</a></p>
+			<p><a href="#nav_three">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
 		<p><a href="#nav_four">{!IF(newForm.Is_change_ownership_or_shareholding__c, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), $Label.ISSP_AMS_NoC_Current_Ownership_or_Shareholding)}</a></p>
 		</apex:outputText>
+		<p><a href="#nav_five">{!$Label.ISSP_AMS_NoC_Additional_Information}</a></p>
 		
 	</div>
 
@@ -733,7 +737,9 @@
 			</apex:pageBlockButtons>
 			<apex:PageMessages id="msgs"/>
 			<div class="apcontainer" style="border: 1px solid #ececec;">
-				<span id="nav_one"></span>
+				<apex:outputText rendered="{!newform.Is_change_bank_account_details__c && PDFPerRegionCS!=null}">
+					<span id="nav_one"></span>
+				</apex:outputText>
 				<apex:pageBlockSection columns="1" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c && PDFPerRegionCS!=null}">
 					<apex:facet name="header">
 						<apex:outputpanel>
@@ -755,8 +761,9 @@
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
 					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
 				</apex:pageBlockSection>
-
-				<span id="nav_two"></span>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					<span id="nav_one"></span>
+				</apex:outputText>
 				<apex:outputPanel rendered="{!isAccreditationModelNotNullOrLegacy}">
 					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
 						<apex:facet name="header">
@@ -827,6 +834,7 @@
 						</apex:pageBlockSection>
 					</apex:pageBlockSection>
 				</apex:outputPanel>
+				<span id="nav_two"></span>
 				<div style="display:{!IF(newform.Is_change_legal_name__c==true,'','none')}">
 					<apex:pageBlockSection columns="2" collapsible="false" id="legalNameSection">
 
@@ -1436,7 +1444,7 @@
 				</apex:outputPanel>
 						
 					
-					
+				<span id="nav_five"></span>	
                 </apex:pageBlockSection>
                 
 						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false}">
@@ -2146,7 +2154,13 @@
 						const cont = header.innerText,
 							sectionNumber = parseInt(cont[0]) + 1;
 						header.innerText =  sectionNumber + cont.slice(1);
-					};
+					}
+					const navLinkList = $j("[href^='#nav_']").slice(1);
+					for (let header of navLinkList) {
+						const cont = header.innerText,
+							sectionNumber = parseInt(cont[0]) + 1;
+						header.innerText =  sectionNumber + cont.slice(1);
+					}
 					const contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
 					  scopeOfChange = '{!newForm.Scope_of_Change__c}';
 					if ((contactAccountNumberOfAEs > 0 && scopeOfChange !== "HO - All Branches") || (scopeOfChange !== "HO - All Branches" && scopeOfChange !== "HO Only")) {

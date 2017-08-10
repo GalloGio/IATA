@@ -2456,6 +2456,8 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToStep3Section5() {
+        if (isNoticeOfChange)
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_five' );
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five' );
     }
 
@@ -2806,8 +2808,15 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'NEW.BR';
             else if (isNoticeOfChange && isBankAccountChange)
                 typeOfProcess = 'BANK.ACCOUNT.CHANGES';
-            else if (isNoticeOfChange && !isBankAccountChange)
-                typeOfProcess = 'MAJOR.CHANGES';
+            else if (isNoticeOfChange && !isBankAccountChange) {
+                //NEWGEN 683
+                if (getIsAccreditationModelNotNullOrLegacy()) {
+                    typeOfProcess = 'ANG.MAJOR.CHANGES.1.0';
+                } else {
+                    typeOfProcess = 'MAJOR.CHANGES';
+                }
+            }
+                
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD)
                  typeOfProcess = 'ANG.NEW.HE.STANDARD.1.0';
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE)

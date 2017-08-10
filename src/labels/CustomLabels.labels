@@ -10854,7 +10854,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Will Change Affect_All_Locations_New</shortDescription>
-        <value>* Will this change affect the head entity and/or associate entity (IES)?</value>
+        <value>* Will this change affect the head entity and/or associate entity (ies)?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Witness</fullName>
