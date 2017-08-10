@@ -80,6 +80,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_ConsumedRHC_Last_Update__c</fullName>
+        <externalId>false</externalId>
+        <label>Consumed RHC Last Update</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>ANG_ConsumedRHC_Percent__c</fullName>
         <externalId>false</externalId>
         <label>Consumed RHC %</label>
@@ -100,15 +109,6 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
-    </fields>
-    <fields>
-        <fullName>ANG_Consumed_RHC_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Consumed RHC Date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
     </fields>
     <fields>
         <fullName>ANG_Exceeding_Financial_Security__c</fullName>
