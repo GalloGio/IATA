@@ -10850,6 +10850,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>* Will this change affect all approved locations ?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations_New</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC Will Change Affect_All_Locations_New</shortDescription>
+        <value>* Will this change affect the head entity and/or associate entity (IES)?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Witness</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -18015,6 +18022,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP No</shortDescription>
         <value>No</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Advise_GDS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Advise GDS</shortDescription>
+        <value>* Please advise which GDS(s) used</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_HE_with_AEs_Warning</fullName>

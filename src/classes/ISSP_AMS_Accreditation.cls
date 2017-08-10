@@ -936,7 +936,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         for (Account thisAccount : accountList) {
             String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + ((thisAccount.ANG_Accreditation_Model__c == null || thisAccount.ANG_Accreditation_Model__c == 'Legacy') ? thisAccount.Location_Type__c : thisAccount.Legal_name__c) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Legal_name__c) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
@@ -946,7 +946,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public String getContactAccount() {
         List<SelectOption> options = new List<SelectOption>();
         Account conAccount = con.Account;
-        String optionLabel =  conAccount.IATACode__c + ' - ' + ((conAccount.ANG_Accreditation_Model__c == null || conAccount.ANG_Accreditation_Model__c == 'Legacy') ? conAccount.Location_Type__c : conAccount.Legal_name__c) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
+        String optionLabel =  conAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? conAccount.Location_Type__c : conAccount.Legal_name__c) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
         options.add(new SelectOption(conAccount.IATACode__c, optionLabel));
         agencyCodesConcerned = options;
         newForm.Scope_of_Change__c = 'Selected Branches Only';
@@ -975,6 +975,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
     public Integer getAgencyCodesConcernedSize() {
         return agencyCodesConcerned.size();
+    }
+
+    public Boolean getIsAccreditationModelNotNullOrLegacy() {
+        return (String.isNotEmpty(con.Account.ANG_Accreditation_Model__c)  && con.Account.ANG_Accreditation_Model__c != 'Legacy');
     }
 
     public List<SelectOption> getOfficeTypes() {
@@ -1108,7 +1112,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isHOAccredited && con.Account.Category__c == 'IATA Passenger Sales Agent') { //And this is an Accredited PAX Agent
                 
-                if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
+                if(!getIsAccreditationModelNotNullOrLegacy()){
                     options.add(new SelectOption('New BR / IP - IATA Passenger Sales Agent', Label.ISSP_AMS_OPTION_PAX_BRANCH));
 
                     if (isocountry.Region__c != 'Americas')
@@ -1348,7 +1352,7 @@ public without sharing class ISSP_AMS_Accreditation {
             if (isBankAccountChange) {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
             } else {
-                if (con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy') {
+                if (!getIsAccreditationModelNotNullOrLegacy()) {
                     newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId;
                 } else {
                     newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes - NAM').RecordTypeId;
@@ -1793,7 +1797,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SFDCAccount.Location_Class__c = getLocationClass();
 
-        if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
+        if(!getIsAccreditationModelNotNullOrLegacy()){
             SFDCAccount.Location_Type__c = 'AE';    
         }else{
             SFDCAccount.Location_Type__c = 'BR';    
@@ -5368,6 +5372,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                     errorFound = true;
                 }
             }
+
+            //NEWGEN-668
+            if (getIsAccreditationModelNotNullOrLegacy() && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+                newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+            //END NEWGEN-668
 
             if (newForm.Notify_Change_Accreditation_Type__c == true) {
                 if (String.isEmpty(newForm.ANG_Accreditation_Model_to_Change__c)) {

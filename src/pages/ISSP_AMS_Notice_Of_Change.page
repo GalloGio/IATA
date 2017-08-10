@@ -757,7 +757,7 @@
 				</apex:pageBlockSection>
 
 				<span id="nav_two"></span>
-				<apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}">
+				<apex:outputPanel rendered="{!isAccreditationModelNotNullOrLegacy}">
 					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
 						<apex:facet name="header">
 							<apex:outputpanel >
@@ -1451,7 +1451,7 @@
 
 							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}"/>
-								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');">
+								<apex:selectRadio id="becomingBranchRadioBtn" style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
 								</apex:selectRadio>
@@ -1503,7 +1503,7 @@
 							</apex:pageblocksectionitem>
 							</apex:pageBlockSection>-->
 							<apex:pageBlockSectionItem >
-								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations}"/>
+								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations_New, $Label.ISSP_AMS_NoC_Will_Change_Affect_All_Locations)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Will_such_change_affect_locations__c==null), 'border:2px red solid;', '')}" value="{!newForm.Will_such_change_affect_locations__c}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
@@ -1571,7 +1571,14 @@
 								</apex:pageblocksectionitem>
 							</apex:pageBlockSection>								
 						</apex:outputPanel>
-
+						<!--NEWGEN-668-->
+						<apex:pageblocksection columns="1" rendered="{!isAccreditationModelNotNullOrLegacy}">
+							<apex:pageblocksectionitem labelStyle="width:50%">
+								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS}" />
+								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
+							</apex:pageblocksectionitem>
+						</apex:pageblocksection>   
+						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem>
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
 						</apex:pageBlockSectionItem>
@@ -2124,7 +2131,16 @@
 
 				const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}';
 					  
-				if (accreditationModel.toLowerCase() !== 'legacy' && accreditationModel) {
+				if ({!isAccreditationModelNotNullOrLegacy}) {
+
+					//NEWGEN-668
+					const becomingBranchRadioBtn = $j('[name$=becomingBranchRadioBtn]');
+					if (lScopeOfChange === 'Selected Branches Only') {
+						becomingBranchRadioBtn[1].checked = true;
+						becomingBranchRadioBtn.prop('disabled', true);
+					}
+					//END - NEWGEN-668
+
 					$("option[value='" + accreditationModel + "']").remove();
 					for (let header of $j('[class=section-header]')) {
 						const cont = header.innerText,
