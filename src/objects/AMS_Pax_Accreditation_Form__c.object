@@ -21175,7 +21175,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_with_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard with Cash</label>
-picklistValues>
+<picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
