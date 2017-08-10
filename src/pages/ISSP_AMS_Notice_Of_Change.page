@@ -800,7 +800,7 @@
 										</span>
 									</apex:outputText>
 								</apex:outputPanel>
-								<apex:pageBlockTable value="{!List_AgencyContacts}" var="agencycon" id="contactIFAPList" styleClass="table-hover table table-condensed table-responsive">
+								<apex:pageBlockTable value="{!List_IFAPAgencyContacts}" var="agencycon" id="contactIFAPList" styleClass="table-hover table table-condensed table-responsive">
 									<apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}" />
 									<apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}" />
 									<apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}" />

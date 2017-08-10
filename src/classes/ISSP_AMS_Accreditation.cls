@@ -3556,6 +3556,22 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         set{}
     }
 
+    public List<AMS_Accreditation_Contact__c> List_IFAPAgencyContacts {
+
+        get{
+            List<AMS_Accreditation_Contact__c> ifapContatc = [
+                SELECT Salutation__c, Name, Email__c, First_name__c, Last_name__c, 
+                       Phone__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c, 
+                       Contact_Id__c, Contact__c, AMS_Pax_Accreditation_Form__c
+                FROM AMS_Accreditation_Contact__c
+                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Person' AND Financial_Assessment_Contact__c = true
+                ORDER BY Agency_owner__c DESC, Name ASC
+            ];
+            return ifapContatc;
+        }
+        set{}
+    }
+
     public List<AMS_Accreditation_Contact__c> List_PreviousOwners {
 
         get{
