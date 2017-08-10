@@ -8665,6 +8665,20 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value> IATA Passenger Sales - Associated Entity</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_OPTION_PAX_HE_standard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OPTION_PAX_HE_standard</shortDescription>
+        <value> IATA Passenger Sales - Standard with Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_OPTION_PAX_HE_lite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_OPTION_PAX_HE_lite</shortDescription>
+        <value> IATA Passenger Sales - Standard with no Cash</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8704,7 +8718,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_StepFinal_AE_Thanks</shortDescription>
-        <value> Thank you for submitting your Accreditation application for your Associated Entity.</value>
+        <value> Thank you for submitting your Accreditation application for your Associate Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LS_Association</fullName>
@@ -11154,6 +11168,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1  Lang Display Help</shortDescription>
         <value>Choose the language you would like for the application form display.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step1_Legal_Display_Help</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step1  Lang Display Help</shortDescription>
+        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Operation_Type</fullName>
