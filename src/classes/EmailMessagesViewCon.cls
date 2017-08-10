@@ -127,7 +127,7 @@ public class EmailWrapper  implements Comparable {
         //EmailsAvailable = true;
         try{
             if(!Test.isRunningTest()) {
-                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c'});
+                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c'});
             }
             this.cse= (Case)controller.getRecord();
             loadEmails();
