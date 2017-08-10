@@ -780,7 +780,7 @@
 						<apex:pageBlockSection columns="1">	
 							<apex:pageBlockSectionItem labelStyle="width:26%">
 								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
-								<apex:outputText value="{!con.Account.ANG_Accreditation_Model__c}" />
+								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
 						<apex:pageBlockSection columns="1">	
