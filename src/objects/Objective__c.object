@@ -226,7 +226,7 @@ Object used to store objectives that can be independent, related to other object
                 <field>Objective__c.RecordTypeId</field>
                 <operation>equals</operation>
                 <value>Account Issues and Priorities</value>
-            </filterItems>            
+            </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Objective__c</referenceTo>
