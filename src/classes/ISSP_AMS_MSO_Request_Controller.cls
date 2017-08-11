@@ -12,6 +12,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     
     public Account msoAccount {get; set;}
     public Account airlineAccount {get; set;}
+    public Contact currentUserContact {get; set;}
     public Case oscarCase {get; set;}
     public AMS_Pax_Accreditation_Form__c accreditationForm {get; set;}
 
@@ -29,24 +30,28 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
         billingStatesList = new list<SelectOption>();
 
-        currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
-        Contact currentUserContact = [SELECT Id, AccountId FROM Contact WHERE Id = :currentUser.ContactId];
-        airlineAccount = [SELECT Id, ParentId, RecordType.DeveloperName, Name, Airline_designator__c FROM Account WHERE Id = :currentUserContact.AccountId];
+        if (currentUser == null || currentUserContact == null ) {
+            currentUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+            currentUserContact = [SELECT Id, AccountId, Account.RecordType.DeveloperName, Account.Name FROM Contact WHERE Id = :currentUser.ContactId];
+            //airlineAccount = [SELECT Id, RecordType.DeveloperName, Name FROM Account WHERE Id = :currentUserContact.AccountId];
+        }
         
 
         if (msoAccount == null) msoAccount = new Account();
 
-        if (caseId == null) {
-            oscarCase = new Case();
-        } else {
-            oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id = :caseId];
+        if (oscarCase == null) {
+            if (caseId == null) {
+                oscarCase = new Case();
+            } else {
+                oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id = :caseId];
+            }
         }
 
         if (accreditationForm == null) accreditationForm = new AMS_Pax_Accreditation_Form__c();
     }
 
     public Pagereference securityCheck() {
-        if (airlineAccount.RecordType.DeveloperName != 'IATA_Airline' && airlineAccount.RecordType.DeveloperName != 'IATA_Airline_BR') 
+        if (currentUserContact.Account.RecordType.DeveloperName != 'IATA_Airline' && currentUserContact.Account.RecordType.DeveloperName != 'IATA_Airline_BR') 
             return new Pagereference('/ISSP_Homepage');
         return null;
     }
@@ -160,9 +165,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         try {
             // create new MSO account
-            RecordType acctRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Standard_Account'  AND IsActive = true];
-            msoAccount.RecordTypeId = acctRT.Id;
-            msoAccount.Name = airlineAccount.Name;
+            //RecordType acctRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Account' AND DeveloperName = 'Standard_Account'  AND IsActive = true];
+            msoAccount.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Account'}).get('Account').get('Standard_Account');//acctRT.Id;
+            msoAccount.Name = currentUserContact.Account.Name;
             msoAccount.Sector__c = 'Travel Agent';
             msoAccount.Category__c = 'MSO Member Sales Office';
             msoAccount.Location_Class__c = 'M';
@@ -172,11 +177,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             insert msoAccount;
 
             // create new OSCAR Communication case
-            RecordType caseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'OSCAR_Communication'  AND IsActive = true];
-            oscarCase.AccountId = airlineAccount.Id;
+            //RecordType caseRT = [SELECT Id FROM RecordType WHERE SObjectType = 'Case' AND DeveloperName = 'OSCAR_Communication'  AND IsActive = true];
+            oscarCase.AccountId = currentUserContact.AccountId;
             oscarCase.ContactId = currentUser.ContactId;
-            oscarCase.RecordTypeId = caseRT.Id;
-            oscarCase.Subject = 'New MSO - ' + airlineAccount.Name;
+            oscarCase.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'Case'}).get('Case').get('OSCAR_Communication');//caseRT.Id;
+            oscarCase.Subject = 'New MSO - ' + currentUserContact.Account.Name;
             oscarCase.CaseArea__c = 'Accreditation Process';
             oscarCase.Reason1__c = 'New MSO';
             oscarCase.Type_of_customer__c = 'IATA Travel Agent';
@@ -185,10 +190,10 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             oscarCase = [SELECT Id, CaseNumber FROM Case WHERE Id = :oscarCase.Id];
 
             // create new accreditation form
-            RecordType accreditationRT = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Pax_Accreditation_Form__c' AND DeveloperName = 'GeneralOnlineAccreditation'  AND IsActive = true];
-            accreditationForm.RecordTypeId = accreditationRT.Id;
+            //RecordType accreditationRT = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_Pax_Accreditation_Form__c' AND DeveloperName = 'GeneralOnlineAccreditation'  AND IsActive = true];
+            accreditationForm.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_Pax_Accreditation_Form__c'}).get('AMS_Pax_Accreditation_Form__c').get('GeneralOnlineAccreditation');//accreditationRT.Id;
             accreditationForm.SAAM_Case__c = oscarCase.Id;
-            accreditationForm.Account_Name__c = airlineAccount.Name;
+            accreditationForm.Account_Name__c = currentUserContact.Account.Name;
             accreditationForm.Location_Class__c = 'M';
             accreditationForm.Location_Type__c = 'HO';
             accreditationForm.IATA_ISO_State__c = billingState;
@@ -196,8 +201,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             insert accreditationForm;
 
             // create new OSCAR
-            RecordType oscarRT = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_OSCAR__c' AND DeveloperName = 'NEW'  AND IsActive = true];
-            oscar.RecordTypeId = oscarRT.Id;
+            //RecordType oscarRT = [SELECT Id FROM RecordType WHERE SObjectType = 'AMS_OSCAR__c' AND DeveloperName = 'NEW'  AND IsActive = true];
+            oscar.RecordTypeId = TransformationHelper.RtIDsPerDeveloperNamePerObj(new list<string> {'AMS_OSCAR__c'}).get('AMS_OSCAR__c').get('NEW');//oscarRT.Id;
             oscar.Name = oscarCase.CaseNumber;
             oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
             oscar.Account__c = msoAccount.Id;
@@ -209,7 +214,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
             // Create new appointment
             AMS_Inspection__c app = new AMS_Inspection__c();
-            app.Airline__c = airlineAccount.Id;
+            app.Airline__c = currentUserContact.AccountId;
             app.Account__c = msoAccount.Id;
             app.OSCAR__c = oscar.Id;
             insert app;
@@ -246,8 +251,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         oscar.Flag_Data_to_Account__c = true;
 
-        String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
-        if (changeCodeResult != 'OK') return;
+        //String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
+        //if (changeCodeResult != 'OK') return;
 
         update oscar;
 
@@ -257,6 +262,9 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     @future
     public static void closeOscar(Id oscarId) {
         try {
+            String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
+            if (changeCodeResult != 'OK') return;
+
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId, Status__c = 'Closed');
             update oscar;
         } catch (DmlException ex) {
