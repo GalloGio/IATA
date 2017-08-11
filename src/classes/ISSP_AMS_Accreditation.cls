@@ -1412,8 +1412,13 @@ public without sharing class ISSP_AMS_Accreditation {
                 
             }
 
-            //NEWGEN-205
             if(getIsAccreditationModelNotNullOrLegacy()) {
+                //NEWGEN-668
+                if (newForm.Scope_Of_Change__c == 'Selected Branches Only') {
+                    newForm.Is_this_Head_Office_becoming_a_Branch__c = 'No';
+                }
+                //END - NEWGEN-668
+                //NEWGEN-205
                 if (newForm.Last_Scope_Of_Change__c == null) {
                     newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
                 } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
@@ -1426,8 +1431,8 @@ public without sharing class ISSP_AMS_Accreditation {
                 } else {
                     isScopeOfChangeChanged = false;
                 }
+                //END - NEWGEN-205
             }
-            //END - NEWGEN-205
 
             //NEWGEN-523
             if(!getCanChangeAccreditationType()) {

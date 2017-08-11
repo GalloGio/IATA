@@ -799,7 +799,7 @@
 							<apex:inputCheckbox id="confirmAccType" value="{!newForm.Confirm_accreditation_type_are_correct__c}" onchange="accreditationModelChanged('isCorrect')"/>
 						</apex:pageBlockSectionItem>
 							
-						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false,newForm.Confirm_accreditation_type_are_correct__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Notify_Change_Accreditation_Type__c==false, newForm.Confirm_accreditation_type_are_correct__c==false, CanChangeAccreditationType), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)" disabled="{!!CanChangeAccreditationType}"/>
 						</apex:pageBlockSectionItem>
@@ -955,7 +955,7 @@
 								<apex:inputCheckbox html-data-group="agencyLocation" value="{!newForm.Confirm_Location_Details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						
-						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_Of_Change__c != 'HO - All Branches' , agencyCodesConcernedSize < 1), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
@@ -1483,7 +1483,7 @@
 
 							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}"/>
-								<apex:selectRadio id="becomingBranchRadioBtn" style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');">
+								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');" disabled="{!newForm.Scope_Of_Change__c == 'Selected Branches Only'}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
 									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
 								</apex:selectRadio>
@@ -2141,7 +2141,7 @@
 			//NoC Changes
 			const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
 				  lScopeOfChange = '{!newForm.Scope_of_Change__c}',
-				  checkb = $j('[id$=notifyChangeLocationCheckbox]');
+				  checkb = $j('[id$=notifyChangeLocationCheckbox]'),
 				  iataChangeAccType = $j('[id$=iataChangeAccType]'),
 				  allowedAccreditationModelSelect = $j('[id$=allowedAccreditationModelSelect]'),
 				  addFinancialAssessmentContactItem = $j('[id$=addFinancialAssessmentContactItem]'),
@@ -2214,17 +2214,8 @@
 				setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
 			}
 			//END - NEWGEN 1227
-			
 					
 			if ({!isAccreditationModelNotNullOrLegacy}) {
-				//NEWGEN-668
-				const becomingBranchRadioBtn = $j('[name$=becomingBranchRadioBtn]');
-				if (lScopeOfChange === 'Selected Branches Only') {
-					becomingBranchRadioBtn[1].checked = true;
-					becomingBranchRadioBtn.prop('disabled', true);
-				}
-				//END - NEWGEN-668
-
 				$("option[value='" + accreditationModel + "']").remove();
 				const contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
 					scopeOfChange = '{!newForm.Scope_of_Change__c}';
