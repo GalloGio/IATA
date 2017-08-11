@@ -37,6 +37,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			AccountId = acc.id,
 			RecordTypeId = conRtId, 
 			LastName = 'portalUser',
+			FirstName = 'first',
+			Email = 'someuser@iata.org',
 			User_Portal_Status__c = 'Approved User'
 			);
         insert con;
