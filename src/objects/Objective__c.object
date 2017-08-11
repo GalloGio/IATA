@@ -227,6 +227,11 @@ Object used to store objectives that can be independent, related to other object
                 <operation>equals</operation>
                 <value>Account Issues and Priorities</value>
             </filterItems>
+            <filterItems>
+                <field>Objective__c.Account__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
         <referenceTo>Objective__c</referenceTo>

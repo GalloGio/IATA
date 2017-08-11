@@ -83,6 +83,9 @@
       					<apex:column headerValue="Account Issue or Priority">
                     <apex:outputField value="{!objective.Account_Issue_or_Priority__c}"  rendered="{!!AND(isEditMode, IdConcerned==objective.Id)}"/>
                     <apex:inputField value="{!objective.Account_Issue_or_Priority__c}" rendered="{!AND(isEditMode, IdConcerned==objective.Id)}" style="width: 80%;" />
+                    <div style="display:none;">
+                    <apex:inputField id="accid" value="{!objective.Account__c}" required="true"/>
+                    </div>
                 </apex:column>
 
       					<apex:column headerValue="Benefits to the Account">
