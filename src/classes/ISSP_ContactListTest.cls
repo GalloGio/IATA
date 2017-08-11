@@ -263,7 +263,7 @@ private class ISSP_ContactListTest {
         ctrl.contactList[0].selected = true;
         ctrl.contactList[1].selected = true;
         ctrl.contactStatus = 'Retired';
-        ctrl.inactivate();
+        //ctrl.inactivate();
     }
 
     static testMethod void myUnitTest_7() {
