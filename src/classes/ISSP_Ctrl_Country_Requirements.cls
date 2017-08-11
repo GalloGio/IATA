@@ -360,8 +360,10 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     private List<SelectOption> setAccreditationTypes() {
         accreditationTypes = new List<SelectOption>();        
 
-        if(user.contact.Account.ANG_Accreditation_Model__c == null){
+        if(user.contact.Account.ANG_Accreditation_Model__c == null && !isNewgenEnabled){
             accredModel = 'Legacy';
+        }else if(user.contact.Account.ANG_Accreditation_Model__c == null && isNewgenEnabled){
+            accredModel = 'Cash';
         }else{
             accredModel = user.contact.Account.ANG_Accreditation_Model__c;
         }        
