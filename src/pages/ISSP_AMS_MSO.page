@@ -41,7 +41,7 @@
 }
 .page-title {
 	font-family: Helvetica;
-	font-size: 30px;
+	font-size: 28px;
 	color: #FFFFFF;
 	padding-top: 60px;
 	margin-left: -15px;
@@ -199,13 +199,13 @@
       		<div class="col-xs-12 service-header">
             
 				<div class="row page-title">
-					<div class="col-xs-12 col-md-4">
+					<div class="col-xs-12 col-md-3">
 						<div class="">{!$Label.ISSP_AMS_MSO_GSA_MSO_Title}</div><!-- ISSP_AMS_MSO_GSA_GSA_Title -->
 					</div>
-					<div class="col-xs-6 col-md-4 hidden-print">
+					<div class="col-xs-4 col-md-3 hidden-print">
 						<apex:inputText id="searchInput" value="{!searchText}" styleClass="form-control search-field" html-placeholder="{!$Label.ISSP_AMS_MSO_GSA_Search_Placeholder}" onkeyup="handleSearchChange();"/>&nbsp;
 					</div>
-					<div class="col-xs-6 col-md-4 hidden-print">
+					<div class="col-xs-8 col-md-6 hidden-print">
 						<apex:outputPanel id="downloadButtons">
 							<button class="btn btn-blue" onclick="window.open('/ISSP_AMS_GSA_MSO_CSV?renderAs=csv&data=MSO&exclude={!isExcludingTerminated}&search={!searchText}','_blank');">
 								<span class="glyphicon glyphicon-th" aria-hidden="true"></span>&nbsp;{!$Label.ISSP_AMS_MSO_GSA_Download_CSV}
@@ -214,6 +214,7 @@
 								<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>&nbsp;{!$Label.CurrencyCenter_Download_Pdf}
 							</button>
 						</apex:outputPanel>
+						<apex:outputLink styleClass="btn btn-blue" value="/ISSP_AMS_MSO_Request">{!$Label.ISSP_AMS_MSO_GSA_Request_New_MSO}</apex:outputLink>
 					</div>
 				</div>
 			</div>

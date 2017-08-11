@@ -9066,6 +9066,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Previous</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_GSA_Request_New_MSO</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_Request_New_MSO</shortDescription>
+        <value>Request New MSO</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_GSA_Search_Placeholder</fullName>
         <language>en_US</language>
         <protected>false</protected>
