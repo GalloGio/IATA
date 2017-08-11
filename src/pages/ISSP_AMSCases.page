@@ -108,10 +108,10 @@
             </tr>
             <tr>
                 <td style="vertical-align:top">
-                    <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, sector=='Travel Agent')}"/></strong>
+                    <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, sector=='Travel Agent')}"/></strong><br/>
                     <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, sector=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="SA" />
-                    </apex:commandLink>
+                    </apex:commandLink><br/>
                     <!-- TIDS out-of-scope for now
                     <apex:commandLink action="{!redirectToCasePage}" value="Travel Industry Designator Service (TIDS)" id="TIDSCommandLink" rendered="{!AND(NOT(isHOAccredited), con.Account.Sector__c=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="TIDS" />
