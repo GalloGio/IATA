@@ -981,6 +981,10 @@ public without sharing class ISSP_AMS_Accreditation {
         return (String.isNotEmpty(con.Account.ANG_Accreditation_Model__c)  && con.Account.ANG_Accreditation_Model__c != 'Legacy');
     }
 
+    public Boolean getCanChangeAccreditationType() {
+        return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != 'HO - All Branches') || (newForm.Scope_of_Change__c != 'HO - All Branches' && newForm.Scope_of_Change__c != 'HO Only'));
+    }
+
     public List<SelectOption> getOfficeTypes() {
         Boolean isUKTerritory;
         
@@ -1407,20 +1411,30 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
                 
             }
+
             //NEWGEN-205
-            if (newForm.Last_Scope_Of_Change__c == null) {
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
-                if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
-                    (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
-                    isScopeOfChangeChanged = true;
-                    setOwners('NoC');
+            if(getIsAccreditationModelNotNullOrLegacy()) {
+                if (newForm.Last_Scope_Of_Change__c == null) {
+                    newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+                } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
+                    if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
+                        (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
+                        isScopeOfChangeChanged = true;
+                        setOwners('NoC');
+                    }
+                    newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+                } else {
+                    isScopeOfChangeChanged = false;
                 }
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else {
-                isScopeOfChangeChanged = false;
             }
             //END - NEWGEN-205
+
+            //NEWGEN-523
+            if(!getCanChangeAccreditationType()) {
+                newForm.Notify_Change_Accreditation_Type__c = false;
+                newForm.ANG_Accreditation_Model_to_Change__c = null;
+            }
+            //END NEWGEN-523
                 
             if (newCase.Account_Concerned__c==null) {
                 SYSTEM.DEBUG('HQ Account ID: ' + newForm.HO_Account__c);
