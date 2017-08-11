@@ -1111,8 +1111,11 @@ public without sharing class ISSP_AMS_Accreditation {
         }
        
         defaultSectorValue = null;
-        sector = null;
-        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);        
+        if(con.Account.ANG_Accreditation_Model__c != 'Cash' || con.Account.ANG_Accreditation_Model__c != 'Cashless')
+            sector = null;
+
+
+        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue + ' sector ' + sector + ' defaultSectorValue ' + defaultSectorValue);        
         return options;
     }
 
@@ -1167,6 +1170,12 @@ public without sharing class ISSP_AMS_Accreditation {
         
         system.debug('Salesforce newForm.ANG_AE_SameLegal__c: ' + newForm.ANG_AE_SameLegal__c);
         system.debug('Salesforce newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c);
+
+        SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
+        if (getIsGSARequired() && amsIsGSA == null) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
+            return null;
+        }
 
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
@@ -6822,8 +6831,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public boolean getIsGSARequired() {
         Boolean isreq;
-
-        if (sector == 'Travel Agent') {
+system.debug('aqui sectorValue ' + sectorValue);
+        if (sectorValue == 'Travel_Agent') {
             isreq = true;
         } else {
             isreq = false;
@@ -6978,6 +6987,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else {
             return null;
         }
+    }
+
+    public PageReference redirectToCountryRequirementPage(){
+        PageReference pg = Page.ISSP_Country_Requirements;
+        pg.getParameters().put('from', 'acc');
+        pg.getParameters().put('comp', 'true');
+        system.debug('aqui pg ' + pg);
+        return pg;
     }
 
     private void createChildCases() {
