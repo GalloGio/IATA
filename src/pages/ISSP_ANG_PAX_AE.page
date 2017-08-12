@@ -904,15 +904,12 @@
                             </apex:outputPanel>
                            
 
-                          <apex:pageBlockSection columns="1">
+                          <apex:pageBlockSection columns="1">                          
                             <apex:actionfunction name="validateVAT" action="{!validateVATNumber}" status="actValidVAT" rerender="VATNumberInput">
                               <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
                             </apex:actionfunction>
-                            <apex:outputPanel rendered="{!isocountry.Hide_Tax_Number_VAT__c==true}">
-                              <apex:outputText value="{!$Label.ISSP_AMS_No_Vat_Number_Section}" style="font-weight:bold" />
-                            </apex:outputPanel>
                             <apex:outputPanel id="VatNumberInput">
-                              <apex:pageblocksectionitem >
+                              <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                                 <apex:outputlabel id="vat-number" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)}" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
@@ -1051,7 +1048,7 @@
                          tradeRegNo = $j('[for$=trade-reg-no]')[0],
                          dateLicenseGranted = $j('[for$=date-license-granted]')[0],
                          dateRegGranted = $j('[for$=date-reg-granted]')[0],
-                         vatNumber = $j('[id$=vat-number]')[0],
+                         //vatNumber = $j('[id$=vat-number]')[0],
                          officePhoneLabel = $j('[id$=office-phone-label]')[0],
                          labelBillStreet = $j('.address-label')[0].childNodes[0],
                          labelBillCity = $j('.address-label')[1].childNodes[0],
@@ -1063,7 +1060,7 @@
                         dateLicenseGranted.textContent = dateLicenseGranted.textContent.replace('* ', '') + ' *';
                         dateRegGranted.textContent = dateRegGranted.textContent.replace('* ', '') + ' *';
                         officePhoneLabel.textContent = officePhoneLabel.textContent.replace('* ', '') + ' *';
-                        vatNumber.textContent = vatNumber.textContent + ' *';
+                        //vatNumber.textContent = vatNumber.textContent + ' *';
                         labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
                         labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;
                         
@@ -1348,7 +1345,7 @@
                       <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
                       <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                     </apex:outputText>         
-                    <apex:pageBlockSection>
+                    <apex:pageBlockSection >
                       <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
                       <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
                     </apex:pageBlockSection> 

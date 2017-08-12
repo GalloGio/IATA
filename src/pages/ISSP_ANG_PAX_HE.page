@@ -824,8 +824,8 @@
                                 </apex:pageBlockSectionItem>
 
                                 <apex:outputPanel id="VatNumberInput">
-                                    <apex:pageblocksectionitem >
-                                        <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
+                                    <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                                        <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)}" />
                                         <apex:outputpanel id="VATNumberInput">
                                         <div style="display:block; width: 394px;">
                                         <div style="display:inline-block; width: 213px;margin-left: 9px;">
@@ -844,7 +844,7 @@
                                         
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-                                </apex:outputPanel> 
+                                </apex:outputPanel>
 
                                 <apex:pageBlockSectionItem >
                                 <DSE:DS_DataQuality id="HOPhone"
@@ -1020,7 +1020,7 @@
                             
                             
                             <apex:outputPanel id="VatNumberInput">
-                              <apex:pageblocksectionitem >
+                              <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                                 <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
@@ -1552,7 +1552,7 @@
                    <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                         <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_Step3_5_Other_Info}
+                                {!$Label.ISSP_AMS_Step3_5_Other_Info} --
                             </apex:outputpanel>
                         </apex:facet>
 
