@@ -1552,7 +1552,7 @@
                    <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                         <apex:facet name="header">
                             <apex:outputpanel >
-                                {!$Label.ISSP_AMS_Step3_5_Other_Info} --
+                                {!$Label.ISSP_AMS_Step3_5_Other_Info}
                             </apex:outputpanel>
                         </apex:facet>
 
