@@ -63,7 +63,7 @@
             <apex:outputField label="{!$ObjectType.Account.fields.Mobile__c.Label}" value="{!hqAccount.Mobile__c}"/>
             <apex:outputField label="{!$ObjectType.Account.fields.Website.Label}" value="{!hqAccount.Website}"/>            
             <apex:outputField label="{!$ObjectType.Account.fields.Fax.Label}" value="{!hqAccount.Fax}"/>
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}"/>
+            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}"/>
     </apex:pageBlockSection>
 
     <apex:pageBlockSection rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS IS TERMINATED AND IS ACCREDITED  -->
@@ -74,7 +74,7 @@
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Mobile__c.Label}" value="{!newForm.Mobile__c}"/>
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Website__c.Label}" value="{!newForm.Website__c}"/>            
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Fax_National__c.Label}" value="{!newForm.Branch_Office_Fax_National__c}"/>
-            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}"/>
+            <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label}" value="{!newForm.ISSP_AMS_VAT_Number_Input__c}" rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}"/>
     </apex:pageBlockSection>
 
 	<br></br>
