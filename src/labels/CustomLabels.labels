@@ -883,6 +883,14 @@
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
         <value>Return to comparison of accreditation type</value>
     </labels>
+	<labels>
+        <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</shortDescription>
+        <value>Return to Online Accreditation &amp; Changes page</value>
+    </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsTitle</fullName>
         <categories>ISSP</categories>
