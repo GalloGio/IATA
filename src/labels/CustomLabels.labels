@@ -678,14 +678,6 @@
         <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
         <value>Perform Correction</value>
     </labels>
-	<labels>
-        <fullName>ANG_AE_separate_Legal_Entity</fullName>
-        <categories>ANG</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_AE_separate_Legal_Entity</shortDescription>
-        <value>* Is this Associate Entity a separate Legal entity than the Head Entity?</value>
-    </labels>
     <labels>
         <fullName>ANG_Conversion_Tool_Error_2</fullName>
         <language>en_US</language>
@@ -890,14 +882,6 @@
         <protected>false</protected>
         <shortDescription>ANG_ISSP_CountryRequirementsGoBack</shortDescription>
         <value>Return to comparison of accreditation type</value>
-    </labels>
-	<labels>
-        <fullName>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</fullName>
-        <categories>ISSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_CountryRequirementsGoBackToOnlineAcc</shortDescription>
-        <value>Return to Online Accreditation &amp; Changes page</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_CountryRequirementsTitle</fullName>
