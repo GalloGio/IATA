@@ -697,7 +697,7 @@
         <label>NG Minor Shareholding</label>
     </fieldSets>
     <fieldSets>
-        <fullName>ANG_name</fullName>
+        <fullName>ANG_legalname</fullName>
         <description>fields to be migrated when we have a change of name process</description>
         <displayedFields>
             <field>Account_Name__c</field>
@@ -790,66 +790,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>NG vmfr</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>ANG_LegalName</fullName>
-        <description>fields to be migrated when we have a change of name process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Name</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>ANG_LegalName</fullName>
-        <description>fields to be migrated when we have a change of name process</description>
-        <displayedFields>
-            <field>Account_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Short_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Trade_Name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Website__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Abbreviated_name__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Name</label>
     </fieldSets>
     <fieldSets>
         <fullName>ChangeOfLegal</fullName>
@@ -1294,15 +1234,25 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_AE_SameLegal__c</fullName>
+        <fullName>ANG_Accreditation_Model_to_Change__c</fullName>
         <externalId>false</externalId>
-        <label>ANG_AE_SameLegal</label>
-        <length>255</length>
+        <label>Accreditation Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard Accreditation with Cash</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Accreditation with no Cash</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
+            <sorted>false</sorted>
+        </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>ANG_Accreditation_type__c</fullName>
@@ -16915,17 +16865,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
-            <values>
-                <fullName>Standard Accreditation with Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
@@ -20254,17 +20193,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
         </picklistValues>
-		<picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
-            <values>
-                <fullName>Standard Accreditation with Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>ANG_Accreditation_Models</picklist>
             <values>
@@ -21176,7 +21104,7 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <fullName>Travel_Agent_Head_Entity_Standard_with_Cash</fullName>
         <active>true</active>
         <label>Travel Agent - Head Entity Standard with Cash</label>
-picklistValues>
+<picklistValues>
             <picklist>AE_separate_Legal_Entity__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -21184,17 +21112,6 @@ picklistValues>
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-		<picklistValues>
-            <picklist>ANG_Accreditation_Models</picklist>
-            <values>
-                <fullName>Standard Accreditation with Cash</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Standard Accreditation with no Cash</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
