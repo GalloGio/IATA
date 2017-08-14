@@ -1040,6 +1040,44 @@ public with sharing class ANG_AgencyChangesHelper {
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	private static Map<Id,AMS_Operation__c> fetchOperationCodeConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds) {
+
+		return new Map<Id,AMS_Operation__c>([SELECT Id, Allow_multiple_remittances__c, 
+				(SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r ORDER BY Remittances_Per_Year__c DESC) 
+				FROM AMS_Operation__c 
+				WHERE Settlement__r.RecordtypeID = :settlementRTId + ''+ CountryIds != null ? 'AND Country__c IN :countryId' : '' + OperationsIds != null ? ' AND Id IN :operationsIds' : '']);        
+	}
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	public static Map<Id,AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Set<Id> operationsIds) {
+
+		return fetchOperationCodeConfiguration (null, settlementRTId, operationsIds);
+	}	
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	public static Map<Id,AMS_Operation__c> fetchOperationCodeConfiguration(Id countryIds, Id settlementRTId) {
+
+		return fetchOperationCodeConfiguration (new Set<Id>{countryIds}, settlementRTId, null);
+	}
+
+	/**
+	Returns a Map of Agency Operations Operation Codes for the given accounts
+	*/
+
+	public static Map<Id,AMS_Agency_Operations__c> fetchAccountAgOperationPerOpCode(List<Id> accIds) {
+
+		Map<Id,AMS_Agency_Operations__c> agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
+            for(AMS_Agency_Operations__c agOp : [SELECT Id, Account__c, Operation__c, Operation__r.Settlement__r.RecordType.Name FROM AMS_Agency_Operations__c WHERE Account__c in :accIds])
+                agencyOperations.put(agOp.Operation__c,agOp);
+
+        return agencyOperations;
+	}
+
 	    /** 
 
      Create Change Codes NEW Method that creates Change Code History Objects

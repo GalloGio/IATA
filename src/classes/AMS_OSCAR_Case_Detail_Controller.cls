@@ -110,7 +110,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isEditable(String fieldName){
 
         //For newgen
-        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && !isAgencyChanges)
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
             if(notEditableForNEWGEN.contains(fieldName))
                 return false;
 
@@ -149,7 +149,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Map<Id,AMS_Operation__c> operationCodes{
         get{
             if(this.operationCodes == null)
-                this.operationCodes = new Map<Id,AMS_Operation__c>([SELECT Id, Allow_multiple_remittances__c, (SELECT Id, Remittance_Frequency__c FROM BSP_Attributes__r) FROM AMS_Operation__c WHERE Settlement__r.Recordtype.Name = 'BSP' AND Country__c = :accreditationObj.Branch_Office_Country__c]);
+                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(accreditationObj.Branch_Office_Country__c, AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id);
             
             return this.operationCodes;            
         } set;
@@ -157,11 +157,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Map<Id,AMS_Agency_Operations__c> agencyOperations{
         get{
-            if(this.agencyOperations == null){
-                this.agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
-                for(AMS_Agency_Operations__c agOp : [SELECT id, Account__c, Operation__c FROM AMS_Agency_Operations__c WHERE Account__c = :oscarObj.Account__c and Operation__c in :operationCodes.keySet()])
-                    this.agencyOperations.put(agOp.Operation__c,agOp);
-            }
+            if(this.agencyOperations == null)
+                this.agencyOperations = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(new List<Id>{oscarObj.Account__c});
+            
             return this.agencyOperations;
         }set;
     }
