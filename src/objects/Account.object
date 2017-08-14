@@ -33330,6 +33330,10 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
                 <default>false</default>
             </values>
             <values>
+                <fullName>GSSA Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Governmental Aviation</fullName>
                 <default>false</default>
             </values>
