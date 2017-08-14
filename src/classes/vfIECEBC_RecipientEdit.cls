@@ -206,9 +206,11 @@ public class vfIECEBC_RecipientEdit extends vfIECEBC_Controller {
         String cntQuery = IECEBC_Utility.getSOQLFromMasterFilter(null, nf,elastic_switch);
         System.debug(cntQuery);
         
-        if (elastic_switch) {IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter(); return req.execute(cntQuery,false);} 
+        boolean istest=false;
+        if (nf.Name=='EBC_TEST_RUN') istest=true;
+        if (elastic_switch) {IECEBCNew_eBroadcast_Counter req = new IECEBCNew_eBroadcast_Counter(); return req.execute(cntQuery,istest);} 
         //only query salesforce and return counter when elastic switch is false
-        if (nf.Name=='EBC_TEST_RUN') return 7;
+        if (istest) return 7;
         return Integer.valueOf(Database.Query(cntQuery)[0].get('expr0'));
     }
     

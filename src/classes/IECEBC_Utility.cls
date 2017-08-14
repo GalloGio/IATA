@@ -127,36 +127,41 @@ public class IECEBC_Utility {
       if (searchLevel == 'Geo-Selection' && masterFilter.Audience__c == 'Agent') { 
          relationship = 'GDP_Products_Account_View__r.';
       }
-      if (af.Filter_RelatedList__c != null) {
-               relationship = af.Filter_RelatedList__c.replace('__c','__r')+ '.';
-            }
+      
       String filterValue = cf.Field_Value__c;
       if (cf.Field_Operator__c != 'in' && cf.Field_Operator__c != 'not in') {
         filterValue = '"' + String.escapeSingleQuotes(filterValue) + '"';
       }
+      if (af.Filter_RelatedList__c != null) {
+          relationship = af.Filter_RelatedList__c.replace('__c','__r')+ '.';
+          if (af.Filter_RelatedList__c=='UPPERCASE'){
+             relationship='';
+             filterValue = filterValue.toUpperCase();
+          }
+      }
       String filter = fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
-        if (cf.Field_Operator__c=='='){ 
-            filter='{"match": {"' + relationship + fieldName + '.keyword": ' + filterValue + '}}';
-        }
-        if (cf.Field_Operator__c=='!='){ 
-                filter='{"bool": {"must_not": [{"match": {"' + relationship +  fieldName + '.keyword": ' + filterValue + '}}]}}';
-        }
-        string dateformat='';
-        boolean dateflag=false;
-        if (dateflag) dateformat=',"format": "yyyy-mm-dd||yyyy"';
-        if (cf.Field_Operator__c=='>'){ 
-            filter='{"range": {"' + relationship + fieldName + '":{ "gt": ' + filterValue + dateformat+ '}}}';
-        }
-        if (cf.Field_Operator__c=='<'){ 
-            filter='{"range": {"' + relationship + fieldName + '":{ "lt": ' + filterValue + dateformat+  '}}}';
-        }
+      if (cf.Field_Operator__c=='='){ 
+          filter='{"match": {"' + relationship + fieldName + '.keyword": ' + filterValue + '}}';
+      }
+      if (cf.Field_Operator__c=='!='){ 
+         filter='{"bool": {"must_not": [{"match": {"' + relationship +  fieldName + '.keyword": ' + filterValue + '}}]}}';
+      }
+      string dateformat='';
+      boolean dateflag=false;
+      if (dateflag) dateformat=',"format": "yyyy-mm-dd||yyyy"';
+      if (cf.Field_Operator__c=='>'){ 
+          filter='{"range": {"' + relationship + fieldName + '":{ "gt": ' + filterValue + dateformat+ '}}}';
+      }
+      if (cf.Field_Operator__c=='<'){ 
+          filter='{"range": {"' + relationship + fieldName + '":{ "lt": ' + filterValue + dateformat+  '}}}';
+      }
 
-        if (cf.Field_Operator__c=='>='){ 
-            filter='{"range": {"' + relationship + fieldName + '":{ "gte": ' + filterValue + dateformat+  '}}}';
-        }
-        if (cf.Field_Operator__c=='<='){ 
-            filter='{"range": {"' + relationship + fieldName + '":{ "lte": ' + filterValue + dateformat+  '}}}';
-        }
+      if (cf.Field_Operator__c=='>='){ 
+          filter='{"range": {"' + relationship + fieldName + '":{ "gte": ' + filterValue + dateformat+  '}}}';
+      }
+      if (cf.Field_Operator__c=='<='){ 
+          filter='{"range": {"' + relationship + fieldName + '":{ "lte": ' + filterValue + dateformat+  '}}}';
+      }
             /*
       if (af.Filter_RelatedList__c != null) {
         filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
@@ -231,7 +236,7 @@ public class IECEBC_Utility {
             if (String.isBlank(code)) continue;
                 //queryWhereClauses.add('IATA_Code__c in (\'' + String.join(limitedCodes, '\',\'') + '\')');
                 if (codeindex>0) nextline=',';
-                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match": {"IATA_Code__c.keyword": "'+code+'"}}]}}');
+                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match_phrase_prefix": {"IATA_Code__c": "'+code+'"}}]}}');
                 codeindex++;
       }
       queryWhereClauses.add(']}}');
@@ -313,7 +318,11 @@ public class IECEBC_Utility {
       String filter = fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
       
       if (af.Filter_RelatedList__c != null) {
-        filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
+         filter = 'id in (Select ' + af.Filter_RelatedList_Field__c  + ' From ' + af.Filter_RelatedList__c + ' Where ' + filter + ')';
+         if (af.Filter_RelatedList__c=='UPPERCASE'){
+             filterValue = filterValue.toUpperCase();
+             filter=fieldName + ' ' + cf.Field_Operator__c + ' ' + filterValue;
+          }    
       }
       
       if (searchLevel == 'Geo-Selection') {
