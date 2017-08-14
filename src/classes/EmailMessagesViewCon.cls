@@ -127,7 +127,7 @@ public class EmailWrapper  implements Comparable {
         //EmailsAvailable = true;
         try{
             if(!Test.isRunningTest()) {
-                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c'});
+                controller.addFields(new List<String>{'id', 'Status', 'CaseNumber', 'BSPCountry__c', 'ContactId', 'RecordType.DeveloperName', 'Region__c', 'RecordTypeId', 'CaseArea__c', 'E2CP__AdditionalCC__c', 'Case_Group__c', 'CNSCase__c'});
             }
             this.cse= (Case)controller.getRecord();
             loadEmails();
@@ -151,47 +151,6 @@ public class EmailWrapper  implements Comparable {
 
     public String getACaseId(){
         return this.cse.Id;
-    }
-
-    private void loadEmails2(){
-        originalEmail = new Map<String,EmailMessage>();
-        //load records related to case
-        this.archivedMessages = [SELECT  Name,EmailMessage__c,  Case__c, CreatedById, CreatedDate, Id FROM Archived_Message__c where Case__c =:this.cse.Id ];
-
-        Map<String,Archived_Message__c> tmpArchivedMessages = new Map<String,Archived_Message__c>();
-        for(Archived_Message__c a:archivedMessages )
-            tmpArchivedMessages .put(a.EmailMessage__c,a);
-
-        //load tracked emails
-        this.trackedEmails = [SELECT ToContact__c, Html_Body__c, Subject__c, Status__c, CreatedById, CreatedDate, Id FROM Tracked_Email__c where Case__c =:this.cse.Id ];
-
-        //load Email activity status to print it in view  using a map: em.Activity --> Stirng
-        List<String> l = new List<String>();
-        this.emails = new List<EmailMessage>();
-
-        List<EmailMessage > tmpEmails = [SELECT ParentId, Status, Incoming, FromName, ActivityId,
-                                         BccAddress, CcAddress, CreatedById, CreatedDate, 
-                                         IsDeleted, Id, FromAddress, HtmlBody, HasAttachment, Headers,
-                                          LastModifiedById, LastModifiedDate, MessageDate, Subject,
-                                           SystemModstamp, TextBody, ToAddress 
-                                           FROM EmailMessage 
-                                         where ParentId = :cse.id order by CreatedDate desc ];
-
-        emailsTasksStatus = new Map<String,String>();
-        for(EmailMessage e:tmpEmails  ) {
-           if(!tmpArchivedMessages .containsKey(e.Id))
-               emails.add(e);
-           else
-               originalEmail.put(e.Id,e);
-
-        }
-        try {
-            EmailsAvailable  = (archivedMessages.size() + trackedEmails.size() + emails.size())>0;
-        }catch(Exception e){
-            EmailsAvailable = true;
-        }
-        if(this.emails==null)
-            this.emails= new List<EmailMessage>();
     }
 
     public Case getCse(){
