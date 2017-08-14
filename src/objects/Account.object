@@ -11338,7 +11338,8 @@ IF ((RecordType.DeveloperName = &quot;IATA_Airline&quot; || RecordType.Developer
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>SAP_BW_report_with_sales_figures__c</fullName>
@@ -82287,6 +82288,47 @@ Source_System__c  &lt;&gt; &apos;AIMS&apos;
 )</errorConditionFormula>
         <errorDisplayField>Industry</errorDisplayField>
         <errorMessage>Industry is a required field.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Limit_Remittance_Frequency_Options</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+NOT(Country_ISO_Code__c  = &apos;BR&apos;),
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ),
+
+AND(
+
+ANG_IsNewGenAgency__c,  
+
+Country_ISO_Code__c  = &apos;BR&apos;,
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) +
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 )
+
+)</errorConditionFormula>
+        <errorDisplayField>Remittance_frequency__c</errorDisplayField>
+        <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
