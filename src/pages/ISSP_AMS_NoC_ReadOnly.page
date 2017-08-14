@@ -108,7 +108,7 @@
                     </apex:facet>
                     <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Accreditation_Type}</apex:outputPanel>
-                        <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:90%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
+                        <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Updated_Accreditation_Type}</apex:outputPanel>
 
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_accreditation_type_are_correct__c.Label}" style="color:black;font-size:110%"/>
@@ -132,13 +132,29 @@
                                     <apex:outputText value="{!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}"></apex:outputText>
                                 </apex:panelGrid>
                                 <apex:outputPanel rendered="{!(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash')}">
-                                    <apex:pageBlockTable value="{!List_IFAPAgencyContacts}" var="agencycon" id="contactIFAPList" styleClass="table-hover table table-condensed table-responsive">
-                                        <apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}" />
-                                        <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}" />
-                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}" />
-                                        <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}" />
-                                        <apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}" value="{!agencycon.Financial_Assessment_Contact__c}" />
-                                    </apex:pageBlockTable>
+                                    <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">Assessment Contact</apex:outputPanel>
+                                    <apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.FirstName.Label}"/>
+                                            <apex:outputText value="{!ifapCon.First_name__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.LastName.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Last_name__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Phone.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Phone__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Email.Label}"/>
+                                            <apex:outputText value="{!ifapCon.Email__c}"></apex:outputText>
+                                        </apex:panelGrid>
+                                        <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+                                            <apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}"/>
+                                            <apex:outputText ><img src="{!IF(ifapCon.Financial_Assessment_Contact__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+                                        </apex:panelGrid>
+                                    </apex:repeat>
                                 </apex:outputPanel>
                             </apex:panelGrid>
                         </apex:outputPanel>
