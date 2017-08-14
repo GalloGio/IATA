@@ -236,7 +236,7 @@ public class IECEBC_Utility {
             if (String.isBlank(code)) continue;
                 //queryWhereClauses.add('IATA_Code__c in (\'' + String.join(limitedCodes, '\',\'') + '\')');
                 if (codeindex>0) nextline=',';
-                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match_phrase_prefix": {"IATA_Code__c": "'+code+'"}}]}}');
+                queryWhereClauses.add(nextline+'{"bool":{"must": [{"match_phrase_prefix": {"Agency_Code__c": "'+code+'"}}]}}');
                 codeindex++;
       }
       queryWhereClauses.add(']}}');
