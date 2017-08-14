@@ -12,6 +12,7 @@ public class AMS_OSCAR_WebserviceTest {
     private static Account a3;
     private static Account a4;
     private static Account a5;
+    private static Case oscarCase;
 
     private static void setup(){
         
@@ -46,10 +47,10 @@ public class AMS_OSCAR_WebserviceTest {
         Contact co2 = new Contact(AccountId = a5.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = true);
         insert new List<Contact>{co1, co2};
 
-        Case oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
+        oscarCase = new Case(Oscar__c = oscar6.Id, RecordTypeId = AMS_Utils.getId('Case', 'OSCAR_Communication'));
         oscarCase.AccountId = a5.Id;
         oscarCase.ContactId = co2.Id;
-        insert oscarCase;  
+        insert oscarCase;
         
     }
     
@@ -98,9 +99,9 @@ public class AMS_OSCAR_WebserviceTest {
     }
 
     static testMethod void test_copyDataToAccount() {
-
+        
         setup();
-
+        
         Test.startTest();
 
         String resultcopyDataToAccount = AMS_OSCAR_Webservice.copyDataToAccount(oscar.Id);
@@ -119,14 +120,91 @@ public class AMS_OSCAR_WebserviceTest {
         Test.stopTest();
     }
 
-    static testMethod void test_createSidraLite() {
+    static testMethod void test_createSidraLite1() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite2() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar2.Id);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite3() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar3.Id);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite4() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar4.Id);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite5() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar5.Id);
+        Test.stopTest();
+    }
+    
+    static testMethod void test_createSidraLite6() {
+        
+        setup();
+        
+        Test.startTest();
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+        
+        oscarCase.Reason1__c = 'Certificate DGR';
+        update oscarCase;
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+        
+        try {
+            oscarCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
+            update oscarCase;
+            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+            System.assert(false, 'Exception Expected');
+        } catch(WSSidraLite.ShowConfirmationException e) {
+            System.assert(true);
+        }
+        Test.stopTest();
+    }
+
+    static testMethod void test_updateSidraLite() {
         
         setup();
         
         Test.startTest();
 
-        String resultcreateSIDRALiteERROR = AMS_OSCAR_Webservice.createSIDRALite(oscar.Id);
-        String resultcreateSIDRALiteSUCCESS = AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+        try {
+            AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
+        try {
+            AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id);
+            System.assert(false,'Exception expected');
+        } catch (Exception e) {
+            System.assert(true);
+        }
 
         Test.stopTest();
     }
@@ -171,22 +249,6 @@ public class AMS_OSCAR_WebserviceTest {
         System.debug(loggingLevel.ERROR, '____ [cls AMS_OSCAR_WebserviceTest - test_generateCertificates] resultgenerateCertificates - ' + resultgenerateCertificates);
 
         Test.stopTest();
-    }
-
-    static testMethod void test_riskEventCreation() {
-        
-        setup();
-        
-        Test.startTest();
-
-        String resultcreateSIDRALiteERROR = AMS_OSCAR_Webservice.createRiskEvent(oscar.Id);
-
-        Test.stopTest();
-
-        oscar = [SELECT Risk_event_creation_date__c, STEP36__c FROM AMS_OSCAR__c WHERE Id =: oscar.Id];
-
-        system.assertEquals(oscar.Risk_event_creation_date__c, System.today());
-        system.assertEquals(oscar.STEP36__c, AMS_Utils.PASSED);
     }
 
 }

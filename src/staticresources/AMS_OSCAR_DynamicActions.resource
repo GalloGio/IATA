@@ -325,34 +325,56 @@ var dyn_functions = {
                sforce.console.getEnclosingPrimaryTabId(openSubtab);
            
            },
-           createSIDRALite:function (arg) {
-                var result;
-                result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
-                
-                // error
-                if (result[0].substring(0, 6) == 'ERROR:') {
-                    alert(result);
-                } 
-                else {
+           SIDRALiteAction:function (arg) {
+                try {
+                    var result = sforce.apex.execute("AMS_OSCAR_Webservice", "createSIDRALite", {oscarId: arg});
                     
-                    var caseId = result[0];
+                    // error
+                    if (result[0].substring(0, 6) == 'ERROR:') {
+                        alert(result);
+                        return;
+                    }
 
+                    var caseId = result[0];
                     var changeTab = function(result){
                         if(result.success == true){
                             //sforce.console.focusPrimaryTabById(caseId);
                             alert('SIDRA Lite Case created successfully.');
                         }
                     };
-
+                    
                     // Use the results primary tab id and open a new subtab
-                   var openSubtab = function(result)
-                   {            
-                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);    
-                   };
-                   sforce.console.getEnclosingPrimaryTabId(openSubtab);
+                    var openSubtab = function(result)
+                    {
+                        sforce.console.openSubtab(result.id, '/'+caseId, true, 'SIDRA Lite Case', null, changeTab);
+                    };
+                    sforce.console.getEnclosingPrimaryTabId(openSubtab);
 
+                } catch (e) {
+                    var exception = e.faultstring.split("\n")[0];
+
+                    if (exception.startsWith("WSSidraLite.SidraLiteException") ) {
+                        alert( e.faultstring.split("\n")[0].replace("WSSidraLite.SidraLiteException: ",""));
+                    }
+
+                    if (exception.startsWith("WSSidraLite.ShowConfirmationException") ) {
+                        var message = exception.replace("WSSidraLite.ShowConfirmationException: ","");
+                        try {
+                            if (confirm(message)) {
+                                sforce.apex.execute("AMS_OSCAR_Webservice","updateSIDRALite",{oscarId:arg});
+                                // refreshing tab
+                                sforce.console.getFocusedPrimaryTabId(
+                                    function(result) {
+                                        sforce.console.refreshPrimaryTabById(result.id, true, function(res) {});
+                                    }
+                                );
+                                alert("Case updated, refreshing");
+                            }
+                        } catch (e) {
+                            alert( e.faultstring.split("\n")[0].replace("WSSidraLite.SidraLiteException: ",""));
+                        }
+                    }
                 }
-           
            },
            createCommissionerCase:function (arg) {
                 var result;

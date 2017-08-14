@@ -1111,7 +1111,7 @@
                 "Required": [],
                 "Actions": [
                   {
-                    "FunctionName": "createSIDRALite",
+                    "FunctionName": "SIDRALiteAction",
                     "ActionLabel": "AMS_OSCAR_Action7",
                     "args": [
                       "oscarid"

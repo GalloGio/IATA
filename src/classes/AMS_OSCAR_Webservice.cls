@@ -254,8 +254,6 @@ global class AMS_OSCAR_Webservice {
 
         try {
 
-            ID sidraLiteRecType = Schema.Case.sObjectType.getDescribe().getRecordTypeInfosByName().get('SIDRA Lite').getRecordTypeId();
-
             List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
 
@@ -268,29 +266,7 @@ global class AMS_OSCAR_Webservice {
 
                 Case oscarCommCase = cases[0];
 
-                Case sidraCase = new Case();
-                sidraCase.RecordTypeId = sidraLiteRecType;
-                //sidraCase.OSCAR__c = oscar[0].Id;
-                sidraCase.Subject = 'SIDRA Lite – Non-Compliance due to "' + oscarCommCase.Reason1__c + '"';
-                sidraCase.ParentId = oscarCommCase.Id;
-                sidraCase.AccountId = oscar[0].Account__c;
-                sidraCase.ContactId = oscarCommCase.ContactId;
-                sidraCase.Region__c = oscar[0].Account__r.IATA_ISO_Country__r.Region__c;
-                sidraCase.BSPCountry__c = oscarCommCase.BSPCountry__c;
-                sidraCase.Reason1__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Reason__c = 'Late/Absence of Notification of Change';
-                //sidraCase.SIDRA_Lite_Default_Date__c = Date.Today();
-                sidraCase.Reason_for_Default__c = 'Disapproval of Change';
-                sidraCase.Total_Irregularities__c = String.ValueOf(oscarCommCase.account.Accumulated_Irregularities__c);
-
-                DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
-                sidraCase.Termination_date_manual_entry__c = BusinessHours.nextStartDate(oscar[0].BusinessHours__c, nextMonthEnd).date();
-
-                if ( oscarCommCase.account.Type == 'IATA Passenger Sales Agent' || oscarCommCase.account.Type == 'Domestic Agent' ) {
-                    sidraCase.BSP_CASS__c = 'BSP';
-                } else {
-                    sidraCase.BSP_CASS__c = 'CASS';
-                }
+                Case sidraCase = WSSidraLite.sidraLiteAction(oscarCommCase.Id);
 
                 insert sidraCase;
 
@@ -313,11 +289,24 @@ global class AMS_OSCAR_Webservice {
             }
 
             return 'ERROR: OSCAR not found.';
+        } catch (WSSidraLite.ShowConfirmationException confirmation) {
+            // this exception is not an actual error, it contains a message to ask the
+            // user if continue the process (using a javascript 'confirm' method)
+            throw(confirmation);
 
         } catch (Exception ex) {
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
 
+    }
+    
+    WebService static void updateSIDRALite(String oscarId) {
+        List<Case> cases = [SELECT Id from Case where OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+        if (cases.isEmpty()) {
+            throw new WSSidraLite.SidraLiteException('Could not find a the Oscar Communication case related to this OSCAR.');
+        }
+        Case oscarCommCase = cases[0];
+        WSSidraLite.updateSecondAndThirdDeadline(oscarCommCase.Id);
     }
 
     WebService static String createCommissionerCase(String oscarId) {
@@ -444,15 +433,11 @@ global class AMS_OSCAR_Webservice {
             //creates change code
             Account acct = new Account(Id = agencyId);
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
-
-            List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];
-
             AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-            //changeCode.status  = null;
             changeCode.name = 'CER';
-            changeCode.reasonCode = accountActiveChangeCode[0].Reason_Code__c;
-            changeCode.reasonDesc  = accountActiveChangeCode[0].Reason_Description__c;
-            changeCode.status  = AMS_Utils.getIATANumericStatus(accountActiveChangeCode[0].Account__r.Status__c);
+            changeCode.reasonCode = '91';
+            changeCode.reasonDesc  = 'ACCREDITED-MEETS STANDARD';
+            changeCode.status  = '9';
 
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Account> {acct}, true);
 
