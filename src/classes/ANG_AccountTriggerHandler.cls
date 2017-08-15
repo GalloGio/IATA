@@ -288,6 +288,9 @@ public class ANG_AccountTriggerHandler {
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
 
+    /**
+	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+    */
     private String getHighestRemittanceFrequency(List<Account> accs){
     	
     	String remitFreq = '';
@@ -297,11 +300,12 @@ public class ANG_AccountTriggerHandler {
     		accsIds.add(a.Id);
 
     	Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
-    	Map<Id,AMS_Operation__c> opCodeMap = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+    	List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
 
     	Integer aux = 0;
-    	for(AMS_Operation__c op: opCodeMap.values()){
+    	for(AMS_Operation__c op: opCodes){
     		for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+
     			if((Integer)attr.Remittances_Per_Year__c > aux){
     				aux = (Integer)attr.Remittances_Per_Year__c;
     				remitFreq = attr.Remittance_Frequency__c;
