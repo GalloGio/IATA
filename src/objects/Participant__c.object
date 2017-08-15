@@ -632,7 +632,8 @@ ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
 )),
 NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
-OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Contact__r.Account.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
 ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
@@ -666,9 +667,9 @@ ISPICKVAL(Local_Group_Type__c, &quot;CGA&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;EACP JC&quot;),
 ISPICKVAL(Local_Group_Type__c, &quot;JALWG&quot;)
 )
-)),
-NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
-OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;),
+)),NOT(AND( Representing__r.RecordType.DeveloperName = &quot;IATA_GSA&quot;,
+OR(ISPICKVAL(Local_Group_Type__c, &quot;CAPJC&quot;)))),
+NOT(AND( Representing__r.RecordType.DeveloperName = &quot;General_Sales_Agent_Headquarters&quot;,AND(
 ISPICKVAL(Local_Group_Type__c, &quot;LCAG-C&quot;))
 ))
 ),
