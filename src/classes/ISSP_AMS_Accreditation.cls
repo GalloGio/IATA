@@ -982,7 +982,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Boolean getIsAccreditationModelNotNullOrLegacy() {
-        return (String.isNotEmpty(con.Account.ANG_Accreditation_Model__c)  && con.Account.ANG_Accreditation_Model__c != 'Legacy');
+        return (String.isNotEmpty(con.Account.ANG_Accreditation_Model__c)  && con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_LEGACY);
     }
 
     public Boolean getCanChangeAccreditationType() {
@@ -1148,7 +1148,7 @@ public without sharing class ISSP_AMS_Accreditation {
         }
        
         defaultSectorValue = null;
-        if(con.Account.ANG_Accreditation_Model__c != 'Cash' || con.Account.ANG_Accreditation_Model__c != 'Cashless')
+        if(con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_CASH || con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_CASHLESS)
             sector = null;
 
 
@@ -2884,7 +2884,7 @@ public without sharing class ISSP_AMS_Accreditation {
             else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
-                    typeOfProcess = 'ANG.MAJOR.CHANGES.1.0';
+                    typeOfProcess = 'AMS_UTILS.NGCHANGES';
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
                 }
