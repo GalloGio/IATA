@@ -310,8 +310,7 @@ public class ANG_AccountTriggerHandler {
     				aux = (Integer)attr.Remittances_Per_Year__c;
     				remitFreq = attr.Remittance_Frequency__c;
     			}
-    		}
-    		
+    		}    		
     	}
 
     	return remitFreq;

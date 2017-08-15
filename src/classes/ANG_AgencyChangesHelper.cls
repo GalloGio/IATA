@@ -1067,7 +1067,6 @@ public with sharing class ANG_AgencyChangesHelper {
 	/**
 	Returns a Map of Agency Operations Operation Codes for the given accounts
 	*/
-
 	public static Map<Id,AMS_Agency_Operations__c> fetchAccountAgOperationPerOpCode(List<Id> accIds) {
 
 		Map<Id,AMS_Agency_Operations__c> agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
