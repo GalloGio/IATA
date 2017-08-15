@@ -138,8 +138,8 @@
         $(document).ready(function(){
           enableShowMoreOrLess();
         });
-
-
+     //  document.getElementById('{!$Component.accid}_lkwgt').style.display = 'none';
+      //  document.getElementById('<id of label>').style.display = 'none';
       </script>
     </apex:outputPanel>
     </body>
