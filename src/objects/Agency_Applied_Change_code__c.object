@@ -739,7 +739,7 @@ IF(AND(ISPICKVAL(Change_Code__c,&apos;IEP&apos;),OR(ISPICKVAL(Account__r.Locatio
         <externalId>false</externalId>
         <formula>Account__r.Accumulated_Irregularities__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>IRR: Acumulated irregularities</label>
+        <label>IRR: Accumulated irregularities</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
