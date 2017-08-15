@@ -1572,8 +1572,10 @@ public without sharing class ISSP_AMS_Accreditation {
             return 'Sole Proprietorship';
         } else if (companyType == 'T') {
             return 'Trust Company';
-        } else {
+        } else if (companyType == 'V') {
             return 'Co-operative';   
+        } else {
+            return '';
         }
     }
 
