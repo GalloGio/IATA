@@ -36,11 +36,11 @@
 			</apex:column>
 
 					<apex:column headerValue="Milestone">
-							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject}</apex:outputLink>
+							<apex:outputLink value="/{!task.Id}" rendered="{!!AND(isTaskEditMode,idTaskConcerned==task.Id)}">{!task.Subject__c}</apex:outputLink>
                     <apex:define name="requiredInputDiv">
                         <div class="requiredInput">
                            <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
-                           <apex:inputText value="{!task.Subject}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
+                           <apex:inputText value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
                        </div>
                     </apex:define>
 					</apex:column>
