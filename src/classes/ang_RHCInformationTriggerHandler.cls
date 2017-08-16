@@ -1,4 +1,4 @@
-public class ang_RHCInformationTriggerHandler{
+public class ANG_RHCInformationTriggerHandler{
 
 	public List<ANG_RHC_Information__c> triggerNew = (List<ANG_RHC_Information__c>) Trigger.new;
 	public List<ANG_RHC_Information__c> triggerOld = (List<ANG_RHC_Information__c>) Trigger.old;
