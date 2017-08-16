@@ -940,7 +940,7 @@ public without sharing class ISSP_AMS_Accreditation {
         
         for (Account thisAccount : accountList) {
             String theLabel;
-            theLabel = thisAccount.IATACode__c + ' - ' + ((thisAccount.ANG_Accreditation_Model__c == null || thisAccount.ANG_Accreditation_Model__c == 'Legacy') ? thisAccount.Location_Type__c : thisAccount.Legal_name__c) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
+            theLabel = thisAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? thisAccount.Location_Type__c : thisAccount.Name) + ' (' + thisAccount.BillingCity + (thisAccount.BillingState!= null ? ' ' + thisAccount.BillingState : '') + ')';
 
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
@@ -950,7 +950,7 @@ public without sharing class ISSP_AMS_Accreditation {
     public String getContactAccount() {
         List<SelectOption> options = new List<SelectOption>();
         Account conAccount = con.Account;
-        String optionLabel =  conAccount.IATACode__c + ' - ' + ((conAccount.ANG_Accreditation_Model__c == null || conAccount.ANG_Accreditation_Model__c == 'Legacy') ? conAccount.Location_Type__c : conAccount.Legal_name__c) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
+        String optionLabel =  conAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? conAccount.Location_Type__c : conAccount.Name) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
         options.add(new SelectOption(conAccount.IATACode__c, optionLabel));
         agencyCodesConcerned = options;
         newForm.Scope_of_Change__c = 'Selected Branches Only';
@@ -975,6 +975,18 @@ public without sharing class ISSP_AMS_Accreditation {
             options.add(new SelectOption(thisAccount.IATACode__c, theLabel));
         }
         return options;
+    }
+
+    public Integer getAgencyCodesConcernedSize() {
+        return agencyCodesConcerned.size();
+    }
+
+    public Boolean getIsAccreditationModelNotNullOrLegacy() {
+        return (String.isNotEmpty(con.Account.ANG_Accreditation_Model__c)  && con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_LEGACY);
+    }
+
+    public Boolean getCanChangeAccreditationType() {
+        return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != 'HO - All Branches') || (newForm.Scope_of_Change__c != 'HO - All Branches' && newForm.Scope_of_Change__c != 'HO Only'));
     }
 
     public List<SelectOption> getOfficeTypes() {
@@ -1112,7 +1124,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (isHOAccredited && con.Account.Category__c == 'IATA Passenger Sales Agent') { //And this is an Accredited PAX Agent
                 
-                if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
+                if(!getIsAccreditationModelNotNullOrLegacy()){
                     options.add(new SelectOption('New BR / IP - Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));
 
                     if (isocountry.Region__c != 'Americas')
@@ -1136,8 +1148,11 @@ public without sharing class ISSP_AMS_Accreditation {
         }
        
         defaultSectorValue = null;
-        sector = null;
-        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue);        
+        if(con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_CASH || con.Account.ANG_Accreditation_Model__c != AMS_UTILS.ACCREDITATIONMODEL_CASHLESS)
+            sector = null;
+
+
+        system.debug('sectorValue at end of getOfficeTypes: ' + sectorValue + ' sector ' + sector + ' defaultSectorValue ' + defaultSectorValue);        
         return options;
     }
 
@@ -1192,6 +1207,12 @@ public without sharing class ISSP_AMS_Accreditation {
         
         system.debug('Salesforce newForm.ANG_AE_SameLegal__c: ' + newForm.ANG_AE_SameLegal__c);
         system.debug('Salesforce newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c);
+
+        SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
+        if (getIsGSARequired() && amsIsGSA == null) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
+            return null;
+        }
 
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
@@ -1385,7 +1406,7 @@ public without sharing class ISSP_AMS_Accreditation {
             if (isBankAccountChange) {
                 newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Change of Bank Account Details').RecordTypeId;
             } else {
-                if (con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy') {
+                if (!getIsAccreditationModelNotNullOrLegacy()) {
                     newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes').RecordTypeId;
                 } else {
                     newForm.RecordTypeId = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.RecordTypeInfosByName.get('Other Changes - NAM').RecordTypeId;
@@ -1440,20 +1461,35 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
                 
             }
-            //NEWGEN-205
-            if (newForm.Last_Scope_Of_Change__c == null) {
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
-                if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
-                    (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
-                    isScopeOfChangeChanged = true;
-                    setOwners('NoC');
+
+            if(getIsAccreditationModelNotNullOrLegacy()) {
+                //NEWGEN-668
+                if (newForm.Scope_Of_Change__c == 'Selected Branches Only') {
+                    newForm.Is_this_Head_Office_becoming_a_Branch__c = 'No';
                 }
-                newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
-            } else {
-                isScopeOfChangeChanged = false;
+                //END - NEWGEN-668
+                //NEWGEN-205
+                if (newForm.Last_Scope_Of_Change__c == null) {
+                    newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+                } else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
+                    if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
+                        (newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
+                        isScopeOfChangeChanged = true;
+                        setOwners('NoC');
+                    }
+                    newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
+                } else {
+                    isScopeOfChangeChanged = false;
+                }
+                //END - NEWGEN-205
             }
-            //END - NEWGEN-205
+
+            //NEWGEN-523
+            if(!getCanChangeAccreditationType()) {
+                newForm.Notify_Change_Accreditation_Type__c = false;
+                newForm.ANG_Accreditation_Model_to_Change__c = null;
+            }
+            //END NEWGEN-523
                 
             if (newCase.Account_Concerned__c==null) {
                 SYSTEM.DEBUG('HQ Account ID: ' + newForm.HO_Account__c);
@@ -1832,10 +1868,9 @@ public without sharing class ISSP_AMS_Accreditation {
         SFDCAccount.Location_Class__c = getLocationClass();
 
         if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
-            SFDCAccount.Location_Type__c = 'BR';    
+            SFDCAccount.Location_Type__c = 'AE';    
         }else{
-            SFDCAccount.Location_Type__c = 'AE';
-            SFDCAccount.ANG_Accreditation_Model__c = hqAccount.ANG_Accreditation_Model__c;     
+            SFDCAccount.Location_Type__c = 'BR';    
         }
         
         SFDCAccount.Reason_for_creation__c = 'Created by customer';
@@ -2494,6 +2529,8 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     public Pagereference goToStep3Section5() {
+        if (isNoticeOfChange)
+            return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange + commParam +'&step=3#nav_five' );
         return new Pagereference('/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3#nav_five' );
     }
 
@@ -2844,8 +2881,15 @@ public without sharing class ISSP_AMS_Accreditation {
                 typeOfProcess = 'NEW.BR';
             else if (isNoticeOfChange && isBankAccountChange)
                 typeOfProcess = 'BANK.ACCOUNT.CHANGES';
-            else if (isNoticeOfChange && !isBankAccountChange)
-                typeOfProcess = 'MAJOR.CHANGES';
+            else if (isNoticeOfChange && !isBankAccountChange) {
+                //NEWGEN 683
+                if (getIsAccreditationModelNotNullOrLegacy()) {
+                    typeOfProcess = 'AMS_UTILS.NGCHANGES';
+                } else {
+                    typeOfProcess = 'MAJOR.CHANGES';
+                }
+            }
+                
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD)
                  typeOfProcess = 'ANG.NEW.HE.STANDARD.1.0';
             else if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE)
@@ -3625,6 +3669,22 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
             ];
             return cons;
 
+        }
+        set{}
+    }
+
+    public List<AMS_Accreditation_Contact__c> List_IFAPAgencyContacts {
+
+        get{
+            List<AMS_Accreditation_Contact__c> ifapContatc = [
+                SELECT Salutation__c, Name, Email__c, First_name__c, Last_name__c, 
+                       Phone__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c, 
+                       Contact_Id__c, Contact__c, AMS_Pax_Accreditation_Form__c
+                FROM AMS_Accreditation_Contact__c
+                WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Person' AND Financial_Assessment_Contact__c = true
+                ORDER BY Agency_owner__c DESC, Name ASC
+            ];
+            return ifapContatc;
         }
         set{}
     }
@@ -5491,6 +5551,13 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 }
             }
 
+            //NEWGEN-668
+            if (getIsAccreditationModelNotNullOrLegacy() && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+                newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+            //END NEWGEN-668
+
             if (newForm.Notify_Change_Accreditation_Type__c == true) {
                 if (String.isEmpty(newForm.ANG_Accreditation_Model_to_Change__c)) {
                     newForm.ANG_Accreditation_Model_to_Change__c.addError(Label.ISSP_YouMustEnter);
@@ -6883,8 +6950,8 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
 
     public boolean getIsGSARequired() {
         Boolean isreq;
-
-        if (sector == 'Travel Agent') {
+system.debug('aqui sectorValue ' + sectorValue);
+        if (sectorValue == 'Travel_Agent') {
             isreq = true;
         } else {
             isreq = false;
@@ -7046,6 +7113,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         } else {
             return null;
         }
+    }
+
+    public PageReference redirectToCountryRequirementPage(){
+        PageReference pg = Page.ISSP_Country_Requirements;
+        pg.getParameters().put('from', 'acc');
+        pg.getParameters().put('comp', 'true');
+        system.debug('aqui pg ' + pg);
+        return pg;
     }
 
     private void createChildCases() {

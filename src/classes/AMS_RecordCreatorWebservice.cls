@@ -251,6 +251,9 @@ global without sharing class AMS_RecordCreatorWebservice {
         if(typeOfProcess.equalsIgnoreCase(NEWNAE))
             return oscarRT.get('ANG_New_AE');
         
+        if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
+            return oscarRT.get('ANG_Agency_Changes');
+        
         return null;
     
     }

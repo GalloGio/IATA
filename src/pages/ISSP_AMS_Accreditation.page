@@ -478,6 +478,9 @@
         <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="compare,langGSA,officetypelist,chinatypeofagent,isSameLegal">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
+        <apex:actionFunction action="{!null}" name="refreshGsaQuestion" reRender="langGSA">
+            <apex:param value="" assignTo="{!amsLocationType}" name="amsLocationType"/>
+        </apex:actionFunction>
         <apex:actionFunction action="{!updateAmsCountry}" name="updateAmsCountry" oncomplete="getCountryFromController()" reRender="amscountrylabel">
         </apex:actionFunction>
         <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
