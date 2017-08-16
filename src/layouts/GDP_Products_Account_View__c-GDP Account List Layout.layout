@@ -399,6 +399,10 @@
                 <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Now_Date_Time__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
