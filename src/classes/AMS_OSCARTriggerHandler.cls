@@ -1883,7 +1883,10 @@ public class AMS_OSCARTriggerHandler {
 
 	        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
-			AMS_AgencyRegulationAutoRenewal.sendEmailAlert(fetchContactInfoFromCase(oscarCommCaseId), oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
+	        List<Contact> contList = fetchContactInfoFromCase(oscarCommCaseId);
+
+	        if(!contList.isEmpty())
+				AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contList, oscarId, ANGemailTemplates(agencyType, step, wasApproved), oscarCommCaseId, owea[0], false);
 
 		}else{
 
