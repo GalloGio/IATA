@@ -1,5 +1,7 @@
 public with sharing class ANG_Risk_Helper{
     
+    public class invalidCurrencyException extends Exception{}
+    public static final String INVALID_CUR_EXCEPTION_MESSAGE = 'Invalid Currency: ';
 
     //---------------STATIC VARIABLES FOR ANG_* CLASSES----------------------
 
@@ -20,8 +22,7 @@ public with sharing class ANG_Risk_Helper{
     //Account - Financial_Review_Result__c
     public static final String FR_SATISFACTORY = 'Satisfactory';
     public static final String FR_UNSATISFACTORY = 'Unsatisfactory - No action';
-    public static final String ACCOUNT_STATUS_APPROVED           = 'Approved';
-	public static final String ACCOUNT_STATUS_TERMINATED         = 'Terminated';
+
 
     //ANG_Agency_Risk_Event__c - ANG_Event_Status__c
     public static final String STATUS_ACTIVE           = 'Active';
@@ -65,6 +66,28 @@ public with sharing class ANG_Risk_Helper{
     //Account - ANG_HE_RiskHistoryAssessment__c
     public static final String RISK_ASSESSMENT_PASSED = 'Passed';
     public static final String RISK_ASSESSMENT_FAILED = 'Failed';
+
+ 	//Account - ANG_HE_RiskHistoryAssessment__c
+    public static final String SECURITY_STATUS_ACTIVE = 'Active';
+    public static final String SECURITY_STATUS_CLOSE_EXPIRY_DATE = 'Close to Expiry Date';
+
+
+    //Currency Conversion Rates
+
+
+    public static map<string,CurrencyType> convertionsRateMap{
+		get{
+			if(convertionsRateMap ==null){
+				convertionsRateMap= new map<string,CurrencyType>();
+				for (CurrencyType cur : [select Id,IsoCode, ConversionRate, DecimalPlaces from CurrencyType where IsActive=true]) {
+					convertionsRateMap.put(cur.IsoCode, cur);
+				}
+			}
+
+			return convertionsRateMap;
+		}
+		private set;
+	}
 
 
     public class changeAgencyRiskEvent implements Queueable{
@@ -148,9 +171,10 @@ public with sharing class ANG_Risk_Helper{
 
         for(Account a : accounts){
             rhcInfos.add(new ANG_RHC_Information__c(
-                ANG_AccountId__c = a.Id
-                , RecordTypeId = RECTYPE_STDRHCINFO
-                //, CurrencyIsoCode = a.IATA_ISO_Country__r.CurrencyIsoCode
+                ANG_AccountId__c = a.Id,
+                RecordTypeId = RECTYPE_STDRHCINFO,
+                ANG_UniqueKey__c=a.id+RHC_INFO_STD_RT,
+                CurrencyIsoCode = a.IATA_ISO_Country__r.CurrencyIsoCode
             ));
         }
 
@@ -160,6 +184,55 @@ public with sharing class ANG_Risk_Helper{
     }
 
     public static void sumFSAmount(List<Account> accounts){
-        //do something
+    	set<string> statusSet = new set<string>{SECURITY_STATUS_ACTIVE,SECURITY_STATUS_CLOSE_EXPIRY_DATE};
+    	list<ANG_RHC_Information__c> rhcInfoList= new list<ANG_RHC_Information__c>();
+    	for(account acc :accounts){
+    		decimal sum=0;
+    		if(acc.Financial_Securities__r !=null){
+	    		for(Financial_Security__c fs:acc.Financial_Securities__r){
+	    			if(statusSet.contains(fs.Security_Status__c)){
+	    				sum+=fs.ANG_ConvertedAmount__c;
+	    			}
+	    		}
+	    	}
+			rhcInfoList.add( new ANG_RHC_Information__c(
+				ANG_UniqueKey__c=acc.id+RHC_INFO_STD_RT,
+				ANG_AccountId__c=acc.id,
+				ANG_Financial_Security__c=sum
+				)
+			);    		
+    	}
+    	if(!rhcInfoList.isEmpty())upsert rhcInfoList ANG_UniqueKey__c;
     }
+
+    public static void convertFSAmount(list<Financial_Security__c> fsList,set<id> accIdSet){
+		list<Financial_Security__c> tempList= new list<Financial_Security__c>();
+		map<id,string> accCurMap= new map<id,string>(); // map that contains rhc account's currencyIsoCode
+		for(ANG_RHC_Information__c rhc:[select ANG_AccountId__c,CurrencyIsoCode from ANG_RHC_Information__c where ANG_AccountId__c in :accIdSet]){
+			accCurMap.put(rhc.ANG_AccountId__c,rhc.currencyIsoCode);
+		}
+
+		for(Financial_Security__c fs:fsList){
+			string targetoCurIso =accCurMap.get(fs.account__C);
+			Decimal convertedValue=ANG_Risk_Helper.currencyConverter(fs.CurrencyIsoCode,fs.Amount__c,targetoCurIso==null?fs.CurrencyIsoCode:targetoCurIso);
+			if(fs.ANG_ConvertedAmount__c != convertedValue){
+				fs.ANG_ConvertedAmount__c=convertedValue;
+				tempList.add(fs);
+			}
+		}
+		fsList=tempList;
+	}
+
+    public static Decimal currencyConverter(string currentCurIso,Decimal ammount,string targetCurIso){
+
+		if(!convertionsRateMap.containsKey(currentCurIso)) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
+		if(!convertionsRateMap.containsKey(targetCurIso))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);
+
+		Decimal fromRate = convertionsRateMap.get(currentCurIso.toUpperCase()).ConversionRate;
+		CurrencyType targetCur = convertionsRateMap.get(targetCurIso.toUpperCase());
+		Decimal toRate = targetCur.ConversionRate;
+
+		Decimal result = ammount * toRate/fromRate;
+		return result.setScale(targetCur.DecimalPlaces, System.RoundingMode.HALF_UP);
+	}
 }
