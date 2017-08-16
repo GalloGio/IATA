@@ -122,7 +122,7 @@
         </apex:outputPanel>
         
         <apex:outputtext ></apex:outputtext>
-        <apex:outputtext  rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"></apex:outputtext>
+        <apex:outputtext rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'Yes',true,false)}"></apex:outputtext>
 
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"/>
         <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}"/>
@@ -278,9 +278,24 @@
             <apex:commandButton styleclass="btn btn-default" action="{!goToStep3Section5}" value="{!$Label.ISSP_EditSection}" id="Edit-Section5" style="float:right" />
           </apex:outputpanel>
         </apex:facet>
-        <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" />
-        <apex:outputText label="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" value="{!IF(newForm.IATA_Registered_IATAN_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}" />
-        <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
+        <apex:outputText rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+            <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
+            <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
+        </apex:outputText>         
+        <apex:pageBlockSection columns="1" rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+            <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
+            <apex:outputText value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
+        </apex:pageBlockSection>                    
+
+        <apex:outputText label="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" value="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}"/>
+        
+        <apex:outputField rendered="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" value="{!newForm.IATA_Cargo_Code__c}"/>
+
+        <apex:outputText label="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" value="{!IF(newForm.IATA_Registered_IATAN_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}"/>
+
+        <apex:outputField rendered="{!newForm.IATA_Registered_IATAN_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" value="{!newForm.IATAN_Code__c}"/> 
+
+        <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
       </apex:pageBlockSection>
 
     </apex:pageBlock>

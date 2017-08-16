@@ -211,6 +211,14 @@
                             <td colspan="2">{!newForm.ISSP_AMS_Principal_business_Org__c}</td>
                           </tr>
                           <tr>
+	                        <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}</td>
+                            <td colspan="2">
+                                <apex:outputText value="{0,date, MMMM d,  yyyy}">
+                                    <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+                                </apex:outputText>
+                            </td>
+	                      </tr>
+                          <tr>
                             <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}</td>
                             <td colspan="2">{!newForm.ISSP_AMS_License_No__c}</td>
                           </tr>
@@ -441,7 +449,7 @@
                                   <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
                               </td>
                           </tr>
-
+                        <apex:outputPanel rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
                             <tr>
                                 <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_First_year__c.Label}</td>
                                 <td>{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}</td>
@@ -450,6 +458,7 @@
                                 <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Gross_Amnt_Second_year__c.Label}</td>
                                 <td>{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}</td>
                             </tr>
+                        </apex:outputPanel>
                         <tr>
                             <td class="label">{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}</td>                            
                             <td style="padding:10px 10px">{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
