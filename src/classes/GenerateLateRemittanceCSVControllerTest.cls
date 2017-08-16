@@ -42,6 +42,7 @@ private class GenerateLateRemittanceCSVControllerTest {
         insert a;
         
         Contact con = new Contact( LastName = 'pluto' ,
+                                 FirstName = 'Name',
                                  Phone = '123',
                                  AccountId = a.id,
                                  Financial_Assessment_Contact__c = true,
