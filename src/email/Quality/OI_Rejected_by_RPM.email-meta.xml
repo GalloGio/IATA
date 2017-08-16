@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to inform RQM about OI rejected by RPM</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>OI Rejected by RPM</name>
+    <style>freeForm</style>
+    <subject>OI Rejected by RPM : {!Operational_Improvements__c.Name} , Region: {!Operational_Improvements__c.Region__c}</subject>
+    <textOnly>Dear all,
+
+Operational Improvement - {!Operational_Improvements__c.Name} - has been REJECTED by RPM and status changed to terminated.
+
+Please review the reason for the rejection in the OI under the below link:
+{!Operational_Improvements__c.Link}
+
+Related Internal Case
+Number: {!Operational_Improvements__c.Related_Case_Number__c}
+Description: {!Operational_Improvements__c.Description__c}
+Region: {!Operational_Improvements__c.Region__c}
+OI Type: {!Operational_Improvements__c.OI_Type__c}
+
+
+Thank you and best regards,
+{!Operational_Improvements__c.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>
