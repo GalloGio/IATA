@@ -1,43 +1,17 @@
 public with sharing class CaseLanguageDetector {
-    
-    public static final list<String> ISSP_CASE_RTS = new list<String>{
-        'Cases_SIS_Help_Desk',
-        'IATA_Service_Request',
-        'ISS_Portal_PwC',
-        'DPC_Service_Request',
-        'CasesMENA',
-        'CasesEurope',
-        'ISS_Portal_New_Case_RT'};
 
     public static void setLanguageForNewISSPCases(list<Case> listCase) {
         list<Id> listCasesToUpdate = new list<Id>();
-        for (Case cse: [SELECT Id FROM Case WHERE id IN :listCase AND Recordtype.DeveloperName IN :ISSP_CASE_RTS]) {
-            listCasesToUpdate.add(cse.Id);
+        for (Case cse: listCase) {
+            if(cse.Origin == 'Portal') {
+                listCasesToUpdate.add(cse.Id);
+            }
         }
         if (!listCasesToUpdate.isEmpty()) {
             detectBatchCaseLanguage(listCasesToUpdate);
         }
     }
 
-    @future(callout=true)
-    public static void detectCaseLanguage(Id caseId) {
-        try {
-            Case cse = [
-                SELECT Id, Description, Case_Language__c
-                FROM Case
-                WHERE Id = :caseId];
-            
-            DetectLanguageRest.Detection detection = DetectLanguageRest.query(cleanDescription(cse.Description));
-            if (detection.isReliable) {
-                cse.Case_Language__c = detection.language;
-                update cse;
-            }
-
-        } catch (Exception e) {
-            System.debug('ERROR in detectCaseLanguage(' + caseId+ ') ' + e.getMessage());
-        }
-    }
-    
     @future(callout=true)
     public static void detectBatchCaseLanguage(list<Id> listCaseId) {
         try {
@@ -58,7 +32,7 @@ public with sharing class CaseLanguageDetector {
                 DetectLanguageRest.Detection detection = listDetection.get(i);
                 Case cse = listCase.get(i);
                 if (detection.isReliable) {
-                    cse.Case_Language__c = detection.language;
+                    cse.Case_Language__c = detection.getLanguageName();
                     listUpdateCase.add(cse);
                 }
             }
@@ -69,9 +43,9 @@ public with sharing class CaseLanguageDetector {
         }
     }
     
-    public static final Integer WORDS_NUMBER = 20;
+    public static final Integer WORDS_NUMBER = 10;
     public static String cleanDescription(String text) {
-        text = text.left(200);
+        text = text.left(150);
         text = text.replaceAll('[0-9\n\t!@#$*()<>?_+]',' ');
         text = text.replaceAll('-',' ');
         text = text.replaceAll('\\s+',' ');
