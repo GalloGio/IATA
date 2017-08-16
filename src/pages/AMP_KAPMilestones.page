@@ -40,7 +40,7 @@
                     <apex:define name="requiredInputDiv">
                         <div class="requiredInput">
                            <apex:define name="requiredInputDiv"><div class="requiredBlock"/></apex:define>
-                           <apex:inputText value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
+                           <apex:inputField value="{!task.Subject__c}" rendered="{!AND(isTaskEditMode,idTaskConcerned==task.Id)}" required="true"/>
                        </div>
                     </apex:define>
 					</apex:column>
