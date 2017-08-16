@@ -40,6 +40,7 @@ global without sharing class IEC_Invoice_Item_Svc {
 		
 		//*** retrieve associated subscription information
 		Map<String, String> mapSubZId_ZInvNum  = new Map<String, String>();
+		Map<String, String> mapSubName_ZInvNum  = new Map<String, String>();
 		Map<String, Boolean> mapObjectId_IsUsed = new Map<String, Boolean>();
 		for (Invoice_Item__c invItem : lstInvoiceItem)
 		{
