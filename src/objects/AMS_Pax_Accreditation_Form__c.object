@@ -3663,7 +3663,7 @@ $Label.ISSP_AMS_LS_Sole_Owner)</formula>
         <fullName>Notify_Change_Accreditation_Type__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <label>Notify IATA of Change</label>
+        <label>Request Change of accreditation type</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
