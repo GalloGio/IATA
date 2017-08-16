@@ -135,6 +135,12 @@ public with sharing class SidraLiteHelperForOSCAR {
                 return reason;
             }
         }
+        if (oscar.Step26__c == 'Failed') {
+            String reason = 'Late/Absence of Notification of Change';
+            if (!existentReasons.contains(reason) ) {
+                return reason;
+            }
+        }
         if (oscar.RPM_Approval__c == 'Authorize Disapproval') {
             String reason = 'Change Deficiency';
             if (!existentReasons.contains(reason) ) {
