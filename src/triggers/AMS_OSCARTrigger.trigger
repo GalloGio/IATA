@@ -77,6 +77,18 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         Map<Id, Account> agencyAccount = new Map<Id, Account>([select id, IATACode__c from Account where id in :oscarAgencies]);
 
+        Map<Id, Integer> caseOscarId = new Map<Id, Integer>();
+        List<Case> listCases = [SELECT Id, OSCAR__c, QuantityProduct__c FROM Case WHERE OSCAR__c IN :Trigger.new];
+
+        if(!listCases.isEmpty()){
+            for(Case cs : listCases){
+                if(!caseOscarId.containsKey(cs.OSCAR__c)){
+                    caseOscarId.put(cs.OSCAR__c, Integer.valueOf(cs.QuantityProduct__c));
+                }
+            }
+        }
+        
+
         for (AMS_OSCAR__c oscar : Trigger.new) {
             //set default name if no case is attached to the oscar
             oscar.Name = 'Wait for OSCAR Communication Case to be attached';
@@ -119,6 +131,12 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             //removed in issue AMS-1584
             //oscar.Sanity_check_deadline__c = Date.today() + 15;
             if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
+
+            if(oscar.Process__c == AMS_Utils.CERTIFICATE){
+                if(caseOscarId.containsKey(oscar.Id)){
+                    oscar.Certificate_Quantity__c = caseOscarId.get(oscar.Id);
+                }
+            }
 
             oscars.add(oscar);
 
