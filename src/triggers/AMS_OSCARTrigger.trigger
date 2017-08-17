@@ -77,13 +77,13 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
 
         Map<Id, Account> agencyAccount = new Map<Id, Account>([select id, IATACode__c from Account where id in :oscarAgencies]);
 
-        Map<Id, Integer> caseOscarId = new Map<Id, Integer>();
+        Map<Id, Integer> caseQuantityCer = new Map<Id, Integer>();
         List<Case> listCases = [SELECT Id, OSCAR__c, QuantityProduct__c FROM Case WHERE OSCAR__c IN :Trigger.new];
 
         if(!listCases.isEmpty()){
             for(Case cs : listCases){
-                if(!caseOscarId.containsKey(cs.OSCAR__c)){
-                    caseOscarId.put(cs.OSCAR__c, Integer.valueOf(cs.QuantityProduct__c));
+                if(!caseQuantityCer.containsKey(cs.OSCAR__c)){
+                    caseQuantityCer.put(cs.OSCAR__c, Integer.valueOf(cs.QuantityProduct__c));
                 }
             }
         }
@@ -133,8 +133,8 @@ trigger AMS_OSCARTrigger on AMS_OSCAR__c (before insert, before update, after in
             if(oscar.Process__c == AMS_Utils.CERTIFICATION) oscar.Sanity_check_deadline__c = Date.today()+90;
 
             if(oscar.Process__c == AMS_Utils.CERTIFICATE){
-                if(caseOscarId.containsKey(oscar.Id)){
-                    oscar.Certificate_Quantity__c = caseOscarId.get(oscar.Id);
+                if(caseQuantityCer.containsKey(oscar.Id)){
+                    oscar.Certificate_Quantity__c = caseQuantityCer.get(oscar.Id);
                 }
             }
 
