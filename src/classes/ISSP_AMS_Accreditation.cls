@@ -5462,7 +5462,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 ApexPages.addMessage(myMsg);
                 errorFound = true;
             }
-            
+
             if (newForm.Branch_Office_Email__c == null) {
                 newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
@@ -5859,7 +5859,14 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
 
         } else if (sector.StartsWith('Cargo Agent') && !isNoticeOfChange &&  (newForm.Agent_Type__c != 'IATA Cargo Agent' && newForm.Agent_Type__c != 'EACP Intermediary') && amsOfficeType == 'HO') {
+
             errorFound = validateCGOCASSAssociate(cntIFAPContacts, cntAuthorisedSig, cntCASSContact);
+            
+            if (hqAccount.Email__c == null) {
+                hqAccount.Email__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+            
         }
 
         //Finally need to check that Local Address fields are completed for China, for all forms (HO & BR)
