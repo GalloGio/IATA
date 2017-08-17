@@ -56,6 +56,17 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Allow_multiple_remittances__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked will allow more than one value for Remittance Frequency for Agencies of the same country</inlineHelpText>
+        <label>Allow multiple remittances</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>CASS_Operations__c</fullName>
         <externalId>false</externalId>
         <label>CASS Operations</label>
