@@ -1370,6 +1370,219 @@ private class ISSP_AMS_Accreditation_Test
         }
             
     }
+
+    @isTest static void ISSP_AMS_Accreditation_Test_NOC_4s() 
+    {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',
+                                    Local_language_Agency_details_required__c = true );
+        insert country;
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', Local_language_Agency_details_required__c = true);
+        insert country2;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType 
+        WHERE SobjectType = 'Account'
+        AND DeveloperName = 'IATA_Agency'][0].Id; 
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HE';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '100';
+        parent.Category__c = 'IATA Passenger Sales Agent';
+        parent.ANG_Accreditation_Model__c = 'Cashless';
+        insert parent;
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'Travel Agent';
+        parent.Category__c = 'IATA Passenger Sales Agent';
+        child.Top_Parent__c = parent.Id;
+        child.ParentId = parent.Id;
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr ;
+        child.Location_Type__c = 'AE';
+        child.IATACode__c = '1001';
+        child.ANG_Accreditation_Model__c = 'Cashless';
+        insert child;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= child.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
+
+        System.debug('con Id: ' + con.Id);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        System.debug('newUser Id: ' + newUser.Id);
+        con.OwnerId = newUser.Id;
+        update con;
+        
+        parent.OwnerId = newUser.Id;
+        update parent;
+
+        AMS_Accreditation_Country_CheckList__c AMS_Acc_Checklist2 = new  AMS_Accreditation_Country_CheckList__c();
+        AMS_Acc_Checklist2.IATA_ISO_Country__c = country.id ;
+        AMS_Acc_Checklist2.Operation__c = 'Travel Agent';
+        AMS_Acc_Checklist2.License_required__c = true ;
+        AMS_Acc_Checklist2.Registration_required__c = true ;
+        AMS_Acc_Checklist2.Statement_of_International_Sales__c = true ;
+
+        insert AMS_Acc_Checklist2;
+
+
+        AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req2 = new AMS_Accreditation_Requirement__c(); 
+        ISSP_AMS_Accreditation_Acc_Req2.AMS_Accreditation_Country_CheckList__c = AMS_Acc_Checklist2.Id ;
+        ISSP_AMS_Accreditation_Acc_Req2.Language__c = 'English';
+        ISSP_AMS_Accreditation_Acc_Req2.Location_type__c = 'HO; Head Office;Branch';
+        ISSP_AMS_Accreditation_Acc_Req2.Type_Of_Change__c = 'bank account details;legal name;location;ownership or shareholding';
+        ISSP_AMS_Accreditation_Acc_Req2.Requirement_text__c = 'cdd';
+        ISSP_AMS_Accreditation_Acc_Req2.Sort_Order__c = 1;
+        ISSP_AMS_Accreditation_Acc_Req2.Name = 'TestReq2';
+        insert ISSP_AMS_Accreditation_Acc_Req2;
+
+        Test.startTest();
+        System.runAs(newUser)
+        {
+            //Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
+            Case testCase = ISSP_ObjectFactory.createNewCase();
+            testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+            testCase.Reason1__c = 'Travel Agent';
+            testCase.Customer_recovery__c = false;
+            //testCase.New_AWB_only_to_be_used_after_17Mar_200__c = false;
+            testCase.BounceEmailCounter__c = 0.0;
+            testCase.Case_Language__c = 'English';
+            testCase.Subject = 'Test 006';
+            testCase.Reopened_case__c = 0.0;
+            //testCase.Continous_Feed_SAF__c = false;
+            testCase.Account_Concerned__c = null;
+            testCase.IFAP_Country_ISO__c = 'tq';
+            insert testCase;
+
+            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+            newForm.IsGSA__c = 'No';
+            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+            newForm.SAAM_Case__c = testCase.Id;
+            newForm.HO_Account__c = parent.Id;
+            insert newForm ;
+                
+            AMS_Accreditation_Contact__c newContact = new AMS_Accreditation_Contact__c();
+            newContact.Name = con.Name;
+            newContact.Salutation__c = con.Salutation;
+            newContact.First_name__c = con.FirstName;
+            newContact.Last_name__c = con.LastName;
+            newContact.Phone__c = con.Phone;
+            newContact.Email__c = con.Email;
+            newContact.Job_title__c = con.Title;
+            newContact.Authorised_signatory__c = true;
+            newContact.Phone__c = '1123123'; 
+            newContact.Email__c = 'test@test.com';
+            newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
+            insert newContact;
+
+            Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP'); 
+            insert app;
+
+            ISSP_AMS_Statement_International_Sales__c AMS_SIS = new ISSP_AMS_Statement_International_Sales__c();
+            AMS_SIS.AMS_Online_Accreditation__c = newForm.Id; 
+            AMS_SIS.IATA_Member_Airline__c = child.Id ;
+            insert AMS_SIS;
+
+            ApexPages.currentPage().getParameters().put('caseId' ,testCase.Id );
+            ApexPages.currentPage().getParameters().put('step' ,'5');
+            ApexPages.currentPage().getParameters().put('isBankAccountChange' ,'false');
+            ApexPages.currentPage().getParameters().put('isNoticeOfChange' ,'true');
+            ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+            ctrl.contactType = 'Company';
+            ctrl.securityCheck();
+            ctrl.getIsEmptySumbittedCases();
+            String iatanCodeL = ctrl.iatanAccount;
+            String accreditationTypeL = ctrl.accredidationType;
+            String loginURL = ctrl.Portal_Login_URL;
+            
+            ctrl.amsOfficeType = 'HO';
+            ctrl.sector = 'Travel Agent';
+            ctrl.iatacode = '100';
+            ctrl.newCase = testCase ;
+            ctrl.editContactId =  newContact.Id;
+            ctrl.brAccountId = parent.Id;
+            ctrl.getContactAccount();
+            
+            ctrl.getBranchAccounts();
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
+            ctrl.newForm.Is_change_location__c = true;
+            ctrl.newForm.Is_change_legal_name__c = true;
+            ctrl.newForm.Is_change_ownership_or_shareholding__c = true;
+            ctrl.newForm.Branch_Office_Street_name_number__c   = 'test street';
+            ctrl.newForm.Branch_Office_City__c  = 'test city';
+            ctrl.newForm.Branch_Office_Email__c  = 'test_email@gmail.com';
+            ctrl.Save();
+            ctrl.createAgencyContact();
+
+            ctrl.cancelAgentUpdate();
+            ctrl.cancelFormUpdate();
+            ctrl.editAgencyContact();
+            ctrl.updateAgencyDetails();
+            ctrl.updateNoCAgencyLocation();
+            ctrl.goToStep3Section1();
+            ctrl.goToStep3Section2();
+            ctrl.goToStep3Section3();
+            ctrl.goToStep3Section4();
+            ctrl.goToStep1();
+            ctrl.newForm.Scope_of_Change__c = 'HO - All Branches';
+            ctrl.Save();
+            ctrl.goToStep3();
+            ctrl.goToStep1();
+            ctrl.newForm.Scope_of_Change__c = 'HO - Selected Branches';
+            ctrl.agencyCodesConcerned = ctrl.getBranchAccounts();
+            ctrl.Save();
+            ctrl.goToStep3();
+            ctrl.goToStep1();
+            ctrl.newForm.Last_Scope_Of_change__c = 'HO Only';
+            ctrl.newForm.Scope_of_Change__c = 'Selected Branches Only';
+            ctrl.agencyCodesConcerned = ctrl.getBranchAccounts(); 
+            ctrl.Save();           
+            ctrl.goToStep2();
+            ctrl.goToStep1();
+            ctrl.agencyCodesConcerned = new List<SelectOption>();
+            ctrl.newForm.Scope_of_Change__c = 'HO - All Branches';
+            ctrl.newForm.Notify_Change_Accreditation_Type__c = true;
+            ctrl.newForm.ANG_Accreditation_Model_to_Change__c = 'Cash';
+            ctrl.Save();  
+            ctrl.contactType = 'Trained Staff';
+            ctrl.newContact = new AMS_Accreditation_Contact__c();
+            ctrl.newContact.Training_dangerous_goods_completed__c = 'Yes';
+            ctrl.createAgencyContact();
+            ctrl.contactType = 'Person';
+            ctrl.newContact = new AMS_Accreditation_Contact__c();
+            ctrl.newContact.First_name__c = 'testef';
+            ctrl.newContact.Last_name__c = 'testel';
+            ctrl.newContact.PhoneNational__c = '+65464644';
+            ctrl.newContact.Email__c = 'email@mail.com';
+            ctrl.newContact.Financial_Assessment_Contact__c = true;
+            ctrl.createAgencyContact();
+            ctrl.Save(); 
+            ctrl.goToStep3();
+            ctrl.goToStep4();
+            ctrl.goToStep5();
+            ctrl.saveAMSFormAndGoForward();
+            ctrl.saveAMSFormAndGoBack();
+            ctrl.saveAMSFormAndLeave();
+            ctrl.setPageLegalStatusAfterChangeLabels();
+            ctrl.newForm.Validation_ERRORS__c = true;
+            ctrl.highLightPageForErrors();
+            ctrl.sectorValue= 'Travel_Agent';
+            ctrl.fetchCountryRequirements();
+            ctrl.goToFinalStep();
+            ctrl.validateDangerousGoods(5);
+        }
+            
+    }
     
     
     

@@ -212,13 +212,19 @@
                   <h3>{!$Label.ANG_ISSP_CountryRequirementsTitle}</h3>
                 </div>              
                 <div class="panel-body" id="body-results">
-                  <div class="row">
-                    <div class="col-md-12">                
+                  <div class="row">                  
+                    <div class="col-md-12" style="display: {!IF(returnpage == true,'none','')}">                
                       <h4>
                         <span class="glyphicon glyphicon-menu-left"></span>
                         <a href="/ISSP_ANG_ProductComparison">{!$Label.ANG_ISSP_CountryRequirementsGoBack}</a>
                       </h4>
-                    </div>                          
+                    </div>
+                    <div class="col-md-12" style="display: {!IF(returnpage != true,'none','')}">                
+                      <h4>
+                        <span class="glyphicon glyphicon-menu-left"></span>
+                        <a href="/ISSP_AMSCases">{!$Label.ANG_ISSP_CountryRequirementsGoBackToOnlineAcc}</a>
+                      </h4>
+                    </div>                           
                   </div>
                   <div class="row">
                     <div class="col-md-2">
@@ -244,14 +250,14 @@
                   <div class="row">
                     <div class="col-md-12">
                       <apex:outputPanel id="countryRequirementsListId">
-                        <apex:pageBlock>
+                        <apex:pageBlock >
                           <apex:dataTable value="{!countryRequirementsList}" var="reqs" style="background-color:white" styleClass="table table-condensed"> 
                             <!--apex:column headerClass="info">
                               <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </apex:column-->
                             <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),agentType)),
                                                                          $Label.ISSP_AMS_NoC_Request_for_Change)}">
-                              <apex:outputText>
+                              <apex:outputText >
                                 <strong>{!reqs.Name}</strong><br/>
                                 <div style="font-weight: normal !important">
                                   <span>
