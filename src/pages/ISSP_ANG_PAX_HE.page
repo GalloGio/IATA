@@ -1535,13 +1535,11 @@
                     <!-- *********************** SECTION 5 - Other Information ************************ -->
                     <!-- ****************************************************************************** -->
 
-                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails,cargoaccountname">
+                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                        <apex:param name="AccountType" assignTo="{!accountType}" value="IATA Passenger Sales Agent"/>
-                        <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value=""/>
                     </apex:actionFunction>
-                    <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
+                    <apex:actionFunction name="fetchIATANAgency" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Travel Agent"/>
                         <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="IATAN Passenger Agent"/>
@@ -1575,10 +1573,7 @@
                 </apex:pageBlockSection>
 
                 <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
-                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
-                        <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
-                        <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                    </apex:actionFunction>
+                    
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="section5-cargo-code" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
@@ -1615,7 +1610,7 @@
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="section5-iatan-code" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
-                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchCargoAgent1(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
+                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchIATANAgency(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
                     </apex:pageBlockSectionItem>        
                     <apex:outputPanel id="iatantravelagen">
                         <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">

@@ -1132,9 +1132,9 @@ public without sharing class ISSP_AMS_Accreditation {
             
                 }else{ //NEWGEN - 552 START
                     if(con.Account.ANG_Accreditation_Model__c == 'Cash'){
-                        options.add(new SelectOption('New AE - Standard with Cash', Label.ISSP_ANG_Assoc_Entity));
+                        options.add(new SelectOption('New AE - Standard with Cash', Label.ISSP_AMS_Associate_Entity_Cash));
                     }else if(con.Account.ANG_Accreditation_Model__c == 'Cashless'){
-                        options.add(new SelectOption('New AE - Standard no Cash', Label.ISSP_ANG_Assoc_Entity));
+                        options.add(new SelectOption('New AE - Standard no Cash', Label.ISSP_AMS_Associate_Entity_Cashless));
                     } //NEWGEN - 552 END
                 }
             }else {
@@ -1209,10 +1209,6 @@ public without sharing class ISSP_AMS_Accreditation {
         system.debug('Salesforce newForm.AE_separate_Legal_Entity__c ' + newForm.AE_separate_Legal_Entity__c);
 
         SYSTEM.DEBUG('isGSARequired=' + getIsGSARequired() +  ';  amsIsGSA=' + amsIsGSA);
-        if (getIsGSARequired() && amsIsGSA == null) {
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
-            return null;
-        }
 
         if (amsLocationType == null && !isNoticeOfChange) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Empty_Location_Type));
@@ -1256,6 +1252,16 @@ public without sharing class ISSP_AMS_Accreditation {
 
             if (amsIsGSA == 'YES' && sectorValue.StartsWith('Travel_Agent')) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_Step1_IS_GSA_Warning));
+                return null;
+            }
+
+            if (getIsGSARequired() && amsIsGSA == null) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
+                return null;
+            }
+
+            if (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD && newForm.AE_separate_Legal_Entity__c == null) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
                 return null;
             }
             

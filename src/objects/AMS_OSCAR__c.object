@@ -24414,14 +24414,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Location type</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Location type to different legal entity</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Minor shareholding</fullName>
                 <default>false</default>
             </values>

@@ -101,7 +101,7 @@
         <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
         <externalId>false</externalId>
         <label>Country Coverage</label>
-        <length>100</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

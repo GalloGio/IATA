@@ -186,11 +186,12 @@ J-Joint Vent</inlineHelpText>
       
       UPPER(&apos;Monthly&apos;) , 12,
       UPPER(&apos;Fortnightly&apos;) , 24,
-      UPPER(&apos;Every ten days&apos;) , 48,
+      UPPER(&apos;Every 10 days&apos;) , 48,
       UPPER(&apos;Weekly&apos;) , 52,
-      UPPER(&apos;Every five days&apos;) , 73,
-      UPPER(&apos;Every three days&apos;) , 122,
+      UPPER(&apos;Every 5 days&apos;) , 73,
+      UPPER(&apos;Every 3 days&apos;) , 122,
       UPPER(&apos;Daily&apos;) , 300,
+      UPPER(&apos;4 times per month&apos;) , 48,
 0)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Remittances Per Year</label>

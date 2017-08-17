@@ -22,12 +22,9 @@
       });
     </script>
 
-    <body>
-      <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.4-dist/css/bootstrap.min.css')}" />
-      <script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
-      
+    <body>      
       <div class="container">
-        <c:ISSP_CustomNavigation />
+        <c:ISSP_CustomNavigation communityName="{!communityName}"/>
 			  <apex:form id="mainFrm">	
           <apex:pagemessages id="errors" />
 
@@ -279,7 +276,7 @@
             </div>            
           </apex:outputpanel>
         </apex:form>
-        <c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter communityName="{!communityName}"/>
       </div><!-- end container-->    
     </body>
   </html>

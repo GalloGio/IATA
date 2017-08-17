@@ -50,11 +50,6 @@
 	
 		<c:ISSP_Header ></c:ISSP_Header>   
 	 	<body>
-	 		<link rel="stylesheet" href="{!URLFOR($Resource.bootstrap, '/bootstrap-3.3.4-dist/css/bootstrap.min.css')}" />
-	 		<script src="{!URLFOR($Resource.BootstrapCSS, 'js/bootstrap.min.js')}"></script>
-
-	     	<!--apex:variable var="AdminOrNot" value="{!if($Profile.Name == 'ISS Portal Agency Delegated Admin User' || $Profile.Name == 'ISS Portal Airline Delegated Admin User' || $Profile.Name == 'ISS Portal Delegated Admin User'  || $Profile.Name == 'ISS Portal GSA Delegated Admin User','','none')}" /-->
-
 	 		<div class="container">
 		 		<c:ISSP_CustomNavigation communityName="{!communityName}"/>
 				<apex:form>

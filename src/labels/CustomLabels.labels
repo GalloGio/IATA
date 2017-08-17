@@ -739,8 +739,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG Conversion Tool Workaround</shortDescription>
-        <value>For what regards the workaround I would say to show always the same message: 
-&quot;The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
+        <value>The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
@@ -905,7 +904,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
-        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agencyâ€™s IATA EasyPay account.&lt;br/&gt;&lt;br/&gt;By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;&lt;br/&gt;Do you wish to proceed?</value>
+        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account.&lt;br/&gt;&lt;br/&gt;By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;&lt;br/&gt;Do you wish to proceed?</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Email_AccessRequest2_IEP</fullName>
@@ -977,7 +976,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject</shortDescription>
-        <value>IATA Customer Portal â€“ Change of</value>
+        <value>IATA Customer Portal – Change of</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</fullName>
@@ -1430,7 +1429,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>AddressDoctorNoState</shortDescription>
         <value>Error: Billing State/Province is empty, please follow this steps to fill it in:
  
- 1- Edit the â€œBilling cityâ€ line
+ 1- Edit the “Billing city” line
  2- Select one of the addresses proposed by the system</value>
     </labels>
     <labels>
@@ -1621,7 +1620,7 @@ Payment required on receipt of this Payment Advice
 &lt;/p&gt;
 &lt;p&gt;
     &lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
-    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, QuÃƒÂ©bec, CANADA&lt;br /&gt;
+    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, QuÃ©bec, CANADA&lt;br /&gt;
     Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
 &lt;/p&gt;
 
@@ -1956,7 +1955,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeReason1List1</shortDescription>
-        <value>AIMS Data Entry,CHG â€“ Data Maintenance,
+        <value>AIMS Data Entry,CHG – Data Maintenance,
 Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irregularity withdrawal,Reinstatement</value>
     </labels>
     <labels>
@@ -1964,7 +1963,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseTypeReason1List2</shortDescription>
-        <value>CHC â€“ Change of Shareholding ,New HO,CHN - Change of Name,New BR Abroad,CHO / CHS â€“ Change of Ownership / Legal Status,Financial RVW intermediaries</value>
+        <value>CHC – Change of Shareholding ,New HO,CHN - Change of Name,New BR Abroad,CHO / CHS – Change of Ownership / Legal Status,Financial RVW intermediaries</value>
     </labels>
     <labels>
         <fullName>CaseTypeRecordTypeList</fullName>
@@ -2387,7 +2386,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Disclaimer_1</shortDescription>
         <value>&lt;b&gt;NO WARRANTY&lt;/b&gt;
-&lt;p&gt;Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the Portal, the Portal and all components thereof are provided â€œas isâ€ and â€œas availableâ€, without any warranty, representation or condition whatsoever, express or implied.&lt;/p&gt;
+&lt;p&gt;Unless otherwise stated in terms applicable specifically to a certain component, product or service offered through the Portal, the Portal and all components thereof are provided “as is” and “as available”, without any warranty, representation or condition whatsoever, express or implied.&lt;/p&gt;
 &lt;p&gt;To the maximum extent allowed under applicable legislation, IATA disclaims any warranty, representation or condition, express or implied, in respect of the Portal and its components, including, without limitation, any warranties, representations, conditions and warranties of quality, merchantability, fitness for a particular purpose and non infringement.&lt;/p&gt;
 &lt;p&gt;Without limiting the generality of the foregoing, IATA does not represent, nor warrant, that the Portal will be uninterrupted or error free, that any deficiencies will be corrected, or that the server, the systems or the network underlying same are, or will be, free from viruses or other harmful components.</value>
     </labels>
@@ -2404,7 +2403,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Disclaimer_3</shortDescription>
-        <value>&lt;p&gt;Any material downloaded or otherwise obtained through the use of the Portal is done at the Userâ€™s own discretion and risk and the User is solely responsible for any damage to its computer system or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the Portal will create any warranty not expressly stated in the terms. IATA&apos;s employees are not authorized to vary these terms. &lt;/p&gt;</value>
+        <value>&lt;p&gt;Any material downloaded or otherwise obtained through the use of the Portal is done at the User’s own discretion and risk and the User is solely responsible for any damage to its computer system or loss of data that results from the download of any such material. No advice or information, whether oral or written, obtained by the User from IATA or through the Portal will create any warranty not expressly stated in the terms. IATA&apos;s employees are not authorized to vary these terms. &lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Download_Pdf</fullName>
@@ -2692,7 +2691,7 @@ The CCD is updated several times a year and is available in printed and electron
         <shortDescription>CurrencyCenter_def_Credit_Spread</shortDescription>
         <value>&lt;p&gt;&lt;b&gt;CDS 5Y Spread or Country Credit Rating&lt;/b&gt;
 &lt;ul&gt;
-&lt;li&gt;Measuring markets perception on countryâ€™s default risk&lt;/li&gt;
+&lt;li&gt;Measuring markets perception on country’s default risk&lt;/li&gt;
 &lt;li&gt;High risk of default discourages foreign investment and demand for local currency&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/p&gt;
@@ -2710,7 +2709,7 @@ The CCD is updated several times a year and is available in printed and electron
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Current_Account_part1</shortDescription>
-        <value>&lt;p&gt;The current account forms part of a countryâ€™s Balance of Payments. It is defined as the sum of the balance of trade (goods and services exports less imports), net income from abroad (eg interest and dividends) and net current transfers (such as foreign aid). The two latter components are typically much smaller than exports and imports. The current account balance is typically expressed as a percentage of nominal GDP.&lt;/p&gt;</value>
+        <value>&lt;p&gt;The current account forms part of a country’s Balance of Payments. It is defined as the sum of the balance of trade (goods and services exports less imports), net income from abroad (eg interest and dividends) and net current transfers (such as foreign aid). The two latter components are typically much smaller than exports and imports. The current account balance is typically expressed as a percentage of nominal GDP.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_Current_Account_part2</fullName>
@@ -2718,7 +2717,7 @@ The CCD is updated several times a year and is available in printed and electron
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Current_Account_part2</shortDescription>
         <value>&lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
-A current account deficit (ie more goods, services and capital is imported than exported) implies that a country is â€˜living beyond its meansâ€™. Although this makes a country more vulnerable to adverse economic developments or shifts in investor sentiment, of itself a CAD is neither inherently â€˜goodâ€™ nor â€˜badâ€™. If a country uses external debt to finance investments that have a higher return than the interest rate on the debt, it can remain solvent while running a current account deficit. If a country is unlikely to cover current debt levels with future revenue streams, it may become insolvent.&lt;/p&gt;
+A current account deficit (ie more goods, services and capital is imported than exported) implies that a country is ‘living beyond its means’. Although this makes a country more vulnerable to adverse economic developments or shifts in investor sentiment, of itself a CAD is neither inherently ‘good’ nor ‘bad’. If a country uses external debt to finance investments that have a higher return than the interest rate on the debt, it can remain solvent while running a current account deficit. If a country is unlikely to cover current debt levels with future revenue streams, it may become insolvent.&lt;/p&gt;
 &lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt;
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
@@ -2734,7 +2733,7 @@ A current account deficit (ie more goods, services and capital is imported than 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part1</shortDescription>
-        <value>&lt;p&gt;Foreign exchange (FX) reserves are a store of foreign currency, held in â€˜reserveâ€™ (at the Central Bank or other monetary authority) which can be drawn upon to back the countryâ€™s liabilities. The first FX reserves indicator relates to the level, specifically the level of reserves compared with imports. Imports represent a fundamental foreign currency obligation which must be financed. Most analysts accept that a buffer of reserves equivalent to at least three monthâ€™s worth of imports is an appropriate benchmark.&lt;/p&gt;</value>
+        <value>&lt;p&gt;Foreign exchange (FX) reserves are a store of foreign currency, held in ‘reserve’ (at the Central Bank or other monetary authority) which can be drawn upon to back the country’s liabilities. The first FX reserves indicator relates to the level, specifically the level of reserves compared with imports. Imports represent a fundamental foreign currency obligation which must be financed. Most analysts accept that a buffer of reserves equivalent to at least three month’s worth of imports is an appropriate benchmark.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_Foreign_Exchange_Reserves_1_part2</fullName>
@@ -2753,7 +2752,7 @@ A country seeking to defend the value of its domestic currency will begin to sel
         <shortDescription>CurrencyCenter_def_Foreign_Exchange_Reserves_2</shortDescription>
         <value>&lt;p&gt;The second FX reserves indicator relates to the rate of change in the level of reserves.&lt;/p&gt;
 &lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
-If a government is selling down its reserves at a rapid rate, the sooner it will reach the critical level of reserves (noted above). The â€˜speed of reductionâ€™ measure should therefore complement the â€˜levelâ€™ measure by providing more of a leading indicator of potential future currency concerns.&lt;/p&gt;
+If a government is selling down its reserves at a rapid rate, the sooner it will reach the critical level of reserves (noted above). The ‘speed of reduction’ measure should therefore complement the ‘level’ measure by providing more of a leading indicator of potential future currency concerns.&lt;/p&gt;
 &lt;b&gt;Frequency?&lt;/b&gt; Monthly or Quarterly or Annual&lt;br/&gt;
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
@@ -2775,9 +2774,9 @@ If a government is selling down its reserves at a rapid rate, the sooner it will
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_GDP_Growth</shortDescription>
-        <value>&lt;p&gt;Gross Domestic Product (GDP) measures the change in a nationâ€™s output (capturing both goods and services). The indicator chosen is the difference between the current rate of real GDP growth and a three-year historical average rate. The use of an average helps to limit the impact of any one-off events or developments on GDP. &lt;/p&gt; 
+        <value>&lt;p&gt;Gross Domestic Product (GDP) measures the change in a nation’s output (capturing both goods and services). The indicator chosen is the difference between the current rate of real GDP growth and a three-year historical average rate. The use of an average helps to limit the impact of any one-off events or developments on GDP. &lt;/p&gt; 
 &lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
-A widening gap between the current rate of growth and that of the recent past â€“ in either a positive or negative direction â€“ gives an indication of investor attractiveness and expected returns. Such changes in expectations are often associated with capital flows into or out of the country which, in turn, has implications for shifts in the currency. 
+A widening gap between the current rate of growth and that of the recent past – in either a positive or negative direction – gives an indication of investor attractiveness and expected returns. Such changes in expectations are often associated with capital flows into or out of the country which, in turn, has implications for shifts in the currency. 
 &lt;/p&gt;
 &lt;b&gt;Frequency?&lt;/b&gt; Quarterly (typically) or Annual&lt;br/&gt; 
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
@@ -2787,7 +2786,7 @@ A widening gap between the current rate of growth and that of the recent past â
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_ICCS</shortDescription>
-        <value>The general approach taken by IATA in converting ICCS Member Airlinesâ€™ funds is one of using pre-determined foreign exchange (FX) policies negotiated in advance with its banking partners and based on neutral market sources (i.e. benchmark rates, Reuters, Central Bank official rates etc.). Contracts are, in general, 2-day spot contracts, but can be different based on market standards.&lt;br/&gt;
+        <value>The general approach taken by IATA in converting ICCS Member Airlines’ funds is one of using pre-determined foreign exchange (FX) policies negotiated in advance with its banking partners and based on neutral market sources (i.e. benchmark rates, Reuters, Central Bank official rates etc.). Contracts are, in general, 2-day spot contracts, but can be different based on market standards.&lt;br/&gt;
 In this regard, ICCS has two main FX Conversion Policies: (1) Central Policy and (2) Local policies. The Central FX Conversion Policy is the main policy as it covers the majority of the volume ICCS handles and covers all currencies that are freely tradable.&lt;br/&gt;&lt;br/&gt;
 &lt;b&gt;1. Central Policy for Currency Conversion Rates&lt;/b&gt;&lt;br/&gt;
 Currently agreed by IATA with the present ICCS Service Bank (Citibank N.A. London). 
@@ -2798,7 +2797,7 @@ IATA is currently using the CitiFX Benchmark product for conversion of all curre
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_ICCS_2</shortDescription>
-        <value>mid-market rates direct from the interbank electronic dealing platforms. These rates are publicly available on Reuters and Bloomberg pages â€˜FXBENCHâ€™, as well as, on the CitiFX Interactive website. IATA-ICCS trades are dealt against either of the fixings between 11:00 and 13:00 GMT. Pre-negotiated market spreads are then applied to the mid-market rates produced by the FX Benchmark to arrive at the deal rates.  Based on the above, the FX conversions will be carried out at the FXBENCH fixing rate plus (+) or minus (-) the agreed spread, as applicable based on each airline participantâ€™s net position on the currency.&lt;br/&gt;&lt;br/&gt;
+        <value>mid-market rates direct from the interbank electronic dealing platforms. These rates are publicly available on Reuters and Bloomberg pages ‘FXBENCH’, as well as, on the CitiFX Interactive website. IATA-ICCS trades are dealt against either of the fixings between 11:00 and 13:00 GMT. Pre-negotiated market spreads are then applied to the mid-market rates produced by the FX Benchmark to arrive at the deal rates.  Based on the above, the FX conversions will be carried out at the FXBENCH fixing rate plus (+) or minus (-) the agreed spread, as applicable based on each airline participant’s net position on the currency.&lt;br/&gt;&lt;br/&gt;
 &lt;b&gt;2. Local FX Conversion Policies&lt;/b&gt;&lt;br/&gt;
 IATA has negotiated separate FX conversion policies for each currency that is not freely convertible and therefore requires local conversion.&lt;br/&gt;&lt;br/&gt;
 &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/index.aspx&quot; target=&quot;_blank&quot;&gt;ICCS FX Policy is available on the IATA Customer Portal&lt;/a&gt;</value>
@@ -2846,7 +2845,7 @@ Rates for one day each period, seven days after the &quot;advice day&quot; that 
         <shortDescription>CurrencyCenter_def_Inflation</shortDescription>
         <value>&lt;p&gt;Inflation measures changes in the general level of prices paid by consumers within an economy. It is generally expressed as the rate of change (in the consumer price index) over a 12 month period.&lt;/p&gt;
 &lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt;
-Inflation â€“ depending on its underlying cause â€“ can be an indicator of emerging problems within an economy. The relationship between economic activity, inflation, interest rates, and exchange rates is not a linear one, however, in the long run, changes in relative inflation should lead to changes in exchange rates. While a lower rate of inflation is generally preferred to a higher rate, deflation (negative inflation or falling prices) can also be a cause for concern â€“ for both economic activity and currency movements.&lt;/p&gt;
+Inflation – depending on its underlying cause – can be an indicator of emerging problems within an economy. The relationship between economic activity, inflation, interest rates, and exchange rates is not a linear one, however, in the long run, changes in relative inflation should lead to changes in exchange rates. While a lower rate of inflation is generally preferred to a higher rate, deflation (negative inflation or falling prices) can also be a cause for concern – for both economic activity and currency movements.&lt;/p&gt;
 &lt;b&gt;Frequency?&lt;/b&gt; Monthly (typically) or Quarterly or Annual&lt;br/&gt;
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
@@ -2866,7 +2865,7 @@ One Multilateral Agreement concluded with another airline through IATA results i
         <shortDescription>CurrencyCenter_def_Non_Performing_Loans</shortDescription>
         <value>&lt;p&gt;A non-performing loan (NPL) is one where the debtor has fallen behind with their payments of interest and/or principal. Although definitions vary, one often accepted benchmark is when the loan repayments are in arrears by more than 90 days. The chosen indicator is the share of NPL to total loans.&lt;/p&gt; 
 &lt;p&gt;&lt;b&gt;Why is it a relevant EWI?&lt;/b&gt;&lt;br/&gt; 
-Other things equal, the higher the share of NPL, the more widespread the degree of financial stress in the country and, consequently, the greater the risk of adverse currency developments â€“ for example as investors seek to repatriate capital.&lt;/p&gt; 
+Other things equal, the higher the share of NPL, the more widespread the degree of financial stress in the country and, consequently, the greater the risk of adverse currency developments – for example as investors seek to repatriate capital.&lt;/p&gt; 
 &lt;b&gt;Frequency?&lt;/b&gt; Annual&lt;br/&gt; 
 &lt;b&gt;Source?&lt;/b&gt; IMF</value>
     </labels>
@@ -2891,7 +2890,7 @@ PSC also provides a forum for the discussion of new developments in the airline 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_def_Sovereign_Credit_Rating</shortDescription>
-        <value>&lt;p&gt;Is the credit rating of a country or sovereign entity. Sovereign credit ratings give investors insight into the level of risk associated with investing in a particular country and also include political risks. First source of preference is Standard &amp; Poorâ€™s and when not available Fitch Ratings or Moodyâ€™s will be the reference.&lt;/p&gt;</value>
+        <value>&lt;p&gt;Is the credit rating of a country or sovereign entity. Sovereign credit ratings give investors insight into the level of risk associated with investing in a particular country and also include political risks. First source of preference is Standard &amp; Poor’s and when not available Fitch Ratings or Moody’s will be the reference.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_def_Spot_Change</fullName>
@@ -3434,7 +3433,7 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
         <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
-You will receive an email with a copy of your quote or you can retrieve the quote details from the â€œAccount Informationâ€ section.</value>
+You will receive an email with a copy of your quote or you can retrieve the quote details from the “Account Information” section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -3599,7 +3598,7 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCARD_reasonCode200</shortDescription>
-        <value>The credit card holderâ€™s address information provided is incorrect. Please try again. If the problem persists, please contact your issuing bank.</value>
+        <value>The credit card holder’s address information provided is incorrect. Please try again. If the problem persists, please contact your issuing bank.</value>
     </labels>
     <labels>
         <fullName>IDCARD_reasonCode201</fullName>
@@ -3746,7 +3745,7 @@ Ensuring that the industry adapts and adheres to these global standards and reco
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CaptchaError</shortDescription>
-        <value>Captcha Error. Please note for all the accented characters such as ÃƒÂ±, ÃƒÂ¡, ÃƒÂ , etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
+        <value>Captcha Error. Please note for all the accented characters such as Ã±, Ã¡, Ã , etc. displayed in Captcha, kindly replace them with plain English alphabet or simply refresh for a new set of code.</value>
     </labels>
     <labels>
         <fullName>IDCard_CardDuration</fullName>
@@ -3883,14 +3882,14 @@ IATA will take no responsibility should a supplier fail to recognize the ID Card
         <shortDescription>IDCard_CheckList_ProofEmployment</shortDescription>
         <value>** SCANNED IN PDF FORMAT **&lt;br/&gt; 
 Accepted documents for agency employees include:&lt;br/&gt; 
-- Official letter of attestation produced by your Agency stating your current employment status and signed by Agencyâ€™s owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
+- Official letter of attestation produced by your Agency stating your current employment status and signed by Agency’s owner/reporting manager, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
 - Pay stub/Pay slip to prove direct deposit of salary from your Agency, &lt;b&gt;AND/OR&lt;/b&gt;&lt;br/&gt; 
 - Agency disbursement records&lt;br/&gt;&lt;br/&gt; 
 
 Accepted documents for independent travel consultant/contractor/broker are:&lt;br/&gt; 
 - Pay stub/Pay slip to prove direct deposit of commission from your Agency&lt;br/&gt; 
 &lt;b&gt;AND&lt;/b&gt;&lt;br/&gt; 
-- A written contract or agreement in compliance with applicable laws and regulations or Official letter of attestation produced by your Agency stating your current employment status and signed by Agencyâ€™s owner/reporting manager.</value>
+- A written contract or agreement in compliance with applicable laws and regulations or Official letter of attestation produced by your Agency stating your current employment status and signed by Agency’s owner/reporting manager.</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckList_ProofEmploymentOptionTitle</fullName>
@@ -4484,14 +4483,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlBSPlink_Description</shortDescription>
-        <value>Explore los procesos de facturaciÃƒÂ³n y el Plan de LiquidaciÃƒÂ³n (BSP) de informes y envÃƒÂ­o de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrÃƒÂ¡ las habilidades para: Entender cÃƒÂ³mo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicaciÃƒÂ³n de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Explore los procesos de facturaciÃ³n y el Plan de LiquidaciÃ³n (BSP) de informes y envÃ­o de remesas y la funcionalidad del usuario BSPLink. Al completar este curso usted tendrÃ¡ las habilidades para: Entender cÃ³mo funciona BSPlink; Discernir los niveles de acceso a BSPlink; Informes de acceso y comunicaciÃ³n de BSPlink. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/introduccion-bsplink-tttg44-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_IntroduccionAlSistemaBSPyLenguajeBSP_Description</shortDescription>
-        <value>Los informes y los procedimientos de facturaciÃƒÂ³n Agente BSP. Al completar este curso usted tendrÃƒÂ¡ las habilidades para: Entender los conceptos bÃƒÂ¡sicos del sistema BSP; Referencia tÃƒÂ©rminos y definiciones BSP; Explicar el proceso de presentaciÃƒÂ³n de informes BSP; Ventas de informe a travÃƒÂ©s del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Los informes y los procedimientos de facturaciÃ³n Agente BSP. Al completar este curso usted tendrÃ¡ las habilidades para: Entender los conceptos bÃ¡sicos del sistema BSP; Referencia tÃ©rminos y definiciones BSP; Explicar el proceso de presentaciÃ³n de informes BSP; Ventas de informe a travÃ©s del BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/sistema-bsp-lenguaje-tttg43-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_IntroductiontoBSPLink_Description</fullName>
@@ -4670,7 +4669,7 @@ In order to verify that you need to upload a proof of last name change.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Leserviceauclientvoyageur_Description</shortDescription>
-        <value>Le niveau de satisfaction de la clientÃƒÂ¨le influence les dÃƒÂ©cisions d&apos;achat et la fidÃƒÂ©lisation. L&apos;objectif de ce cours sur le service ÃƒÂ  la clientÃƒÂ¨le est de prÃƒÂ©senter les stratÃƒÂ©gies essentielles pour faire en sorte que le contact de premiÃƒÂ¨re ligne avec le client constitue une expÃƒÂ©rience positive et mÃƒÂ©morable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Le niveau de satisfaction de la clientÃ¨le influence les dÃ©cisions d&apos;achat et la fidÃ©lisation. L&apos;objectif de ce cours sur le service Ã  la clientÃ¨le est de prÃ©senter les stratÃ©gies essentielles pour faire en sorte que le contact de premiÃ¨re ligne avec le client constitue une expÃ©rience positive et mÃ©morable. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/service-client-voyageur-tttg66-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_LoginPersonalInfo_Label</fullName>
@@ -4721,7 +4720,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LosInformesyLosProcedimientosDeFacturacionAgenteBSP_Description</shortDescription>
-        <value>Aprenda sobre el proceso de presentaciÃƒÂ³n de informes del agente en el Plan de FacturaciÃƒÂ³n y LiquidaciÃƒÂ³n (BSP) y cÃƒÂ³mo interpretar los informes de facturaciÃƒÂ³n. Este mÃƒÂ³dulo de aprendizaje es parte de un nuevo curso de seis mÃƒÂ³dulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrÃƒÂ¡ las habilidades para: Seguir con el proceso de presentaciÃƒÂ³n de informes BSP; Identificar los documentos de presentaciÃƒÂ³n de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturaciÃƒÂ³n; Interpretar los informes de facturaciÃƒÂ³n BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
+        <value>Aprenda sobre el proceso de presentaciÃ³n de informes del agente en el Plan de FacturaciÃ³n y LiquidaciÃ³n (BSP) y cÃ³mo interpretar los informes de facturaciÃ³n. Este mÃ³dulo de aprendizaje es parte de un nuevo curso de seis mÃ³dulos: IATA BSP Esencial para Agentes de Viaje. Al completar este curso usted tendrÃ¡ las habilidades para: Seguir con el proceso de presentaciÃ³n de informes BSP; Identificar los documentos de presentaciÃ³n de informes BSP y corregir cualquier discrepancia; Acceder al BSP informes de calendario y de facturaciÃ³n; Interpretar los informes de facturaciÃ³n BSP. More Details &lt;a href=\&quot;http://www.iata.org/training/courses/Pages/procedimientos-facturacion-bsp-tttg46-es.aspx\&quot; target=\&quot;_blank\&quot;&gt;Here&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>IDCard_Match_IsNotTheAgent</fullName>
@@ -6683,7 +6682,7 @@ If you continue to experience issues registering for the IATA Customer Portal, t
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC_NoRecordsFoundGP</shortDescription>
-        <value>No records were found matching your search criteria. Please click on â€œBackâ€ to proceed with the registration process as Other Company or General Public or modify your search criteria and try again.
+        <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as Other Company or General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
@@ -6720,7 +6719,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IEC Registration UserExist</shortDescription>
-        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use â€œForgot your password?â€ function.</value>
+        <value>This e-mail is already registered in the Online Store. If you would like to reset your password, please go back to the login screen and use “Forgot your password?” function.</value>
     </labels>
     <labels>
         <fullName>IEC_Required_Field_Error_Msg</fullName>
@@ -7056,11 +7055,11 @@ msgDeleted: is deleted.</value>
         <value>We are sorry, but you login attempt failed. Please make sure that your user (email) and password are correct.&lt;br/&gt; 
 If you are coming from one of the following countries:&lt;br/&gt; 
 &lt;ol&gt; 
-&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East â€“ AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Americas â€“ AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific â€“ BD, BT, IN, NP, PH, PK&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;China &amp; North Asia â€“ HK, MN, TW&lt;/li&gt; 
-&lt;li type=&quot;square&quot;&gt;Europe â€“ CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Africa &amp; Middle East – AE, ET, IR, JO, KE, KW, LB, MD, MZ, NA, ZA, TZ&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Americas – AG, AR, AW, BS, BB, BQ, CL, CR, CW, DM, DO, GD, GY, HT, JM, KN, KY, LC, MS, PY, SR, SX, TC, TT, UY, VC, VG&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Asia &amp; Pacific – BD, BT, IN, NP, PH, PK&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;China &amp; North Asia – HK, MN, TW&lt;/li&gt; 
+&lt;li type=&quot;square&quot;&gt;Europe – CZ, DK, EE, GB, HR, HU, GR, IS, LU, LV, LT, MT, NL, NO, PT, RO, SE, SK, UA&lt;/li&gt; 
 &lt;/ol&gt; 
 In order to upload your financial documents, please, login to Customer Portal on &lt;b&gt;&lt;a href=&apos;http://portal.iata.org&apos;&gt;http://portal.iata.org&lt;/a&gt;&lt;/b&gt;</value>
     </labels>
@@ -7396,6 +7395,22 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Agency Type</shortDescription>
         <value>Type of Agency</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
+        <value>New Associate Entity - Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
+        <value>New Associate Entity - Cashless</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
@@ -8112,14 +8127,14 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).</value>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1 New</shortDescription>
-        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).</value>
+        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2</fullName>
@@ -8423,7 +8438,7 @@ IFG Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Cases Notify IATA Changes Error</shortDescription>
-        <value>Only users from your Agencyâ€™s Head Entity can notify IATA of changes.</value>
+        <value>Only users from your Agency’s Head Entity can notify IATA of changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_City</fullName>
@@ -8446,6 +8461,14 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Click here</shortDescription>
         <value>Click here to continue with Agency Accreditation.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Compare_Accreditation_Types</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
+        <value>Compare Accreditation types</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
@@ -9209,6 +9232,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS IS GSA</shortDescription>
         <value>We regret to inform you that according to the current Passenger Sales Agency Rules, the applicant shall not trade as a General Sales Agent (GSA) for any carrier in the country where it is established.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_IS_Separate_Entity_Null</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS IS Separate Entity Null</shortDescription>
+        <value>Please select if the Associate Entity is a separate Legal Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_If_Approved_Gross_Amnt</fullName>
@@ -10807,7 +10837,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_TC</shortDescription>
-        <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the â€˜Company informationâ€™ above to make these statements and file this document.</value>
+        <value>I hereby certify that the foregoing statements (including statements made in any attachment hereto) are true and correct to the best of my knowledge and belief, and that I am authorized by the organization identified in the ‘Company information’ above to make these statements and file this document.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_TC_Change_CASS</fullName>
@@ -10915,10 +10945,11 @@ You will be required to upload a scanned copy of this document in the next step 
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Updated_Accreditation_Type</fullName>
+        <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Updated Accreditation Type</shortDescription>
-        <value>Updated Accreditation Type</value>
+        <value>Change of Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>
@@ -11138,7 +11169,7 @@ You will be required to upload a scanned copy of this document in the next step 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS OPTION CGO HO New</shortDescription>
-        <value>IATA Cargo Agent / IFACP Forwarder â€“ New Head Office</value>
+        <value>IATA Cargo Agent / IFACP Forwarder – New Head Office</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_OPTION_COURIER_BRANCH</fullName>
@@ -12133,7 +12164,7 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).</value>
+        <value>If your agency is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies_New</fullName>
@@ -12141,7 +12172,7 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Companies New</shortDescription>
-        <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).</value>
+        <value>If your company is fully- or partially-owned by one or more companies, please enter the details here (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Companies_SubTitle</fullName>
@@ -12164,7 +12195,7 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 Ownership</shortDescription>
-        <value>Except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market, the ownership shown here should total 100%.</value>
+        <value>Except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market, the ownership shown here should total 100%.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_Ownership_SubTitle</fullName>
@@ -12180,14 +12211,14 @@ You can update you Ownership details at any time by following the &lt;i&gt;IATA 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People</shortDescription>
-        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
+        <value>If your agency is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the agency.&lt;br/&gt;&lt;br/&gt;Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_4_People_Intermediary</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People Intermediary</shortDescription>
-        <value>If your intermediary is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).&lt;br/&gt;
+        <value>If your intermediary is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;
 Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the Intermediary. 
 Select at least one Authorized Signatory, and choose the Financial Assessment Contact and Portal Administrator.</value>
     </labels>
@@ -12197,7 +12228,7 @@ Select at least one Authorized Signatory, and choose the Financial Assessment Co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 4 People New</shortDescription>
-        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an â€˜over-the-counterâ€™ market).&lt;br/&gt;&lt;br/&gt;
+        <value>If your company is fully- or partially-owned by one or more people, please enter their details here as owners, partners or shareholders (except where your organization is a legal entity whose shares are listed on a security exchange or are regularly traded in an ‘over-the-counter’ market).&lt;br/&gt;&lt;br/&gt;
 Enter the names and titles for the directors or officers of a corporation, and the details of the managers of the company.&lt;br/&gt;&lt;br/&gt;
 Select at least one authorised signatory, and choose the Financial Assessment contact and Portal Administrator.</value>
     </labels>
@@ -13349,7 +13380,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AgencyInformation_disclaimer</shortDescription>
-        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:Ã¢â‚¬Â¦</value>
+        <value>Pilot Phase: please note that only Changes and New processes related codes are currently available everywhere. The rest of Agency Information is only available for the following Countries:â€¦</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_AgencyInformation_disclaimer_Daily</fullName>
@@ -14073,7 +14104,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Account Statements Disclaimer</shortDescription>
-        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATAâ€™s account has been credited.
+        <value>NOTE: Kindly note that these balances are updated on the portal at least one business day after IATA’s account has been credited.
 Also note that the data contained in ICE is provided to IATA by third parties at 24 hour intervals, and may not be current, accurate or complete</value>
     </labels>
     <labels>
@@ -14844,7 +14875,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CertificateEmail3</shortDescription>
-        <value>To check the status of your request or to communicate with us, log to your Customer Portal and look for the above record under â€œMy recent casesâ€ or using the â€œSearchâ€ option.</value>
+        <value>To check the status of your request or to communicate with us, log to your Customer Portal and look for the above record under “My recent cases” or using the “Search” option.</value>
     </labels>
     <labels>
         <fullName>ISSP_Certificate_All</fullName>
@@ -14859,7 +14890,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Certificate_Confirm</shortDescription>
-        <value>You have selected to purchase an IATA Certificate. Please note that if you are currently subscribed to receive your certificate annually, this request will be considered as an additional copy and charged according to the pricelist. Click â€œConfirmâ€ to accept the charges related to the product and proceed.</value>
+        <value>You have selected to purchase an IATA Certificate. Please note that if you are currently subscribed to receive your certificate annually, this request will be considered as an additional copy and charged according to the pricelist. Click “Confirm” to accept the charges related to the product and proceed.</value>
     </labels>
     <labels>
         <fullName>ISSP_Certificate_Delivered</fullName>
@@ -15949,7 +15980,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseComment_Subject</shortDescription>
-        <value>New comment on case nÃ‚Âº</value>
+        <value>New comment on case nÂº</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_CaseResolution</fullName>
@@ -16378,7 +16409,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_aNewComment</shortDescription>
-        <value>The new comment below has been posted on your case nÃ‚Âº</value>
+        <value>The new comment below has been posted on your case nÂº</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_do_not_reply</fullName>
@@ -16733,7 +16764,7 @@ Please add below all your company valid email domains, including different ones 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_GeneralPublicNotFound</shortDescription>
-        <value>No General Public Account was found matching your search criteria. Please click on â€œNextâ€ to return to login page.</value>
+        <value>No General Public Account was found matching your search criteria. Please click on “Next” to return to login page.</value>
     </labels>
     <labels>
         <fullName>ISSP_General_Public</fullName>
@@ -17175,7 +17206,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Registration</shortDescription>
-        <value>Non-existing IATA code. Please, fill the correct IATA Code. If you do not have IATA code, please, select â€˜Otherâ€™ as â€˜Type of Customerâ€™.</value>
+        <value>Non-existing IATA code. Please, fill the correct IATA Code. If you do not have IATA code, please, select ‘Other’ as ‘Type of Customer’.</value>
     </labels>
     <labels>
         <fullName>ISSP_IATA_NOT_Found_for_Country</fullName>
@@ -18164,7 +18195,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGP</shortDescription>
-        <value>No records were found matching your search criteria. Please click on â€œBackâ€ to proceed with the registration process as General Public or modify your search criteria and try again.
+        <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the IATA Customer Portal then please consult our &lt;a href=http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US target=_blank&gt;troubleshooting guide&lt;/a&gt;</value>
     </labels>
@@ -18174,7 +18205,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_NoRecordsFoundGP_CNS</shortDescription>
-        <value>No records were found matching your search criteria. Please click on â€œBackâ€ to proceed with the registration process as General Public or modify your search criteria and try again.
+        <value>No records were found matching your search criteria. Please click on “Back” to proceed with the registration process as General Public or modify your search criteria and try again.
 &lt;br/&gt;&lt;br/&gt;
 If you continue to experience issues registering for the CNS Customer Portal then please contact us at 786-413-1000</value>
     </labels>
@@ -18492,7 +18523,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PageDescription_ISSP_AccessToService</shortDescription>
-        <value>Manage portal service requests for you and your companyâ€™s portal users</value>
+        <value>Manage portal service requests for you and your company’s portal users</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_AvailableServices</fullName>
@@ -18529,7 +18560,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PageDescription_ISSP_ContactList</shortDescription>
-        <value>Manage your companyâ€™s portal users by granting/denying their access to the Customer Portal, or creating a new user</value>
+        <value>Manage your company’s portal users by granting/denying their access to the Customer Portal, or creating a new user</value>
     </labels>
     <labels>
         <fullName>ISSP_PageDescription_ISSP_FAQ2Case</fullName>
@@ -19017,7 +19048,7 @@ Passenger Agencies - 8 digits;&lt;br/&gt;
 Cargo Agencies - 11 digits;&lt;br/&gt;
 GSA - 3 letters.
 &lt;br/&gt;&lt;br/&gt;
-If you do not have an IATA Code please go back and select â€˜Other Companyâ€™ as â€˜Type of Customerâ€™.</value>
+If you do not have an IATA Code please go back and select ‘Other Company’ as ‘Type of Customer’.</value>
     </labels>
     <labels>
         <fullName>ISSP_Registration_JobTitle</fullName>
@@ -19941,7 +19972,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
 &lt;/BR&gt;
 &lt;/BR&gt;
 &lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard is a dynamic, Web based information tool that assists and supports airline treasuries with their Liquidity Planning and Cash Flow Forecasting activities.
-The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATAâ€™s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
+The Dashboard allows each airline Treasury Team to gain full visibility of their incoming cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit: 
 &lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
 &lt;/font&gt;</value>
     </labels>
@@ -20002,7 +20033,7 @@ The Dashboard allows each airline Treasury Team to gain full visibility of their
 &lt;/BR&gt;
 &lt;/BR&gt;
 &lt;font face=&quot;ARIAL&quot; size=&quot;1&quot; color=&quot;rgb(23,54,93)&quot;&gt;The IATA Treasury Dashboard Premium will give you access to the credit card dashboard to view sales via different credit card types.
-This Dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report â€“ in addition to viewing cash flows being processed by each of IATAâ€™s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit:
+This Dashboard allows each airline Treasury Team to gain full visibility of their incoming credit card sales, and the related credit card sales downloadable report – in addition to viewing cash flows being processed by each of IATA’s main settlement systems: BSP, CASS, ICCS (Currency Clearance Service) and ICH (IATA Clearing House). For more info visit:
 &lt;a href= &quot;www.iata.org/treasurydashboard&quot;&gt;www.iata.org/treasurydashboard&lt;/a&gt;
 &lt;/font&gt;</value>
     </labels>
@@ -20816,7 +20847,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Kavi email notification part 2</shortDescription>
-        <value>Details of all industry standard setting groups that use this platform will be visible. Please select the group(s) in which you plan to actively participate and follow  â€œjoin the groupâ€.</value>
+        <value>Details of all industry standard setting groups that use this platform will be visible. Please select the group(s) in which you plan to actively participate and follow  “join the group”.</value>
     </labels>
     <labels>
         <fullName>Kavi_email_notification_part_3</fullName>
@@ -21140,7 +21171,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LAQ_NoRecordsFound</shortDescription>
-        <value>No records were found matching your search criteria. Please click on â€œNextâ€ to proceed with the registration process or modify your search criteria and try again.</value>
+        <value>No records were found matching your search criteria. Please click on “Next” to proceed with the registration process or modify your search criteria and try again.</value>
     </labels>
     <labels>
         <fullName>LAQ_NoTiess</fullName>
@@ -21203,7 +21234,7 @@ an IATA accredited agency, please press &quot;Back&quot; button and select anoth
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TIESS bubble</shortDescription>
-        <value>Please enter your 7 digits TIESS Code, collated to the mention â€œTIESS_â€. Example: TIESS_1234567</value>
+        <value>Please enter your 7 digits TIESS Code, collated to the mention “TIESS_”. Example: TIESS_1234567</value>
     </labels>
     <labels>
         <fullName>LAQ_Thankyou</fullName>
@@ -21585,7 +21616,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>LiveAgentFootNote</shortDescription>
-        <value>Please notice that you can save the transcript of this chat session via the â€œSave chatâ€ button in the Top of the screen</value>
+        <value>Please notice that you can save the transcript of this chat session via the “Save chat” button in the Top of the screen</value>
     </labels>
     <labels>
         <fullName>LiveAgentNEW</fullName>
@@ -25076,7 +25107,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Bosnian</shortDescription>
-        <value>ÃÂ±ÃÂ¾Ã‘ÂÃÂ°ÃÂ½Ã‘ÂÃÂºÃÂ¸</value>
+        <value>Ð±Ð¾ÑÐ°Ð½ÑÐºÐ¸</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_cy</fullName>
@@ -25110,8 +25141,8 @@ title,Title,Name</value>
         <fullName>pkb2_lang_es</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>EspaÃƒÂ±ol</shortDescription>
-        <value>EspaÃƒÂ±ol</value>
+        <shortDescription>EspaÃ±ol</shortDescription>
+        <value>EspaÃ±ol</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_et</fullName>
@@ -25153,7 +25184,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Hindi</shortDescription>
-        <value>Ã Â¤Â¹Ã Â¤Â¿Ã Â¤Â¨Ã Â¥ÂÃ Â¤Â¦Ã Â¥â‚¬</value>
+        <value>à¤¹à¤¿à¤¨à¥à¤¦à¥€</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_hr</fullName>
@@ -25167,7 +25198,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Armenian</shortDescription>
-        <value>Ã•â‚¬Ã•Â¡Ã•ÂµÃ•Â¥Ã–â‚¬Ã•Â§Ã•Â¶</value>
+        <value>Õ€Õ¡ÕµÕ¥Ö€Õ§Õ¶</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_in</fullName>
@@ -25181,7 +25212,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Icelandic</shortDescription>
-        <value>ÃƒÂslenska</value>
+        <value>Ãslenska</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_it</fullName>
@@ -25195,49 +25226,49 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Japanese</shortDescription>
-        <value>Ã¦â€”Â¥Ã¦Å“Â¬Ã£ÂÂ®</value>
+        <value>æ—¥æœ¬ã®</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ka</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Georgian</shortDescription>
-        <value>Ã¡Æ’Â¥Ã¡Æ’ÂÃ¡Æ’Â Ã¡Æ’â€”Ã¡Æ’Â£Ã¡Æ’Å¡Ã¡Æ’Ëœ</value>
+        <value>áƒ¥áƒáƒ áƒ—áƒ£áƒšáƒ˜</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ko</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Korean</shortDescription>
-        <value>Ã­â€¢Å“ÃªÂµÂ­Ã¬â€“Â´</value>
+        <value>í•œêµ­ì–´</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lb</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Luxembourgish</shortDescription>
-        <value>LÃƒÂ«tzebuergesch</value>
+        <value>LÃ«tzebuergesch</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lt</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Lithuanian</shortDescription>
-        <value>LietuviÃ…Â³ Kalba</value>
+        <value>LietuviÅ³ Kalba</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_lv</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Latvian</shortDescription>
-        <value>LatvieÃ…Â¡u Valoda</value>
+        <value>LatvieÅ¡u Valoda</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mk</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Macedonian</shortDescription>
-        <value>ÃÂ¼ÃÂ°ÃÂºÃÂµÃÂ´ÃÂ¾ÃÂ½Ã‘ÂÃÂºÃÂ¸</value>
+        <value>Ð¼Ð°ÐºÐµÐ´Ð¾Ð½ÑÐºÐ¸</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_mt</fullName>
@@ -25258,28 +25289,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese (Brazilian)</shortDescription>
-        <value>PortuguÃƒÂªs</value>
+        <value>PortuguÃªs</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_pt_PT</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Portuguese</shortDescription>
-        <value>PortuguÃƒÂªs</value>
+        <value>PortuguÃªs</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ro_MD</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Moldovan</shortDescription>
-        <value>ÃÂ»ÃÂ¸ÃÂ¼ÃÂ±ÃÂ° ÃÂ¼ÃÂ¾ÃÂ»ÃÂ´ÃÂ¾ÃÂ²ÃÂµÃÂ½Ã‘ÂÃ‘ÂÃÂºÃ‘Â</value>
+        <value>Ð»Ð¸Ð¼Ð±Ð° Ð¼Ð¾Ð»Ð´Ð¾Ð²ÐµÐ½ÑÑÐºÑ</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ru</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Russian</shortDescription>
-        <value>Ã‘â‚¬Ã‘Æ’Ã‘ÂÃ‘ÂÃÂºÃÂ¸ÃÂ¹</value>
+        <value>Ñ€ÑƒÑÑÐºÐ¸Ð¹</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sh</fullName>
@@ -25293,14 +25324,14 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovak</shortDescription>
-        <value>SlovenÃ„Âina</value>
+        <value>SlovenÄina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sl</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Slovenian</shortDescription>
-        <value>SlovenÃ…Â¡Ãƒâ€žÃ‚Âina</value>
+        <value>SlovenÅ¡Ã„Âina</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sq</fullName>
@@ -25314,7 +25345,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Serbian Cyrillic</shortDescription>
-        <value>Ã‘ÂÃ‘â‚¬ÃÂ¿Ã‘ÂÃÂºÃÂ¸</value>
+        <value>ÑÑ€Ð¿ÑÐºÐ¸</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_sv</fullName>
@@ -25328,7 +25359,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Thai</shortDescription>
-        <value>Ã Â¸Â Ã Â¸Â²Ã Â¸Â©Ã Â¸Â²Ã Â¹â€žÃ Â¸â€”Ã Â¸Â¢</value>
+        <value>à¸ à¸²à¸©à¸²à¹„à¸—à¸¢</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_tl</fullName>
@@ -25342,28 +25373,28 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Urdu</shortDescription>
-        <value>Ã˜Â§Ã˜Â±Ã˜Â¯Ã™Ë†</value>
+        <value>Ø§Ø±Ø¯Ùˆ</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_vi</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Vietnamese</shortDescription>
-        <value>TiÃ¡ÂºÂ¿ng ViÃ¡Â»â€¡t</value>
+        <value>Tiáº¿ng Viá»‡t</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>Ã¤Â¸Â­Ã¥â€ºÂ½Ã§Å¡â€ž</value>
+        <value>ä¸­å›½çš„</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>Ã¤Â¸Â­Ã¥Å“â€¹Ã§Å¡â€ž</value>
+        <value>ä¸­åœ‹çš„</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>

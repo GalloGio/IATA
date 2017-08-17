@@ -56,6 +56,12 @@ private class SCIMCreateUserPluginTest {
         System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));
     }
 
+    @isTest static void testInsertUserProvAccount() {
+        List<id> userProvisioningRequestList = new List<id>();
+
+        SCIMCreateUserPlugin.insertUserProvAccount(userProvisioningRequestList);
+    }
+
     // Helper methods
     private static Process.PluginResult callPlugin() {
         return callPlugin(true);
