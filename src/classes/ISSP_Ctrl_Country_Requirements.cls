@@ -370,7 +370,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
         if(isHOAccredited && category == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT) {
             if(isNewgenEnabled){
-                    accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_ANG_Assoc_Entity));
+                    if (accredModel == 'Cash') {
+                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cash));
+                    } else if(accredModel == 'Cashless') {
+                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cashless));
+                    }
                 }else{
                     accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));        
                 }

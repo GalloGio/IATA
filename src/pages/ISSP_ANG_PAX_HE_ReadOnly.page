@@ -111,36 +111,32 @@
             </apex:facet>
             
             <apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Status__c.Label}" value="{!newForm.ISSP_AMS_Legal_Status__c}"/>
-            
+        	<apex:outputtext ></apex:outputtext>
             <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_when_incorporated__c.Label}" value="{0, date, MM/dd/yyyy}" rendered="{!(newForm.ISSP_AMS_Legal_Status__c == 'Corporation')}">
                 <apex:param value="{!newForm.ISSP_AMS_when_incorporated__c}" />
             </apex:outputText> 
             
             <apex:outputField rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_where_incorporated__c.Label}" value="{!newForm.ISSP_AMS_where_incorporated__c}"/>
             <apex:outputField rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}" label="{!$Label.ISSP_AMS_LABEL_Listed_Shares}" value="{!newForm.ISSP_AMS_Entity_with_listed_shares__c}"/>
-            <apex:outputField rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}" label="{!$Label.ISSP_AMS_Step3_OnlineAgency}" value="{!newForm.ISSP_AMS_Online_Agency_Application__c}"/>
-            <apex:outputField rendered="{!newForm.ISSP_AMS_Online_Agency_Application__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Online_Agency_URL__c.Label}" value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>
-            
-			<apex:outputField rendered="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c!=''}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Legal_Reg_Name_Address__c.Label}" value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}"/>
-		    <apex:outputField rendered="{!newForm.ISSP_AMS_Principal_business_Org__c!=''}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Principal_business_Org__c.Label}" value="{!newForm.ISSP_AMS_Principal_business_Org__c}"/>
-
-		    <apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{0,date, MMMM d,  yyyy}">
-                        <apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
-            </apex:outputText>
-
+        	<apex:outputtext rendered="{!newForm.ISSP_AMS_Legal_Status__c == 'Corporation'}"></apex:outputtext>
             <apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
             <br></br>
             
-            	<apex:outputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px"/>
-            	<apex:outputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;"/> 
+            <apex:outputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px"/>
+            <apex:outputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;"/> 
 
-			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Pax_Office_Open_Date__c.Label}" value="{0,date, MMMM d,  yyyy}">
+            	<apex:param value="{!newForm.ISSP_AMS_Pax_Office_Open_Date__c}" />
+            </apex:outputText>
         	<apex:outputtext ></apex:outputtext>
 			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}" value="{!newForm.ISSP_AMS_License_No__c}" />
 			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}" value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
-			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}" value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
-			<apex:outputField label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}" value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />  
-            
+			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}" value="{0,date, MMMM d,  yyyy}">
+            	<apex:param value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
+            </apex:outputText>
+			<apex:outputText label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}" value="{0,date, MMMM d,  yyyy}">
+            	<apex:param value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
+            </apex:outputText>
 
         </apex:pageBlockSection>
 

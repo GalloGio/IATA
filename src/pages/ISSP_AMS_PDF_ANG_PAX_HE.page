@@ -196,14 +196,6 @@
 	                        <td colspan="2">{!newForm.ISSP_AMS_Entity_with_listed_shares__c}</td>
 	                    </tr>
 	                    <tr>
-	                        <td class="label">{!$Label.ISSP_AMS_Step3_OnlineAgency}</td>
-	                        <td colspan="2">{!IF(newForm.ISSP_AMS_Online_Agency_Application__c=='Yes', $Label.ISSP_Yes, $Label.ISSP_No)}</td>
-	                    </tr>
-	                    <tr style="display:{!IF(newForm.ISSP_AMS_Online_Agency_Application__c != 'Yes','none','')}">
-	                        <td class="label">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Online_Agency_URL__c.Label}</td>
-	                        <td colspan="2">{!newForm.ISSP_AMS_Online_Agency_URL__c}</td>
-	                    </tr>
-	                    <tr>
 	                        <td colspan="3"><apex:outputText ><strong>{!$Label.ISSP_AMS_Step3_Owned_by_OtherOrg_Branch}</strong></apex:outputText></td>
 	                    </tr>
 	                    <tr>

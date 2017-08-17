@@ -7398,6 +7398,22 @@ IFG Customer Services</value>
         <value>Type of Agency</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cash</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cash</shortDescription>
+        <value>New Associate Entity - Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_Entity_Cashless</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
+        <value>New Associate Entity - Cashless</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8448,6 +8464,14 @@ IFG Customer Services</value>
         <value>Click here to continue with Agency Accreditation.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Compare_Accreditation_Types</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Compare Accreditation Types</shortDescription>
+        <value>Compare Accreditation types</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Completed_dangerous_goods_awareness_certificate</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -9209,6 +9233,13 @@ IFG Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS IS GSA</shortDescription>
         <value>We regret to inform you that according to the current Passenger Sales Agency Rules, the applicant shall not trade as a General Sales Agent (GSA) for any carrier in the country where it is established.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_IS_Separate_Entity_Null</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS IS Separate Entity Null</shortDescription>
+        <value>Please select if the Associate Entity is a separate Legal Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_If_Approved_Gross_Amnt</fullName>
