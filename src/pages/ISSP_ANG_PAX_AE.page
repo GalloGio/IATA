@@ -1317,13 +1317,11 @@
                     </apex:pageblocksectionitem>
                   </apex:pageBlockSection>                  
 
-                  <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails,cargoaccountname">
-                    <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value="" />
-                    <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent" />
-                    <apex:param name="AccountType" assignTo="{!accountType}" value="IATA Passenger Sales Agent" />
-                    <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="" />
-                  </apex:actionFunction>
-                  <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
+                  <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
+                      <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value="" />
+                      <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent" />
+                    </apex:actionFunction>
+                  <apex:actionFunction name="fetchIATANAgent" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
                     <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value="" />
                     <apex:param name="AgentSector" assignTo="{!agentsector}" value="Travel Agent" />
                     <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="IATAN Passenger Agent" />
@@ -1341,11 +1339,11 @@
                       </apex:outputpanel>
                     </apex:facet>
 
-                    <apex:outputText >
+                    <apex:outputText rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
                       <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
                       <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
                     </apex:outputText>         
-                    <apex:pageBlockSection >
+                    <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
                       <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
                       <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
                     </apex:pageBlockSection> 
@@ -1361,10 +1359,6 @@
 
 
                   <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
-                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
-                      <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value="" />
-                      <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent" />
-                    </apex:actionFunction>
                     <apex:pageBlockSection columns="2">
                       <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="cargo-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
@@ -1400,7 +1394,7 @@
                     <apex:pageBlockSection columns="2">
                       <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="iatan-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
-                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchCargoAgent1(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
+                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchIATANAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
                         <apex:outputPanel id="iatantravelagen">
                           <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">

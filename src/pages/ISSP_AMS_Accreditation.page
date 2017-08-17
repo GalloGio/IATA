@@ -475,7 +475,7 @@
             </div>
          
         </div> 
-        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="compare,langGSA,officetypelist,chinatypeofagent,isSameLegal">
+        <apex:actionFunction action="{!null}" name="refreshOfficeTypes" reRender="optionsSetpA, langGSA">
             <apex:param value="" assignTo="{!sectorValue}" name="sectorValue"/>
         </apex:actionFunction>
         <apex:actionFunction action="{!null}" name="refreshGsaQuestion" reRender="langGSA">
@@ -512,15 +512,13 @@
             </div>
 
             <apex:outputPanel style="display:{!IF(newCase.Status!='Open - EDMC', '', 'none')}" rendered="{!NOT(isNoticeOfChange)}">
-                <apex:actionRegion >
                     
-                    <div class="form-group">
+                <div class="form-group">
                     <label for="operationtype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Operation_Type}</label>
                     <div class="col-lg-9" style="padding-top:7px">
-                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="refreshOfficeTypes(this.value)"> <!--onchange="refreshOfficeTypes(this.value);"-->
+                        <apex:selectRadio style="width:45%" id="operationType" value="{!sectorValue}" onchange="operationTypeChanged(this.value);">
                             <apex:selectOption itemValue="Travel_Agent" itemLabel="{!$Label.ISSP_Travel_Agent}" id="travelAgentCheck" />
                             <apex:selectOption itemValue="Cargo_Agent" itemLabel="{!IF(newlabels,$Label.ISSP_Cargo_Agent_New,$Label.ISSP_Cargo_Agent)}" id="cargoAgentCheck" />
-                            <!--apex:actionsupport event="onchange" rerender="langGSA,officetypelist" action="{!null}"/ --> 
                         </apex:selectRadio>
                         <script>
                         if('{!communityName}' === 'CNS') {
@@ -528,63 +526,63 @@
                         }
                         </script>
                     </div>
-                    </div>
+                </div>
+                <apex:outputPanel id="optionsSetpA">
+                    <apex:actionRegion>
+                        <div class="form-group">
+                            <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
+                            <div class="col-lg-9">
 
-                    <div class="form-group"> 
-                    <label for="approval focus" class="col-lg-3 control-label">{!IF(NOT(newAccreditationModels), $Label.ISSP_AMS_Step1_Approval_Sought, $Label.Type_of_Accreditation)}</label>
-                        <div class="col-lg-9">
-                        
-                            <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1"> <!--onchange="toggleOfficeTypes(this.id, '{!$Component.step1Form.step1Block.countryconcerned}');"-->
-                                <apex:selectOptions value="{!OfficeTypes}"/>
-                            </apex:selectList>
+                                <apex:selectList label="{!$Label.ISSP_AMS_Step1_Approval_Sought}" styleClass="form-control" id="officetypelist" style="width:55%;float:left" value="{!amsLocationType}" onchange="toggleOfficeTypes(this.id, '');toggleCountries(this.value);" size="1">
+                                    <apex:selectOptions value="{!OfficeTypes}" />
+                                </apex:selectList>
 
-                            <apex:outputPanel id="compare">
-                                <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent',!isHOAccredited)}">                            
-                                    <apex:outputLink value="/apex/ISSP_ANG_ProductComparison" >Compare Accreditation types</apex:outputLink>    
+                                <apex:outputPanel id="compare">
+                                    <apex:outputPanel rendered="{!AND(newAccreditationModels,sectorValue=='Travel_Agent', OR(!isHOAccredited, con.Account.Sector__c=='Cargo Agent'))}">
+                                        <apex:outputLink value="/apex/ISSP_ANG_ProductComparison">&nbsp;{!$Label.ISSP_AMS_Compare_Accreditation_Types}</apex:outputLink>
+                                    </apex:outputPanel>
                                 </apex:outputPanel>
-                            </apex:outputPanel>
-                        </div>
-
-                    </div>
-                 </apex:actionRegion>    
-
-                <!-- NEWGEN-1249-->
-
-                <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent',isHOAccredited)}">                 
-                    <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">                    
-                        <div class="form-group" id='isLegal'>
-                            <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
-                            
-                            <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
-                                <apex:selectradio style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}" required="{!isGSARequired}">                                         
-                                    <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
-                                    <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />        
-                                </apex:selectradio>
-                                                              
                             </div>
-                            <div style="float: left;padding-top:10px;padding-right: 30px;">
-                                <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_ANG_Step1_Legal_Display_Help}" style="float:left" html-data-placement="right" html-data-toggle="tooltip"/>  
-                            </div>                          
-                            
                         </div>
-                    </apex:outputpanel>  
-                </apex:outputpanel>
-                    
-                <apex:outputpanel id="chinatypeofagent">
-                    <apex:outputPanel rendered="{!AND(isocountry.ISO_Code__c=='CN', NOT(isHOAccredited),BEGINS(sectorValue,'Travel_Agent'))}">
-                        <div class="form-group"> 
-                        <label for="chinaagenttype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Agency_Type}</label>
-                        <div class="col-lg-9">
-                            <apex:selectList required="true" label="{!$Label.ISSP_AMS_Agency_Type}" styleClass="form-control" id="chinaagenttype" style="width:40%" value="{!newForm.Local_Agent_Type__c}"  size="1">
-                                <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Select}"/>
-                                <apex:selectOption itemValue="Domestic" itemLabel="{!$Label.ISSP_AMS_Domestic}"/>
-                                <apex:selectOption itemValue="International" itemLabel="{!$Label.ISSP_AMS_International}"/>
-                            </apex:selectList>                           
-                        </div>
-                    </div>
-                    </apex:outputPanel> 
-                </apex:outputpanel> 
-            </apex:outputPanel>
+
+                        <!-- NEWGEN-1249-->
+                        <apex:outputpanel id="isSameLegal" rendered="{!AND(newAccreditationModels,con.Account.Category__c =='IATA Passenger Sales Agent',isHOAccredited)}">
+                            <apex:outputpanel id="legalEntity" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                                <div class="form-group" id='isLegal'>
+                                    <label for="isLegal" class="col-lg-3 control-label">{!$Label.ANG_AE_separate_Legal_Entity}</label>
+
+                                    <div style="width: 142px;padding-left:15px;padding-top:7px; float:left;margin-left:0px;">
+                                        <apex:selectradio id="separateLegalEntitySelect" style="width:100%;" label="{!$Label.ANG_AE_separate_Legal_Entity}" value="{!newForm.AE_separate_Legal_Entity__c}">
+                                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
+                                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
+                                        </apex:selectradio>
+
+                                    </div>
+                                    <div style="float: left;padding-top:10px;padding-right: 30px;">
+                                        <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_ANG_Step1_Legal_Display_Help}" style="float:left" html-data-placement="right" html-data-toggle="tooltip" />
+                                    </div>
+
+                                </div>
+                            </apex:outputpanel>
+                        </apex:outputPanel>
+
+                        <apex:outputpanel id="chinatypeofagent">
+                            <apex:outputPanel rendered="{!AND(isocountry.ISO_Code__c=='CN', NOT(isHOAccredited),BEGINS(sectorValue,'Travel_Agent'))}">
+                                <div class="form-group">
+                                    <label for="chinaagenttype" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Agency_Type}</label>
+                                    <div class="col-lg-9">
+                                        <apex:selectList required="true" label="{!$Label.ISSP_AMS_Agency_Type}" styleClass="form-control" id="chinaagenttype" style="width:40%" value="{!newForm.Local_Agent_Type__c}" size="1">
+                                            <apex:selectOption itemValue="" itemLabel="{!$Label.ISSP_Select}" />
+                                            <apex:selectOption itemValue="Domestic" itemLabel="{!$Label.ISSP_AMS_Domestic}" />
+                                            <apex:selectOption itemValue="International" itemLabel="{!$Label.ISSP_AMS_International}" />
+                                        </apex:selectList>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputpanel>
+                    </apex:actionRegion>
+                    </apex:outputPanel>
+                </apex:outputPanel>
             
             
 
@@ -684,6 +682,7 @@
 
                             <!-- apex:outputpanel id="langGSA" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent')) || isNoticeOfChange}" -->
                             <apex:outputpanel id="langGSA">
+                            <apex:actionRegion>
                                 <apex:outputpanel rendered="{!NOT(AND(BEGINS(sectorValue,'Cargo_Agent'), NOT(isNoticeOfChange)))}">
                                     <div class="form-group"> 
                                     <label for="applylanguage" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Lang_Display}</label>
@@ -696,20 +695,20 @@
                                     </div>
                                 </apex:outputpanel>
                            
-                                
-                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">                                 
-                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(BEGINS(sectorValue,'Cargo_Agent'))}">
+                                <apex:outputpanel rendered="{!AND(NOT(isNoticeOfChange),newCase.Status!='Open - EDMC')}">
+                                    <apex:outputpanel id="GSAPanel" rendered="{!NOT(OR(BEGINS(sectorValue,'Cargo_Agent'),CONTAINS(amsLocationType,'New TIDS')))}">
                                         <div class="form-group" id="isGSA">
                                             <label for="isGSA" class="col-lg-3 control-label">{!$Label.ISSP_AMS_Step1_Is_GSA}</label>
                                             <div class="col-lg-9" style="padding-top:7px">
-                                                <apex:selectradio style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" required="{!isGSARequired }">
+                                                <apex:selectradio id="isGSASelect" style="width:15%" label="{!$Label.ISSP_AMS_Step1_Is_GSA}" value="{!amsIsGSA}" > <!-- required="{!isGSARequired}"> HANDLED IN CONTROLLER NOW -->
                                                     <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" />
                                                     <apex:selectOption itemValue="NO" itemLabel="{!$Label.ISSP_No}" />
-                                                </apex:selectradio>                                                
+                                                </apex:selectradio>
                                             </div>
                                         </div>
                                     </apex:outputpanel>  
                                 </apex:outputpanel>
+                                </apex:actionRegion>
                             </apex:outputpanel>                       
                     </apex:outputPanel>
             </apex:pageBlock>
@@ -727,6 +726,14 @@
                     
                     //Disable country selection for the Pilot
                     //document.getElementById('{!$Component.step1Form.step1Block.countryconcerned}').disabled=true;
+
+                    function operationTypeChanged(sectorValue) {
+                        if (sectorValue === 'Cargo_Agent') {
+                            $('[name$=separateLegalEntitySelect]').prop('checked', false);
+                            $('[name$=isGSASelect]').prop('checked', false);
+                        }
+                        refreshOfficeTypes(sectorValue);
+                    }
                 </script>
             
            </apex:form>         
@@ -1033,15 +1040,14 @@
        <div style="color:#000000; font-size:14px; padding-bottom:10px; padding-top:10px;margin-left:200px">
            
            <strong>
-               <apex:outputPanel rendered="{!NOT(isNoticeOfChange)}">
+               <!--<apex:outputPanel rendered="{!NOT(isNoticeOfChange)}">
                {!IF(BEGINS(sectorValue, 'Travel_Agent'),
-               IF(newCase.Reason1__c =='New AE', $Label.ISSP_ANG_StepFinal_AE_Thanks,               
-               IF(amsOfficeType!='HO', $Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks, 
+               IF(newCase.Reason1__c =='New AE', $Label.ISSP_ANG_StepFinal_AE_Thanks,
+               IF(amsOfficeType!='HO', IF(CONTAINS(amsLocationType,'New TIDS'),$Label.ISSP_AMS_StepFinal_TIDS_BR,$Label.ISSP_AMS_StepFinal_Pax_Branch_Thanks),
                IF(newCase.Reason1__c!='New BR Abroad', $Label.ISSP_AMS_StepFinal_Thanks, $Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks))),
-               IF(amsOfficeType=='HO',$Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,               
-               $Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR)
-               )}
-               </apex:outputPanel>
+               IF(CONTAINS(amsLocationType,'New TIDS'), $Label.ISSP_AMS_StepFinal_TIDS_HO,$Label.ISSP_AMS_StepFinal_Thanks),$Label.ISSP_AMS_StepFinal_Pax_BR_Abroad_Thanks))),
+               IF(amsOfficeType=='HO',$Label.ISSP_AMS_ACCR_Submit_Msg_CargoHO,$Label.ISSP_AMS_ACCR_Submit_Msg_CargoBR))}
+               </apex:outputPanel>-->
                <apex:outputPanel rendered="{!isNoticeOfChange}">
                 {!IF(newform.Is_change_bank_account_details__c, $Label.ISSP_AMS_StepFinal_ChangeBank, $Label.ISSP_AMS_StepFinal_ChangeOther)}
                </apex:outputPanel>
