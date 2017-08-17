@@ -5463,6 +5463,11 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 errorFound = true;
             }
             
+            if (newForm.Branch_Office_Email__c == null) {
+                newForm.Branch_Office_Email__c.addError(Label.ISSP_YouMustEnter);
+                errorFound = true;
+            }
+            
             if (newForm.ISSP_AMS_Legal_Status__c == null) {
                 newForm.ISSP_AMS_Legal_Status__c.addError(Label.ISSP_YouMustEnter);
                 errorFound = true;
