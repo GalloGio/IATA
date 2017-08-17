@@ -739,8 +739,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG Conversion Tool Workaround</shortDescription>
-        <value>For what regards the workaround I would say to show always the same message: 
-&quot;The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
+        <value>The system allows you to proceed, the normal conversion process will be applied to each hierarchy selected: hierarchy will be adjusted to HE-AE, accreditation model will be set to &quot;Cash&quot; and new forms of payment will be created. Please read carefully the error description to find out if any correction is mandatory before proceeding with the conversion!</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_AccreditationType</fullName>
