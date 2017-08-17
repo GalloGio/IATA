@@ -110,6 +110,7 @@
             </tr>
             <tr>
                 <td style="vertical-align:top">
+                    <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!con.Account.Category__c == 'IATA Passenger Sales Agent'}"/><br></br><br></br>
                     <strong><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, isoCountry.ANG_Enable_NewGen__c, sector=='Travel Agent')}"/></strong><br/>
                     <apex:commandLink action="{!redirectToCasePage}" value="{!$Label.ISSP_AMS_Step0_Specific_Sales_Activity}" id="SACommandLink" rendered="{!AND(isHOAccredited, isoCountry.ANG_Enable_NewGen__c, sector=='Travel Agent')}">
                         <apex:param assignTo="{!agentCaseType}" value="SA" />
@@ -119,15 +120,18 @@
                         <apex:param assignTo="{!agentCaseType}" value="TIDS" />
                     </apex:commandLink>
                     -->
+                    <br/>
                 </td>
                 <td style="display:{!IF(AND(isEligableForChange,isoCountry.Enable_Notice_of_Change__c),'','none')};vertical-align:top">
                     <table>
                         <tr>
                             <td><input type="button" class="btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}"/></td>
                             <td style="padding-left:8px"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/></td>
+                        <!--<td style="display:{!con.Account.Category__c == 'IATA Passenger Sales Agent'};vertical-align:top">-->
                         </tr>
                     </table>
                 </td>
+
             </tr>
                 <tr>
                     <td style="padding-top:20px">

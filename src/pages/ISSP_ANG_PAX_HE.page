@@ -824,8 +824,8 @@
                                 </apex:pageBlockSectionItem>
 
                                 <apex:outputPanel id="VatNumberInput">
-                                    <apex:pageblocksectionitem >
-                                        <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
+                                    <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
+                                        <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $Label.ISSP_AMS_VAT_number, isocountry.Tax_Number_label__c)}" />
                                         <apex:outputpanel id="VATNumberInput">
                                         <div style="display:block; width: 394px;">
                                         <div style="display:inline-block; width: 213px;margin-left: 9px;">
@@ -844,7 +844,7 @@
                                         
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-                                </apex:outputPanel> 
+                                </apex:outputPanel>
 
                                 <apex:pageBlockSectionItem >
                                 <DSE:DS_DataQuality id="HOPhone"
@@ -1020,7 +1020,7 @@
                             
                             
                             <apex:outputPanel id="VatNumberInput">
-                              <apex:pageblocksectionitem >
+                              <apex:pageblocksectionitem rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}">
                                 <apex:outputlabel id="section1-vat-number" style="margin-left: 10px !important;" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label, isocountry.Tax_Number_label__c)}" />
                                 <apex:outputpanel id="VATNumberInput">
                                 <div style="display:block; width: 385px;">
@@ -1535,13 +1535,11 @@
                     <!-- *********************** SECTION 5 - Other Information ************************ -->
                     <!-- ****************************************************************************** -->
 
-                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails,cargoaccountname">
+                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                        <apex:param name="AccountType" assignTo="{!accountType}" value="IATA Passenger Sales Agent"/>
-                        <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value=""/>
                     </apex:actionFunction>
-                    <apex:actionFunction name="fetchCargoAgent1" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
+                    <apex:actionFunction name="fetchIATANAgency" status="actIATANAgent" action="{!fetchIATANDetails}" reRender="iatantravelagen,iatanaccountname">
                         <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
                         <apex:param name="AgentSector" assignTo="{!agentsector}" value="Travel Agent"/>
                         <apex:param name="IATANAccount" assignTo="{!iatanAccount}" value="IATAN Passenger Agent"/>
@@ -1575,10 +1573,7 @@
                 </apex:pageBlockSection>
 
                 <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
-                    <apex:actionFunction name="fetchCargoAgent" status="actCargoAgent" action="{!fetchAgentDetails}" reRender="cargoagentdetails">
-                        <apex:param name="cargoAgentCode" assignTo="{!iatacode}" value=""/>
-                        <apex:param name="AgentSector" assignTo="{!agentsector}" value="Cargo Agent"/>
-                    </apex:actionFunction>
+                    
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="section5-cargo-code" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
@@ -1615,7 +1610,7 @@
                 <apex:pageBlockSection columns="2">
                     <apex:pageBlockSectionItem dataStyle="width:20%">
                         <apex:outputLabel id="section5-iatan-code" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
-                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchCargoAgent1(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
+                        <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchIATANAgency(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}"/>
                     </apex:pageBlockSectionItem>        
                     <apex:outputPanel id="iatantravelagen">
                         <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
