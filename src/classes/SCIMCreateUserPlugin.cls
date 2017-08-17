@@ -1,5 +1,5 @@
 global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugin {
-   
+
     global override Process.PluginDescribeResult buildDescribeCall() { 
         Process.PluginDescribeResult describeResult = new Process.PluginDescribeResult();
         // A Group for the Plugins
@@ -16,7 +16,7 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
     }
     
     global override Process.PluginResult invoke(Process.PluginRequest request) {
-     
+
         Map<String,Object> result = new Map<String,Object>();
         result.put(UserProvisioningUtils.PARAM_STATUS, 'Failed'); // set default
         
@@ -42,8 +42,8 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
             String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
             if(params != null) SCIMUsersUtility.createParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);
 
-            System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] params - ' + params);
-            System.debug(loggingLevel.FINEST, '____ [cls SCIMDeleteUserPlugin - invoke] createParams - ' + SCIMUsersUtility.createParams);
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] params - ' + params);
+            System.debug(loggingLevel.FINEST, '____ [cls SCIMCreateUserPlugin - invoke] createParams - ' + SCIMUsersUtility.createParams);
             
             Map<String, Object> callResult = SCIMUsersUtility.createUser(userPayload);
             userProvUtils.debug('HTTP call result was ' + callResult);
@@ -73,6 +73,37 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
         return new Process.PluginResult(result);
     }
+
+    @InvocableMethod
+    public static void insertUserProvAccount(List<id> userProvisioningRequestList) {
+
+        User currentUser = [Select Id,
+                                   FederationIdentifier
+                              from User
+                             Where Id =: UserInfo.getUserId()];
+
+
+        List<UserProvisioningRequest> uprl = new List<UserProvisioningRequest>();
+        uprl = [Select ConnectedAppId
+                  From UserProvisioningRequest
+                 Where Id in : userProvisioningRequestList
+                   And State = 'Completed'];
+
+        List<UserProvAccount> upal = new List<UserProvAccount>();
+        for(UserProvisioningRequest upr : uprl) {
+            UserProvAccount upa = new UserProvAccount (
+                ExternalUserId = currentUser.FederationIdentifier,
+                salesforceUserId = currentUser.id,
+                connectedAppId = upr.ConnectedAppId,
+                linkState = 'Linked',
+                status = 'Active'
+            );
+            upal.add(upa);
+        }
+
+        insert upal;
+
+    }    
 
     // Read values that were not returned by the target API from the input payload
     private void assignDerivedOutputParameters(Map<String, Object> pluginResult, String userPayload) {
