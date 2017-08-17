@@ -781,10 +781,8 @@
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
 					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
 				</apex:pageBlockSection>
-				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-					<span id="nav_one"></span>
-				</apex:outputText>
 				<apex:outputPanel rendered="{!isAccreditationModelNotNullOrLegacy}">
+					<span id="nav_one"></span>
 					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
 						<apex:facet name="header">
 							<apex:outputpanel >
@@ -827,29 +825,45 @@
 										</span>
 									</apex:outputText>
 								</apex:outputPanel>
-								<apex:pageBlockTable value="{!List_IFAPAgencyContacts}" var="agencycon" id="contactIFAPList" styleClass="table-hover table table-condensed table-responsive">
-									<apex:column headerValue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!agencycon.First_name__c}" />
-									<apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}" />
-									<apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}" />
-									<apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}" />
-									<apex:column headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}" value="{!agencycon.Financial_Assessment_Contact__c}" />
-									<apex:column>
-										<apex:actionStatus id="actEditContact">
-											<apex:facet name="start">
-												<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
-											</apex:facet>
-										</apex:actionStatus>
-
-										<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewIFAPContactDialog();" rerender="contactIFAPList, newIFAPContact">
-											<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
-										</apex:commandLink>
-									</apex:column>
-									<apex:column>
-										<span id="agencyConIFAPContact" style="display: none;">{!agencycon.Id}</span>
-										<apex:commandLink onfocus="confirmIFAPContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
-									</apex:column>
-
-								</apex:pageBlockTable>
+								<apex:outputPanel id="contactIFAPList">
+									<apex:repeat value="{!List_IFAPAgencyContacts}" var="ifapCon">
+										<apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">
+											{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}
+											<span style="float: right;">
+												<apex:actionStatus id="actEditContact">
+													<apex:facet name="start">
+														<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> {!$Label.ISSP_AMS_Loading_Contact}
+													</apex:facet>
+												</apex:actionStatus>
+												<apex:commandLink action="{!editAgencyContact}" status="actEditContact" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewIFAPContactDialog();" rerender="contactIFAPList, newIFAPContact">
+													<apex:param value="{!ifapCon.Id}" name="recordId" assignTo="{!editContactId}" />
+												</apex:commandLink>
+												<span id="agencyConIFAPContact" style="display: none;">{!ifapCon.Id}</span>
+												<apex:commandLink onfocus="confirmIFAPContactDelete('{!ifapCon.Id}', '{!ifapCon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
+											</span>
+										</apex:outputPanel>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.FirstName.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.First_name__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.LastName.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Last_name__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Phone.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Phone__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.Contact.fields.Email.Label}"/>
+											<apex:outputText style="font-weight: normal;" value="{!ifapCon.Email__c}"></apex:outputText>
+										</apex:panelGrid>
+										<apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
+											<apex:outputLabel style="padding-left: 5px;" value="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}"/>
+											<apex:outputText style="font-weight: normal;" ><img src="{!IF(ifapCon.Financial_Assessment_Contact__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
+										</apex:panelGrid>
+									</apex:repeat>
+								</apex:outputPanel>
 							</apex:outputPanel>
 						</apex:pageBlockSection>
 					</apex:pageBlockSection>

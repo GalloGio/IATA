@@ -10915,10 +10915,11 @@ You will be required to upload a scanned copy of this document in the next step 
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Updated_Accreditation_Type</fullName>
+        <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC Updated Accreditation Type</shortDescription>
-        <value>Updated Accreditation Type</value>
+        <value>Change of Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Will_Change_Affect_All_Locations</fullName>

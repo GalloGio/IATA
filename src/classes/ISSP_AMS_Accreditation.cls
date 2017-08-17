@@ -1867,7 +1867,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
         SFDCAccount.Location_Class__c = getLocationClass();
 
-        if(con.Account.ANG_Accreditation_Model__c == null || con.Account.ANG_Accreditation_Model__c == 'Legacy'){
+        if(getIsAccreditationModelNotNullOrLegacy()){
             SFDCAccount.Location_Type__c = 'AE';    
         }else{
             SFDCAccount.Location_Type__c = 'BR';    
