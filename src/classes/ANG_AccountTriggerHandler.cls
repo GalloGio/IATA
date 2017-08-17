@@ -176,6 +176,9 @@ public class ANG_AccountTriggerHandler {
 		//insert cases
 		insert cases;
 
+		//populate field with operation with BSP attributes more frequent
+		String remitFreq = getHighestRemittanceFrequency(accounts);
+
 		//create staging areas
 		List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
 	    for(Account acc : accounts){
@@ -204,7 +207,7 @@ public class ANG_AccountTriggerHandler {
 	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
 	    	stgArea.Mobile__c                                = acc.Mobile__c;
 	    	stgArea.Operation__c                             = acc.Operation__c;
-	    	stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
+	    	stgArea.Remittance_frequency__c                  = remitFreq;
 	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
 	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
 	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
@@ -285,5 +288,32 @@ public class ANG_AccountTriggerHandler {
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
 
+    /**
+	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+    */
+    private String getHighestRemittanceFrequency(List<Account> accs){
+    	
+    	String remitFreq = '';
+    	List<Id> accsIds = new List<Id>();
+
+    	for (Account a: accs)
+    		accsIds.add(a.Id);
+
+    	Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
+    	List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+
+    	Integer aux = 0;
+    	for(AMS_Operation__c op: opCodes){
+    		for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+
+    			if((Integer)attr.Remittances_Per_Year__c > aux){
+    				aux = (Integer)attr.Remittances_Per_Year__c;
+    				remitFreq = attr.Remittance_Frequency__c;
+    			}
+    		}    		
+    	}
+
+    	return remitFreq;
+    }
 
 }

@@ -9,7 +9,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isCertificationOSCAR{get;set;}
     public Boolean isNewGenProcess{get;set;}
     public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
-    public Boolean isMorethan2RFs {get{return (rightOptionsRF.size() > 2);}set;}
+    public Boolean displayErrorMsg{get{return false;} set;}
 
         //this flag will controll if picklist or multipicklist is displayed for Remittance Frequency 
     public Boolean allowMultipleRemittances{
@@ -17,7 +17,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             if(this.allowMultipleRemittances == null){
                 this.allowMultipleRemittances = false;
                 if(operationCodes != null && !operationCodes.isEmpty()){
-                    for(AMS_Operation__c opCode: operationCodes.values()){
+                    for(AMS_Operation__c opCode: operationCodes){
                         if(opCode.Allow_multiple_remittances__c){
                             this.allowMultipleRemittances = opCode.Allow_multiple_remittances__c;
                             return this.allowMultipleRemittances;
@@ -110,7 +110,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     private Boolean isEditable(String fieldName){
 
         //For newgen
-        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && !isAgencyChanges)
+        if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c)
             if(notEditableForNEWGEN.contains(fieldName))
                 return false;
 
@@ -146,22 +146,20 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         set;
     }
 
-    private Map<Id,AMS_Operation__c> operationCodes{
+    private List<AMS_Operation__c> operationCodes{
         get{
             if(this.operationCodes == null)
-                this.operationCodes = new Map<Id,AMS_Operation__c>([SELECT Id, Allow_multiple_remittances__c, (SELECT Id, Remittance_Frequency__c FROM BSP_Attributes__r) FROM AMS_Operation__c WHERE Settlement__r.Recordtype.Name = 'BSP' AND Country__c = :accreditationObj.Branch_Office_Country__c]);
-            
+                this.operationCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, accreditationObj.Branch_Office_Country__c);
+
             return this.operationCodes;            
         } set;
     }
 
     private Map<Id,AMS_Agency_Operations__c> agencyOperations{
         get{
-            if(this.agencyOperations == null){
-                this.agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
-                for(AMS_Agency_Operations__c agOp : [SELECT id, Account__c, Operation__c FROM AMS_Agency_Operations__c WHERE Account__c = :oscarObj.Account__c and Operation__c in :operationCodes.keySet()])
-                    this.agencyOperations.put(agOp.Operation__c,agOp);
-            }
+            if(this.agencyOperations == null)
+                this.agencyOperations = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(new List<Id>{oscarObj.Account__c});
+            
             return this.agencyOperations;
         }set;
     }
@@ -169,7 +167,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     //auxiliary to the custom multipicklist
     public List<SelectOption> rightOptionsRF{
         get{
-            if(this.rightOptionsRF == null){
+            if(this.rightOptionsRF == null && allowMultipleRemittances){
 
                 this.rightOptionsRF = new List<SelectOption>();
 
@@ -188,9 +186,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
 
-                // if multipicklist is being displayed,check the rightOptions to prevent record duplication between the left and right lists
                 if(!allowMultipleRemittances){
                     rfPicklistValues.add(new SelectOption('','--None--'));
+                // if multipicklist is being displayed, check the rightOptions to prevent record duplication between the left and right lists
                 }else if(accreditationObj.Remittance_frequency__c != null){
                     rightOptions = new Set<String>(accreditationObj.Remittance_frequency__c.Split(';'));
                 }else{
@@ -202,8 +200,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
                 if(oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD) {
 
-                    for(AMS_Operation__c operation :operationCodes.values()) {
+                    for(AMS_Operation__c operation :operationCodes) {
                         for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+
                             if(!allowMultipleRemittances || !rightOptions.contains(attribute.Remittance_Frequency__c))
                                 rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, attribute.Remittance_Frequency__c));                               
                         }
@@ -218,7 +217,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 }else if(oscarObj.Process__c == AMS_Utils.NGCHANGES && tocList.contains(AMS_Utils.ANG_VMFR)) {
 
                     if(!agencyOperations.isEmpty()){                     
-                        for(AMS_Operation__c opCode: operationCodes.values()) {
+                        for(AMS_Operation__c opCode: operationCodes) {
                             //Make sure attributes are related with the current account
                             if(agencyOperations.keySet().contains(opCode.id)) {
 
@@ -370,19 +369,19 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
             if(accreditationObj != null){ 
 
-                if(!isMorethan2RFs){
-
+                if(rightOptionsRF != null && rightOptionsRF.size()>2){
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The maximum amount of allowed values for Remmitance Frequency is 2.')); 
+                    displayErrorMsg = true;
+                }else if(rightOptionsRF != null){    
                     values = new List<String>();
-                    if(rightOptionsRF != null){    
-                        for (SelectOption o :rightOptionsRF){
-                            values.add(o.getValue());
-                            accreditationObj.Remittance_frequency__c = String.Join(values,';');
-                        }
-                    }
+                    for (SelectOption o :rightOptionsRF){
+                        values.add(o.getValue());
+                        accreditationObj.Remittance_frequency__c = String.Join(values,';');
+                    }            
                     update accreditationObj;
-                    this.saveAction = true;
                 }else{
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The maximum amount of allowed values for Remmitance Frequency is 2.'));                       
+                    update accreditationObj;          
+                    this.saveAction = true;
                 }
             }
 
