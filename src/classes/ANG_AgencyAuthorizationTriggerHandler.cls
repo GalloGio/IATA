@@ -37,7 +37,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 			}
 		}
 
-		List<Agency_Authorization__c> aaFromAccounts = [Select ID,Account__c, Account__r.Name,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c where Account__c in:accountsInvolved and RecordTypeId = :formOfPaymentRT and Status__c = 'Active' and Id not in :newMap];
+		List<Agency_Authorization__c> aaFromAccounts = [Select ID,Account__c, Account__r.IATACode__c,ANG_FormOfPayment_ID__c, RecordTypeId from Agency_Authorization__c where Account__c in:accountsInvolved and RecordTypeId = :formOfPaymentRT and Status__c = 'Active' and Id not in :newMap];
 
 		Map<Id,List<Agency_Authorization__c>> accountsAAMap = new Map<Id,List<Agency_Authorization__c>>();
 
@@ -50,7 +50,7 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 				accountsAAMap.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
 
 			//Populate MapAccountName for show in error
-			accountsName.put(aa.Account__c, aa.Account__r.Name);
+			accountsName.put(aa.Account__c, aa.Account__r.IATACode__c);
 		}
 
 		For(Id accountId: accountsAAMap.keySet()){
