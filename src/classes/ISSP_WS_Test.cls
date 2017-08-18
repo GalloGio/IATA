@@ -564,14 +564,17 @@ private class ISSP_WS_Test {
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.disableUser(myInput);
             
+			Test.startTest();
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
             
+			
             myInput.services = 'BSPLink';
             ISSP_WS_DisableUser.disableUser(myInput);
+			Test.stopTest();
         }
     }
     
@@ -697,14 +700,17 @@ private class ISSP_WS_Test {
             myInput.services = 'CASS03';
             ISSP_WS_DisableUser.reactivateUser(myInput);
             
+			Test.startTest();
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.reactivateUser(myInput);
+			
             
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
+			Test.stopTest();
             
             myInput.services = 'BSPLink';
             //ISSP_WS_DisableUser.disableUser(myInput);
