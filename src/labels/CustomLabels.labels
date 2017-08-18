@@ -13911,7 +13911,6 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Enable:</value>
     </labels>
     <labels>
-    <labels>
         <fullName>ISSP_ANG_Country_Req</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -13919,6 +13918,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <shortDescription>ISSP_ANG_Country_Req</shortDescription>
         <value>View Country Requirements</value>
     </labels>
+    <labels>
         <fullName>ISSP_ANG_OPTION_PAX_AE</fullName>
         <language>en_US</language>
         <protected>false</protected>
