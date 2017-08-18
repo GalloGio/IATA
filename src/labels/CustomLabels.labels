@@ -18115,6 +18115,14 @@ this is the tiess topic help</value>
         <value>No</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoC_AE_Becoming_a_Head_Entity</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC AE Becoming a Head Entity</shortDescription>
+        <value>* Is this Associate Entity becoming a Head Entity?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoC_Advise_GDS</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -18128,6 +18136,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
         <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Head Entity Becoming a AE</shortDescription>
+        <value>* Is this Head Entity becoming a Associate Entity?</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Location_Warning</fullName>
