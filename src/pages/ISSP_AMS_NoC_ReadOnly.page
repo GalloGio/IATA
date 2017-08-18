@@ -594,13 +594,13 @@
                               </apex:outputpanel>
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label}" />
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" />
                             <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />
                             <apex:outputText value="{!newForm.New_Head_Office_IATA_Code__c}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />  
                             
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label}" />
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_AE_Becoming_a_Head_Entity, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Branch_becoming_a_Head_Office__c.Label)}" />
                             <apex:outputText value="{!newForm.Is_this_Branch_becoming_a_Head_Office__c}"/>                                   
                             
                             <!--
