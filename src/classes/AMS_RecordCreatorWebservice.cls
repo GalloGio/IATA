@@ -294,6 +294,14 @@ global without sharing class AMS_RecordCreatorWebservice {
             oscar.Is_using_credit_card__c = true;
             oscar.Oscar_Communication_Case_Id__c = caseId;
         }
+
+        if(processType.equalsIgnoreCase(NEWCER_PV)){
+            List<Case> caseList = [SELECT Id, QuantityProduct__c FROM Case WHERE Id = :caseId LIMIT 1];
+            if(!caseList.isEmpty()){
+                oscar.Certificate_Quantity__c = Integer.valueOf(caseList.get(0).QuantityProduct__c);
+            }
+            
+        }
         
         insert oscar;
 
