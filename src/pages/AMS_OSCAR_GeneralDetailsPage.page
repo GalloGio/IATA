@@ -202,27 +202,33 @@
                     </apex:outputField>
                 </apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">
-                    <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
-                    <apex:selectList value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()"> 
-                        <apex:selectOptions value="{!rfPickListValues}"/>
-                    </apex:selectList>
+
+
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
+                    <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
+                    <apex:outputPanel >  
+                        <apex:outputLabel id="outputRF" value="{!accreditationObj[field.name]}"/> 
+                        <apex:selectList id="cPicklist" value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()" style="display: none;"> 
+                            <apex:selectOptions value="{!rfPickListValues}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
                 </apex:pageBlockSectionItem>
 
                  <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
-                    <apex:outputPanel>
-                        <apex:outputLabel id="rfLabel" value="{!accreditationObj[field.name]}"/>
-                        <apex:outputPanel id="multipick" style="display: none;">
-                            <c:MultiselectPicklist leftLabel="Available"
-                            leftOptions="{!rfPickListValues}"
-                            rightLabel="Selected"
-                            rightOptions="{!rightOptionsRF}"
-                            size="3"
-                            width="120px"
-                            btn_up_down="true"
-                            /> 
-                        </apex:outputPanel>
+                    <apex:outputPanel >
+                            <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>
+                            <apex:outputPanel id="multipick" style="display: none;">
+                                <c:MultiselectPicklist leftLabel="Available"
+                                leftOptions="{!rfPickListValues}"
+                                rightLabel="Selected"
+                                rightOptions="{!rightOptionsRF}"
+                                size="3"
+                                width="120px"
+                                btn_up_down="true"
+                                readonly="{!IF(OR(NOT(field.inlineEdit),isCertificationOSCAR),'true','false')}"
+                                /> 
+                            </apex:outputPanel>   
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem>
 
@@ -237,9 +243,13 @@
     <script>
 
         $ ( document ).ready(function(){
-            $('[id$=rfLabel]').parent().parent().dblclick(function() {
+            $('[id$=mRFLabel]').parent().parent().dblclick(function() {
                 remittanceFrequencyChange();
                 showMultiPick();
+            }); 
+            $('[id$=rfLabel]').parent().parent().dblclick(function() {
+                remittanceFrequencyChange();
+                showCPickList();
             });
         });
 
@@ -253,7 +263,14 @@
         function showMultiPick() {
             if(!{!isNewAE}){
                 $('[id$=multipick]')[0].style.display = '';
-                $('[id$=rfLabel]')[0].style.display = 'none';
+                $('[id$=mRFLabel]')[0].style.display = 'none';
+            }
+        }
+
+        function showCPickList() {
+            if(!{!isNewAE}){
+                $('[id$=cPicklist]')[0].style.display = '';
+                $('[id$=outputRF]')[0].style.display = 'none';
             }
         }
 
