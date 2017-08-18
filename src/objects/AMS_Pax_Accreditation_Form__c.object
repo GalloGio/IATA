@@ -22051,4 +22051,45 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
         <errorMessage>Please accept the Terms and Conditions before submitting your Agency Accreditation application to IATA.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Limit_Remittance_Frequency_Options</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR( 
+
+AND( 
+
+ANG_IsNewGenAgency__c, 
+
+NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;), 
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 1 ), 
+
+AND( 
+
+ANG_IsNewGenAgency__c, 
+
+Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;, 
+
+IF(INCLUDES(Remittance_frequency__c , &quot;Monthly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Fortnightly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 10 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Weekly&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 3 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;4 times per month&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Every 5 days&quot;),1,0) + 
+IF(INCLUDES(Remittance_frequency__c , &quot;Daily&quot;),1,0) &gt; 2 ) 
+
+)</errorConditionFormula>
+        <errorDisplayField>Remittance_frequency__c</errorDisplayField>
+        <errorMessage>The amount of selected options is not valid for this agency.</errorMessage>
+    </validationRules>
 </CustomObject>
