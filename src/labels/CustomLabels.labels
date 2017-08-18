@@ -18115,11 +18115,27 @@ this is the tiess topic help</value>
         <value>No</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoC_Advise_GDS</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoC_Advise_GDS</shortDescription>
+        <value>* Please advise which GDS(s) used</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoC_HE_with_AEs_Warning</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
         <value>Since the conversion of accreditation type must apply to your entire Organization please return to STEP A and select the option &apos;Head Entity &amp; All Associate Entities&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Location_Warning</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NoC_Location_Warning</shortDescription>
+        <value>A change of location can only be made for a single IATA Code. Please return to STEP A and select either your Head Entity Only, or a single Associate Entity.</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_No_Contact_Error</fullName>
