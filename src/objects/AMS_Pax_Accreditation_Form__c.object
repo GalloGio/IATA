@@ -4400,12 +4400,18 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <fullName>Daily</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Every 5 day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <restrictedPicklist>true</restrictedPicklist>
             <sorted>false</sorted>
         </picklist>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>SAAM_Case__c</fullName>
