@@ -4899,7 +4899,14 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -4928,13 +4935,6 @@
                   {
                     "FunctionName": "createRiskEvent",
                     "ActionLabel": "AMS_OSCAR_Action15",
-                    "args": [
-                      "oscarid"
-                    ]
-                  },
-                  {
-                    "FunctionName": "forecast",
-                    "ActionLabel": "AMS_OSCAR_Action16",
                     "args": [
                       "oscarid"
                     ]
@@ -5853,7 +5853,14 @@
               {
                 "Name": "STEP2",
                 "Required": [],
-                "Actions": [],
+                "Actions": [
+                  {
+                    "FunctionName": "forecast",
+                    "ActionLabel": "AMS_OSCAR_Action16",
+                    "args": [
+                      "oscarid"
+                    ]
+                  }],
                 "Automations": [
                   {
                     "Status": "Passed",
@@ -5882,13 +5889,6 @@
                   {
                     "FunctionName": "createRiskEvent",
                     "ActionLabel": "AMS_OSCAR_Action15",
-                    "args": [
-                      "oscarid"
-                    ]
-                  },
-                  {
-                    "FunctionName": "forecast",
-                    "ActionLabel": "AMS_OSCAR_Action16",
                     "args": [
                       "oscarid"
                     ]
