@@ -542,7 +542,7 @@ var dyn_functions = {
         var records = oscarData.getArray("records");
 
         if(records[0].Risk_event_creation_date__c != null){
-            result = 'The risk event has already been generated.';  
+            result = 'This button has already been clicked before, no further action will be performed.';  
         }else{
             result = sforce.apex.execute("AMS_OSCAR_Webservice", "createRiskEvent", {oscarId: arg});
         }
