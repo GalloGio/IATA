@@ -57,7 +57,7 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
                 }
 
                 delete upa;
-
+                    
             } else {
                 userProvUtils.debug('Could not find user to delete from UserProvAccount where linkState = Linked and salesforceUserId = ' + userProvUtils.getSalesforceUserId());
                 result.put(UserProvisioningUtils.PARAM_STATUS, 'Failed');

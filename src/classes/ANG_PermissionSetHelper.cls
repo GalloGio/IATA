@@ -111,23 +111,7 @@ public class ANG_PermissionSetHelper {
 			for(Id contact : change.contactsToRemove){
 				String key = ''+users.get(contact)+permissionSetId;
 				//find permission assignment on the map
-				if(assignments.containsKey(key)) {
-					permissionsToDelete.add(assignments.get(key));
-
-					System.debug(loggingLevel.FINEST, '____ Remove - ' + change.operation);
-
-					provRequests.add(
-						new UserProvisioningRequest(
-							AppName = change.provisioningAppName
-							, ConnectedAppId = change.provisioningAppId
-							, Operation = 'Deactivate'
-							, ApprovalStatus = 'NotRequired'
-							, SalesforceUserId = users.get(contact)
-							, state = 'New'
-						)
-					);
-
-				}
+				if(assignments.containsKey(key)) permissionsToDelete.add(assignments.get(key));
 			}
 		}
 
