@@ -480,7 +480,7 @@ global class AMS_OSCAR_Webservice {
                 List<ANG_Agency_Risk_Event__c> rskEventLst = [SELECT Id from ANG_Agency_Risk_Event__c where ANG_OscarId__c = :oscarId];
                 
                 if(rskEventLst.isEmpty())
-                    return 'No Risk Event generated for this process.';
+                    return 'No risk event is needed for this OSCAR.';
                 else
                     return rskEventLst.size() + ' Risk(s) Event(s) generated successfully';
 
