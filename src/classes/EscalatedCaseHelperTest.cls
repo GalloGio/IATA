@@ -345,7 +345,7 @@ private class EscalatedCaseHelperTest {
         
         Account acc = new Account(Name = 'TestSISAccount',BillingCity='Montreal', BillingCountry='Canada');
         insert acc;
-        Contact con = new Contact(LastName='TestSISContact', AccountId=acc.Id, email='testuser@iata.org');
+        Contact con = new Contact(FirstName = 'Name', LastName='TestSISContact', AccountId=acc.Id, email='testuser@iata.org');
         insert con;
         
         Account suppAcc = new Account(Name = 'TestSupportAccount',BillingCity='Montreal', BillingCountry='Canada');
