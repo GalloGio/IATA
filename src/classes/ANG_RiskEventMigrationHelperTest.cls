@@ -22,7 +22,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void authCashPaymentTest() {
-		system.debug('test: authCashPaymentTest');
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
 		insert a;
@@ -42,7 +41,6 @@ private class ANG_RiskEventMigrationHelperTest {
 //-------------NEED TO TEST WITHDRAW PART----------------
 	@isTest
 	public static void lateShortPaymentTest() {
-		system.debug('test: lateShortPaymentTest');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
@@ -64,7 +62,6 @@ private class ANG_RiskEventMigrationHelperTest {
 //-------------NEED TO TEST WITHDRAW PART----------------
 	@isTest
 	public static void paymentDefaultTest() {
-		system.debug('test: paymentDefaultTest');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
@@ -99,7 +96,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void failFinancialStatementsTest() {
-		system.debug('test: failFinancialStatementsTest');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
@@ -123,11 +119,9 @@ private class ANG_RiskEventMigrationHelperTest {
 //-----------should test all types maybe-------------
 	@isTest
 	public static void majorChange1Test() {
-		system.debug('test: majorChange1Test');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
-		system.debug('test: done inserting1');
 		insert a;
 		setAccs.add(a);
 		Agency_Applied_Change_code__c cc 
@@ -135,7 +129,6 @@ private class ANG_RiskEventMigrationHelperTest {
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_CCF
 												);
 		insert cc;
-		system.debug('test: done inserting2');
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
 
@@ -145,7 +138,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void majorChange2Test() {
-		system.debug('test: majorChange2Test');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
@@ -159,14 +151,12 @@ private class ANG_RiskEventMigrationHelperTest {
 		insert cc;
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
-		system.debug('isMajor: result: ' + listRisks.get(0));
 		system.assertEquals(listRisks.size() , 1);
 
 	}
 
 	@isTest
 	public static void unreportedChangeTest() {
-		system.debug('test: unreportedChangeTest');
 
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
@@ -188,8 +178,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void failFinancialSecurity1Test() {
-		system.debug('test: failFinancialSecurity1Test');
-
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
 		insert a;
@@ -211,8 +199,6 @@ private class ANG_RiskEventMigrationHelperTest {
 //--------maybe bullettin test needs to cantain black. check if fails
 	@isTest
 	public static void failFinancialSecurity2Test() {
-		system.debug('test: failFinancialSecurity2Test');
-
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
 		insert a;
@@ -235,8 +221,6 @@ private class ANG_RiskEventMigrationHelperTest {
 //------check previous code if fails
 	@isTest
 	public static void commonOwnershipDefaultTest() {
-		system.debug('test: commonOwnershipDefaultTest');
-
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
 		insert a;
@@ -255,8 +239,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void prejudicedCollectionTest() {
-		system.debug('test: prejudicedCollectionTest');
-
 		Set<Account> setAccs = new set<Account>();
 		Account a = createAccount(true);
 		insert a;
@@ -278,7 +260,6 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void removeWithdrawalLateShortPaymentTest() {
-		system.debug('test: removeWithdrawalLateShortPaymentTest');
 		//run two times for each to insert the witdraw and then confirm that list is empty 
 
 		//------------------------------FOR LATE/SHORT PAYMENT--------------------------
@@ -314,10 +295,9 @@ private class ANG_RiskEventMigrationHelperTest {
 
 	@isTest
 	public static void removeWithdrawalFailFinancialStatementsTest() {
-		system.debug('test: removeWithdrawalFailFinancialStatementsTest');
-
 		//-----------------NTW----------------------------------
 		Set<Account> setAccs = new set<Account>();
+		List<Agency_Applied_Change_code__c> listCCs = new List<Agency_Applied_Change_code__c>(); 
 		Account a = createAccount(true);
 		insert a;
 
@@ -333,7 +313,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
 												SIDRA_Case__c = c.id 
 												);
-		insert cc;
+		listCCs.add(cc);
 
 		Agency_Applied_Change_code__c cc1 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
@@ -343,7 +323,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												SIDRA_Case__c = c.id 
 
 												);
-		insert cc1;
+		listCCs.add(cc1);
 
 
 		//OSCAR
@@ -355,7 +335,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NTW,
 												OSCAR__c = oscar.id 
 												);
-		insert cc2;
+		listCCs.add(cc2);
 
 		Agency_Applied_Change_code__c cc3 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
@@ -365,7 +345,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												OSCAR__c = oscar.id 
 
 												);
-		insert cc3;
+		listCCs.add(cc3);
 
 
 		//-----------------RVW----------------------------------
@@ -374,7 +354,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
 												SIDRA_Case__c = c.id 
 												);
-		insert cc4;
+		listCCs.add(cc4);
 
 		Agency_Applied_Change_code__c cc5 = new Agency_Applied_Change_code__c(Account__c = a.id,
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_NOT,
@@ -383,7 +363,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												SIDRA_Case__c = c.id 
 
 												);
-		insert cc5;
+		listCCs.add(cc5);
 
 		//OSCAR
 
@@ -392,7 +372,7 @@ private class ANG_RiskEventMigrationHelperTest {
 												Change_Code__c = ANG_Risk_Helper.CHANGE_CODE_RVW,
 												OSCAR__c = oscar.id 
 												);
-		insert cc6;
+		listCCs.add(cc6);
 
 		Agency_Applied_Change_code__c cc7 
 			= new Agency_Applied_Change_code__c(Account__c = a.id,
@@ -402,7 +382,9 @@ private class ANG_RiskEventMigrationHelperTest {
 												OSCAR__c = oscar.id 
 
 												);
-		insert cc7;
+		listCCs.add(cc7);
+
+		insert listCCs;
 
 		ANG_RiskEventMigrationHelper helper = new ANG_RiskEventMigrationHelper(setAccs);
 		List<ANG_Agency_Risk_Event__c> listRisks = helper.convertChangeCodesToRiskEvents();
