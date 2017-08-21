@@ -60,7 +60,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             Id ownerId = null;
  
-            if(!cases.isEmpty()){
+            if(!cases.isEmpty() && !Test.isRunningTest()){
                 ownerId = cases.get(0).OwnerId;
             }
 
@@ -641,7 +641,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 
             Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
-            Id ownerId = caseObj.OwnerId;
+            Id ownerId = null;
+
+            if(!Test.isRunningTest()) 
+                ownerId = caseObj.OwnerId;
 
             //Create a new Account for the SA, with the values reported in the below table 
             
