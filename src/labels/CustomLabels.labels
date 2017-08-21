@@ -13923,7 +13923,7 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OPTION_PAX_AE</shortDescription>
-        <value>IATA Passenger Sales - Associated Entity</value>
+        <value>IATA Passenger Sales - Associate Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_STEP_2_Identi_Appro_Req_AE</fullName>
@@ -18144,6 +18144,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP NoC Head Entity Becoming a AE</shortDescription>
         <value>* Is this Head Entity becoming a Associate Entity?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Least_One_AE</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Least One AE</shortDescription>
+        <value>Please select at least one Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Least_One_BO</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Least One BO</shortDescription>
+        <value>Please select at least one Branch Office</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Location_Warning</fullName>

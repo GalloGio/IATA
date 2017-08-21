@@ -653,7 +653,7 @@
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null}">
 			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
-		<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+		<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
 			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
@@ -680,12 +680,14 @@
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
-		<p><a href="#nav_five">
-			<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
-			<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-				{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
-			</apex:outputText>
-		</a></p>
+		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
+			<p><a href="#nav_five">
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+					{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
+				</apex:outputText>
+			</a></p>
+		</apex:outputText>
 		
 	</div>
 
@@ -781,7 +783,7 @@
 				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
 					<apex:outputText escape="false" value="{!IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions)}"/>
 				</apex:pageBlockSection>
-				<apex:outputPanel rendered="{!isAccreditationModelNotNullOrLegacy}">
+				<apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
 					<span id="nav_one"></span>
 					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
 						<apex:facet name="header">
