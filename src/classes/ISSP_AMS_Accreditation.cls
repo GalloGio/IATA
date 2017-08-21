@@ -4118,7 +4118,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
         system.debug('accountType:' + accountType);
         system.debug('amsOfficeType:' + amsOfficeType);
         
-        if (agentsector == 'Cargo Agent' && amsOfficeType == 'Branch') {
+        if (agentsector == 'Cargo Agent' && amsOfficeType == 'Branch' && newCase.Reason1__c != AMS_Utils.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) {
             agentaccounts = [SELECT Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
                              BillingCountry, Name
                              FROM Account
@@ -7203,7 +7203,7 @@ system.debug('aqui sectorValue ' + sectorValue);
         Id rtAccreditContPreviousCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Previous Company Owner').getRecordTypeId();
         Id rtAccreditContCurrentCompanyOwner = Schema.SObjectType.AMS_Accreditation_Contact__c.getRecordTypeInfosByName().get('Current Company Owner').getRecordTypeId();
 
-        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
+        List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
         //NEWGEN-205
         ID lAccountConcerned = ( newForm.Scope_of_Change__c == 'Selected Branches Only' ? newCase.Account_Concerned__c : vHQAccountId );
         if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
