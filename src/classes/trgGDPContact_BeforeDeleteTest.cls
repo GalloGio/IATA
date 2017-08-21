@@ -5,6 +5,7 @@ private class trgGDPContact_BeforeDeleteTest {
         
         ID gdpContactRecordTypeID = TestClass_SetupVariables.gdpContactRecordTypeID;        
         Contact con = new Contact();
+        con.FirstName = 'Name';
         con.LastName = 'TestContact';
         con.RecordTypeId = gdpContactRecordTypeID;
         insert con;
@@ -13,6 +14,7 @@ private class trgGDPContact_BeforeDeleteTest {
         
         ID standardContactRecordTypeID = clsContactTypeIDSingleton.getInstance().RecordTypes.get('Standard');  
         Contact con1 = new Contact();
+        con1.FirstName = 'Name';
         con1.LastName = 'TestContact';
         con1.Email = 'email@email.org';
         con1.VER_Number__c = 123456;

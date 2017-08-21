@@ -24,6 +24,7 @@ private class TransferAttachmentToCaseControllerTest {
         insert a;
         
         Contact con =new contact(lastname = 'pluto' ,
+                                 firstname = 'Name',
                                  phone = '123',
                                  accountid = a.Id,
                                  Financial_Assessment_Contact__c = true,
