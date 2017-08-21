@@ -71,37 +71,6 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
         return new Process.PluginResult(result);
     }
 
-    @InvocableMethod
-    public static void insertUserProvAccount(List<id> userProvisioningRequestList) {
-
-        User currentUser = [Select Id,
-                                   FederationIdentifier
-                              from User
-                             Where Id =: UserInfo.getUserId()];
-
-
-        List<UserProvisioningRequest> uprl = new List<UserProvisioningRequest>();
-        uprl = [Select ConnectedAppId
-                  From UserProvisioningRequest
-                 Where Id in : userProvisioningRequestList
-                   And State = 'Completed'];
-
-        List<UserProvAccount> upal = new List<UserProvAccount>();
-        for(UserProvisioningRequest upr : uprl) {
-            UserProvAccount upa = new UserProvAccount (
-                ExternalUserId = currentUser.FederationIdentifier,
-                salesforceUserId = currentUser.id,
-                connectedAppId = upr.ConnectedAppId,
-                linkState = 'Linked',
-                status = 'Active'
-            );
-            upal.add(upa);
-        }
-
-        insert upal;
-
-    }    
-
     // Read values that were not returned by the target API from the input payload
     private void assignDerivedOutputParameters(Map<String, Object> pluginResult, String userPayload) {
         SCIMUser user = SCIMUser.parse(userPayload);
