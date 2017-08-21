@@ -25,6 +25,7 @@ private class ISSP_AMS_MSO_Controller_Test {
 	        AccountId = acc.id,
 	        RecordTypeId = conRtId, 
 	        LastName = 'portalUser',
+            FirstName = 'firstname',
 	        User_Portal_Status__c = 'Approved User'
 	        );
         insert con;
