@@ -68,6 +68,17 @@ public without sharing class AMS_Utils {
         private set;
     }
 
+    //20-06-2017 - AMSU-93
+    public static Map<String, String> JsonSpecialChars{
+        get {
+            if(JsonSpecialChars == null){
+                JsonSpecialChars = AMS_Utils.loadJsonSpecialCharsFile();
+            }
+            return JsonSpecialChars;
+        }
+        private set;
+    }
+
     private static Map<String, RecordType> currentCache = null;
 
     public static String userSessionId = UserInfo.getSessionId();
@@ -150,7 +161,7 @@ public without sharing class AMS_Utils {
     public static final String RECTYPE_OSCARCOMM= Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
     public static final String RECTYPE_NEWHE= Schema.AMS_OSCAR__c.sObjectType.getDescribe().getRecordTypeInfosByName().get('NG New HE').getRecordTypeId();
 
-    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE};
+    public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
 
 
     //public static final Set<String> oscarProcessesWithAppointments = new Set <String>{new_GSA,new_GSA_BSP,new_AHA,new_AHA_BSP,new_GSSA,new_MSO, new_HO,new_BR,new_BR_ABROAD};
@@ -2178,45 +2189,78 @@ public static String fetchTypeOfCustomer (String locationType , String category)
         return oscarProcessesWithAppointments.contains(oscar.Process__c) || (oscarCNSProcessesWithAppointments.contains(oscar.Process__c) && oscar.CNS_Process__c);
     }
 
-    //FM 22-05-2017 - AMSU-1 - split reason comming form account in order to be able to populate the Applied change code "reason code" and "reason description"
-    //Returns: List<String> with 2 entries:
-    // 1st position : Reason code, if exists... othewise is empty
-    // 2nd position : Reason Description
-    // also could be null if the value passed is null or empty
-    public static List<String> splitAccReason(String sReason){
+    //20-06-2017 - Change AMSU-93 - special chars replacement
+	public static String cleanSpecialChars(String s){
 
-        List<String> lRes = new List<String>();
+        String sRes = '';
 
-        String reason_Code = '';
-        String reason_Description = '';
-        
-        //check parameter for null or empty value
-        if(sReason == null || sReason.equalsIgnoreCase('')){
-            return null;
-        }else 
-        //Check for char '-' in order to see if we can split by code and description
-        if(sReason.indexOf('-') >= 0 && sReason.indexOf('-') <= 4){
+        //Apply try catch{} return same string in case of error
 
-            reason_Code = sReason.substringBefore('-');
-            reason_Description = sReason.substringAfter('-');
-
-            //Check if 1st part of the split is numeric in order to get the code
-            if(reason_Code.isNumeric()){
-                lRes.add(reason_Code);
-                lRes.add(reason_Description);
-            }else{
-                lRes.add('');
-                lRes.add(sReason);
-            }
-
-        }else{
-            //no splitting was possible, so we only fill the description
-            lRes.add('');
-            lRes.add(sReason);
+        if(s == null){
+             return '';
         }
+
+         if(s != null || !s.equalsIgnoreCase('')){
+
+            Map<String, String> mSpecialChars = JsonSpecialChars;
+
+            //String regex = '[^a-zA-Z0-9]';
+            //String regex = '[a-zA-Z\\d\\!@#\\$%&,;\'"\\(\\-º\\){}?:+ª\\*]';
+            String regex = '[^a-zA-Z\\d\\!@#\\$%&;\'"\\-{}?:_. ,+\\*\\\\/]';
+            sRes = s;
+
+            Matcher m = Pattern.compile(regex).matcher(s);
+
+            //System.debug('m: ' + m);
+            //System.debug('m.groupCount(): ' + m.groupCount() );
+
+            //Pattern p = Pattern.compile('regex'); 
+            //Matcher mo = p.matcher('string'); 
+            while (m.find()) { 
+                
+                //System.debug('m.group: ' + m.group()); 
+                if(mSpecialChars.containsKey( m.group() )) {
+                    //System.debug('replace by value: ' + m.group() + ' by ' + mSpecialChars.get(m.group()) ); 
+                    sRes = sRes.replaceAll(m.group(), mSpecialChars.get(m.group()));
+                }else{
+                    //System.debug('replace by space: ' + m.group() + ' by ' + mSpecialChars.get('SPACE') ); 
+                    //sRes = sRes.replaceAll(m.group(), '_');
+                    sRes = sRes.replaceAll(m.group(), mSpecialChars.get('SPACE'));
+                    //System.debug('sRes1: ' + sRes);
+                }
+
+            }
+        }
+        System.debug('sRes: ' + sRes);
+
+
+        return sRes;
+
+    }    
+    
+	//20-06-2017 - Change AMSU-93 - special chars replacement
+    public static Map<String, String> loadJsonSpecialCharsFile(){
+        /*
+         *  LOAD JSON TO MAP
+         */
+        StaticResource jsonFile = [select Id , Name , Body from StaticResource where Name = 'AMS_SPECIAL_CHARS_MAP'];
+
+        String JSONContent = EncodingUtil.urlDecode(jsonFile.Body.toString(), 'UTF-8');
         
-        return lRes;
+        Map<String, Object> m = (Map<String, Object>)JSON.deserializeUntyped(JSONContent);
+
+        Map<String, String> mRes = new Map<String, String>();
+        //System.debug('m: ' + m);
+
+        for (String key : m.keySet()) {
+            String value = (String)m.get(key);
+            //System.debug('key: '+ key + ' || value: ' + value);
+            mRes.put(key, (String)m.get(key));
+        }
+        return mRes;
+        //return null;
     }
+    
 
     public class Utility_RowIterator implements Iterator<String>, Iterable<String>
     {
