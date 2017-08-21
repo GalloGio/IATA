@@ -191,6 +191,24 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>Update Date%2FTime Closed</fullName>
+        <actions>
+            <name>Update_Date_Time_Closed</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Closed effective,Closed error,Closed effectiveness pending,Closed not effective</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Operational_Improvements__c.Date_Time_Closed__c</field>
+            <operation>equals</operation>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Update OI Status</fullName>
         <actions>
             <name>OI_Status_WF</name>
