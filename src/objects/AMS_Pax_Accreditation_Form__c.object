@@ -1154,7 +1154,7 @@
     <fields>
         <fullName>Branch_Office_Email__c</fullName>
         <externalId>false</externalId>
-        <label>Office Email</label>
+        <label>* Office Email</label>
         <length>80</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
