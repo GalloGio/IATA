@@ -1248,7 +1248,7 @@
                       <div class="col-md-12">
                         <apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Companies}" escape="false" />
                       </div>
-                      <apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
+                      <apex:commandLink id="addcompany" style="margin-right:5px" onfocus="showNewCompanyDialog();" rendered="{!newForm.AE_separate_Legal_Entity__c != 'No'}"><span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_AMS_ADD_COMPANY}</apex:commandLink>
                       <apex:outputText value="{!$Label.ISSP_AMS_NoC_No_Company_Owners}" styleClass="alert alert-info" rendered="{!newForm.AE_separate_Legal_Entity__c == 'Yes'}" />
                       <apex:pageBlockTable value="{!List_AgencyCompanies}" var="agencycon" id="companyList" styleClass="table-hover table table-condensed table-responsive">
                         <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}" />

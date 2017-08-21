@@ -1391,7 +1391,7 @@ public without sharing class ISSP_AMS_Accreditation {
             SYSTEM.DEBUG('Scope of Change: ' + newForm.Scope_of_Change__c);
          
             if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Please select at least one Branch Office'));
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
                 return null;
             }
             

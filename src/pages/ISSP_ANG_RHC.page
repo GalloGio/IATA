@@ -1,0 +1,145 @@
+<apex:page controller="ISSP_ANG_RHC" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" action="{!initActions}">
+  <html>
+
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <c:iss_ap_css />
+    <c:ISSP_Header></c:ISSP_Header>
+  </head>
+
+  <body>
+    <apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}" />
+    <script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
+    <style>
+      .section-header {
+        background-color: rgb(43, 120, 228);
+        color: white;
+        line-height: 1.42857143;
+        padding: 8px;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+      }
+
+      .section-header>i {
+        color: black;
+        margin-right: 5px;
+      }
+
+      main {
+        background-color: white;
+      }
+
+      td>img {
+        padding-bottom: 7px;
+        padding-left: 5px;
+      }
+    </style>
+    <main class="container">
+      <c:ISSP_CustomNavigation />
+      <div class="row">
+        <section name="left-side" class="col-lg-6 col-md-12">
+          <section name="remittance-holding" class="row">
+            <header class="col-lg-12">
+              <div class="section-header">
+                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Remittance Holding Capacity</strong>
+              </div>
+            </header>
+            <section name="remittance-holding-table" class="col-lg-8 col-md-12">
+              <table class="table">
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> RHC amount
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </td>
+                  <td>USD 120</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current usage
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </td>
+                  <td>USD 120</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Percentage usage
+                    <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                  </td>
+                  <td>75%</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Financial Security
+                  </td>
+                  <td>USD 120</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Remittance frequency
+                  </td>
+                  <td>Every 2 weeks</td>
+                  <td></td>
+                </tr>
+              </table>
+            </section>
+            <section name="remittance-holding-graph" class="col-lg-4 col-md-12">
+            
+            </section>
+          </section>
+          <div class="row">
+            <div class="col-lg-12 text-center"><a href="#">IATA Customer e-Statment</a></div>
+          </div>
+          <section name="payment-forms" class="row">
+            <header class="col-lg-12">
+              <div class="section-header">
+                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Available Forms of Payment</strong>
+              </div>
+            </header>
+            <div class="col-md-4 col-sm-12 text-center">
+              <i class="fa fa-money fa-4x show" aria-hidden="true"></i> <strong>Cash</strong>
+            </div>
+            <div class="col-md-4 col-sm-12 text-center">
+              <i class="fa fa-credit-card-alt fa-4x show" aria-hidden="true"></i> <strong>IATA EasyPay</strong>
+            </div>
+            <div class="col-md-4 col-sm-12 text-center">
+              <i class="fa fa-credit-card fa-4x show" aria-hidden="true"></i> <strong>Credit Card</strong>
+            </div>
+          </section>
+        </section>
+        <section name="right-side" class="col-lg-6 col-md-12">
+          <table class="table">
+            <tr>
+              <th class="section-header" colspan="2">
+                <i class="fa fa-user-md" aria-hidden="true"></i> Risk Profile
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Accreditation type
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+              </td>
+              <td>Standard Accreditatio with Cash</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Risk Status
+                <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+              </td>
+              <td>B</td>
+            </tr>
+          </table>
+        </section>
+      </div>
+
+
+      <c:ISSP_CustomFooter />
+    </main>
+  </body>
+
+  </html>
+</apex:page>

@@ -97,7 +97,7 @@
                 </apex:pageBlockSection>
         </div>
         <!-- NEWGEN-683 -->
-        <apex:outputPanel rendered="{!isAccreditationModelNotNullOrLegacy}">
+        <apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(newform.Is_change_bank_account_details__c))}">
             <div style="page-break-after:always;margin-top:30px;">
                 <apex:pageBlockSection columns="1" collapsible="false">
                     <apex:facet name="header">
