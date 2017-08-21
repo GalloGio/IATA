@@ -18146,6 +18146,22 @@ this is the tiess topic help</value>
         <value>* Is this Head Entity becoming a Associate Entity?</value>
     </labels>
     <labels>
+        <fullName>ISSP_NoC_Least_One_AE</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Least One AE</shortDescription>
+        <value>Please select at least one Associate Entity</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_Least_One_BO</fullName>
+        <categories>ISSP,NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC Least One BO</shortDescription>
+        <value>Please select at least one Branch Office</value>
+    </labels>
+    <labels>
         <fullName>ISSP_NoC_Location_Warning</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
