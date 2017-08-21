@@ -164,6 +164,16 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }set;
     }
 
+    private List<SelectOption> populateRightOptions(List<String> split) {
+
+        List<SelectOption> rightopts = new List<SelectOption>();
+       
+        for(String a :split)
+            rightopts.add(new SelectOption(a,a));
+
+        return rightopts;
+    }
+
     //auxiliary to the custom multipicklist
     public List<SelectOption> rightOptionsRF{
         get{
@@ -172,8 +182,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 this.rightOptionsRF = new List<SelectOption>();
 
                 If(accreditationObj.Remittance_frequency__c != null)
-                    for(String a :accreditationObj.Remittance_frequency__c.split(';'))
-                        this.rightOptionsRF.add(new SelectOption(a,a));
+                    this.rightOptionsRF = populateRightOptions(accreditationObj.Remittance_frequency__c.split(';'));
 
             }
             return this.rightOptionsRF;
@@ -372,6 +381,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 if(rightOptionsRF != null && rightOptionsRF.size()>2){
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'The maximum amount of allowed values for Remmitance Frequency is 2.')); 
                     displayErrorMsg = true;
+                    rightOptionsRF = null; // force repopulation 
                 }else if(rightOptionsRF != null){    
                     values = new List<String>();
                     for (SelectOption o :rightOptionsRF){
