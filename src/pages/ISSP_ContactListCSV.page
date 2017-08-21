@@ -1,0 +1,1 @@
+<apex:page controller="ISSP_ContactList" action="{!initialization}"  standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false" contentType="text/csv#exportContacts.csv">{!CSVcontent}</apex:page>
