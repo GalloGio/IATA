@@ -34,6 +34,14 @@
         padding-bottom: 7px;
         padding-left: 5px;
       }
+
+      i.check {
+        color: green;
+      }
+
+      i.wrong {
+        color: red;
+      }
     </style>
     <main class="container">
       <c:ISSP_CustomNavigation />
@@ -101,13 +109,19 @@
               </div>
             </header>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-money fa-4x show" aria-hidden="true"></i> <strong>Cash</strong>
+              <i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>Cash</strong>
+              <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
+              <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card-alt fa-4x show" aria-hidden="true"></i> <strong>IATA EasyPay</strong>
+              <i class="fa fa-credit-card-alt fa-4x show" aria-hidden="true"></i> <strong class="show">IATA EasyPay</strong>
+              <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
+              <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card fa-4x show" aria-hidden="true"></i> <strong>Credit Card</strong>
+              <i class="fa fa-credit-card fa-4x show" aria-hidden="true"></i> <strong class="show">Credit Card</strong>
+              <i class="fa fa-check fa-2x show check" aria-hidden="true"></i>
+              <a href="#">Example</a>
             </div>
           </section>
         </section>
