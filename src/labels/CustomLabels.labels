@@ -8905,6 +8905,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Agency Details in Local language</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_MSO_Application_Review</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_Application_Review</shortDescription>
+        <value>Please review your application details before accepting the Terms &amp;amp; Conditions below and submitting to IATA.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_MSO_Application_Section_2</fullName>
         <language>en_US</language>
         <protected>false</protected>
