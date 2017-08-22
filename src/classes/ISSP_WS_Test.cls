@@ -350,6 +350,10 @@ private class ISSP_WS_Test {
     }
     
     static testMethod void NewUser_7() {
+        Map<Id, String> sisFedIdMap = new Map<Id, String>();
+        Map<Id, String> sisEmailMap = new Map<Id, String>();
+        Map<Id, String> sisFirstNameMap = new Map<Id, String>();
+        Map<Id, String> sisLastNameMap = new Map<Id, String>();
         List <ISSP_Int_Error__c> errorList = ISSP_WS_Test.createErrors();
         insert errorList;
         
@@ -383,10 +387,16 @@ private class ISSP_WS_Test {
         theIds.ASD__c = newApp.Id;
         theIds.BSPLink__c = newApp.Id;
         insert theIds;
-        
+
+        String fedId = String.valueOf(con).substring(0,15);
+        sisEmailMap.put(con.id, con.Email);
+        sisFirstNameMap.put(con.id, con.FirstName);
+        sisLastNameMap.put(con.id, con.LastName);
+        sisFedIdMap.put(con.id, fedId);
+
         User myUser = [ select Id, firstname, lastname, email from User where Id = :UserInfo.getUserId() ];
         Contact con2 = ISSP_WS_Utilities.createContact(myUser.firstName, myUser.lastName, myUser.email, acc.id, false);
-
+        Test.startTest();
         system.runAs(myUser){
             ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
             myInput.firstName = 'test';
@@ -407,8 +417,13 @@ private class ISSP_WS_Test {
             acc.RecordTypeId = recordTypeId1;
             update acc;
             ISSP_WS_NewUser.createUser(myInput);
+            ISSP_WS_Utilities.invokeSisModifyUser(sisFedIdMap, sisEmailMap, sisFirstNameMap, sisLastNameMap);         
+            try{
+            ISSP_WS_Utilities.sendUserEmail(thisUser, con);
+            }catch (Exception e){
+            }
         }
-
+        Test.stopTest();
     }
     
     static testMethod void NewUser_8() {
@@ -744,6 +759,10 @@ private class ISSP_WS_Test {
             myInput.services = 'BSPLink';
             //ISSP_WS_DisableUser.disableUser(myInput);
         }
+    }
+
+     static testMethod void asdDeactivateUser() { 
+        ISSP_WS_Utilities.invokeAsdDisableUser('1234');
     }
     
     /*
