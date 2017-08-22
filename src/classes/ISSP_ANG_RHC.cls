@@ -1,14 +1,14 @@
 public with sharing class ISSP_ANG_RHC {
 
-	private Contact contact;
+	public Contact contact {get;set;}
 	private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
+	public ANG_RHC_Information__c remittanceFrequency {get;set;}
 
-	public ISSP_ANG_RHC() {
-		
-	}
+	public ISSP_ANG_RHC() {}
 
 	public void initActions() {
 		setContact();
+		setRemittanceFrequency();
 	}
 
 	private Boolean hasRightAccess(String service) {
@@ -28,7 +28,17 @@ public with sharing class ISSP_ANG_RHC {
 	private void setContact() {
 		List<User> userList = [SELECT Id, ContactId FROM User WHERE Id = :Userinfo.getUserId()];
 		Id contactId = userList.isEmpty() ? null : userList[0].ContactId;
-		List<Contact> contactList = [SELECT Id, Account.Id  FROM Contact WHERE Id = :contactId];
+		List<Contact> contactList = [SELECT Id, Account.Id, Account.Remittance_frequency__c FROM Contact WHERE Id = :contactId];
 		this.contact = contactList.isEmpty() ? null : contactList[0];
 	}
+
+	private void setRemittanceFrequency() {
+		List<ANG_RHC_Information__c> remittanceFrequencyList = [
+			SELECT Id, ANG_RME_Amount__c, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_Financial_Security__c
+			  FROM ANG_RHC_Information__c
+			 WHERE ANG_AccountId__c = :this.contact.Account.Id
+		];
+		this.remittanceFrequency = remittanceFrequencyList.isEmpty() ? null : remittanceFrequencyList[0];
+	}
+	
 }

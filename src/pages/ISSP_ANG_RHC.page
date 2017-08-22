@@ -8,9 +8,6 @@
   </head>
 
   <body>
-    <apex:stylesheet value="{!URLFOR($Resource.ISSP_AccountStatements,'css/style.css')}" />
-    <apex:stylesheet value="{!URLFOR($Resource.bootstraptoggle,'css/bootstrap-toggle.min.css')}" />
-    <script src="{!URLFOR($Resource.bootstraptoggle,'js/bootstrap-toggle.min.js')}"></script>
     <style>
       .section-header {
         background-color: rgb(43, 120, 228);
@@ -42,6 +39,27 @@
       i.wrong {
         color: red;
       }
+
+      canvas#percentageUsageGauge {
+        padding: 0;
+        margin: auto;
+      }
+
+      @media only screen and (max-width: 992px) {
+        canvas#percentageUsageGauge {
+          width: 75% !important;
+          height: calc(75% / 2) !important;
+          margin-left: calc((100% - 75%) / 2) !important;
+        }
+      }
+
+      @media only screen and (min-width: 992px) {
+        canvas#percentageUsageGauge {
+          width: 100% !important;
+          height: calc(100% / 2) !important;
+        }
+      }
+      
     </style>
     <main class="container">
       <c:ISSP_CustomNavigation />
@@ -60,7 +78,7 @@
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> RHC amount
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>USD 120</td>
+                  <td>USD {!remittanceFrequency.ANG_RME_Amount__c}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -68,7 +86,7 @@
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current usage
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>USD 120</td>
+                  <td>USD {!remittanceFrequency.ANG_ConsumedRHC__c}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -76,27 +94,27 @@
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Percentage usage
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>75%</td>
+                  <td>{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}%</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Financial Security
                   </td>
-                  <td>USD 120</td>
+                  <td>USD {!remittanceFrequency.ANG_Financial_Security__c}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Remittance frequency
                   </td>
-                  <td>Every 2 weeks</td>
+                  <td>{!contact.Account.Remittance_frequency__c}</td>
                   <td></td>
                 </tr>
               </table>
             </section>
-            <section name="remittance-holding-graph" class="col-lg-4 col-md-12">
-            
+            <section class="col-lg-4 col-md-12">
+              <canvas id="percentageUsageGauge"></canvas>
             </section>
           </section>
           <div class="row">
@@ -105,7 +123,7 @@
           <section name="payment-forms" class="row">
             <header class="col-lg-12">
               <div class="section-header">
-                <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Available Forms of Payment</strong>
+                <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>Available Forms of Payment</strong>
               </div>
             </header>
             <div class="col-md-4 col-sm-12 text-center">
@@ -114,12 +132,12 @@
               <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card-alt fa-4x show" aria-hidden="true"></i> <strong class="show">IATA EasyPay</strong>
+              <i class="fa fa-credit-card-alt fa-5x show" aria-hidden="true"></i> <strong class="show">IATA EasyPay</strong>
               <i class="fa fa-times fa-2x show wrong" aria-hidden="true"></i>
               <a href="#">Example</a>
             </div>
             <div class="col-md-4 col-sm-12 text-center">
-              <i class="fa fa-credit-card fa-4x show" aria-hidden="true"></i> <strong class="show">Credit Card</strong>
+              <i class="fa fa-credit-card fa-5x show" aria-hidden="true"></i> <strong class="show">Credit Card</strong>
               <i class="fa fa-check fa-2x show check" aria-hidden="true"></i>
               <a href="#">Example</a>
             </div>
@@ -153,6 +171,47 @@
 
       <c:ISSP_CustomFooter />
     </main>
+    <script src="{!URLFOR($Resource.gaugeJS)}"></script>
+    <script>
+      (function gaugeScript() {
+        "use strict";
+        var opts = {
+          angle: 0, // The span of the gauge arc
+          lineWidth: 0.47, // The line thickness
+          radiusScale: 1, // Relative radius
+          pointer: {
+            length: 0.6, // // Relative to gauge radius
+            strokeWidth: 0.024, // The thickness
+            color: '#000000' // Fill color
+          },
+          limitMax: false,     // If false, max value increases automatically if value > maxValue
+          limitMin: false,     // If true, the min value of the gauge will be fixed
+          colorStart: '#6FADCF',   // Colors
+          colorStop: '#8FC0DA',    // just experiment with them
+          strokeColor: '#E0E0E0',  // to see which ones work best for you
+          generateGradient: true,
+          highDpiSupport: true,     // High resolution support
+          staticZones: [
+            {strokeStyle: "#30B32D", min: 0, max: 50}, // Green
+            {strokeStyle: "#FFA500", min: 50, max: 75}, // Orange
+            {strokeStyle: "#F03E3E", min: 75, max: 100}  // Red
+          ],
+          staticLabels: {
+            font: "15px Arial",  // Specifies font
+            labels: [0, 50, 75, 100],  // Print labels at these values
+            color: "#000000",  // Optional: Label text color
+            fractionDigits: 0  // Optional: Numerical precision. 0=round off.
+          },
+        };
+        var target = document.getElementById('percentageUsageGauge'); // your canvas element
+        var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 100; // set max gauge value
+        gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c}); // set actual value
+      })();
+      
+    </script>
   </body>
 
   </html>
