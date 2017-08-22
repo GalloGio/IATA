@@ -2897,7 +2897,7 @@ public without sharing class ISSP_AMS_Accreditation {
             else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
-                    typeOfProcess = 'AMS_UTILS.NGCHANGES';
+                    typeOfProcess = AMS_UTILS.NGCHANGES;
                 } else {
                     typeOfProcess = 'MAJOR.CHANGES';
                 }

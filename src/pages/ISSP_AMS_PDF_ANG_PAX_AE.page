@@ -445,7 +445,7 @@
                   <apex:pageBlock >
                       <table class="aptable">
                           <tr>
-                              <td colspan="3" class="bluebg">
+                              <td colspan="2" class="bluebg">
                                   <p class="whitetext">{!$Label.ISSP_AMS_Step3_5_Other_Info}</p>
                               </td>
                           </tr>
