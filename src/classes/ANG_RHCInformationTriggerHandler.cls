@@ -13,7 +13,6 @@ public class ANG_RHCInformationTriggerHandler{
 	public void onBeforeInsert(){
 	}
 	public void onAfterInsert(){
-		recalculateConvertedAmount();
 	}
 
 	public void onBeforeUpdate(){
@@ -33,7 +32,7 @@ public class ANG_RHCInformationTriggerHandler{
 		set<id> accIdSet = new set<id>();
 		
 		for(ANG_RHC_Information__c rhc:triggerNew){
-			if(Trigger.isInsert || (Trigger.isUpdate &&(rhc.currencyIsoCode != oldMap.get(rhc.id).CurrencyIsoCode)))	accIdSet.add(rhc.ANG_AccountId__c);
+			if(rhc.currencyIsoCode != oldMap.get(rhc.id).CurrencyIsoCode))	accIdSet.add(rhc.ANG_AccountId__c);
 		}
 		if(!accIdSet.isEmpty()){
 			list<Financial_Security__c> fsList= Database.query('select account__C,amount__c,CurrencyIsoCode,ANG_ConvertedAmount__c from Financial_Security__c where account__C in:accIdSet');
