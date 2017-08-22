@@ -82124,18 +82124,16 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
         <active>true</active>
         <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
         <errorConditionFormula>AND(
-       NOT(ISBLANK(EF_SIS_Location_ID__c)), 
-       AND( EF_SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
-               NOT(
-               OR(
-                   REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{1}&quot;),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, REGEX(EF_SIS_Location_ID__c, &quot;[2-9]{2}&quot;)),
-                   AND(LEN(EF_SIS_Location_ID__c)=2, EF_SIS_Location_ID__c=&quot;10&quot;)
-                   
-                   )
-               )
-       )
- )</errorConditionFormula>
+NOT(ISBLANK(EF_SIS_Location_ID__c)),
+AND( EF_SIS_Location_ID__c &lt;&gt;&quot;Main&quot;,
+NOT(
+OR(
+REGEX(EF_SIS_Location_ID__c, &quot;[1-9]{1}&quot;),
+REGEX(EF_SIS_Location_ID__c, &quot;[0-9]{2}&quot;)
+)
+)
+)
+)</errorConditionFormula>
         <errorDisplayField>EF_SIS_Location_ID__c</errorDisplayField>
         <errorMessage>SIS Location ID just accepts values Main, and numbers from 1 to 99</errorMessage>
     </validationRules>

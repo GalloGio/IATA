@@ -6534,7 +6534,7 @@ TotalRows-Successes-Errors</description>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
             <operation>equals</operation>
-            <value>IFG Pre-Production</value>
+            <value>IFG Sandbox</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Right__c</field>
@@ -27740,6 +27740,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorConditionFormula>NOT(ISBLANK(TEXT(Data_quality_feedback__c))) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
         <errorDisplayField>Comment_data_quality_feedback__c</errorDisplayField>
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Contact_First_name_mandatory</fullName>
+        <active>true</active>
+        <description>Forcing the standard field (first name) mandatory</description>
+        <errorConditionFormula>TRIM (FirstName) == &apos;&apos;</errorConditionFormula>
+        <errorMessage>Please insert the first name</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>

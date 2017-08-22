@@ -971,11 +971,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <operation>equals</operation>
             <value>ERROR Rejected by G&amp;D</value>
         </filters>
-        <filters>
-            <field>MustSyncWithAIMS__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
         <label>Rejected by G&amp;D</label>
         <language>en_US</language>
     </listViews>
