@@ -64,7 +64,9 @@ public class clsCaseCommentManager {
                     
                     // ********* ACR &  DPC SR cases Notifications **************
                     // Added by shai Fisher in 31/07/14
-                    if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)')) {
+                    if ((cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems - locked)') ||    
+                        (cm.Parent.RecordType.Name == 'Application Change Request (DPC System)') ||
+                        (cm.Parent.RecordType.Name == 'Application Change Request (DPC Systems) - ACCA')) {
                         if (cm.Parent.Owner.Email != null)
                             ccaddress.add(cm.Parent.Owner.Email);
                             
@@ -136,7 +138,7 @@ public class clsCaseCommentManager {
         Account acc = new Account(Name='Test Account',BillingCity='Montreal', BillingCountry='Canada');
         insert acc;
         
-        Contact cont = new Contact(LastName = 'Test Contact', email ='test@test.com', AccountId = acc.Id);
+        Contact cont = new Contact(FirstName = 'Name', LastName = 'Test Contact', email ='test@test.com', AccountId = acc.Id);
         insert cont;
         
         Case case2 = new Case(contactId=cont.Id, Subject='Test Case');

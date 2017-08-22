@@ -20,13 +20,25 @@ public class AMS_AgencyRegulationTriggerHandler {
         Set<Id> accountIds = new Set<Id>();
         Set<String> regulationPerAccount = new Set<String>();
 
-        for(AMS_Agency_Regulation__c agReg: agencyRegulations){
-            accountIds.add(agReg.Account__c);
+        Map<Id,String> agencyRegulationsAccStatus = new Map<Id,String>();
+        for(AMS_Agency_Regulation__c agRegStatus : [SELECT Id, Account__r.Status__c FROM AMS_Agency_Regulation__c WHERE Id IN :agencyRegulations])
+        {
+            agencyRegulationsAccStatus.put(agRegStatus.Id, agRegStatus.Account__r.Status__c);
+        }
 
-            if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
-                dgrRegulationsExpiringIn90Days.add(agReg);
-                if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
-                    renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
+        for(AMS_Agency_Regulation__c agReg: agencyRegulations){
+
+            if(agencyRegulationsAccStatus.get(agReg.Id) != AMS_Utils.ACC_S0_TERMINATED){
+
+                accountIds.add(agReg.Account__c);
+
+                if(!oldAgRegulationValues.get(agReg.Id).Notification_Sent__c && agReg.Notification_Sent__c && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR || agReg.Type_of_Certificate__c == AMS_Utils.CERT_CATA || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) && agReg.Handling_Account__c)
+                    dgrRegulationsExpiringIn90Days.add(agReg);
+                    if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))
+                        renewalCertPerAccount.put(agReg.Account__c+agReg.Type_of_Certificate__c, -1);
+
+            }
+            
         }
 
         if(!dgrRegulationsExpiringIn90Days.isEmpty()){
@@ -55,7 +67,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             //get contacts of first accounts
             if(!accountIds.isEmpty()) {
-                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContacts = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIds AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
                 for(Contact c: allContacts){
                     if(!keyContactsPerAccount.containsKey(c.AccountId))
@@ -67,7 +79,7 @@ public class AMS_AgencyRegulationTriggerHandler {
 
             //get contacts of topParents and relate them with first account
             if(!accountIdsHOs.isEmpty()){
-                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
+                List<Contact> allContactsHOs = new List<Contact>([SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE AccountId IN :accountIdsHOs AND IsEmailBounced = FALSE AND (BSP_CASS_Payment_contact__c = TRUE OR Financial_Assessment_Contact__c = TRUE OR User_Portal_Status__c = 'Approved Admin')]);
 
                 for(Contact cHO: allContactsHOs){
 

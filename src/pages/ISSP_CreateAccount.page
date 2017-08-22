@@ -62,7 +62,27 @@
 		$j('#shippingstreet textarea').blur(function() {
 			$('#addressStreetMSG').hide();
 		});
+		
+		$j('.billingstate').change(function() {
+			if($j('select[id*="drpdwnBState"]').val() != $j('#billingstate input').val()) {
+				$j('select[id*="drpdwnBState"]').val($j('#billingstate input').val());
+			}
+		});
+		
+		$j('.shippingstate').change(function() {
+			if($j('select[id*="drpdwnSState"]').val() != $j('#shippingstate input').val()) {
+				$j('select[id*="drpdwnSState"]').val($j('#shippingstate input').val());
+			}
+		});		
 
+	}
+	
+	function copyToAccBState() {
+		$j('#billingstate input').val($j('select[id*="drpdwnBState"]').val());
+	}
+	
+	function copyToAccSState() {
+		$j('#shippingstate input').val($j('select[id*="drpdwnSState"]').val());
 	}
 	
 	function modifyUIForm() {
@@ -83,7 +103,43 @@
 				$j('#shippingpostalcode input').prop('placeholder', 'N/A');
 	            $j('#shippingpostalcode input').prop('disabled', true);	 
 			}
+			shippingListStates();
 		});
+		setBillingStatesDrpDown();
+		setShippingStatesDrpDown();
+	}
+	
+	function shippingListStates() {
+		var country = $j('#shippingcountry input').val();
+		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
+			$j("#drpdwnSState").empty();
+			$j("#drpdwnSState").addClass('rec');
+			$j("#drpdwnSState").append("<option value=''>--Select One--</option>");
+			if(country == 'Brazil' && mapStates.BR)	{
+				$j.each(mapStates.BR, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'United States' && mapStates.US) {
+				$j.each(mapStates.US, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Canada' && mapStates.CA) {
+				$j.each(mapStates.CA, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Australia' && mapStates.AU) {
+				$j.each(mapStates.AU, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Venezuela' && mapStates.VE) {
+				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			}
+			$j('#shippingstate input').hide();
+			$j('#divToMove3').show();	
+			$j('.shippingstate').change(function() {
+				if($j('select[id*="drpdwnSState"]').val() != $j('#shippingstate input').val()) {
+					$j('select[id*="drpdwnSState"]').val($j('#shippingstate input').val());
+				}
+			});	
+		} else {
+			$j("#drpdwnSState").empty();
+			$j("#drpdwnSState").removeClass('rec');
+			$j('#shippingstate input').val('');
+			$j('#shippingstate input').show();
+			$j('#divToMove3').hide();			
+		}
 	}
 	
 	function replaceShippingTXT(node) {
@@ -108,10 +164,90 @@
 		return true;
 	}
 	
+	function setBillingStatesDrpDown() {
+		var country = $j('#billingcountry input').val();
+		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
+			$j('#billingstate input').hide();
+			var elem = $j('#divToMove2').detach();
+			elem.insertAfter("#billingstate");
+			$j('#billingstate input').hide();
+			$j('#divToMove2').show();
+		
+			if(country == 'Brazil' && mapStates.BR)	{
+				$j.each(mapStates.BR, function(k, v) {$j('select[id*="drpdwnBState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'United States' && mapStates.US) {
+				$j.each(mapStates.US, function(k, v) {$j('select[id*="drpdwnBState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Canada' && mapStates.CA) {
+				$j.each(mapStates.CA, function(k, v) {$j('select[id*="drpdwnBState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Australia' && mapStates.AU) {
+				$j.each(mapStates.AU, function(k, v) {$j('select[id*="drpdwnBState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Venezuela' && mapStates.VE) {
+				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnBState"]').append($j("<option></option>").attr("value", v).text(v));});
+			}
+		} else {
+			$j("#drpdwnBState").removeClass('rec');
+		}
+	}
+	
+	function setShippingStatesDrpDown() {
+		var country = $j('#shippingcountry input').val();
+		if(country == 'Brazil' || country == 'United States' || country == 'Canada' || country == 'Australia' || country == 'Venezuela') {
+			$j('#shippingstate input').hide();
+			var elem = $j('#divToMove3').detach();
+			elem.insertAfter("#shippingstate");
+			$j('#shippingstate input').hide();
+			$j('#divToMove3').show();
+		
+			if(country == 'Brazil' && mapStates.BR)	{
+				$j.each(mapStates.BR, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'United States' && mapStates.US) {
+				$j.each(mapStates.US, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Canada' && mapStates.CA) {
+				$j.each(mapStates.CA, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Australia' && mapStates.AU) {
+				$j.each(mapStates.AU, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			} else if(country == 'Venezuela' && mapStates.VE) {
+				$j.each(mapStates.VE, function(k, v) {$j('select[id*="drpdwnSState"]').append($j("<option></option>").attr("value", v).text(v));});
+			}
+			
+			$j('.shippingstate').change(function() {
+				if($j('select[id*="drpdwnSState"]').val() != $j('#shippingstate input').val()) {
+					$j('select[id*="drpdwnSState"]').val($j('#shippingstate input').val());
+				}
+			});	
+		}
+	}
+	
+	function replaceAutoCompleteAddressDoctor() {
+		try {
+			var f = attachAutoComplete.toString();
+			f = f.replace('dseJQ("<li>")', '(fieldName.indexOf(\'Shipping\') != -1 ? dseJQ("<li>").attr("onclick", "forceStateChangeShipping(\'"+item["shippingstate"].trim()+"\')") : dseJQ("<li>").attr("onclick", "forceStateChangeBilling(\'"+item["billingstate"].trim()+"\')"))');
+			attachAutoComplete = new Function('component','fieldName','minlen','delay','inputFldGrp','fastComplete','ruleNumber','ruleInstance','clicktoverify', f.substring(f.indexOf('{')+1,f.lastIndexOf('}')));
+		} catch(e) {
+			console.log(e);
+		}
+	}
+	
+	function forceStateChangeShipping(c) {
+		try {			
+			$j('#drpdwnSState').val(c);
+		} catch(e) {
+			console.log(e);
+		}
+	}
+	
+	function forceStateChangeBilling(c) {
+		try {
+			$j('#drpdwnBState').val(c);
+		} catch(e) {
+			console.log(e);
+		}
+	}
 	/*iec functions - end*/
 	
 	var countriesWithoutZipCode;
 	var defCountry;
+	var mapStates;
     $j(document).ready(function() {
         console.log('fsd '+'{!preventAddressDoctorService}');
         if('{!preventAddressDoctorService}'=='false') {
@@ -143,10 +279,12 @@
 	            $j('#shippingcountry input').removeAttr("readonly");
 	            
 	            countriesWithoutZipCode = new Set({!countriesNamesWithoutZipCode});
+	            mapStates = {!isoStates};
 	            defCountry = $j('#billingcountry input').val();
 	            addListeners();  
 	            
 	            modifyUIForm();
+	            replaceAutoCompleteAddressDoctor();
 	            
 	            //TC: set mandatory fields by country 
 	            var country = "{!searchCountryName}";     
@@ -613,17 +751,24 @@
                         </apex:outputPanel>
                       </div>
                       <div class="form-group col-lg-6">
-                      <DSE:DS_DataQuality id="BillingAddress"
-                        RecordRef="{!acc}"
-                        FieldGroupName="Billing Address"
-                        Edit="true"
-                        FormGroupStyle="form-group"
-                        RowStyle="row"
-                        LabelStyle="col-lg-5"
-                        InputStyle="col-lg-6"
-                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
-                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
-                      </DSE:DS_DataQuality>
+	                      <DSE:DS_DataQuality id="BillingAddress"
+	                        RecordRef="{!acc}"
+	                        FieldGroupName="Billing Address"
+	                        Edit="true"
+	                        FormGroupStyle="form-group"
+	                        RowStyle="row"
+	                        LabelStyle="col-lg-5"
+	                        InputStyle="col-lg-6"
+	                        StatusStyle="{!IF(sRefererCommunity == 'iec','elementBAddressToHide', 'col-lg-1 col-md-1 col-sm-1 col-xs-1')}"
+	                        FormControlStyle="form-control req" rendered="{!preventAddressDoctorService==false}">
+	                      </DSE:DS_DataQuality>
+	                      <apex:outputPanel layout="none" rendered="{!sRefererCommunity == 'iec'}">
+	                      		<div id="divToMove2" class="col-lg-6" style="display: none;">
+	                      			<select class="form-control rec" id="drpdwnBState" onchange="copyToAccBState();">
+	                      				<option value="">--Select One--</option>
+	                      			</select>                		 	
+	                        	</div>
+                       	  </apex:outputPanel>	
                       </div>
                       <div class="form-group col-lg-6">
 	                      <apex:outputPanel id="shippingAddressArea" layout="none">                 
@@ -644,6 +789,11 @@
 			                            	<apex:selectOptions value="{!shpCountry}"/>	
 			                        	</apex:selectList>
 		                        	</div>
+		                        	<div id="divToMove3" class="col-lg-6" style="display: none;">
+		                      			<select class="form-control rec" id="drpdwnSState" onchange="copyToAccSState();">
+		                      				<option value="">--Select One--</option>
+		                      			</select>                		 	
+		                        	</div>
 	                        	</apex:outputPanel>		                                       
 	                      </apex:outputPanel>
                       </div>
@@ -653,7 +803,8 @@
                       
                       <div class="form-group col-lg-7" id="Phoneone">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Phone} <span class="required">*</span></label><br/>
-                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" onblur="setInternationalPhoneNo('phone');$j('.phone').change();"/>
+                            <apex:inputField id="businessphoneinput" styleclass="form-control rec"  value="{!acc.PhoneNational__c}" 
+                            onblur="setInternationalPhoneNo('phone');$j('.phone').change();" onkeyup="setLengthPhone(this,0)"/>
 
                             <DSE:DS_DataQuality id="phoneinput"
                                 RecordRef="{!acc}"
@@ -671,7 +822,8 @@
                       
                       <div class="form-group col-lg-7" id="Phonetwo">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Mobile}</label><span class="required"></span><br/>
-                        <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" onblur="setInternationalPhoneNo('mobile');"/>
+                        <apex:inputField id="businessmobileinput" styleclass="form-control"  value="{!acc.MobileNational__c}" 
+                        onblur="setInternationalPhoneNo('mobile');" onkeyup="setLengthPhone(this,1)"/>
                       </div>
 
                       <!-- <div class="form-group col-lg-6" id="DSEPhone">
@@ -690,7 +842,8 @@
                     
                       <div class="form-group col-lg-7" id="Phonethree">
                         <label for="exampleInputEmail1" >{!$Label.ISSP_Office_Fax}</label><span class="required"></span><br/>
-                            <apex:inputField id="businessfaxinput" styleclass="form-control"  value="{!acc.FAXNational__c}" onblur="setInternationalPhoneNo('fax');"/>
+                            <apex:inputField id="businessfaxinput" styleclass="form-control"  value="{!acc.FAXNational__c}" 
+                            onblur="setInternationalPhoneNo('fax');" onkeyup="setLengthPhone(this,2)"/>
                       </div>
 
                       <div class="clearfix"></div>
@@ -760,7 +913,7 @@
                         id="btnShowCreateAccount"
                         style="display:{!if(or(showCreateAccount,showCreateOther),'','none')}"
                         />
-                      <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitNewAccount" onClick="if(!validateNewAccount('{!$Component.categoryField}'))return false;blockme();" action="{!register}" value="{!$Label.site.submit}" id="submit" style="display:none" />
+                      <apex:commandButton styleclass="btn_iata btn-lg btn-block btn-success2 submitNewAccount" onClick="if(!validateNewAccount('{!$Component.categoryField}')) {return false;}blockme();" action="{!register}" value="{!$Label.site.submit}" id="submit" style="display:none" />
                     </div> 
                 </div>
                 <div id="pleaseWait2" style="display:none" >
@@ -996,7 +1149,7 @@
         }
         $j('.rec').each(function (){
             $j(this).parents('.form-group').removeClass('has-error');
-            if(!$j(this).val()){// && ($(this).html() == '' || $(this).html() == null)){
+            if(isBlank($j(this).val())){// && ($(this).html() == '' || $(this).html() == null)){
                 if($j(this).css('display') != 'none'){
                     flag = false;
                     $j(this).parents('.form-group').addClass('has-error');
@@ -1273,7 +1426,13 @@
             if(isIEC) {          	
             	$j('[id*="drpdwnCountry"]').attr('disabled', 'disabled');
             	$j("#shippingcountry").find("input").val(defCountry);
-            	$j('[id*="drpdwnCountry"]').val(defCountry);
+            	$j('[id*="drpdwnCountry"]').val(defCountry);            	
+            	shippingListStates();
+            	if($j('#divToMove3').css('display') != 'none') {
+            		$j('#drpdwnSState').val($j('#drpdwnBState').val());
+            	} else {
+            		$j("#shippingstate").find("input").val($j("#billingstate").find("input").val());
+            	}
             }
         } else if(!checkBox.checked && isIEC) {
         	$j('[id*="drpdwnCountry"]').removeAttr('disabled');
@@ -1346,6 +1505,30 @@
             */
         }
     }
+
+    /* iec functions */
+    //INC333196
+    function setLengthPhone(e, i) {
+    	var phoneVal = e.value;
+    	if(phoneVal && "{!sRefererCommunity}"=="iec") {	        	
+        	var formatedSize = phoneVal.length;
+        	var unformatedSize = phoneVal.replace(" ", "").replace("-","").length;
+			
+			if(phoneVal.charAt(0) == "+") {
+				$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+			} else {
+				var flagDrpd = $j($j(".flag-dropdown")[i]).find("div")[0];
+				if(flagDrpd && flagDrpd.title && flagDrpd.title.split("+")[1]) {
+					var selectedFlagLength = flagDrpd.title.split("+")[1].length;
+					$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize) - selectedFlagLength);
+				} else {
+					$j(e).attr("maxlength", 15 + (formatedSize - unformatedSize));
+				}	
+			}	        	
+    	}
+    }
+        
+    /******/
                   
 </Script>                 
 

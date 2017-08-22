@@ -4,6 +4,7 @@ private class clsAccelyaRequestTest {
     static testMethod void testAccelyaRequestMethod() {
         
         Contact c = new Contact();
+        c.FirstName = 'Name';
         c.LastName = 'Test';
         insert c;
         

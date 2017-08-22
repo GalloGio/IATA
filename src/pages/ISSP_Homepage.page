@@ -246,7 +246,15 @@
                                                                             <apex:param value="{!f.FieldPath}" name="column" assignTo="{!sortExpression}" ></apex:param>
                                                                          </apex:commandLink>
                                                                       </apex:facet>
-                                                                      <apex:outputfield value="{!item[f.fieldPath]}" />
+
+        <!-- basto1p -->
+        <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(f.fieldPath!='Portal_Case_Status__c',true,false)}" />
+
+        <!-- basto1p -->
+        <apex:outputpanel rendered="{!IF(f.fieldPath=='Portal_Case_Status__c',true,false)}">
+            <apex:outputfield value="{!item[f.fieldPath]}" rendered="{!IF(mapFieldsValue['Status'+item.Status]=='NO_FIELD_MAP',true,false)}"/>
+            <apex:outputpanel rendered="{!IF(mapFieldsValue['Status'+item.Status]!='NO_FIELD_MAP',true,false)}"> {!mapFieldsValue['Status'+item.Status]} </apex:outputpanel>
+        </apex:outputpanel>
                                                                     </apex:column>
                                                               </apex:repeat>
                                                           </apex:pageBlockTable>
@@ -356,11 +364,6 @@
                                                                     <span class="">
                                                                         <apex:outPutField value="{!not.Subject__c}" />
                                                                     </span>
-                                                                    <span class="modalDate">
-                                                                        <apex:outputText value="{0, date, short}">
-                                                                            <apex:param value="{!not.CreatedDate}" />
-                                                                        </apex:outputText>
-                                                                    </span>
                                                                   </div>
                                                                   <div class="modal-body">
                                                                       <apex:outPutField value="{!not.Message__c}" />
@@ -427,10 +430,13 @@
                                                               <li id="Serv2"  class="left-color">
                                                                   <!-- temp for CNS -->
                                                                   <apex:outputPanel rendered="{!app.PortalServiceTranslatedName__c != 'CNS Endorsement & Changes'}" >
-                                                                    <apex:outputPanel rendered="{!app.Right__c != 'Access Requested'}" >
+                                                                    <apex:outputPanel rendered="{!IF(app.IsSCIMIFG__c,IF(app.Right__c=='Access Granted', IF(app.Technical_Provisioning_Status__c=='External Access Granted', true,false),false), IF(app.Right__c=='Access Granted', true,false))}" >
                                                                     <a  id="app{!app.Id}" class="subject color_" target="{!IF(app.Portal_Application__r.New_Window__c,'_blank','_self')}" href="{!IF(app.Right__c == 'Access     Requested','javascript:void(0)',app.Application_Start_URL__c)}">
                                                                       <h5>{!app.PortalServiceTranslatedName__c}</h5>
                                                                     </a>
+                                                                    </apex:outputPanel>
+                                                                    <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
+                                                                      <h5>{!app.PortalServiceTranslatedName__c}</h5>
                                                                     </apex:outputPanel>
                                                                     <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
                                                                       <h5>{!app.PortalServiceTranslatedName__c}</h5>
@@ -444,9 +450,17 @@
                                                                     <!-- /temp for CNS -->
                                                               </li>
                                                           </span>
-                                                          <span class="lbl_services" style="display: {!IF(app.Right__c == 'Access Requested','','none')}">
-                                                                {!$Label.ISSP_Pending_Approval}
-                                                          </span>
+                                                          <apex:outputPanel rendered="{!app.Right__c == 'Access Requested'}" >
+                                              		  <span class="lbl_services" >
+                                                		{!$Label.ISSP_Pending_Approval}
+                                              		  </span>
+                                            		  </apex:outputPanel>
+
+                                            		  <apex:outputPanel rendered="{!IF(app.Right__c == 'Access Granted',IF(app.IsSCIMIFG__c,IF(app.Technical_Provisioning_Status__c!='External Access Granted', true,false),false),false)}" >
+                                            		  <span class="lbl_services" >
+                                              		  	{!$Label.ISSP_Access_Under_Provisioning}
+                                            		  </span>
+                                          		  </apex:outputPanel>
                                                     </ul>
 
                                                     <script>

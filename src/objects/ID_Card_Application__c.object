@@ -1198,7 +1198,7 @@ Completed: Process is complete</inlineHelpText>
     </fields>
     <fields>
         <fullName>VER_Number__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>VER#</label>
         <length>18</length>
         <required>false</required>
@@ -1274,7 +1274,7 @@ Completed: Process is complete</inlineHelpText>
         <filters>
             <field>VER_Number__c</field>
             <operation>equals</operation>
-            <value>5990032445</value>
+            <value>5484010057</value>
         </filters>
         <label>For specific VER</label>
         <language>en_US</language>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email to notify the IEP Admins and Master Wallet managers that users have been added to IATA EasyPay</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>ISSP_Approval_Of_IATA_EasyPay_Users</name>
+    <style>none</style>
+    <subject>Approval of IATA EasyPay Users</subject>
+    <type>custom</type>
+</EmailTemplate>

@@ -15,7 +15,7 @@
 
        function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
-            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}"});
+            var countryEmail = sforce.apex.execute("IDFS_Util","getRecordTypeEmail",{caseRecordType:"{!cse.RecordType.DeveloperName}", caseBSPCountry:"{!cse.BSPCountry__c}", caseGroup:"{!cse.Case_Group__c}"});
             if (countryEmail == '') {
                 countryEmail = sforce.apex.execute("IDFS_Util","getIATACountryEmail",{caseBSPCountry:"{!cse.BSPCountry__c}"});
             }
@@ -217,10 +217,6 @@
                                        <a href ="" onclick="ToAllMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="To All">
                                          <apex:outputText value="To All" />
                                        </a>
-                                       <span value="|" class="view"> |</span>
-                                      <a href ="" onclick="DeleteMethod('{!msg.message.Id}');return false;" style="color:#015ba7; cursor: pointer;" title="Delete">
-                                        <apex:outputText value="Del" />
-                                      </a>
 
                             </td>
                             <td class=" dataCell " scope="row">

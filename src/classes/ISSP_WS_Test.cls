@@ -168,7 +168,8 @@ private class ISSP_WS_Test {
         myInput.description = '';
         ISSP_WS_NewUser.createUser(myInput);
         
-        con.User_Portal_Status__c = 'Approved User';
+        con.User_Portal_Status__c = 'Approved User';         
+        con.Community__c = 'ISS Customer Portal';
         update con;
         ISSP_WS_NewUser.createUser(myInput);
     }
@@ -346,6 +347,7 @@ private class ISSP_WS_Test {
         con.LastName = 'test';
         con.User_Portal_Status__c = 'Pending Approval';
         con.Email = 'test.issp.interface@testisspinterface.com';
+        con.Community__c = 'ISS Customer Portal';
         insert con;
         
         User thisUser = ISSP_ObjectFactory.createPortalUser(con);
@@ -562,14 +564,17 @@ private class ISSP_WS_Test {
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.disableUser(myInput);
             
+			Test.startTest();
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
             
+			
             myInput.services = 'BSPLink';
             ISSP_WS_DisableUser.disableUser(myInput);
+			Test.stopTest();
         }
     }
     
@@ -695,14 +700,17 @@ private class ISSP_WS_Test {
             myInput.services = 'CASS03';
             ISSP_WS_DisableUser.reactivateUser(myInput);
             
+			Test.startTest();
             myInput.services = 'CASS01';
             ISSP_WS_DisableUser.reactivateUser(myInput);
+			
             
             myInput.services = 'SIS';
             ISSP_WS_DisableUser.disableUser(myInput);
             
             myInput.services = 'ASD';
             ISSP_WS_DisableUser.disableUser(myInput);
+			Test.stopTest();
             
             myInput.services = 'BSPLink';
             //ISSP_WS_DisableUser.disableUser(myInput);

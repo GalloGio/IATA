@@ -98,7 +98,7 @@
     <fields>
         <fullName>Accredited_By__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By__r.Definition__c</formula>
+        <formula>Related_Accreditation_Class__r.Endorsed_Accredited_By_Formula__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Accredited By</label>
         <required>false</required>
@@ -173,9 +173,9 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
         <fullName>Agency_Status_Code_Interpreted__c</fullName>
         <description>Agency Status Code for non-Member  0 or 9</description>
         <externalId>false</externalId>
-        <formula>if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3,
-9,
-0)</formula>
+        <formula>IF( WebStar_ID__c = &apos;&apos;, 
+    if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3, 9, 0),
+    if(Value(Related_Accreditation_Class__r.Status__r.Code__c)&gt;3, 7, 0))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Agency Status Code Interpreted</label>
         <precision>18</precision>
@@ -280,7 +280,7 @@ IF(RIGHT(AIMS_ID__c,3)=&quot;GDP&quot;,Left(AIMS_ID__c,LEN(AIMS_ID__c)-3),AIMS_I
     <fields>
         <fullName>City__c</fullName>
         <externalId>false</externalId>
-        <formula>Related_GDP_Address__r.Address_City__c</formula>
+        <formula>UPPER(Related_GDP_Address__r.Address_City__c)</formula>
         <label>City</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -611,6 +611,19 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Now_Date_Time__c</fullName>
+        <description>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</description>
+        <externalId>false</externalId>
+        <formula>Now()</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date/Time Auto-Populated Formula used to validate EBC Daily Master Sync</inlineHelpText>
+        <label>Now Date/Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Parent_Account_AIMS_ID__c</fullName>
