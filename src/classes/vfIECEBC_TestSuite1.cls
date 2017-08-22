@@ -512,6 +512,7 @@ public class vfIECEBC_TestSuite1 {
         newAccount.Name = 'Hello World';
         insert newAccount;
         Contact newContact = new Contact();
+		newContact.FirstName = 'Name';
         newContact.Phone='5142640908';
         newContact.Email='dashboard@iata.com';
         newContact.LastName = 'w00t';
