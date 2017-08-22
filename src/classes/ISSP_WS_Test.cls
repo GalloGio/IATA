@@ -157,20 +157,38 @@ private class ISSP_WS_Test {
         
         ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
         myInput.firstName = 'test';
-        myInput.lastName = 'test';
+        myInput.lastName = '';
         myInput.salutation = '';
-        myInput.email = 'test.issp.interface@testisspinterface.com';
+        myInput.email = '';
         myInput.accountIATAcode = '100';
         myInput.accountCountry = 'PT';
         myInput.phone = '';
-        myInput.services = 'CASS01';
+        myInput.services = '';
         myInput.sisMemberId = '';
         myInput.description = '';
         ISSP_WS_NewUser.createUser(myInput);
-        
-        con.User_Portal_Status__c = 'Approved User';         
-        con.Community__c = 'ISS Customer Portal';
+        myInput.email = 'test.issp.interface@testisspinterface.com';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.lastName = 'test';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'CASS01';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'CASS02';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'CASS03';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'CASS04';
+        con.User_Portal_Status__c = 'Approved User';  
+        con.Community__c = '';  
         update con;
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'SIS';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'ASD';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.services = 'BSPLINK';
+        ISSP_WS_NewUser.createUser(myInput);
+        myInput.email = 'a';
         ISSP_WS_NewUser.createUser(myInput);
     }
 
@@ -295,6 +313,7 @@ private class ISSP_WS_Test {
         con.AccountId = acc.Id;
         con.LastName = 'test';
         con.User_Portal_Status__c = 'Rejected';
+        con.Status__c = 'Inactive';
         con.Email = 'test.issp.interface@testisspinterface.com';
         insert con;
         
@@ -328,7 +347,6 @@ private class ISSP_WS_Test {
             myInput.description = '';
             ISSP_WS_NewUser.createUser(myInput);
         }
-
     }
     
     static testMethod void NewUser_7() {
@@ -336,6 +354,7 @@ private class ISSP_WS_Test {
         insert errorList;
         
         String recordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Airline'].Id;
+        String recordTypeId1 = [SELECT Id FROM RecordType WHERE DeveloperName = 'IATA_Agency'].Id;
         
         Account acc = ISSP_ObjectFactory.createNewAccount();
         acc.IATACode__c = '100';
@@ -365,19 +384,28 @@ private class ISSP_WS_Test {
         theIds.BSPLink__c = newApp.Id;
         insert theIds;
         
-        User myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
+        User myUser = [ select Id, firstname, lastname, email from User where Id = :UserInfo.getUserId() ];
+        Contact con2 = ISSP_WS_Utilities.createContact(myUser.firstName, myUser.lastName, myUser.email, acc.id, false);
+
         system.runAs(myUser){
             ISSP_WS_NewUser.UserInputData myInput = new ISSP_WS_NewUser.UserInputData();
             myInput.firstName = 'test';
             myInput.lastName = 'test';
             myInput.salutation = '';
-            myInput.email = 'test.issp.interface@testisspinterface.com';
-            myInput.accountIATAcode = '100';
+            myInput.email = 'test.issp.interfac2e@testisspinterface.com';
+            myInput.accountIATAcode = '';
             myInput.accountCountry = 'PT';
             myInput.phone = '';
             myInput.services = 'CASS01';
             myInput.sisMemberId = '';
             myInput.description = '';
+            ISSP_WS_NewUser.createUser(myInput);
+            myInput.accountIATAcode = '100';            
+            ISSP_WS_NewUser.createUser(myInput);
+            myInput.accountCountry = '';
+            ISSP_WS_NewUser.createUser(myInput);
+            acc.RecordTypeId = recordTypeId1;
+            update acc;
             ISSP_WS_NewUser.createUser(myInput);
         }
 
@@ -414,6 +442,7 @@ private class ISSP_WS_Test {
         theIds.SIS__c = newApp.Id;
         theIds.ASD__c = newApp.Id;
         theIds.BSPLink__c = newApp.Id;
+        theIds.CNS_CassLink__c = newApp.Id;
         insert theIds;
         
         Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();
@@ -435,9 +464,15 @@ private class ISSP_WS_Test {
             myInput.services = 'CASS01';
             myInput.sisMemberId = '';
             myInput.description = '';
+            thisUser.FederationIdentifier = null;
+            update thisUser;
+            ISSP_WS_NewUser.createUser(myInput);
+            myInput.services = 'CASS04';
+            con.Community__c = '';
+            con.User_Portal_Status__c = 'Pending Approval';
+            update con;
             ISSP_WS_NewUser.createUser(myInput);
         }
-
     }
     
     static testMethod void NewUser_9() {
