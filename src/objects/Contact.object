@@ -6512,7 +6512,7 @@ TotalRows-Successes-Errors</description>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
             <operation>equals</operation>
-            <value>IFG Pre-Production</value>
+            <value>IFG Sandbox</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Right__c</field>
