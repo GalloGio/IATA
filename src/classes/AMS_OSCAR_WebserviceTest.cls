@@ -125,7 +125,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar.Id,true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
         Test.stopTest();
     }
     
@@ -134,7 +135,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar2.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar2.Id, true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar2.Id);
         Test.stopTest();
     }
     
@@ -143,7 +145,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar3.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar3.Id,true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar3.Id);
         Test.stopTest();
     }
     
@@ -152,7 +155,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar4.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar4.Id,true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar4.Id);
         Test.stopTest();
     }
     
@@ -161,7 +165,8 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar5.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar5.Id,true);
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar5.Id);
         Test.stopTest();
     }
     
@@ -170,20 +175,21 @@ public class AMS_OSCAR_WebserviceTest {
         setup();
         
         Test.startTest();
-        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
         
         oscarCase.Reason1__c = 'Certificate DGR';
         update oscarCase;
-        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+        AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
         
         try {
             oscarCase.Termination_date_manual_entry__c = Date.today().addDays(-1);
             update oscarCase;
-            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id);
+            AMS_OSCAR_Webservice.createSIDRALite(oscar6.Id,true);
             System.assert(false, 'Exception Expected');
         } catch(WSSidraLite.ShowConfirmationException e) {
             System.assert(true);
         }
+        AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id);
         Test.stopTest();
     }
 
@@ -193,18 +199,8 @@ public class AMS_OSCAR_WebserviceTest {
         
         Test.startTest();
 
-        try {
-            AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
-            System.assert(false,'Exception expected');
-        } catch (Exception e) {
-            System.assert(true);
-        }
-        try {
-            AMS_OSCAR_Webservice.updateSIDRALite(oscar6.Id);
-            System.assert(false,'Exception expected');
-        } catch (Exception e) {
-            System.assert(true);
-        }
+        String result1 = AMS_OSCAR_Webservice.updateSIDRALite(oscar.Id);
+        System.assert(result1.startsWithIgnoreCase('error'), 'Error expected');
 
         Test.stopTest();
     }

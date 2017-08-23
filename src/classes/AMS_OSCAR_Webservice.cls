@@ -1,5 +1,7 @@
 global class AMS_OSCAR_Webservice {
 
+    public class OSCARException extends Exception{}
+
     WebService static String updateFormFields(String[] fieldsToUpdateKey, String[] fieldsToUpdateValue, String recordId) {
 
         Map<String, Schema.DisplayType> fTypes;
@@ -247,48 +249,32 @@ global class AMS_OSCAR_Webservice {
             return ex.getMessage();
         }
     }
+    
+    /**
+        Find the parent case related to an Oscar Id
+    **/
+    private static Case findOscarParentCase(Id oscarId) {
+        List<Case> cases = [
+            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c
+            FROM Case
+            WHERE OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' )
+            LIMIT 1];
+        if (cases.isEmpty()) {
+            throw new OSCARException('Could not find a the Oscar Communication case related to this OSCAR');
+        }
+        return cases[0];
+    }
 
-    WebService static String createSIDRALite(String oscarId) {
-
-        String result = '';
-
+    WebService static String createSIDRALite(String oscarId, Boolean createCase) {
         try {
-
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, BusinessHours__c from AMS_OSCAR__c where Id = : oscarId];
-            if (oscar != null && oscar.size() > 0) {
-
-                List<Case> cases = [SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-
-                if (cases == null || cases.isEmpty()) {
-                    result = 'Could not find a the Oscar Communication case related to this OSCAR.';
-                    return 'ERROR: ' + result;
-                }
-
-                Case oscarCommCase = cases[0];
-
-                Case sidraCase = WSSidraLite.sidraLiteAction(oscarCommCase.Id);
-
+            Case oscarCase = findOscarParentCase(oscarId);
+            Case sidraCase = WSSidraLite.sidraLiteAction(oscarCase.Id);
+            
+            if (createCase) {
                 insert sidraCase;
-
-                /*AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
-
-                changeCode.name = 'SRM';
-                changeCode.reasonCode = '91';
-                changeCode.memoText = 'to be defined';
-                changeCode.reasonDesc  = 'SIDRA LITE CREATED';
-                changeCode.status  = '7';
-
-                Account acct = new Account(Id = oscar[0].Account__c);
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar[0]}, new List<Account> {acct}, true);*/
-
-                oscar[0].STEP26__c = 'In Progress';
-                update oscar;
-
-                return sidraCase.Id;
-
             }
+            return sidraCase.Id;
 
-            return 'ERROR: OSCAR not found.';
         } catch (WSSidraLite.ShowConfirmationException confirmation) {
             // this exception is not an actual error, it contains a message to ask the
             // user if continue the process (using a javascript 'confirm' method)
@@ -297,16 +283,17 @@ global class AMS_OSCAR_Webservice {
         } catch (Exception ex) {
             return AMS_Utils.errorMessageBeautifyer(ex);
         }
-
     }
     
-    WebService static void updateSIDRALite(String oscarId) {
-        List<Case> cases = [SELECT Id from Case where OSCAR__c = :oscarId AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
-        if (cases.isEmpty()) {
-            throw new WSSidraLite.SidraLiteException('Could not find a the Oscar Communication case related to this OSCAR.');
+    WebService static String updateSIDRALite(String oscarId) {
+        try {
+            Case oscarCase = findOscarParentCase(oscarId);
+            WSSidraLite.updateSecondAndThirdDeadline(oscarCase.Id);
+            return '';
+
+        } catch (Exception ex) {
+            return AMS_Utils.errorMessageBeautifyer(ex);
         }
-        Case oscarCommCase = cases[0];
-        WSSidraLite.updateSecondAndThirdDeadline(oscarCommCase.Id);
     }
 
     WebService static String createCommissionerCase(String oscarId) {
