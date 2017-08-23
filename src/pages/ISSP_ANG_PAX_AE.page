@@ -690,7 +690,10 @@
           $j(".PostalArea").val($j(".PhysicalArea").val());
         }
       }
+      
     </script>
+    <c:MutationObserverPolyfill></c:MutationObserverPolyfill>
+
     <div class="container">
       <div id="contentWrapper">
         <c:ISSP_CustomNavigation />
@@ -1042,7 +1045,7 @@
                   </apex:pageblock>
                   <script>
                     $j( document ).ready(function() {
-                      const legalStatus = $j('[id$=LegalStatusLabel]')[0],
+                      var legalStatus = $j('[id$=LegalStatusLabel]')[0],
                          dateOpenedAsTravelAgency = $j('[for$=dateOpenedAsTravelAgency]')[0],
                          licenseNo = $j('[for$=license-no]')[0],
                          tradeRegNo = $j('[for$=trade-reg-no]')[0],
@@ -1283,7 +1286,7 @@
                   </div>
                   <script>
                    $j( document ).ready(function() {
-                      const prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
+                      var prevDefDetLabel = $j('[id$=previous-default-details-label]')[0],
                          prevDef = $j('[id$=previous-default-label]')[0];
                       prevDefDetLabel.textContent = prevDefDetLabel.textContent.replace('* ', '') + ' *';
                       prevDef.textContent = prevDef.textContent.replace('* ', '') + ' *';
@@ -1431,7 +1434,7 @@
               <script>
                 setPortalAdmin('{!$Component.PortalAdminId}');
                  $j( document ).ready(function() {
-                    const dgsLabel = $j('[id$=dgs-label]')[0],
+                    var dgsLabel = $j('[id$=dgs-label]')[0],
                        isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
                        iatanCode = $j('[id$=iatan-code-label]')[0],
                        isCargo = $j('[id$=is-cargo-label]')[0],
@@ -1952,7 +1955,7 @@
               <!--<script src="{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/build/js/intlTelInput.js')}"></script>-->
               <script>
 
-                const target = $j('.statusBox #recordstatuscontainer')[0],
+                var target = $j('.statusBox #recordstatuscontainer')[0],
                   observer = new MutationObserver(function(mutations) {
                     $j('#div-verify-office-phone').html($j('.statusBox input')[0]);  
                   }),
