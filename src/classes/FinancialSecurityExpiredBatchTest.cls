@@ -17,7 +17,7 @@ public class FinancialSecurityExpiredBatchTest {
 
         date dead = date.today().addDays(40);
 
-        Contact con = new contact(lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true);
+        Contact con = new contact(FirstName = 'jupiter', lastname = 'pluto', phone = '123', accountid = a.id, Financial_Assessment_Contact__c = true);
         insert con;
 
         Case c = new Case(recordtypeID = IFAPcaseRecordTypeID, Status = 'Assessment Performed', Origin = 'asd', IFAP_Area__c = 'asda', Financial_Review_Type__c = 'bla',
