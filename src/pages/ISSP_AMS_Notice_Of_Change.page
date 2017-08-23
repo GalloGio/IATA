@@ -2158,7 +2158,7 @@
 		</div>
 		<script>
 			//NoC Changes
-			const accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
+			var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
 				  lScopeOfChange = '{!newForm.Scope_of_Change__c}',
 				  checkb = $j('[id$=notifyChangeLocationCheckbox]'),
 				  iataChangeAccType = $j('[id$=iataChangeAccType]'),
@@ -2168,7 +2168,7 @@
 				  confirmAccType = $j('[id$=confirmAccType]');
 
 			function getWarningBox(message) {
-				const alertDiv = document.createElement('div');
+				var alertDiv = document.createElement('div');
 				alertDiv.className = 'alert alert-warning text-justify';
 				alertDiv.role = 'alert';
 				alertDiv.appendChild(document.createTextNode(message));
@@ -2176,7 +2176,7 @@
 			} 
 
 			function setWarningBoxOnHover(where, warningMessage) {
-				const whereToAppend = where.parent().parent().next().children().last();
+				var whereToAppend = where.parent().parent().next().children().last();
 				// where.parent() because disabled elements does not have mouse events
 				where.parent().hover(function() {
 					whereToAppend.append(getWarningBox(warningMessage));
@@ -2228,7 +2228,8 @@
 			//END NEWGEN-523
 
 			//NEWGEN-1227
-			if (lScopeOfChange === 'HO - All Branches' || {!agencyCodesConcernedSize} > 1) {
+			if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || {!agencyCodesConcernedSize} > 1) {
+				checkb.prop('checked', false);
 				checkb.prop('disabled', true);
 				setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
 			}
@@ -2236,7 +2237,7 @@
 					
 			if ({!isAccreditationModelNotNullOrLegacy}) {
 				$("option[value='" + accreditationModel + "']").remove();
-				const contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
+				var contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
 					scopeOfChange = '{!newForm.Scope_of_Change__c}';
 				if ({!!CanChangeAccreditationType}) {
 					setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
