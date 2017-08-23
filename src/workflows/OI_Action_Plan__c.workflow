@@ -249,46 +249,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>OI Action Plan Reminder</fullName>
-        <active>true</active>
-        <criteriaItems>
-            <field>OI_Action_Plan__c.Closure_Date__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>OI_Action_Plan__c.Due_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>OI_Action_Plan__c.Action_Owner__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Operational_Improvements__c.Status__c</field>
-            <operation>notContain</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>OI_Action_Plan_Remnder_15_days_before_due_date</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
-            <timeLength>-15</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>OI_Action_Plan_Remnder_5_days_before_due_date</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>OI_Action_Plan__c.Due_Date__c</offsetFromField>
-            <timeLength>-5</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>OI Action Plan Reminder AMM</fullName>
         <active>true</active>
         <criteriaItems>
