@@ -27836,7 +27836,7 @@ AND(NOT(CONTAINS($Profile.Name , &quot;System Administrator&quot; )),
     </validationRules>
     <validationRules>
         <fullName>Required_Community</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Contact first Community</description>
         <errorConditionFormula>AND(ISCHANGED(User_Portal_Status__c),ISBLANK(Community__c))</errorConditionFormula>
         <errorMessage>Please select a value for Community</errorMessage>
