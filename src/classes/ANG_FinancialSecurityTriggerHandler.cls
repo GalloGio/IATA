@@ -16,7 +16,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(accIdSet==null){
 				accIdset = new set<id>();
 				for(Financial_Security__c fs:triggerNew){	
-					if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.ANG_ConvertedAmount__c ==oldMap.get(fs.id).ANG_ConvertedAmount__c&& fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
+					if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
 					accIdSet.add(fs.Account__c);
 				}				
 			}
@@ -28,21 +28,20 @@ public class ANG_FinancialSecurityTriggerHandler{
 	public void onBeforeInsert(){
 		convertFSAmount();
 	}
-	public void onAfterInsert() {
+	public void onAfterInsert(){
 		calculateFSTotal();
 	}
 
 	public void onBeforeUpdate(){
 		convertFSAmount();
 	}
-	public void onAfterUpdate() {
+	public void onAfterUpdate(){
 		calculateFSTotal();
 	}
 
-	public void onBeforeDelete(){
-		
+	public void onBeforeDelete(){		
 	}
-	public void onAfterDelete() {
+	public void onAfterDelete(){
 		calculateFSTotal();
 	}
 
@@ -53,7 +52,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 	private void calculateFSTotal(){
 		
 		if(!accIdSet.isEmpty()){
-			list<account> accList= Database.query('SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accIdSet');
+			list<account> accList= [SELECT Id, IATA_ISO_Country__r.CurrencyIsoCode, (SELECT Id, Security_Status__c, ANG_ConvertedAmount__c FROM Financial_Securities__r) FROM Account WHERE Id IN :accIdSet];
 			if(!accList.isEmpty())ANG_Risk_Helper.sumFSAmount(accList);	
 		}	
 	}
