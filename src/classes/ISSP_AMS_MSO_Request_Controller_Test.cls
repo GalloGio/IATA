@@ -89,8 +89,9 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             ctrl.refreshStates();
             ctrl.billingState = isos.Id;
 
+            ctrl.save();
+            
 			Test.startTest();
-            	ctrl.save();
             	ctrl.accreditationForm.Accept_terms_and_conditions__c = true;
             	ctrl.submitAndApproveCase();
 			Test.stopTest();
