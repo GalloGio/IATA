@@ -309,8 +309,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				childAccount.Location_Type__c = AMS_Utils.HE;
 				childAccount.ParentId = null;
-				childAccount.ANG_IEP_HE_AccntNum__c = null;
-				childAccount.ANG_IEP_Status__c = 'No IEP Account';
+				childAccount.ANG_IEP_HE_AccntNum__c = parentAccount.ANG_IEP_HE_AccntNum__c;
+				childAccount.ANG_IEP_Status__c = parentAccount.ANG_IEP_Status__c;
 				childAccount.ANG_HE_CashCondition__c = parentAccount.ANG_HE_CashCondition__c;
 				childAccount.ANG_HE_RiskHistoryAssessment__c = parentAccount.ANG_HE_RiskHistoryAssessment__c;
 				childAccount.ANG_HE_RiskStatus__c = parentAccount.ANG_HE_RiskStatus__c;
