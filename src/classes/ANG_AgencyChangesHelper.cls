@@ -194,7 +194,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					    changeCode.name = 'LET';
 					    changeCode.reasonCode = '91';
 					    changeCode.memoText = '';
-					    changeCode.reasonDesc  = 'ACCREDITED–MEETS–STANDARDS';
+					    changeCode.reasonDesc  = 'ACCREDITED-MEETS-STANDARDS';
 					    changeCode.status  = '9';
 
 					    changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
@@ -953,9 +953,11 @@ public with sharing class ANG_AgencyChangesHelper {
 
                     changesContainer.addChangeCode(changeCode);
                     
-                    accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
-                    //changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus); REMOVED THIS BECAUSE WE MUST USE THE addAccount METHOD !!
-                    changesContainer.addAccount(accToUpdateStatus);
+					if(changeCodeDef.status != null){
+                    	accToUpdateStatus.Status__c = AMS_Utils.getIATAReadableStatus(changeCodeDef.status);
+                    	//changesContainer.accountsMap.put(accToUpdateStatus.Id, accToUpdateStatus); REMOVED THIS BECAUSE WE MUST USE THE addAccount METHOD !!
+                    	changesContainer.addAccount(accToUpdateStatus);
+					}
                 }
             }
 
@@ -1036,6 +1038,42 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c
 		         FROM Account WHERE Id IN :accountIds]);
+	}
+
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	private static List<AMS_Operation__c> fetchOperationCodeConfiguration(Set<Id> countryIds, Id settlementRTId, Set<Id> operationsIds) {
+
+		return Database.query('SELECT Id, Allow_multiple_remittances__c, (SELECT Remittance_Frequency__c, Remittances_Per_Year__c FROM BSP_Attributes__r ORDER BY Remittances_Per_Year__c DESC) FROM AMS_Operation__c WHERE Settlement__r.RecordtypeID = :settlementRTId' + (CountryIds != null ? ' AND Country__c IN :countryIds' : '' ) + (OperationsIds != null ? ' AND Id IN :operationsIds' : ''));
+	}
+
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Set<Id> operationsIds) {
+
+		return fetchOperationCodeConfiguration(null, settlementRTId, operationsIds);
+	}
+
+	/**
+	Returns operationCodes and respective BSP Configurations 
+	*/
+	public static List<AMS_Operation__c> fetchOperationCodeConfiguration(Id settlementRTId, Id countryId) {
+
+		return fetchOperationCodeConfiguration(new Set<Id>{countryId}, settlementRTId, null);
+	}
+
+	/**
+	Returns a Map of Agency Operations Operation Codes for the given accounts
+	*/
+	public static Map<Id,AMS_Agency_Operations__c> fetchAccountAgOperationPerOpCode(List<Id> accIds) {
+
+		Map<Id,AMS_Agency_Operations__c> agencyOperations = new Map<Id,AMS_Agency_Operations__c>();
+            for(AMS_Agency_Operations__c agOp : [SELECT Id, Account__c, Operation__c, Operation__r.Settlement__r.RecordType.Name FROM AMS_Agency_Operations__c WHERE Account__c in :accIds])
+                agencyOperations.put(agOp.Operation__c,agOp);
+
+        return agencyOperations;
 	}
 
 	    /** 

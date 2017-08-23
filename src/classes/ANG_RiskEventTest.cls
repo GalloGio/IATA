@@ -4,7 +4,7 @@ private class ANG_RiskEventTest {
     @testSetup static void createData() {
         Account a = new Account(
             Name = 'Test',
-            recordtypeId=RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Account').get('IATA_Agency')
+            recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY
         );
         insert a;
 
@@ -13,7 +13,7 @@ private class ANG_RiskEventTest {
 
         ANG_Agency_Risk_Event__c re = new ANG_Agency_Risk_Event__c(
             ANG_AccountId__c = a.Id
-            , ANG_Risk_Type__c = [SELECT Id FROM ANG_Risk_Event_Type__c].Id
+            , ANG_Risk_Type__c = riskType.Id
             , ANG_Issued_date__c = System.today().addDays(5)
         );
 
@@ -39,17 +39,17 @@ private class ANG_RiskEventTest {
 
         Test.startTest();
 
-        acc.Status__c = 'Terminated';
+        acc.Status__c = AMS_Utils.ACC_S0_TERMINATED;
         update acc;
 
         
 
         String statusRiskEvent = [SELECT ang_event_status__c FROM ANG_Agency_Risk_Event__c].ang_event_status__c;
-        System.assertEquals('Inactive_TER', statusRiskEvent);
+        System.assertEquals(ANG_Risk_Helper.STATUS_TERMINATED, statusRiskEvent);
 
         
 
-        acc.Status__c = 'Approved';
+        acc.Status__c = AMS_Utils.ACC_S9_APPROVED;
         update acc;
 
         Test.stopTest();
@@ -57,7 +57,7 @@ private class ANG_RiskEventTest {
         statusRiskEvent = [SELECT ang_event_status__c FROM ANG_Agency_Risk_Event__c].ang_event_status__c;
         
         //Inactive and not Active because AddDays(5)
-        System.assertEquals('Inactive', statusRiskEvent);
+        System.assertEquals(ANG_Risk_Helper.STATUS_INACTIVE, statusRiskEvent);
 
     }
 }

@@ -52,9 +52,6 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -206,6 +203,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ANG_CashCondition__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>ANG_RiskStatus__c</field>
             </layoutItems>
             <layoutItems>
@@ -213,12 +214,12 @@
                 <field>ANG_RiskHistoryAssessment__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ANG_CashCondition__c</field>
+                <behavior>Edit</behavior>
+                <field>IFG_Member__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>IFG_Member__c</field>
+                <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -707,6 +708,14 @@
         <relatedList>Financial_Security__c.Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC_Percent__c</fields>
+        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
+        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

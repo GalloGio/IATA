@@ -19,6 +19,7 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		manageDowngrades();
 	}
+	
 	public void onAfterUpdate() {
 		runRiskAssessment();
 		UpdateRiskEventStatus();
@@ -55,21 +56,21 @@ public class ANG_AccountTriggerHandler {
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] new Cash Condition - ' + acc.ANG_CashCondition__c);
 			System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageDowngrades] old Cash Condition - ' + oldMap.get(acc.Id).ANG_CashCondition__c);
 
-			if(acc.ANG_HE_RiskStatus__c == 'B' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'A' && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
-			if(acc.ANG_HE_RiskStatus__c == 'C' && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == 'B') downGradeBtoC.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_A && acc.ANG_CashCondition__c == oldMap.get(acc.Id).ANG_CashCondition__c) downGradeAtoB.add(acc);
+			if(acc.ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_C && oldMap.get(acc.Id).ANG_HE_RiskStatus__c == ANG_Risk_Helper.RISK_STATUS_B) downGradeBtoC.add(acc);
 		}
 
 		if(downGradeAtoB.isEmpty() && downGradeBtoC.isEmpty()) return;
 
 		//fetch portal admins
 		Map<Id, Id> portalAdmins = new Map<Id, Id>();
-		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = 'Approved Admin' AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
+		for(Contact c : [SELECT Id, AccountId FROM Contact WHERE User_Portal_Status__c = :ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM AND (AccountId IN :downGradeAtoB OR AccountId IN :downGradeBtoC)]){
 			portalAdmins.put(c.AccountId, c.Id);
 		}
 
 		//create cases
 		List<Case> newCases = new List<Case>();
-		Id saamRecordType = RecordTypeSingleton.getInstance().RtIDsPerDeveloperNamePerObj.get('Case').get('ProcessEuropeSCE');
+		Id saamRecordType = AMS_Utils.RECTYPE_SAAM;
 
 		Database.DMLOptions dmlOpts = new Database.DMLOptions();
 		dmlOpts.assignmentRuleHeader.useDefaultRule = true;
@@ -82,9 +83,9 @@ public class ANG_AccountTriggerHandler {
 			c.Subject = (String.isEmpty(acc.Short_Name__c) ? acc.Name.left(20) : acc.Short_Name__c.left(20)) + ' - ' + acc.IATACode__c + ' - Downgrade Risk Status';
 			c.Region__c = acc.Region_formula__c;
 			c.BSPCountry__c = acc.BillingCountry;
-			c.Origin = 'Internal case';
-			c.CaseArea__c = 'Risk Management Process'; 
-			c.Reason1__c = 'Financial Security Update';
+			c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS; 
+			c.Reason1__c = ANG_Risk_Helper.CASE_REASON_FINANCIAL_SECURITY_UPDATE;
 			c.Visible_on_ISS_Portal__c = false;
 
 			//make sure that the default assignment rule is used
@@ -164,7 +165,7 @@ public class ANG_AccountTriggerHandler {
 			c.Account_Concerned__c = acc.Id;
 			c.BSPCountry__c = acc.BillingCountry;
 			c.Region__c = acc.Region_formula__c;
-			c.CaseArea__c = 'Accreditation Process';
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_ACCREDITATION_PROCESS;
 			c.Reason1__c = 'Change of '+AMS_Utils.VFMR;
 			c.ContactId = contacts.get(acc.Id);
 
@@ -174,6 +175,9 @@ public class ANG_AccountTriggerHandler {
 
 		//insert cases
 		insert cases;
+
+		//populate field with operation with BSP attributes more frequent
+		String remitFreq = getHighestRemittanceFrequency(accounts);
 
 		//create staging areas
 		List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
@@ -203,7 +207,7 @@ public class ANG_AccountTriggerHandler {
 	    	stgArea.Location_Type__c                         = acc.Location_Type__c;
 	    	stgArea.Mobile__c                                = acc.Mobile__c;
 	    	stgArea.Operation__c                             = acc.Operation__c;
-	    	stgArea.Remittance_frequency__c                  = acc.Remittance_frequency__c;
+	    	stgArea.Remittance_frequency__c                  = remitFreq;
 	    	stgArea.Shipping_City__c                         = acc.ShippingCity;
 	    	stgArea.Shipping_Country__c                      = acc.ShippingCountry;
 	    	stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
@@ -255,15 +259,15 @@ public class ANG_AccountTriggerHandler {
 		accIdSet.addAll(inactiveAccsIdSet);
 
 		//get all related risk Events 
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in ('Active','Inactive','Inactive_TER')];
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 		
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
 			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
-				&& (re.ang_event_status__c == 'Active' || (re.ang_event_status__c == 'Inactive' && re.ANG_Issued_Date__c > system.Today()))){
-			        re.ang_event_status__c = 'Inactive_TER';
+				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
+			        re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
 				
-			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == 'Inactive_TER'){
-		        re.ang_event_status__c = 'Active';
+			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
+		        re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}
 
 		}
@@ -283,4 +287,33 @@ public class ANG_AccountTriggerHandler {
 
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
+
+    /**
+	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+    */
+    private String getHighestRemittanceFrequency(List<Account> accs){
+    	
+    	String remitFreq = '';
+    	List<Id> accsIds = new List<Id>();
+
+    	for (Account a: accs)
+    		accsIds.add(a.Id);
+
+    	Map<Id,AMS_Agency_Operations__c> agOpMap = ANG_AgencyChangesHelper.fetchAccountAgOperationPerOpCode(accsIds);
+    	List<AMS_Operation__c> opCodes = ANG_AgencyChangesHelper.fetchOperationCodeConfiguration(AMS_Utils.getRecordType('AMS_Settlement_System__c','BSP').Id, agOpMap.keySet());
+
+    	Integer aux = 0;
+    	for(AMS_Operation__c op: opCodes){
+    		for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+
+    			if((Integer)attr.Remittances_Per_Year__c > aux){
+    				aux = (Integer)attr.Remittances_Per_Year__c;
+    				remitFreq = attr.Remittance_Frequency__c;
+    			}
+    		}    		
+    	}
+
+    	return remitFreq;
+    }
+
 }

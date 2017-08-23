@@ -125,7 +125,7 @@ window.onload = function HighlightBar() {
         var mainvar = getUrlParameter('MainNav');
         var mid = getUrlParameter('mid');
         var subvar = getUrlParameter('subNav');
-        var menuid=mid.substr(0,2)
+        var menuid = mid && mid.substr(0,2);
 
      $("#searchbox").css("display", (menuid=="M2") ? "none" : "");    /* hides the search box if for resources & docs*/
 

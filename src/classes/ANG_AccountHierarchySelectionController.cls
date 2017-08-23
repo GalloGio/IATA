@@ -128,7 +128,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				errorMessages.put(
 					'Location Type Change Detected',
-					'Selecting all hierarchy and not selecting a target agency means you are trying to perform a Change of Location Type. Please choose a target agency or change the Type of Change.'
+					'Selecting all hierarchy and not selecting a target agency outside of the hierarchy, means you are trying to perform a Change of Location Type. Please choose a valid target agency or change the Type of Change.'
 				);
 
 				errorMessages.put(

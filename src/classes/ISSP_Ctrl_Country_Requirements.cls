@@ -25,10 +25,12 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     public Boolean newlabels {get; set;}
     public String agentType {get; set;}
     public String userLanguage {get; set;}
+    public Boolean returnpage {get; set;}
 
     public String accreditationType {get;set;}
     public List<AMS_Accreditation_Requirement__c> countryRequirementsList;
-    public List<SelectOption> accreditationTypes;    
+    public List<SelectOption> accreditationTypes;
+    public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}    
 
     /**
         Check is the user has access to this service
@@ -40,7 +42,6 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
             Boolean comp = (ApexPages.currentPage().getParameters().get('comp') == 'true');
 
-
             return user.contact.Account.Sector__c == 'Airline'
                 || user.contact.Account.Sector__c == 'General Sales Agent'
                 || user.contact.Account.Category__c == 'GSA General Sales agent'
@@ -50,6 +51,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
             return false;
         }
     }
+
 
     private static User getUser() {
         if(user == null) {
@@ -66,7 +68,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                            contact.Account.Top_Parent__c,
                            contact.Account.IATACode__c,
                            contact.Account.RecordType.DeveloperName,
-                           contact.Account.Status__c
+                           contact.Account.Status__c,
+                           contact.Account.ANG_Accreditation_Model__c
                       from User
                      where Id = :UserInfo.getUserId()];
         } 
@@ -80,7 +83,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         try {
 
             accreditationType = ApexPages.currentPage().getParameters().get('accredType');
-        
+            returnpage = (ApexPages.currentPage().getParameters().get('from') == 'acc');            
             getUser();
 
             Id vHQAccountId;
@@ -326,7 +329,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
                 }            
 
                 for(AMS_Accreditation_Requirement__c req : countryRequirementListAux) {
-                    if (filterLanguage == req.Language__c) {
+                    if (filterLanguage == req.Language__c && req.Requirement_text__c != null) {
 
                         req.Requirement_text__c = req.Requirement_text__c.replaceAll('style[/a-zA-Z0-9="-: ;]*','');
                         req.Requirement_text__c = req.Requirement_text__c.replaceAll('<b>','');
@@ -356,18 +359,31 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
     }
 
     private List<SelectOption> setAccreditationTypes() {
-        accreditationTypes = new List<SelectOption>();
+        accreditationTypes = new List<SelectOption>();        
 
-        if(isHOAccredited && category == 'IATA Passenger Sales Agent') {
+        if(user.contact.Account.ANG_Accreditation_Model__c == null && !isNewgenEnabled){
             accredModel = 'Legacy';
-            accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));
+        }else if(user.contact.Account.ANG_Accreditation_Model__c == null && isNewgenEnabled){
+            accredModel = 'Cash';
+        }else{
+            accredModel = user.contact.Account.ANG_Accreditation_Model__c;
+        }        
+
+        if(isHOAccredited && category == AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT) {
+            if(isNewgenEnabled){
+                    if (accredModel == 'Cash') {
+                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cash));
+                    } else if(accredModel == 'Cashless') {
+                        accreditationTypes.add(new SelectOption(accredModel, Label.ISSP_AMS_Associate_Entity_Cashless));
+                    }
+                }else{
+                    accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_BRANCH));        
+                }
         } else {
-            if(isNewgenEnabled) {
-                accredModel = AMS_Utils.ACCREDITATIONMODEL_CASH;
+            if(isNewgenEnabled) {                
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASH, Label.ISSP_AMS_Head_Entity_Cash));
                 accreditationTypes.add(new SelectOption(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, Label.ISSP_AMS_Head_Entity_No_Cash));
             } else {
-                accredModel = 'Legacy';
                 accreditationTypes.add(new SelectOption('Legacy', Label.ISSP_AMS_OPTION_PAX_HO));
             }
         }

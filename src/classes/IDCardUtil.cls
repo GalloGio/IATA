@@ -406,6 +406,7 @@ public static String generateVER(Account theAccount) {
             country.ISO_Code_Numeric__c = 0;
         string formattedIsoCodeNumeric =  String.valueOf(country.ISO_Code_Numeric__c).leftpad(3).left(3).replace(' ', '0');
         string newValue = 'New';
+        string last12months = String.valueOf(System.now().addyears(-1).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\''));
         // If there are other VER numbers for this Country I just increase the highest
         List<Contact> c = database.query('SELECT Ver_Number_2__c ' +
                                          'FROM Contact ' +
@@ -414,7 +415,7 @@ public static String generateVER(Account theAccount) {
                                          'ORDER BY Ver_Number_2__c DESC LIMIT 1  ');
         List<ID_Card_Application__c> a = database.query('SELECT Ver_Number__c ' +
                                          'FROM ID_Card_Application__c ' +
-                                         'WHERE  Type_of_application__c = :newValue AND (Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
+                                         'WHERE  CreatedDate > '+last12months+' AND Type_of_application__c = :newValue AND (Ver_Number__c LIKE \'5' + formattedIsoCodeNumeric + '%\' ' +
                                          'or  Ver_Number__c LIKE \'Z5' + formattedIsoCodeNumeric + '%\')' +
                                          'ORDER BY Ver_Number__c DESC LIMIT 1  ');
 

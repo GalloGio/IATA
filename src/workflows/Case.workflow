@@ -14521,7 +14521,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.RecordType__c</field>
             <operation>equals</operation>
-            <value>Internal Cases (IDFS ISS)</value>
+            <value>Cases - IFG</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Status</field>
@@ -14770,12 +14770,12 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
+            <value>,CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite, New AE</value>
+            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite,New AE,New SA</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>
@@ -14861,7 +14861,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>equals</operation>
-            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard, New AE</value>
+            <value>,New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,TIDS,New MSO,New HE lite,New HE standard,New AE</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType__c</field>

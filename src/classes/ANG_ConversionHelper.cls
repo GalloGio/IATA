@@ -419,6 +419,8 @@ global with sharing class ANG_ConversionHelper {
 
 		Map<Id,AMS_Agencies_Hierarchy__c> allHierarchiesInvolvedMap = fetchAllHierarchiesInvolved(structures);
 
+		Set<Id> topParents = new Set<Id>();
+
 		for(ANG_ConversionHelper.HierarchyStructure struct: structures){
 
 			allAgencies = new Set<Account>();
@@ -442,17 +444,21 @@ global with sharing class ANG_ConversionHelper {
 			container.struct.migrated = true;
 
 			toReturn.add(container.struct);
+			topParents.add(container.struct.topParentId);
 
 		}
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-
+		ANG_RiskEventMigrationHelper reHelper = new ANG_RiskEventMigrationHelper(accountsToUpdate);
+		reHelper.convertChangeCodesToRiskEvents();
 		update new List<Account>(accountsToUpdate);
 
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
+
+		ANG_Risk_Helper.createRHCInfo(topParents, true);
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = true;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = false;

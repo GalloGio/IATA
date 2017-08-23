@@ -22,6 +22,10 @@
                 <behavior>Required</behavior>
                 <field>Settlement__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_multiple_remittances__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -88,6 +92,14 @@
         <fields>NAME</fields>
         <fields>Agency__c</fields>
         <relatedList>AMS_Agency_Operations__c.Operation__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Class_Type__c</fields>
+        <fields>Remittance_Frequency__c</fields>
+        <fields>Remittances_Per_Year__c</fields>
+        <relatedList>ANG_BSP_Attributes__c.Operation__c</relatedList>
+        <sortField>Remittances_Per_Year__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

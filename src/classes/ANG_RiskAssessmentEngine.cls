@@ -51,7 +51,7 @@ public class ANG_RiskAssessmentEngine{
         get{
             if(accInfoMap==null){
                 accInfoMap = new map<id,accHelperClass>();
-                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c='Active') from account where id in :accCalcMap.keySet()]){
+                for(account acc:[select id,name, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Risk_Type__r.Limit_Cash_conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
                     integer nAdjs=0;
                     boolean hasCashCond=false;
                     for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
@@ -126,7 +126,7 @@ public class ANG_RiskAssessmentEngine{
         accCalcMap.putAll(AccMap);
         string accId=null;
         map<id,integer> calcTempMap= new map<id,integer>();                                                                                                                                                                                                                                                                      
-        for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :AccMap.keySet() AND ANG_Event_Status__c='Active' group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
+        for(AggregateResult reRec:[select ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c calcId,count(id) counter from ang_agency_risk_event__c where ang_HE_accountid__c in :AccMap.keySet() AND ANG_Event_Status__c= :Ang_Risk_Helper.STATUS_ACTIVE group by ang_HE_accountid__c,ang_risk_type__r.ANG_Agency_Risk_Calculation__c]){
             if(accId==null)accId=String.valueOf(reRec.get('ang_HE_accountid__c'));
             else if(accId!=reRec.get('ang_HE_accountid__c')){
                 accCalcMap.remove(accId);
@@ -142,7 +142,7 @@ public class ANG_RiskAssessmentEngine{
         }
 
         for(id accountId:accInfoMap.KeySet()){
-            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel=='Legacy' ||  accInfoMap.get(accountId).accreditantionModel=='Cashless') || accInfoMap.get(accountId).status=='Terminated'){
+            if(accCalcMap.containsKey(accountId) && (accInfoMap.get(accountId).accreditantionModel== AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  accInfoMap.get(accountId).accreditantionModel==AMS_Utils.ACCREDITATIONMODEL_CASHLESS || accInfoMap.get(accountId).status== AMS_Utils.ACC_S0_TERMINATED)){
                 accCalcMap.remove(accountId);
             }
         }
@@ -152,7 +152,7 @@ public class ANG_RiskAssessmentEngine{
     public ANG_RiskAssessmentEngine(map<account,list<string>> accRiskEventsMap){
         //list<string>> accRiskEventsMap -> list of strings containg the risk Type Id or de risk type UniqueKey
         for(account acc:accRiskEventsMap.KeySet()){
-            if(acc.ANG_Accreditation_Model__c=='Legacy' ||  acc.ANG_Accreditation_Model__c=='Cashless' || acc.status__c=='Terminated'){
+            if(acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_LEGACY ||  acc.ANG_Accreditation_Model__c==AMS_Utils.ACCREDITATIONMODEL_CASHLESS || acc.status__c== AMS_Utils.ACC_S0_TERMINATED){
                 accCalcMap.put(acc.id,null);// to return the assessment
                 continue;
             } 
@@ -169,7 +169,7 @@ public class ANG_RiskAssessmentEngine{
                 }else{
                     tempCalcMap.put(calcId,1);
                 }
-                if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes'){
+                if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c==ANG_Risk_Helper.ADJ_YES){
                     nrAdjustedRe+=1;
                 }
                 hasCashCond=hasCashCond||ret.Limit_Cash_conditions__c;
@@ -217,18 +217,18 @@ public class ANG_RiskAssessmentEngine{
     }
  
      private String calculateRiskHistoryAssessment(map<id,integer> groupingMap,String remiFreq, Integer nrAdjusRe){
-        String result ='Passed';
+        String result =ANG_Risk_Helper.RISK_ASSESSMENT_PASSED;
         if(groupingMap==null)return result;
         for(string reRec: groupingMap.keySet()){ // iterate groupings
             integer accParentOccs=groupingMap.get(reRec);                
             if(risCalcMap.containsKey(reRec)){ //validate REC
                 if( accParentOccs>=risCalcMap.get(reRec).ANG_Occurrence_Num__c){ // if fails assessment
-                    result='Failed';
+                    result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                     break;
                 }else if(risCalcMap.get(reRec).ANG_Adjustments__r.size()>0){                        
                     for(ang_agency_risk_calculation__c arca: risCalcMap.get(reRec).ANG_Adjustments__r){
                         if(arca.ANG_Remittance_Frequency__c==remiFreq && arca.ANG_Parent_Occurences__c ==accParentOccs && arca.ANG_Occurrence_Num__c <= nrAdjusRe){
-                            result='Failed';
+                            result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;
                             breakCicle=true;
                             break;
                         }
@@ -243,7 +243,7 @@ public class ANG_RiskAssessmentEngine{
                 if(risCalAdjcMap.get(reRec).ANG_Adjustments__r.size()>0 ){
                     for(ang_agency_risk_calculation__c arca: risCalAdjcMap.get(reRec).ANG_Adjustments__r){
                         if(arca.ANG_Remittance_Frequency__c==remiFreq && arca.ANG_Occurrence_Num__c <= nrAdjusRe){
-                            result='Failed';      
+                            result=ANG_Risk_Helper.RISK_ASSESSMENT_FAILED;      
                             breakCicle=true;                        
                             break;  
                         }
