@@ -273,17 +273,17 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         String[] generateResult = AmsIataCodeGenerator.generatedAgencyIATACode(accountId, accreditationId);
         if (generateResult[0] != '1') return;
 
-        oscar.STEP10__c = 'Passed';
+        //oscar.STEP10__c = 'Passed';
 
         String copyResult = AMS_OSCAR_Webservice.copyDataToAccount(oscarId);
         if (copyResult != 'OK') return;
 
-        oscar.Flag_Data_to_Account__c = true;
+        //oscar.Flag_Data_to_Account__c = true;
 
         String changeCodeResult = AMS_OSCAR_Webservice.createChangeCodeNEW(oscarId);
         if (changeCodeResult != 'OK') return;
 
-        update oscar;
+        //update oscar;
 
         closeOscar(oscarId);
     }
@@ -291,7 +291,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     @future
     public static void closeOscar(Id oscarId) {
         try {
-            AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId, Status__c = 'Closed');
+            AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
+            oscar.STEP10__c = 'Passed';
+            oscar.Flag_Data_to_Account__c = true;
+            //update oscar;
+            
+            oscar.Status__c = 'Closed';
             update oscar;
         } catch (DmlException ex) {
             system.debug('Error closing the OSCAR: ' + ex.getMessage());

@@ -91,11 +91,11 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 
             ctrl.save();
             
-			Test.startTest();
-            	ctrl.accreditationForm.Accept_terms_and_conditions__c = true;
+            Test.startTest();
+				ctrl.accreditationForm.Accept_terms_and_conditions__c = true;
             	ctrl.submitAndApproveCase();
+
 			Test.stopTest();
-			
         }
 
 
