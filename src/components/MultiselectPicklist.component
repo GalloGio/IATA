@@ -51,7 +51,7 @@
               class="multilist" multiple="multiple" size="{!size}" 
               style="width: {!width};display:{!IF(readonly=='true', 'none', '')}">
               <apex:repeat value="{!leftOptions}" var="option">
-                <option value="{!option.value}">{!option.label}</option>
+                <option title="{!option.label}" value="{!option.value}">{!option.label}</option>
               </apex:repeat>
             </select>
           </td>
@@ -85,7 +85,7 @@
               class="multilist" multiple="multiple" size="{!size}" 
               style="width: {!width};">
               <apex:repeat value="{!rightOptions}" var="option">
-                <option value="{!option.value}">{!option.label}</option>
+                <option title="{!option.label}" value="{!option.value}">{!option.label}</option>
               </apex:repeat>
             </select>
           </td>
