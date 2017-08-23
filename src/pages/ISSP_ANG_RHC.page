@@ -39,39 +39,18 @@
       i.wrong {
         color: red;
       }
-
-      canvas#percentageUsageGauge {
-        padding: 0;
-        margin: auto;
-      }
-
-      @media only screen and (max-width: 992px) {
-        canvas#percentageUsageGauge {
-          width: 75% !important;
-          height: calc(75% / 2) !important;
-          margin-left: calc((100% - 75%) / 2) !important;
-        }
-      }
-
-      @media only screen and (min-width: 992px) {
-        canvas#percentageUsageGauge {
-          width: 100% !important;
-          height: calc(100% / 2) !important;
-        }
-      }
-      
     </style>
     <main class="container">
       <c:ISSP_CustomNavigation />
       <div class="row">
-        <section name="left-side" class="col-lg-6 col-md-12">
+        <section name="left-side" class="col-md-6 col-sm-12">
           <section name="remittance-holding" class="row">
-            <header class="col-lg-12">
+            <header class="col-xs-12">
               <div class="section-header">
                 <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Remittance Holding Capacity</strong>
               </div>
             </header>
-            <section name="remittance-holding-table" class="col-lg-8 col-md-12">
+            <section name="remittance-holding-table" class="col-md-8 col-sm-12">
               <table class="table">
                 <tr>
                   <td>
@@ -113,15 +92,15 @@
                 </tr>
               </table>
             </section>
-            <section class="col-lg-4 col-md-12">
+            <section class="col-md-4 col-sm-12">
               <canvas id="percentageUsageGauge"></canvas>
             </section>
           </section>
           <div class="row">
-            <div class="col-lg-12 text-center"><a href="#">IATA Customer e-Statment</a></div>
+            <div class="col-xs-12 text-center"><a href="#">IATA Customer e-Statment</a></div>
           </div>
           <section name="payment-forms" class="row">
-            <header class="col-lg-12">
+            <header class="col-xs-12">
               <div class="section-header">
                 <i class="fa fa-google-wallet" aria-hidden="true"></i> <strong>Available Forms of Payment</strong>
               </div>
@@ -143,7 +122,7 @@
             </div>
           </section>
         </section>
-        <section name="right-side" class="col-lg-6 col-md-12">
+        <section name="right-side" class="col-md-6 col-sm-12">
           <table class="table">
             <tr>
               <th class="section-header" colspan="2">
@@ -184,8 +163,8 @@
             strokeWidth: 0.024, // The thickness
             color: '#000000' // Fill color
           },
-          limitMax: false,     // If false, max value increases automatically if value > maxValue
-          limitMin: false,     // If true, the min value of the gauge will be fixed
+          limitMax: true,     // If false, max value increases automatically if value > maxValue
+          limitMin: true,     // If true, the min value of the gauge will be fixed
           colorStart: '#6FADCF',   // Colors
           colorStop: '#8FC0DA',    // just experiment with them
           strokeColor: '#E0E0E0',  // to see which ones work best for you
@@ -197,18 +176,55 @@
             {strokeStyle: "#F03E3E", min: 75, max: 100}  // Red
           ],
           staticLabels: {
-            font: "15px Arial",  // Specifies font
+            font: "12px Arial",  // Specifies font
             labels: [0, 50, 75, 100],  // Print labels at these values
             color: "#000000",  // Optional: Label text color
             fractionDigits: 0  // Optional: Numerical precision. 0=round off.
           },
         };
         var target = document.getElementById('percentageUsageGauge'); // your canvas element
-        var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-        gauge.maxValue = 100; // set max gauge value
-        gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
-        gauge.animationSpeed = 32; // set animation speed (32 is default value)
-        gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c}); // set actual value
+        createGauge();
+
+        let windowWidth;
+        $( window ).resize(function() {
+          windowWidth = $( window ).width();
+          if (windowWidth <= 992) {
+            if( opts.staticLabels.font === '12px Arial') {
+              opts.staticLabels.font = '15px Arial';
+              createGauge(windowWidth);
+            }
+            target.style.marginLeft = ((target.parentElement.offsetWidth - target.width) / 2) + 'px';
+          } else if (windowWidth > 992 && opts.staticLabels.font === '15px Arial') {
+            opts.staticLabels.font = '12px Arial';
+            createGauge(windowWidth);
+          }
+        });
+
+        function setGaugeSize(windowWidth) {
+          const canvasParentWidth = target.parentElement.offsetWidth;
+          console.log(canvasParentWidth, windowWidth);
+          if (windowWidth > 992) {
+            target.width = canvasParentWidth;
+            target.height = (target.width / 2);
+            target.style.marginLeft = '0px';
+          } else {
+            target.width = canvasParentWidth - 50;
+            target.height = (target.width / 2);
+            target.style.marginLeft = ((canvasParentWidth - target.width) / 2) + 'px';
+          }
+        }
+
+        function createGauge(windowWidth) {
+          setGaugeSize(windowWidth || $( window ).width());
+          target.style.width = target.width + 'px';
+          target.style.height = target.height + 'px';
+          var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+          gauge.maxValue = 100; // set max gauge value
+          gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+          gauge.animationSpeed = 32; // set animation speed (32 is default value)
+          gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c}); // set actual value´
+        }
+
       })();
       
     </script>
