@@ -1275,13 +1275,13 @@ public without sharing class ISSP_AMS_Accreditation {
             newCase.Origin = 'Portal';
             newCase.Status = 'Draft';
             newForm.Agent_Type__c = agentType;
-             if(newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH){
+
+            if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_WITHCASH) {
                 newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASH; 
-            } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH){
+            } else if (newForm.Agent_Type__c == AMS_Utils.AGENTTYPE_NOCASH) {
                 newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
-            } else{
-                newForm.ANG_Accreditation_Type__c = newForm.Agent_Type__c;
             }
+            
             newCase.Description = Label.ISSP_Email_Draft_Process1 + ' ' + getApplicationTypeLabel(amsLocationType) + '.';
             newCase.CaseArea__c = 'Accreditation Process';
             newcase.Case_Language__c = applyLanguage;
