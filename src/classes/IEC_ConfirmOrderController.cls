@@ -446,7 +446,7 @@ public class IEC_ConfirmOrderController extends IEC_PageController
 			IECOrder_Svc.deleteOrder(storeCart.getCartOrderContent());
 		}
 		return null;
-	}
+	} 
 
 	/*
 
