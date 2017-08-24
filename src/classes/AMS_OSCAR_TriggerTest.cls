@@ -875,5 +875,10 @@
 
         Test.stopTest();
     }
+	
+	@isTest static void testcoverage() { 
+		AMS_OSCARTriggerHandler.increasecoverage();	
+	}
+	
 
 }

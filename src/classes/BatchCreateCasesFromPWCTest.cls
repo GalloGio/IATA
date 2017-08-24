@@ -21,7 +21,7 @@ public class BatchCreateCasesFromPWCTest {
         list<Contact> listcontact = new list<Contact>();
         Integer i = 0;
         for ( Account account: listAccount ) {
-            listcontact.add( new Contact( LastName = 'TestName ' + i, AccountId = account.Id, Financial_Assessment_Contact__c = true) );
+            listcontact.add( new Contact( FirstName = 'Name', LastName = 'TestName ' + i, AccountId = account.Id, Financial_Assessment_Contact__c = true) );
             i++;
         }
         return listcontact;
@@ -149,6 +149,7 @@ public class BatchCreateCasesFromPWCTest {
             Preferred_Language__c = language,
             Financial_Assessment_Contact__c = true,
             AccountId = account.Id,
+            FirstName = 'Name',
             LastName = 'lastName'
         );
         insert contact;

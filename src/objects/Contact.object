@@ -5519,6 +5519,28 @@ IF(Account.IATACode__c != &apos;&apos;
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Data_Quality_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Data_Quality_Score__c =100,&quot;All Contact Details Captured&quot;, &quot;Missing: &quot;&amp;IF( LEN( Phone ) = 0, &quot;Phone, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF(LEN( Email) = 0, &quot;Email, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN( MailingStreet ) = 0, &quot;Complete Address, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( LEN(Title) = 0, &quot;Job Title, &quot;,&quot;&quot;)&amp;&quot;&quot;&amp;IF( ISPICKVAL( Salutation,&quot;&quot;), &quot;Salutation&quot;,&quot;&quot;))</formula>
+        <label>Data Quality Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Quality_Score__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( LEN( Phone) = 0, 0,20) + IF( LEN( Email) = 0, 0,20) + IF( LEN(MailingStreet) = 0, 0,20) + IF( LEN(Title) = 0, 0,20) + IF( ISPICKVAL(Salutation,&quot;&quot;), 0,20)</formula>
+        <label>Data Quality Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Data_quality_feedback__c</fullName>
         <externalId>false</externalId>
         <label>Data Quality Feedback</label>
@@ -6512,7 +6534,7 @@ TotalRows-Successes-Errors</description>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Application_Name_Text_Field__c</field>
             <operation>equals</operation>
-            <value>IFG Pre-Production</value>
+            <value>IFG Sandbox</value>
         </summaryFilterItems>
         <summaryFilterItems>
             <field>Portal_Application_Right__c.Right__c</field>
@@ -27718,6 +27740,13 @@ ISCHANGED(ISSP_Contact_Name__c )
         <errorConditionFormula>NOT(ISBLANK(TEXT(Data_quality_feedback__c))) &amp;&amp; ISBLANK(Comment_data_quality_feedback__c)</errorConditionFormula>
         <errorDisplayField>Comment_data_quality_feedback__c</errorDisplayField>
         <errorMessage>Please fill the Comment field when choosing a value for Data quality feedback</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Contact_First_name_mandatory</fullName>
+        <active>true</active>
+        <description>Forcing the standard field (first name) mandatory</description>
+        <errorConditionFormula>TRIM (FirstName) == &apos;&apos;</errorConditionFormula>
+        <errorMessage>Please insert the first name</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>

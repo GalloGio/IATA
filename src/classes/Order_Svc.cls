@@ -948,7 +948,7 @@ public without sharing class Order_Svc
 
         set<Id> orderIds = new set<Id>();
         set<String> paymentMethod = new set<String>();
-        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');
+        paymentMethod.add('Bank Transfer');paymentMethod.add('Check');paymentMethod.add('Credit Card');
 
         //map of Order sold Id
         map<Id,Boolean> orderId_Sold = new map<Id,Boolean>();
