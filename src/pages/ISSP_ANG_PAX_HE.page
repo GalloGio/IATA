@@ -647,7 +647,7 @@
     }
     
     </script>
-            
+     <c:MutationObserverPolyfill></c:MutationObserverPolyfill>       
      <div class="container">
        <div id="contentWrapper">
            <c:ISSP_CustomNavigation />
@@ -794,7 +794,7 @@
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
                                 
-                                <apex:pageBlockSectionItem dataStyle="padding-left: 45px">    
+                                <apex:pageBlockSectionItem>    
                                 <DSE:DS_DataQuality id="HOEmail" 
                                         RecordRef="{!hqAccount}"
                                         FieldGroupName="Email"
@@ -890,24 +890,26 @@
                             var $j = jQuery.noConflict();
 
                             function mandatoryLabels() {
-                                const labelBillStreet = $j('.address-label')[0].childNodes[0],
+                                var labelBillStreet = $j('.address-label')[0].childNodes[0],
                                     labelBillCity = $j('.address-label')[1].childNodes[0];
-                                labelBillStreet.textContent = labelBillStreet.textContent + ' *' ;
-                                labelBillCity.textContent = labelBillCity.textContent + ' *' ;                                
+                                if (labelBillStreet)
+                                    labelBillStreet.textContent = labelBillStreet.textContent + ' *' ;
+                                if (labelBillCity)
+                                    labelBillCity.textContent = labelBillCity.textContent + ' *' ;                                
                             }
 
                             document.onload = mandatoryLabels();
                             document.onload = showUpdateAgencyDialog();
                             document.onload = removeReq();
 
-                             const target = $j('.hophonestatusBox #recordstatuscontainer')[0],
+                             var target = $j('.hophonestatusBox #recordstatuscontainer')[0],
                                 observer = new MutationObserver(function (mutations) {
                                     $j('#div-verify-office-phone').html($j('.hophonestatusBox input')[0]);
                                 }),
                                 config = { attributes: true, childList: true, characterData: true };
                             observer.observe(target, config);
 
-                            const natphoneacct = $j("[id$=companyphoneinput]"),
+                            var natphoneacct = $j("[id$=companyphoneinput]"),
                                 phoneacct = $j(".phone"),
                                 phoneacctfield = $j("[id$=companyphone]"),
                                 natfaxacct = $j("[id$=companyfaxinput]"),
@@ -1088,7 +1090,7 @@
                 <script type="text/javascript">
                     var $j = jQuery.noConflict();
 
-                    const target = $j('.hophonestatusBox2 #recordstatuscontainer')[0],
+                    var target = $j('.hophonestatusBox2 #recordstatuscontainer')[0],
                         observer = new MutationObserver(function (mutations) {
                             $j('#div-verify-office-phone').html($j('.hophonestatusBox2 input')[0]);
                         }),
@@ -1096,15 +1098,17 @@
                     observer.observe(target, config);
 
                     function mandatoryLabels() {
-                        const labelBillStreet = $j('.address-label')[0].childNodes[0],
+                        var labelBillStreet = $j('.address-label')[0].childNodes[0],
                             labelBillCity = $j('.address-label')[1].childNodes[0];
-                        labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
-                        labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;  
+                        if (labelBillStreet)
+                            labelBillStreet.textContent = labelBillStreet.textContent.replace('* ', '') + ' *' ;
+                        if (labelBillCity)
+                            labelBillCity.textContent = labelBillCity.textContent.replace('* ', '') + ' *' ;  
                     }
 
                     document.onload = mandatoryLabels();
 
-                    const natphoneacct = $j("[id$=companyphoneinputTerminated]"),
+                    var natphoneacct = $j("[id$=companyphoneinputTerminated]"),
                         phoneacct = $j(".phone"),
                         phoneacctfield = $j("[id$=companyphone2]"),
                         natfaxacct = $j("[id$=companyfaxinputTerminated]"),
@@ -1153,8 +1157,9 @@
         </apex:pageblock>
         <script>
             $( document ).ready(function() {
-                const vatNumber = $j('[id$=section1-vat-number]')[0];
-                vatNumber.textContent = vatNumber.textContent + ' *'; 
+                var vatNumber = $j('[id$=section1-vat-number]')[0];
+                if (vatNumber)
+                    vatNumber.textContent = vatNumber.textContent + ' *'; 
             });
         </script>
 
@@ -1290,16 +1295,21 @@
 
                 <script>
                     $j( document ).ready(function() {
-                        const legalStatusLabel = $j('[for$=LegalStatus]')[0],
+                        var legalStatusLabel = $j('[for$=LegalStatus]')[0],
                             dateOfficeOpenedLabel = $j('[for$=dateOpenedAsTravelAgency]')[0],
                             whereIncorporate = $j('[for$=section2-where-incorporate]')[0],
                             whenIncorporate = $j('[for$=section2-when-incorporate]')[0],
                             sharesListedLabel = $j('[id$=section2-shares-listed-label]')[0];
-                        legalStatusLabel.textContent = legalStatusLabel.textContent.replace('* ', '') + ' *';
-                        dateOfficeOpenedLabel.textContent = dateOfficeOpenedLabel.textContent.replace('* ', '') + ' *';
-                        sharesListedLabel.textContent = sharesListedLabel.textContent.replace('* ', '') + ' *';
-                        whereIncorporate.textContent = whereIncorporate.textContent.replace('* ', '') + ' *';
-                        whenIncorporate.textContent = whenIncorporate.textContent.replace('* ', '') + ' *';
+                        if (legalStatusLabel)
+                            legalStatusLabel.textContent = legalStatusLabel.textContent.replace('* ', '') + ' *';
+                        if (dateOfficeOpenedLabel)
+                            dateOfficeOpenedLabel.textContent = dateOfficeOpenedLabel.textContent.replace('* ', '') + ' *';
+                        if (sharesListedLabel)
+                            sharesListedLabel.textContent = sharesListedLabel.textContent.replace('* ', '') + ' *';
+                        if (whereIncorporate)
+                            whereIncorporate.textContent = whereIncorporate.textContent.replace('* ', '') + ' *';
+                        if (whenIncorporate)
+                            whenIncorporate.textContent = whenIncorporate.textContent.replace('* ', '') + ' *';
                     });
                 </script>
                 
@@ -1647,20 +1657,27 @@
           <script>
             setPortalAdmin('{!$Component.PortalAdminId}');
             $( document ).ready(function() {
-                const gds = $j('[id$=section5-gds]')[0],
+                var gds = $j('[id$=section5-gds]')[0],
                     iatanCode = $j('[id$=section5-iatan-code]')[0],
                     iatanCodeRadio = $j('[id$=section5-iatan-code-radio]')[0],
                     cargoCode = $j('[id$=section5-cargo-code]')[0],
                     cargoCodeRadio = $j('[id$=section5-cargo-code-radio]')[0],
                     firstYear = $j('[for$=section5-first-year]')[0],
                     secondYear = $j('[for$=section5-second-year]')[0];
-                gds.textContent = gds.textContent.replace('* ', '') + ' *'; 
-                iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *'; 
-                iatanCodeRadio.textContent = iatanCodeRadio.textContent.replace('* ', '') + ' *'; 
-                cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *'; 
-                cargoCodeRadio.textContent = cargoCodeRadio.textContent.replace('* ', '') + ' *'; 
-                firstYear.textContent = firstYear.textContent.replace('* ', '') + ' *'; 
-                secondYear.textContent = secondYear.textContent.replace('* ', '') + ' *'; 
+                if (gds)
+                    gds.textContent = gds.textContent.replace('* ', '') + ' *'; 
+                if (iatanCode)
+                    iatanCode.textContent = iatanCode.textContent.replace('* ', '') + ' *'; 
+                if (iatanCodeRadio)
+                    iatanCodeRadio.textContent = iatanCodeRadio.textContent.replace('* ', '') + ' *'; 
+                if (cargoCode)
+                    cargoCode.textContent = cargoCode.textContent.replace('* ', '') + ' *'; 
+                if (cargoCodeRadio)
+                    cargoCodeRadio.textContent = cargoCodeRadio.textContent.replace('* ', '') + ' *'; 
+                if (firstYear)
+                    firstYear.textContent = firstYear.textContent.replace('* ', '') + ' *'; 
+                if (secondYear)
+                    secondYear.textContent = secondYear.textContent.replace('* ', '') + ' *'; 
             });
 
             </script>
