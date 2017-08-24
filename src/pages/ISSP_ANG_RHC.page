@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_ANG_RHC" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false" action="{!initActions}">
+<apex:page controller="ISSP_ANG_RHC" cache="false" sidebar="false" showHeader="false" applyBodyTag="false" applyHtmlTag="false" standardStylesheets="false">
   <html>
 
   <head>
@@ -39,6 +39,31 @@
       i.wrong {
         color: red;
       }
+
+      #gaugeSection {
+        padding-left: 0;
+        text-align: center;
+        font-size: 15px;
+      }
+
+      #gaugeSection > strong {
+        margin-left: 15px;
+      }
+
+      @media (max-width: 992px) {
+        .fa-money {
+          font-size: 200px;
+        }
+        .fa-credit-card-alt {
+          font-size: 167px;
+        }
+        .fa-credit-card {
+          font-size: 198px;
+        }
+        #gaugeSection > strong {
+          margin-left: 25px;
+        }
+      }
     </style>
     <main class="container">
       <c:ISSP_CustomNavigation />
@@ -50,14 +75,14 @@
                 <i class="fa fa-line-chart" aria-hidden="true"></i> <strong>Remittance Holding Capacity</strong>
               </div>
             </header>
-            <section name="remittance-holding-table" class="col-md-8 col-sm-12">
+            <section id="remittance-holding-table" class="col-md-8 col-sm-12">
               <table class="table">
                 <tr>
                   <td>
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> RHC amount
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>USD {!remittanceFrequency.ANG_RME_Amount__c}</td>
+                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_RHC_Amount__c}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -65,7 +90,7 @@
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current usage
                     <apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                   </td>
-                  <td>USD {!remittanceFrequency.ANG_ConsumedRHC__c}</td>
+                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_ConsumedRHC__c}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -80,7 +105,7 @@
                   <td>
                     <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Current Financial Security
                   </td>
-                  <td>USD {!remittanceFrequency.ANG_Financial_Security__c}</td>
+                  <td>{!remittanceFrequency.CurrencyIsoCode} {!remittanceFrequency.ANG_Financial_Security__c}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -92,12 +117,16 @@
                 </tr>
               </table>
             </section>
-            <section class="col-md-4 col-sm-12">
+            <section id="gaugeSection" class="col-md-4 col-sm-12">
               <canvas id="percentageUsageGauge"></canvas>
+              <strong>{!remittanceFrequency.ANG_ConsumedRHC_Percent__c}%</strong>
             </section>
           </section>
           <div class="row">
-            <div class="col-xs-12 text-center"><a href="#">IATA Customer e-Statment</a></div>
+            <div class="col-xs-12 text-center">
+              <apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">IATA Customer e-Statment</apex:outputLink>
+              <apex:outputLink value="/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1" rendered="{!NOT(hasRightAccessIceService)}">IATA Customer e-Statment</apex:outputLink>
+            </div>
           </div>
           <section name="payment-forms" class="row">
             <header class="col-xs-12">
@@ -176,7 +205,7 @@
             {strokeStyle: "#F03E3E", min: 75, max: 100}  // Red
           ],
           staticLabels: {
-            font: "12px Arial",  // Specifies font
+            font: "11px Arial",  // Specifies font
             labels: [0, 50, 75, 100],  // Print labels at these values
             color: "#000000",  // Optional: Label text color
             fractionDigits: 0  // Optional: Numerical precision. 0=round off.
@@ -185,44 +214,43 @@
         var target = document.getElementById('percentageUsageGauge'); // your canvas element
         createGauge();
 
-        let windowWidth;
+        var windowWidth;
         $( window ).resize(function() {
           windowWidth = $( window ).width();
           if (windowWidth <= 992) {
-            if( opts.staticLabels.font === '12px Arial') {
-              opts.staticLabels.font = '15px Arial';
-              createGauge(windowWidth);
-            }
+            opts.staticLabels.font = '15px Arial';
+            createGauge(windowWidth);
             target.style.marginLeft = ((target.parentElement.offsetWidth - target.width) / 2) + 'px';
-          } else if (windowWidth > 992 && opts.staticLabels.font === '15px Arial') {
-            opts.staticLabels.font = '12px Arial';
+          } else if (windowWidth > 992) {
+            opts.staticLabels.font = '11px Arial';
             createGauge(windowWidth);
           }
         });
 
         function setGaugeSize(windowWidth) {
-          const canvasParentWidth = target.parentElement.offsetWidth;
-          console.log(canvasParentWidth, windowWidth);
+          var canvasParentWidth = target.parentElement.offsetWidth;
           if (windowWidth > 992) {
             target.width = canvasParentWidth;
-            target.height = (target.width / 2);
+            target.height = canvasParentWidth * 0.5 ;
             target.style.marginLeft = '0px';
+            target.parentElement.style.paddingTop = ((document.getElementById('remittance-holding-table').offsetHeight - target.parentElement.offsetHeight) /2) + 'px';
           } else {
             target.width = canvasParentWidth - 50;
-            target.height = (target.width / 2);
+            target.height = target.width * 0.5;
             target.style.marginLeft = ((canvasParentWidth - target.width) / 2) + 'px';
+            target.parentElement.style.paddingTop = '0px';
           }
         }
 
         function createGauge(windowWidth) {
           setGaugeSize(windowWidth || $( window ).width());
           target.style.width = target.width + 'px';
-          target.style.height = target.height + 'px';
-          var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-          gauge.maxValue = 100; // set max gauge value
-          gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
-          gauge.animationSpeed = 32; // set animation speed (32 is default value)
-          gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c}); // set actual value´
+          target.style.height = (target.height + 10) + 'px';
+          var gauge = new Gauge(target).setOptions(opts);
+          gauge.maxValue = 100;
+          gauge.setMinValue(0);
+          gauge.animationSpeed = 32;
+          gauge.set({!remittanceFrequency.ANG_ConsumedRHC_Percent__c});
         }
 
       })();
