@@ -45,7 +45,7 @@ public with sharing class ANG_RiskForecastPropertiesController {
                         riskOpt ='9';
 
                     else if (myCase.SIDRA_Lite_Reason__c == 'Late/Absence of Notification of Change' )
-                        riskOpt ='6';
+                        riskOpt ='7';
 
                     else if (myCase.SIDRA_Lite_Reason__c == 'Prejudiced Collection of Funds' )
                         riskOpt ='11';
