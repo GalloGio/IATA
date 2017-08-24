@@ -967,6 +967,30 @@
         <value>E-mail address</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_ProgressBarNode1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode1</shortDescription>
+        <value>Draft (Label)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode2</shortDescription>
+        <value>Submitted to IATA (Label)</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ProgressBarNode3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ProgressBarNode3</shortDescription>
+        <value>Sanity Check (Label)</value>
+    </labels>
+    <labels>
         <fullName>ANY</fullName>
         <language>en_US</language>
         <protected>false</protected>
