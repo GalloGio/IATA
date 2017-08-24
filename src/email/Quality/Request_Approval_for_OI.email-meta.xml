@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to Request Approval for OI</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>Request Approval for OI</name>
+    <style>freeForm</style>
+    <subject>OI Approval Request : {!Operational_Improvements__c.Subject__c} , {!Operational_Improvements__c.Name} , Region: {!Operational_Improvements__c.Region__c}</subject>
+    <textOnly>Dear,
+
+
+Operational improvement - {!Operational_Improvements__c.Name} - has been created and is pending for your Approval or Rejection.
+
+Please click the below link to review it and go to the approval section to approve it:
+{!Operational_Improvements__c.Link}
+
+Subject:  {!Operational_Improvements__c.Subject__c}
+Description: {!Operational_Improvements__c.Description__c}
+OI Type: {!Operational_Improvements__c.OI_Type__c}
+
+Related Internal Case Number: {!Operational_Improvements__c.Related_Case_Number__c}
+Region:  {!Operational_Improvements__c.Region__c}
+
+
+Thank you and best regards,
+{!Operational_Improvements__c.OwnerFullName}</textOnly>
+    <type>html</type>
+</EmailTemplate>
