@@ -53,6 +53,8 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 	
 	global ANG_OscarConversionBatch(String countryToSearch, String oscarName) {
 		
+		ANG_AgencyChangesHelper.isMigrationRunning = true;
+
 		this.oscarName = oscarName;
 		this.countryToSearch = countryToSearch;
 
@@ -223,6 +225,8 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 	global void finish(Database.BatchableContext BC) {
 		
+		ANG_AgencyChangesHelper.isMigrationRunning = false;
+
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
 		//Below code will fetch the job Id

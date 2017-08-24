@@ -1,5 +1,7 @@
 public with sharing class ANG_AgencyChangesHelper {
 	
+	public static Boolean isMigrationRunning = false;
+	
 	public class AChangeStructure{
 
 		public Map<Id,AMS_Agencies_relationhip__c> relationsMap;
@@ -904,7 +906,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		List<String> oscarStepsApiName = AMS_Utils.getOSCARStepsApiName();
 
-		if (oscar.ANG_Type_Of_Change__c <> oldMap.get(oscar.Id).ANG_Type_Of_Change__c && oldMap.get(oscar.Id).STEP6__c == AMS_Utils.PASSED)
+		if (oscar.ANG_Type_Of_Change__c <> oldMap.get(oscar.Id).ANG_Type_Of_Change__c && oldMap.get(oscar.Id).STEP6__c == AMS_Utils.PASSED && !isMigrationRunning)
 		{
 			oscar.addError('Type of Change cannot be changed after Sanity Check is passed.');
 			return false;
