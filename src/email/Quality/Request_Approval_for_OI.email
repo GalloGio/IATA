@@ -1,0 +1,15 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font style="FONT-FAMILY: arial; COLOR: rgb(0,0,0); FONT-SIZE: 12pt" class="Apple-style-span" size="3" face="arial"></font><span style="font-size: 12pt;">Dear,</span></p>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Operational improvement -&nbsp;</span><span style="font-size: 12pt;">{!Operational_Improvements__c.Name}</span><span style="font-size: 12pt;">&nbsp;- has been created and is pending for your&nbsp;Approval or Rejection.</span></div><div><div style="font-size: 12pt;"><span style="font-size: 12pt;"><br></span></div><div style="font-size: 12pt;"><span style="font-size: 12pt;">Please click the below link to review it and go to the approval section to approve it:</span></div><div style="font-size: 12pt;"><span style="font-size: 12pt;"></span></div><div style="font-size: 12pt;"><div style="font-size: 12pt;">{!Operational_Improvements__c.Link}</div></div> 
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Subject:&nbsp;&nbsp;{!Operational_Improvements__c.Subject__c}&nbsp;</span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Description:&nbsp;{!Operational_Improvements__c.Description__c}</div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">OI Type:&nbsp;{!Operational_Improvements__c.OI_Type__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="font-size: 12pt;"><span style="font-size: 12pt;">Related Internal Case Number:&nbsp;</span><font face="arial">{!Operational_Improvements__c.Related_Case_Number__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Region:&nbsp;</span><font face="arial">&nbsp;{!Operational_Improvements__c.Region__c}</font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font class="Apple-style-span" face="arial">Thank you and best regards,</font></div>
+<div><font face="arial">{!Operational_Improvements__c.OwnerFullName}</font></div>
+<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></div>]]></td>
+</tr>
+</table>
