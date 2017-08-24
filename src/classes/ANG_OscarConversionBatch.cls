@@ -123,15 +123,36 @@ global class ANG_OscarConversionBatch implements Database.Batchable<sObject>, Da
 
 		if(oscarToProcess.Process__c == AMS_Utils.NGCHANGES || oscarToProcess.Process__c == AMS_Utils.NGCORRECTION){
 			
+			String toReturn = '';
+
 			oscarToProcess.New_parent__c = oscarToProcess.AMS_Target_Agency__c;
 
-			String typeOfChange = typeOfChangeMap.get(oscarToProcess.Type_of_change__c);
+			String oldChanges = oscarToProcess.Type_of_change__c;
 
-			if(typeOfChange != null)
-				oscarToProcess.ANG_Type_Of_Change__c = typeOfChange;
-			else{ 
-				oscarToProcess.ANG_Type_Of_Change__c = oscarToProcess.Type_of_change__c;
+			if(oldChanges != null){
+
+				List<String> multipleChanges = oscarToProcess.Type_of_change__c.split(';');
+
+				for(String change: multipleChanges){
+
+					String typeOfChange = typeOfChangeMap.get(change);
+
+					if(typeOfChange != null)
+						toReturn += typeOfChange + ';';
+					else{ 
+						toReturn += change + ';';
+
+					}
+
+				}
+
+			toReturn = toReturn.removeEnd(';');
+
+			oscarToProcess.ANG_Type_Of_Change__c = toReturn;
+
 			}
+
+
 		}
         
         return oscarToProcess;
