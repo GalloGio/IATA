@@ -15,10 +15,17 @@ public class ANG_FinancialSecurityTriggerHandler{
 		get{
 			if(accIdSet==null){
 				accIdset = new set<id>();
-				for(Financial_Security__c fs:triggerNew){	
-					if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
-					accIdSet.add(fs.Account__c);
-				}				
+				if(Trigger.isDelete){
+					for(Financial_Security__c fs:triggerOld){
+						accIdSet.add(fs.Account__c);
+					}
+				}else{
+					for(Financial_Security__c fs:triggerNew){	
+						if(Trigger.isUpdate &&  fs.Amount__c == oldMap.get(fs.id).Amount__c && fs.CurrencyIsoCode == oldMap.get(fs.id).CurrencyIsoCode && fs.Security_Status__c ==oldMap.get(fs.id).Security_Status__c) continue;
+						accIdSet.add(fs.Account__c);
+					}
+				}
+							
 			}
 			return accIdSet;
 		}
