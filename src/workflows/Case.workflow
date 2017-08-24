@@ -4823,7 +4823,7 @@
     <fieldUpdates>
         <fullName>DPCtoRBest</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>bestr@iata.org</lookupValue>
+        <lookupValue>chaziran@iata.org.prod</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>DPCtoRBest</name>
         <notifyAssignee>false</notifyAssignee>
@@ -11246,7 +11246,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
             <operation>equals</operation>
             <value>CASSlink</value>
         </criteriaItems>
-        <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Rod Best</description>
+        <description>Designate the Product Manager ACR based on the DPC System - CASSlink to Nektarios Chazirakis</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
