@@ -154,6 +154,11 @@ public class AMS_OscarCaseTriggerHelper {
                 changed = true;
             }
 
+            if(oscar.Certificate_Quantity__c != Integer.valueOf(c.QuantityProduct__c)){
+                oscar.Certificate_Quantity__c = Integer.valueOf(c.QuantityProduct__c);
+                changed = true;
+            }
+
             if(changed) oscarsToUpdate.add(oscar);
         }
 
