@@ -17017,10 +17017,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
                 <default>false</default>
             </values>
             <values>
-                <fullName>Closed %28Closed%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Closed_ Not Accepted</fullName>
                 <default>false</default>
             </values>
@@ -18892,10 +18888,6 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
             </values>
             <values>
                 <fullName>Closed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Closed %28Closed%29</fullName>
                 <default>false</default>
             </values>
             <values>
