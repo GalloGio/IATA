@@ -8,6 +8,10 @@
 			 2017-05-31, asantos, Included a field to bypass the trigger logic that
                                   should be used when performing data fixes in the
                                   Zuora__Payment__c object.
+			 2017-06-19, asantos, Reworked the way zuora data is rollback.
+			 2017-06-19, asantos, Only update order status to "Payment Failure" when current
+								  order status is "Pending Payment" to prevent out of order
+								  status changes due to payments.
 
        Info: Purpose of this handler is to:
               - populate the Order__c field on Zuora__Payment__c object to link the Payment with
@@ -132,35 +136,40 @@ public with sharing class trgHndlrIECPayment {
 			String orderType;
 			String gatewayResponse;
 			Date effectiveDate = Date.today();
+			String previousOrderStatus = order.Status;
 
 			Order updateOrder;
 
 			if (processedOrderIdSet.contains(order.Id) == false) {
-				if (success == true) {
-					orderStatus = Order_Svc.getOrderStatusByPaymentType(order.Payment_Type__c);
-					orderIsPaid = Order_Svc.isOrderPaidByPaymentType(order.Payment_Type__c);
-					orderType = 'Order';
+				if (previousOrderStatus == null || previousOrderStatus != null && previousOrderStatus == 'Pending Payment') {
+					if (success == true) {
+						orderStatus = Order_Svc.getOrderStatusByPaymentType(order.Payment_Type__c);
+						orderIsPaid = Order_Svc.isOrderPaidByPaymentType(order.Payment_Type__c);
+						orderType = 'Order';
+					} else {
+						orderStatus = 'Payment Failure';
+						orderIsPaid = false;
+						orderType = order.Type;
+					}
+
+					gatewayResponse = gatewayResponseMap.get(order.Id);
+
+					updateOrder = new Order(
+						Id = order.Id,
+						Status = orderStatus,
+						Is_Paid__c = orderIsPaid,
+						Type = orderType,
+						EffectiveDate = effectiveDate,
+						ShipToContactId = order.ShipToContactId,
+						Payment_Gateway_Response__c = gatewayResponse
+					);
+
+					System.debug(updateOrder);
+
+					orderUpdateList.add(updateOrder);
 				} else {
-					orderStatus = 'Payment Failure';
-					orderIsPaid = false;
-					orderType = order.Type;
+					System.debug('Order ' + order.Id + ' ignored because order status is ' + previousOrderStatus);
 				}
-
-				gatewayResponse = gatewayResponseMap.get(order.Id);
-
-				updateOrder = new Order(
-					Id = order.Id,
-					Status = orderStatus,
-					Is_Paid__c = orderIsPaid,
-					Type = orderType,
-					EffectiveDate = effectiveDate,
-					ShipToContactId = order.ShipToContactId,
-					Payment_Gateway_Response__c = gatewayResponse
-				);
-
-				System.debug(updateOrder);
-
-				orderUpdateList.add(updateOrder);
 
 				processedOrderIdSet.add(order.Id);
 			}
@@ -186,7 +195,7 @@ public with sharing class trgHndlrIECPayment {
 			}
 
 			if (cancelOrderIdSet.isEmpty() == false) {
-				cancelZuoraOrders(cancelOrderIdSet);
+				rollbackZuoraOrders(cancelOrderIdSet);
 			}
 		}
 	}
@@ -322,259 +331,187 @@ public with sharing class trgHndlrIECPayment {
 		return ipe;
 	}
 
-	@future (callout=true) static void cancelZuoraOrders(Set<Id> orderIdSet) {
+	@future (callout=true)
+	static void rollbackZuoraOrders(Set<Id> orderIdSet) {
 		Map<Id,Order> orderMap = new Order_Sel().getOrderByStatus(orderIdSet);
 		Map<Id,List<OrderItem>> orderItemListMap = new OrderItem_Sel().getOrderItems(orderIdSet);
 		List<String> paymentIdList = new List<String>();
-		List<String> invoiceIdList = new List<String>();
 		List<String> subscriptionIdList = new List<String>();
-		Map<String,String> paymentAccountIdMap = new Map<String,String>();
-		Map<String,String> paymentInvoiceIdMap = new Map<String,String>();
-		Map<String,String> invoiceSubscriptionIdMap = new Map<String,String>();
+		List<String> invoiceIdList = new List<String>();
 
 		List<Zuora.zObject> paymentList;
-		List<Zuora.zObject> invoicePaymentList;
-		List<Zuora.zObject> invoiceItemList;
 		List<Zuora.zObject> invoiceList;
 		List<Zuora.zObject> subscriptionList;
-		
-		Set<String> zuoraAccountIdSet = new Set<String>();
 
-		System.debug('cancelZuoraOrders START');		
+		List<IEC_Error_Log__c> errorLogList = new List<IEC_Error_Log__c>();
 
 		for (Id orderId : orderItemListMap.keySet()) {
 			Order order = orderMap.get(orderId);
+			String zuoraTransactionId = order.Zuora_Transaction_Id__c;
+			String zuoraSubscriptionId = order.IEC_Zuora_ST_SubscriptionId__c;
+			String zuoraInvoiceId = order.IEC_Zuora_ST_InvoiceId__c;
 
-			if (order.Zuora_Transaction_Id__c != null) {
-				paymentIdList.add(order.Zuora_Transaction_Id__c);
+			if (zuoraTransactionId != null) {
+				paymentIdList.add(zuoraTransactionId);
 			}
-		}
 
-		if (Test.isRunningTest()) {
-			zuoraTestObjectData.put('Payment', new List<Zuora.zObject>());
-			zuoraTestObjectData.put('Invoice', new List<Zuora.zObject>());
-			zuoraTestObjectData.put('InvoiceItem', new List<Zuora.zObject>());
-			zuoraTestObjectData.put('InvoicePayment', new List<Zuora.zObject>());
-			zuoraTestObjectData.put('Subscription', new List<Zuora.zObject>());
+			if (zuoraSubscriptionId != null) {
+				subscriptionIdList.add(zuoraSubscriptionId);
+			}
 
-			for (Id orderId : orderItemListMap.keySet()) {
-				Order order = orderMap.get(orderId);
+			if (zuoraInvoiceId != null) {
+				invoiceIdList.add(zuoraInvoiceId);
+			}
 
-				if (order.Zuora_Transaction_Id__c != null) {
-					Zuora.zObject zp = new Zuora.zObject('Payment');
+			for (OrderItem orderItem : orderItemListMap.get(orderId)) {
+				zuoraSubscriptionId = orderItem.Zuora_SubscriptionId__c;
+				zuoraInvoiceId = orderItem.Zuora_InvoiceId__c;
 
-					zobjectSetString(zp, 'Id', order.Zuora_Transaction_Id__c);
-					zobjectSetString(zp, 'AccountId', order.AccountId);
+				if (zuoraSubscriptionId != null) {
+					subscriptionIdList.add(zuoraSubscriptionId);
+				}
 
-					zuoraTestObjectData.get('Payment').add(zp);
+				if (zuoraInvoiceId != null) {
+					invoiceIdList.add(zuoraInvoiceId);
 				}
 			}
-
-			for (Zuora.zObject zp : zuoraTestObjectData.get('Payment')) {
-				Zuora.zObject zip = new Zuora.zObject('InvoicePayment');
-
-				zobjectSetString(zip, 'Id', String.valueOf(zuoraTestId++));
-				zobjectSetString(zip, 'PaymentId', zobjectGetString(zip, 'Id'));
-				zobjectSetString(zip, 'InvoiceId', String.valueOf(zuoraTestId++));
-
-				zuoraTestObjectData.get('InvoicePayment').add(zip);
-			}
-
-			for (Zuora.zObject zip : zuoraTestObjectData.get('InvoicePayment')) {
-				Zuora.zObject zi = new Zuora.zObject('Invoice');
-
-				zobjectSetString(zi, 'Id', zobjectGetString(zip, 'InvoiceId'));
-				zobjectSetString(zi, 'Status', 'Active');
-
-				zuoraTestObjectData.get('Invoice').add(zi);
-			}
-
-			for (Zuora.zObject zi : zuoraTestObjectData.get('Invoice')) {
-				Zuora.zObject zii = new Zuora.zObject('InvoiceItem');
-
-				zobjectSetString(zii, 'Id', String.valueOf(zuoraTestId++));
-				zobjectSetString(zii, 'InvoiceId', zobjectGetString(zi, 'Id'));
-				zobjectSetString(zii, 'SubscriptionId', String.valueOf(zuoraTestId++));
-
-				zuoraTestObjectData.get('InvoiceItem').add(zii);
-			}
-
-			for (Zuora.zObject zii : zuoraTestObjectData.get('InvoiceItem')) {
-				Zuora.zObject zs = new Zuora.zObject('Subscription');
-
-				zobjectSetString(zs, 'Id', zobjectGetString(zii, 'SubscriptionId'));
-				zobjectSetString(zs, 'Status', 'Active');
-				
-				zuoraTestObjectData.get('Subscription').add(zs);
-			}
 		}
 
-		paymentList = zoqlQuery('Payment', new List<String> { 'Id', 'AccountId' }, 'Id', paymentIdList);
-
-		if (paymentList != null) {
-			for (Zuora.zObject payment : paymentList) {
-				String paymentId = zObjectGetString(payment, 'Id');
-				String accountId = zObjectGetString(payment, 'AccountId');
-
-				paymentAccountIdMap.put(paymentId, accountId);
-
-				zuoraAccountIdSet.add(accountId);
-			}
+		if (paymentIdList.isEmpty() == false) {
+			paymentList = zoqlQuery('Payment', new List<String> { 'Id', 'Status', 'AccountId' }, 'Id', paymentIdList);
 		}
 
-		invoicePaymentList = zoqlQuery('InvoicePayment', new List<String> { 'Id','PaymentId','InvoiceId'}, 'PaymentId', paymentIdList);
-
-		if (invoicePaymentList != null) {
-			for (Zuora.zObject invoicePayment : invoicePaymentList) {
-				String paymentId = zObjectGetString(invoicePayment, 'PaymentId');
-				String invoiceId = zObjectGetString(invoicePayment, 'InvoiceId');
-
-				invoiceIdList.add(invoiceId);
-
-				paymentInvoiceIdMap.put(paymentId, invoiceId);
-			}
+		if (subscriptionIdList.isEmpty() == false) {
+			subscriptionList = zoqlQuery('Subscription', new List<String> { 'Id', 'Status' }, 'Id', subscriptionIdList);
 		}
 
-		invoiceItemList = zoqlQuery('InvoiceItem', new List<String> { 'Id', 'InvoiceId', 'SubscriptionId'}, 'InvoiceId', invoiceIdList);
-
-		if (invoiceItemList != null) {
-			for (Zuora.zObject invoiceItem : invoiceItemList) {
-				String invoiceId = zObjectGetString(invoiceItem, 'InvoiceId');
-				String subscriptionId = zObjectGetString(invoiceItem, 'SubscriptionId');
-
-				subscriptionIdList.add(subscriptionId);
-
-				invoiceSubscriptionIdMap.put(invoiceId, subscriptionId);
-			}
+		if (invoiceIdList.isEmpty() == false) {
+			invoiceList = zoqlQuery('Invoice', new List<String> { 'Id', 'Status' }, 'Id', invoiceIdList);
 		}
 
-		invoiceList = zoqlQuery('Invoice', new List<String> { 'Id', 'Status' }, 'Id', invoiceIdList);
-		
-		subscriptionList = zoqlQuery('Subscription', new List<String> { 'Id', 'Status' }, 'Id', subscriptionIdList);
+		zuoraCancelPayments(paymentList, errorLogList);
+		zuoraDraftInvoices(invoiceList, errorLogList);
+		zuoraCancelInvoices(invoiceList, errorLogList);
+		zuoraDeletePayments(paymentList, errorLogList);
+		zuoraDeleteInvoices(invoiceList, errorLogList);
+		zuoraDeleteSubscriptions(subscriptionList, errorLogList);
 
-		if (Test.isRunningTest()) {
-			return;
+		// Log Errors (if any)
+		if (errorLogList.isEmpty() == false) {
+			IECErrorLogger.logErrors(errorLogList);
 		}
+	}
 
+	@testVisible
+	private static void zuoraCancelPayments(List<Zuora.zObject> paymentList, List<IEC_Error_Log__c> errorLogList) {
 		if (paymentList != null && paymentList.isEmpty() == false) {
-			zuoraDeletePayments(paymentList);
-		}
-
-		if (invoiceList != null && invoiceList.isEmpty() == false) {
-			zuoraDeleteInvoices(invoiceList);
-		}
-
-		if (subscriptionList != null && subscriptionList.isEmpty() == false) {
-			zuoraDeleteSubscriptions(subscriptionList);
-		}
-
-		System.debug('ZuoraAccountIdSet: ' + zuoraAccountIdSet);
-
-		// Invoke Batch in Zuora to Sync-Back to SFDC
-		List<Zuora.SyncResult> syncResultList = IECSubscriptionManager.OnDemandSyncAccounts(zuoraAccountIdSet);
-
-		System.debug('cancelZuoraOrders END');
-	}
-
-	@testVisible
-	private static void zuoraDeletePayments(List<Zuora.zObject> paymentList) {
-		List<Zuora.zApi.SaveResult> canceledSaveResultList;
-		List<Zuora.zApi.DeleteResult> deletePaymentResultList;
-		String[] paymentIdList = new String[paymentList.size()];
-
-		Integer counter = 0;
-
-		for (Zuora.zObject payment : paymentList) {
-			zObjectSetString(payment, 'Status', 'Canceled');
-
-			paymentIdList[counter++] = zObjectGetString(payment, 'Id');
-		}
-
-		canceledSaveResultList = ZuoraUtil.zupdate(paymentList);
-
-		System.debug('CanceledSaveResultList: ' + canceledSaveResultList);
-
-		deletePaymentResultList = ZuoraUtil.zdelete('Payment', paymentIdList);		
-	}
-
-	@testVisible
-	private static void zuoraDeleteInvoices(List<Zuora.zObject> invoiceList) {
-		List<Zuora.zApi.SaveResult> draftSaveResultList;
-		List<Zuora.zApi.SaveResult> canceledSaveResultList;
-		List<Zuora.zApi.DeleteResult> deleteInvoiceResultList;
-		String[] invoiceIdList = new String[invoiceList.size()];
-
-		Integer counter = 0;
-		
-		for (Zuora.zObject invoice : invoiceList) {
-			zObjectSetString(invoice, 'Status', 'Draft');
-
-			invoiceIdList[counter++] = zObjectGetString(invoice, 'Id');
-		}
-
-		draftSaveResultList = ZuoraUtil.zupdate(invoiceList);
-
-		System.debug('DraftSaveResultList: ' + draftSaveResultList);
-
-		for (Zuora.zObject invoice : invoiceList) {
-			zObjectSetString(invoice, 'Status', 'Canceled');
-		}
-		
-		canceledSaveResultList = ZuoraUtil.zupdate(invoiceList);
-
-		System.debug('CanceledSaveResultList: ' + canceledSaveResultList);
-
-		deleteInvoiceResultList = ZuoraUtil.zdelete('Invoice', invoiceIdList);		
-	}
-
-	@testVisible
-	private static void zuoraDeleteSubscriptions(List<Zuora.zObject> subscriptionList) {
-		/* Amend the Subscriptions to set the Status to Cancel */
-		List<Zuora.zApi.AmendRequest> amendRequestList = new List<Zuora.zApi.AmendRequest>();
-		Zuora.zApi.AmendResult amendResult;
-		String[] subscriptionIdList = new String[subscriptionList.size()];
-		List<Zuora.zApi.DeleteResult> deleteSubscriptionResultList;
-
-		Integer counter = 0;
-
-		for (Zuora.zObject subscription : subscriptionList) {
-			Zuora.zApi.AmendRequest amendRequest = new Zuora.zApi.AmendRequest();
-			Zuora.zObject amend = new Zuora.zObject('Amendment');
-
-			zobjectSetString(amend, 'Name', 'Cancel of Subscription due to credit card Payment Error');
-			zobjectSetString(amend, 'Type', 'Cancellation');
-			zobjectSetString(amend, 'SubscriptionId', zobjectGetString(subscription, 'Id'));
-			zobjectSetString(amend, 'Status', 'Completed');
-
-			zobjectSetDate(amend, 'CustomerAcceptanceDate', System.today());
-			zobjectSetDate(amend, 'ServiceActivationDate', System.today());
-			zobjectSetDate(amend, 'ContractEffectiveDate', System.today());
-			zobjectSetDate(amend, 'EffectiveDate', System.today());
-
-			amendRequest.amendOptions = new Zuora.zApi.AmendOptions();
-
-			amendRequest.amendOptions.GenerateInvoice = false;
-			amendRequest.amendOptions.ProcessPayments = false;
-
-			amendRequest.amendments = new List<Zuora.zObject>{ amend };
-
-			amendRequestList.add(amendRequest);
-
-			subscriptionIdList[counter++] = zObjectGetString(subscription, 'Id');
-		}
-
-		// using for loop due to the fact that the amendApiCall for a list of Amendments is throwing an exception currently.
-		for (Zuora.zApi.AmendRequest amendRequest : amendRequestList) {
-			if (Test.isRunningTest() == true) {
-				continue;
+			for (Zuora.zObject payment : paymentList) {
+				payment.setValue('Status', 'Canceled');
 			}
 
-			amendResult = IECZuoraHelper.amendApiCall(amendRequest);
+			try {
+				List<Zuora.zApi.SaveResult> saveResultList = ZuoraUtil.zupdate(paymentList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraCancelPayments', JSON.serialize(paymentList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
+	}
 
-			System.debug('AmendResult: ' + amendResult);
-		}		
+	@testVisible
+	private static void zuoraDeletePayments(List<Zuora.zObject> paymentList, List<IEC_Error_Log__c> errorLogList) {
+		if (paymentList != null && paymentList.isEmpty() == false) {
+			List<String> paymentIdList = new List<String>();
 
-		deleteSubscriptionResultList = ZuoraUtil.zDelete('Subscription', subscriptionIdList);
+			for (Zuora.zObject payment : paymentList) {
+				paymentIdList.add((String)payment.getValue('Id'));
+			}
+
+			try {
+				List<Zuora.zApi.DeleteResult> deleteResultList = ZuoraUtil.zdelete('Payment', paymentIdList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraDeletePayments', JSON.serialize(paymentIdList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
+	}
+
+	@testVisible
+	private static void zuoraDraftInvoices(List<Zuora.zObject> invoiceList, List<IEC_Error_Log__c> errorLogList) {
+		if (invoiceList != null && invoiceList.isEmpty() == false) {
+			List<String> invoiceIdList = new List<String>();
+
+			for (Zuora.zObject invoice : invoiceList) {
+				invoice.setValue('Status', 'Draft');
+			}
+
+			try {
+				List<Zuora.zApi.SaveResult> saveResultList = ZuoraUtil.zupdate(invoiceList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraDraftInvoices', JSON.serialize(invoiceList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
+	}
+
+	@testVisible
+	private static void zuoraCancelInvoices(List<Zuora.zObject> invoiceList, List<IEC_Error_Log__c> errorLogList) {
+		if (invoiceList != null && invoiceList.isEmpty() == false) {
+			List<String> invoiceIdList = new List<String>();
+
+			for (Zuora.zObject invoice : invoiceList) {
+				invoice.setValue('Status', 'Canceled');
+			}
+
+			try {
+				List<Zuora.zApi.SaveResult> saveResultList = ZuoraUtil.zupdate(invoiceList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraCancelInvoices', JSON.serialize(invoiceList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
+	}
+
+	@testVisible
+	private static void zuoraDeleteInvoices(List<Zuora.zObject> invoiceList, List<IEC_Error_Log__c> errorLogList) {
+		if (invoiceList != null && invoiceList.isEmpty() == false) {
+			List<String> invoiceIdList = new List<String>();
+
+			for (Zuora.zObject invoice : invoiceList) {
+				invoiceIdList.add((String)invoice.getValue('Id'));
+			}
+
+			try {
+				List<Zuora.zApi.DeleteResult> deleteResultList = ZuoraUtil.zdelete('Invoice', invoiceIdList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraDeleteInvoices', JSON.serialize(invoiceIdList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
+	}
+
+	@testVisible
+	private static void zuoraDeleteSubscriptions(List<Zuora.zObject> subscriptionList, List<IEC_Error_Log__c> errorLogList) {
+		if (subscriptionList != null && subscriptionList.isEmpty() == false) {
+			List<String> subscriptionIdList = new List<String>();
+
+			for (Zuora.zObject subscription : subscriptionList) {
+				subscriptionIdList.add((String)subscription.getValue('Id'));
+			}
+
+			try {
+				List<Zuora.zApi.DeleteResult> deleteResultList = ZuoraUtil.zdelete('Subscription', subscriptionIdList);
+			} catch (Exception e) {
+				errorLogList.add(
+					IECErrorLogger.createErrorLog('trgHndlrIECPayment/zuoraDeleteSubscription', JSON.serialize(subscriptionIdList), e.getMessage(), e.getStackTraceString())
+				);
+			}
+		}
 	}
 
 	private static List<Zuora.zObject> zoqlQuery(String objectName, List<String> fieldList, String filterField, List<String> filterValueList) {
@@ -617,26 +554,6 @@ public with sharing class trgHndlrIECPayment {
 		}
 
 		return zoql;
-	}
-
-	@testVisible
-	private static String zObjectGetString(Zuora.zObject zobject, String field) {
-		return (String)zobject.getValue(field);
-	}
-
-	@testVisible
-	private static void zObjectSetString(Zuora.zObject zobject, String field, String value) {
-		zobject.setValue(field, value);
-	}
-
-	@testVisible
-	private static void zObjectSetDate(Zuora.zObject zobject, String field, Date value) {
-		zobject.setValue(field, Zuora.zUtil.getZuoraDate(value));
-	}
-
-	@testVisible
-	private static void zObjectSetDecimal(Zuora.zObject zobject, String field, Decimal value) {
-		zobject.setValue(field, value);
 	}
 
 	/****************************************************************************************************

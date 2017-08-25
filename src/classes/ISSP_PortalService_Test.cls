@@ -1,6 +1,48 @@
 @isTest
 public class ISSP_PortalService_Test {
 
+	@testSetup static void createData() {
+		Account acc = ISSP_ObjectFactory.createNewAccount();  
+		acc.Location_Type__c = 'HO';
+		acc.Location_Class__c = 'P';				
+
+		insert acc;
+
+		Account acc2 = ISSP_ObjectFactory.createNewAccount();
+		acc2.Location_Type__c = 'BR';
+		acc2.Location_Class__c = 'P';
+		acc2.ParentId = acc.id;
+		acc2.Top_Parent__c = acc.id;
+		acc2.Name = 'Test1';
+		insert acc2;
+
+		Contact contact = ISSP_ObjectFactory.createNewContact();
+		contact.AccountId = acc2.Id;	
+		insert contact;
+
+		Connected_App_Roles__c car = new Connected_App_Roles__c(
+			Name = 'ANG Test2',
+			Connected_App__c = 'IATA EasyPay (EDENRED)',
+			Permission_set_SSO__c = 'IATA EasyPay (EDENRED)',
+			Role__c = 'IEP Admin',
+			Default_User_Role__c = true,
+			Min_Users_With_Role__c = 2
+		);
+		insert car;
+
+		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA EasyPay');
+		insert app;
+		
+		Portal_Application_Right__c par = new Portal_Application_Right__c(
+			Contact__c = contact.Id, 
+			Portal_Application__c = app.Id,
+			Right__c = 'Access Granted',
+			ANG_Portal_Service_Role__c = 'IEP Admin'
+		);
+		insert par;
+
+	}
+
 	public static testMethod void unitTest1() {
 		ISSP_PortalService_Test.createTestData();
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
@@ -38,13 +80,17 @@ public class ISSP_PortalService_Test {
         appReq.Contact__c = con.Id;
         insert appReq;
         
+		
+
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
+		
+		Test.startTest();
         
         Apexpages.currentPage().getParameters().put('id', app.Id);
-        ISSP_PortalService ctrl2 = new ISSP_PortalService();
+        /*ISSP_PortalService ctrl2 = new ISSP_PortalService();
         ctrl2.RedirectToServiceAccess();
-        
+     
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         Apexpages.currentPage().getParameters().put('PSid', app.Id);
         Apexpages.currentPage().getParameters().put('PSname', 'test');
@@ -54,10 +100,12 @@ public class ISSP_PortalService_Test {
         ctrl3.DenyAccess();
         ctrl3.GrantAccess();
         ctrl3.RedirectToService();
-        ctrl3.getContacts();
+        ctrl3.getContacts();*/
+
+        Test.stopTest();
 	}
 	
-	public static testMethod void unitTest2() {
+	/*public static testMethod void unitTest2() {
 
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
         insert ISO_Country;
@@ -86,6 +134,8 @@ public class ISSP_PortalService_Test {
 		con.User_Portal_Status__c = 'Pending Approval';
 		insert con;
 
+		Test.startTest();
+
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
         
@@ -93,7 +143,7 @@ public class ISSP_PortalService_Test {
         appReq.Portal_Application__c = app.Id;
         appReq.Right__c = 'Access Granted';
         appReq.Contact__c = con.Id;
-        insert appReq;
+        insert appReq;      
         
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
@@ -111,7 +161,9 @@ public class ISSP_PortalService_Test {
         ctrl3.GrantAccess();
         ctrl3.RedirectToService();
         ctrl3.getContacts();
-	}
+
+        Test.stopTest();
+	}*/
 	
 	public static testMethod void unitTest3() {
 
@@ -142,6 +194,8 @@ public class ISSP_PortalService_Test {
 		con.User_Portal_Status__c = 'Deactivated';
 		insert con;
 
+		Test.startTest();
+
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
         
@@ -149,7 +203,7 @@ public class ISSP_PortalService_Test {
         appReq.Portal_Application__c = app.Id;
         appReq.Right__c = 'Access Granted';
         appReq.Contact__c = con.Id;
-        insert appReq;
+        insert appReq;        
         
         Apexpages.currentPage().getParameters().put('id', appReq.Id);
         ISSP_PortalServiceAccess ctrl1 = new ISSP_PortalServiceAccess();
@@ -167,6 +221,8 @@ public class ISSP_PortalService_Test {
         ctrl3.GrantAccess();
         ctrl3.RedirectToService();
         ctrl3.getContacts();
+
+        Test.stopTest();
 	}
 	
 	public static testMethod void unitTest4() {
@@ -193,23 +249,31 @@ public class ISSP_PortalService_Test {
         
                IECTestUtil.trgPortalUserAfterInserUpdate = true;
 		
+		Test.startTest();
+
+		List<Contact> cl = new List<Contact>();
+
 		Contact con1 = ISSP_ObjectFactory.createNewContact();
 		con1.AccountId = acc.Id;
 		con1.User_Portal_Status__c = 'Pending Approval';
 		con1.Email = 'con1@test.test';
-		insert con1;
-		test.startTest();
+		con1.Community__c = 'ISS Customer Portal';
+		cl.add(con1);		
 
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.AccountId = acc.Id;
 		con2.User_Portal_Status__c = 'Approved User';
 		con2.Email = 'con2@test.test';
-		insert con2;
+		con2.Community__c = 'ISS Customer Portal';
+		cl.add(con2);
 		
 		Contact con3 = ISSP_ObjectFactory.createNewContact();
 		con3.AccountId = acc.Id;
 		con3.Email = 'con3@test.test';
-		insert con3;
+		con3.Community__c = 'ISS Customer Portal';
+		cl.add(con3);		
+
+		insert cl;
 
         Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App'); 
         insert app;
@@ -220,8 +284,58 @@ public class ISSP_PortalService_Test {
         ctrl3.getContacts();
         ctrl3.SelectedContacts = ' ' + con1.Id + ' , ' + con2.Id + ' , ' + con3.Id + ' ';
         ctrl3.confirmContacts();
-        //ctrl3.CreateNewPortalAccess();
+        ctrl3.CreateNewPortalAccess();
 	}
+
+	/*public static testMethod void unitTest5() {
+		ISSP_PortalService_Test.createTestData();
+		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='12',Name='test');
+        insert ISO_Country;
+
+		Account acc = ISSP_ObjectFactory.createNewAccount();
+		acc.IATACode__c = '1111';
+		acc.IATA_ISO_Country__c = ISO_Country.Id;
+		acc.BillingCity = 'Test';
+		acc.RecordTypeId = [SELECT Id FROM RecordType r WHERE SobjectType = 'Account' AND DeveloperName = 'IATA_Agency'][0].Id;
+		insert acc;
+		
+		String agencyProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'].Id;
+        ISSP_CS__c profileCS = new ISSP_CS__c();
+        profileCS.Name = 'ISS_Portal_Agency_User';
+        profileCS.Value__c = agencyProfileId;
+        insert profileCS;
+        ISSP_CS__c profileCS2 = new ISSP_CS__c();
+        profileCS2.Name = 'Host';
+        profileCS2.Value__c = 'preprod-customer-portal-iata.cs18.force.com';
+        insert profileCS2;
+        
+        IECTestUtil.trgPortalUserAfterInserUpdate = true;
+			
+		List<Contact> cl = new List<Contact>();
+
+		Contact con1 = ISSP_ObjectFactory.createNewContact();
+		con1.AccountId = acc.Id;
+		con1.User_Portal_Status__c = 'Pending Approval';
+		con1.Email = 'con1@test.test';
+		cl.add(con1);
+	
+		insert cl;
+
+		Test.startTest();
+
+        Portal_Applications__c app = [Select id, name From Portal_Applications__c Where name = 'IATA EasyPay' limit 1];
+       
+        Apexpages.currentPage().getParameters().put('PSid', app.Id);
+        Apexpages.currentPage().getParameters().put('PSname', app.name);
+        ISSP_EditPortalServiceAccess ctrl3 = new ISSP_EditPortalServiceAccess();
+        ctrl3.getContacts();
+        ctrl3.SelectedContacts = ' ' + con1.Id + ' ';
+        ctrl3.CreateNewPortalAccess();		
+
+        test.stopTest();
+        //ctrl3.CreateNewPortalAccess();
+	}*/
+
 	
     /*
 	public static testMethod void unitTest5() {

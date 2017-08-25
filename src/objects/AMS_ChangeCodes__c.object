@@ -21,6 +21,22 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Billable_Location_Class__c</fullName>
+        <description>Location Class To include if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
+Values must be Separated by &quot;;&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Location Class To include if the Change code is Billable
+Possible values - &apos;A&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;G&apos;,&apos;I&apos;,&apos;K&apos;,&apos;M&apos;,&apos;N&apos;,&apos;O&apos;,&apos;P&apos;,&apos;Q&apos;,&apos;R&apos;,&apos;S&apos;,&apos;T&apos;,&apos;V&apos;,&apos;X&apos;,&apos;J&apos;
+Values must be Separated by &quot;;&quot;</inlineHelpText>
+        <label>Billable Location Class</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Billable__c</fullName>
         <defaultValue>false</defaultValue>
         <description>sets the change code to be sent for external systems for the emission of a sales order</description>
@@ -100,12 +116,31 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Calculate_End_Grace_Period_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked End of Grace Period will be displayed on eBulletin</inlineHelpText>
+        <label>Calculate End Grace Period Date</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Calculate_Outstanding_Amount__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If checked the Outstanding Amount column on eBulletin report will display a value</description>
         <externalId>false</externalId>
         <inlineHelpText>If checked the Outstanding Amount column on eBulletin report will display a value</inlineHelpText>
         <label>Calculate Outstanding Amount</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Termination_Date__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, Termination Date field on Change Code will be populated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, Termination Date field on Change Code will be populated</inlineHelpText>
+        <label>Calculate Termination Date</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -289,6 +324,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Generate_Irregularity_Sequence__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked the irregularity sequence will be displayed on eBulletin</inlineHelpText>
+        <label>Generate Irregularity Sequence</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Integration_RecId__c</fullName>
         <description>Value for RecId on the Integration process with SAP PI, 3 possible values: A (Addition), C (Change) and D (Termination)</description>
         <externalId>false</externalId>
@@ -354,6 +398,15 @@
         <description>True if change code relates to risk management</description>
         <externalId>false</externalId>
         <label>Risk ChangeCode</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Skip_Agency_Update__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if the change code should or should not be picked by the DPC integration</description>
+        <externalId>false</externalId>
+        <label>Skip Agency Update</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>

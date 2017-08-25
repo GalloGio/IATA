@@ -9,14 +9,18 @@ public without sharing class vfISSP_FAQ2Case
     public static final String CancelAndCreateACase   = 'CancelAndCreateACase';
     public static final String CancelAndSubmit   = 'CancelAndSubmit';
     public static final Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-
+	public static final String IFG_TOPIC ='IATA_Financial_Gateway_IFG__c';
+    
     public String currentButtonsToShow {get; set;}
     public boolean SHowButtons {get; set;}
     public String recordToCreate {get; set;}
     public list<SelectOption> lst_selectTopics {get;set;}
     public list<SelectOption> lst_selectsubTopics {get;set;}
+    public list<SelectOption> lst_selectAreasOfConcern {get;set;}
+    
     public String topic { get; set; }
     public String subtopic { get; set; }
+    public String areaOfConcern { get; set; }
     public String concernedCountry { get; set; }
     public String selectedCountry { get; set; }
     public clsDataCategoryContainer DataCategoryContainer {get;set;}
@@ -32,6 +36,7 @@ public without sharing class vfISSP_FAQ2Case
     public String myTopic {get;set;} //TF - SP9-C5
     public boolean isPWCProfile {get;set;}
     public boolean isDPCUser {get;set;}
+    public boolean isIFG {get;set;}
     public static boolean isComplain {get;set;}//Indecates if the user clicked the "I wish to complain button"
     // compliments
     public static boolean isCompliment {get;set;}//Indicates if the user clicked the "Share a compliment button"
@@ -77,6 +82,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public list<String> errorMessage {get; set;}
 
+    public String iataCode {get;set;}
     //CNS
     public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
     public String commParam { get { if(communityName=='CNS'){ return '&CommunityName='+ communityName;} return ''; } set;}
@@ -95,6 +101,7 @@ public without sharing class vfISSP_FAQ2Case
         isGSAOnly = false;
         isPWCProfile = false;
         isDPCUser = false;
+        isIFG = false;
 
         //Page SHOW Buttons in side Bar booleans , According to Record types
         isSISHelpDesk       = false ;
@@ -108,6 +115,9 @@ public without sharing class vfISSP_FAQ2Case
 
         //Call the new method that decides what Links the user allowed to see according to his case record type
         setCaseRecordTypeAccess();
+
+        //Call for the new method that arrange the fields according to the Custom settings
+        GenerateFieldsBySettings();
 
         String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
         if(profileName.startsWith('ISS Portal PwC')){  isPWCProfile = true; }
@@ -256,6 +266,11 @@ public without sharing class vfISSP_FAQ2Case
     private void resetCase() {
         this.newCase = new Case();
         this.newCase1 = new Case();
+        
+        isIFG = false;
+        areaOfConcern = Env.SelectOptionDefaultValue ;
+        this.lst_selectareasOfConcern = new list<SelectOption>();
+        this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
     }
 
     private void addDecsription() {
@@ -266,10 +281,17 @@ public without sharing class vfISSP_FAQ2Case
         {
              Integer index = Integer.valueOf(topic.trim());
              clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
+             
+             String areaOfConcernStr='';
+             if (isIFG && areaOfConcern!='' && areaOfConcern!=null && !areaOfConcern.contains('-- None --')){
+                areaOfConcernStr='\n'+Label.ISSP_Area_of_Concern+' - '+areaOfConcern+'\n';
+             }
+            
              addDecsription = Label.ISSP_F2CTopic + ' - '
                               + selectDataCategory.CategoryLabel + '\n'
                               + labelSubTopic + ' - '
-                              + selectDataCategory.getLabelByNameCategory(subtopic);
+                              + selectDataCategory.getLabelByNameCategory(subtopic)
+                 			  + areaOfConcernStr;
         }else {
              addDecsription = Label.ISSP_F2CTopic + ' - '
                               + 'COMPLIMENT' + '\n'
@@ -301,16 +323,14 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     public Boolean isAllowedSector(string btnName) {
-
-        LiveAgentButtonSettings__c labs = new LiveAgentButtonSettings__c();
         try{
-            labs = LiveAgentButtonSettings__c.getAll().get(btnName);
+            LiveAgentButtonSettings__c labs = LiveAgentButtonSettings__c.getAll().get(btnName);
+            Set<String> aSectors =  new Set<String>(labs.sectors__c.split(','));
+            return aSectors.contains(sector);
         }catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'{!$Label.LiveAgentCustomSettingNotFound} '+e));
             return false;
         }
-        Set<String> aSectors =  new Set<String>(labs.sectors__c.split(','));
-        return aSectors.contains(sector);
     }
 
     /*
@@ -466,8 +486,22 @@ public without sharing class vfISSP_FAQ2Case
 
     public PageReference save()
     {
-        this.errorMessage = new list<String>();
+        if (areaOfConcern!=null) {
+            areaOfConcern = areaOfConcern.trim();
+            if (areaOfConcern.contains('-- None --') || areaOfConcern.contains('-- Select --')) {
+                areaOfConcern = '';
+            }
+            system.debug('basto1p - areaOfConcern=' + areaOfConcern.contains('-- None --') + ', isIFG=' + isIFG);
+            system.debug('basto1p - newCase.areaOfConcern=' + newCase.Area_of_Concern__c);
+        }
+        else
+        {
+            areaOfConcern = '';
+        }
+	this.errorMessage = new list<String>();
+        System.debug('basto1p - FAQ2Case.save isIFG='+isIFG);
         if( ((subtopic == null ||subtopic == '' ||subtopic == '-- Select --' || subTopic == topic))||//added &&iscompliment to bypass error message
+            ((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1) ||
             (newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')||
             (newCase.Subject == null ||newCase.Subject == '')||
             (newCase.Description == null ||newCase.Description == '')){
@@ -475,6 +509,9 @@ public without sharing class vfISSP_FAQ2Case
             string ErrFields = '';
             if((subtopic == null ||subtopic == ''||subtopic == '-- Select --'|| subTopic == topic)&&isCompliment1!= true){
                ErrFields += System.Label.ISSP_I_wish_to_complain_about +'xx, '+isCompliment1;
+            }
+            if((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1){
+               ErrFields += System.Label.ISSP_Area_of_Concern;
             }
             if((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')){
                ErrFields += System.Label.Country_concerned_by_the_query +', ';
@@ -486,6 +523,7 @@ public without sharing class vfISSP_FAQ2Case
                 ErrFields += System.Label.IDCard_Description+', ';
             }
             if(ErrFields != ''){
+                system.debug('basto1p - ErrFields NOT EMPTY!!!');
                 errorMessage = new list<string>();
                 String errorString = ErrFields+' '+system.Label.ISSP_Should_be_mandatory;
                 errorMessage.add(errorString);
@@ -495,6 +533,8 @@ public without sharing class vfISSP_FAQ2Case
             }
         }
 
+        newCase.Area_of_Concern__c=areaOfConcern;
+        
         addDecsription();
         setRecordType(); //TF - SP11
         
@@ -525,6 +565,7 @@ public without sharing class vfISSP_FAQ2Case
             newCase.CNSCase__c = true;
             newCase.Groups__c = 'CNS Team'; // important field to be used on E2C premium
         }
+        newCase.Case_Language__c = null;
 
         system.debug('wwe newCase: ' + newCase );
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
@@ -612,6 +653,7 @@ public without sharing class vfISSP_FAQ2Case
         if(AssignNewCaseRecordType() != null){
             newCase.RecordTypeId = AssignNewCaseRecordType();
         }
+        newCase.Case_Language__c = null;
 
         if (!isGSAOnly && (newCase.IATAcode__c == '' || newCase.IATAcode__c == null) && isGSAUser && isCompliment1!= true){
             errorMessage = new list<string>();
@@ -778,6 +820,7 @@ public without sharing class vfISSP_FAQ2Case
 
     public void refreshTopicPickList()
     {
+        System.debug('basto1p - refreshTopicPickList myTopic='+myTopic);
         system.debug('JK22 isComplain refreshTopicPickList START: ' + isComplain);
         resetCase();
         this.currentButtonsToShow = OnlyCancel;
@@ -827,6 +870,7 @@ public without sharing class vfISSP_FAQ2Case
    public void refreshSubTopicPickList()     {
 
         resetCase();
+       System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
         system.debug('TOPIC: ' + topic);
         Integer index = Integer.valueOf(topic.trim());
         system.debug('INTEGER: ' + index);
@@ -858,7 +902,53 @@ public without sharing class vfISSP_FAQ2Case
                 this.newCase1.IFAP_Country_ISO__c = lsIsoCountries[0].ISO_Code__c ;
             }
         }
+
+       system.debug('basto1p before setIsIFG CategoryName='+selectDataCategory.CategoryName);
+        //Set Areas of Concern Pick List
+       setIsIFG(selectDataCategory.CategoryName);
+
+       if (isIFG){
+           List<IFG_AreasOfConcernMapp__mdt> SubTopicAreasOfConcernMappList;
+           SubTopicAreasOfConcernMappList=[SELECT SubTopic__c, MasterLabel FROM IFG_AreasOfConcernMapp__mdt ORDER BY SubTopic__c ASC, MasterLabel ASC];
+           
+           this.lst_selectareasOfConcern = new list<SelectOption>();
+           this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+           
+           for (IFG_AreasOfConcernMapp__mdt AreasOfConcernItem : SubTopicAreasOfConcernMappList){
+               system.debug('subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.SubTopic__c);
+               if (subtopic.Contains(AreasOfConcernItem.SubTopic__c)){
+                   system.debug('ADDED subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.MasterLabel);
+                   this.lst_selectareasOfConcern.add(new SelectOption(AreasOfConcernItem.MasterLabel, AreasOfConcernItem.MasterLabel));
+               }
+           }
+           /*
+           this.lst_selectareasOfConcern.add(new SelectOption('SLB', 'Benfica'));
+           this.lst_selectareasOfConcern.add(new SelectOption('SLB2', 'Benfica2'));
+           */
+       }
+       else
+       {
+           this.lst_selectareasOfConcern = new list<SelectOption>();
+           this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+       }
     }
+    
+    public void refreshAreasOfConcernPickList(){
+        system.debug('basto1p - TOPIC: ' + topic);
+        system.debug('basto1p - SUB-TOPIC: ' + subtopic);
+		
+    }
+    public void setIsIFG(String categoryName){
+        system.debug('basto1p - setIsIFG categoryName='+categoryName);
+        if (categoryName==IFG_TOPIC) {
+        	isIFG=true;
+        }
+        else {
+            isIFG=false;
+        }
+        system.debug('basto1p - isIFG='+isIFG);
+    }
+    
     /*
      * End Actions
     */
@@ -1263,7 +1353,9 @@ public without sharing class vfISSP_FAQ2Case
                 }
             }
             // current account value as default
-            this.newCase.IATACode__c = currentAccount.IATAcode__c; 
+            this.newCase.IATACode__c = currentAccount.IATAcode__c;
+            iataCode = this.newCase.IATACode__c;
+
         } catch (Exception e) {
             System.debug(e.getMessage());
         }
@@ -1436,6 +1528,11 @@ public without sharing class vfISSP_FAQ2Case
             newCase.Country_concerned_by_the_query__c = lst_Country[0].Case_BSP_Country__c ;
         }
 
+        system.debug('basto1p topicName: ' + topicName);
+        system.debug('basto1p subtopic: ' + subtopic);
+        system.debug('basto1p parentCase.Compliment__c: ' + isComplain1);
+        system.debug('basto1p varCountry: ' + varCountry);
+        
         //select all matched custom settings
         List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c ,
                                                              Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,
@@ -1452,6 +1549,7 @@ public without sharing class vfISSP_FAQ2Case
 
 
         if(csList != null && csList.size() > 0 ) {
+            system.debug('basto1p: csList NOT EMPTY');
             String userInput_Country = newCase.IFAP_Country_ISO__c ;
 
             //Holds All Topic match Cases
@@ -1469,6 +1567,7 @@ public without sharing class vfISSP_FAQ2Case
 
                 //Collect Topic Match Custom Settings
                 if(cs.Topic__c != null && cs.Topic__c.contains(topicName)){
+                   system.debug('basto1p: ADD TO TopicMatch_Lst'+cs.Topic__c);
                    TopicMatch_Lst.add(cs);
                 }
 
@@ -1494,6 +1593,9 @@ public without sharing class vfISSP_FAQ2Case
                         EmptySubTopicMatch_Lst.add(tcs);
                     }
                 }
+                
+                system.debug('basto1p: TopicMatch_Lst NOT EMPTY');
+                
                 if(SubTopicMatch_Lst != null && SubTopicMatch_Lst.size() > 0)
                 {
                     //Check for country match
@@ -1503,13 +1605,16 @@ public without sharing class vfISSP_FAQ2Case
                     //Topic + NO SubTopic Match Case
                     //Check for country match
                     if(EmptySubTopicMatch_Lst != null && EmptySubTopicMatch_Lst.size() > 0){
+                    	system.debug('basto1p: use EmptySubTopicMatch_Lst');
                         FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicMatch_Lst , userInput_Country);
+                        system.debug('basto1p: FinalMatch_Lst='+FinalMatch_Lst);
                     }else{
                         FinalMatch_Lst = RetriveMatchCountrySettings(EmptySubTopicAndSubTopicMatch_Lst , userInput_Country);
                     }
                 }
             }
             else{
+            	system.debug('basto1p: NO Topic Match Case');
                 //NO Topic Match Case
                 //Check for country match
                 if(EmptyTopicMatch_Lst != null && EmptyTopicMatch_Lst.size() > 0){
@@ -1520,15 +1625,18 @@ public without sharing class vfISSP_FAQ2Case
 
         if(FinalMatch_Lst != null && FinalMatch_Lst.size() > 0)
         {
+            system.debug('basto1p: FinalMatch_Lst NOT EMPTY');
             ChoosenCS = FinalMatch_Lst[0];
             //Select the choosen Record Type
             String recordType = ChoosenCS.RecordType__c;
-            List <RecordType> recordTypeList = [SELECT Id FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
+            List <RecordType> recordTypeList = [SELECT Id, Name FROM RecordType WHERE DeveloperName = :recordType AND sObjectType = 'Case'];
 
             if (!recordTypeList.isEmpty()){
                 //Assign RecordType according to custom Settings
                 newCase.RecordTypeId = recordTypeList[0].Id;
 
+                system.debug('basto1p: FinalMatch_Lst recordType='+recordTypeList[0].Name);
+                
                 //Assign owenerId according to custom Settings
                 if (ChoosenCS.OwnerId__c != null && ChoosenCS.OwnerId__c != ''){
                     newCase.OwnerId = ChoosenCS.OwnerId__c;
@@ -1711,6 +1819,7 @@ public without sharing class vfISSP_FAQ2Case
         //public Boolean Complaint    {get; set;}
         public Decimal orderNumber  {get; set;}
         public list<list<SelectOption>> listOptions {get; set;} 
+        public list<SelectOption> listOptionsExtended {get; set;}
 
         public fieldRecordWrapper(ISSP_Case_Fields__c CS){
               this.fieldName    = CS.Label__c ;
@@ -1724,6 +1833,18 @@ public without sharing class vfISSP_FAQ2Case
               this.AP_CASE      = CS.AP_Case__c ;
               //this.Complaint    = CS.Complaint__c ;
               this.listOptions  = new list<list<SelectOption>>();
+              this.listOptionsExtended  = new list<SelectOption>();
+        }
+        public void addListOptions(list<SelectOption> inputOptions) {
+            Integer maxElems = 1000;
+            for (SelectOption option: inputOptions) {
+                if (this.listOptions.size()<maxElems) {
+                    //this.listOptions.add(option);
+                } else {
+                    //this.listOptionsExtended.add(option);
+                }
+                
+            }
         }
     }
 
@@ -1798,13 +1919,13 @@ public without sharing class vfISSP_FAQ2Case
     }
 
     public Id AssignNewCaseRecordType(){
-        if(Clicked_SISHelpDesk = true){
+        if(Clicked_SISHelpDesk == true){
             return getCaseRecordTypeIdByName('Cases_SIS_Help_Desk');
-        }else if(Clicked_IATAServiceRequest = true){
+        }else if(Clicked_IATAServiceRequest == true){
             return getCaseRecordTypeIdByName('IATA_Service_Request');
-        }else if(Clicked_PWCServiceRequest = true){
+        }else if(Clicked_PWCServiceRequest == true){
             return getCaseRecordTypeIdByName('ISS_Portal_PwC');
-        }else if(Clicked_DPCServiceRequest = true ){
+        }else if(Clicked_DPCServiceRequest == true ){
             return getCaseRecordTypeIdByName('DPC_Service_Request');
         }else{
             return null;
@@ -1861,6 +1982,7 @@ public without sharing class vfISSP_FAQ2Case
     private void setTopicByPermissions(){
         //Help Selectoptuion List
         list<SelectOption> tmpselectTopicsList = new list<SelectOption>();
+        boolean isIFGUser = ISSP_Utilities.isIFGUser();
 
         //Select Custom Setting to set permissions
         List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c, ISO_Country__c
@@ -1878,10 +2000,12 @@ public without sharing class vfISSP_FAQ2Case
             {
                 //set the Topic "English Value"
                 string TopicinEnglish = '';
+                String CategoryNameItem='';
                 if (top.getValue() != '-- Select --')
                 {
                     clsDataCategory cdc = this.DataCategoryContainer.lst_DataCategories[Integer.valueOf(top.getValue())];
                     TopicinEnglish = ((cdc.CategoryName).replace('__c','')) ;//.replace('_',' ')
+                    CategoryNameItem=cdc.CategoryName;
                 }else{
                     TopicinEnglish ='-- Select --';
                 }
@@ -1907,7 +2031,13 @@ public without sharing class vfISSP_FAQ2Case
                 //If topic has permission add it to the display List
                 if (!FoundExcludePermission)
                 {
-                    tmpselectTopicsList.add(top);
+                    //system.debug('basto1p - TopicinEnglish='+TopicinEnglish);
+                    if(!isIFGUser && CategoryNameItem.equals(IFG_TOPIC)){
+                        continue;
+                    }else{
+                        tmpselectTopicsList.add(top);
+                    }
+
                 }
             }
 

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCEPTED_PAYMENT_METHODS_MANDATORY</shortDescription>
+        <value>The accepted payment methods is mandatory, please select one or more values.</value>
+    </labels>
+    <labels>
+        <fullName>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</shortDescription>
+        <value>The accepted payment methods is different from the parent product value. Please do not select any value to use the parent product accepted payment methods.</value>
+    </labels>
+    <labels>
         <fullName>AIMSAccountBeforeUpdate_AutoProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -141,6 +157,20 @@
         <protected>false</protected>
         <shortDescription>AMS_OSCAR_Action13</shortDescription>
         <value>Undo Deactivation of agency in BSPLink</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action14</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action14</shortDescription>
+        <value>New Financial Security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_Action15</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_Action15</shortDescription>
+        <value>Generate Risk Event</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_Action2</fullName>
@@ -550,6 +580,34 @@
         <value>Certificate</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP34</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP34</shortDescription>
+        <value>Request financial security</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP35</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS_OSCAR_STEP35</shortDescription>
+        <value>Confirm financial security  received</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP36</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP36</shortDescription>
+        <value>Risk Event</value>
+    </labels>
+    <labels>
+        <fullName>AMS_OSCAR_STEP37</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP37</shortDescription>
+        <value>Ticketing Authority</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP4</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -612,6 +670,301 @@
         <protected>false</protected>
         <shortDescription>AMS_PERFORM_CORRECTION</shortDescription>
         <value>Perform Correction</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</shortDescription>
+        <value>Congratulations on the opening of your new IATA EasyPay account.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_1</shortDescription>
+        <value>Please read this</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_2</shortDescription>
+        <value>FAQ</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_3</shortDescription>
+        <value>to learn more on how to manage your EasyPay account and get started.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line2_link</shortDescription>
+        <value>http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line3</shortDescription>
+        <value>Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The &amp;lt;a href=&quot;http://portal.iata.org/faq/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&amp;gt;FAQ&amp;lt;/a&amp;gt; above describes how you can manage user access.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Txt_Mail</shortDescription>
+        <value>Congratulations on the opening of your new IATA EasyPay account.
+        Please follow this article that describes how to manage your EasyPay account and the initial steps in order to transfer funds so that you can start issuing EasyPay tickets.
+        Your colleagues can now apply to access your newly opened account from the IATA Customer Service Portal. The article above describes how you can manage user access.
+        Thank you, 
+        IATA Customer Service</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_1</shortDescription>
+        <value>Please select your access role for IATA EasyPay.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_2</shortDescription>
+        <value>Once you confirm your access request will be sent to your IATA EasyPay administrator and wallet manager for approval.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_ConfirmRequestIEP_3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_ConfirmRequestIEP_3</shortDescription>
+        <value>For information on the available roles, please click</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_EasyPayLegalConfirmation</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_EasyPayLegalConfirmation</shortDescription>
+        <value>You will now be taken to the EasyPay Portal where you can complete your application to open your Agency’s IATA EasyPay account. By proceeding, you agree to IATA submitting your first name, last name, email address and IATA Code and any other relevant personal information available to the IATA EasyPay Suppliers. This information will only be used by the IATA EasyPay Suppliers for the purpose of opening and managing your EasyPay account and operating the EasyPay services generally, or otherwise as may be required by law.&lt;br/&gt;Do you wish to proceed?</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_AccessRequest2_IEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_AccessRequest2_IEP</shortDescription>
+        <value>Service has been transferred to your IEP Admin / Master Wallet Manager.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP</shortDescription>
+        <value>has been granted with the following portal service role:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part2</shortDescription>
+        <value>You can access it</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Access_YourAccessTo2GrantedIEP_Part3</shortDescription>
+        <value>or from your IATA customer portal home page.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_AppReq_BeInformed</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_AppReq_BeInformed</shortDescription>
+        <value>Please be informed that the below user has requested access to IATA EasyPay Service.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_Notify_Admin_App_Request_DearIEP</shortDescription>
+        <value>Dear IEP Admin / Master Wallet Manager,</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_1</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_1</shortDescription>
+        <value>This is to inform you that your</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_2</shortDescription>
+        <value>portal service role has been changed to:</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject</shortDescription>
+        <value>IATA Customer Portal – Change of</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Email_PortalServiceRole_Change_Subject2</shortDescription>
+        <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IATA_EasyPay</shortDescription>
+        <value>IATA EasyPay</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_Abroad_Account_error_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Abroad_Account_error_msg</shortDescription>
+        <value>Your branch is located in a different country than your Head Office. We regret to inform you that IATA Easypay service is not available for your office at this stage. Please contact IATA Customer Support if you need any further information.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account. Please contact your Head Office&apos;s Portal Administrator to request them to open an IATA EasyPay.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_Portal_Request_Access_Msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Portal_Request_Access_Msg</shortDescription>
+        <value>Access to your IATA EasyPay Account for the selected user(s) has been requested.  IATA EasyPay Administrator (s) and Master Wallet Manager(s) have been notified for their approval.
+               &lt;br/&gt;
+               Users will receive a confirmation once their access has been granted.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_add_users_to_account_not_open_error_msg</shortDescription>
+        <value>Users can only be added to open IATA EasyPay (IEP) Accounts. Please open your IEP Account before proceeding.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Min_Users_With_Role_Error_Msg</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Min_Users_With_Role_Error_Msg</shortDescription>
+        <value>The following contact is the only currently active IATA EasyPay administrator for this agency and it cannot be deactivated. Please contact IATA Customer Service for support.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_1</shortDescription>
+        <value>To manage the request please click</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Notify_Admin_app_req_2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Notify_Admin_app_req_2</shortDescription>
+        <value>to access your IATA EasyPay portal.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Open_IATA_EasyPay_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Open_IATA_EasyPay_Account</shortDescription>
+        <value>Open IATA EasyPay Account</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_PORTAL_SERVICE_ROLE</shortDescription>
+        <value>Portal Service Role</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_PORTAL_SERVICE_ROLE_HINT</shortDescription>
+        <value>Please select the portal role you would like to have in this portal service.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_PortalRoleErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_PortalRoleErrorMessage</shortDescription>
+        <value>The portal role is required</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_Request_Access_IATA_EasyPay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_Request_Access_IATA_EasyPay</shortDescription>
+        <value>Request access to IATA EasyPay</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_SelectContacts</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_SelectContacts</shortDescription>
+        <value>Select one or more contacts</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_UserProvisioningWait</fullName>
+        <categories>ISSP, Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_UserProvisioningWait</shortDescription>
+        <value>Please wait. You&apos;ll be redirected to the EasyPay Portal in a few moments.</value>
+    </labels>
+    <labels>
+        <fullName>ANG_ISSP_e_mail_address</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_e_mail_address</shortDescription>
+        <value>E-mail address</value>
     </labels>
     <labels>
         <fullName>ANY</fullName>
@@ -700,7 +1053,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AddressDoctorValidate</shortDescription>
-        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D2000000008TF&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
+        <value>Please validate your billing and shipping addresses by clicking on the &lt;img height=&quot;16&quot; width=&quot;16&quot; src=&quot;https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w000000438d2&amp;oid=00D5E0000008wRK&amp;lastMod=1468481666000&quot; title=&quot;Click To Verify&quot;&gt; button</value>
     </labels>
     <labels>
         <fullName>AddressDoctorValidate2</fullName>
@@ -882,9 +1235,9 @@
 Payment required on receipt of this Payment Advice
 &lt;/p&gt;
 &lt;p&gt;
-	&lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
-	ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
-	Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
+    &lt;b&gt;IATA Bank Account&lt;/b&gt;- Please QUOTE the order number and customer number to your Bank.&lt;br /&gt;
+    ROYAL BANK OF CANADA - 1 Place Ville Marie - Montreal, Québec, CANADA&lt;br /&gt;
+    Branch/Transit number: 00001 - Bank ID: 003 Swift Code: ROYCCAT2 - ABA : 021000021 - USD Account # : 404-903-7
 &lt;/p&gt;
 
 &lt;p&gt;&lt;b&gt;Tax Information&lt;/b&gt;&lt;/p&gt;
@@ -1240,7 +1593,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -2464,6 +2817,13 @@ Case description: {!Case.Description}
         <value>Email To</value>
     </labels>
     <labels>
+        <fullName>Email_To_Case_Replier</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email-To-Case Replier</shortDescription>
+        <value>ifgcare@iata.org</value>
+    </labels>
+    <labels>
         <fullName>Email_address</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -2689,7 +3049,7 @@ Message: {2}</value>
         <protected>false</protected>
         <shortDescription>GetQuoteConfirmationMsg</shortDescription>
         <value>Please click on the &lt;i&gt;Generate a quote&lt;/i&gt; button to proceed. 
-You may retrieve the Quote details from the Account Information section.</value>
+You will receive an email with a copy of your quote or you can retrieve the quote details from the “Account Information” section.</value>
     </labels>
     <labels>
         <fullName>Go</fullName>
@@ -3947,7 +4307,7 @@ For returning agents who are looking to renew or re-issue their card due to loss
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_LoginWithPInfo</shortDescription>
-        <value>&lt;h1&gt;&lt;b&gt;Login with Personal	Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
+        <value>&lt;h1&gt;&lt;b&gt;Login with Personal   Information &lt;/b&gt;&lt;/h1&gt;&lt;br/&gt; 
 For new applicants and returning agents who do not have their existing ID Card codes.</value>
     </labels>
     <labels>
@@ -6481,6 +6841,40 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Name</value>
     </labels>
     <labels>
+        <fullName>IFG_Prov_Declined</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Prov_Declined</shortDescription>
+        <value>Provision declined externally by IFG</value>
+    </labels>
+    <labels>
+        <fullName>IFG_Prov_Failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Prov_Failed</shortDescription>
+        <value>IFG Provision Falied</value>
+    </labels>
+    <labels>
+        <fullName>IFG_SP</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG SP</shortDescription>
+        <value>Solution Provided</value>
+    </labels>
+    <labels>
+        <fullName>IFG_Thanks_for_request</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG_Thanks_for_request</shortDescription>
+        <value>Thanks for you request. 
+You have just received an email confirming your request.
+Regards,
+IFG Customer Services</value>
+    </labels>
+    <labels>
         <fullName>ISSP</fullName>
         <categories>S-control</categories>
         <language>en_US</language>
@@ -8319,6 +8713,20 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Gross Amnt Second year</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Head_Entity_Cash</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity Cash</shortDescription>
+        <value>New Head Entity - Standard Accreditation with Cash</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Head_Entity_No_Cash</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Head Entity No Cash</shortDescription>
+        <value>New Head Entity - Standard Accreditation with no Cash</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_How_Many_PrevAgencies</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8575,6 +8983,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>1. General Info</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section1_ApproRequest</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section1_ApproRequest</shortDescription>
+        <value>1. Identification of Agency for which Approval Requested</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8604,6 +9019,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>2. Intermediary Identification</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section2_GenInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section2_GenInfo</shortDescription>
+        <value>2. General Info</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section2_New</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8618,6 +9040,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section3</shortDescription>
         <value>3. Financial Info</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section3_AgencyContacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section3_AgencyContacts</shortDescription>
+        <value>3. Agency Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section3_Cargo_Agency</fullName>
@@ -8663,6 +9092,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>4. Additional Info</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section4_Sec_Elect_Tickets</shortDescription>
+        <value>4.Security of Electronic Tickets</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_LeftNav_Section5</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -8676,6 +9112,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS LeftNav_Section5_Cargo</shortDescription>
         <value>5. Facilities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_LeftNav_Section5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_LeftNav_Section5_Other Info</shortDescription>
+        <value>5. Other Info</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_LeftNav_Section6</fullName>
@@ -8903,6 +9346,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>ISSP AMS Local Details Title</shortDescription>
         <value>Agency Details in Local language</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_MSO_GSA_GSA_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_MSO_GSA_GSA_Service_Name</shortDescription>
+        <value>GSA Appointments</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Manager</fullName>
@@ -10390,6 +10840,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>* Have you, or any partner, officer, director, manager or any individual having authorization to act and sign on behalf of any such firm, partnership, association or corporation at any time been a director or had a financial interest or a position of management in an IATA Agent which has been removed from the IATA Agency List or which is under notice of default and still has outstanding commercial debts?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Previous_Default_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Previous_Default_2</shortDescription>
+        <value>* Have you, or any person who is a director of, or who holds a material financial interest or a position of management in the Applicant currently or previously been involved in any fiduciary breach or crime, or subject to bankruptcy proceedings, or been a director of or had a financial interest or held a position of management in an Agent which has been removed from the Agency List or is currently subject to review or default action by IATA for non-compliance with the conditions of its Accreditation?</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Previous_Default_Details</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -10491,11 +10948,25 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>SECTION 1 - IFACP Endorsed Head Office Details</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_STEP_3_1_General_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_General_Info</shortDescription>
+        <value>SECTION 2 - General Information</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_STEP_3_1_HO_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS STEP 3_1 HO Title</shortDescription>
         <value>SECTION 1 - General Information</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_STEP_3_1_Identi_Appro_Req</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_STEP_3_1_Identi_Appro_Req</shortDescription>
+        <value>SECTION 1 - Identification of Agency for which Approval Requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_STEP_3_2_Title</fullName>
@@ -10824,6 +11295,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS Step1 Approval Sought</shortDescription>
         <value>* Location Type requested</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step1_Approval_Sought_Cash_Cashless</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step1_Approval_Sought_Cash/Cashless</shortDescription>
+        <value>Accreditaiton type requested</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_Branch_Abroad_Not_Allowed</fullName>
@@ -11447,12 +11925,26 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Is your firm a member of a national or international association of freight forwarders?</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step3_5_Event_of_inspection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_5_Event_of_inspection</shortDescription>
+        <value>In the event of an inspection, the Applicant will be required to provide evidence that it meets the security requirements for issuance of Electronic Tickets, in accordance with the provisions of section 8, and in particular the Payment Card Industry (PCI) Data Security Standards as referenced in section 2.1.6 of Resolution 890.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step3_5_Facilities</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step3_5_Facilities</shortDescription>
         <value>SECTION 5 - Facilities</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_5_Other_Info</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step3 5 Other Info</shortDescription>
+        <value>SECTION 5 - Other Information</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_5_Premises_Title</fullName>
@@ -11645,6 +12137,20 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Branch Location</shortDescription>
         <value>&lt;strong&gt;Branch Office location&lt;/strong&gt; of the following IATA Approved agent:&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cash_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cash_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - Standard with cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Cashless_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Cashless_Location</shortDescription>
+        <value>&lt;strong&gt;Head Entity - Standard without cash&lt;/strong&gt; (mentioned in SECTION 1 above)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_ErrMsg_FIN_Interest</fullName>
@@ -12997,6 +13503,14 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <value>Access to Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Access_Under_Provisioning</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Access_Under_Provisioning</shortDescription>
+        <value>Access under Provisioning</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Access_to_services</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -13253,12 +13767,44 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <value>Apply Filter</value>
     </labels>
     <labels>
+        <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line1</shortDescription>
+        <value>One or more users have been added to IATA EasyPay from the IATA Customer Service Portal.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line2</shortDescription>
+        <value>As IEP Admin or Master Wallet Manager you must now approve those users in IATA EasyPay and assign them to one or more wallets before they can start using the service.&lt;br/&gt;&lt;br/&gt;Users will be notified by email once access is granted.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Approval_Of_IATA_EasyPay_Users_Mail_line3</shortDescription>
+        <value>IATA EasyPay can be accessed from the home page of the</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Are_you_sure</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_HomePage</shortDescription>
         <value>Do you really want to delete this notification?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Area_of_Concern</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Area_of_Concern</shortDescription>
+        <value>Area of Concern</value>
     </labels>
     <labels>
         <fullName>ISSP_Article</fullName>
@@ -14575,6 +15121,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Edit Section</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouFeedback</shortDescription>
+        <value>Thank you for your feedback.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_EmailChanged</fullName>
         <categories>ISSP, ISSP_Email</categories>
         <language>en_US</language>
@@ -14846,12 +15399,40 @@ Please add below all your company valid email domains, including different ones 
         <value>CNS Customer Service</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_Case</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_Case</shortDescription>
+        <value>Case</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_CaseClosed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CaseClosed</shortDescription>
+        <value>Case Closed</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_CaseComment_Subject</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_CaseComment_Subject</shortDescription>
         <value>New comment on case n°</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_CaseResolution</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_CaseResolution</shortDescription>
+        <value>Case Resolution</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ClickGoToCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ClickGoToCase</shortDescription>
+        <value>Click here to go to the related case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Comment</fullName>
@@ -14868,6 +15449,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_Congratulations</shortDescription>
         <value>Congratulations</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ConsultCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ConsultCase</shortDescription>
+        <value>Please consult the case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_DearAdmin</fullName>
@@ -14925,12 +15513,26 @@ Please add below all your company valid email domains, including different ones 
         <value>You can access any ongoing accreditation &amp; change applications by clicking the link below and logging into the portal with your email address:</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_GiveUsFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_GiveUsFeedback</shortDescription>
+        <value>and give us your feedback.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_Granted_Reason</fullName>
         <categories>ISSP Emails</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Email_Granted_Reason</shortDescription>
         <value>Reason for service being granted:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_HasBeenClosed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_HasBeenClosed</shortDescription>
+        <value>has been closed.</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_Here</fullName>
@@ -15044,6 +15646,13 @@ Please add below all your company valid email domains, including different ones 
         <value>Access to Portal requested</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_PleaseContactUs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_PleaseContactUs</shortDescription>
+        <value>Please contact us if you have further questions.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_PleaseLogin</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -15148,6 +15757,20 @@ Please add below all your company valid email domains, including different ones 
         <value>Thank you for contacting CNS</value>
     </labels>
     <labels>
+        <fullName>ISSP_Email_ThankYouFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_ThankYouFeedback</shortDescription>
+        <value>Thank you for your feedback.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_ThankYouForYourFeedback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_IFGSolutionProvided</shortDescription>
+        <value>The IFG Team provided a solution for your case.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Email_ThankYouInAdvance</fullName>
         <categories>ISSP, Email</categories>
         <language>en_US</language>
@@ -15194,6 +15817,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_Email_YouCanAccess</shortDescription>
         <value>To respond to this comment, please access it on your</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Email_YourCase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Email_YourCase</shortDescription>
+        <value>Your case</value>
     </labels>
     <labels>
         <fullName>ISSP_Email_YourCompanyAdmin</fullName>
@@ -17097,7 +17727,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Office_Email</shortDescription>
-        <value>Office Email</value>
+        <value>* Office Email</value>
     </labels>
     <labels>
         <fullName>ISSP_Office_Fax</fullName>
@@ -18445,6 +19075,13 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <value>Search by Tags</value>
     </labels>
     <labels>
+        <fullName>ISSP_Secu_of_Elect_Tickets</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Secu_of_Elect_Tickets</shortDescription>
+        <value>SECTION 4 - Security of Electronic Tickets</value>
+    </labels>
+    <labels>
         <fullName>ISSP_See_more</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -18599,6 +19236,14 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_Simplified_Interline_Settlement</shortDescription>
         <value>Simplified Interline Settlement</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Solution_Provided</fullName>
+        <categories>IFG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Solution_Provided</shortDescription>
+        <value>Solution Provided</value>
     </labels>
     <labels>
         <fullName>ISSP_Status</fullName>
@@ -20881,7 +21526,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_ISAGO_Terms_2</shortDescription>
-        <value>N/A</value>
+        <value>In order to complete your request, please go back to the previous tab and proceed with the next steps.</value>
     </labels>
     <labels>
         <fullName>OneId_ISAGO_Terms_3</fullName>
@@ -21416,6 +22061,14 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <protected>false</protected>
         <shortDescription>Overall maximum size</shortDescription>
         <value>Overall maximum size: 20MB</value>
+    </labels>
+    <labels>
+        <fullName>PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY</fullName>
+        <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PARENT_ACCEPTED_PAYMENT_METHODS_IS_EMPTY</shortDescription>
+        <value>The parent product accepted payment methods has not been selected. Before updating this product, please update the parent product accepted payment methods.</value>
     </labels>
     <labels>
         <fullName>PKB2M_aTypeConfig</fullName>
@@ -23495,6 +24148,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Trust Weaver</shortDescription>
         <value>Trust Weaver</value>
+    </labels>
+    <labels>
+        <fullName>Type_of_Accreditation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Type of Accreditation</shortDescription>
+        <value>* Type of Accreditation</value>
     </labels>
     <labels>
         <fullName>Until</fullName>

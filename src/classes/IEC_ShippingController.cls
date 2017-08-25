@@ -140,7 +140,10 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         OrderItem_Sel oiSelector = new OrderItem_Sel();
         List<OrderItem> pendingOrderItems = oiSelector.getOrderItems(sfOrder.Id);
         
-        refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+        // Ecommerce Enhancements R2 - dont re-add to cart because it's already serialized and user might cancel or
+        //                             click elsewhere (IATA logo) and return to homepage with cart item re-added.
+        //refreshCookieContent(pendingOrderItems, false);//@todo: revalidate
+        IECOrder_Svc.deleteAllCookies();
 
         if (!isShipToError)
         {
@@ -242,7 +245,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         sfOrder.EndDate = sfOrder.EffectiveDate.addDays(Utility.getIntegerSetting('Quote Nb Days Valid'));
         update sfOrder;
 
-        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber;
+        quoteGeneratedMsg = 'Your Quote was successfully registered. <br /> Quote number : ' + sfOrder.OrderNumber + '<br /> You will receive an email with a PDF copy of your Quote. <br /> Please follow the instructions contained in the e-mail to confirm and pay for your Quote.';
         
         quote = sfOrder;//new Order_Sel().getQuoteDetails(sfOrder.Id);
 
@@ -567,6 +570,14 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
     public void fetchCustomerPaymentMethods()
     {
+        Map<String,String> uiToPaymentMethodMap = new Map<String,String> {
+            'Bank Transfer'         => IECConstants.PaymentThresholdType_BankTransfer,
+            'Credit Card'           => IECConstants.PaymentThresholdType_CreditCard,
+            'IATA Clearing House'   => IECConstants.PaymentThresholdType_ICH
+        };
+        List<String> orderAcceptedPaymentMethods = new List<String>();
+        Set<String> acceptedPaymentMethodSet = new Set<String>();
+
         Set<String> setPaymentMethods = new Set<String>(Utility.getTextSettingToArray('Order Payment Types allowed for CUS',','));
 
         //Check if Bank transfer is allowed
@@ -582,6 +593,28 @@ global without sharing class IEC_ShippingController extends IEC_PageController
         if((!loggedCustomer.canPayByICH()) || (!IECSubscriptionManager.canPurchaseAmountWithPaymentMethod(IECConstants.PaymentThresholdType_ICH, sfOrder.Total_Amount__c))) setPaymentMethods.remove(IECConstants.PaymentThresholdType_ICH);
 
     
+        // Ecommerce Enhancements R2
+        if (sfOrder.Accepted_Payment_Methods__c != null) {
+            orderAcceptedPaymentMethods = sfOrder.Accepted_Payment_Methods__c.split(';');
+
+            for (String accepted : orderAcceptedPaymentMethods) {
+                String pm = uiToPaymentMethodMap.get(accepted);
+
+                if (pm != null) {
+                    acceptedPaymentMethodSet.add(pm);
+                }
+            }
+
+            if (acceptedPaymentMethodSet.isEmpty() == false) {
+                setPaymentMethods.retainAll(acceptedPaymentMethodSet);
+            } else {
+                setPaymentMethods.clear();
+            }
+        } else {
+            setPaymentMethods.clear();
+        }
+
+
         if(setPaymentMethods.size() > 0) paymentMethods = new List<String>(setPaymentMethods);
         else addErrorMessage('NO PAYMENT METHOD FOR THIS ORDER');
     }

@@ -66,6 +66,10 @@
 				<apex:selectOptions value="{!currencyOptions}" />
 			</apex:selectList>
 		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem rendered="{!Portal_Application_Right__c.ANG_Portal_Service_Role__c != null}">
+			<apex:outputLabel value="Portal Service Role" for="portalserrole" />
+			<apex:outputText  value="{!Portal_Application_Right__c.ANG_Portal_Service_Role__c}" id="portalserrole" />
+		</apex:pageBlockSectionItem>
 	</apex:pageBlockSection>
 </apex:pageBlock>
 </apex:form>
