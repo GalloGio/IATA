@@ -1342,7 +1342,6 @@
                   <!-- ****************************************************************************** -->
 
                   <span id="nav_five"></span>
-                  <span id="nav_five"></span>
                   <apex:pageBlockSection id="sectionfive" collapsible="false" columns="1">
                     <apex:facet name="header">
                       <apex:outputpanel >
@@ -1382,28 +1381,30 @@
                   <span id="nav_six"></span>
                   <apex:pageBlockSection id="sectionSix" collapsible="false" columns="1">
                     <apex:facet name="header">
-                      <apex:outputpanel >
+                      <apex:outputpanel>
                         {!$Label.ISSP_AMS_Step3_5_Other_Info}
                       </apex:outputpanel>
                     </apex:facet>
 
-                    <apex:outputText rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
+                    <apex:outputText rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
                       <strong>{!$Label.ISSP_AMS_If_Approved_Gross_Amnt}</strong>
-                      <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip"/>
-                    </apex:outputText>         
-                    <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_model__c!='Cashless'}">
-                      <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}"/>
-                      <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}"/>
-                    </apex:pageBlockSection> 
-
-                    <apex:pageblocksectionitem >
+                      <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpGrossSales}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                    </apex:outputText>
+                  </apex:pageBlockSection>
+                  <apex:pageBlockSection rendered="{!con.Account.ANG_Accreditation_Model__c!='Cashless'}">
+                    <apex:inputField id="section5-first-year" value="{!newForm.ISSP_AMS_Gross_Amnt_First_year__c}" />
+                    <apex:inputField id="section5-second-year" value="{!newForm.ISSP_AMS_Gross_Amnt_Second_year__c}" />
+                  </apex:pageBlockSection>
+                  <apex:pageBlockSection>
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="is-cargo-label" value="{!$Label.ISSP_AMS_Step3_IATA_Reg_Cargo_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c}" styleclass="{!IF(AND(isValError, newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c==null), 'requiredIndicator', '')}" id="isregcargoagent" onchange="toggleIATACode('{!$Component.isregcargoagent}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
-                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
+                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
                       </apex:selectradio>
                     </apex:pageblocksectionitem>
                   </apex:pageBlockSection>
+
 
 
                   <div id="iatacode" style="{!IF(newForm.ISSP_AMS_IATA_Registered_Cargo_Agent__c == 'Yes', 'border: 0px !important;', 'display:none')}">
@@ -1412,29 +1413,29 @@
                         <apex:outputLabel id="cargo-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATA_Cargo_Code__c.Label}" />
                         <apex:inputField id="iataCodeCargoInput" value="{!newForm.IATA_Cargo_Code__c}" onblur="if(this.value!='') {fetchCargoAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="cargoagentdetails">
-                          <apex:actionStatus id="actCargoAgent" startStyleClass="bg-info">
-                            <apex:facet name="start">
-                              {!$Label.ISSP_Loading_Cargo_Agency_Details}
-                            </apex:facet>
-                          </apex:actionStatus>
-                            <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(cargoAgentAccount.Name=='', iatacode!='')}" />
-                            <apex:outputText escape="false" value="
-                                <strong>{!cargoAgentAccount.Name}</strong><br>
-                                {!cargoAgentAccount.BillingStreet}<br/>
-                                {!cargoAgentAccount.BillingCity} {!cargoAgentAccount.BillingPostalCode}<br/>
-                                {!cargoAgentAccount.BillingState}, {!cargoAgentAccount.BillingCountry}
-                            " />
-                        </apex:outputPanel>
+                      <apex:outputPanel id="cargoagentdetails">
+                        <apex:actionStatus id="actCargoAgent" startStyleClass="bg-info">
+                          <apex:facet name="start">
+                            {!$Label.ISSP_Loading_Cargo_Agency_Details}
+                          </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(cargoAgentAccount.Name=='', iatacode!='')}" />
+                        <apex:outputText escape="false" value="
+                                                <strong>{!cargoAgentAccount.Name}</strong><br>
+                                                {!cargoAgentAccount.BillingStreet}<br/>
+                                                {!cargoAgentAccount.BillingCity} {!cargoAgentAccount.BillingPostalCode}<br/>
+                                                {!cargoAgentAccount.BillingState}, {!cargoAgentAccount.BillingCountry}
+                                            " />
+                      </apex:outputPanel>
                     </apex:pageBlockSection>
                   </div>
-                  
-                  <apex:pageBlockSection >
-                    <apex:pageblocksectionitem >
+
+                  <apex:pageBlockSection>
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="is-agency-iatan-label" value="{!$Label.ISSP_AMS_Step5_IATAN_Travel_Agent}" />
                       <apex:selectradio style="width:100px" value="{!newForm.IATA_Registered_IATAN_Agent__c}" styleclass="{!IF(AND(isValError, newForm.IATA_Registered_IATAN_Agent__c==null), 'requiredIndicator', '')}" id="isregiatantravel" onchange="toggleIATACodeIATAN('{!$Component.isregiatantravel}');">
                         <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
-                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}"/>
+                        <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
                       </apex:selectradio>
                     </apex:pageblocksectionitem>
                   </apex:pageBlockSection>
@@ -1444,25 +1445,25 @@
                         <apex:outputLabel id="iatan-code-label" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" />
                         <apex:inputField value="{!newForm.IATAN_Code__c}" onblur="if(this.value!='') {fetchIATANAgent(this.value.trim());}" html-placeholder="{!$Label.ISSP_AMS_First_8_Digits}" />
                       </apex:pageBlockSectionItem>
-                        <apex:outputPanel id="iatantravelagen">
-                          <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
-                            <apex:facet name="start">
-                              {!$Label.ISSP_Loading_IATAN_Agency_Details}
-                            </apex:facet>
-                          </apex:actionStatus>
-                          <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATAN_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(IATANAgentAccount.Name=='', iatacode!='')}" />
-                          <apex:outputText escape="false" value="
-                              <strong>{!IATANAgentAccount.Name}</strong><br>
-                              {!IATANAgentAccount.BillingStreet}<br/>
-                              {!IATANAgentAccount.BillingCity} {!IATANAgentAccount.BillingPostalCode}<br/>
-                              {!IATANAgentAccount.BillingState}, {!IATANAgentAccount.BillingCountry}" />
-                        </apex:outputPanel>
+                      <apex:outputPanel id="iatantravelagen">
+                        <apex:actionStatus id="actIATANAgent" startStyleClass="bg-info">
+                          <apex:facet name="start">
+                            {!$Label.ISSP_Loading_IATAN_Agency_Details}
+                          </apex:facet>
+                        </apex:actionStatus>
+                        <apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATAN_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(IATANAgentAccount.Name=='', iatacode!='')}" />
+                        <apex:outputText escape="false" value="
+                                              <strong>{!IATANAgentAccount.Name}</strong><br>
+                                              {!IATANAgentAccount.BillingStreet}<br/>
+                                              {!IATANAgentAccount.BillingCity} {!IATANAgentAccount.BillingPostalCode}<br/>
+                                              {!IATANAgentAccount.BillingState}, {!IATANAgentAccount.BillingCountry}" />
+                      </apex:outputPanel>
                     </apex:pageBlockSection>
 
                   </div>
-                  
+
                   <apex:pageblocksection columns="1">
-                    <apex:pageblocksectionitem >
+                    <apex:pageblocksectionitem>
                       <apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
                       <apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
                     </apex:pageblocksectionitem>
